@@ -1,0 +1,9 @@
+//start {mod_name}
+Route::get('/{mod_url}/set_order', '{mod_url_c}Controller@set_order');
+Route::get('/{mod_url}/pop', '{mod_url_c}Controller@pop');
+Route::get('/{mod_url}/unset_search', '{mod_url_c}Controller@unset_search');
+Route::post('/{mod_url}/update_status', '{mod_url_c}Controller@update_status');
+Route::post('/{mod_url}/update_order', '{mod_url_c}Controller@update_order');
+Route::resource('/{mod_url}', '{mod_url_c}Controller');
+//end {mod_name}
+/*DCODE HERE*/

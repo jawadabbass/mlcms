@@ -1,0 +1,52 @@
+.bs-example{
+	font-family: sans-serif;
+	position: relative;
+	margin: 100px;
+}
+.typeahead, .tt-query, .tt-hint {
+	border: 1px solid #CCCCCC;
+	height: 35px;
+	outline: medium none;
+	padding: 8px 0px;
+}
+.typeahead {
+	background-color: #FFFFFF;
+}
+.typeahead:focus {
+	border: 1px solid #0097CF;
+}
+.tt-query {
+	padding-left:12px;
+}
+.tt-hint {
+	color: #999999;
+	padding-left:12px;
+}
+.tt-dropdown-menu {
+	background-color: #FFFFFF;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	/*border-radius: 8px;*/
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+	margin-top: 2px;
+	/*padding: 8px 0;*/
+	/*width: 422px;*/
+}
+.tt-suggestion {
+	font-size: 18px;
+	line-height: 24px;
+	padding: 3px 12px;
+	min-width:148px;
+}
+.tt-suggestion.tt-is-under-cursor {
+	background-color: #0097CF;
+	color: #FFFFFF;
+}
+.tt-suggestion p {
+	margin: 0;
+}
+
+#scrollable-dropdown-menu .tt-dropdown-menu {
+  max-height: 200px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}

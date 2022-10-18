@@ -1,0 +1,67 @@
+/* My addition to github theme */
+
+.action-z{z-index: 99999}
+
+.sortableListsOpener .fa-plus, .sortableListsOpener .fa-minus {cursor: pointer}
+
+ul#sTree2, #sTree2 li {
+	list-style-type:none;
+	color:#b5e853;
+	border:1px solid #abbbcc;
+}
+
+#sTree2 { padding:0; background-color:#e7eff7; }
+
+#sTree2 li, ul#sortableListsBase li {
+	padding-left:50px;
+	margin:5px; border:1px solid #3f3f3f;
+	background-color:#55708a;
+}
+
+li div {
+	padding:7px;
+	background-color:#2e3e4e;
+}
+#sTree2 .chilnav:after{content:''; clear: both; display: table;}
+#sTree2 li .pull-right{padding: 0}
+#sTree2 li .pull-right a{display: inline-block; margin-left: 5px;}
+
+li, ul, div { border-radius: 3px; }
+
+.c1 { color:#b5e853; }
+.c2 { color:#63c0f5; }
+.c3 { color: #f77720; }
+.c4 { color: #888; }
+.c5 { color: #666667; }
+.c6 { color: #888; }
+
+.bgC1, .gray { background-color:#ccc; }
+.bgC2, .yellow { background-color:#ff8; }
+.bgC3, .red { background-color:#ff9999; }
+.bgC4, .blue { background-color:#aaaaff;}
+.bgC5, .green { background-color:#99ff99; }
+.bgC6, .gree2 { background-color:#bbffbb; }
+.bgC7, .brown { background-color:#c26b2b; }
+
+.pT20 { padding-top:20px; }
+
+.pV10 { padding-top:10px; padding-bottom:10px; }
+
+.pR { position: relative; }
+
+.t10 { top: 10px; }
+
+.dN { display:none; }
+
+.zI1000 { z-index:1000; }
+
+.small1 { font-size:0.8em; }
+.small2 { font-size:0.7em; }
+.small3 { font-size:0.6em; }
+
+.tAR { text-align:right; }
+
+.clear { clear:both; }
+
+
+#sTree2 { margin:10px auto; }

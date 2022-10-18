@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Models\Back;
+
+use Illuminate\Database\Eloquent\Model;
+
+class BlogPost extends Model
+{
+    public $timestamps = false;
+    protected $primaryKey = 'ID';
+    public function comments()
+    {
+        return $this->hasMany('App\Models\Back\BlogComment', 'post_id', 'ID');
+    }
+    public function author()
+    {
+        return $this->belongsTo('App\User', 'author_id', 'id');
+    }
+}
