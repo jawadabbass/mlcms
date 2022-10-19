@@ -1,21 +1,30 @@
-name: Publish Website to CPanel
+name: Deploy Files
 on:
   push:
     branches:
       - main
+  # Enables manually triggering of Workflow with file synchronization option
+  workflow_dispatch:
+    inputs:
+      sync:
+        description: "File synchronization"
+        required: true
+        default: "delta"
 jobs:
-  FTP-Deploy-Action:
-    name: FTP-Deploy-Action
+  deploy-main:
+    name: "main branch"
+    if: ${{ github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
-    - uses: actions/checkout@v2.1.0
-      with:
-        fetch-depth: 2
-    - name: FTP-Deploy-Action
-      uses: SamKirkland/FTP-Deploy-Action@3.1.1
-      with:
-        ftp-server: ${{ secrets.FTP_SERVER }}
-        ftp-username: ${{ secrets.FTP_USERNAME }}
-        ftp-password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: ${{ secrets.SERVER_DIR }}
-        state-name: ${{ secrets.STATE_NAME }}
+      - name: "Checkout"
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: "Deploy"
+        uses: milanmk/actions-file-deployer@master
+        with:
+          remote-protocol: "ftp"
+          remote-host: ${{ secrets.FTP_SERVER }}
+          remote-user: ${{ secrets.FTP_USERNAME }}
+          remote-path: ${{ secrets.SERVER_DIR }}
