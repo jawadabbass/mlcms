@@ -25,6 +25,7 @@ jobs:
         uses: milanmk/actions-file-deployer@master
         with:
           remote-protocol: "sftp"
+          remote-port: ${{ secrets.FTP_PORT }}
           remote-host: ${{ secrets.FTP_SERVER }}
           remote-user: ${{ secrets.FTP_USERNAME }}
           remote-password: ${{ secrets.FTP_PASSWORD }}
