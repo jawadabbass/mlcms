@@ -66,9 +66,7 @@ class SecureHeaders
     public static function fromFile($file)
     {
         if (!is_file($file)) {
-            throw new InvalidArgumentException(
-                sprintf('%s does not exist.', $file)
-            );
+            throw new InvalidArgumentException(sprintf('%s does not exist.', $file));
         }
 
         $config = require $file;
@@ -84,9 +82,7 @@ class SecureHeaders
     public function send()
     {
         if (headers_sent($file, $line)) {
-            throw new RuntimeException(
-                sprintf('Headers already sent in %s on line %d.', $file, $line)
-            );
+            throw new RuntimeException(sprintf('Headers already sent in %s on line %d.', $file, $line));
         }
 
         foreach ($this->headers() as $key => $value) {
@@ -236,10 +232,6 @@ class SecureHeaders
 
     /**
      * Generate random nonce value for current request.
-     *
-     * @param string $target
-     *
-     * @return string
      *
      * @throws Exception
      */
