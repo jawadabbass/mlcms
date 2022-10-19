@@ -17,6 +17,6 @@ jobs:
         target-server: directfinding.com
         remote-user: directfinding
         private-ssh-key: ${{ secrets.SSH_KEY }}
-        destination-path: ~/public_html/client/mlcms/
+        destination-path: ~/home/directfinding/public_html/client/mlcms/
         ssh-port: 22
         rsync-options: --dry-run --archive --verbose --compress --delete-after --human-readable --exclude=.git* --exclude=.git/ --exclude=README.md --exclude=readme.md --exclude=.gitignore
