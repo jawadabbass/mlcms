@@ -17,5 +17,5 @@ jobs:
         ftp-server: ${{ secrets.FTP_SERVER }}
         ftp-username: ${{ secrets.FTP_USERNAME }}
         ftp-password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: ${{ SERVER_DIR }}
-        state-name: ${{ STATE_NAME }}
+        server-dir: ${{ secrets.SERVER_DIR }}
+        state-name: ${{ secrets.STATE_NAME }}
