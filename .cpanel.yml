@@ -1,0 +1,6 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/directfinding/public_html/client/mlcms/
+    - /bin/cp -R * $DEPLOYPATH
+     

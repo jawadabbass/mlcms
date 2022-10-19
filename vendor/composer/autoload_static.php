@@ -147,6 +147,7 @@ class ComposerStaticInit302eafd917550ca722d339c80fd3422b
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
         '4a1f389d6ce373bda9e57857d3b61c84' => __DIR__ . '/..' . '/barryvdh/laravel-debugbar/src/helpers.php',
+        'cf44199717bf3055b6c87791a4b20b22' => __DIR__ . '/..' . '/bepsvpt/secure-headers/src/helpers.php',
         'ed962a97bd972bc82007176b647d4e36' => __DIR__ . '/..' . '/facade/ignition/src/helpers.php',
         'e23faeee409e941dc9b4c80386209c39' => __DIR__ . '/..' . '/laracasts/flash/src/Laracasts/Flash/functions.php',
         'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
@@ -328,6 +329,7 @@ class ComposerStaticInit302eafd917550ca722d339c80fd3422b
         'B' => 
         array (
             'Brick\\Math\\' => 11,
+            'Bepsvpt\\SecureHeaders\\' => 22,
             'Barryvdh\\DomPDF\\' => 16,
             'Barryvdh\\Debugbar\\' => 18,
         ),
@@ -805,6 +807,10 @@ class ComposerStaticInit302eafd917550ca722d339c80fd3422b
         array (
             0 => __DIR__ . '/..' . '/brick/math/src',
         ),
+        'Bepsvpt\\SecureHeaders\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/bepsvpt/secure-headers/src',
+        ),
         'Barryvdh\\DomPDF\\' => 
         array (
             0 => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src',
@@ -1119,6 +1125,15 @@ class ComposerStaticInit302eafd917550ca722d339c80fd3422b
         'Barryvdh\\DomPDF\\Facade\\Pdf' => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src/Facade/Pdf.php',
         'Barryvdh\\DomPDF\\PDF' => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src/PDF.php',
         'Barryvdh\\DomPDF\\ServiceProvider' => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src/ServiceProvider.php',
+        'Bepsvpt\\SecureHeaders\\Builders\\Builder' => __DIR__ . '/..' . '/bepsvpt/secure-headers/src/Builders/Builder.php',
+        'Bepsvpt\\SecureHeaders\\Builders\\ClearSiteDataBuilder' => __DIR__ . '/..' . '/bepsvpt/secure-headers/src/Builders/ClearSiteDataBuilder.php',
+        'Bepsvpt\\SecureHeaders\\Builders\\ContentSecurityPolicyBuilder' => __DIR__ . '/..' . '/bepsvpt/secure-headers/src/Builders/ContentSecurityPolicyBuilder.php',
+        'Bepsvpt\\SecureHeaders\\Builders\\ExceptCTBuilder' => __DIR__ . '/..' . '/bepsvpt/secure-headers/src/Builders/ExceptCTBuilder.php',
+        'Bepsvpt\\SecureHeaders\\Builders\\PermissionsPolicyBuilder' => __DIR__ . '/..' . '/bepsvpt/secure-headers/src/Builders/PermissionsPolicyBuilder.php',
+        'Bepsvpt\\SecureHeaders\\Builders\\StrictTransportSecurityBuilder' => __DIR__ . '/..' . '/bepsvpt/secure-headers/src/Builders/StrictTransportSecurityBuilder.php',
+        'Bepsvpt\\SecureHeaders\\SecureHeaders' => __DIR__ . '/..' . '/bepsvpt/secure-headers/src/SecureHeaders.php',
+        'Bepsvpt\\SecureHeaders\\SecureHeadersMiddleware' => __DIR__ . '/..' . '/bepsvpt/secure-headers/src/SecureHeadersMiddleware.php',
+        'Bepsvpt\\SecureHeaders\\SecureHeadersServiceProvider' => __DIR__ . '/..' . '/bepsvpt/secure-headers/src/SecureHeadersServiceProvider.php',
         'Brick\\Math\\BigDecimal' => __DIR__ . '/..' . '/brick/math/src/BigDecimal.php',
         'Brick\\Math\\BigInteger' => __DIR__ . '/..' . '/brick/math/src/BigInteger.php',
         'Brick\\Math\\BigNumber' => __DIR__ . '/..' . '/brick/math/src/BigNumber.php',
