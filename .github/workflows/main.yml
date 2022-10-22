@@ -31,3 +31,5 @@ jobs:
           remote-password: ${{ secrets.FTP_PASSWORD }}
           ssh-private-key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
           remote-path: ${{ secrets.SERVER_DIR }}
+          artifacts: true
+          debug: true
