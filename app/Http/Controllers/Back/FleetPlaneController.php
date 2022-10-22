@@ -2,21 +2,20 @@
 
 namespace App\Http\Controllers\Back;
 
-use App\Models\Back\Safety;
-use Illuminate\Http\Request;
 use App\Helpers\ImageUploader;
-use App\Models\Back\FleetPlane;
-use App\Traits\FleetPlaneTrait;
-use App\Models\Back\Performance;
-use App\Models\Back\CabinAmenity;
-use App\Models\Back\FleetCategory;
-use App\Models\Back\CabinDimension;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Back\FleetPlaneBackFormRequest;
 use App\Models\Back\BaggageCapacity;
+use App\Models\Back\CabinAmenity;
+use App\Models\Back\CabinDimension;
+use App\Models\Back\FleetPlane;
 use App\Models\Back\PassengerCapacity;
+use App\Models\Back\Performance;
+use App\Models\Back\Safety;
+use App\Traits\FleetPlaneTrait;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Yajra\DataTables\Facades\DataTables;
-use App\Http\Requests\Back\FleetPlaneBackFormRequest;
 
 class FleetPlaneController extends Controller
 {
@@ -29,7 +28,7 @@ class FleetPlaneController extends Controller
      */
     public function index()
     {
-        $title = config('Constants.SITE_NAME') . ': Fleet Planes Management';
+        $title = config('Constants.SITE_NAME').': Fleet Planes Management';
         $msg = '';
 
         return view('back.fleet_planes.index', compact('title', 'msg'));
@@ -55,46 +54,38 @@ class FleetPlaneController extends Controller
                 return $fleetPlanes->fleetCategory->title;
             })
             ->addColumn('image', function ($fleetPlanes) {
-                return '<img src="' . ImageUploader::print_image_src($fleetPlanes->image, 'fleet_planes/thumb') . '" />';
+                return '<img src="'.ImageUploader::print_image_src($fleetPlanes->image, 'fleet_planes/thumb').'" />';
             })
             ->addColumn('status', function ($fleetPlanes) {
-                $str = '<select class="form-control" name="status" id="status_' . $fleetPlanes->id . '" onchange="updateFleetPlaneStatus(' . $fleetPlanes->id . ', \'' . $fleetPlanes->status . '\', this.value);">';
+                $str = '<select class="form-control" name="status" id="status_'.$fleetPlanes->id.'" onchange="updateFleetPlaneStatus('.$fleetPlanes->id.', \''.$fleetPlanes->status.'\', this.value);">';
                 $str .= generateFleetPlaneStatusDropDown($fleetPlanes->status, false);
                 $str .= '</select>';
 
                 return $str;
             })
             ->addColumn('action', function ($fleetPlanes) {
-                $awardStr = '';
-                if ($fleetPlanes->is_copied_from_award && $fleetPlanes->prestige_local_award_id > 0) {
-                    $awardStr = '<li>
-                    <a target="_blank" href="' . route('prestigeLocalAwards.edit', ['prestigeLocalAwardObj' => $fleetPlanes->prestige_local_award_id]) . '" class="text-info"><i class="fa-solid fa-trophy" aria-hidden="true"></i>Linked Award</a>
-                </li>';
-                }
-
                 return '
                 <div class="btn-group">
 					<button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action
 					</button>
 					<ul class="dropdown-menu">
 						<li>
-							<a href="' . route('fleetPlanes.edit', ['fleetPlaneObj' => $fleetPlanes->id]) . '" class="text-warning"><i class="fa-solid fa-pencil" aria-hidden="true"></i>Edit</a>
+							<a href="'.route('fleetPlanes.edit', ['fleetPlaneObj' => $fleetPlanes->id]).'" class="text-warning"><i class="fa-solid fa-pencil" aria-hidden="true"></i>Edit</a>
 						</li>
 						<li>
-							<a href="javascript:void(0);" onclick="deleteFleetPlane(' . $fleetPlanes->id . ');" class="text-danger"><i class="fa-solid fa-trash" aria-hidden="true"></i>Delete</a>
+							<a href="javascript:void(0);" onclick="deleteFleetPlane('.$fleetPlanes->id.');" class="text-danger"><i class="fa-solid fa-trash" aria-hidden="true"></i>Delete</a>
 						</li>
-                        ' . $awardStr . '
-					</ul>
+                	</ul>
 				</div>';
             })
             ->rawColumns(['image', 'fleet_category_id', 'status', 'action'])
             ->orderColumns(['fleet_category_id', 'plane_name', 'status'], ':column $1')
             ->setRowId(function ($fleetPlanes) {
-                return 'fleetPlanesDtRow' . $fleetPlanes->id;
+                return 'fleetPlanesDtRow'.$fleetPlanes->id;
             })
             ->make(true);
-        //$query = $dataTable->getQuery()->get();
-        //return $query;
+        // $query = $dataTable->getQuery()->get();
+        // return $query;
     }
 
     /**
@@ -104,7 +95,7 @@ class FleetPlaneController extends Controller
      */
     public function create()
     {
-        $title = config('Constants.SITE_NAME') . ': Fleet Planes Management';
+        $title = config('Constants.SITE_NAME').': Fleet Planes Management';
         $msg = '';
         $fleetPlaneObj = new FleetPlane();
 
@@ -174,7 +165,7 @@ class FleetPlaneController extends Controller
      */
     public function edit(FleetPlane $fleetPlaneObj)
     {
-        $title = config('Constants.SITE_NAME') . ': Fleet Planes Management';
+        $title = config('Constants.SITE_NAME').': Fleet Planes Management';
         $msg = '';
 
         $passengerCapacities = PassengerCapacity::active()->sorted()->get();
@@ -226,7 +217,7 @@ class FleetPlaneController extends Controller
 
     public function sortFleetPlanes()
     {
-        $title = config('Constants.SITE_NAME') . ': Fleet Planes Management';
+        $title = config('Constants.SITE_NAME').': Fleet Planes Management';
         $msg = '';
 
         return view('back.fleet_planes.sort')->with('title', $title)
@@ -235,17 +226,17 @@ class FleetPlaneController extends Controller
 
     public function fleetPlanesSortData(Request $request)
     {
-        $fleetPlanes = FleetPlane::select('fleet_planes.id', 'fleet_planes.fleet_category_id',  'fleet_planes.plane_name', 'fleet_planes.sort_order')
+        $fleetPlanes = FleetPlane::select('fleet_planes.id', 'fleet_planes.fleet_category_id', 'fleet_planes.plane_name', 'fleet_planes.sort_order')
             ->where('fleet_category_id', $request->fleet_category_id)
             ->orderBy('sort_order', 'ASC')
             ->get();
         $str = '<ul id="sortable">';
         if ($fleetPlanes != null) {
             foreach ($fleetPlanes as $fleetPlaneObj) {
-                $str .= '<li class="ui-state-default" id="' . $fleetPlaneObj->id . '"><i class="fa-solid fa-sort"></i> ' . $fleetPlaneObj->plane_name . '</li>';
+                $str .= '<li class="ui-state-default" id="'.$fleetPlaneObj->id.'"><i class="fa-solid fa-sort"></i> '.$fleetPlaneObj->plane_name.'</li>';
             }
         }
-        echo $str . '</ul>';
+        echo $str.'</ul>';
     }
 
     public function fleetPlanesSortUpdate(Request $request)
@@ -266,8 +257,6 @@ class FleetPlaneController extends Controller
         $fleetPlaneObj = FleetPlane::find($request->id);
         $fleetPlaneObj = $this->setFleetPlaneStatus($request, $fleetPlaneObj);
         $fleetPlaneObj->save();
-
-        $this->sendFleetPlaneStatusEmail($fleetPlaneObj);
 
         return response()->json(['status' => 'success', 'message' => $fleetPlaneObj->status]);
     }

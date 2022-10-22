@@ -204,7 +204,7 @@
                         _token: '{{ csrf_token() }}'
                     })
                     .done(function(response) {
-                        if (response == 'ok') {
+                        if (response.includes('ok')) {
                             var table = $('#stateDatatableAjax').DataTable();
                             table.row('stateDtRow' + id).remove().draw(false);
                         } else {

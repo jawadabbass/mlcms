@@ -171,7 +171,7 @@
                         _token: '{{ csrf_token() }}'
                     })
                     .done(function(response) {
-                        if (response == 'ok') {
+                        if (response.includes('ok')) {
                             var table = $('#performanceDatatableAjax').DataTable();
                             table.row('performanceDtRow' + id).remove().draw(false);
                         } else {

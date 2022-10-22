@@ -171,7 +171,7 @@
                         _token: '{{ csrf_token() }}'
                     })
                     .done(function(response) {
-                        if (response == 'ok') {
+                        if (response.includes('ok')) {
                             var table = $('#cabinDimensionDatatableAjax').DataTable();
                             table.row('cabinDimensionDtRow' + id).remove().draw(false);
                         } else {

@@ -221,7 +221,7 @@
                         _token: '{{ csrf_token() }}'
                     })
                     .done(function(response) {
-                        if (response == 'ok') {
+                        if (response.includes('ok')) {
                             var table = $('#cityDatatableAjax').DataTable();
                             table.row('cityDtRow' + id).remove().draw(false);
                         } else {

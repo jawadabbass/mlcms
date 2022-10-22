@@ -171,7 +171,7 @@
                         _token: '{{ csrf_token() }}'
                     })
                     .done(function(response) {
-                        if (response == 'ok') {
+                        if (response.includes('ok')) {
                             var table = $('#baggageCapacityDatatableAjax').DataTable();
                             table.row('baggageCapacityDtRow' + id).remove().draw(false);
                         } else {

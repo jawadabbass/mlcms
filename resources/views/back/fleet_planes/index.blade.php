@@ -188,7 +188,7 @@
                         _token: '{{ csrf_token() }}'
                     })
                     .done(function(response) {
-                        if (response == 'ok') {
+                        if (response.includes('ok')) {
                             var table = $('#fleetPlaneDatatableAjax').DataTable();
                             table.row('fleetPlaneDtRow' + id).remove().draw(false);
                         } else {

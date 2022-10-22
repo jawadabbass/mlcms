@@ -195,7 +195,7 @@
                         _token: '{{ csrf_token() }}'
                     })
                     .done(function(response) {
-                        if (response == 'ok') {
+                        if (response.includes('ok')) {
                             var table = $('#newsDatatableAjax').DataTable();
                             table.row('newsDtRow' + id).remove().draw(false);
                         } else {

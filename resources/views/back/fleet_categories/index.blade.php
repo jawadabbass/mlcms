@@ -190,7 +190,7 @@
                         _token: '{{ csrf_token() }}'
                     })
                     .done(function(response) {
-                        if (response == 'ok') {
+                        if (response.includes('ok')) {
                             var table = $('#fleetCategoryDatatableAjax').DataTable();
                             table.row('fleetCategoryDtRow' + id).remove().draw(false);
                         } else {
