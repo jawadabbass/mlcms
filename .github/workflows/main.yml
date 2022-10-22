@@ -9,7 +9,7 @@ on:
       sync:
         description: "File synchronization"
         required: true
-        default: "delta"
+        default: "full"
 jobs:
   deploy-main:
     name: "main branch"
