@@ -1,3 +1,6 @@
+
+[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/support-ukraine.svg?t=1" />](https://supportukrainenow.org)
+
 # Generate sitemaps with ease
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-sitemap.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-sitemap)
@@ -64,6 +67,32 @@ You can also use one of your available filesystem disks to write the sitemap to.
 SitemapGenerator::create('https://example.com')->getSitemap()->writeToDisk('public', 'sitemap.xml');
 ```
 
+You can also add your models directly by implementing the `\Spatie\Sitemap\Contracts\Sitemapable` interface.
+
+```php
+use Spatie\Sitemap\Contracts\Sitemapable;
+use Spatie\Sitemap\Tags\Url;
+
+class Post extends Model implements Sitemapable
+{
+    public function toSitemapTag(): Url | string | array
+    {
+        return route('blog.post.show', $this);
+    }
+}
+```
+
+Now you can add a single post model to the sitemap or even a whole collection.
+```php
+use Spatie\Sitemap\Sitemap;
+
+Sitemap::create()
+    ->add($post)
+    ->add(Post::all());
+```
+
+This way you can add all your pages super fast without the need to crawl them all.
+
 ## Support us
 
 [<img src="https://github-ads.s3.eu-central-1.amazonaws.com/laravel-sitemap.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/laravel-sitemap)
@@ -89,7 +118,7 @@ If you want to update your sitemap automatically and frequently you need to perf
 You can override the default options for the crawler. First publish the configuration:
 
 ```bash
-php artisan vendor:publish --provider="Spatie\Sitemap\SitemapServiceProvider" --tag=config
+php artisan vendor:publish --provider="Spatie\Sitemap\SitemapServiceProvider" --tag=sitemap-config
 ```
 
 This will copy the default config to `config/sitemap.php` where you can edit it.
@@ -189,10 +218,10 @@ The generated sitemap will look similar to this:
 
 #### Define a custom Crawl Profile
 
-You can create a custom crawl profile by implementing the `Spatie\Crawler\CrawlProfile` interface and by customizing the `shouldCrawl()` method for full control over what url/domain/sub-domain should be crawled:
+You can create a custom crawl profile by implementing the `Spatie\Crawler\CrawlProfiles\CrawlProfile` interface and by customizing the `shouldCrawl()` method for full control over what url/domain/sub-domain should be crawled:
 
 ```php
-use Spatie\Crawler\CrawlProfile;
+use Spatie\Crawler\CrawlProfiles\CrawlProfile;
 use Psr\Http\Message\UriInterface;
 
 class CustomCrawlProfile extends CrawlProfile
@@ -349,6 +378,20 @@ SitemapGenerator::create('https://example.com')
 
 Note the ```addAlternate``` function which takes an alternate URL and the locale it belongs to.
 
+#### Adding images to links
+
+Urls can also have images. See also https://developers.google.com/search/docs/advanced/sitemaps/image-sitemaps
+
+```php
+use Spatie\Sitemap\Sitemap;
+use Spatie\Sitemap\Tags\Url;
+
+Sitemap::create()
+    // here we add an image to a URL
+    ->add(Url::create('https://example.com')->addImage('https://example.com/images/home.jpg', 'Home page image'))
+    ->writeToFile($sitemapPath);
+```
+
 ### Manually creating a sitemap
 
 You can also create a sitemap fully manual:
@@ -492,11 +535,11 @@ $ composer test
 
 ## Contributing
 
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+Please see [CONTRIBUTING](https://github.com/spatie/.github/blob/main/CONTRIBUTING.md) for details.
 
 ## Security
 
-If you discover any security related issues, please email freek@spatie.be instead of using the issue tracker.
+If you've found a bug regarding security please mail [security@spatie.be](mailto:security@spatie.be) instead of using the issue tracker.
 
 ## Credits
 

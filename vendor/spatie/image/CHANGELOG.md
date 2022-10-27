@@ -2,13 +2,71 @@
 
 All notable changes to `image` will be documented in this file
 
+## 2.2.3 - 2022-05-21
+
+## What's Changed
+
+- Fix permission issue with temporary directory by @sebastianpopp in https://github.com/spatie/image/pull/163
+
+## New Contributors
+
+- @sebastianpopp made their first contribution in https://github.com/spatie/image/pull/163
+
+**Full Changelog**: https://github.com/spatie/image/compare/2.2.2...2.2.3
+
+## 2.2.2 - 2022-02-22
+
+- add TIFF support
+
+## 1.11.0 - 2022-02-21
+
+## What's Changed
+
+- Fix docs link by @pascalbaljet in https://github.com/spatie/image/pull/154
+- Update .gitattributes by @PaolaRuby in https://github.com/spatie/image/pull/158
+- Add TIFF support by @Synchro in https://github.com/spatie/image/pull/159
+
+## New Contributors
+
+- @PaolaRuby made their first contribution in https://github.com/spatie/image/pull/158
+
+**Full Changelog**: https://github.com/spatie/image/compare/2.2.1...1.11.0
+
+## 2.2.1 - 2021-12-17
+
+## What's Changed
+
+- Use match expression in convertToGlideParameter method  by @mohprilaksono in https://github.com/spatie/image/pull/149
+- [REF] updated fit docs description by @JeremyRed in https://github.com/spatie/image/pull/150
+- Adding compatibility to Symfony 6 by @spackmat in https://github.com/spatie/image/pull/152
+
+## New Contributors
+
+- @mohprilaksono made their first contribution in https://github.com/spatie/image/pull/149
+- @JeremyRed made their first contribution in https://github.com/spatie/image/pull/150
+- @spackmat made their first contribution in https://github.com/spatie/image/pull/152
+
+**Full Changelog**: https://github.com/spatie/image/compare/2.2.0...2.2.1
+
+## 2.2.0 - 2021-10-31
+
+- add avif support (#148)
+
+## 2.1.0 - 2021-07-15
+
+- Drop support for PHP 7
+- Make codebase more strict with type hinting
+
 ## 2.0.0 - 2021-07-15
+
 - Bump league/glide to v2 [#134](https://github.com/spatie/image/pull/134)
 
 ## 1.10.4 - 2021-04-07
+
 - Allow spatie/temporary-directory v2
 
 ## 1.10.3 - 2021-03-10
+
 - Bump league/glide to 2.0 [#123](https://github.com/spatie/image/pull/123)
 
 ## 1.10.2 - 2020-01-26
@@ -93,18 +151,23 @@ All notable changes to `image` will be documented in this file
 - Support phpunit ^7.0
 
 ## 1.4.0 - 2017-12-05
+
 - add `getWidth` and `getHeight`
 
 ## 1.3.5 - 2017-12-04
+
 - fix for problems when creating directories in the temporary directory
 
 ## 1.3.4 - 2017-07-25
+
 - fix `optimize` docblock
 
 ## 1.3.3 - 2017-07-11
+
 - make `optimize` method fluent
 
 ## 1.3.2 - 2017-07-05
+
 - swap out underlying optimization package
 
 ## 1.3.1 - 2017-07-02

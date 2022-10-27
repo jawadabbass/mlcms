@@ -13,7 +13,7 @@ Once your Glide [server](/1.0/config/setup/) is configured, there are a number o
 <?php
 
 // Set the source file system
-public function setSource(FilesystemInterface $source)
+public function setSource(FilesystemOperator $source)
 
 // Get the source file system
 public function getSource()
@@ -37,7 +37,7 @@ public function sourceFileExists($path)
 <?php
 
 // Set the cache file system
-public function setCache(FilesystemInterface $cache)
+public function setCache(FilesystemOperator $cache)
 
 // Get the cache file system
 public function getCache()
@@ -62,6 +62,12 @@ public function getCachePath($path, array $params)
 
 // Check if a cache file exists
 public function cacheFileExists($path, array $params)
+
+// Set the temporary directory that should be used to store EXIF data
+public function setTempDir($tempDir)
+
+// Get the current temporary directory
+public function getTempDir()
 ~~~
 
 ## Api
@@ -93,11 +99,11 @@ public function getResponseFactory()
 ~~~ php
 <?php
 
-// Set the default manipulations
-public function setDefaultManipulations(array $defaultManipulations)
+// Set the default manipulators
+public function setManipulators(array $manipulators)
 
-// Get the default manipulations
-public function getDefaultManipulations()
+// Get the default manipulators
+public function getManipulators()
 ~~~
 
 ## Base URL

@@ -1,3 +1,6 @@
+
+[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/support-ukraine.svg?t=1" />](https://supportukrainenow.org)
+
 # 🕸 Crawl the web using PHP 🕷
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/crawler.svg?style=flat-square)](https://packagist.org/packages/spatie/crawler)
@@ -41,7 +44,7 @@ Crawler::create()
 The argument passed to `setCrawlObserver` must be an object that extends the `\Spatie\Crawler\CrawlObservers\CrawlObserver` abstract class:
 
 ```php
-namespace Spatie\Crawler;
+namespace Spatie\Crawler\CrawlObservers;
 
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\ResponseInterface;
@@ -54,9 +57,8 @@ abstract class CrawlObserver
      *
      * @param \Psr\Http\Message\UriInterface $url
      */
-    public function willCrawl(UriInterface $url)
+    public function willCrawl(UriInterface $url): void
     {
-
     }
 
     /**
@@ -70,7 +72,7 @@ abstract class CrawlObserver
         UriInterface $url,
         ResponseInterface $response,
         ?UriInterface $foundOnUrl = null
-    );
+    ): void;
 
     /**
      * Called when the crawler had a problem crawling the given url.
@@ -83,14 +85,13 @@ abstract class CrawlObserver
         UriInterface $url,
         RequestException $requestException,
         ?UriInterface $foundOnUrl = null
-    );
+    ): void;
 
     /**
      * Called when the crawl has ended.
      */
-    public function finishedCrawling()
+    public function finishedCrawling(): void
     {
-
     }
 }
 ```
@@ -398,6 +399,16 @@ Here
 - [ArrayCrawlQueue](https://github.com/spatie/crawler/blob/master/src/CrawlQueues/ArrayCrawlQueue.php)
 - [RedisCrawlQueue (third-party package)](https://github.com/repat/spatie-crawler-redis)
 - [CacheCrawlQueue for Laravel (third-party package)](https://github.com/spekulatius/spatie-crawler-toolkit-for-laravel)
+- [Laravel Model as Queue (third-party example app)](https://github.com/insign/spatie-crawler-queue-with-laravel-model)
+
+## Change the default base url scheme
+
+By default, the crawler will set the base url scheme to `http` if none. You have the ability to change that with `setDefaultScheme`.
+
+```php
+Crawler::create()
+    ->setDefaultScheme('https')
+```
 
 ## Changelog
 
@@ -405,7 +416,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recen
 
 ## Contributing
 
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+Please see [CONTRIBUTING](https://github.com/spatie/.github/blob/main/CONTRIBUTING.md) for details.
 
 ## Testing
 
@@ -425,12 +436,12 @@ node server.js
 
 With the server running, you can start testing.
 ```bash
-composer tests
+composer test
 ```
 
 ## Security
 
-If you discover any security related issues, please email freek@spatie.be instead of using the issue tracker.
+If you've found a bug regarding security please mail [security@spatie.be](mailto:security@spatie.be) instead of using the issue tracker.
 
 ## Postcardware
 

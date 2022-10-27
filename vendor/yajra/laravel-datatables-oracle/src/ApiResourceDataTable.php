@@ -3,25 +3,9 @@
 namespace Yajra\DataTables;
 
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Collection;
 
 class ApiResourceDataTable extends CollectionDataTable
 {
-    /**
-     * Collection object.
-     *
-     * @var \Illuminate\Http\Resources\Json\AnonymousResourceCollection
-     */
-    public $collection;
-
-    /**
-     * Collection object.
-     *
-     * @var \Illuminate\Http\Resources\Json\AnonymousResourceCollection
-     */
-    public $original;
-
     /**
      * Can the DataTable engine be created with these parameters.
      *
@@ -36,7 +20,7 @@ class ApiResourceDataTable extends CollectionDataTable
     /**
      * Factory method, create and return an instance for the DataTable engine.
      *
-     * @param  \Illuminate\Http\Resources\Json\AnonymousResourceCollection  $source
+     * @param  \Illuminate\Http\Resources\Json\AnonymousResourceCollection<array-key, array>|array  $source
      * @return ApiResourceDataTable|DataTableAbstract
      */
     public static function create($source)
@@ -47,17 +31,14 @@ class ApiResourceDataTable extends CollectionDataTable
     /**
      * CollectionEngine constructor.
      *
-     * @param  \Illuminate\Http\Resources\Json\AnonymousResourceCollection  $collection
+     * @param  \Illuminate\Http\Resources\Json\AnonymousResourceCollection<array-key, array>  $collection
      */
     public function __construct(AnonymousResourceCollection $collection)
     {
-        $this->request    = app('datatables.request');
-        $this->config     = app('datatables.config');
-        $this->collection = collect($collection->toArray($this->request));
-        $this->original   = $collection;
-        $this->columns    = array_keys($this->serialize(collect($collection->toArray($this->request))->first()));
-        if ($collection->resource instanceof LengthAwarePaginator) {
-            $this->isFilterApplied = true;
-        }
+        $this->request = app('datatables.request');
+        $this->config = app('datatables.config');
+        $this->collection = collect($collection);
+        $this->original = collect($collection);
+        $this->columns = array_keys($this->serialize(collect($collection)->first()));
     }
 }
