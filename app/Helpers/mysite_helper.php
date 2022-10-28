@@ -184,38 +184,6 @@ if (!function_exists('get_extension_name')) {
         return $icon_name;
     }
 }
-if (!function_exists('get_image_properties')) {
-    function get_image_properties($path = '', $return = false)
-    {
-        if ($path == '') {
-            $path = $this->full_src_path;
-        }
-        if (!file_exists($path)) {
-            $this->set_error('imglib_invalid_path');
-
-            return false;
-        }
-        $vals = @getimagesize($path);
-        $types = [1 => 'gif', 2 => 'jpeg', 3 => 'png'];
-        $mime = (isset($types[$vals['2']])) ? 'image/'.$types[$vals['2']] : 'image/jpg';
-        if ($return == true) {
-            $v['width'] = $vals['0'];
-            $v['height'] = $vals['1'];
-            $v['image_type'] = $vals['2'];
-            $v['size_str'] = $vals['3'];
-            $v['mime_type'] = $mime;
-
-            return $v;
-        }
-        $this->orig_width = $vals['0'];
-        $this->orig_height = $vals['1'];
-        $this->image_type = $vals['2'];
-        $this->size_str = $vals['3'];
-        $this->mime_type = $mime;
-
-        return true;
-    }
-}
 if (!function_exists('us_phone_format')) {
     function us_phone_format($strPhone)
     {
