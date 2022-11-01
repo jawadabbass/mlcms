@@ -66,9 +66,7 @@ class ModuleController extends Controller
         $cmsModule->show_seo_field = $request->show_seo_field;
         $cmsModule->show_preview_link_on_listing_page = $request->show_preview_link_on_listing_page;
         $cmsModule->show_follow = $request->show_follow;
-        $cmsModule->show_no_follow = $request->show_no_follow;
         $cmsModule->show_index = $request->show_index;
-        $cmsModule->show_no_index = $request->show_no_index;
         $cmsModule->show_descp = $request->show_descp;
         $cmsModule->crop_image = ($request->crop_image == 'Yes') ? 'Yes' : 'No';
         if ($request->feature_img_thmb_width != null) {
@@ -83,7 +81,7 @@ class ModuleController extends Controller
         $cmsModule->show_featured_image = $request->show_featured_image;
         $cmsModule->show_in_admin_menu = 0;
         $cmsModule->save();
-        //Session::flash('added_action', true);
+        // Session::flash('added_action', true);
         return redirect(route('modules.index'));
     }
 
@@ -176,9 +174,7 @@ class ModuleController extends Controller
         $cmsModule->show_seo_field = $request->show_seo_field;
         $cmsModule->show_preview_link_on_listing_page = $request->show_preview_link_on_listing_page;
         $cmsModule->show_follow = $request->show_follow;
-        $cmsModule->show_no_follow = $request->show_no_follow;
         $cmsModule->show_index = $request->show_index;
-        $cmsModule->show_no_index = $request->show_no_index;
         $cmsModule->crop_image = ($request->crop_image == 'Yes') ? 'Yes' : 'No';
         if ($request->feature_img_thmb_width != null) {
             $cmsModule->feature_img_thmb_width = $request->feature_img_thmb_width;
@@ -216,7 +212,7 @@ class ModuleController extends Controller
     {
         $module_id = $request->module_id;
         $cmsModule = CmsModule::find($module_id);
-        //$cmsModule->page_heading = $request->page_heading;
+        // $cmsModule->page_heading = $request->page_heading;
         $cmsModule->page_link = $request->page_link;
         $cmsModule->page_menu_option = $request->page_menu_option;
         $cmsModule->page_content = $request->page_content;

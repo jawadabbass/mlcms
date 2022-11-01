@@ -86,10 +86,12 @@
                                     <label class="form-label">{{ ucwords($module->term) }} Description</label>
                                     <label for="">
                                         <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#media_image"
-                                            class="btn btn-info"> <i class="fa-solid fa-cloud-download" aria-hidden="true"></i>
+                                            class="btn btn-info"> <i class="fa-solid fa-cloud-download"
+                                                aria-hidden="true"></i>
                                             Insert Image from Media</a>
                                         <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#media_files"
-                                            class="btn btn-warning"> <i class="fa-solid fa-cloud-download" aria-hidden="true"></i>
+                                            class="btn btn-warning"> <i class="fa-solid fa-cloud-download"
+                                                aria-hidden="true"></i>
                                             Insert Document from Media</a>
                                     </label>
                                     <textarea name="editor1" id="editor1" placeholder="{{ ucwords($module->term) }} Description" class="form-control"
@@ -158,7 +160,8 @@
                                         <div class="col-md-4">{{ ucwords($module->additional_field_title_2) }}</div>
                                         <div class="col-md-8"><a href="javascript:;" data-bs-toggle="modal"
                                                 data-bs-target="#media_image_addition" class="btn btn-info"> <i
-                                                    class="fa-solid fa-cloud-download" aria-hidden="true"></i> Insert Image from
+                                                    class="fa-solid fa-cloud-download" aria-hidden="true"></i> Insert
+                                                Image from
                                                 Media</a></div>
                                     </div>
                                     <div class="row">
@@ -249,46 +252,41 @@
                                         <div class="mt-3 mb-3" style="display:none;">
                                             <label class="form-label">Image Title</label>
                                             <input type="text" name="featured_img_title" id="featured_img_title"
-                                                class="form-control" placeholder="Featured Image Title" value="{{ $moduleData->featured_img_title }}">
+                                                class="form-control" placeholder="Featured Image Title"
+                                                value="{{ $moduleData->featured_img_title }}">
                                             <label class="mt-3">Image Alt</label>
                                             <input type="text" name="featured_img_alt" id="featured_img_alt"
-                                                class="form-control" placeholder="Featured Image Alt" value="{{ $moduleData->featured_img_alt }}">
+                                                class="form-control" placeholder="Featured Image Alt"
+                                                value="{{ $moduleData->featured_img_alt }}">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <br>
-                            <div id="page_follow"
-                                style="display: {{ $module->show_follow == 1 ? 'block' : 'none' }}">
+                            <div id="page_follow" style="display: {{ $module->show_follow == 1 ? 'block' : 'none' }}">
                                 <label class="form-label">Make Follow</label>
-                                @php echo helptooltip('follow') @endphp
-                                <input name="show_follow" id="show_follow_rel" value="1" type="checkbox"
+                                <input name="show_follow" id="show_follow_rel_1" value="1" type="radio"
                                     <?php echo $moduleData->show_follow == 1 ? 'checked' : ''; ?> />
-                            </div>
-                            <br>
-                            <div id="page_no_follow"
-                                style="display: {{ $module->show_no_follow == 1 ? 'block' : 'none' }}">
+                                    @php echo helptooltip('follow') @endphp
+                                    <br />
                                 <label class="form-label">Make No Follow</label>
-                                @php echo helptooltip('no_follow') @endphp
-                                <input name="show_no_follow" id="show_no_follow_rel" value="1" type="checkbox"
-                                    <?php echo $moduleData->show_no_follow == 1 ? 'checked' : ''; ?> />
+                                <input name="show_follow" id="show_follow_rel_0" value="0" type="radio"
+                                    <?php echo $moduleData->show_follow == 0 ? 'checked' : ''; ?> />
+                                    
+                                
                             </div>
                             <br>
-                            <div id="page_index"
-                                style="display: {{ $module->show_index == 1 ? 'block' : 'none' }}">
+                            <div id="page_index" style="display: {{ $module->show_index == 1 ? 'block' : 'none' }}">
                                 <label class="form-label">Indexing</label>
-                                @php echo helptooltip('indexing') @endphp
-                                <input name="show_index" id="show_index_rel" value="1" type="checkbox"
+                                <input name="show_index" id="show_index_rel_1" value="1" type="radio"
                                     <?php echo $moduleData->show_index == 1 ? 'checked' : ''; ?> />
+                                    @php echo helptooltip('indexing') @endphp
+                                <br />
+                                <label class="form-label">No Indexing</label>
+                                <input name="show_index" id="show_index_rel_0" value="0" type="radio"
+                                    <?php echo $moduleData->show_index == 0 ? 'checked' : ''; ?> />                                                                    
                             </div>
                             <br>
-                            <div id="page_no_index"
-                                style="display: {{ $module->show_no_index == 1 ? 'block' : 'none' }}">
-                                <label class="form-label">No Indexing</label>
-                                @php echo helptooltip('no_indexing') @endphp
-                                <input name="show_no_index" id="show_no_index_rel" value="1" type="checkbox"
-                                    <?php echo $moduleData->show_no_index == 1 ? 'checked' : ''; ?> />
-                            </div>
                             <div id="page_seo_option"
                                 style="display: {{ $module->show_seo_field == 1 ? 'block' : 'none' }}">
                                 <div>

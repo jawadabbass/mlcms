@@ -144,106 +144,22 @@
     </script>
     <script type="text/javascript">
         $(document).ready(function() {
-
-            $("#edit_field1").hide();
-            $("#edit_field2").hide();
-            $("#edit_field3").hide();
-            $("#edit_field4").hide();
-            $("#edit_field5").hide();
-            $("#edit_field6").hide();
-            $("#edit_field7").hide();
-            $("#edit_field8").hide();
-
+            var field_value = $("#additional_fields").val();
+            for (var count = 1; count <= 8; count++) {
+                $("#edit_field" + count).hide();
+            }
+            for (var count = 1; count <= field_value; count++) {
+                $("#edit_field" + count).show();
+            }
             $("#additional_fields").on('change', function() {
-
-
                 var field_value = $("#additional_fields").val();
-                if (field_value == "1") {
-                    $("#edit_field1").show();
-                    $("#edit_field2").hide();
-                    $("#edit_field3").hide();
-                    $("#edit_field4").hide();
-                    $("#edit_field5").hide();
-                    $("#edit_field6").hide();
-                    $("#edit_field7").hide();
-                    $("#edit_field8").hide();
-                } else if (field_value == "2") {
-                    $("#edit_field1").show();
-                    $("#edit_field2").show();
-                    $("#edit_field3").hide();
-                    $("#edit_field4").hide();
-                    $("#edit_field5").hide();
-                    $("#edit_field6").hide();
-                    $("#edit_field7").hide();
-                    $("#edit_field8").hide();
-                } else if (field_value == "3") {
-                    $("#edit_field1").show();
-                    $("#edit_field2").show();
-                    $("#edit_field3").show();
-                    $("#edit_field4").hide();
-                    $("#edit_field5").hide();
-                    $("#edit_field6").hide();
-                    $("#edit_field7").hide();
-                    $("#edit_field8").hide();
-                } else if (field_value == "4") {
-                    $("#edit_field1").show();
-                    $("#edit_field2").show();
-                    $("#edit_field3").show();
-                    $("#edit_field4").show();
-                    $("#edit_field5").hide();
-                    $("#edit_field6").hide();
-                    $("#edit_field7").hide();
-                    $("#edit_field8").hide();
-                } else if (field_value == "5") {
-                    $("#edit_field1").show();
-                    $("#edit_field2").show();
-                    $("#edit_field3").show();
-                    $("#edit_field4").show();
-                    $("#edit_field5").show();
-                    $("#edit_field6").hide();
-                    $("#edit_field7").hide();
-                    $("#edit_field8").hide();
-                }else if (field_value == "6") {
-                    $("#edit_field1").show();
-                    $("#edit_field2").show();
-                    $("#edit_field3").show();
-                    $("#edit_field4").show();
-                    $("#edit_field5").show();
-                    $("#edit_field6").show();
-                    $("#edit_field7").hide();
-                    $("#edit_field8").hide();
-                }else if (field_value == "7") {
-                    $("#edit_field1").show();
-                    $("#edit_field2").show();
-                    $("#edit_field3").show();
-                    $("#edit_field4").show();
-                    $("#edit_field5").show();
-                    $("#edit_field6").show();
-                    $("#edit_field7").show();
-                    $("#edit_field8").hide();
-                }else if (field_value == "8") {
-                    $("#edit_field1").show();
-                    $("#edit_field2").show();
-                    $("#edit_field3").show();
-                    $("#edit_field4").show();
-                    $("#edit_field5").show();
-                    $("#edit_field6").show();
-                    $("#edit_field7").show();
-                    $("#edit_field8").show();
-                }else {
-                    $("#edit_field1").hide();
-                    $("#edit_field2").hide();
-                    $("#edit_field3").hide();
-                    $("#edit_field4").hide();
-                    $("#edit_field5").hide();
-                    $("#edit_field6").hide();
-                    $("#edit_field7").hide();
-                    $("#edit_field8").hide();
+                for (var count = 1; count <= 8; count++) {
+                    $("#edit_field" + count).hide();
                 }
-
-
+                for (var count = 1; count <= field_value; count++) {
+                    $("#edit_field" + count).show();
+                }
             });
-
         });
     </script>
     <!-- Filer -->

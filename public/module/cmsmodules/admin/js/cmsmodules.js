@@ -1,11 +1,3 @@
-/*
-Author: sadiq noor
-Date: 28/01/16
-Version: 2.0
-*/
-
-//=======Starts cmsmodule Module=======
-
 function toggle_crop_height(obj) {
     if ($(obj).is(':checked')) {
         $('#feature_img_thmb_height_div').show();
@@ -41,91 +33,11 @@ function load_cmsmodule_edit_form(id) {
         $('#edit_type').val(data.type);
         $('#edit_additional_fields').val(data.additional_fields);
         var field_value = data.additional_fields;
-        if (field_value == "1") {
-            $("#edit_field1").show();
-            $("#edit_field2").hide();
-            $("#edit_field3").hide();
-            $("#edit_field3").hide();
-            $("#edit_field5").hide();
-            $("#edit_field6").hide();
-            $("#edit_field7").hide();
-            $("#edit_field8").hide();
-        } else if (field_value == "2") {
-            $("#edit_field1").show();
-            $("#edit_field2").show();
-            $("#edit_field3").hide();
-            $("#edit_field4").hide();
-            $("#edit_field5").hide();
-            $("#edit_field6").hide();
-            $("#edit_field7").hide();
-            $("#edit_field8").hide();
-        } else if (field_value == "3") {
-            $("#edit_field1").show();
-            $("#edit_field2").show();
-            $("#edit_field3").show();
-            $("#edit_field4").hide();
-            $("#edit_field5").hide();
-            $("#edit_field6").hide();
-            $("#edit_field7").hide();
-            $("#edit_field8").hide();
-        } else if (field_value == "4") {
-            $("#edit_field1").show();
-            $("#edit_field2").show();
-            $("#edit_field3").show();
-            $("#edit_field4").show();
-            $("#edit_field5").hide();
-            $("#edit_field6").hide();
-            $("#edit_field7").hide();
-            $("#edit_field8").hide();
-        } else if (field_value == "5") {
-            $("#edit_field1").show();
-            $("#edit_field2").show();
-            $("#edit_field3").show();
-            $("#edit_field4").show();
-            $("#edit_field5").show();
-
-            $("#edit_field6").hide();
-            $("#edit_field7").hide();
-            $("#edit_field8").hide();
-        } else if (field_value == "6") {
-            $("#edit_field1").show();
-            $("#edit_field2").show();
-            $("#edit_field3").show();
-            $("#edit_field4").show();
-            $("#edit_field5").show();
-            $("#edit_field6").show();
-
-            $("#edit_field7").hide();
-            $("#edit_field8").hide();
-        } else if (field_value == "7") {
-            $("#edit_field1").show();
-            $("#edit_field2").show();
-            $("#edit_field3").show();
-            $("#edit_field4").show();
-            $("#edit_field5").show();
-            $("#edit_field6").show();
-            $("#edit_field7").show();
-
-            $("#edit_field8").hide();
-        } else if (field_value == "8") {
-            $("#edit_field1").show();
-            $("#edit_field2").show();
-            $("#edit_field3").show();
-            $("#edit_field4").show();
-            $("#edit_field5").show();
-            $("#edit_field6").show();
-            $("#edit_field7").show();
-            $("#edit_field8").show();
-
-        } else {
-            $("#edit_field1").hide();
-            $("#edit_field2").hide();
-            $("#edit_field3").hide();
-            $("#edit_field4").hide();
-            $("#edit_field5").hide();
-            $("#edit_field6").hide();
-            $("#edit_field7").hide();
-            $("#edit_field8").hide();
+        for (var count = 1; count <= 8; count++) {
+            $("#edit_field" + count).hide();
+        }
+        for (var count = 1; count <= field_value; count++) {
+            $("#edit_field" + count).show();
         }
         $('#edit_additional_field_title_1').val(data.additional_field_title_1);
         $('#edit_additional_field_title_2').val(data.additional_field_title_2);
@@ -145,9 +57,7 @@ function load_cmsmodule_edit_form(id) {
         $('#edit_feature_img_thmb_width').val(data.feature_img_thmb_width);
         $('#edit_feature_img_thmb_height').val(data.feature_img_thmb_height);
         $('#edit_show_follow').val(data.show_follow);
-        $('#edit_show_no_follow').val(data.show_no_follow);
         $('#edit_show_index').val(data.show_index);
-        $('#edit_show_no_index').val(data.show_no_index);
         $('#edit_show_descp').val(data.show_descp);
         $('#edit_show_featured_image').val(data.show_featured_image);
         if (data.crop_image == 'Yes') {
@@ -167,87 +77,11 @@ function load_cmsmodule_edit_form(id) {
 function additional_fields_show_hide() {
 
     var field_value = $("#edit_additional_fields").val();
-    if (field_value == "1") {
-        $("#edit_field1").show();
-        $("#edit_field2").hide();
-        $("#edit_field3").hide();
-        $("#edit_field4").hide();
-        $("#edit_field5").hide();
-        $("#edit_field6").hide();
-        $("#edit_field7").hide();
-        $("#edit_field8").hide();
-    } else if (field_value == "2") {
-        $("#edit_field1").show();
-        $("#edit_field2").show();
-        $("#edit_field3").hide();
-        $("#edit_field4").hide();
-        $("#edit_field5").hide();
-        $("#edit_field6").hide();
-        $("#edit_field7").hide();
-        $("#edit_field8").hide();
-    } else if (field_value == "3") {
-        $("#edit_field1").show();
-        $("#edit_field2").show();
-        $("#edit_field3").show();
-        $("#edit_field4").hide();
-        $("#edit_field5").hide();
-        $("#edit_field6").hide();
-        $("#edit_field7").hide();
-        $("#edit_field8").hide();
-    } else if (field_value == "4") {
-        $("#edit_field1").show();
-        $("#edit_field2").show();
-        $("#edit_field3").show();
-        $("#edit_field4").show();
-        $("#edit_field5").hide();
-        $("#edit_field6").hide();
-        $("#edit_field7").hide();
-        $("#edit_field8").hide();
-    } else if (field_value == "5") {
-        $("#edit_field1").show();
-        $("#edit_field2").show();
-        $("#edit_field3").show();
-        $("#edit_field4").show();
-        $("#edit_field5").show();
-        $("#edit_field6").hide();
-        $("#edit_field7").hide();
-        $("#edit_field8").hide();
-    } else if (field_value == "6") {
-        $("#edit_field1").show();
-        $("#edit_field2").show();
-        $("#edit_field3").show();
-        $("#edit_field4").show();
-        $("#edit_field5").show();
-        $("#edit_field6").show();
-        $("#edit_field7").hide();
-        $("#edit_field8").hide();
-    } else if (field_value == "7") {
-        $("#edit_field1").show();
-        $("#edit_field2").show();
-        $("#edit_field3").show();
-        $("#edit_field4").show();
-        $("#edit_field5").show();
-        $("#edit_field6").show();
-        $("#edit_field7").show();
-        $("#edit_field8").hide();
-    } else if (field_value == "8") {
-        $("#edit_field1").show();
-        $("#edit_field2").show();
-        $("#edit_field3").show();
-        $("#edit_field4").show();
-        $("#edit_field5").show();
-        $("#edit_field6").show();
-        $("#edit_field7").show();
-        $("#edit_field8").show();
-    } else {
-        $("#edit_field1").hide();
-        $("#edit_field2").hide();
-        $("#edit_field3").hide();
-        $("#edit_field4").hide();
-        $("#edit_field5").hide();
-        $("#edit_field6").hide();
-        $("#edit_field7").hide();
-        $("#edit_field8").hide();
+    for (var count = 1; count <= 8; count++) {
+        $("#edit_field" + count).hide();
+    }
+    for (var count = 1; count <= field_value; count++) {
+        $("#edit_field" + count).show();
     }
 }
 
@@ -303,6 +137,3 @@ function validate_edit_cmsmodules_form(the_form) {
         return false;
     }
 }
-
-
-//=======Ends cmsmodule Module=======

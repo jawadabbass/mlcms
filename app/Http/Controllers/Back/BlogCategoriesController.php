@@ -47,22 +47,11 @@ class BlogCategoriesController extends Controller
         $blogCategory = new BlogCategory();
         $blogCategory->cate_title = $request->title;
         $blogCategory->cate_slug = $cate_slug;
-        $blogCategory->cate_description = $this->myform_admin_cms_filter($request->editor1);
+        $blogCategory->cate_description = myform_admin_cms_filter($request->editor1);
         $blogCategory->dated = date("Y-m-d H:i:s");
         $blogCategory->save();
         Session::flash('added_action', 'Added');
         return redirect(route('blog_categories.index'));
-    }
-    function myform_admin_cms_filter($data)
-    {
-        $siteLink = base_url();
-        $data = str_replace('../../../../../public/userfile/', 'public/userfile/', $data);
-        $data = str_replace('../../../../../public/userfile/', 'public/userfile/', $data);
-        $data = str_replace('../../../public/userfile/', 'public/userfile/', $data);
-        $data = str_replace('../../public/userfile/', 'public/userfile/', $data);
-        $data = str_replace('../public/userfile/', 'public/userfile/', $data);
-        $tmp = str_replace('public/userfile/', $siteLink . 'public/userfile/', $data);
-        return $tmp;
     }
     /**
      * Display the specified resource.
@@ -120,7 +109,7 @@ class BlogCategoriesController extends Controller
         $blogCategory = BlogCategory::find($request->category_id);
         $blogCategory->cate_title = $request->title;
         $blogCategory->cate_slug = $cate_slug;
-        $blogCategory->cate_description = $this->myform_admin_cms_filter($request->editor1);
+        $blogCategory->cate_description = myform_admin_cms_filter($request->editor1);
         $blogCategory->save();
         //	    echo "Saved";
         Session::flash('update_action', 'Added');

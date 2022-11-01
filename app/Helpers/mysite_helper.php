@@ -28,11 +28,7 @@ if (!function_exists('is_in_array')) {
 function myform_admin_cms_filter($data)
 {
     $siteLink = base_url();
-    $data = str_replace('../../../../../public/userfile/', 'public/userfile/', $data);
-    $data = str_replace('../../../../../public/userfile/', 'public/userfile/', $data);
-    $data = str_replace('../../../public/userfile/', 'public/userfile/', $data);
-    $data = str_replace('../../public/userfile/', 'public/userfile/', $data);
-    $data = str_replace('../public/userfile/', 'public/userfile/', $data);
+    $data = str_replace('../', '', $data);
     $tmp = str_replace('public/userfile/', $siteLink.'public/userfile/', $data);
 
     return $tmp;
@@ -302,7 +298,7 @@ if (!function_exists('seo_print')) {
         }
         if (isset($seoArr['descp']) && $seoArr['descp'] != '') {
             $description = $seoArr['descp'];
-        }else{
+        } else {
             $description = $title;
         }
         $metaTags .= '<meta name="description" content="'.$description.'">'."\r\n";
@@ -313,16 +309,14 @@ if (!function_exists('seo_print')) {
         if (isset($seoArr['canonical_url']) && $seoArr['canonical_url'] != '') {
             $metaTags .= '<link rel="canonical" href="'.$seoArr['canonical_url'].'" />'."\r\n";
         }
-        if (isset($seoArr['index']) && ($seoArr['index'] == '1' || $seoArr['index'] == 'yes')) {
+        if ($seoArr['index'] == '1') {
             $noFollowNoIndex[] = 'INDEX';
-        }
-        if (isset($seoArr['no_index']) && ($seoArr['no_index'] == '1' || $seoArr['no_index'] == 'yes')) {
+        } else {
             $noFollowNoIndex[] = 'NOINDEX';
         }
-        if (isset($seoArr['follow']) && ($seoArr['follow'] == '1' || $seoArr['follow'] == 'yes')) {
+        if ($seoArr['follow'] == '1') {
             $noFollowNoIndex[] = 'FOLLOW';
-        }
-        if (isset($seoArr['no_follow']) && ($seoArr['no_follow'] == '1' || $seoArr['no_follow'] == 'yes')) {
+        } else {
             $noFollowNoIndex[] = 'NOFOLLOW';
         }
         $metaTags .= '<meta name="robots" content="'.implode(',', $noFollowNoIndex).'">'."\r\n";
@@ -657,36 +651,35 @@ function getSeoArrayModule($id)
     if (!isset($moduleData)) {
         abort(500);
     }
+
     return SeoArray($moduleData);
 }
 
 function getSeoArrayBlog($id)
 {
     $moduleData = \App\Models\Back\BlogPost::find($id);
+
     return SeoArray($moduleData);
 }
 
 function SeoArray($moduleData)
 {
-    $title = (isset($moduleData->meta_title))? $moduleData->meta_title:'';
-    $title = (empty($title))? $moduleData->heading:'';
+    $title = (isset($moduleData->meta_title)) ? $moduleData->meta_title : '';
+    $title = (empty($title)) ? $moduleData->heading : '';
 
-    $keywords = (isset($moduleData->meta_keywords))? $moduleData->meta_keywords:'';
-    $description = (isset($moduleData->meta_description))? $moduleData->meta_description:'';
-    $canonical_url = (isset($moduleData->canonical_url))? $moduleData->canonical_url:'';
-    $index = (isset($moduleData->show_index))? $moduleData->show_index:'';
-    $no_index = (isset($moduleData->show_no_index))? $moduleData->show_no_index:'';
-    $follow = (isset($moduleData->show_follow))? $moduleData->show_follow:'';
-    $no_follow = (isset($moduleData->show_no_follow))? $moduleData->show_no_follow:'';
+    $keywords = (isset($moduleData->meta_keywords)) ? $moduleData->meta_keywords : '';
+    $description = (isset($moduleData->meta_description)) ? $moduleData->meta_description : '';
+    $canonical_url = (isset($moduleData->canonical_url)) ? $moduleData->canonical_url : '';
+    $index = $moduleData->show_index;
+    $follow = $moduleData->show_follow;
+
     return [
         'title' => $title,
         'keywords' => $keywords,
         'descp' => $description,
         'canonical_url' => $canonical_url,
         'index' => $index,
-        'no_index' => $no_index,
         'follow' => $follow,
-        'no_follow' => $no_follow,
     ];
 }
 

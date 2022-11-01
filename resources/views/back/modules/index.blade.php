@@ -124,8 +124,8 @@
                     <div class="modal-header">
                         <h4 class="modal-title">Add New CMS Module</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-          
-        </button>
+
+                        </button>
                     </div>
                     <div class="modal-body">
                         <div class="box-body">
@@ -261,29 +261,15 @@
                             <div class="mb-2">
                                 <label class="form-label">Show Follow Checkbox </label>
                                 <select class="form-control" id="show_follow" name="show_follow">
-                                    <option value="0">No</option>
                                     <option value="1">Yes</option>
-                                </select>
-                            </div>
-                            <div class="mb-2">
-                                <label class="form-label">Show No Follow Checkbox </label>
-                                <select class="form-control" id="show_no_follow" name="show_no_follow">
                                     <option value="0">No</option>
-                                    <option value="1">Yes</option>
                                 </select>
                             </div>
                             <div class="mb-2">
                                 <label class="form-label">Show Index Checkbox </label>
                                 <select class="form-control" id="show_index" name="show_index">
-                                    <option value="0">No</option>
                                     <option value="1">Yes</option>
-                                </select>
-                            </div>
-                            <div class="mb-2">
-                                <label class="form-label">Show No Index Checkbox </label>
-                                <select class="form-control" id="show_no_index" name="show_no_index">
                                     <option value="0">No</option>
-                                    <option value="1">Yes</option>
                                 </select>
                             </div>
                             <div class="mb-2">
@@ -298,7 +284,8 @@
                                     id="feature_img_thmb_width" value="">
                             </div>
                             <div id="feature_img_thmb_height_div" class="mb-2" style="display: none">
-                                <label class="form-label">Thumb Image height(Must If featured Image cropper is used) </label>
+                                <label class="form-label">Thumb Image height(Must If featured Image cropper is used)
+                                </label>
                                 <input class="form-control" type="text" name="feature_img_thmb_height"
                                     id="feature_img_thmb_height" value="">
                             </div>
@@ -332,8 +319,8 @@
                     <div class="modal-header">
                         <h4 class="modal-title">Edit Page Options</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-          
-        </button>
+
+                        </button>
                     </div>
                     <div class="modal-body">
                         <input type="hidden" value="" name="module_id" id="edit_page_module_id">
@@ -401,8 +388,8 @@
                     <div class="modal-header">
                         <h4 class="modal-title">Edit CMS Module</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-          
-        </button>
+
+                        </button>
                     </div>
                     <div class="modal-body">
                         <div class="box-body">
@@ -548,33 +535,15 @@
                             <div class="mb-2">
                                 <label class="form-label">Show Follow Checkbox </label>
                                 <select class="form-control" id="edit_show_follow" name="show_follow">
-                                    <option value="">Select Option</option>
-                                    <option value="0">No</option>
                                     <option value="1">Yes</option>
-                                </select>
-                            </div>
-                            <div class="mb-2">
-                                <label class="form-label">Show No Follow Checkbox </label>
-                                <select class="form-control" id="edit_show_no_follow" name="show_no_follow">
-                                    <option value="">Select Option</option>
-                                    <option value="0">No</option>
-                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>                                    
                                 </select>
                             </div>
                             <div class="mb-2">
                                 <label class="form-label">Show Index Checkbox </label>
                                 <select class="form-control" id="edit_show_index" name="show_index">
-                                    <option value="">Select Option</option>
-                                    <option value="0">No</option>
                                     <option value="1">Yes</option>
-                                </select>
-                            </div>
-                            <div class="mb-2">
-                                <label class="form-label">Show No Index Checkbox </label>
-                                <select class="form-control" id="edit_show_no_index" name="show_no_index">
-                                    <option value="">Select Option</option>
                                     <option value="0">No</option>
-                                    <option value="1">Yes</option>
                                 </select>
                             </div>
                             <div class="mb-2">
@@ -622,87 +591,11 @@
             });
             $("#additional_fields").change(function() {
                 var field_value = $("#additional_fields").val();
-                if (field_value == "1") {
-                    $("#field1").show();
-                    $("#field2").hide();
-                    $("#field3").hide();
-                    $("#field4").hide();
-                    $("#field5").hide();
-                    $("#field6").hide();
-                    $("#field7").hide();
-                    $("#field8").hide();
-                } else if (field_value == "2") {
-                    $("#field1").show();
-                    $("#field2").show();
-                    $("#field3").hide();
-                    $("#field4").hide();
-                    $("#field5").hide();
-                    $("#field6").hide();
-                    $("#field7").hide();
-                    $("#field8").hide();
-                } else if (field_value == "3") {
-                    $("#field1").show();
-                    $("#field2").show();
-                    $("#field3").show();
-                    $("#field4").hide();
-                    $("#field5").hide();
-                    $("#field6").hide();
-                    $("#field7").hide();
-                    $("#field8").hide();
-                } else if (field_value == "4") {
-                    $("#field1").show();
-                    $("#field2").show();
-                    $("#field3").show();
-                    $("#field4").show();
-                    $("#field5").hide();
-                    $("#field6").hide();
-                    $("#field7").hide();
-                    $("#field8").hide();
-                } else if (field_value == "5") {
-                    $("#field1").show();
-                    $("#field2").show();
-                    $("#field3").show();
-                    $("#field4").show();
-                    $("#field5").show();
-                    $("#field6").hide();
-                    $("#field7").hide();
-                    $("#field8").hide();
-                } else if (field_value == "6") {
-                    $("#field1").show();
-                    $("#field2").show();
-                    $("#field3").show();
-                    $("#field4").show();
-                    $("#field5").show();
-                    $("#field6").show();
-                    $("#field7").hide();
-                    $("#field8").hide();
-                } else if (field_value == "7") {
-                    $("#field1").show();
-                    $("#field2").show();
-                    $("#field3").show();
-                    $("#field4").show();
-                    $("#field5").show();
-                    $("#field6").show();
-                    $("#field7").show();
-                    $("#field8").hide();
-                } else if (field_value == "8") {
-                    $("#field1").show();
-                    $("#field2").show();
-                    $("#field3").show();
-                    $("#field4").show();
-                    $("#field5").show();
-                    $("#field6").show();
-                    $("#field7").show();
-                    $("#field8").show();
-                } else {
-                    $("#field1").hide();
-                    $("#field2").hide();
-                    $("#field3").hide();
-                    $("#field4").hide();
-                    $("#field5").hide();
-                    $("#field6").hide();
-                    $("#field7").hide();
-                    $("#field8").hide();
+                for (var count = 1; count <= 8; count++) {
+                    $("#field" + count).hide();
+                }
+                for (var count = 1; count <= field_value; count++) {
+                    $("#field" + count).show();
                 }
             });
         });

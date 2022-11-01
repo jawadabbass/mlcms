@@ -144,56 +144,22 @@
     <!--Widget JS functions available in back/js/admin_functions.js file-->
     <script type="text/javascript">
         $(document).ready(function() {
-
             var field_value = $("#additional_fields").val();
-
-            if (field_value == "1") {
-                $("#edit_field1").show();
-                $("#edit_field2").hide();
-                $("#edit_field3").hide();
-            } else if (field_value == "2") {
-                $("#edit_field1").hide();
-                $("#edit_field2").show();
-                $("#edit_field3").hide();
-            } else if (field_value == "3") {
-                $("#edit_field1").hide();
-                $("#edit_field2").hide();
-                $("#edit_field3").show();
-
-            } else {
-                $("#edit_field1").hide();
-                $("#edit_field2").hide();
-                $("#edit_field3").hide();
-
+            for (var count = 1; count <= 8; count++) {
+                $("#edit_field" + count).hide();
             }
-
+            for (var count = 1; count <= field_value; count++) {
+                $("#edit_field" + count).show();
+            }
             $("#additional_fields").on('change', function() {
-
-
                 var field_value = $("#additional_fields").val();
-                if (field_value == "1") {
-                    $("#edit_field1").show();
-                    $("#edit_field2").hide();
-                    $("#edit_field3").hide();
-                } else if (field_value == "2") {
-                    $("#edit_field1").hide();
-                    $("#edit_field2").show();
-                    $("#edit_field3").hide();
-                } else if (field_value == "3") {
-                    $("#edit_field1").hide();
-                    $("#edit_field2").hide();
-                    $("#edit_field3").show();
-
-                } else {
-                    $("#edit_field1").hide();
-                    $("#edit_field2").hide();
-                    $("#edit_field3").hide();
-
+                for (var count = 1; count <= 8; count++) {
+                    $("#edit_field" + count).hide();
                 }
-
-
+                for (var count = 1; count <= field_value; count++) {
+                    $("#edit_field" + count).show();
+                }
             });
-
         });
     </script>
     <script type="text/javascript">
@@ -209,23 +175,23 @@
                 obj.forEach(function(value, index) {
 
                     var new_div = '<div id="clone-equipment-div" class="clone-equipment-div">\
-                                                    <div class="row">\
-                                                        <div class="col-md-8">\
-                                                    <label>Enter value To Ask</label>\
-                                                    <input id="conten" name="check_field[]" value="' + value + '" class="form-control"/>\
-                                                        </div >\
-                                                           ' + inc_not + '\
-                                                <div class="col-md-1" style="margin-top: 30px;">\
-                                                    <div class="iconcontent">\
-                                                    <a href="javascript:void(0)" onclick="remove_equipment_div_edit(this)" id="rmovebtn" class="btn btn-xs btn-danger"><i class="fa-solid fa-minus"></i></a>\
-                                                       </div> \
-                                                     </div>\
-                                                       <div class="col-md-1" style="margin-top: 30px; margin-left:5px;">\
-                                                    <div class="iconcontent">\
-                                                    <a href="javascript:void(0)" id="adbtn" onclick="clone_equipment_div_edit()" class="btn btn-xs btn-success"><i class="fa-solid fa-plus"></i></a></div> \
-                                                     </div>\
-                                                  </div>\
-                                                </div>';
+                                                            <div class="row">\
+                                                                <div class="col-md-8">\
+                                                            <label>Enter value To Ask</label>\
+                                                            <input id="conten" name="check_field[]" value="' + value + '" class="form-control"/>\
+                                                                </div >\
+                                                                   ' + inc_not + '\
+                                                        <div class="col-md-1" style="margin-top: 30px;">\
+                                                            <div class="iconcontent">\
+                                                            <a href="javascript:void(0)" onclick="remove_equipment_div_edit(this)" id="rmovebtn" class="btn btn-xs btn-danger"><i class="fa-solid fa-minus"></i></a>\
+                                                               </div> \
+                                                             </div>\
+                                                               <div class="col-md-1" style="margin-top: 30px; margin-left:5px;">\
+                                                            <div class="iconcontent">\
+                                                            <a href="javascript:void(0)" id="adbtn" onclick="clone_equipment_div_edit()" class="btn btn-xs btn-success"><i class="fa-solid fa-plus"></i></a></div> \
+                                                             </div>\
+                                                          </div>\
+                                                        </div>';
 
                     $('#clone_equipment_target_edit').append(new_div);
                     edit_index = index;
@@ -234,17 +200,17 @@
 
                 $('#clone_equipment_target').html('');
                 var new_div = '<div id="clone-equipment-div" class="clone-equipment-div">\
-                                                     <div class="row">\
-                                                    <div class="col-md-8">\
-                                                    <label>Enter value To Ask</label>\
-                                                    <input  name="check_field[]"  class="form-control"/>\
-                                                        </div>\
-                                                    <div class="col-md-1" style="margin-top:30px;">\
-                                                    <div class="iconcontent">\
-                                                    <a href="javascript:void(0)" id="adbtn"  onclick="clone_equipment_div()" class="btn btn-xs btn-success"><i class="fa-solid fa-plus"></i></a></div>\
-                                                 </div>\
-                                                 </div>\
-                                                </div>';
+                                                             <div class="row">\
+                                                            <div class="col-md-8">\
+                                                            <label>Enter value To Ask</label>\
+                                                            <input  name="check_field[]"  class="form-control"/>\
+                                                                </div>\
+                                                            <div class="col-md-1" style="margin-top:30px;">\
+                                                            <div class="iconcontent">\
+                                                            <a href="javascript:void(0)" id="adbtn"  onclick="clone_equipment_div()" class="btn btn-xs btn-success"><i class="fa-solid fa-plus"></i></a></div>\
+                                                         </div>\
+                                                         </div>\
+                                                        </div>';
                 $('#clone_equipment_target').append(new_div);
                 $('#clone_equipment_target_edit').html('');
                 a = a + 1;
@@ -253,22 +219,22 @@
 
         function clone_equipment_div() {
             var new_div = '<div id="clone-equipment-div" class="clone-equipment-div">\
-                                                    <div class="row">\
-                                                    <div class="col-md-8">\
-                                                    <label>Enter value To Ask</label>\
-                                                    <input id="conten" name="check_field[]"  class="form-control"/>\
-                                                    </div>\
-                                                    <div class="col-md-1" style="margin-top: 30px;">\
-                                                    <div class="iconcontent">\
-                                                    <a href="javascript:void(0)"  onclick="remove_equipment_div(this)" id="rmovebtn" class="btn btn-xs btn-danger"><i class="fa-solid fa-minus"></i></a>\
-                                                   </div>\
-                                                    </div>\
-                                                      <div class="col-md-1" style="margin-top: 30px; margin-left:5px;">\
-                                                    <div class="iconcontent">\
-                                                    <a href="javascript:void(0)" id="adbtn"  onclick="clone_equipment_div()" class="btn btn-xs btn-success"><i class="fa-solid fa-plus"></i></a></div>\
-                                                    </div>\
-                                                    </div>\
-                                                </div>';
+                                                            <div class="row">\
+                                                            <div class="col-md-8">\
+                                                            <label>Enter value To Ask</label>\
+                                                            <input id="conten" name="check_field[]"  class="form-control"/>\
+                                                            </div>\
+                                                            <div class="col-md-1" style="margin-top: 30px;">\
+                                                            <div class="iconcontent">\
+                                                            <a href="javascript:void(0)"  onclick="remove_equipment_div(this)" id="rmovebtn" class="btn btn-xs btn-danger"><i class="fa-solid fa-minus"></i></a>\
+                                                           </div>\
+                                                            </div>\
+                                                              <div class="col-md-1" style="margin-top: 30px; margin-left:5px;">\
+                                                            <div class="iconcontent">\
+                                                            <a href="javascript:void(0)" id="adbtn"  onclick="clone_equipment_div()" class="btn btn-xs btn-success"><i class="fa-solid fa-plus"></i></a></div>\
+                                                            </div>\
+                                                            </div>\
+                                                        </div>';
             $('#clone_equipment_target').append(new_div);
             var main_equipment = $('#clone_equipment_target').closest('.clone_equipment_target');
             var counts = main_equipment.children('.clone-equipment-div').length;
@@ -284,22 +250,22 @@
         function clone_equipment_div_edit() {
             edit_index++;
             var new_div = '<div id="clone-equipment-div" class="clone-equipment-div">\
-                                                    <div class="row">\
-                                                    <div class="col-md-8">\
-                                                    <label>Enter value To Ask</label>\
-                                                    <input id="conten" name="check_field[]"  class="form-control"/>\
-                                                    </div>\
-                                                    <div class="col-md-1" style="margin-top: 30px;">\
-                                                    <div class="iconcontent">\
-                                                    <a href="javascript:void(0)" onclick="remove_equipment_div_edit(this)" id="rmovebtn" class="btn btn-xs btn-danger"><i class="fa-solid fa-minus"></i></a>\
-                                                       </div> \
-                                                     </div>\
-                                                       <div class="col-md-1" style="margin-top: 30px; margin-left:5px;">\
-                                                    <div class="iconcontent">\
-                                                    <a href="javascript:void(0)" id="adbtn" onclick="clone_equipment_div_edit()" class="btn btn-xs btn-success"><i class="fa-solid fa-plus"></i></a></div> \
-                                                     </div>\
-                                                      </div>\
-                                                </div>';
+                                                            <div class="row">\
+                                                            <div class="col-md-8">\
+                                                            <label>Enter value To Ask</label>\
+                                                            <input id="conten" name="check_field[]"  class="form-control"/>\
+                                                            </div>\
+                                                            <div class="col-md-1" style="margin-top: 30px;">\
+                                                            <div class="iconcontent">\
+                                                            <a href="javascript:void(0)" onclick="remove_equipment_div_edit(this)" id="rmovebtn" class="btn btn-xs btn-danger"><i class="fa-solid fa-minus"></i></a>\
+                                                               </div> \
+                                                             </div>\
+                                                               <div class="col-md-1" style="margin-top: 30px; margin-left:5px;">\
+                                                            <div class="iconcontent">\
+                                                            <a href="javascript:void(0)" id="adbtn" onclick="clone_equipment_div_edit()" class="btn btn-xs btn-success"><i class="fa-solid fa-plus"></i></a></div> \
+                                                             </div>\
+                                                              </div>\
+                                                        </div>';
             $('#clone_equipment_target_edit').append(new_div);
             var main_equipment = $('#clone_equipment_target_edit').closest('.clone_equipment_target_edit');
             var counts = main_equipment.children('.clone-equipment-div').length;
@@ -353,23 +319,23 @@
 
                     // var newid=uniqId();
                     var new_div = '<div id="clone-equipment-div1" class="clone-equipment-div1">\
-                                                    <div class="row">\
-                                                        <div class="col-md-8">\
-                                                    <label>Enter value To Ask</label>\
-                                                    <input id="conten" name="radio_field[]" value="' + value + '" class="form-control"/>\
-                                                        </div >\
-                                                           ' + inc_not + '\
-                                                <div class="col-md-1" style="margin-top: 30px;">\
-                                                    <div class="iconcontent">\
-                                                    <a href="javascript:void(0)" onclick="remove_equipment_div_edit1(this)" id="rmovebtn1" class="btn btn-xs btn-danger"><i class="fa-solid fa-minus"></i></a>\
-                                                       </div> \
-                                                     </div>\
-                                                       <div class="col-md-1" style="margin-top: 30px; margin-left:5px;">\
-                                                    <div class="iconcontent">\
-                                                    <a href="javascript:void(0)" id="adbtn1" onclick="clone_equipment_div_edit1()" class="btn btn-xs btn-success"><i class="fa-solid fa-plus"></i></a></div> \
-                                                     </div>\
-                                                  </div>\
-                                                </div>';
+                                                            <div class="row">\
+                                                                <div class="col-md-8">\
+                                                            <label>Enter value To Ask</label>\
+                                                            <input id="conten" name="radio_field[]" value="' + value + '" class="form-control"/>\
+                                                                </div >\
+                                                                   ' + inc_not + '\
+                                                        <div class="col-md-1" style="margin-top: 30px;">\
+                                                            <div class="iconcontent">\
+                                                            <a href="javascript:void(0)" onclick="remove_equipment_div_edit1(this)" id="rmovebtn1" class="btn btn-xs btn-danger"><i class="fa-solid fa-minus"></i></a>\
+                                                               </div> \
+                                                             </div>\
+                                                               <div class="col-md-1" style="margin-top: 30px; margin-left:5px;">\
+                                                            <div class="iconcontent">\
+                                                            <a href="javascript:void(0)" id="adbtn1" onclick="clone_equipment_div_edit1()" class="btn btn-xs btn-success"><i class="fa-solid fa-plus"></i></a></div> \
+                                                             </div>\
+                                                          </div>\
+                                                        </div>';
 
                     $('#clone_equipment_target_edit1').append(new_div);
                     edit_index = index;
@@ -378,17 +344,17 @@
 
                 $('#clone_equipment_target1').html('');
                 var new_div = '<div id="clone-equipment-div1" class="clone-equipment-div1">\
-                                                     <div class="row">\
-                                                    <div class="col-md-8">\
-                                                    <label>Enter value To Ask</label>\
-                                                    <input  name="radio_field[]"  class="form-control"/>\
-                                                        </div>\
-                                                    <div class="col-md-1" style="margin-top:30px;">\
-                                                    <div class="iconcontent">\
-                                                    <a href="javascript:void(0)" id="adbtn1"  onclick="clone_equipment_div1()" class="btn btn-xs btn-success"><i class="fa-solid fa-plus"></i></a></div>\
-                                                 </div>\
-                                                 </div>\
-                                                </div>';
+                                                             <div class="row">\
+                                                            <div class="col-md-8">\
+                                                            <label>Enter value To Ask</label>\
+                                                            <input  name="radio_field[]"  class="form-control"/>\
+                                                                </div>\
+                                                            <div class="col-md-1" style="margin-top:30px;">\
+                                                            <div class="iconcontent">\
+                                                            <a href="javascript:void(0)" id="adbtn1"  onclick="clone_equipment_div1()" class="btn btn-xs btn-success"><i class="fa-solid fa-plus"></i></a></div>\
+                                                         </div>\
+                                                         </div>\
+                                                        </div>';
                 $('#clone_equipment_target1').append(new_div);
                 $('#clone_equipment_target_edit1').html('');
                 d = d + 1;
@@ -397,22 +363,22 @@
 
         function clone_equipment_div1() {
             var new_div = '<div id="clone-equipment-div1" class="clone-equipment-div1">\
-                                                    <div class="row">\
-                                                    <div class="col-md-8">\
-                                                    <label>Enter value To Ask</label>\
-                                                    <input id="conten" name="radio_field[]"  class="form-control"/>\
-                                                    </div>\
-                                                    <div class="col-md-1" style="margin-top: 30px;">\
-                                                    <div class="iconcontent">\
-                                                    <a href="javascript:void(0)"  onclick="remove_equipment_div1(this)" id="rmovebtn1" class="btn btn-xs btn-danger"><i class="fa-solid fa-minus"></i></a>\
-                                                   </div>\
-                                                    </div>\
-                                                      <div class="col-md-1" style="margin-top: 30px; margin-left:5px;">\
-                                                    <div class="iconcontent">\
-                                                    <a href="javascript:void(0)" id="adbtn1"  onclick="clone_equipment_div1()" class="btn btn-xs btn-success"><i class="fa-solid fa-plus"></i></a></div>\
-                                                    </div>\
-                                                    </div>\
-                                                </div>';
+                                                            <div class="row">\
+                                                            <div class="col-md-8">\
+                                                            <label>Enter value To Ask</label>\
+                                                            <input id="conten" name="radio_field[]"  class="form-control"/>\
+                                                            </div>\
+                                                            <div class="col-md-1" style="margin-top: 30px;">\
+                                                            <div class="iconcontent">\
+                                                            <a href="javascript:void(0)"  onclick="remove_equipment_div1(this)" id="rmovebtn1" class="btn btn-xs btn-danger"><i class="fa-solid fa-minus"></i></a>\
+                                                           </div>\
+                                                            </div>\
+                                                              <div class="col-md-1" style="margin-top: 30px; margin-left:5px;">\
+                                                            <div class="iconcontent">\
+                                                            <a href="javascript:void(0)" id="adbtn1"  onclick="clone_equipment_div1()" class="btn btn-xs btn-success"><i class="fa-solid fa-plus"></i></a></div>\
+                                                            </div>\
+                                                            </div>\
+                                                        </div>';
             $('#clone_equipment_target1').append(new_div);
             var main_equipment = $('#clone_equipment_target1').closest('.clone_equipment_target1');
             var counts = main_equipment.children('.clone-equipment-div1').length;
@@ -428,22 +394,22 @@
         function clone_equipment_div_edit1() {
             edit_index++;
             var new_div = '<div id="clone-equipment-div1" class="clone-equipment-div1">\
-                                                    <div class="row">\
-                                                    <div class="col-md-8">\
-                                                    <label>Enter value To Ask</label>\
-                                                    <input id="conten" name="radio_field[]"  class="form-control"/>\
-                                                    </div>\
-                                                    <div class="col-md-1" style="margin-top: 30px;">\
-                                                    <div class="iconcontent">\
-                                                    <a href="javascript:void(0)" onclick="remove_equipment_div_edit1(this)" id="rmovebtn1" class="btn btn-xs btn-danger"><i class="fa-solid fa-minus"></i></a>\
-                                                       </div> \
-                                                     </div>\
-                                                       <div class="col-md-1" style="margin-top: 30px; margin-left:5px;">\
-                                                    <div class="iconcontent">\
-                                                    <a href="javascript:void(0)" id="adbtn1" onclick="clone_equipment_div_edit1()" class="btn btn-xs btn-success"><i class="fa-solid fa-plus"></i></a></div> \
-                                                     </div>\
-                                                      </div>\
-                                                </div>';
+                                                            <div class="row">\
+                                                            <div class="col-md-8">\
+                                                            <label>Enter value To Ask</label>\
+                                                            <input id="conten" name="radio_field[]"  class="form-control"/>\
+                                                            </div>\
+                                                            <div class="col-md-1" style="margin-top: 30px;">\
+                                                            <div class="iconcontent">\
+                                                            <a href="javascript:void(0)" onclick="remove_equipment_div_edit1(this)" id="rmovebtn1" class="btn btn-xs btn-danger"><i class="fa-solid fa-minus"></i></a>\
+                                                               </div> \
+                                                             </div>\
+                                                               <div class="col-md-1" style="margin-top: 30px; margin-left:5px;">\
+                                                            <div class="iconcontent">\
+                                                            <a href="javascript:void(0)" id="adbtn1" onclick="clone_equipment_div_edit1()" class="btn btn-xs btn-success"><i class="fa-solid fa-plus"></i></a></div> \
+                                                             </div>\
+                                                              </div>\
+                                                        </div>';
             $('#clone_equipment_target_edit1').append(new_div);
             var main_equipment = $('#clone_equipment_target_edit1').closest('.clone_equipment_target_edit1');
             var counts = main_equipment.children('.clone-equipment-div1').length;
