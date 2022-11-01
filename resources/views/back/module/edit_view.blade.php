@@ -383,10 +383,7 @@
 @endsection
 @section('beforeBodyClose')
     <script type="text/javascript" src="{{ base_url() . 'module/module/admin/js/module.js' }}"></script>
-    <script type="text/javascript" src="{{ base_url() . 'back/js/plugins/datatables/jquery.dataTables.js' }}"></script>
     <!-- Filer -->
-    <link rel="stylesheet" href="{{ base_url() . 'module/module/admin/filer/css/jquery.filer.css' }}">
-    <script src="{{ base_url() . 'module/module/admin/filer/js/jquery.filer.min.js' }}"></script>
     <link rel="stylesheet" href="{{ base_url() . 'module/module/admin/crop-avatar/cropper.css' }}">
     <style>
         img {

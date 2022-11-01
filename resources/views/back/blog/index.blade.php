@@ -214,8 +214,6 @@
 @endsection
 @section('beforeBodyClose')
     <!-- Filer -->
-    <link rel="stylesheet" href="{{ base_url() . 'module/module/admin/filer/css/jquery.filer.css' }}">
-    <script src="{{ base_url() . 'module/module/admin/filer/js/jquery.filer.min.js' }}"></script>
     <script>
         var uploadUrl = "{{ admin_url() }}module_image/upload_image";
         var deleteUrl = "{{ admin_url() }}module_image/remove_image";
@@ -234,7 +232,7 @@
         });
     </script>
     <!----- data table include library and script ----->
-    <script type="text/javascript" src="{{ base_url() . 'back/js/plugins/datatables/jquery.dataTables.js' }}"></script>
+    
     <script type="text/javascript" src="{{ base_url() . 'back/js/bootstrap-multiselect.js' }}"></script>
     <script type="text/javascript" src="{{ base_url() . 'module/blog/admin/js/blog.js' }}"></script>
     <script type="text/javascript">

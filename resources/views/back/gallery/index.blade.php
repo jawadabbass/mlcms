@@ -221,7 +221,7 @@
     @section('beforeBodyClose')
     @include('back.gallery.gallery_js');
         <script src="{{ asset('lib/sweetalert2.js') }}"></script>
-        <script type="text/javascript" src="{{ env('APP_URL') . 'back/js/plugins/datatables/jquery.dataTables.js' }}"></script>
+        
         <script>
             $.ajaxSetup({
                 headers: {

@@ -120,17 +120,4 @@
         });
     </script>
     <!-- Filer -->
-    <link rel="stylesheet" href="{{ base_url() . 'module/module/admin/filer/css/jquery.filer.css' }}">
-    <script src="{{ base_url() . 'module/module/admin/filer/js/jquery.filer.min.js' }}"></script>
-
-    <script type="text/javascript" src="{{ asset('back/js/fileUploader2.js') }}"></script>
-    <script>
-        var uploadUrl = "{{ admin_url() }}module_image/upload_image";
-        var deleteUrl = "{{ admin_url() }}module_image/remove_image";
-        var baseUrl = '{{ base_url() }}';
-        var folder = "widgets";
-        var maxSize = {{ session('max_image_size') }};
-        var csrfToken = $('meta[name="csrf-token"]').attr('content');
-        var show_cropper = false;
-    </script>
 @endsection

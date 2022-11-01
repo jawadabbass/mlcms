@@ -1,6 +1,5 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('beforeHeadClose')
-    <link href="{{ base_url() . 'back/css/datatables/jquery.dataTables.css' }}" rel="stylesheet" type="text/css" />
     <style>
         .switch {
             position: relative;
@@ -218,10 +217,6 @@
 @endsection
 @section('beforeBodyClose')
     <script src="{{ base_url() . 'module/products/admin/js/products.js' }}" type="text/javascript"></script>
-    <script type="text/javascript" src="{{ base_url() . 'back/js/plugins/datatables/jquery.dataTables.js' }}"></script>
-    <!-- Filer -->
-    <link rel="stylesheet" href="{{ base_url() . 'module/module/admin/filer/css/jquery.filer.css' }}">
-    <script src="{{ base_url() . 'module/module/admin/filer/js/jquery.filer.min.js' }}"></script>
     <script>
         var uploadUrl = "{{ admin_url() }}module_image/upload_image";
         var deleteUrl = "{{ admin_url() }}module_image/remove_image";

@@ -1,7 +1,6 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('beforeHeadClose')
     @php $module = 'menu' @endphp
-    <link href="{{ base_url() . 'back/css/datatables/jquery.dataTables.css' }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="{{ base_url() . 'module/menu/admin/drag/stylesheet.css' }}" type="text/css">
 @endsection
 @section('content')
@@ -87,7 +86,7 @@
     <script type="text/javascript" src="{{ base_url() . 'module/menu/admin/drag/jquery-sortable-lists.js' }}"></script>
     {{-- <script type="text/javascript" --}}
     {{-- src="{{base_url() . 'module/menu/admin/js/menu.js'}}"></script> --}}
-    <script type="text/javascript" src="{{ env('APP_URL') . 'back/js/plugins/datatables/jquery.dataTables.js' }}"></script>
+    
     @include('back.menu.menu_js')
     <!-- End Bootstrap modal -->
     <script type="text/javascript">

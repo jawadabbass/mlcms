@@ -1,7 +1,5 @@
 @extends('back.layouts.app', ['title' => $title])
-@section('beforeHeadClose')
-    <link href="{{ base_url() . 'back/css/datatables/jquery.dataTables.css' }}" rel="stylesheet" type="text/css" />
-@endsection
+
 @section('content')
     <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
         <!-- Content Header (Page header) -->
@@ -91,7 +89,7 @@
     </aside>
 @endsection
 @section('beforeBodyClose')
-    <script type="text/javascript" src="{{ base_url() . 'back/js/plugins/datatables/jquery.dataTables.js' }}"></script>
+    
     <script>
         var module = '{{ $module->type }}';
         $(function() {

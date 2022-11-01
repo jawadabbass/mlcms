@@ -1,7 +1,4 @@
 @extends('back.layouts.app', ['title' => $title])
-@section('beforeHeadClose')
-    <link href="{{ env('APP_URL') . 'back/css/datatables/jquery.dataTables.css' }}" rel="stylesheet" type="text/css" />
-@endsection
 @section('content')
     <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
         <!-- Content Header (Page header) -->
@@ -207,10 +204,10 @@
 @endsection
 @section('beforeBodyClose')
     <script src="{{ env('APP_URL') . 'module/products/admin/js/products.js' }}" type="text/javascript"></script>
-    <script type="text/javascript" src="{{ env('APP_URL') . 'back/js/plugins/datatables/jquery.dataTables.js' }}"></script>
+    
     <!-- Filer -->
-    <link rel="stylesheet" href="{{ env('APP_URL') . 'module/module/admin/filer/css/jquery.filer.css' }}">
-    <script src="{{ env('APP_URL') . 'module/module/admin/filer/js/jquery.filer.min.js' }}"></script>
+    
+    
     <script>
         var uploadUrl = "{{ admin_url() }}module_image/upload_image";
         var deleteUrl = "{{ admin_url() }}module_image/remove_image";

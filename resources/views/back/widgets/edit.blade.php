@@ -175,4 +175,5 @@
         var csrfToken = $('meta[name="csrf-token"]').attr('content');
         var show_cropper = false;
     </script>
+    <script type="text/javascript" src="{{ asset('back/js/fileUploader2.js') }}"></script>
 @endsection

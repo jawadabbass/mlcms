@@ -374,7 +374,7 @@
         }
     </script>
     <!-- Filer -->
-    <link rel="stylesheet" href="{{ env('APP_URL') . 'module/module/admin/filer/css/jquery.filer.css' }}">
-    <script src="{{ env('APP_URL') . 'module/module/admin/filer/js/jquery.filer.min.js' }}"></script>
+    
+    
     <script type="text/javascript" src="{{ asset('back/js/fileUploader2.js') }}"></script>
 @endsection
