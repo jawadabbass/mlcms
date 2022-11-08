@@ -3,9 +3,6 @@
 namespace App\Traits;
 
 use App\Helpers\ImageUploader;
-use App\Models\Back\News;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 trait NewsTrait
 {
@@ -47,6 +44,7 @@ trait NewsTrait
     private function setNewsStatus($request, $newsObj)
     {
         $newsObj->status = $request->input('status');
+
         return $newsObj;
     }
 }
