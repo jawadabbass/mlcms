@@ -449,6 +449,10 @@ Route::group(['namespace' => 'Back', 'prefix' => 'adminmedia', 'middleware' => [
     Route::get('fleetPlanes-sort-data', 'FleetPlaneController@fleetPlanesSortData')->name('fleetPlanes.sort.data');
     Route::put('fleetPlanes-sort-update', 'FleetPlaneController@fleetPlanesSortUpdate')->name('fleetPlanes.sort.update');
     Route::post('deletePlaneImageAjax', 'FleetPlaneController@deletePlaneImageAjax')->name('deletePlaneImageAjax');
+
+    Route::get('/module-code-generator', 'ModuleCodeGeneratorController@index')->name('module.code.generator');
+    Route::post('/module-code-generator', 'ModuleCodeGeneratorController@generateCode')->name('generate.module.code');
+    
 });
 Route::group(['namespace' => 'Front', 'middleware' => ['siteStatus', 'clearCache', 'ipmiddleware']], function () {
     Route::get('/aaa', 'TestController@aaa');

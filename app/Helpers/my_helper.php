@@ -440,3 +440,33 @@ function generateIsHideEventAfterDateDropDown($defaultSelected = '', $empty = tr
 
     return $str;
 }
+
+function generateModuleCodeFieldLabel($field_counter, $errors, $oldData, $hide_show)
+{
+    $field_counter_minus_1 = $field_counter-1;
+    $field_name = (isset($oldData['field_name'][$field_counter_minus_1]))? $oldData['field_name'][$field_counter_minus_1]:'';
+    $field_label = (isset($oldData['field_label'][$field_counter_minus_1]))? $oldData['field_label'][$field_counter_minus_1]:'';
+    return '
+        <div class="row">
+            <div class="col-md-5 mb-1 field_' .$field_counter .'">
+                <label class="form-label">Field Name:*</label>
+                <input name="field_name[]" value="' . $field_name . '"
+                    type="text"
+                    class="form-control ' .hasError($errors, "field_name.$field_counter_minus_1") .'"
+                    placeholder="student_name">
+                ' .showErrors($errors, "field_name.$field_counter_minus_1") . '
+            </div>
+            <div class="col-md-5 mb-1 field_' .$field_counter .'">
+                <label class="form-label">Field Label:*</label>
+                <input name="field_label[]" value="' . $field_label .'"
+                    type="text"
+                    class="form-control ' .hasError($errors, "field_label.$field_counter_minus_1" ) . '"
+                    placeholder="Student Name">
+                ' . showErrors($errors, "field_label.$field_counter_minus_1" ) . '
+            </div>
+            <div class="col-md-2 mb-1 field_' .$field_counter .' ' .$hide_show .'">
+                <label class="form-label">&nbsp;</label><br/>
+                <button type="button" class="btn btn-danger" onclick="removeField(' .$field_counter .');">Remove</button>
+            </div>
+        </div>';
+}

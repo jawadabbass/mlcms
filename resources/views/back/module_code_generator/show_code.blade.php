@@ -1,0 +1,41 @@
+@extends('back.layouts.app', ['title' => $title])
+@section('content')
+    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="row">
+                <div class="col-md-8 col-sm-6">
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="{{ base_url() . 'adminmedia' }}">
+                                <i class="fa-solid fa-dashboard"></i> Home
+                            </a>
+                        </li>
+                        <li class="active">
+                            <a href="{{ base_url() . 'adminmedia/module-code-generator' }}">
+                                Module Code Generator
+                            </a>
+                        </li>
+                    </ol>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    @include('back.common_views.quicklinks')
+                </div>
+            </div>
+        </section>
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12 col-md-12">
+                    <div class="box">
+                        <div class="alert alert-success">{!! $msg !!}</div>
+                    </div>
+                    <!-- /.box -->
+                    <!-- /.box -->
+                </div>
+            </div>
+        </section>
+        <!-- /.content -->
+    </aside>
+    @include('back.common_views.spinner')
+@endsection

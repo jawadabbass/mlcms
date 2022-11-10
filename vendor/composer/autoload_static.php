@@ -342,8 +342,8 @@ class ComposerStaticInit0dc209307679f50bbb2e87bb8c8dc706
         ),
         'voku\\' => 
         array (
-            0 => __DIR__ . '/..' . '/voku/portable-ascii/src/voku',
-            1 => __DIR__ . '/..' . '/voku/html-min/src/voku',
+            0 => __DIR__ . '/..' . '/voku/html-min/src/voku',
+            1 => __DIR__ . '/..' . '/voku/portable-ascii/src/voku',
         ),
         'tubalmartin\\CssMin\\' => 
         array (
@@ -367,8 +367,8 @@ class ComposerStaticInit0dc209307679f50bbb2e87bb8c8dc706
         ),
         'WyriHaximus\\Compress\\' => 
         array (
-            0 => __DIR__ . '/..' . '/wyrihaximus/compress-contracts/src',
-            1 => __DIR__ . '/..' . '/wyrihaximus/compress/src',
+            0 => __DIR__ . '/..' . '/wyrihaximus/compress/src',
+            1 => __DIR__ . '/..' . '/wyrihaximus/compress-contracts/src',
         ),
         'Whoops\\' => 
         array (
@@ -604,8 +604,8 @@ class ComposerStaticInit0dc209307679f50bbb2e87bb8c8dc706
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -911,6 +911,7 @@ class ComposerStaticInit0dc209307679f50bbb2e87bb8c8dc706
         'App\\Http\\Controllers\\Back\\MenuController' => __DIR__ . '/../..' . '/app/Http/Controllers/Back/MenuController.php',
         'App\\Http\\Controllers\\Back\\MessageController' => __DIR__ . '/../..' . '/app/Http/Controllers/Back/MessageController.php',
         'App\\Http\\Controllers\\Back\\ModController' => __DIR__ . '/../..' . '/app/Http/Controllers/Back/ModController.php',
+        'App\\Http\\Controllers\\Back\\ModuleCodeGeneratorController' => __DIR__ . '/../..' . '/app/Http/Controllers/Back/ModuleCodeGeneratorController.php',
         'App\\Http\\Controllers\\Back\\ModuleController' => __DIR__ . '/../..' . '/app/Http/Controllers/Back/ModuleController.php',
         'App\\Http\\Controllers\\Back\\ModuleManageController' => __DIR__ . '/../..' . '/app/Http/Controllers/Back/ModuleManageController.php',
         'App\\Http\\Controllers\\Back\\NewsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Back/NewsController.php',
@@ -970,6 +971,7 @@ class ComposerStaticInit0dc209307679f50bbb2e87bb8c8dc706
         'App\\Http\\Requests\\Back\\CountyBackFormRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Back/CountyBackFormRequest.php',
         'App\\Http\\Requests\\Back\\FleetCategoryBackFormRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Back/FleetCategoryBackFormRequest.php',
         'App\\Http\\Requests\\Back\\FleetPlaneBackFormRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Back/FleetPlaneBackFormRequest.php',
+        'App\\Http\\Requests\\Back\\ModuleCodeGeneratorBackFormRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Back/ModuleCodeGeneratorBackFormRequest.php',
         'App\\Http\\Requests\\Back\\NewsBackFormRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Back/NewsBackFormRequest.php',
         'App\\Http\\Requests\\Back\\PassengerCapacityBackFormRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Back/PassengerCapacityBackFormRequest.php',
         'App\\Http\\Requests\\Back\\PerformanceBackFormRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Back/PerformanceBackFormRequest.php',
@@ -1248,6 +1250,7 @@ class ComposerStaticInit0dc209307679f50bbb2e87bb8c8dc706
         'Cron\\HoursField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/HoursField.php',
         'Cron\\MinutesField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/MinutesField.php',
         'Cron\\MonthField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/MonthField.php',
+        'Database\\Seeders\\BaggageCapacitiesTableSeeder' => __DIR__ . '/../..' . '/database/seeders/BaggageCapacitiesTableSeeder.php',
         'Database\\Seeders\\DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeders/DatabaseSeeder.php',
         'DebugBar\\Bridge\\CacheCacheCollector' => __DIR__ . '/..' . '/maximebf/debugbar/src/DebugBar/Bridge/CacheCacheCollector.php',
         'DebugBar\\Bridge\\DoctrineCollector' => __DIR__ . '/..' . '/maximebf/debugbar/src/DebugBar/Bridge/DoctrineCollector.php',
