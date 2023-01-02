@@ -211,12 +211,13 @@
     <script type="text/javascript" src="{{ base_url() . 'back/js/fileUploader.js' }}"></script>
     <div id="loading" class="loadinggif" style="display: none;"></div>
     <!-- End Bootstrap modal -->
-    
-    @if (isset($_GET['id'])) {
-        <script>
-            $(document).ready(function() {
-                edit_module({{ $_GET['id'] }})
-            });
-        </script>
-    @endif
+    @php
+        if (isset($_GET['id']) && !empty($_GET['id'])) {
+            echo "<script>
+                $(document).ready(function() {
+                    edit_module(".$_GET['id'].")
+                });
+            </script>";
+        }
+    @endphp
 @endsection
