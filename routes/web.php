@@ -10,6 +10,7 @@ use App\Http\Controllers\Back\ContactUsController as BackContactUsController;
 use App\Http\Controllers\Back\DashboardController;
 use App\Http\Controllers\Back\Email_templatesController;
 use App\Http\Controllers\Back\FilesController;
+use App\Http\Controllers\Front\GalleryController;
 use App\Http\Controllers\Back\GalleryController as BackGalleryController;
 use App\Http\Controllers\Back\ImageUploadController;
 use App\Http\Controllers\Back\MediaController;
@@ -25,7 +26,8 @@ use App\Http\Controllers\Back\VideoController as BackVideoController;
 use App\Http\Controllers\Back\WidgetController;
 use App\Http\Controllers\Front\BlogController;
 use App\Http\Controllers\Front\ContactUsController;
-use App\Http\Controllers\Front\GalleryController;
+use App\Http\Controllers\Front\GalleryCFrontoller;
+use App\Http\Controllers\HomeController as UserDashboardController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\InvoiceController;
 use App\Http\Controllers\Back\InvoiceController as BackInvoiceController;
@@ -66,6 +68,9 @@ Route::post('searchZipCodeAjax', 'Front\AjaxController@searchZipCodeAjax')->name
 Route::post('filterCountiesAjax', 'Front\AjaxController@filterCountiesAjax')->name('filterCountiesAjax');
 Route::post('filterCitiesAjax', 'Front\AjaxController@filterCitiesAjax')->name('filterCitiesAjax');
 
+Route::group(['middleware' => ['auth', 'ipmiddleware']], function () {
+    Route::get('/home', [UserDashboardController::class, 'index'])->name('home');
+});
 Route::group(['namespace' => 'Front', 'middleware' => ['siteStatus', 'clearCache', 'ipmiddleware']], function () {
     Route::get('/', [HomeController::class, 'index']);
     Route::get('/about-medialinkers.html', [HomeController::class, 'aboutUs']);
@@ -459,3 +464,11 @@ Route::group(['namespace' => 'Front', 'middleware' => ['siteStatus', 'clearCache
     Route::get('/aaa2', 'TestController@aaa2');
     Route::get('/{slug}', [HomeController::class, 'page']);
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

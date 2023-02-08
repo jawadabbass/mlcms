@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
 use App\Http\Controllers\Controller;
+use App\Providers\RouteServiceProvider;
+use App\Models\User;
+use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Http\Request;
-use App\Traits\AuthTrait;
+
 class RegisterController extends Controller
 {
-    use AuthTrait;
     /*
     |--------------------------------------------------------------------------
     | Register Controller
@@ -22,13 +21,16 @@ class RegisterController extends Controller
     | provide this functionality without requiring any additional code.
     |
     */
+
     use RegistersUsers;
+
     /**
      * Where to redirect users after registration.
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = RouteServiceProvider::HOME;
+
     /**
      * Create a new controller instance.
      *
@@ -39,11 +41,6 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
-    public function registered(Request $request)
-    {
-        return $this->setSession($request);
-    }
-
     /**
      * Get a validator for an incoming registration request.
      *
@@ -52,17 +49,42 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
+        $rules = [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
+            'password' => [
+                'required',
+                'string',
+                'min:8',             // must be at least 8 characters in length
+                'regex:/[a-z]/',      // must contain at least one lowercase letter
+                'regex:/[A-Z]/',      // must contain at least one uppercase letter
+                'regex:/[0-9]/',      // must contain at least one digit
+                'regex:/[@$!%*#?&]/', // must contain a special character
+                'confirmed',
+            ],
+            'g-recaptcha-response' => 'required|recaptcha',
+
+        ];
+
+        $messages = [
+            'name.required' => 'Please provide name!',
+            'email.required' => 'Please provide e-mail address!',
+            'email.email' => 'Please provide valid e-mail address!',
+            'password.required' => 'Please provide password!',
+            'password.confirmed' => 'Passwords must match...',
+            'password.regex' => 'Password must be 8 characters long, should contain at-least 1 Uppercase, 1 Lowercase, 1 Numeric and 1 special character',
+            'g-recaptcha-response.required' => 'Please verify yourself',
+            'g-recaptcha-response.recaptcha' => 'Please verify yourself',
+        ];
+
+        return Validator::make($data, $rules, $messages);
     }
+
     /**
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \App\User
+     * @return \App\Models\User
      */
     protected function create(array $data)
     {

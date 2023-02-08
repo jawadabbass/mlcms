@@ -235,67 +235,48 @@
         </section>
         <section class="content" id="google-captcha">
             <div class="box">
-                <h2 class="box-title"><i class="fa-solid fa-arrow-circle-o-down" aria-hidden="true"></i> ContactUs Captcha
+                <h2 class="box-title"><i class="fa-solid fa-arrow-circle-o-down" aria-hidden="true"></i> ContactUs
+                    Captcha
                 </h2>
                 <form name="emp_network_detail" method="post" action="{{ admin_url() . 'setting/captcha' }}">
                     @csrf
                     <div class="mb-2">
-                        <br><br>
-                        <span style="font-size:12px">
-                            <div class="alert alert-success alert-dismissible" role="alert">
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                                    </button>
-                                Google reCAPTCHA is a free service that protects your website from spam and abuse.
-                                reCAPTCHA uses an advanced risk analysis engine and adaptive CAPTCHAs to keep automated
-                                software
-                                from submittting your forms. It does this while letting your valid users pass through
-                                with ease.
-                                You can get the Keys for reCapcha from here
-                                <a href="https://www.google.com/recaptcha/admin"
-                                    target="_blank">https://www.google.com/recaptcha/admin</a>
-                                <br><br>
-                                {{-- </div> --}}
-                                {{-- <div class="alert alert-success alert-dismissible" role="alert"> --}}
-                                {{-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> --}}
-                                {{-- </button> --}}
-                                <span class="text-danger"><strong>Note:</strong> If you don't add Google reCAPTCHA, it
-                                    will keep working with our custom built CAPTCHA. It is very secure but not as good
-                                    as Google reCAPTCHA. If you are receiving spam with our CAPTCHA, please add Google
-                                    reCAPTCHA.</span>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span style="font-size:12px">
+                                    <div class="alert alert-success alert-dismissible" role="alert">
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                            aria-label="Close">
+                                        </button>
+                                        Google reCAPTCHA is a free service that protects your website from spam and abuse.
+                                        reCAPTCHA uses an advanced risk analysis engine and adaptive CAPTCHAs to keep
+                                        automated
+                                        software
+                                        from submittting your forms. It does this while letting your valid users pass
+                                        through
+                                        with ease.
+                                        You can get the Keys for reCapcha from here
+                                        <a href="https://www.google.com/recaptcha/admin"
+                                            target="_blank">https://www.google.com/recaptcha/admin</a>
+                                    </div>
+                                </span>
                             </div>
-                        </span>
-                        <div id="d_web">
-                            <p></p>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="mb-2">
-                                        <label class="form-label">
-                                            <input id="recaptcha_status" name="recaptcha_status" type="checkbox"
-                                                data-toggle="toggle" data-on="On" data-off="Off"
-                                                data-onstyle="success" data-offstyle="danger"
-                                                {{ $metaArray['recaptcha_status'] ? 'checked' : '' }}>
-                                            ON/OFF reCaptcha
-                                        </label>
-                                        @php echo helptooltip('recaptcha_msg') @endphp
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-2">
-                                        <label class="form-label">reCAPTCHA SITE KEY</label>
-                                        <input type="text" class="form-control" name="siteKey" placeholder="Site Key"
-                                            value="{{ $metaArray['recaptcha_site_key'] }}">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-2">
-                                        <label class="form-label">reCAPTCHA SECRET KEY</label>
-                                        <input type="text" class="form-control" name="secretKey"
-                                            placeholder="Secret Key" value="{{ $metaArray['recaptcha_secret_key'] }}">
-                                    </div>
+                            <div class="col-md-6">
+                                <div class="mb-2">
+                                    <label class="form-label">reCAPTCHA SITE KEY</label>
+                                    <input type="text" class="form-control" name="siteKey" placeholder="Site Key"
+                                        value="{{ $metaArray['recaptcha_site_key'] }}">
                                 </div>
                             </div>
-                            <input type="submit" name="change_network_details" value="update" class="sitebtn" />
+                            <div class="col-md-6">
+                                <div class="mb-2">
+                                    <label class="form-label">reCAPTCHA SECRET KEY</label>
+                                    <input type="text" class="form-control" name="secretKey" placeholder="Secret Key"
+                                        value="{{ $metaArray['recaptcha_secret_key'] }}">
+                                </div>
+                            </div>
                         </div>
+                        <input type="submit" name="change_network_details" value="update" class="sitebtn" />
                     </div>
                 </form>
             </div>
@@ -413,7 +394,8 @@
         </section>
         <section class="content" id="disable-website">
             <div class="box">
-                <h2 class="box-title"><i class="fa-solid fa-arrow-circle-o-down" aria-hidden="true"></i> Disable Website </h2>
+                <h2 class="box-title"><i class="fa-solid fa-arrow-circle-o-down" aria-hidden="true"></i> Disable Website
+                </h2>
                 <form name="emp_network_detail" action="{{ route('settings.edit', 0) }}">
                     <div class="mb-2">
                         <span style="color:red; font-size:12px">

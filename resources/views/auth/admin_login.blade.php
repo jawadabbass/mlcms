@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app_front')
 @section('content')
     <div class="loginwrap">
         <div class="loginfrm">

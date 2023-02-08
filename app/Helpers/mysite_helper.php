@@ -309,12 +309,12 @@ if (!function_exists('seo_print')) {
         if (isset($seoArr['canonical_url']) && $seoArr['canonical_url'] != '') {
             $metaTags .= '<link rel="canonical" href="'.$seoArr['canonical_url'].'" />'."\r\n";
         }
-        if ($seoArr['index'] == '1') {
+        if (isset($seoArr['index']) && $seoArr['index'] == '1') {
             $noFollowNoIndex[] = 'INDEX';
         } else {
             $noFollowNoIndex[] = 'NOINDEX';
         }
-        if ($seoArr['follow'] == '1') {
+        if (isset($seoArr['follow']) && $seoArr['follow'] == '1') {
             $noFollowNoIndex[] = 'FOLLOW';
         } else {
             $noFollowNoIndex[] = 'NOFOLLOW';

@@ -22,26 +22,7 @@ class ContactUsController extends Controller
         $seoArr = getSeoArrayModule(118);
         $editPageID = 118;
         $data = CmsModuleData::find(118);
-        $googleReCaptcha = Metadata::where('data_key', 'recaptcha_status')->first();
-        $siteKey = '';
-        if ($googleReCaptcha->val1 == 'on') {
-            $capImage = false;
-            session(['recaptcha' => true]);
-            $siteKeyData = Metadata::where('data_key', 'recaptcha_site_key')->first();
-            $siteKey = $siteKeyData->val1;
-        } else {
-            $capImage = create_ml_captcha();
-            session(['recaptcha' => false]);
-        }
-
-        return view('front.contact_us.index', compact('seoArr', 'data', 'capImage', 'siteKey', 'editPageID'));
-    }
-
-    public function refresh()
-    {
-        $capImage = create_ml_captcha(2);
-
-        return json_encode($capImage);
+        return view('front.contact_us.index', compact('seoArr', 'data', 'editPageID'));
     }
 
     public function save(Request $request)
@@ -51,11 +32,8 @@ class ContactUsController extends Controller
             'email' => ['required', 'email'],
             'phone' => ['required'],
             'message' => ['required'],
+            'g-recaptcha-response' => 'required|recaptcha',
         ];
-
-        if (session('recaptcha')) {
-            $validationRules['g-recaptcha-response'] = ['required'];
-        }
 
         $validationMessages = [
             'name.required' => 'First Name is required',
@@ -63,46 +41,15 @@ class ContactUsController extends Controller
             'email.email' => 'Valid Email is required',
             'phone.required' => 'Phone is required',
             'message.required' => 'Message is required',
-            'g-recaptcha-response.required' => 'Captcha verification required',
+            'g-recaptcha-response.required' => 'Please verify yourself',
+            'g-recaptcha-response.recaptcha' => 'Please verify yourself',
         ];
 
         $validatedData = $request->validate($validationRules, $validationMessages);
 
-        if (session('recaptcha')) {
-            $secretKeyData = Metadata::where('data_key', 'recaptcha_secret_key')->first();
-            $secretKey = trim($secretKeyData->val1, ' ');
-            $reCaptchaResponse = $request->get('g-recaptcha-response');
-            if (!isset($reCaptchaResponse) || $reCaptchaResponse == '') {
-                echo json_encode(['status' => false, 'error' => 'CAPTCHA Verification required']);
-
-                return;
-            }
-
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, 'https://www.google.com/recaptcha/api/siteverify?secret='.$secretKey.'&response='.$reCaptchaResponse.'&remoteip='.$request->ip());
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            $data = curl_exec($ch);
-            if (curl_errno($ch)) {
-            }
-            curl_close($ch);
-            $gResp = json_decode($data);
-            if (!$gResp->success) {
-                echo json_encode(['status' => false, 'error' => 'CAPTCHA Verification Failed']);
-
-                return;
-            }
-        } else {
-            $captchaCode = Session::get('cptcode', 0);
-            if (strcmp($captchaCode, $request->cpt_code)) {
-                echo json_encode(['status' => false, 'error' => 'CAPTCHA Failed']);
-
-                return;
-            }
-        }
-
         $negativeKeywordsMetaData = Metadata::where('data_key', 'negative_keywords')->first();
         $negativeKeywords = explode(',', $negativeKeywordsMetaData->val1);
-        $sentenceToCheck = $request->name.' '.' '.$request->email.' '.$request->phone.' '.$request->company_name.' '.$request->message;
+        $sentenceToCheck = $request->name . ' ' . ' ' . $request->email . ' ' . $request->phone . ' ' . $request->company_name . ' ' . $request->message;
         $hasNegativeKeyword = false;
         if (count($negativeKeywords) > 0) {
             foreach ($negativeKeywords as $negativeKeyword) {

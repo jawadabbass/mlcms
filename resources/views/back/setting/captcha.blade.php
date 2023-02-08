@@ -72,31 +72,11 @@
                                 You can get the Keys for reCapcha from here
                                 <a href="https://www.google.com/recaptcha/admin"
                                     target="_blank">https://www.google.com/recaptcha/admin</a>
-                                <br><br>
-                                {{-- </div> --}}
-                                {{-- <div class="alert alert-success alert-dismissible" role="alert"> --}}
-                                {{-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> --}}
-                                {{-- </button> --}}
-                                <span class="text-danger"><strong>Note:</strong> If you don't add Google reCAPTCHA, it
-                                    will keep working with our custom built CAPTCHA. It is very secure but not as good
-                                    as Google reCAPTCHA. If you are receiving spam with our CAPTCHA, please add Google
-                                    reCAPTCHA.</span>
                             </div>
                         </span>
                         <div id="d_web">
                             <p></p>
                             <div class="row">
-                                <div class="col-md-12">
-                                    <div class="mb-2">
-                                        <label class="form-label">
-                                            <input id="recaptcha_status" name="recaptcha_status" type="checkbox"
-                                                data-toggle="toggle" data-on="On" data-off="Off" data-onstyle="success"
-                                                data-offstyle="danger" {{ $metaArray['recaptcha_status'] ? 'checked' : '' }}>
-                                            ON/OFF reCaptcha
-                                        </label>
-                                        @php echo helptooltip('recaptcha_msg') @endphp
-                                    </div>
-                                </div>
                                 <div class="col-md-6">
                                     <div class="mb-2">
                                         <label class="form-label">reCAPTCHA SITE KEY</label>
