@@ -56,6 +56,8 @@ Route::get('/clear-cache', function () {
     Artisan::call('config:clear');
     Artisan::call('view:clear');
     Artisan::call('optimize:clear');
+    Artisan::call('logs:clear');
+
     return 'Cache is cleared';
 });
 Route::view('/login/adminLogin', 'auth.admin_login');
