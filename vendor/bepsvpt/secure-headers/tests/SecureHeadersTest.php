@@ -178,6 +178,45 @@ final class SecureHeadersTest extends TestCase
         );
     }
 
+    public function testContentSecurityPolicyRemoveNonce()
+    {
+        SecureHeaders::nonce('script');
+        SecureHeaders::nonce('style');
+
+        SecureHeaders::removeNonce();
+
+        $headers = (new SecureHeaders($this->config()))->headers();
+
+        $this->assertArrayNotHasKey(
+            'Content-Security-Policy',
+            $headers
+        );
+
+        $nonce = SecureHeaders::nonce('script');
+        SecureHeaders::nonce('style');
+
+        SecureHeaders::removeNonce('style');
+
+        $headers = (new SecureHeaders($this->config()))->headers();
+
+        $this->assertSame(
+            sprintf("script-src 'nonce-%s'", $nonce),
+            $headers['Content-Security-Policy']
+        );
+
+        $nonce1 = SecureHeaders::nonce('script');
+        $nonce2 = SecureHeaders::nonce('script');
+
+        SecureHeaders::removeNonce('script', $nonce1);
+
+        $headers = (new SecureHeaders($this->config()))->headers();
+
+        $this->assertSame(
+            sprintf("script-src 'nonce-%s'", $nonce2),
+            $headers['Content-Security-Policy']
+        );
+    }
+
     public function testContentSecurityPolicyNonceWillBeClearedAfterHeaderSent()
     {
         $times = 10;
@@ -237,7 +276,7 @@ final class SecureHeadersTest extends TestCase
         );
     }
 
-    public function testExpectCT()
+    public function testExpectCertificateTransparency()
     {
         $config = $this->config();
 
@@ -271,6 +310,28 @@ final class SecureHeadersTest extends TestCase
 
         $this->assertArrayNotHasKey(
             'Clear-Site-Data',
+            (new SecureHeaders($config))->headers()
+        );
+    }
+
+    public function testCrossOriginPolicy()
+    {
+        $config = $this->config();
+
+        $config['cross-origin-resource-policy'] = 'same-origin';
+
+        $headers = (new SecureHeaders($config))->headers();
+
+        $this->assertArrayHasKey('Cross-Origin-Resource-Policy', $headers);
+
+        $this->assertSame('same-origin', $headers['Cross-Origin-Resource-Policy']);
+
+        // ensure backward compatibility
+
+        unset($config['cross-origin-resource-policy']);
+
+        $this->assertArrayNotHasKey(
+            'Cross-Origin-Resource-Policy',
             (new SecureHeaders($config))->headers()
         );
     }

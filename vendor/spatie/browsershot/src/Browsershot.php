@@ -4,6 +4,7 @@ namespace Spatie\Browsershot;
 
 use Spatie\Browsershot\Exceptions\CouldNotTakeBrowsershot;
 use Spatie\Browsershot\Exceptions\ElementNotFound;
+use Spatie\Browsershot\Exceptions\FileDoesNotExistException;
 use Spatie\Browsershot\Exceptions\FileUrlNotAllowed;
 use Spatie\Browsershot\Exceptions\HtmlIsNotAllowedToContainFile;
 use Spatie\Browsershot\Exceptions\UnsuccessfulResponse;
@@ -64,6 +65,11 @@ class Browsershot
     public static function html(string $html)
     {
         return (new static())->setHtml($html);
+    }
+
+    public static function htmlFromFilePath(string $filePath): self
+    {
+        return (new static())->setHtmlFromFilePath($filePath);
     }
 
     public function __construct(string $url = '', bool $deviceEmulate = false)
@@ -242,6 +248,18 @@ class Browsershot
         }
 
         $this->url = $url;
+        $this->html = '';
+
+        return $this;
+    }
+
+    public function setHtmlFromFilePath(string $filePath): self
+    {
+        if (false === file_exists($filePath)) {
+            throw new FileDoesNotExistException($filePath);
+        }
+
+        $this->url = 'file://'.$filePath;
         $this->html = '';
 
         return $this;
@@ -675,14 +693,14 @@ class Browsershot
 
     public function createBodyHtmlCommand(): array
     {
-        $url = $this->html ? $this->createTemporaryHtmlFile() : $this->url;
+        $url = $this->getFinalContentsUrl();
 
         return $this->createCommand($url, 'content');
     }
 
     public function createScreenshotCommand($targetPath = null): array
     {
-        $url = $this->html ? $this->createTemporaryHtmlFile() : $this->url;
+        $url = $this->getFinalContentsUrl();
 
         $options = [
             'type' => $this->screenshotType,
@@ -706,7 +724,7 @@ class Browsershot
 
     public function createPdfCommand($targetPath = null): array
     {
-        $url = $this->html ? $this->createTemporaryHtmlFile() : $this->url;
+        $url = $this->getFinalContentsUrl();
 
         $options = [];
 
@@ -733,7 +751,7 @@ class Browsershot
 
     public function createEvaluateCommand(string $pageFunction): array
     {
-        $url = $this->html ? $this->createTemporaryHtmlFile() : $this->url;
+        $url = $this->getFinalContentsUrl();
 
         $options = [
             'pageFunction' => $pageFunction,
@@ -989,5 +1007,12 @@ class Browsershot
     private function isWindows()
     {
         return strtoupper(substr(PHP_OS, 0, 3)) === 'WIN';
+    }
+
+    private function getFinalContentsUrl(): string
+    {
+        $url = $this->html ? $this->createTemporaryHtmlFile() : $this->url;
+
+        return $url;
     }
 }

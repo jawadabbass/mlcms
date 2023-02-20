@@ -4,7 +4,7 @@ namespace Bepsvpt\SecureHeaders;
 
 use Bepsvpt\SecureHeaders\Builders\ClearSiteDataBuilder;
 use Bepsvpt\SecureHeaders\Builders\ContentSecurityPolicyBuilder;
-use Bepsvpt\SecureHeaders\Builders\ExceptCTBuilder;
+use Bepsvpt\SecureHeaders\Builders\ExpectCertificateTransparencyBuilder;
 use Bepsvpt\SecureHeaders\Builders\PermissionsPolicyBuilder;
 use Bepsvpt\SecureHeaders\Builders\StrictTransportSecurityBuilder;
 use Exception;
@@ -39,7 +39,7 @@ class SecureHeaders
     /**
      * Constructor.
      *
-     * @param array<mixed> $config
+     * @param  array<mixed>  $config
      */
     public function __construct(array $config = [])
     {
@@ -52,15 +52,14 @@ class SecureHeaders
     public function __destruct()
     {
         if ($this->sent) {
-            self::$nonces['script'] = self::$nonces['style'] = [];
+            self::removeNonce();
         }
     }
 
     /**
      * Load data from file.
      *
-     * @param string $file
-     *
+     * @param  string  $file
      * @return SecureHeaders
      */
     public static function fromFile($file)
@@ -192,7 +191,7 @@ class SecureHeaders
             return [];
         }
 
-        $builder = new ExceptCTBuilder($config);
+        $builder = new ExpectCertificateTransparencyBuilder($config);
 
         return ['Expect-CT' => $builder->get()];
     }
@@ -231,14 +230,16 @@ class SecureHeaders
             'X-XSS-Protection' => $this->config['x-xss-protection'],
             'Referrer-Policy' => $this->config['referrer-policy'],
             'Server' => $this->config['server'],
+            'Cross-Origin-Embedder-Policy' => $this->config['cross-origin-embedder-policy'] ?? '',
+            'Cross-Origin-Opener-Policy' => $this->config['cross-origin-opener-policy'] ?? '',
+            'Cross-Origin-Resource-Policy' => $this->config['cross-origin-resource-policy'] ?? '',
         ]);
     }
 
     /**
      * Generate random nonce value for current request.
      *
-     * @param string $target
-     *
+     * @param  string  $target
      * @return string
      *
      * @throws Exception
@@ -250,5 +251,25 @@ class SecureHeaders
         self::$nonces[$target][] = $nonce;
 
         return $nonce;
+    }
+
+    /**
+     * Remove specific nonce value or flush all nonce for the given target.
+     *
+     * @param  string|null  $target
+     * @param  string|null  $nonce
+     * @return void
+     */
+    public static function removeNonce(string $target = null, string $nonce = null)
+    {
+        if ($target === null) {
+            self::$nonces['script'] = self::$nonces['style'] = [];
+        } elseif (isset(self::$nonces[$target])) {
+            if ($nonce === null) {
+                self::$nonces[$target] = [];
+            } elseif (false !== ($idx = array_search($nonce, self::$nonces[$target]))) {
+                unset(self::$nonces[$target][$idx]);
+            }
+        }
     }
 }

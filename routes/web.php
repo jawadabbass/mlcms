@@ -1,43 +1,44 @@
 <?php
 
-use App\Http\Controllers\Back\BlogController as BackBlogController;
-use App\Http\Controllers\Back\CacheController;
-use App\Http\Controllers\Back\CareerController;
-use App\Http\Controllers\Back\ClientController;
-use App\Http\Controllers\Back\ContactFormSetting;
-use App\Http\Controllers\Back\ContactPagesController;
-use App\Http\Controllers\Back\ContactUsController as BackContactUsController;
-use App\Http\Controllers\Back\DashboardController;
-use App\Http\Controllers\Back\Email_templatesController;
-use App\Http\Controllers\Back\FilesController;
-use App\Http\Controllers\Front\GalleryController;
-use App\Http\Controllers\Back\GalleryController as BackGalleryController;
-use App\Http\Controllers\Back\ImageUploadController;
-use App\Http\Controllers\Back\MediaController;
-use App\Http\Controllers\Back\ModuleController;
-use App\Http\Controllers\Back\ModuleManageController;
-use App\Http\Controllers\Back\PaymentOptionController;
-use App\Http\Controllers\Back\ProductController;
-use App\Http\Controllers\Back\SearchController;
-use App\Http\Controllers\Back\SettingController;
-use App\Http\Controllers\Back\SiteMapController;
-use App\Http\Controllers\Back\ThemeController;
-use App\Http\Controllers\Back\VideoController as BackVideoController;
-use App\Http\Controllers\Back\WidgetController;
-use App\Http\Controllers\Front\BlogController;
-use App\Http\Controllers\Front\ContactUsController;
-use App\Http\Controllers\Front\GalleryCFrontoller;
-use App\Http\Controllers\HomeController as UserDashboardController;
-use App\Http\Controllers\Front\HomeController;
-use App\Http\Controllers\Front\InvoiceController;
-use App\Http\Controllers\Back\InvoiceController as BackInvoiceController;
-use App\Http\Controllers\Front\NewsController;
-use App\Http\Controllers\Front\ServicesController;
-use App\Http\Controllers\Front\TestimonialController;
-use App\Http\Controllers\Front\VideoController;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\Front\MailChimpController;
+use App\Http\Controllers\Back\CacheController;
+use App\Http\Controllers\Back\FilesController;
+use App\Http\Controllers\Back\MediaController;
+use App\Http\Controllers\Back\ThemeController;
+use App\Http\Controllers\Front\BlogController;
+use App\Http\Controllers\Front\HomeController;
+use App\Http\Controllers\Front\NewsController;
+use App\Http\Controllers\Back\CareerController;
+use App\Http\Controllers\Back\ClientController;
+use App\Http\Controllers\Back\ModuleController;
+use App\Http\Controllers\Back\SearchController;
+use App\Http\Controllers\Back\WidgetController;
+use App\Http\Controllers\Front\VideoController;
+use App\Http\Controllers\Back\ProductController;
+use App\Http\Controllers\Back\SettingController;
+use App\Http\Controllers\Back\SiteMapController;
+use App\Http\Controllers\Back\ContactFormSetting;
+use App\Http\Controllers\Front\GalleryController;
+use App\Http\Controllers\Front\InvoiceController;
+use App\Http\Controllers\Back\DashboardController;
+use App\Http\Controllers\Front\GalleryCFrontoller;
+use App\Http\Controllers\Front\ServicesController;
+use App\Http\Controllers\Front\ContactUsController;
+use App\Http\Controllers\Back\ImageUploadController;
+use App\Http\Controllers\Back\ContactPagesController;
+use App\Http\Controllers\Back\ModuleManageController;
+use App\Http\Controllers\Front\TestimonialController;
+use App\Http\Controllers\Back\PaymentOptionController;
+use App\Http\Controllers\Back\Email_templatesController;
+use App\Http\Controllers\Back\BlogController as BackBlogController;
+use App\Http\Controllers\HomeController as UserDashboardController;
+use App\Http\Controllers\Back\VideoController as BackVideoController;
+use App\Http\Controllers\Back\GalleryController as BackGalleryController;
+use App\Http\Controllers\Back\InvoiceController as BackInvoiceController;
+use App\Http\Controllers\Back\ContactUsController as BackContactUsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -105,6 +106,11 @@ Route::group(['namespace' => 'Front', 'middleware' => ['siteStatus', 'clearCache
     Route::get('/getState/{ads}', 'ClientRegisterController@getState')->name('get_state');
     Route::get('/getCity/{ads}', 'ClientRegisterController@getCity')->name('get_city');
     Route::get('/flight-works/{fleetCategoryId?}/{fleetPlaneId?}/{fleetPlaneNameSlug?}', 'FlightWorkController@index')->name('flight.work.index');
+
+    Route::get('updateMailChimpListMembers', [MailChimpController::class, 'updateMailChimpListMembers'])->name('updateMailChimpListMembers');
+    Route::get('getMailChimpListMembers', [MailChimpController::class, 'getMailChimpListMembers'])->name('getMailChimpListMembers');
+    Route::get('testUpdateMailChimpListMember', [MailChimpController::class, 'testUpdateMailChimpListMember'])->name('testUpdateMailChimpListMember');
+    Route::get('testRemoveMailChimpListMember', [MailChimpController::class, 'testRemoveMailChimpListMember'])->name('testRemoveMailChimpListMember');
 });
 Route::group(['namespace' => 'Back', 'prefix' => 'adminmedia', 'middleware' => ['auth', 'admin', 'ipmiddleware']], function () {
     Route::get('/', [DashboardController::class, 'index']);
@@ -459,7 +465,6 @@ Route::group(['namespace' => 'Back', 'prefix' => 'adminmedia', 'middleware' => [
 
     Route::get('/module-code-generator', 'ModuleCodeGeneratorController@index')->name('module.code.generator');
     Route::post('/module-code-generator', 'ModuleCodeGeneratorController@generateCode')->name('generate.module.code');
-    
 });
 Route::group(['namespace' => 'Front', 'middleware' => ['siteStatus', 'clearCache', 'ipmiddleware']], function () {
     Route::get('/aaa', 'TestController@aaa');

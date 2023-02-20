@@ -17,7 +17,13 @@
     </a>
 </p>
 
-# Laravel XSS Filter 
+<p align="center">
+    <a href="https://github.com/vshymanskyy/StandWithUkraine/blob/main/docs/README.md">
+        <img src="https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/StandWithUkraine.svg" alt="StandWithUkraine">
+    </a>
+</p>
+
+# XSS Filter/Sanitizer for Laravel 
 
 ### Configure once and forget about XSS attacks!
 

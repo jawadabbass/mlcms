@@ -22,7 +22,8 @@
         "stripe/stripe-php": "^9.8",
         "vonage/client": "^3.0",
         "wyrihaximus/html-compress": "^4.2",
-        "yajra/laravel-datatables-oracle": "^10.1"
+        "yajra/laravel-datatables-oracle": "^10.1",
+        "mailchimp/marketing": "^3.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.7",
