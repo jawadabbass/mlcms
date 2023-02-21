@@ -27,40 +27,15 @@ class ClientRegisterController extends Controller
         $states = State::active()->sorted()->get();
         $seoArr = getSeoArrayModule(104);
         $seoArr['title'] = 'Sign Up';
-        $googleReCaptcha = Metadata::where('data_key', 'recaptcha_status')->first();
-        $siteKey = '';
-        if ($googleReCaptcha->val1 == 'on') {
-            $capImage = false;
-            session(['recaptcha' => true]);
-            $siteKeyData = Metadata::where('data_key', 'recaptcha_site_key')->first();
-            $siteKey = $siteKeyData->val1;
-        } else {
-            $capImage = create_ml_captcha();
-            session(['recaptcha' => false]);
-        }
         $conditions =  CmsModuleData::where('sts', 'active')
             ->where('cms_module_id', 38)
             ->orderBy('item_order', 'ASC')
             ->get();
-        return view('front.auth.clientregister', compact('states', 'seoArr', 'siteKey', 'conditions'));
+        return view('front.auth.clientregister', compact('states', 'seoArr', 'conditions'));
     }
     public function register(Request $request)
     {
         $this->validator($request->all())->validate();
-        $secretKeyData = Metadata::where('data_key', 'recaptcha_secret_key')->first();
-        $secretKey = $secretKeyData->val1;
-        $reCaptchaResponse = $request['g-recaptcha-response'];
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, 'https://www.google.com/recaptcha/api/siteverify?secret=' . $secretKey . '&response=' . $reCaptchaResponse . '&remoteip=' . $request->ip());
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $data = curl_exec($ch);
-        if (curl_errno($ch)) {
-        }
-        curl_close($ch);
-        $gResp = json_decode($data);
-        if (!$gResp->success == 'true') {
-            return back()->with('error_cp', 'Please Select Again i am not robot');
-        }
         //Create seller
         $client  = new Client();
         $client->name = $request->first_name;
@@ -114,6 +89,7 @@ class ClientRegisterController extends Controller
             'zip' => 'required|min:5|max:5',
             'email' => 'required|email|max:255|unique:clients',
             'password' => 'required|min:6|confirmed',
+            'g-recaptcha-response' => 'required|recaptcha',
         ], [
             'first_name.required' => 'First Name is required.',
             'last_name.required' => 'Last Name is required.',
@@ -125,6 +101,8 @@ class ClientRegisterController extends Controller
             'address.required' => 'Address is required.',
             'password.required' => 'Password is Required.',
             'email.required' => 'Email is Required.',
+            'g-recaptcha-response.required' => 'Please verify yourself',
+            'g-recaptcha-response.recaptcha' => 'Please verify yourself',
         ]);
     }
     protected function guard()

@@ -290,7 +290,7 @@
                         <div class="col-md-12">
                             <div class="mb-2">
                                 <label class="form-label">
-                                    <input id="recaptcha_status" name="restrict_traffic" type="checkbox"
+                                    <input id="restrict_traffic" name="restrict_traffic" type="checkbox"
                                         data-toggle="toggle" data-on="On" data-off="Off" data-onstyle="success"
                                         data-offstyle="danger" {{ $metaArray['restrict_traffic'] ? 'checked' : '' }}>
                                     Restrict Traffic Based on Countries

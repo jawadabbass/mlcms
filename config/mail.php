@@ -34,6 +34,14 @@ return [
     */
 
     'mailers' => [
+        'failover' => [
+            'transport' => 'failover',
+            'mailers' => [
+                'smtp',
+                'sendmail',
+                'log',
+            ],
+        ],
         'smtp' => [
             'transport' => 'smtp',
             'host' => env('MAIL_HOST', 'smtp.medialinkers.org'),

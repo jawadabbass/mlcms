@@ -173,9 +173,6 @@ class SettingController extends Controller
 
     public function saveCaptcha(Request $request)
     {
-        $reCaptchaStatus = Metadata::where('data_key', 'recaptcha_status')->first();
-        $reCaptchaStatus->val1 = $request->recaptcha_status;
-        $reCaptchaStatus->save();
         $reCaptchaSite = Metadata::where('data_key', 'recaptcha_site_key')->first();
         $reCaptchaSite->val1 = $request->siteKey;
         $reCaptchaSite->save();
