@@ -87,7 +87,7 @@ trait MailChimpTrait
             'server' => config('mailchimp.MAILCHIMP_SERVER_PREFIX')
         ]);
 
-        $response = $mailchimp->lists->getListMembersInfo($listId);
+        $response = $mailchimp->lists->getListMembersInfo($listId, null, null, 1000);
         echo '<pre>';
         print_r($response);
         echo '</pre>';
@@ -104,14 +104,32 @@ trait MailChimpTrait
 
         $newMemberObj = [
             'email_address' => $memberObj->email,
-            'status_if_new' => 'subscribed',
+            'status' => 'subscribed',
             'merge_fields' => ['FNAME' => $memberObj->first_name, 'LNAME' => $memberObj->last_name]
         ];
 
         $subscriber_hash = md5(strtolower($memberObj->email));
         $response = $mailchimp->lists->setListMember($listId, $subscriber_hash, $newMemberObj);
+        //dd($response);
     }
 
+    public function unsubMailChimpListMember($memberObj)
+    {
+        $listId = $this->createList();
+        $mailchimp = new ApiClient();
+        $mailchimp->setConfig([
+            'apiKey' => config('mailchimp.MAILCHIMP_API_KEY'),
+            'server' => config('mailchimp.MAILCHIMP_SERVER_PREFIX')
+        ]);
+        $newMemberObj = [
+            'email_address' => $memberObj->email,
+            'status' => 'unsubscribed'
+        ];
+
+        $subscriber_hash = md5(strtolower($memberObj->email));
+        $response = $mailchimp->lists->setListMember($listId, $subscriber_hash, $newMemberObj);
+        //dd($response);
+    }
     public function removeMailChimpListMember($memberObj)
     {
         $listId = $this->createList();

@@ -107,10 +107,15 @@ Route::group(['namespace' => 'Front', 'middleware' => ['siteStatus', 'clearCache
     Route::get('/getCity/{ads}', 'ClientRegisterController@getCity')->name('get_city');
     Route::get('/flight-works/{fleetCategoryId?}/{fleetPlaneId?}/{fleetPlaneNameSlug?}', 'FlightWorkController@index')->name('flight.work.index');
 
-    Route::get('updateMailChimpListMembers', [MailChimpController::class, 'updateMailChimpListMembers'])->name('updateMailChimpListMembers');
-    Route::get('getMailChimpListMembers', [MailChimpController::class, 'getMailChimpListMembers'])->name('getMailChimpListMembers');
-    Route::get('testUpdateMailChimpListMember', [MailChimpController::class, 'testUpdateMailChimpListMember'])->name('testUpdateMailChimpListMember');
-    Route::get('testRemoveMailChimpListMember', [MailChimpController::class, 'testRemoveMailChimpListMember'])->name('testRemoveMailChimpListMember');
+    Route::get('updateMailChimpListMembers', [App\Http\Controllers\MailChimpController::class, 'updateMailChimpListMembers'])->name('updateMailChimpListMembers');
+    Route::get('getMailChimpListMembers', [App\Http\Controllers\MailChimpController::class, 'getMailChimpListMembers'])->name('getMailChimpListMembers');
+    Route::get('testUpdateMailChimpListMember', [App\Http\Controllers\MailChimpController::class, 'testUpdateMailChimpListMember'])->name('testUpdateMailChimpListMember');
+    Route::get('testRemoveMailChimpListMember', [App\Http\Controllers\MailChimpController::class, 'testRemoveMailChimpListMember'])->name('testRemoveMailChimpListMember');
+    Route::post('subscribe-newsletter', [App\Http\Controllers\MailChimpController::class, 'subscribeNewsletter'])->name('subscribeNewsletter');
+    Route::get('subscribe-newsletter-thanks', [App\Http\Controllers\MailChimpController::class, 'subscribeNewsletterThanks'])->name('subscribeNewsletterThanks');
+    Route::get('unsubscribe-newsletter', [App\Http\Controllers\MailChimpController::class, 'unsubscribeNewsletterForm'])->name('unsubscribeNewsletterForm');
+    Route::post('unsubscribe-newsletter', [App\Http\Controllers\MailChimpController::class, 'unsubscribeNewsletter'])->name('unsubscribeNewsletter');
+    Route::get('unsubscribe-newsletter-thanks', [App\Http\Controllers\MailChimpController::class, 'unsubscribeNewsletterThanks'])->name('unsubscribeNewsletterThanks');
 });
 Route::group(['namespace' => 'Back', 'prefix' => 'adminmedia', 'middleware' => ['auth', 'admin', 'ipmiddleware']], function () {
     Route::get('/', [DashboardController::class, 'index']);
