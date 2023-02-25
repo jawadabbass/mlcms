@@ -163,7 +163,7 @@ Route::group(['namespace' => 'Back', 'prefix' => 'adminmedia', 'middleware' => [
     //Contact us leads
     Route::post('/contact_request/lead_comment', [BackContactUsController::class, 'CommentContactLeads'])->name('lead_comments');
     Route::get('/read_data_contact_lead/{id}', [BackContactUsController::class, 'contactUsReadData'])->name('contact_lead_read');
-    Route::post('/contact-request-delete', [BackContactUsController::class, 'contactUsDelete'])->name('contact_request.delete');
+    Route::post('/contact-request-bulk-actions', [BackContactUsController::class, 'contactUsBulkActions'])->name('contact_request.bulk.actions');
     Route::post('/contact_request/price', [BackContactUsController::class, 'PriceContactLeads'])->name('lead_price');
     Route::get('/get_contact_request_to_edit/{id}', [BackContactUsController::class, 'getContactRequestToEdit'])->name('get_contact_request_to_edit');
     Route::post('/update_contact_request', [BackContactUsController::class, 'updateContactRequest'])->name('update_contact_request');

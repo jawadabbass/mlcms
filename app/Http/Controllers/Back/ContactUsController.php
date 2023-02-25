@@ -29,8 +29,9 @@ class ContactUsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $read_lead = $request->input('read_lead', 2);
         $sendResult = array('name' => '', 'email' => '', 'dates' => '');
         if (isset($_GET['name']) || isset($_GET['email']) || isset($_GET['dates'])) {
             $searchArr = array();
@@ -50,6 +51,9 @@ class ContactUsController extends Controller
                 }
             }
             $specialistQuery = ContactUs::with('user')->with('assessment.assessment_question')->orderBy('dated', 'DESC');
+            if ($read_lead != 2) {
+                $specialistQuery->where('read_lead', $read_lead);
+            }
             if (isset($_GET['name']) && !empty($_GET['name'])) {
                 $specialistQuery->where('name', 'like', '%' . $_GET['name'] . '%')->orWhere('email', 'like', '%' . $_GET['name'] . '%')->where('email', 'like', '%' . $_GET['name'] . '%')->orWhere('name', 'like', '%' . $_GET['name'] . '%');
             }
@@ -338,10 +342,16 @@ class ContactUsController extends Controller
         $contatUsRequestObj->update();
         return response()->json(['message' => 'Contact request updated successfully!', 'contatUsRequestObj' => $contatUsRequestObj]);
     }
-    public function contactUsDelete(Request $request)
+    public function contactUsBulkActions(Request $request)
     {
-        ContactUs::whereIn('id', $request->contact_request_check)->delete();
-        Session::flash('msg', 'Deleted Successfully');
+        if ($request->bulk_action === 'delete') {
+            ContactUs::whereIn('id', $request->contact_request_check)->delete();
+            Session::flash('msg', 'Deleted successfully');
+        }
+        if ($request->bulk_action === 'read') {
+            ContactUs::whereIn('id', $request->contact_request_check)->update(['read_lead'=>1]);
+            Session::flash('msg', 'Marked read successfully');
+        }
         return redirect(route('contact_request.index'));
     }
 }

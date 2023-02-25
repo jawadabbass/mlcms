@@ -51,6 +51,7 @@
                             </div>
                             <br>
                             <form method="get" action="{{ route('contact_request.index') }}" id="search_form">
+                                <input type="hidden" name="read_lead" id="read_lead" value="{{ request()->input('read_lead', 2) }}" />
                                 <div class="row" onKeyPress="return checkSubmit(event)">
                                     <div class="col-md-3">
                                         <input type="text" name="name" class="form-control"
@@ -62,7 +63,8 @@
                                         echo $_GET['dates'];
                                     } ?>">
                                     <div class="col-md-3 form-group">
-                                        <input type="text" name="dates" id="reportrange" placeholder="All" class="form-control">
+                                        <input type="text" name="dates" id="reportrange" placeholder="All"
+                                            class="form-control">
                                     </div>
                                     <div class="col-md-1 text-start">
                                         <button type="submit" class="btn btn-info"><i class="fa-solid fa-search"
@@ -74,134 +76,150 @@
                                     </div>
                                 </div>
                             </form>
-                            <form method="post" onSubmit="return confirm('Are you sure?');" action="{{ route('contact_request.delete') }}" id="delete_contact_request_form">
+                            <form method="post" onSubmit="return confirm('Are you sure?');"
+                                action="{{ route('contact_request.bulk.actions') }}" id="bulk_actions_contact_request_form">
                                 @csrf
-                                
-                            <table class="table table-bordered table-inverse table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            <input type="checkbox" id="contact_request_check_all" />
-                                            <button type="submit" class="btn btn-small btn-danger" id="contact_request_delete_all" style="display:none;">Delete</button>
-                                        </th>
-                                        <th></th>
-                                        <th width="8%">ID</th>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Phone</th>
-                                        <th width="15%">Package</th>
-                                        <th>Date</th>
-                                        <th>Comment</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @php
-                                        $Bstatus = '';
-                                        $BGcolor = '';
-                                    @endphp
-                                    @if (count($result) > 0)
-                                        @foreach ($result as $row)
-                                            @php
-                                                $bgColor = isset($bgColor) && $bgColor == '#f9f9f9' ? '#FFFFFF' : '#f9f9f9';
-                                            @endphp
-                                            <tr id="trr{{ $row->id }}" onclick="read_data(<?php echo $row->id; ?>)">
-                                                <td><input type="checkbox" class="contact_request_check" name="contact_request_check[]"
-                                                    value="<?php echo $row->id; ?>" /></td>
-                                                <td><a style="font-size: 24px;" data-toggle="tooltip" title=""
-                                                        href="javascript:;"
-                                                        onclick="showme_page('#subtrr{{ $row->id }}',this)"
-                                                        data-original-title="Show more"><i class="fa-solid fa-angle-double-down"
-                                                            aria-hidden="true"></i></a></td>
-                                                <td>{{ $row->id }}
-                                                    @if ($row->read_lead == 0)
-                                                        <strong style="color: red;font-size: 20px;" class="blink_me"
-                                                            id="read11_value-<?php echo $row->id; ?>">!</strong>
-                                                    @endif
-                                                </td>
-                                                <td>{{ $row->name }}</td>
-                                                <td><a href="mailto:{{ $row->email }}">{{ $row->email }}</a></td>
-                                                <td><a href="tel:{{ $row->phone }}">{{ $row->phone }}</a></td>
-                                                <td>
-                                                    <select class="form-control"
-                                                        onchange="update_package('{{ $row->id }}',this.value)">
-                                                        <option value="">-Select-</option>
-                                                        @foreach ($get_all_packages as $kk => $package)
-                                                            <option value="{{ $package->id }}"
-                                                                @if ($row->package_id == $package->id) selected="" @endif>
-                                                                {{ $package->heading }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </td>
-                                                <td>{{ format_date($row->dated, 'date_time') }}</td>
-                                                <td>
-                                                    <a href="javascript:;" data-bs-toggle="popover"
-                                                        class="btn btn-sm btn-success" data-bs-placement="bottom"
-                                                        data-bs-title="User Comment" data-bs-content="{{ $row->comments }}">
-                                                        <i class="fa-solid fa-comment" aria-hidden="true"></i>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                            <tr style="display: none;" id="subtrr{{ $row->id }}">
-                                                <td colspan="2">
-                                                    <strong>IP: </strong>{{ $row->ip }} <br>
-                                                    <strong>Added By: </strong>{{ $row->user->name ?? '-' }} <br>
-                                                </td>
-                                                <td colspan="7">
-                                                    <a class="btn btn-sm btn-info"
-                                                                href="mailto:{{ $row->email }}"
-                                                                title="Reply via Email">
-                                                                <i class="fa-solid fa-reply" aria-hidden="true"></i>
-                                                                Reply</a>
-                                                                
-                                                            <a onclick="comment_model({{ $row->id }})"
-                                                                class="btn btn-success  btn-sm" style="color: white;"><i
-                                                                    class="fa-solid fa-pencil" aria-hidden="true"></i> Add
-                                                                Comment</a>
-                                                            <a href="{{ route('contact_request.show', $row->id) }}"
-                                                                class="btn btn-success  btn-sm"><i class="fa-solid fa-history"
-                                                                    aria-hidden="true"></i> History</a>
-                                                            @if (isset($clientArr[$row->email]))
-                                                                <a class="btn btn-sm btn-success" target="_blank"
-                                                                    href="{{ admin_url() }}manage_clients/{{ $clientArr[$row->email] }}"><i
-                                                                        class="fa-solid fa-user" aria-hidden="true"></i>
-                                                                    Existing Client</a>
-                                                            @else
-                                                                <a class="btn btn-sm btn-warning" href="javascript:;"
-                                                                    onclick="convert_client('{{ $row->id }}')"><i
-                                                                        class="fa-solid fa-user" aria-hidden="true"></i>
-                                                                    Convert to Client</a>
-                                                            @endif
-                                                        <a class="btn btn-sm btn-danger"
-                                                                href="javascript:"
-                                                                onclick="del_recrod('{{ $row->id }}');"
-                                                                title="Delete"><i class="glyphicon glyphicon-trash"></i>
-                                                                Delete</a>
-                                                            <a class="btn btn-sm btn-info"
-                                                                onclick="send_template_email('{{ $row->id }}','lead','single')"
-                                                                href="javascript:"><i
-                                                                    class="fa-solid fa-envelope-square"></i>Send
-                                                                Email</a>
-                                                            <a onclick="send_template_sms('{{ $row->id }}','lead','single')"
-                                                                class="btn btn-sm btn-info" href="javascript:"><i
-                                                                    class="fa-solid awesome_style fa-share"></i>Send
-                                                                Message</a>
-                                                        @if ($row->assesment_status == 'sent')
-                                                                <a onclick="send_assessment_email('{{ $row->id }}','lead')"
-                                                                    class="btn btn-sm btn-primary" href="javascript:"><i
-                                                                        class="fa-solid fa-envelope-square"></i> reSend
-                                                                    Questionnaire</a>
-                                                        @elseif($row->assesment_status == 'receive')
-                                                                <a class="btn btn-sm btn-info" href="javascript:"
-                                                                    data-toggle="modal"
-                                                                    data-target="#largeShoes-<?php echo $row->id; ?>"><i
-                                                                        class="fa-solid fa-envelope-square"></i>View Answered
-                                                                    Questions</a>
+                                <input type="hidden" name="bulk_action" id="bulk_action" value="delete" />
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button type="submit" class="btn btn-small btn-primary m-1 bulk_actions"
+                                            onclick="setBulkAction('read');" style="display:none;">Mark All Read</button>
+                                        <button type="submit" class="btn btn-small btn-danger m-1 bulk_actions"
+                                            onclick="setBulkAction('delete');" style="display:none;">Delete</button>
+                                        @if (request()->input('read_lead', 2) == 1 || request()->input('read_lead', 2) == 2)
+                                            <button type="button" class="btn btn-small btn-warning m-1"
+                                                onclick="filterReadStatus(0);">Show Unread</button>
+                                        @else
+                                            <button type="button" class="btn btn-small btn-warning m-1"
+                                                onclick="filterReadStatus(2);">Show All</button>
+                                        @endif
+                                    </div>
+                                </div>
+                                <table class="table table-bordered table-inverse table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <input type="checkbox" id="contact_request_check_all" />
+                                            </th>
+                                            <th></th>
+                                            <th width="8%">ID</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Phone</th>
+                                            <th width="15%">Package</th>
+                                            <th>Date</th>
+                                            <th>Comment</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                            $Bstatus = '';
+                                            $BGcolor = '';
+                                        @endphp
+                                        @if (count($result) > 0)
+                                            @foreach ($result as $row)
+                                                @php
+                                                    $bgColor = isset($bgColor) && $bgColor == '#f9f9f9' ? '#FFFFFF' : '#f9f9f9';
+                                                @endphp
+                                                <tr id="trr{{ $row->id }}" onclick="read_data(<?php echo $row->id; ?>)">
+                                                    <td><input type="checkbox" class="contact_request_check"
+                                                            name="contact_request_check[]" value="<?php echo $row->id; ?>" />
+                                                    </td>
+                                                    <td><a style="font-size: 24px;" data-toggle="tooltip" title=""
+                                                            href="javascript:;"
+                                                            onclick="showme_page('#subtrr{{ $row->id }}',this)"
+                                                            data-original-title="Show more"><i
+                                                                class="fa-solid fa-angle-double-down"
+                                                                aria-hidden="true"></i></a></td>
+                                                    <td>{{ $row->id }}
+                                                        @if ($row->read_lead == 0)
+                                                            <strong style="color: red;font-size: 20px;" class="blink_me"
+                                                                id="read11_value-<?php echo $row->id; ?>">!</strong>
+                                                        @endif
+                                                    </td>
+                                                    <td>{{ $row->name }}</td>
+                                                    <td><a href="mailto:{{ $row->email }}">{{ $row->email }}</a></td>
+                                                    <td><a href="tel:{{ $row->phone }}">{{ $row->phone }}</a></td>
+                                                    <td>
+                                                        <select class="form-control"
+                                                            onchange="update_package('{{ $row->id }}',this.value)">
+                                                            <option value="">-Select-</option>
+                                                            @foreach ($get_all_packages as $kk => $package)
+                                                                <option value="{{ $package->id }}"
+                                                                    @if ($row->package_id == $package->id) selected="" @endif>
+                                                                    {{ $package->heading }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                    <td>{{ format_date($row->dated, 'date_time') }}</td>
+                                                    <td>
+                                                        <a href="javascript:;" data-bs-toggle="popover"
+                                                            class="btn btn-sm btn-success" data-bs-placement="bottom"
+                                                            data-bs-title="User Comment"
+                                                            data-bs-content="{{ $row->comments }}">
+                                                            <i class="fa-solid fa-comment" aria-hidden="true"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr style="display: none;" id="subtrr{{ $row->id }}">
+                                                    <td colspan="2">
+                                                        <strong>IP: </strong>{{ $row->ip }} <br>
+                                                        <strong>Added By: </strong>{{ $row->user->name ?? '-' }} <br>
+                                                    </td>
+                                                    <td colspan="7">
+                                                        <a class="btn btn-sm btn-info" href="mailto:{{ $row->email }}"
+                                                            title="Reply via Email">
+                                                            <i class="fa-solid fa-reply" aria-hidden="true"></i>
+                                                            Reply</a>
+
+                                                        <a onclick="comment_model({{ $row->id }})"
+                                                            class="btn btn-success  btn-sm" style="color: white;"><i
+                                                                class="fa-solid fa-pencil" aria-hidden="true"></i> Add
+                                                            Comment</a>
+                                                        <a href="{{ route('contact_request.show', $row->id) }}"
+                                                            class="btn btn-success  btn-sm"><i class="fa-solid fa-history"
+                                                                aria-hidden="true"></i> History</a>
+                                                        @if (isset($clientArr[$row->email]))
+                                                            <a class="btn btn-sm btn-success" target="_blank"
+                                                                href="{{ admin_url() }}manage_clients/{{ $clientArr[$row->email] }}"><i
+                                                                    class="fa-solid fa-user" aria-hidden="true"></i>
+                                                                Existing Client</a>
                                                         @else
-                                                                <a href="javascript:;"
-                                                                    onclick="send_assessment_email('{{ $row->id }}','lead')"
-                                                                    class="btn btn-sm btn-primary" href="javascript:"><i
-                                                                        class="fa-solid fa-envelope-square"></i> Send
-                                                                    Questionnaire</a>
+                                                            <a class="btn btn-sm btn-warning" href="javascript:;"
+                                                                onclick="convert_client('{{ $row->id }}')"><i
+                                                                    class="fa-solid fa-user" aria-hidden="true"></i>
+                                                                Convert to Client</a>
+                                                        @endif
+                                                        <a class="btn btn-sm btn-danger" href="javascript:"
+                                                            onclick="del_recrod('{{ $row->id }}');"
+                                                            title="Delete"><i class="glyphicon glyphicon-trash"></i>
+                                                            Delete</a>
+                                                        <a class="btn btn-sm btn-info"
+                                                            onclick="send_template_email('{{ $row->id }}','lead','single')"
+                                                            href="javascript:"><i
+                                                                class="fa-solid fa-envelope-square"></i>Send
+                                                            Email</a>
+                                                        <a onclick="send_template_sms('{{ $row->id }}','lead','single')"
+                                                            class="btn btn-sm btn-info" href="javascript:"><i
+                                                                class="fa-solid awesome_style fa-share"></i>Send
+                                                            Message</a>
+                                                        @if ($row->assesment_status == 'sent')
+                                                            <a onclick="send_assessment_email('{{ $row->id }}','lead')"
+                                                                class="btn btn-sm btn-primary" href="javascript:"><i
+                                                                    class="fa-solid fa-envelope-square"></i> reSend
+                                                                Questionnaire</a>
+                                                        @elseif($row->assesment_status == 'receive')
+                                                            <a class="btn btn-sm btn-info" href="javascript:"
+                                                                data-toggle="modal"
+                                                                data-target="#largeShoes-<?php echo $row->id; ?>"><i
+                                                                    class="fa-solid fa-envelope-square"></i>View Answered
+                                                                Questions</a>
+                                                        @else
+                                                            <a href="javascript:;"
+                                                                onclick="send_assessment_email('{{ $row->id }}','lead')"
+                                                                class="btn btn-sm btn-primary" href="javascript:"><i
+                                                                    class="fa-solid fa-envelope-square"></i> Send
+                                                                Questionnaire</a>
                                                         @endif
                                                         <div class="modal" id="largeShoes-<?php echo $row->id; ?>"
                                                             tabindex="-1" role="dialog"
@@ -249,17 +267,16 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </td>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @else
+                                            <tr>
+                                                <td> No Record found!</td>
                                             </tr>
-                                        @endforeach
-                                    @else
-                                        <tr>
-                                            <td> No Record found!</td>
-                                        </tr>
-                                    @endif
-                                </tbody>
-                            </table>
+                                        @endif
+                                    </tbody>
+                                </table>
                             </form>
                         </div>
                     </div>
@@ -477,7 +494,8 @@
                             'danger', true, 1500);
                     } else {
                         // location.reload();
-                        alertme('<i class="fa-solid fa-check" aria-hidden="true"></i> Done Successfully ', 'success',
+                        alertme('<i class="fa-solid fa-check" aria-hidden="true"></i> Done Successfully ',
+                            'success',
                             true, 1500);
                         $("#trr" + id).fadeOut(1000);
                         $("#subtrr" + id).hide(1000);
@@ -607,7 +625,8 @@
                 var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
                 var start = moment().subtract(Difference_In_Days, 'days');
                 var end = moment();
-            }            
+            }
+
             function cb(start, end) {
                 $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
             }
@@ -776,9 +795,9 @@
         }
 
         $('#contact_request_check_all').on('change', function() {
-            if($('#contact_request_check_all').is(':checked')){
+            if ($('#contact_request_check_all').is(':checked')) {
                 $('.contact_request_check').prop('checked', true);
-            }else{
+            } else {
                 $('.contact_request_check').prop('checked', false);
             }
             checkUncheckDelCheckBoxes();
@@ -788,19 +807,27 @@
             checkUncheckDelCheckBoxes();
         })
 
-        function checkUncheckDelCheckBoxes(){
-            if($('.contact_request_check:checked').length == $('.contact_request_check').length){
+        function checkUncheckDelCheckBoxes() {
+            if ($('.contact_request_check:checked').length == $('.contact_request_check').length) {
                 $('#contact_request_check_all').prop('checked', true);
-            }else{
+            } else {
                 $('#contact_request_check_all').prop('checked', false);
             }
-            
-            if($('.contact_request_check:checked').length > 0){
-                $('#contact_request_delete_all').show();
-            }else{
-                $('#contact_request_delete_all').hide();
+
+            if ($('.contact_request_check:checked').length > 0) {
+                $('.bulk_actions').show();
+            } else {
+                $('.bulk_actions').hide();
                 $('#contact_request_check_all').prop('checked', false);
             }
+        }
+
+        function setBulkAction(action = 'delete') {
+            $('#bulk_action').val(action);
+        }
+        function filterReadStatus(status){
+            $('#read_lead').val(status);
+            $('#search_form').submit();
         }
     </script>
 @endsection
