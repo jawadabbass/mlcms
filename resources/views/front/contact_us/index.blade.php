@@ -252,7 +252,7 @@
                             title: 'Sorry!',
                             html: data.error,
                             timer: 2000,
-                            timerProgressBar: false
+                            timerProgressBar: true
                         })
                     }
                 },
