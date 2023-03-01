@@ -14,7 +14,7 @@ class GalleryController extends Controller
         $seoArr = getSeoArrayModule(175);
         $albumIds = Album::where('status', 1)->pluck('id')->toArray();
         $albums = Album::where('status', 1)->orderBy('order_by', 'ASC')->get();
-        $images = Image::whereIn('album_id', $albumIds)->orderBy('orderBy', 'ASC')->get();
+        $images = Image::whereIn('album_id', $albumIds)->where('status', 1)->orderBy('orderBy', 'ASC')->get();
         return view('front.gallery.index', compact('seoArr', 'images', 'albums'));
     }
 }

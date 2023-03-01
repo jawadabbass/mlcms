@@ -1338,14 +1338,12 @@ div.dataTables_filter input {
 .dropdown-menu li a {
   margin-left: 10px;
 }
-
 #sortable {
   list-style-type: none;
   margin: 0;
   padding: 0;
   width: 100%;
 }
-
 #sortable li {
   margin: 10px 0px 10px 0px;
   padding: 8px;
@@ -1354,12 +1352,10 @@ div.dataTables_filter input {
   line-height: 1em;
   cursor: pointer;
 }
-
 .ui-state-highlight {
   height: 2em;
   line-height: 1em;
 }
-
 .ui-state-default {
   border: 1px solid #2e3e4e;
   background: #41586e;

@@ -57,8 +57,6 @@ Route::get('/clear-cache', function () {
     Artisan::call('config:clear');
     Artisan::call('view:clear');
     Artisan::call('optimize:clear');
-    Artisan::call('logs:clear');
-
     return 'Cache is cleared';
 });
 Route::view('/login/adminLogin', 'auth.admin_login');
@@ -193,6 +191,7 @@ Route::group(['namespace' => 'Back', 'prefix' => 'adminmedia', 'middleware' => [
     Route::post('/gallery/is_feature', [BackGalleryController::class, 'isfeatured'])->name('album.feature');
     Route::get('/albums/order', [BackGalleryController::class, 'order']);
     Route::get('/albums/gallery/order', [BackGalleryController::class, 'imagesOrder']);
+    Route::post('/albums/gallery/status', [BackGalleryController::class, 'imageStatus']);
     Route::post('/albums/gallery/is_feature', [BackGalleryController::class, 'imageIsFeatured']);
     Route::get('/albums/gallery/delete/{id}', [BackGalleryController::class, 'deleteImage']);
     Route::get('/albums/{id}/gallery/create', [BackGalleryController::class, 'create'])->name('album.gallery.create');

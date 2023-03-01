@@ -44,6 +44,29 @@ class GalleryController extends Controller
         }
     }
 
+    public function imageStatus()
+    {
+        $album = AlbumImage::where(['id' => request('id')])->first();
+        if ($album->status == 1) {
+            $album->update([
+                'status' => 0,
+            ]);
+
+            return response([
+                'status' => true,
+                'message' => 'inactive',
+            ]);
+        } else {
+            $album->update([
+                'status' => 1,
+            ]);
+
+            return response([
+                'status' => true,
+                'message' => 'active',
+            ]);
+        }
+    }
     public function imageIsFeatured()
     {
         $album = AlbumImage::where(['id' => request('id')])->first();

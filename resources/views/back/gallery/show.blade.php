@@ -1,5 +1,4 @@
 @extends('back.layouts.app', ['title' => $title])
-
 @section('beforeHeadClose')
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     <link href="{{ asset('back/css/cropper.css') }}" rel="stylesheet">
@@ -18,7 +17,6 @@
     </style>
 @endsection
 @section('content')
-
     <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
         <!-- Inner Header -->
         <section class="content-header">
@@ -35,11 +33,8 @@
                 <div class="col-md-4 col-sm-6"> @include('back.common_views.quicklinks') </div>
             </div>
         </section>
-
         <!-- Main Content starts --->
-
         <section class="content">
-
             <div class="row">
                 <div class="col-xs-12 col-md-12">
                     <div class="row">
@@ -47,14 +42,11 @@
                             <h3 class="box-title">{{ $album_name }} Gallery</h3>
                         </div>
                     </div>
-
                     @if (session('success'))
                         <div class="alert alert-success">
                             <i class="fa-solid fa-check" aria-hidden="true"></i> {{ session('success') }}
                         </div>
                     @endif
-
-
                     @if ($errors->any())
                         <div class="row">
                             <div class="col-md-12">
@@ -65,16 +57,13 @@
                                         @endforeach
                                     </ul>
                                 </div>
-
                             </div>
                         </div>
                     @endif
-
                     <!-- Image Uploader  -->
                     <div class="upload_adm_area" id="upload_adm_area">
                         <h5>Upload Image(s) </h5>
                         <hr>
-
                         <form action="{{ route('upload_album_images') }}" enctype="multipart/form-data" method="post">
                             {{ csrf_field() }}
                             <input type="hidden" name="album" value="{{ request()->route('id') }}">
@@ -96,14 +85,9 @@
                             <div id="image_preview" class="row">
                             </div>
                         </form>
-
                         </hr>
-
                     </div>
                     <!-- End Image Uploader  -->
-
-
-
                 </div>
             </div>
         </section>
@@ -111,7 +95,6 @@
             <div class="row sortable121">
                 @forelse($images as $image)
                     <div class="col-md-4" id="{{ $image->id }}">
-
                         <div class="mb-3 sort2">
                             <div class="imagebox">
                                 <img alt="" id="image_{{ $image->id }}" data-imgname="{{ $image->imageUrl }}"
@@ -119,13 +102,17 @@
                                     style="width:100%" alt="{{ $image->image_alt }}" title="{{ $image->image_title }}">
                             </div>
                             <div class="caption myadelbtn">
-
                             </div>
                             <div class="image_btn mt-2">
                                 <span class="drag"><i class="fa-solid fa-arrows" aria-hidden="true"></i></span>
+                                <a onClick="update_status({{ $image->id }}, this)" href="javascript:void(0)"
+                                    class="mb-1 btn btn-{{ $image->status == 1 ? 'success' : 'secondary' }}"
+                                    id="{{ 'status_' . $image->id }}"><i class="fa-solid fa-eye"
+                                        aria-hidden="true"></i></a>
                                 <a onClick="update_featured({{ $image->id }}, this)" href="javascript:void(0)"
                                     class="mb-1 btn btn-{{ $image->isFeatured == 1 ? 'success' : 'secondary' }}"
-                                    id="{{ 'featured_' . $image->id }}"><i class="fa-solid fa-star" aria-hidden="true"></i></a>
+                                    id="{{ 'featured_' . $image->id }}"><i class="fa-solid fa-star"
+                                        aria-hidden="true"></i></a>
                                 <a onclick="deleteImage({{ $image->id }}, this);" class="mb-1 btn btn-danger"
                                     data-bs-toggle="tooltip" data-placement="left" title="Delete this image"
                                     href="javascript:;"> <i class="fa-solid fa-trash"></i></a>
@@ -133,7 +120,6 @@
                                     <a onClick="markBeforeAfter({{ $image->id }}, this)" href="javascript:void(0)"
                                         class="mb-1 btn btn-warning">Mark Before After</a>
                                 @endif
-
                                 <a onClick="bind_cropper_preview_gallery_image({{ $image->album_id }}, {{ $image->id }});"
                                     href="javascript:void(0)" class="mb-1 btn btn-warning"><i class="fa-solid fa-crop"
                                         aria-hidden="true"></i></a>
@@ -142,7 +128,6 @@
                                         aria-hidden="true"></i></a>
                             </div>
                         </div>
-
                     </div>
                 @empty
                     <div>There is no image found in the album.</div>
@@ -190,14 +175,12 @@
                 </form>
             </div>
         </div>
-
         <div class="modal fade" id="galleryImageAltTitleModal" role="dialog">
             <div class="modal-dialog modal-lg">
                 <form action="#" id="galleryImageAltTitleForm" class="form-horizontal">
                     @csrf
                     <input type="hidden" name="album_id" id="album_id" value="">
                     <input type="hidden" name="image_id" id="image_id" value="">
-
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="modal-title">Image Alt-Title Form</h4>
@@ -210,11 +193,13 @@
                                     <div class="col-md-12">
                                         <div class="mb-3">
                                             <label for="image_alt" class="form-label">Image Alt</label>
-                                            <input type="text" name="image_alt" id="image_alt" class="form-control" placeholder="Image Alt">
+                                            <input type="text" name="image_alt" id="image_alt" class="form-control"
+                                                placeholder="Image Alt">
                                         </div>
                                         <div class="mb-3">
                                             <label for="image_title" class="form-label">Image Title</label>
-                                            <input type="text" name="image_title" id="image_title" class="form-control" placeholder="Image Title">
+                                            <input type="text" name="image_title" id="image_title"
+                                                class="form-control" placeholder="Image Title">
                                         </div>
                                     </div>
                                 </div>
@@ -232,7 +217,6 @@
             </div>
         </div>
     @endsection('content')
-
     @section('beforeBodyClose')
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
         <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
@@ -293,10 +277,27 @@
                     }
                 });
             }
-
-
+            function update_status(id, elem) {
+                $.ajax({
+                    url: "{{ url('/adminmedia/albums/gallery/status') }}",
+                    method: 'post',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "id": id,
+                    },
+                    success: function(response) {
+                        if (response.message == 'active') {
+                            elem.classList.remove('btn-secondary');
+                            elem.classList.add('btn-success');
+                        } else {
+                            elem.classList.remove('btn-success');
+                            elem.classList.add('btn-secondary');
+                        }
+                        console.log(response);
+                    }
+                });
+            }
             function update_featured(id, elem) {
-
                 $.ajax({
                     url: "{{ url('/adminmedia/albums/gallery/is_feature') }}",
                     method: 'post',
@@ -313,11 +314,9 @@
                             elem.classList.add('btn-secondary');
                         }
                         console.log(response);
-
                     }
                 });
             }
-
             function markBeforeAfter(id, elem) {
                 $.ajax({
                     url: "{{ url('/adminmedia/albums/gallery/markBeforeAfter') }}",
