@@ -2,6 +2,15 @@
 @section('beforeHeadClose')
     <link href="{{ base_url() . 'module/blog/front/css/blog.css' }}" rel="stylesheet" type="text/css" />
     <script src='https://www.google.com/recaptcha/api.js'></script>
+    <style>
+        .error-bg {
+            background-color: #e6cfcf;
+        }
+
+        .error {
+            color: #FF0000;
+        }
+    </style>
 @endsection
 @section('content')
     @php $settingArr = settingArr(); @endphp
@@ -11,7 +20,7 @@
     @php echo cms_edit_page('cms',$data->id);@endphp
     <div class="about-wrap">
         <!-- Start Breadcrumb
-                        ============================================= -->
+                                                                            ============================================= -->
         <div class="breadcrumb-area shadow dark bg-fixed text-center text-light"
             style="background-image: url(<?php echo base_url(); ?>front/img/banner/23.jpg);">
             <div class="container">
@@ -28,7 +37,7 @@
         </div>
         <!-- End Breadcrumb -->
         <!-- Start Contact Area
-                        ============================================= -->
+                                                                            ============================================= -->
         <div class="contact-area default-padding">
             <div class="container">
                 <div class="row">
@@ -67,56 +76,49 @@
                         <div class="col-md-8 contact-form">
                             <h2>Send Us A Message</h2>
                             @php  echo $data->content @endphp
+                            <div id="errorMessages"></div>
                             <form action="#" method="POST" name="frm_process" id="contactForm" class="contact-form">
                                 @csrf
                                 <div class="col-md-12">
                                     <div class="row">
                                         <div class="form-group">
                                             <input name="name" type="text" placeholder="Name"
-                                                value="{{ old('first_name') }}" class="form-control req" id="first_name"
-                                                required>
-                                            <span class="alert-error"></span>
-                                        </div>
+                                                value="{{ old('name') }}" class="form-control" id="name" required>
+                                                <div id="name-error" class="error"></div>
+                                            </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <input name="email" type="email" placeholder="Email"
-                                                value="{{ old('email') }}" class="form-control req valid_email"
-                                                id="email" required>
-                                            <span class="alert-error"></span>
+                                                value="{{ old('email') }}" class="form-control" id="email" required>
+                                                <div id="email-error" class="error"></div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <input name="phone" type="text" placeholder="Phone"
-                                                value="{{ old('phone') }}" class="form-control req valid_phone"
-                                                id="phone_number" data-placement="top" data-toggle="hover"
-                                                title="Popover Header" data-content="Some content inside the popover"
-                                                required>
-                                            <span class="alert-error"></span>
+                                                value="{{ old('phone') }}" class="form-control" id="phone" required>
+                                                <div id="phone-error" class="error"></div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="row">
                                         <div class="form-group comments">
-                                            <textarea name="message" placeholder="Message" class="form-control req" rows="6" id="message" required>{{ old('message') }}</textarea>
+                                            <textarea name="comments" placeholder="Message" class="form-control" rows="6" id="comments" required>{{ old('comments') }}</textarea>
+                                            <div id="comments-error" class="error"></div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="row">
                                         <div class="g-recaptcha" data-sitekey="{{ config('recaptcha.siteKey') }}"></div>
-                                        <button type="button" id="btnSave" onclick="save()" class="sbutn"
-                                            style="margin-bottom: 11px;margin-top: 5px;">Send Message <i
+                                        <div id="g-recaptcha-response-error" class="error"></div>
+                                        <button type="button" onclick="submitContactForm();">Send Message <i
                                                 class="fa fa-paper-plane"></i> </button>
                                     </div>
-                                </div>
-                                <!-- Alert Message -->
-                                <div class="col-md-12 alert-notification">
-                                    <div id="message" class="alert-msg"></div>
                                 </div>
                             </form>
                         </div>
@@ -126,7 +128,7 @@
         </div>
         <!-- End Contact Area -->
         <!-- Start Google Maps
-                        ============================================= -->
+                                                                            ============================================= -->
         @if ($settingArr->google_map_status == 1)
             <div class="maps-area">
                 <div class="container-full">
@@ -144,150 +146,128 @@
     </div>
 @endsection
 @section('beforeBodyClose')
-    <script src="{{ asset('lib/sweetalert2.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#contactForm").validate({
+                rules: {
+                    name: {
+                        required: true
+                    },
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    phone: {
+                        required: true,
+                        phoneUS: true
+                    },
+                    comments: {
+                        required: true
+                    }
+                },
+                messages: {
+                    name: {
+                        required: "Please enter your name"
+                    },
+                    email: {
+                        required: "Please provide email",
+                        email: "Please provide valid email"
+                    },
+                    phone: {
+                        required: "Please provide phone",
+                        phoneUS: "Valid phone number required"
+                    },
+                    comments: {
+                        required: "Please provide message"
+                    }
+                },
+                errorElement: "div",
+                errorPlacement: function(error, element) {
+                    element.addClass('error-bg');
+                    element.siblings('.error').remove();
+                    if (element.prop("type") === "checkbox") {
+                        error.insertAfter(element.parent("label"));
+                    } else {
+                        error.insertAfter(element);
+                    }
+                },
+                success: function(label, element) {
+                    //
+                },
+                highlight: function(element, errorClass, validClass) {
+                    $(element).addClass('error-bg');
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).removeClass('error-bg');
+                },
+                invalidHandler: function(event, validator) {
+                    //
+                },
+                submitHandler: function() {
+                    submitContactFormAjax();
+                }
+            });
+        });
+
+        function submitContactForm() {
+            $('#contactForm').submit();
+        }
+        $('#phone').inputmask("999-999-9999");
+    </script>
     <script>
         baseUrl = "{{ base_url() }}";
 
-        function save() {
-            if (validateForm()) {
-                url = "{{ base_url() }}contact-us";
-                method = 'POST';
-                header = '';
-                let formData = new FormData($('#contactForm')[0]);
-                console.log(formData);
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        function submitContactFormAjax() {
+            url = "{{ base_url() }}contact-us";
+            method = 'POST';
+            header = '';
+            let formData = new FormData($('#contactForm')[0]);
+            console.log(formData);
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: url,
+                type: method,
+                data: formData,
+                headers: header,
+                async: true,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    data = JSON.parse(data);
+                    if (data.status) {
+                        $("#contactForm").trigger('reset');
+                        Swal.fire({
+                            title: 'Thank you!',
+                            html: 'Your message has been sent.',
+                            timer: 2000,
+                            timerProgressBar: false
+                        })
+                    } else {
+                        Swal.fire({
+                            title: 'Sorry!',
+                            html: data.error,
+                            timer: 2000,
+                            timerProgressBar: false
+                        })
                     }
-                });
-                $.ajax({
-                    url: url,
-                    type: method,
-                    data: formData,
-                    headers: header,
-                    async: true,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    success: function(data) {
-                        data = JSON.parse(data);
-                        if (data.status) {
-                            $("#contactForm").trigger('reset');
-                            swal(
-                                'Thank you!',
-                                'Your message has been sent.',
-                                'success'
-                            );
-                        } else {
-                            swal(
-                                'Sorry!',
-                                data.error,
-                                'error'
-                            );
-                        }
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        alert('Error sending your request');
-                        console.log(jqXHR);
-                        console.log(textStatus);
-                        console.log(errorThrown);
-                    }
-                });
-            }
-        }
-
-        function validateForm() {
-            $("#first_name").css('background-color', '');
-            $("#phone_number").css('background-color', '');
-            $("#email").css('background-color', '');
-            $("#message").css('background-color', '');
-            var text = '';
-            var name = $("#first_name").val();
-            var valid = true;
-            if (name.length < 3) {
-                text += "* Name must be valid <br>";
-                $("#first_name").css('background-color', '#e6cfcf');
-                valid = false;
-            }
-            var phone = $("#phone_number").val();
-            var isnum = validatePhone(phone);
-            console.log(isnum);
-            if (!isnum || phone.length < 10) {
-                text += "* Phone must be valid (<em>format: xxx-xxx-xxxx</em>) <br>";
-                $("#phone_number").css('background-color', '#e6cfcf');
-                valid = false;
-            }
-            var email = $("#email").val();
-            if (!isEmail(email)) {
-                text += "* Email must be valid  <br>";
-                $("#email").css('background-color', '#e6cfcf');
-                valid = false;
-            }
-            var message = $("#message").val();
-            if (message.length < 10) {
-                text += "* Message must be valid  <br>";
-                $("#message").css('background-color', '#e6cfcf');
-                valid = false;
-            }
-            var gRecaptchaResponse = $("#g-recaptcha-response").val();
-            if (gRecaptchaResponse.length < 1) {
-                text += "* Please verify yourself <br>";
-                valid = false;
-            }
-            if (!valid) {
-                swal(
-                    'ERROR',
-                    text,
-                    'error'
-                );
-                return false;
-            }
-            return true;
-        }
-
-        function isEmail(email) {
-            var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-            return regex.test(email);
-        }
-
-        function validatePhone(p) {
-            var phoneRe = /^[1-9]\d{2}[1-9]\d{2}\d{4}$/;
-            var digits = p.replace(/\D/g, "");
-            return phoneRe.test(digits);
-        }
-        $('input.req,select.req,textarea.req').blur(function() {
-            if ($(this).val() == '') {
-                $(this).css("background-color", "#e6cfcf");
-            } else {
-                $(this).css("background-color", "");
-            }
-        });
-        $('input.valid_email').blur(function() {
-            if (isEmail($(this).val()) == false) {
-                $(this).css("background-color", "#e6cfcf");
-            } else {
-                $(this).css("background-color", "");
-            }
-        });
-        $('input.valid_phone').on('keydown', function(e) {
-            var ssnval = $(this).val();
-            var Len = ssnval.length;
-            if (e.keyCode > 47 && e.keyCode < 58) {} else if (e.keyCode > 95 && e.keyCode < 106) {} else if (e
-                .keyCode == 9) {
-                return true;
-            } else if (e.keyCode == 8 || e.keyCode == 13 || e.keyCode == 173) {} else {
-                return false;
-            }
-            if (e.keyCode != 8) {
-                if (e.keyCode != 173) {
-                    if (Len == 3 || Len == 7) {
-                        $(this).val($(this).val() + '-');
-                    }
-                    if (Len >= 12) {
-                        return false;
+                },
+                error: function(data) {
+                    if (data.status === 422) {
+                        var responseText = $.parseJSON(data.responseText);
+                        $.each(responseText.errors, function(key, value) {
+                            $('#'+key+'-error').html(value);
+                            $('#'+key+'-error').addClass('formValidationErrors');
+                            $('#'+key+'-error').show();
+                            scrollToErrors('.formValidationErrors');
+                        });
                     }
                 }
-            }
-        });
+            });
+        }
     </script>
 @endsection

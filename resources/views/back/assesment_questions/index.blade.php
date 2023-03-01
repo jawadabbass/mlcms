@@ -216,7 +216,7 @@
         var csrfToken = $('meta[name="csrf-token"]').attr('content');
         var show_cropper = false;
     </script>
-    <script src="{{ asset('lib/sweetalert2.js') }}"></script>
+    <script src="{{ asset('lib/sweetalert/sweetalert2.js') }}"></script>
     <script type="text/javascript" src="{{ env('APP_URL') . 'back/js/fileUploader.js' }}"></script>
     @include('back.assesment_questions.question_js')
 

@@ -304,7 +304,7 @@
     </aside>
 @endsection
 @section('beforeBodyClose')
-    <script src="{{ asset('lib/sweetalert2.js') }}"></script>
+    <script src="{{ asset('lib/sweetalert/sweetalert2.js') }}"></script>
     <script>
         function PackageManageContentShow($type) {
 

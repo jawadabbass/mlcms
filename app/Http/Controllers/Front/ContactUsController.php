@@ -31,7 +31,7 @@ class ContactUsController extends Controller
             'name' => ['required'],
             'email' => ['required', 'email'],
             'phone' => ['required'],
-            'message' => ['required'],
+            'comments' => ['required'],
             'g-recaptcha-response' => 'required|recaptcha',
         ];
 
@@ -40,7 +40,7 @@ class ContactUsController extends Controller
             'email.required' => 'Email is required',
             'email.email' => 'Valid Email is required',
             'phone.required' => 'Phone is required',
-            'message.required' => 'Message is required',
+            'comments.required' => 'Message is required',
             'g-recaptcha-response.required' => 'Please verify yourself',
             'g-recaptcha-response.recaptcha' => 'Please verify yourself',
         ];
@@ -49,7 +49,7 @@ class ContactUsController extends Controller
 
         $negativeKeywordsMetaData = Metadata::where('data_key', 'negative_keywords')->first();
         $negativeKeywords = explode(',', $negativeKeywordsMetaData->val1);
-        $sentenceToCheck = $request->name . ' ' . ' ' . $request->email . ' ' . $request->phone . ' ' . $request->company_name . ' ' . $request->message;
+        $sentenceToCheck = $request->name . ' ' . $request->email . ' ' . $request->phone . ' ' . $request->comments;
         $hasNegativeKeyword = false;
         if (count($negativeKeywords) > 0) {
             foreach ($negativeKeywords as $negativeKeyword) {
@@ -64,8 +64,7 @@ class ContactUsController extends Controller
             $contactUsRequest->name = $request->name;
             $contactUsRequest->email = $request->email;
             $contactUsRequest->phone = $request->phone;
-            $contactUsRequest->company_name = $request->company_name;
-            $contactUsRequest->comments = $request->message;
+            $contactUsRequest->comments = $request->comments;
             $contactUsRequest->ip = $request->ip();
             $contactUsRequest->dated = date('Y-m-d H:i:s');
             $contactUsRequest->save();

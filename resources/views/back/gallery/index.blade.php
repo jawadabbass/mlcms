@@ -220,7 +220,7 @@
 
     @section('beforeBodyClose')
     @include('back.gallery.gallery_js');
-        <script src="{{ asset('lib/sweetalert2.js') }}"></script>
+        <script src="{{ asset('lib/sweetalert/sweetalert2.js') }}"></script>
         
         <script>
             $.ajaxSetup({

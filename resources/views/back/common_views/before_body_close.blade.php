@@ -17,7 +17,8 @@
 <script src="{{ base_url() . 'back/js/admin_functions.js?v=22' }}" type="text/javascript"></script>
 
 <script src="{{ asset('select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('back/datetimepicker/build/jquery.datetimepicker.full.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('back/datetimepicker/build/jquery.datetimepicker.full.min.js') }}" type="text/javascript">
+</script>
 @include('back.common_views.common_state_county_city_functions')
 
 
@@ -36,7 +37,8 @@
         $('#selected_images_preview').html('');
         for (let index = 0; index < event.target.files.length; index++) {
             const src = URL.createObjectURL(event.target.files[index]);
-            $('#selected_images_preview').append('<div class="col-2 m-1"><img style="border-radius: 0px;" src="' + src +
+            $('#selected_images_preview').append(
+                '<div class="col-2 m-1"><img style="border-radius: 0px;" src="' + src +
                 '" /></div>');
         }
     });

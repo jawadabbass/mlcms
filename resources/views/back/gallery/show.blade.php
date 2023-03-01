@@ -97,33 +97,37 @@
                     <div class="col-md-4" id="{{ $image->id }}">
                         <div class="mb-3 sort2">
                             <div class="imagebox">
-                                <img alt="" id="image_{{ $image->id }}" data-imgname="{{ $image->imageUrl }}"
-                                    src="{{ base_url() }}uploads/gallery/{{ $image->album_id }}/thumb/{{ $image->imageUrl . '?' . time() }}"
-                                    style="width:100%" alt="{{ $image->image_alt }}" title="{{ $image->image_title }}">
+                                <a href="javascript:void(0);" title="{{ $image->image_title }}"
+                                    onclick="openGalleryImageZoomModal('{{ base_url() }}uploads/gallery/{{ $image->album_id }}/{{ $image->imageUrl . '?' . time() }}');">
+                                    <img id="image_{{ $image->id }}" data-imgname="{{ $image->imageUrl }}"
+                                        src="{{ base_url() }}uploads/gallery/{{ $image->album_id }}/thumb/{{ $image->imageUrl . '?' . time() }}"
+                                        style="width:100%" alt="{{ $image->image_alt }}"
+                                        title="{{ $image->image_title }}">
+                                </a>
                             </div>
                             <div class="caption myadelbtn">
                             </div>
                             <div class="image_btn mt-2">
-                                <span class="drag"><i class="fa-solid fa-arrows" aria-hidden="true"></i></span>
-                                <a onClick="update_status({{ $image->id }}, this)" href="javascript:void(0)"
+                                <span class="drag" title="Drag and Drop to sort"><i class="fa-solid fa-arrows" aria-hidden="true"></i></span>
+                                <a  title="Active/Inactive" onClick="update_status({{ $image->id }}, this)" href="javascript:void(0)"
                                     class="mb-1 btn btn-{{ $image->status == 1 ? 'success' : 'secondary' }}"
                                     id="{{ 'status_' . $image->id }}"><i class="fa-solid fa-eye"
                                         aria-hidden="true"></i></a>
-                                <a onClick="update_featured({{ $image->id }}, this)" href="javascript:void(0)"
+                                <a  title="Featured/Not Featured" onClick="update_featured({{ $image->id }}, this)" href="javascript:void(0)"
                                     class="mb-1 btn btn-{{ $image->isFeatured == 1 ? 'success' : 'secondary' }}"
                                     id="{{ 'featured_' . $image->id }}"><i class="fa-solid fa-star"
                                         aria-hidden="true"></i></a>
-                                <a onclick="deleteImage({{ $image->id }}, this);" class="mb-1 btn btn-danger"
+                                <a  title="Delete Image" onclick="deleteImage({{ $image->id }}, this);" class="mb-1 btn btn-danger"
                                     data-bs-toggle="tooltip" data-placement="left" title="Delete this image"
                                     href="javascript:;"> <i class="fa-solid fa-trash"></i></a>
                                 @if ((bool) $image->isBeforeAfter == false)
                                     <a onClick="markBeforeAfter({{ $image->id }}, this)" href="javascript:void(0)"
                                         class="mb-1 btn btn-warning">Mark Before After</a>
                                 @endif
-                                <a onClick="bind_cropper_preview_gallery_image({{ $image->album_id }}, {{ $image->id }});"
+                                <a  title="Crop Image" onClick="bind_cropper_preview_gallery_image({{ $image->album_id }}, {{ $image->id }});"
                                     href="javascript:void(0)" class="mb-1 btn btn-warning"><i class="fa-solid fa-crop"
                                         aria-hidden="true"></i></a>
-                                <a onClick="openImageAltTitleModal({{ $image->album_id }}, {{ $image->id }});"
+                                <a  title="Image Alt/Title" onClick="openImageAltTitleModal({{ $image->album_id }}, {{ $image->id }});"
                                     href="javascript:void(0)" class="mb-1 btn btn-success"><i class="fa-solid fa-bars"
                                         aria-hidden="true"></i></a>
                             </div>
@@ -216,6 +220,13 @@
                 </form>
             </div>
         </div>
+        <div class="modal fade" id="galleryImageZoomModal" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <img src="" id="galleryImageZoomImage" />
+                </div>
+            </div>
+        </div>
     @endsection('content')
     @section('beforeBodyClose')
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
@@ -277,6 +288,7 @@
                     }
                 });
             }
+
             function update_status(id, elem) {
                 $.ajax({
                     url: "{{ url('/adminmedia/albums/gallery/status') }}",
@@ -297,6 +309,7 @@
                     }
                 });
             }
+
             function update_featured(id, elem) {
                 $.ajax({
                     url: "{{ url('/adminmedia/albums/gallery/is_feature') }}",
@@ -317,6 +330,7 @@
                     }
                 });
             }
+
             function markBeforeAfter(id, elem) {
                 $.ajax({
                     url: "{{ url('/adminmedia/albums/gallery/markBeforeAfter') }}",
@@ -333,6 +347,12 @@
                         console.log(response);
                     }
                 });
+            }
+        </script>
+        <script>
+            function openGalleryImageZoomModal(url) {
+                $('#galleryImageZoomImage').attr('src', url);
+                $('#galleryImageZoomModal').modal('show');
             }
         </script>
     @endsection

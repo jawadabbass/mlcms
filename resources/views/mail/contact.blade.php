@@ -15,7 +15,7 @@
     </tr>
     <tr>
         <td height="25" width="50%"><strong>Message</strong></td>
-        <td width="50%">{{ $data['message'] }}</td>
+        <td width="50%">{{ $data['comments'] }}</td>
     </tr>
     <tr>
         <td height="25" bgcolor="#eeeeee" width="50%"><strong>IP Address</strong></td>

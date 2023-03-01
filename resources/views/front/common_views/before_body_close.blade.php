@@ -15,3 +15,22 @@
 <script src="{{ asset('front/js/count-to.js') }}"></script>
 <script src="{{ asset('front/js/bootsnav.js') }}"></script>
 <script src="{{ asset('front/js/main.js') }}"></script>
+<script src="{{ asset('lib/jquery-validation/dist/jquery.validate.min.js') }}"></script>
+<script src="{{ asset('lib/jquery-validation/dist/additional-methods.min.js') }}"></script>
+<script src="{{ asset('lib/inputmask/dist/jquery.inputmask.js') }}"></script>
+<script src="{{ asset('lib/sweetalert/sweetalert2.all.min.js') }}"></script>
+<script>
+function scrollToErrors(idCls = '#formValidationErrors') {
+    if ($(idCls).length > 0) {
+        setTimeout(
+            function() {
+                $('html, body').animate({
+                    scrollTop: $(idCls).offset().top
+                }, 1000);
+            }, 800);
+    }
+}
+$(document).ready(function() {
+    scrollToErrors();
+});
+</script>
