@@ -175,7 +175,7 @@
                             </div>
                             <div id="fea_img">
                                 <label class="form-label"> Upload Featured Image <span style="font-size: 12px;color: red"> max size:
-                                        {{ session('max_image_size') }}
+                                        {{ getMaxUploadSize() }}
                                         MB </span> @php echo helptooltip('max_image_size') @endphp </label>
                                 <div id="file-field">
                                     <input type="file" name="product_img" id="module_img" class="form-control">
@@ -218,7 +218,7 @@
         var uploadUrl = "{{ admin_url() }}module_image/upload_image";
         var deleteUrl = "{{ admin_url() }}module_image/remove_image";
         var folder = "blog";
-        var maxSize = {{ session('max_image_size') }};
+        var maxSize = {{ getMaxUploadSize() }};
         var csrfToken = $('meta[name="csrf-token"]').attr('content');
         var show_cropper = false;
         var save_method = "POST";

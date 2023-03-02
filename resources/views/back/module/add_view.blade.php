@@ -22,6 +22,8 @@
             <form action="{{ admin_url() . 'module/' . $module->type . '/' . $module->id }}" id="form"
                 class="form-horizontal" enctype="multipart/form-data">
                 @csrf
+                <input type="hidden" name="session_id" value="{{ session()->getId() }}" />
+                <input type="hidden" name="module_data_id" value="0" />
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 id="modal_form_title" class="modal-title"> Add New {{ ucwords($module->term) }} </h4>
@@ -195,7 +197,7 @@
                                         style="display:{{ $module->show_feature_img_field == 1 ? 'block' : 'none' }}">
                                         <label class="form-label">Update {{ ucwords($module->term) }} Image <span
                                                 style="color: #ff0000;font-size: 12px">(max size:
-                                                {{ session('max_image_size') }}
+                                                {{ getMaxUploadSize() }}
                                                 MB)</span> @php echo helptooltip('max_image_size') @endphp </label>
                                         <div id="file-field">
                                             <input type="file" name="module_img" id="module_img"
@@ -219,24 +221,57 @@
                                         </div>
                                     </div>
                                 </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="btn btn-primary more_images_label">More Images</label>
+                                        <!-- Image Uploader  -->
+                                        <div class="upload_adm_area" id="upload_adm_area" style="display:none;">
+                                            <h5>Upload Image(s) </h5>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-md-12 mb-3">
+                                                    <input class="form-control" id="uploadFile" multiple=""
+                                                        name="uploadFile[]" type="file"
+                                                        onchange="uploaded_files_show();" />
+                                                    <div class="text-danger"><em>Max :</em> {{ getMaxUploadSize() }} MB
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 mb-3">
+                                                    <input onclick="uploadMoreImages();" class="btn btn-success"
+                                                        name="submitImage" type="button" value="Upload Image(s)" />
+                                                </div>
+                                            </div>
+                                            <div id="image_preview" class="row">
+                                            </div>
+                                            </hr>
+                                        </div>
+                                        <div class="row" id="moreImages" style="display:none;">
+                                        
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Image Uploader  -->
                                 <br>
                                 <div id="page_follow"
                                     style="display: {{ $module->show_follow == 1 ? 'block' : 'none' }}">
                                     <label class="form-label">Make Follow</label>
-                                    <input name="show_follow" id="show_follow_rel_1" value="1" type="radio" checked />
+                                    <input name="show_follow" id="show_follow_rel_1" value="1" type="radio"
+                                        checked />
                                     @php echo helptooltip('follow') @endphp
-                                    <br/>
+                                    <br />
                                     <label class="form-label">Make No Follow</label>
-                                    <input name="show_follow" id="show_follow_rel_0" value="0" type="radio" />                                                                        
+                                    <input name="show_follow" id="show_follow_rel_0" value="0" type="radio" />
                                 </div>
                                 <br>
                                 <div id="page_index" style="display: {{ $module->show_index == 1 ? 'block' : 'none' }}">
                                     <label class="form-label">Indexing</label>
-                                    <input name="show_index" id="show_index_rel_1" value="1" type="radio" checked />
+                                    <input name="show_index" id="show_index_rel_1" value="1" type="radio"
+                                        checked />
                                     @php echo helptooltip('indexing') @endphp
-                                    <br/>
+                                    <br />
                                     <label class="form-label">No Indexing</label>
-                                    <input name="show_index" id="show_index_rel_0" value="0" type="radio" />                                                                        
+                                    <input name="show_index" id="show_index_rel_0" value="0" type="radio" />
                                 </div>
                                 <br>
 
@@ -303,7 +338,7 @@
 @endsection
 @section('beforeBodyClose')
     <script type="text/javascript" src="{{ base_url() . 'module/module/admin/js/module.js' }}"></script>
-    
+
     <!-- Filer -->
     <link rel="stylesheet" href="{{ base_url() . 'module/module/admin/crop-avatar/cropper.css' }}">
     <style>
@@ -540,13 +575,60 @@
                 });
             }
         }
+
+        $('.more_images_label').on('click', function() {
+            $('#upload_adm_area').toggle();
+            $('#moreImages').toggle();
+        })
+
+        function uploadMoreImages() {
+            var total_files = document.getElementById("uploadFile").files.length;
+            if (total_files > 0) {
+                $('#btnSave').attr('disabled', true);
+                let formData = new FormData();
+                formData.append("_token", csrfToken);
+                formData.append("folder", folder);
+                formData.append("module_type", cms_module_type);
+                formData.append("module_id", cms_module_id);
+                formData.append("module_data_id", cms_module_data_id);
+                formData.append("session_id", session_id);
+                $.each($("#uploadFile")[0].files, function(i, file) {
+                    formData.append('uploadFile[]', file);
+                });
+                $.ajax({
+                    url: uploadMoreUrl,
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    dataType: "json",
+                    success: function(response) {
+                        $('#moreImages').append(response.html);
+                        $('#btnSave').attr('disabled', false);
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.log(jqXHR);
+                        console.log(textStatus);
+                        console.log(errorThrown);
+                        alert('Error adding / update data');
+                    }
+                });
+            } else {
+                alert('Please select images');
+            }
+        }
     </script>
     <!----------- END Module JS functions -------------------->
     <script>
+        var cms_module_type = "{{ $module->type }}";
+        var cms_module_id = {{ $module->id }};
+        var cms_module_data_id = 0;
+        var session_id = "{{ session()->getId() }}";
         var uploadUrl = "{{ admin_url() }}module_image/upload_image";
+        var uploadMoreUrl = "{{ admin_url() }}module_image/upload_more_images";
         var deleteUrl = "{{ admin_url() }}module_image/remove_image";
         var folder = "{{ 'module/' . $module->type }}";
-        var maxSize = {{ session('max_image_size') }};
+        var maxSize = {{ getMaxUploadSize() }};
         var csrfToken = $('meta[name="csrf-token"]').attr('content');
         var show_cropper = {{ $module->crop_image == 'Yes' ? 1 : 0 }};
         var module_id = "{{ $module->type }}";

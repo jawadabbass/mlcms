@@ -65,7 +65,7 @@
 
                                                                     <?php $client_id=base64_encode($client_id); ?>
 
-                                                                   Please Click Here to Review: <a class="btn btn-primary" href="{{env('APP_URL').'verify_client/'.$client_id.'/'.$con_id}}">Click Here</a><br />
+                                                                   Please Click Here to Review: <a class="btn btn-primary" href="{{base_basel().'verify_client/'.$client_id.'/'.$con_id}}">Click Here</a><br />
                                                                     Pin: {{$pin}}
                                                                    
                                                                     <br />

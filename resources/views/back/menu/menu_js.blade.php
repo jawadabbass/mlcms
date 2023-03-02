@@ -68,7 +68,7 @@
         //$('#footer_menu').prop('checked', false);
         //Ajax Load data from ajax
         $.ajax({
-            url: "{{ env('APP_URL') }}adminmedia/menus/" + id + "/edit",
+            url: "{{ base_url() }}adminmedia/menus/" + id + "/edit",
             type: "GET",
             dataType: "JSON",
             success: function(data) {
@@ -110,12 +110,12 @@
     function save() {
         var url;
         if (save_method == 'add') {
-            url = "{{ env('APP_URL') . 'adminmedia/menus' }}";
+            url = "{{ base_url() . 'adminmedia/menus' }}";
             method = 'POST';
             header = '';
         } else {
             id = $('[name="menu_actual_id"]').val();
-            url = "{{ env('APP_URL') . 'adminmedia/menus/' }}" + id;
+            url = "{{ base_url() . 'adminmedia/menus/' }}" + id;
             console.log(id);
             console.log(url);
             method = 'POST';
@@ -199,7 +199,7 @@
         if (confirm("Are you sure you want to delete this Product Image?")) {
             // ajax delete data to database
             $.ajax({
-                url: "{{ env('APP_URL') }}menu/ajax_remove_feature_image/" + id,
+                url: "{{ base_url() }}menu/ajax_remove_feature_image/" + id,
                 type: "POST",
                 dataType: "JSON",
                 success: function(data) {

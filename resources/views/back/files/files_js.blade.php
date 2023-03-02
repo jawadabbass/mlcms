@@ -28,7 +28,7 @@
 
                 } else {
                     $(".spinner").hide();
-                    alert("Error: Please select valid file.\n Max Size: {{ session('max_image_size') }}MB");
+                    alert("Error: Please select valid file.\n Max Size: {{ getMaxUploadSize() }}MB");
 
                 }
             },
@@ -136,7 +136,7 @@
                     location.reload();
 
                 } else {
-                    alert("Error: Please select valid file.\n Max Size: {{ session('max_image_size') }}MB");
+                    alert("Error: Please select valid file.\n Max Size: {{ getMaxUploadSize() }}MB");
                     console.log(data.status);
                 }
             },

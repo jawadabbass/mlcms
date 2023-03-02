@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-md-8 col-sm-6">
                     <ol class="breadcrumb">
-                        <li><a href="{{ env('APP_URL') . 'adminmedia' }}"><i class="fa-solid fa-gauge"></i> Home</a></li>
+                        <li><a href="{{ base_url() . 'adminmedia' }}"><i class="fa-solid fa-gauge"></i> Home</a></li>
                         <li class="active">Albums</li>
                     </ol>
                 </div>

@@ -109,7 +109,7 @@
                     }
                 });
                 $.ajax({
-                    url: "{{url('/')}}/adminmedia/user/admin_log/0",
+                    url: "{{base_url()}}/adminmedia/user/admin_log/0",
                     type: "DELETE",
                     success: function (data) {
                         location.reload();

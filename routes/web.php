@@ -144,6 +144,9 @@ Route::group(['namespace' => 'Back', 'prefix' => 'adminmedia', 'middleware' => [
     Route::post('/modul/crop_image', [ModuleManageController::class, 'ajax_crop_img']);
     Route::post('/module_image/upload_image', [ImageUploadController::class, 'store']);
     Route::post('/module_image/remove_image', [ImageUploadController::class, 'removeUploadedImage']);
+
+    Route::post('/module_image/upload_more_images', [ImageUploadController::class, 'uploadMoreImages']);
+
     Route::post('/modules/updatePageOptions', [ModuleController::class, 'updatePageOptions']);
     Route::post('/payment_options/paypal_email', [PaymentOptionController::class, 'paypal_email']);
     Route::post('/payment_options/authorize_net', [PaymentOptionController::class, 'authorize_net']);

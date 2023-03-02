@@ -210,7 +210,7 @@ class GalleryController extends Controller
     public function update_album(Request $request)
     {
         $validationArr = [];
-        $maxImageSize = session('max_image_size') * 1024;
+        $maxImageSize = getMaxUploadSize() * 1024;
         $imageUploaded = false;
         if (isset($_FILES['f_mg']['name']) && $_FILES['f_mg']['name'] != '') {
             $imageUploaded = true;
@@ -240,7 +240,7 @@ class GalleryController extends Controller
 
     public function upload_album_images(Request $request)
     {
-        $maxImageSize = session('max_image_size') * 1024;
+        $maxImageSize = getMaxUploadSize() * 1024;
         $validator = Validator::make(
             $request->all(),
             [

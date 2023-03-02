@@ -22,7 +22,7 @@
                                 <div>
                                     <label class="form-label">Menu URL @php echo helptooltip('proper_url')@endphp </label>
                                     <div class="mb-2">
-                                        <span class="mb-2-addon" id="base_url_id">{{ env('APP_URL') }}</span>
+                                        <span class="mb-2-addon" id="base_url_id">{{ base_url() }}</span>
                                         <input name="menu_url" placeholder="Menu URL" class="form-control"
                                             type="text">
                                     </div>

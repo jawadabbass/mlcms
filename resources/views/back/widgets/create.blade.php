@@ -50,7 +50,7 @@
                 </div>
                 <div id="fea_img">
                     <label class="form-label"> Add Widgets Image <span style="font-size: 12px;color: red"> max size:
-                            {{ session('max_image_size') }}MB </span> @php echo helptooltip('max_image_size') @endphp </label>
+                            {{ getMaxUploadSize() }}MB </span> @php echo helptooltip('max_image_size') @endphp </label>
                     <div id="file-field">
                         <input type="file" name="module_img" id="module_img" class="form-control module_img">
                         <div id="attached_files_div" class="attached_files_div"></div>
@@ -168,7 +168,7 @@
         var deleteUrl = "{{ admin_url() }}module_image/remove_image";
         var baseUrl = '{{ base_url() }}';
         var folder = "widgets";
-        var maxSize = {{ session('max_image_size') }};
+        var maxSize = {{ getMaxUploadSize() }};
         var csrfToken = $('meta[name="csrf-token"]').attr('content');
         var show_cropper = false;
     </script>

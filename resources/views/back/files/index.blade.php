@@ -77,7 +77,7 @@
                                 <div class="col-md-3">
                                     <input class="form-control" id="uploadFile" multiple="" name="uploadFile[]"
                                         type="file" />
-                                    <div class="text-danger"><em>Max :</em> {{ session('max_image_size') }} MB</div>
+                                    <div class="text-danger"><em>Max :</em> {{ getMaxUploadSize() }} MB</div>
                                 </div>
                                 <div class="col-md-3">
                                     <input onclick="document.getElementById('spinner').style.display='block'"

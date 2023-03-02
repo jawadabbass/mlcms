@@ -125,4 +125,12 @@
         }
 
     });
+    function uploaded_files_show() {
+        $('#image_preview').html("");
+        var total_file = document.getElementById("uploadFile").files.length;
+        for (var i = 0; i < total_file; i++) {
+            $('#image_preview').append("<div class=\"col-md-1\"><img src='" + URL.createObjectURL(event.target.files[
+                i]) + "'></div>");
+        }
+    }
 </script>

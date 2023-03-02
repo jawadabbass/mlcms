@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Back;
 
-use App\Http\Controllers\Controller;
-use App\Models\Back\Category;
-use App\Models\Back\CmsModule;
-use App\Models\Back\CmsModuleData;
 use App\Models\Back\Menu;
+use Illuminate\Http\Request;
+use App\Models\Back\Category;
 use App\Models\Back\MenuType;
 use App\Models\Back\Template;
-use Illuminate\Http\Request;
+use App\Models\Back\CmsModule;
+use App\Models\Back\CmsModuleData;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Models\Back\ModuleDataImage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
@@ -31,7 +32,6 @@ class ModuleManageController extends Controller
             // echo "<pre>";
             // print_r( $module);
             // exit;
-
             if (!$module) {
                 abort(404);
             }
@@ -45,21 +45,17 @@ class ModuleManageController extends Controller
                 } else {
                     $moduleMembers->orderBy('item_order', 'ASC');
                 }
-
                 $moduleMembers->orderBy('id', 'ASC');
                 $moduleMembers = $moduleMembers->paginate(100);
             }
             $menu_types = MenuType::orderBy('id', 'ASC')->get();
-            $title = config('Constants.SITE_NAME').': '.strtoupper($module->type).' Management';
+            $title = config('Constants.SITE_NAME') . ': ' . strtoupper($module->type) . ' Management';
             $msg = '';
             $allParentCategory = Category::orderBy('orderr', 'ASC')->get()->toArray();
-
             return view('back.module.index', compact('module', 'moduleMembers', 'menu_types', 'title', 'msg', 'allParentCategory'));
         }
-
         return redirect(back());
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -69,7 +65,6 @@ class ModuleManageController extends Controller
     {
         $id = $request->id;
         $current_status = $request->current_status;
-
         if ($id == '') {
             echo 'error';
             exit;
@@ -86,7 +81,6 @@ class ModuleManageController extends Controller
             $new_status = 'active';
             $menuTableStatus = 'Y';
         }
-
         $moduleData = CmsModuleData::find($id);
         if ($moduleData->cms_module_id == 48) {
             if ($moduleData->is_shared_on_pp == 'Yes') {
@@ -104,7 +98,6 @@ class ModuleManageController extends Controller
         echo $new_status;
         exit;
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -124,25 +117,21 @@ class ModuleManageController extends Controller
             $moduleData->heading = $request->module_heading;
             $page_slug = $request->module_slug;
             $slugs = $page_slug;
-            $slugs = ((isset($module_type) && $module_type->type && $module_type->id != 1) ? $module_type->type.'/' : '').$slugs;
+            $slugs = ((isset($module_type) && $module_type->type && $module_type->id != 1) ? $module_type->type . '/' : '') . $slugs;
             $slugs = $this->createUniqueURL($slugs);
             $moduleData->post_slug = $slugs;
-        $moduleData->content = myform_admin_cms_filter($request->module_description);
-            
+            $moduleData->content = myform_admin_cms_filter($request->module_description);
             $moduleData->additional_field_1 = $request->additional_field_1;
             $moduleData->additional_field_2 = $request->additional_field_2;
             $moduleData->additional_field_3 = $request->additional_field_3;
             $moduleData->additional_field_4 = $request->additional_field_4;
             $moduleData->additional_field_5 = $request->additional_field_5;
             $moduleData->additional_field_6 = $request->additional_field_6;
-            
-
             $moduleData->additional_field_7 = $request->additional_field_7;
             $moduleData->additional_field_8 = $request->additional_field_8;
             $moduleData->cms_module_id = $request->module_id;
             $moduleData->cat_id = $request->cat;
             $moduleData->is_pages = (strcmp($module_type->type, 'cms)') ? 1 : 0);
-
             $moduleData->show_follow = $request->show_follow;
             $moduleData->show_index = $request->show_index;
             $moduleData->meta_title = $request->meta_title;
@@ -153,11 +142,13 @@ class ModuleManageController extends Controller
             if (!empty($request->featured_img)) {
                 $moduleData->featured_img = $request->featured_img;
             }
-
             $moduleData->featured_img_title = $request->featured_img_title;
             $moduleData->featured_img_alt = $request->featured_img_alt;
-
             $moduleData->save();
+            /**************************************** */
+            $this->updateMoreImagesModuleDataId($request, $moduleData->id);
+            /**************************************** */
+
             $insert = $moduleData->id;
             $menu_types = $request->menu_type;
             if (isset($menu_types) && !empty($menu_types)) {
@@ -168,7 +159,7 @@ class ModuleManageController extends Controller
                     $menu->menu_id = $insert;
                     $menu->menu_label = $request->module_heading;
                     $slugPrefix = strcmp($module_type->type, 'cms)') ? '' : '';
-                    $menu->menu_url = $slugPrefix.$slugs;
+                    $menu->menu_url = $slugPrefix . $slugs;
                     $menu->menu_types = $menu_type_id;
                     $menu->menu_sort_order = $max_order;
                     $menu->open_in_new_window = $request->open_in_new_window;
@@ -176,13 +167,14 @@ class ModuleManageController extends Controller
                     $menu->save();
                 }
             }
-
-            return response()->json(['success' => 'Added new records.'.$request->module_id]);
+            return response()->json(['success' => 'Added new records.' . $request->module_id]);
         }
-
         return response()->json(['error' => $validator->errors()->all()]);
     }
-    
+
+    private function updateMoreImagesModuleDataId($request, $moduleDataId){
+        ModuleDataImage::where('session_id', 'like', $request->session_id)->update(['module_data_id'=>$moduleDataId,'session_id'=>'' ]);
+    }
     /**
      * Display the specified resource.
      *
@@ -193,7 +185,6 @@ class ModuleManageController extends Controller
     public function show($id)
     {
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -210,12 +201,11 @@ class ModuleManageController extends Controller
             $data['module_data'] = CmsModule::find($data->cms_module_id);
         }
         if (isset($data['module_data']->type)) {
-            $data['post_slug'] = str_replace($data['module_data']->type.'/', '', $data['post_slug']);
+            $data['post_slug'] = str_replace($data['module_data']->type . '/', '', $data['post_slug']);
         }
         $data['menus'] = Menu::where('menu_id', $id)->get();
         echo json_encode($data);
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -229,23 +219,20 @@ class ModuleManageController extends Controller
             'module_heading' => 'required',
             'module_description' => '',
         ]);
-
         $module_id = $type;
         $module_type = CmsModule::find($module_id);
         $moduleData = CmsModuleData::find($id);
-
         if ($validator->passes()) {
             $moduleData->heading = $request->module_heading;
             $page_slug = $request->module_slug;
             $slugs = $page_slug;
-            $slugs = str_replace($module_type->type.'/', '', $slugs);
-            $slugs = ((isset($module_type) && $module_type->type && $module_type->id != 1) ? $module_type->type.'/' : '').$slugs;
+            $slugs = str_replace($module_type->type . '/', '', $slugs);
+            $slugs = ((isset($module_type) && $module_type->type && $module_type->id != 1) ? $module_type->type . '/' : '') . $slugs;
             if (CmsModuleData::where('post_slug', $slugs)->where('id', '<>', $id)->exists()) {
                 return response()->json(['error' => ['URL already assigned.']]);
             }
             $moduleData->post_slug = $slugs;
             $moduleData->content = myform_admin_cms_filter($request->module_description);
-
             $moduleData->additional_field_1 = $request->additional_field_1;
             $moduleData->additional_field_2 = $request->additional_field_2;
             $moduleData->additional_field_3 = $request->additional_field_3;
@@ -256,15 +243,13 @@ class ModuleManageController extends Controller
             $moduleData->additional_field_8 = $request->additional_field_8;
             $moduleData->cat_id = $request->cat;
             $moduleData->is_pages = (strcmp($module_type->type, 'cms)') ? 1 : 0);
-
             $moduleData->show_follow = $request->show_follow;
             $moduleData->show_index = $request->show_index;
-
             $all_menus = '';
             $menu_types = $request->menu_type;
             if (isset($menu_types) && !empty($menu_types)) {
                 foreach ($menu_types as $menu_type_id) {
-                    $all_menus .= $menu_type_id.',';
+                    $all_menus .= $menu_type_id . ',';
                 }
             }
             $all_menus = rtrim($all_menus, ',');
@@ -276,10 +261,8 @@ class ModuleManageController extends Controller
             if (!empty($request->featured_img)) {
                 $moduleData->featured_img = $request->featured_img;
             }
-
             $moduleData->featured_img_title = $request->featured_img_title;
             $moduleData->featured_img_alt = $request->featured_img_alt;
-
             $moduleData->save();
             $insert = $moduleData->id;
             $menu_types = $request->menu_type;
@@ -314,7 +297,7 @@ class ModuleManageController extends Controller
                     $menu->menu_id = $insert;
                     $menu->menu_label = $request->module_heading;
                     $slugPrefix = strcmp($module_type->type, 'cms)') ? '' : '';
-                    $menu->menu_url = $slugPrefix.$slugs;
+                    $menu->menu_url = $slugPrefix . $slugs;
                     $menu->menu_types = $menu_type_id;
                     $menu->open_in_new_window = $request->open_in_new_window;
                     $menu->show_no_follow = $request->show_no_follow;
@@ -326,20 +309,18 @@ class ModuleManageController extends Controller
                 }
             }
             if (!empty($request->from_page_update)) {
-                return redirect('adminmedia/module/'.$module_type->type);
+                return redirect('adminmedia/module/' . $module_type->type);
             } else {
-                return response()->json(['success' => 'Added new records.'.$request->module_id]);
+                return response()->json(['success' => 'Added new records.' . $request->module_id]);
             }
         }
         if (!empty($request->from_page_update)) {
             Session::flash('added_action', true);
-
-            return redirect('adminmedia/module/'.$module_type->type);
+            return redirect('adminmedia/module/' . $module_type->type);
         } else {
             return response()->json(['error' => $validator->errors()->all()]);
         }
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -353,7 +334,6 @@ class ModuleManageController extends Controller
         Menu::where('menu_id', $id)->delete();
         echo 'done';
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -363,22 +343,20 @@ class ModuleManageController extends Controller
     {
         $id = $request->id;
         $data = CmsModuleData::find($id);
-
-        if (file_exists('uploads/module/'.$request->type.'/'.$data->featured_img)) {
-            unlink('uploads/module/'.$request->type.'/'.$data->featured_img);
+        if (file_exists('uploads/module/' . $request->type . '/' . $data->featured_img)) {
+            unlink('uploads/module/' . $request->type . '/' . $data->featured_img);
         }
         $data->featured_img = '';
         $data->save();
         echo 'done';
     }
-
     public function ajax_crop_img(Request $request)
     {
         $module_id = $request->module_id;
         $module = CmsModule::find($module_id);
         $module_type = $module->type;
-        $upload_dir = public_path().'/uploads/module/'.$module_type.'/';
-        $upload_dir_thumb = public_path().'/uploads/module/'.$module_type.'/thumb';
+        $upload_dir = public_path() . '/uploads/module/' . $module_type . '/';
+        $upload_dir_thumb = public_path() . '/uploads/module/' . $module_type . '/thumb';
         $crop_x = $request->crop_x;
         $crop_y = $request->crop_y;
         $crop_height = $request->crop_height;
@@ -395,7 +373,7 @@ class ModuleManageController extends Controller
             'module_width' => $module->feature_img_thmb_width,
             'module_height' => $module->feature_img_thmb_height,
         ];
-        crop_image($upload_dir.'/'.$source_img, $upload_dir_thumb.'/'.$dest_img, $crop_data);
+        crop_image($upload_dir . '/' . $source_img, $upload_dir_thumb . '/' . $dest_img, $crop_data);
         if ($source_img != 'no-image.jpg') {
             // @unlink($upload_dir . "/" . $source_img);
             // @unlink($upload_dir_thumb ."/" . $source_img);
@@ -404,7 +382,6 @@ class ModuleManageController extends Controller
         echo json_encode($data);
         exit;
     }
-
     public function showOrderPage($type)
     {
         $type = trim($type);
@@ -412,15 +389,12 @@ class ModuleManageController extends Controller
             $module = CmsModule::where('type', $type)->first();
             $moduleMembers = CmsModuleData::where('cms_module_id', $module->id)
                 ->orderBy('item_order', 'ASC')->get();
-            $title = config('Constants.SITE_NAME').': '.strtoupper($module->type).' Management';
+            $title = config('Constants.SITE_NAME') . ': ' . strtoupper($module->type) . ' Management';
             $msg = '';
-
             return view('back.module.order', compact('module', 'moduleMembers', 'title', 'msg'));
         }
-
         return redirect(back());
     }
-
     public function saveOrdering(Request $request)
     {
         $list_order = $request->list_order;
@@ -432,10 +406,9 @@ class ModuleManageController extends Controller
             $cmsModule->item_order = $i;
             $cmsModule->save();
             ++$i;
-            echo $i.' '.$id;
+            echo $i . ' ' . $id;
         }
     }
-
     public function add_single_module($type)
     {
         $type = trim($type);
@@ -446,7 +419,7 @@ class ModuleManageController extends Controller
             }
         }
         $menu_types = MenuType::orderBy('id', 'ASC')->get();
-        $title = config('Constants.SITE_NAME').': '.strtoupper($module->type).' Management';
+        $title = config('Constants.SITE_NAME') . ': ' . strtoupper($module->type) . ' Management';
         $msg = '';
         $allParentCategory = Category::orderBy('orderr', 'ASC')->get()->toArray();
         // >>>>>>>>>>>>>>>>> **Start** Media Section
@@ -458,19 +431,16 @@ class ModuleManageController extends Controller
         // get template
         $templates = Template::all();
         $job_content = CmsModuleData::where('id', 226)->first();
-
         return view('back.module.add_view', compact('module', 'menu_types', 'title', 'msg', 'allParentCategory', 'albumsObj', 'filesObj', 'filesExts', 'templates', 'job_content'));
         // return view('back.module.add_edit_view', compact('module'));
     }
-
     public function filesObj()
     {
         $albumsObj = [];
         // uploads/editor/images/
         $folodersArr = [];
         $filesBasePath = filesBasePath();
-        $folodersArr = array_filter(glob($filesBasePath.'*'), 'is_dir');
-
+        $folodersArr = array_filter(glob($filesBasePath . '*'), 'is_dir');
         $cnt = 0;
         // >>>>>>>>>>>>>>>>> **Start** Root Files
         $folderName = 'root';
@@ -486,7 +456,7 @@ class ModuleManageController extends Controller
         foreach ($folodersArr as $key => $folder) {
             ++$cnt;
             $folderName = str_replace($filesBasePath, '', $folder);
-            $currentFolderpath = $filesBasePath.$folderName.'/';
+            $currentFolderpath = $filesBasePath . $folderName . '/';
             $filesArr = getFilesListInDir($currentFolderpath, filesExtsAllowed());
             $albumsObj[] = [
                 'album_id' => $cnt,
@@ -496,18 +466,15 @@ class ModuleManageController extends Controller
                 'all' => $filesArr,
             ];
         }
-
         return $albumsObj;
     }
-
     public function get_images()
     {
         $albumsObj = [];
         // uploads/editor/images/
         $folodersArr = [];
         $mediaBasePath = mediaBasePath();
-        $folodersArr = array_filter(glob($mediaBasePath.'*'), 'is_dir');
-
+        $folodersArr = array_filter(glob($mediaBasePath . '*'), 'is_dir');
         $cnt = 0;
         // >>>>>>>>>>>>>>>>> **Start** Root Files
         $folderName = 'root';
@@ -523,7 +490,7 @@ class ModuleManageController extends Controller
         foreach ($folodersArr as $key => $folder) {
             ++$cnt;
             $folderName = str_replace($mediaBasePath, '', $folder);
-            $currentFolderpath = $mediaBasePath.$folderName.'/';
+            $currentFolderpath = $mediaBasePath . $folderName . '/';
             $filesArr = getImagesListInDir($currentFolderpath);
             $albumsObj[] = [
                 'album_id' => $cnt,
@@ -533,10 +500,8 @@ class ModuleManageController extends Controller
                 'all' => $filesArr,
             ];
         }
-
         return $albumsObj;
     }
-
     public function edit_single_module($type, $id = 0)
     {
         $type = trim($type);
@@ -550,7 +515,6 @@ class ModuleManageController extends Controller
             abort(404);
         } else {
             $moduleData = CmsModuleData::where('id', $id)->first();
-
             if ($moduleData->post_slug && $type == 'cms') {
                 $orig_module = CmsModule::where('type', $moduleData->post_slug)->first();
                 if (isset($orig_module)) {
@@ -566,8 +530,7 @@ class ModuleManageController extends Controller
         }
         $menu_types = MenuType::orderBy('id', 'ASC')->get();
         $menu = Menu::where('menu_id', $id)->get();
-
-        $title = config('Constants.SITE_NAME').': '.strtoupper($module->type).' Management';
+        $title = config('Constants.SITE_NAME') . ': ' . strtoupper($module->type) . ' Management';
         $msg = '';
         $allParentCategory = Category::orderBy('orderr', 'ASC')->get()->toArray();
         // >>>>>>>>>>>>>>>>> **Start** Media Section
@@ -576,25 +539,19 @@ class ModuleManageController extends Controller
         $filesObj = $this->filesObj();
         $filesExts = filesExtsAllowed();
         $widget = \DB::table('widgets')
-
-            ->whereRaw("find_in_set('".$id."',pages_id)")
+            ->whereRaw("find_in_set('" . $id . "',pages_id)")
             ->get();
         $templates = Template::all();
-
         return view('back.module.edit_view', compact('module', 'moduleData', 'menu_types', 'title', 'msg', 'allParentCategory', 'menu', 'albumsObj', 'filesObj', 'filesExts', 'widget', 'templates'));
     }
-
     public function createUniqueURL($slugs)
     {
         if (CmsModuleData::where('post_slug', $slugs)->exists()) {
-            $slugs = $slugs.'-2';
-
+            $slugs = $slugs . '-2';
             return $this->createUniqueURL($slugs);
         }
-
         return $slugs;
     }
-
     public function run_script()
     {
         $ID = 0;
@@ -617,19 +574,16 @@ class ModuleManageController extends Controller
         // ->get();
         // foreach ($blogArr as $key => $value) {
         //     $ID=$value->ID;
-
         $old_posts = \DB::table('wp_posts')->where('ID', $ID)->orderBy('ID', 'ASC')->first();
         $old_postmeta = \DB::table('wp_postmeta')->where('post_id', $ID)->get();
         $act_url = '';
         $act_url = \DB::table('wp_postmeta')->where('meta_key', 'custom_permalink')->where('post_id', $ID)->value('meta_value');
-
         $meta_title = \DB::table('wp_postmeta')->where('meta_key', '_yoast_wpseo_title')->where('post_id', $ID)->value('meta_value');
         $meta_description = \DB::table('wp_postmeta')->where('meta_key', '_yoast_wpseo_metadesc')->where('post_id', $ID)->value('meta_value');
         $meta_keywords = \DB::table('wp_postmeta')->where('meta_key', '_yoast_wpseo_metakeywords')->where('post_id', $ID)->value('meta_value');
         if (DB::table('cms_module_datas')->where('post_slug', $act_url)->exists()) {
             cp('ERROR: EXISTS');
         }
-
         $arr = [];
         $arr['heading'] = $old_posts->post_title;
         // $arr['news_date_time']=$old_posts->news_date_time;
@@ -647,7 +601,6 @@ class ModuleManageController extends Controller
         $arr['meta_description'] = $meta_description;
         $lastID = DB::table('cms_module_datas')->insertGetId($arr);
         // }
-
         return redirect()->back();
         // \DB::table('menus')->truncate();
         // $old_menu=\DB::table('aaa_menus')->orderBy('parent_id','ASC')->get();
@@ -667,23 +620,19 @@ class ModuleManageController extends Controller
         // }
         // cp('DONE');
     }
-
     public function script_add_blog_posts()
     {
         $blogArr = DB::table('wp_posts')->where('post_type', 'post')->where('post_status', 'publish')
             ->get();
         foreach ($blogArr as $key => $value) {
             $ID = $value->ID;
-
             $old_posts = \DB::table('wp_posts')->where('ID', $ID)->orderBy('ID', 'ASC')->first();
             $old_postmeta = \DB::table('wp_postmeta')->where('post_id', $ID)->get();
             $act_url = '';
             $act_url = \DB::table('wp_postmeta')->where('meta_key', 'custom_permalink')->where('post_id', $ID)->value('meta_value');
-
             $meta_title = \DB::table('wp_postmeta')->where('meta_key', '_yoast_wpseo_title')->where('post_id', $ID)->value('meta_value');
             $meta_description = \DB::table('wp_postmeta')->where('meta_key', '_yoast_wpseo_metadesc')->where('post_id', $ID)->value('meta_value');
             $meta_keywords = \DB::table('wp_postmeta')->where('meta_key', '_yoast_wpseo_metakeywords')->where('post_id', $ID)->value('meta_value');
-
             $arr = [];
             $arr['title'] = $old_posts->post_title;
             // $arr['news_date_time']=$old_posts->news_date_time;
@@ -702,7 +651,6 @@ class ModuleManageController extends Controller
             $lastID = DB::table('blog_posts')->insertGetId($arr);
         }
     }
-
     public function prepareMenu($array)
     {
         $return = [];
@@ -721,10 +669,8 @@ class ModuleManageController extends Controller
         }
         // 3
         ksort($array);
-
         return $array;
     }
-
     public function buildMenu($array)
     {
         echo '<ul>';
@@ -738,14 +684,12 @@ class ModuleManageController extends Controller
         }
         echo '</ul>';
     }
-
     public function commonContactSave(Request $request)
     {
         $data = CmsModuleData::where('id', $request->content_id)->first();
         $data->heading = $request->heading;
         $data->content = myform_admin_cms_filter($request->editor3);
         $data->save();
-
         return redirect('adminmedia/module/careers/add');
     }
 }

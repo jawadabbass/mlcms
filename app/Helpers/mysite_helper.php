@@ -260,7 +260,7 @@ if (!function_exists('helptooltip')) {
             'no_follow' => 'If this is checked, then Google will not further crawl to any other link from this page.',
             'indexing' => 'If you select this, it means you want Google to index this page. In other words, it will appear in Google search engine. We recommend this option should be checked.',
             'no_indexing' => 'If you select this, it means you do not want Google to index this page. In other words, it will never appear in Google search engine. We recommend this option should be unchecked.',
-            'max_image_size' => 'Maximum allowed image size: '.session('max_image_size').'MB',
+            'max_image_size' => 'Maximum allowed image size: '.getMaxUploadSize().'MB',
             'sub_cat_link' => 'This would be the link of your sub category ',
         ];
         $msg = $arr[$key];
@@ -339,7 +339,7 @@ if (!function_exists('seo_print')) {
                         "@type": "SearchAction",
                         "target": {
                             "@type": "EntryPoint",
-                            "urlTemplate": "'.url('/').'/blog/search?s={search_term_string}"
+                            "urlTemplate": "'.base_url().'/blog/search?s={search_term_string}"
                         },
                         "query-input": "required name=search_term_string"
                     }
@@ -441,7 +441,7 @@ function myform_getmsg($text = '', $msgType = 's')
 function display_with_children($parentRow, $level, $type)
 {
     $prelink = $link_str = $page = '';
-    $prelink = ($parentRow['is_external_link'] == 'N') ? env('APP_URL') : '';
+    $prelink = ($parentRow['is_external_link'] == 'N') ? base_url() : '';
 
     if ($parentRow['menu_id'] == 0) {
         $link_str .= '<a class="page-linke clickable" target="_blank" href="'.$prelink.$parentRow['menu_url'].'">Link</a>';

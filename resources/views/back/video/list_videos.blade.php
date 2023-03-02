@@ -160,7 +160,7 @@
         var uploadUrl = "{{ admin_url() }}module_image/upload_image";
         var deleteUrl = "{{ admin_url() }}module_image/remove_image";
         var folder = "{{ 'module/' . $module->type }}";
-        var maxSize = {{ session('max_image_size') }};
+        var maxSize = {{ getMaxUploadSize() }};
         var csrfToken = $('meta[name="csrf-token"]').attr('content');
         var show_cropper = {{ $module->crop_image == 'Yes' ? 1 : 0 }};
         var module_id = "{{ $module->type }}";

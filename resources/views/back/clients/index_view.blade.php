@@ -570,7 +570,7 @@
                 }
             });
             $.ajax({
-                url: "{{ env('APP_URL') . 'adminmedia/manage_clients/update_condition' }}",
+                url: "{{ base_url() . 'adminmedia/manage_clients/update_condition' }}",
                 type: "POST",
                 data: {
                     'id': id,

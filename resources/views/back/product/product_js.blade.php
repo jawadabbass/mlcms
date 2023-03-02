@@ -87,12 +87,12 @@
     function save() {
         let url;
         if (save_method === 'add') {
-            url = "{{ env('APP_URL') . 'adminmedia/products' }}";
+            url = "{{ base_url() . 'adminmedia/products' }}";
             method = 'POST';
             header = '';
         } else {
             id = $('[name="id"]').val();
-            url = "{{ env('APP_URL') . 'adminmedia/products/' }}" + id;
+            url = "{{ base_url() . 'adminmedia/products/' }}" + id;
             console.log(id);
             console.log(url);
             method = 'POST';

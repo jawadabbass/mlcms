@@ -39,7 +39,7 @@
                             </div>
                             <div id="fea_img">
                                 <label class="form-label"> Update Product Image <span style="font-size: 12px;color: red"> max size:
-                                        {{ session('max_image_size') }}MB </span> @php echo helptooltip('max_image_size') @endphp </label>
+                                        {{ getMaxUploadSize() }}MB </span> @php echo helptooltip('max_image_size') @endphp </label>
                                 <div id="file-field">
                                     <input type="file" name="product_img" id="module_img" class="form-control">
                                     <div id="attached_files_div"></div>

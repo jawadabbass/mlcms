@@ -7,7 +7,7 @@
                 <div class="col-md-8 col-sm-6">
                     <ol class="breadcrumb">
                         <li>
-                            <a href="{{ env('APP_URL') . 'adminmedia' }}">
+                            <a href="{{ base_url() . 'adminmedia' }}">
                                 <i class="fa-solid fa-dashboard"></i> Home
                             </a>
                         </li>
@@ -203,7 +203,7 @@
     @include('back.common_views.spinner')
 @endsection
 @section('beforeBodyClose')
-    <script src="{{ env('APP_URL') . 'module/products/admin/js/products.js' }}" type="text/javascript"></script>
+    <script src="{{ base_url() . 'module/products/admin/js/products.js' }}" type="text/javascript"></script>
     
     <!-- Filer -->
     
@@ -212,12 +212,12 @@
         var uploadUrl = "{{ admin_url() }}module_image/upload_image";
         var deleteUrl = "{{ admin_url() }}module_image/remove_image";
         var folder = "products";
-        var maxSize = {{ session('max_image_size') }};
+        var maxSize = {{ getMaxUploadSize() }};
         var csrfToken = $('meta[name="csrf-token"]').attr('content');
         var show_cropper = false;
     </script>
     <script src="{{ asset('lib/sweetalert/sweetalert2.js') }}"></script>
-    <script type="text/javascript" src="{{ env('APP_URL') . 'back/js/fileUploader.js' }}"></script>
+    <script type="text/javascript" src="{{ base_url() . 'back/js/fileUploader.js' }}"></script>
     @include('back.assesment_questions.question_js')
 
     <script type="text/javascript">

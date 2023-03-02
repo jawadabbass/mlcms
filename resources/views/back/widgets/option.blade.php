@@ -163,7 +163,7 @@
         var deleteUrl = "{{ admin_url() }}module_image/remove_image";
         var baseUrl = '{{ base_url() }}';
         var folder = "widgets";
-        var maxSize = {{ session('max_image_size') }};
+        var maxSize = {{ getMaxUploadSize() }};
         var csrfToken = $('meta[name="csrf-token"]').attr('content');
         var show_cropper = false;
     </script>

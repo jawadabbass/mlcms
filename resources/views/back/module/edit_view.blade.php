@@ -230,7 +230,7 @@
                                     style="display:{{ $module->show_feature_img_field == 1 ? 'block' : 'none' }}">
                                     <label class="form-label">Update {{ ucwords($module->term) }} Image <span
                                             style="color: #ff0000;font-size: 12px">(max size:
-                                            {{ session('max_image_size') }}
+                                            {{ getMaxUploadSize() }}
                                             MB)</span> @php echo helptooltip('max_image_size') @endphp </label>
                                     <div id="file-field">
                                         <input type="file" name="module_img" id="module_img" class="form-control">
@@ -630,7 +630,7 @@
         var uploadUrl = "{{ admin_url() }}module_image/upload_image";
         var deleteUrl = "{{ admin_url() }}module_image/remove_image";
         var folder = "{{ 'module/' . $module->type }}";
-        var maxSize = {{ session('max_image_size') }};
+        var maxSize = {{ getMaxUploadSize() }};
         var csrfToken = $('meta[name="csrf-token"]').attr('content');
         var show_cropper = {{ $module->crop_image == 'Yes' ? 1 : 0 }};
         var module_id = "{{ $module->type }}";

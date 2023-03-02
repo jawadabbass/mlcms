@@ -138,7 +138,7 @@
                 }
             });
             $.ajax({
-                url: "{{env('APP_URL') . 'adminmedia/question/'}}" + id,
+                url: "{{base_url() . 'adminmedia/question/'}}" + id,
                 type: "DELETE",
                 success: function (data) {
                     //if success reload ajax table

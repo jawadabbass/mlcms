@@ -8,7 +8,7 @@
                 <div class="col-md-8 col-sm-6">
                     <ol class="breadcrumb">
                         <li>
-                            <a href="{{ env('APP_URL') . 'adminmedia' }}">
+                            <a href="{{ base_url() . 'adminmedia' }}">
                                 <i class="fa-solid fa-dashboard"></i> Home
                             </a>
                         </li>

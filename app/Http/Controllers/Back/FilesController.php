@@ -78,7 +78,7 @@ class FilesController extends Controller
     }
     public function upload_album_images(Request $request)
     {
-        $maxImageSize = session('max_image_size') * 1024;
+        $maxImageSize = getMaxUploadSize() * 1024;
         $exts = implode(',', keyArray(filesExtsAllowed()));
         $validator = Validator::make(
             $request->all(),

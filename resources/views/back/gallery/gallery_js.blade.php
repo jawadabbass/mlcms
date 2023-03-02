@@ -1,13 +1,4 @@
 <script type="text/javascript">
-    function uploaded_files_show() {
-        $('#image_preview').html("");
-        var total_file = document.getElementById("uploadFile").files.length;
-        for (var i = 0; i < total_file; i++) {
-            $('#image_preview').append("<div class=\"col-md-1\"><img src='" + URL.createObjectURL(event.target.files[
-                i]) + "'></div>");
-        }
-    }
-
     function add_album() {
         if ($("#title").val() == '') {
             alert('Please Add Album Title');
@@ -39,7 +30,7 @@
                 } else {
                     $(".spinner").hide();
                     alert(
-                        "Error: Please select valid image.\n Max Size: {{ session('max_image_size') }}MB"
+                        "Error: Please select valid image.\n Max Size: {{ getMaxUploadSize() }}MB"
                     );
                 }
             },
@@ -139,7 +130,7 @@
                     location.reload();
                 } else {
                     alert(
-                        "Error: Please select valid image.\n Max Size: {{ session('max_image_size') }}MB"
+                        "Error: Please select valid image.\n Max Size: {{ getMaxUploadSize() }}MB"
                     );
                     console.log(data.status);
                 }

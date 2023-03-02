@@ -23,9 +23,9 @@
             <div class="row">
                 <div class="col-md-8 col-sm-6">
                     <ol class="breadcrumb">
-                        <li><a href="{{ env('APP_URL') . 'adminmedia' }}">
+                        <li><a href="{{ base_url() . 'adminmedia' }}">
                                 <i class="fa-solid fa-gauge"></i> Home</a></li>
-                        <li><a href="{{ env('APP_URL') . 'adminmedia/gallery' }}">
+                        <li><a href="{{ base_url() . 'adminmedia/gallery' }}">
                                 <i class="fa-solid fa-gauge"></i> Albums</a></li>
                         <li class="active">{{ $album_name }}</li>
                     </ol>
@@ -71,7 +71,7 @@
                                 <div class="col-md-12 mb-3">
                                     <input class="form-control" id="uploadFile" multiple="" name="uploadFile[]"
                                         type="file" onchange="uploaded_files_show();" />
-                                    <div class="text-danger"><em>Max :</em> {{ session('max_image_size') }} MB</div>
+                                    <div class="text-danger"><em>Max :</em> {{ getMaxUploadSize() }} MB</div>
                                 </div>
                                 <div class="col-md-12 mb-3">
                                     <input type="checkbox" name="isBeforeAfter" value="1"
