@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Back\Category;
 use App\Models\Back\MenuType;
 use App\Models\Back\Template;
+use App\Helpers\ImageUploader;
 use App\Models\Back\CmsModule;
 use App\Models\Back\CmsModuleData;
 use Illuminate\Support\Facades\DB;
@@ -14,6 +15,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Back\ModuleDataImage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Laminas\Diactoros\Module;
 
 class ModuleManageController extends Controller
 {
@@ -173,7 +175,7 @@ class ModuleManageController extends Controller
     }
 
     private function updateMoreImagesModuleDataId($request, $moduleDataId){
-        ModuleDataImage::where('session_id', 'like', $request->session_id)->update(['module_data_id'=>$moduleDataId,'session_id'=>'' ]);
+        ModuleDataImage::where('session_id', 'like', $request->session_id)->update(['module_data_id'=>$moduleDataId,'session_id'=>NULL ]);
     }
     /**
      * Display the specified resource.
@@ -264,6 +266,7 @@ class ModuleManageController extends Controller
             $moduleData->featured_img_title = $request->featured_img_title;
             $moduleData->featured_img_alt = $request->featured_img_alt;
             $moduleData->save();
+
             $insert = $moduleData->id;
             $menu_types = $request->menu_type;
             $menus = Menu::where('menu_id', $insert)->get();
@@ -330,7 +333,18 @@ class ModuleManageController extends Controller
      */
     public function destroy($id)
     {
-        CmsModuleData::destroy($id);
+        $moduleData = CmsModuleData::find($id);
+        $module = CmsModule::find($moduleData->cms_module_id);
+
+        $moduleDataImages = ModuleDataImage::where('module_data_id', $id)->get();
+        foreach ($moduleDataImages as $image) {
+            ImageUploader::deleteImage('module/'.$image->module_type, $image->image_name, true);
+            $image->delete();
+        }
+        if (file_exists('uploads/module/' . $module->type . '/' . $moduleData->featured_img)) {
+            unlink('uploads/module/' . $module->type . '/' . $moduleData->featured_img);
+        }
+        $moduleData->delete();
         Menu::where('menu_id', $id)->delete();
         echo 'done';
     }
@@ -431,7 +445,8 @@ class ModuleManageController extends Controller
         // get template
         $templates = Template::all();
         $job_content = CmsModuleData::where('id', 226)->first();
-        return view('back.module.add_view', compact('module', 'menu_types', 'title', 'msg', 'allParentCategory', 'albumsObj', 'filesObj', 'filesExts', 'templates', 'job_content'));
+        $moduleDataImages = ModuleDataImage::where('session_id', session()->getId())->get();
+        return view('back.module.add_view', compact('module', 'menu_types', 'title', 'msg', 'allParentCategory', 'albumsObj', 'filesObj', 'filesExts', 'templates', 'job_content', 'moduleDataImages'));
         // return view('back.module.add_edit_view', compact('module'));
     }
     public function filesObj()
@@ -542,7 +557,9 @@ class ModuleManageController extends Controller
             ->whereRaw("find_in_set('" . $id . "',pages_id)")
             ->get();
         $templates = Template::all();
-        return view('back.module.edit_view', compact('module', 'moduleData', 'menu_types', 'title', 'msg', 'allParentCategory', 'menu', 'albumsObj', 'filesObj', 'filesExts', 'widget', 'templates'));
+
+        $moduleDataImages = ModuleDataImage::where('module_data_id', $id)->get();
+        return view('back.module.edit_view', compact('module', 'moduleData', 'menu_types', 'title', 'msg', 'allParentCategory', 'menu', 'albumsObj', 'filesObj', 'filesExts', 'widget', 'templates', 'moduleDataImages'));
     }
     public function createUniqueURL($slugs)
     {
@@ -691,5 +708,44 @@ class ModuleManageController extends Controller
         $data->content = myform_admin_cms_filter($request->editor3);
         $data->save();
         return redirect('adminmedia/module/careers/add');
+    }
+
+    public function ajax_crop_module_data_img(Request $request)
+    {
+        $crop_x = (int) $request->crop_x;
+        $crop_y = (int) $request->crop_y;
+        $crop_height = (int) $request->crop_height;
+        $crop_width = (int) $request->crop_width;
+        $fileName = $request->source_image;
+        $imageId = $request->image_id;
+        $moduleDataImageObj = ModuleDataImage::find($imageId);
+
+        $folder = 'module/' . $moduleDataImageObj->module_type;
+        ImageUploader::CropImageAndMakeThumb($folder . '/', $fileName, $crop_width, $crop_height, $crop_x, $crop_y);
+        $data['cropped_image'] = $fileName;
+        echo json_encode($data);
+        exit;
+    }
+
+    public function getModuleDataImageAltTitle(Request $request)
+    {
+        $imageObj = ModuleDataImage::find($request->image_id);
+        return response([
+            'image_alt' => $imageObj->image_alt,
+            'image_title' => $imageObj->image_title,
+        ]);
+    }
+
+    public function saveModuleDataImageAltTitle(Request $request)
+    {
+        $imageObj = ModuleDataImage::find($request->image_id);
+        $imageObj->image_alt = $request->image_alt;
+        $imageObj->image_title = $request->image_title;
+        $imageObj->update();
+
+        return response([
+            'image_alt' => $imageObj->image_alt,
+            'image_title' => $imageObj->image_title,
+        ]);
     }
 }

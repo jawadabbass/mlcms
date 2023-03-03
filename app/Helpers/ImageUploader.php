@@ -126,8 +126,8 @@ class ImageUploader
         $name = $field->getClientOriginalName();
         $name = Str::replaceLast('.'.$extension, '', $name);
         $newName = ($newName != '') ? $newName : $name;
+        $newName = self::getFileName($newName);
         $fileName = Str::slug($newName, '-').'.'.$extension;
-
         if (file_exists($destinationPath.'/'.$fileName)) {
             $fileName = time().'-'.$fileName;
         }

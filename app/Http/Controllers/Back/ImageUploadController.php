@@ -50,42 +50,15 @@ class ImageUploadController extends Controller
                 $image->module_type = $request->input('module_type');
                 $image->module_id = $request->input('module_id');
                 $image->module_data_id = $request->input('module_data_id');
-                $image->session_id = $request->input('session_id');
+                $image->session_id = ($request->input('module_data_id', 0) == 0)? $request->input('session_id'):NULL;
                 $image->image_alt = $request->input('image_alt');
                 $image->image_title = $request->input('image_title');
                 $image->save();
 
-                $html .= '<div class="col-md-4" id="' . $image->id . '">
-                    <div class="mb-3">
-                        <div class="imagebox">
-                            <a href="javascript:void(0);" title="' . $image->image_title . '"
-                                onclick="openGalleryImageZoomModal(\'' . base_url() . 'uploads/' . $folder . '/' . $image->image_name . '?' . time() . '\');">
-                                <img id="image_' . $image->id . '"
-                                    data-imgname="' . $image->image_name . '"
-                                    src="' . base_url() . 'uploads/' . $folder . '/thumb/' . $image->image_name . '?' . time() . '"
-                                    style="width:100%" alt="' . $image->image_alt . '"
-                                    title="' . $image->image_title . '">
-                            </a>
-                        </div>
-                        <div class="image_btn mt-2">
-                            <a title="Delete Image"
-                                onclick="deleteMoreImage(' . $image->id . ', this);"
-                                class="mb-1 btn btn-danger" data-bs-toggle="tooltip"
-                                data-placement="left" title="Delete this image"
-                                href="javascript:;"> <i class="fa-solid fa-trash"></i></a>
-                            <a title="Crop Image"
-                                onClick="bind_cropper_preview_more_image(' . $image->id . ');"
-                                href="javascript:void(0)" class="mb-1 btn btn-warning"><i
-                                    class="fa-solid fa-crop" aria-hidden="true"></i></a>
-                            <a title="Image Alt/Title"
-                                onClick="openMoreImageAltTitleModal(' . $image->id . ');"
-                                href="javascript:void(0)" class="mb-1 btn btn-success"><i
-                                    class="fa-solid fa-bars" aria-hidden="true"></i></a>
-                        </div>
-                    </div>
-                </div>';
+                $html .= generateModuleDataImageHtml($folder, $image);
             }
         }
+        $this->removeModuleDataUnusedImages();
         echo json_encode(['html' => $html]);
     }
 
@@ -96,10 +69,28 @@ class ImageUploadController extends Controller
             'folder' => 'required'
         ]);
         if ($validator->passes()) {
-            ImageUploader::deleteImage($request->folder, $request->file_name);
+            $module_data_image_id = $request->input('module_data_image_id', 0);
+            if ($module_data_image_id > 0) {
+                ModuleDataImage::where('id', $module_data_image_id)->delete();
+                ImageUploader::deleteImage($request->folder, $request->file_name, true);
+            } else {
+                ImageUploader::deleteImage($request->folder, $request->file_name);
+            }
             echo "done";
         } else {
             echo "error";
+        }
+    }
+
+    public function removeModuleDataUnusedImages()
+    {
+        $date = date_create(date('Y-m-d'));
+        date_sub($date, date_interval_create_from_date_string("10 days"));
+        $moduleDataImages = ModuleDataImage::whereNotNull('session_id')->where('module_data_id', 0)->whereDate('created_at', '<', $date)->get();
+
+        foreach ($moduleDataImages as $image) {
+            ImageUploader::deleteImage('module/'.$image->module_type, $image->image_name, true);
+            $image->delete();
         }
     }
 }

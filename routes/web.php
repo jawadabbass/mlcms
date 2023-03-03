@@ -74,7 +74,7 @@ Route::group(['middleware' => ['auth', 'ipmiddleware']], function () {
 });
 Route::group(['namespace' => 'Front', 'middleware' => ['siteStatus', 'clearCache', 'ipmiddleware']], function () {
     Route::get('/', [HomeController::class, 'index']);
-    Route::get('/about-medialinkers.html', [HomeController::class, 'aboutUs']);
+    Route::get('/about-us', [HomeController::class, 'aboutUs']);
     Route::get('/atlanta_webdesign_portfolio.html', [HomeController::class, 'Portfolio'])->name('portfolio');
     Route::get('/frequently_asked_questions', [HomeController::class, 'FAQs']);
     Route::get('/news', [NewsController::class, 'index']);
@@ -144,8 +144,12 @@ Route::group(['namespace' => 'Back', 'prefix' => 'adminmedia', 'middleware' => [
     Route::post('/modul/crop_image', [ModuleManageController::class, 'ajax_crop_img']);
     Route::post('/module_image/upload_image', [ImageUploadController::class, 'store']);
     Route::post('/module_image/remove_image', [ImageUploadController::class, 'removeUploadedImage']);
-
     Route::post('/module_image/upload_more_images', [ImageUploadController::class, 'uploadMoreImages']);
+
+    Route::post('/save_module_data_image_crop_image', [ModuleManageController::class, 'ajax_crop_module_data_img']);
+    Route::post('/getModuleDataImageAltTitle', [ModuleManageController::class, 'getModuleDataImageAltTitle']);
+    Route::post('/saveModuleDataImageAltTitle', [ModuleManageController::class, 'saveModuleDataImageAltTitle']);
+    
 
     Route::post('/modules/updatePageOptions', [ModuleController::class, 'updatePageOptions']);
     Route::post('/payment_options/paypal_email', [PaymentOptionController::class, 'paypal_email']);

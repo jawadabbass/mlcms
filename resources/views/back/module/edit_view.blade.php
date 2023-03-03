@@ -42,7 +42,6 @@
                                         value="{{ $moduleData->heading }}">
                                     <span id="module_heading" style="padding-left:2px;" class="err"></span>
                                 </div>
-
                                 <div id="page_link"
                                     style=" display:{{ $module->show_page_slug_field == 1 ? 'block' : 'none' }}">
                                     <label for="basic-url">{{ ucwords($module->term) }}
@@ -144,8 +143,6 @@
                                             @endif
                                         </div>
                                 @endif
-
-
                             </div>
                             <div id="field1" style="display:none;">
                                 <label class="form-label">{{ ucwords($module->additional_field_title_1) }}</label>
@@ -225,7 +222,7 @@
                                     placeholder="{{ ucwords($module->additional_field_title_8) }} ">
                                 <span id="additional_field8" style="padding-left:2px;" class="err"></span>
                             </div>
-                            <div id="page_featured_img">
+                            <div class="row" id="page_featured_img">
                                 <div id="fea_img"
                                     style="display:{{ $module->show_feature_img_field == 1 ? 'block' : 'none' }}">
                                     <label class="form-label">Update {{ ucwords($module->term) }} Image <span
@@ -262,29 +259,27 @@
                                     </div>
                                 </div>
                             </div>
-                            <br>
+                            @include('back.module.module_data_images.module_data_images_html')
                             <div id="page_follow" style="display: {{ $module->show_follow == 1 ? 'block' : 'none' }}">
                                 <label class="form-label">Make Follow</label>
                                 <input name="show_follow" id="show_follow_rel_1" value="1" type="radio"
                                     <?php echo $moduleData->show_follow == 1 ? 'checked' : ''; ?> />
-                                    @php echo helptooltip('follow') @endphp
-                                    <br />
+                                @php echo helptooltip('follow') @endphp
+                                <br />
                                 <label class="form-label">Make No Follow</label>
                                 <input name="show_follow" id="show_follow_rel_0" value="0" type="radio"
                                     <?php echo $moduleData->show_follow == 0 ? 'checked' : ''; ?> />
-                                    
-                                
                             </div>
                             <br>
                             <div id="page_index" style="display: {{ $module->show_index == 1 ? 'block' : 'none' }}">
                                 <label class="form-label">Indexing</label>
                                 <input name="show_index" id="show_index_rel_1" value="1" type="radio"
                                     <?php echo $moduleData->show_index == 1 ? 'checked' : ''; ?> />
-                                    @php echo helptooltip('indexing') @endphp
+                                @php echo helptooltip('indexing') @endphp
                                 <br />
                                 <label class="form-label">No Indexing</label>
                                 <input name="show_index" id="show_index_rel_0" value="0" type="radio"
-                                    <?php echo $moduleData->show_index == 0 ? 'checked' : ''; ?> />                                                                    
+                                    <?php echo $moduleData->show_index == 0 ? 'checked' : ''; ?> />
                             </div>
                             <br>
                             <div id="page_seo_option"
@@ -325,7 +320,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="bottom-btns">
                     <input type="hidden" name="module_id" id="module_id" value="{{ ucwords($module->id) }}">
                     <input type="hidden" name="from_page_update" id="from_page_update" value="yess">
@@ -380,6 +374,7 @@
     </div>
     @include('back.module.media_popup')
     @include('back.module.files_popup')
+    @include('back.module.module_data_images.module_data_images_popups')
 @endsection
 @section('beforeBodyClose')
     <script type="text/javascript" src="{{ base_url() . 'module/module/admin/js/module.js' }}"></script>
@@ -392,19 +387,18 @@
     </style>
     <script src="{{ base_url() . 'module/module/admin/crop-avatar/cropper.js' }}"></script>
     <script type="text/javascript" src="{{ base_url() . 'back/js/std_functions.js' }}"></script>
+    @include('back.module.module_data_images.module_data_images_js')
     <!------------ Module JS Functions ---------------------->
     <script type="text/javascript">
         var save_method; //for save method string
         var table;
         $(document).ready(function() {
             additional_fields({{ ucwords($module->additional_fields) }});
-
             $("#dated").click(function(event) {
                 //event.preventDefault();
                 $(this).attr("type", 'date').trigger('click');
             });
         });
-
         function bind_cropper_preview() {
             var $previews = $('.preview');
             var $image = $('#image');
@@ -465,7 +459,6 @@
                 });
             });
         }
-
         function save_cropped_img() {
             var json = [
                 '{"x":' + $('#crop_x').val(),
@@ -489,8 +482,6 @@
                 error: function(jqXHR, textStatus, errorThrown) {}
             });
         }
-
-
         function update_module_status(id) {
             var current_status = $("#sts_" + id + " span").html();
             current_status = current_status.trim();
@@ -503,9 +494,6 @@
                 $("#sts_" + id).html('<span class="label label-' + class_label + '">' + sts + '</span>');
             });
         }
-
-
-
         function add_content() {
             reset_model();
             save_method = 'add';
@@ -514,7 +502,6 @@
             CKEDITOR.instances[my_editor_id].setData('');
             CKEDITOR.instances[my_editor_id].updateElement();
         }
-
         function save() {
             var url;
             var my_editor_id = 'editor1';
@@ -529,8 +516,6 @@
                 console.log(id);
                 console.log(url);
             }
-
-
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -545,14 +530,12 @@
                     if ($.isEmptyObject(data.error)) {
                         $('#modal_form').modal('hide');
                         $('#' + save_method + '_action').show();
-
                         if ($("#from_page_update").val() == "yess") {
                             redirect_url = "{{ admin_url() . 'module/' . $module->type }}";
                             window.location.href = redirect_url;
                         } else {
                             location.reload();
                         }
-
                     } else {
                         errorsHtml = '<div class="alert alert-danger"><ul>';
                         $.each(data, function(key, value) {
@@ -572,7 +555,6 @@
                 }
             });
         }
-
         function delete_content(id) {
             $('.message-container').fadeOut(3000);
             var mess_alert = '';
@@ -604,7 +586,6 @@
                 });
             }
         }
-
         function remove_featured_img(id) {
             if (confirm("Are you sure you want to delete this {{ ucwords($module->term) }} Image?")) {
                 url = "{{ base_url() }}adminmedia/modul/remove_image?id=" + id + '&&type={{ $module->type }}';

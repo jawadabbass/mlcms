@@ -83,17 +83,19 @@ class HomeController extends Controller
     }
     public function aboutUs()
     {
-        if (Cache::has('page_234') && Auth::check() == false) {
-            return Cache::get('page_234');
+        if (Cache::has('page_about_us_104') && Auth::check() == false) {
+            return Cache::get('page_about_us_104');
         }
         $about = CmsModuleData::where('id', '104')->firstOrFail();
         $seoArr = SeoArray($about);
 
-        $html = view('front.home.about-us', compact('about', 'seoArr'))->render();
+        $cmsModuleDataImages = getCmsModuleDataImagesById(104);
+
+        $html = view('front.home.about-us', compact('about', 'seoArr', 'cmsModuleDataImages'))->render();
         $parser = \WyriHaximus\HtmlCompress\Factory::construct();
         $html = $parser->compress($html);
         if (Auth::check() == false) {
-            Cache::put('page_234', $html, cacheTime());
+            Cache::put('page_about_us_104', $html, cacheTime());
         }
         return $html;
     }
@@ -140,12 +142,13 @@ class HomeController extends Controller
             $module = CmsModule::where('type', 'cms')->first();
             $menu_types = MenuType::orderBy('id', 'ASC')->get();
             $seoArr = getSeoArrayModule($data->id);
+            $cmsModuleDataImages = getCmsModuleDataImagesBySlug($slug);
             $editPageID = $data->id;
             if ($data->cms_module_id == 33) {
-                return view('front.home.full', compact('data', 'seoArr', 'module', 'menu_types', 'editPageID'));
+                return view('front.home.full', compact('data', 'seoArr', 'module', 'menu_types', 'editPageID', 'cmsModuleDataImages'));
             } else {
                 // return view('front.home.page', compact('data', 'seoArr','module','menu_types','editPageID'));
-                $html = view('front.home.page', compact('data', 'seoArr', 'module', 'menu_types', 'editPageID'))->render();
+                $html = view('front.home.page', compact('data', 'seoArr', 'module', 'menu_types', 'editPageID', 'cmsModuleDataImages'))->render();
                 $parser = \WyriHaximus\HtmlCompress\Factory::construct();
                 $html = $parser->compress($html);
                 Cache::put($slug, $html, cacheTime());

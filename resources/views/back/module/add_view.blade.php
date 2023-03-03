@@ -22,8 +22,6 @@
             <form action="{{ admin_url() . 'module/' . $module->type . '/' . $module->id }}" id="form"
                 class="form-horizontal" enctype="multipart/form-data">
                 @csrf
-                <input type="hidden" name="session_id" value="{{ session()->getId() }}" />
-                <input type="hidden" name="module_data_id" value="0" />
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 id="modal_form_title" class="modal-title"> Add New {{ ucwords($module->term) }} </h4>
@@ -221,38 +219,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <br />
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <label class="btn btn-primary more_images_label">More Images</label>
-                                        <!-- Image Uploader  -->
-                                        <div class="upload_adm_area" id="upload_adm_area" style="display:none;">
-                                            <h5>Upload Image(s) </h5>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-md-12 mb-3">
-                                                    <input class="form-control" id="uploadFile" multiple=""
-                                                        name="uploadFile[]" type="file"
-                                                        onchange="uploaded_files_show();" />
-                                                    <div class="text-danger"><em>Max :</em> {{ getMaxUploadSize() }} MB
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12 mb-3">
-                                                    <input onclick="uploadMoreImages();" class="btn btn-success"
-                                                        name="submitImage" type="button" value="Upload Image(s)" />
-                                                </div>
-                                            </div>
-                                            <div id="image_preview" class="row">
-                                            </div>
-                                            </hr>
-                                        </div>
-                                        <div class="row" id="moreImages" style="display:none;">
-                                        
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- End Image Uploader  -->
-                                <br>
+                                @include('back.module.module_data_images.module_data_images_html')
                                 <div id="page_follow"
                                     style="display: {{ $module->show_follow == 1 ? 'block' : 'none' }}">
                                     <label class="form-label">Make Follow</label>
@@ -335,6 +302,7 @@
     </div>
     @include('back.module.media_popup')
     @include('back.module.files_popup')
+    @include('back.module.module_data_images.module_data_images_popups')
 @endsection
 @section('beforeBodyClose')
     <script type="text/javascript" src="{{ base_url() . 'module/module/admin/js/module.js' }}"></script>
@@ -349,6 +317,7 @@
     <script src="{{ base_url() . 'module/module/admin/crop-avatar/cropper.js' }}"></script>
     <script type="text/javascript" src="{{ base_url() . 'back/js/std_functions.js' }}"></script>
     <!------------ Module JS Functions ---------------------->
+    @include('back.module.module_data_images.module_data_images_js')
     <script type="text/javascript">
         var save_method; //for save method string
         var table;
@@ -575,57 +544,10 @@
                 });
             }
         }
-
-        $('.more_images_label').on('click', function() {
-            $('#upload_adm_area').toggle();
-            $('#moreImages').toggle();
-        })
-
-        function uploadMoreImages() {
-            var total_files = document.getElementById("uploadFile").files.length;
-            if (total_files > 0) {
-                $('#btnSave').attr('disabled', true);
-                let formData = new FormData();
-                formData.append("_token", csrfToken);
-                formData.append("folder", folder);
-                formData.append("module_type", cms_module_type);
-                formData.append("module_id", cms_module_id);
-                formData.append("module_data_id", cms_module_data_id);
-                formData.append("session_id", session_id);
-                $.each($("#uploadFile")[0].files, function(i, file) {
-                    formData.append('uploadFile[]', file);
-                });
-                $.ajax({
-                    url: uploadMoreUrl,
-                    type: "POST",
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    dataType: "json",
-                    success: function(response) {
-                        $('#moreImages').append(response.html);
-                        $('#btnSave').attr('disabled', false);
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        console.log(jqXHR);
-                        console.log(textStatus);
-                        console.log(errorThrown);
-                        alert('Error adding / update data');
-                    }
-                });
-            } else {
-                alert('Please select images');
-            }
-        }
     </script>
     <!----------- END Module JS functions -------------------->
     <script>
-        var cms_module_type = "{{ $module->type }}";
-        var cms_module_id = {{ $module->id }};
-        var cms_module_data_id = 0;
-        var session_id = "{{ session()->getId() }}";
         var uploadUrl = "{{ admin_url() }}module_image/upload_image";
-        var uploadMoreUrl = "{{ admin_url() }}module_image/upload_more_images";
         var deleteUrl = "{{ admin_url() }}module_image/remove_image";
         var folder = "{{ 'module/' . $module->type }}";
         var maxSize = {{ getMaxUploadSize() }};
