@@ -18,7 +18,7 @@ class ClearCache
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::check() && (Auth::user()->type == config('Constants.USER_TYPE_ADMIN')
+        if (Auth::check() && (Auth::user()->type == config('Constants.USER_TYPE_NORMAL_ADMIN')
             || Auth::user()->type == config('Constants.USER_TYPE_SUPER_ADMIN')
         )) {
             Cache::flush();
