@@ -2,7 +2,6 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -14,6 +13,7 @@ class Handler extends ExceptionHandler
      * @var array<class-string<\Throwable>, \Psr\Log\LogLevel::*>
      */
     protected $levels = [
+        //
     ];
 
     /**
@@ -22,6 +22,7 @@ class Handler extends ExceptionHandler
      * @var array<int, class-string<\Throwable>>
      */
     protected $dontReport = [
+        //
     ];
 
     /**
@@ -43,25 +44,7 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->reportable(function (Throwable $e) {
+            //
         });
-    }
-
-    public function render($request, Throwable $exception)
-    {
-        if ($exception instanceof AuthenticationException) {
-            if ($request->expectsJson()) {
-                return response()->json(['error' => 'Unauthenticated.'], 401);
-            }
-            if ($request->is('adminmedia') || $request->is('adminmedia/*')) {
-                return redirect()->guest('/login/adminLogin');
-            }
-            if ($request->is('member') || $request->is('member/*')) {
-                return redirect()->guest('/login');
-            }
-
-            return redirect()->guest(route('login'));
-        }
-
-        return parent::render($request, $exception);
     }
 }

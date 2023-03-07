@@ -16,9 +16,13 @@ class AdminMiddleware
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if (Auth::guard($guard)->check() && (Auth::user()->type == config('Constants.USER_TYPE_ADMIN')
-            || Auth::user()->type == config('Constants.USER_TYPE_SUPER_ADMIN')
-        )) {
+        if (
+            Auth::guard($guard)->check() &&
+            (Auth::guard($guard)->user()->type == config('Constants.USER_TYPE_SUPER_ADMIN') ||
+                Auth::guard($guard)->user()->type == config('Constants.USER_TYPE_NORMAL_ADMIN') ||
+                Auth::guard($guard)->user()->type == config('Constants.USER_TYPE_REPS_ADMIN')
+            )
+        ) {
             return $next($request);
         }
         return redirect('/');

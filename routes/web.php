@@ -40,6 +40,13 @@ use App\Http\Controllers\Back\VideoController as BackVideoController;
 use App\Http\Controllers\Back\GalleryController as BackGalleryController;
 use App\Http\Controllers\Back\InvoiceController as BackInvoiceController;
 use App\Http\Controllers\Back\ContactUsController as BackContactUsController;
+/************************* */
+use App\Http\Controllers\AdminAuth\LoginController as AdminAuthLoginController;
+use App\Http\Controllers\AdminAuth\ForgotPasswordController as AdminAuthForgotPasswordController;
+use App\Http\Controllers\AdminAuth\ResetPasswordController as AdminAuthResetPasswordController;
+use App\Http\Controllers\AdminAuth\ConfirmPasswordController as AdminAuthConfirmPasswordController;
+use App\Http\Controllers\AdminAuth\VerificationController as AdminAuthVerificationController;
+/************************* */
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -52,26 +59,22 @@ use App\Http\Controllers\Back\ContactUsController as BackContactUsController;
 */
 
 Auth::routes();
-Route::get('/clear-cache', function () {
-    Artisan::call('cache:clear');
-    Artisan::call('route:clear');
-    Artisan::call('config:clear');
-    Artisan::call('view:clear');
-    Artisan::call('optimize:clear');
-    return 'Cache is cleared';
+Route::group(['prefix' => 'adminmedia', 'middleware' => ['ipmiddleware']], function () {
+    Route::get('login', [AdminAuthLoginController::class, 'showLoginForm'])->name('admin.login');
+    Route::post('login', [AdminAuthLoginController::class, 'login']);
+    Route::post('logout', [AdminAuthLoginController::class, 'logout'])->name('admin.logout');
+    Route::get('password/reset', [AdminAuthForgotPasswordController::class, 'showLinkRequestForm'])->name('admin.password.request');
+    Route::post('password/email', [AdminAuthForgotPasswordController::class, 'sendResetLinkEmail'])->name('admin.password.email');
+    Route::get('password/reset/{token}', [AdminAuthResetPasswordController::class, 'showResetForm'])->name('admin.password.reset');
+    Route::post('password/reset', [AdminAuthResetPasswordController::class, 'reset'])->name('admin.password.update');
+    Route::get('password/confirm', [AdminAuthConfirmPasswordController::class, 'showConfirmForm'])->name('admin.password.confirm');
+    Route::post('password/confirm', [AdminAuthConfirmPasswordController::class, 'confirm']);
+    Route::get('email/verify', [AdminAuthVerificationController::class, 'show'])->name('admin.verification.notice');
+    Route::get('email/verify/{id}/{hash}', [AdminAuthVerificationController::class, 'verify'])->name('admin.verification.verify');
+    Route::post('email/resend', [AdminAuthVerificationController::class, 'resend'])->name('admin.verification.resend');
 });
-Route::view('/login/adminLogin', 'auth.admin_login');
-Route::view('permission_denied', 'front.home.permission_denied');
-Route::get('/redirect', 'RedirectController@redirect')->name('redirect');
-Route::get('/maintenance', 'Front\HomeController@maintenance');
-Route::get('/block', 'Front\HomeController@block');
-
-Route::post('searchZipCodeAjax', 'Front\AjaxController@searchZipCodeAjax')->name('searchZipCodeAjax');
-Route::post('filterCountiesAjax', 'Front\AjaxController@filterCountiesAjax')->name('filterCountiesAjax');
-Route::post('filterCitiesAjax', 'Front\AjaxController@filterCitiesAjax')->name('filterCitiesAjax');
-
-Route::group(['middleware' => ['auth', 'ipmiddleware']], function () {
-    Route::get('/home', [UserDashboardController::class, 'index'])->name('home');
+Route::group(['prefix' => 'member', 'name' => 'member', 'middleware' => ['auth', 'is_member', 'ipmiddleware']], function () {
+    Route::get('/', [UserDashboardController::class, 'index'])->name('dashboard');
 });
 Route::group(['namespace' => 'Front', 'middleware' => ['siteStatus', 'clearCache', 'ipmiddleware']], function () {
     Route::get('/', [HomeController::class, 'index']);
@@ -116,7 +119,7 @@ Route::group(['namespace' => 'Front', 'middleware' => ['siteStatus', 'clearCache
     Route::post('unsubscribe-newsletter', [App\Http\Controllers\MailChimpController::class, 'unsubscribeNewsletter'])->name('unsubscribeNewsletter');
     Route::get('unsubscribe-newsletter-thanks', [App\Http\Controllers\MailChimpController::class, 'unsubscribeNewsletterThanks'])->name('unsubscribeNewsletterThanks');
 });
-Route::group(['namespace' => 'Back', 'prefix' => 'adminmedia', 'middleware' => ['auth', 'admin', 'ipmiddleware']], function () {
+Route::group(['namespace' => 'Back', 'prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'is_admin', 'ipmiddleware']], function () {
     Route::get('/', [DashboardController::class, 'index']);
     Route::get('/aaa', function () {
         return view('back.common_views.script');
@@ -150,7 +153,7 @@ Route::group(['namespace' => 'Back', 'prefix' => 'adminmedia', 'middleware' => [
     Route::post('/save_module_data_image_crop_image', [ModuleManageController::class, 'ajax_crop_module_data_img']);
     Route::post('/getModuleDataImageAltTitle', [ModuleManageController::class, 'getModuleDataImageAltTitle']);
     Route::post('/saveModuleDataImageAltTitle', [ModuleManageController::class, 'saveModuleDataImageAltTitle']);
-    
+
 
     Route::post('/modules/updatePageOptions', [ModuleController::class, 'updatePageOptions']);
     Route::post('/payment_options/paypal_email', [PaymentOptionController::class, 'paypal_email']);
@@ -478,16 +481,22 @@ Route::group(['namespace' => 'Back', 'prefix' => 'adminmedia', 'middleware' => [
     Route::get('/module-code-generator', 'ModuleCodeGeneratorController@index')->name('module.code.generator');
     Route::post('/module-code-generator', 'ModuleCodeGeneratorController@generateCode')->name('generate.module.code');
 });
+
+Route::view('permission_denied', 'front.home.permission_denied');
+Route::get('/maintenance', 'Front\HomeController@maintenance');
+Route::get('/block', 'Front\HomeController@block');
+
+Route::post('searchZipCodeAjax', 'Front\AjaxController@searchZipCodeAjax')->name('searchZipCodeAjax');
+Route::post('filterCountiesAjax', 'Front\AjaxController@filterCountiesAjax')->name('filterCountiesAjax');
+Route::post('filterCitiesAjax', 'Front\AjaxController@filterCitiesAjax')->name('filterCitiesAjax');
+Route::get('/clear-cache', function () {
+    Artisan::call('cache:clear');
+    Artisan::call('route:clear');
+    Artisan::call('config:clear');
+    Artisan::call('view:clear');
+    Artisan::call('optimize:clear');
+    return 'Cache is cleared';
+});
 Route::group(['namespace' => 'Front', 'middleware' => ['siteStatus', 'clearCache', 'ipmiddleware']], function () {
-    Route::get('/aaa', 'TestController@aaa');
-    Route::get('/aaa2', 'TestController@aaa2');
     Route::get('/{slug}', [HomeController::class, 'page']);
 });
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

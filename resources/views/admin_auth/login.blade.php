@@ -3,7 +3,7 @@
     <div class="loginwrap">
         <div class="loginfrm">
             <h1>Please Login</h1>
-            <form method="POST" action="{{ route('login') }}">
+            <form method="POST" action="{{ route('admin.login') }}">
                 @csrf
                 <div class="formwrp">
                     <div class="loginrow">
@@ -42,7 +42,7 @@
                                 {{ __('Login') }}
                             </button>
                             <div class="forgotlink"><a class="btn-link"
-                                    href="{{ route('password.request') }}">{{ __('Forgot Your Password?') }}</a></div>
+                                    href="{{ route('admin.password.request') }}">{{ __('Forgot Your Password?') }}</a></div>
                         </div>
                     </div>
                 </div>
