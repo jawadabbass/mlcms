@@ -339,7 +339,7 @@ if (!function_exists('seo_print')) {
                         "@type": "SearchAction",
                         "target": {
                             "@type": "EntryPoint",
-                            "urlTemplate": "'.base_url().'/blog/search?s={search_term_string}"
+                            "urlTemplate": "'.base_url().'blog/search?s={search_term_string}"
                         },
                         "query-input": "required name=search_term_string"
                     }

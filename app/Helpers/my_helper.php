@@ -329,8 +329,8 @@ function getCmsModuleDataImages($images)
     $imagesArray = [];
     if (count($images) > 0) {
         foreach ($images as $image) {
-            $thumb = base_url() . '/uploads/module/' . $image->module_type . '/thumb/' . $image->image_name;
-            $main = base_url() . '/uploads/module/' . $image->module_type . '/' . $image->image_name;
+            $thumb = base_url() . 'uploads/module/' . $image->module_type . '/thumb/' . $image->image_name;
+            $main = base_url() . 'uploads/module/' . $image->module_type . '/' . $image->image_name;
             $imagesArray[] = (object)['thumb' => $thumb, 'main' => $main, 'image_alt' => $image->image_alt, 'image_title' => $image->image_title ];
         }
     }
