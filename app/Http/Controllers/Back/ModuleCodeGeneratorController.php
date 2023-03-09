@@ -191,7 +191,7 @@ class ModuleCodeGeneratorController extends Controller
             $filterStr .= '
             <div class="col-md-3 form-group">' . "\n" .
                 '<label>' . $fieldLabel . '</label>' . "\n" .
-                '<input id="title" name="title" type="text" placeholder="' . $fieldLabel . '" value="{{ request(\'' . $fieldName . '\', \'\') }}" class="form-control">' . "\n" .
+                '<input id="'.$fieldName.'" name="'.$fieldName.'" type="text" placeholder="' . $fieldLabel . '" value="{{ request(\'' . $fieldName . '\', \'\') }}" class="form-control">' . "\n" .
                 '</div>' . "\n";
         }
 
