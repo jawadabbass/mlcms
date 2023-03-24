@@ -31,7 +31,12 @@
                             @if (Session::has('msg'))
                                 <p class="alert alert-success">{{ Session::get('msg') }}</p>
                             @endif
-                            <div class="text-end"><a href="{{ admin_url() }}contact_request/create" class="btn btn-info">
+                            <div class="text-end">
+                                <a href="{{ admin_url() }}contact_request/export/excel" class="btn btn-warning">
+                                    <i class="fa fa-list" aria-hidden="true"></i> Export To Excel
+                                </a>
+
+                                <a href="{{ admin_url() }}contact_request/create" class="btn btn-info">
                                     <i class="fa-solid fa-plus-circle" aria-hidden="true"></i> Add New
                                     Lead</a>
                                 <a href="{{ route('email_templates.index') }}" class="btn btn-info">
@@ -51,7 +56,8 @@
                             </div>
                             <br>
                             <form method="get" action="{{ route('contact_request.index') }}" id="search_form">
-                                <input type="hidden" name="read_lead" id="read_lead" value="{{ request()->input('read_lead', 2) }}" />
+                                <input type="hidden" name="read_lead" id="read_lead"
+                                    value="{{ request()->input('read_lead', 2) }}" />
                                 <div class="row" onKeyPress="return checkSubmit(event)">
                                     <div class="col-md-3">
                                         <input type="text" name="name" class="form-control"
@@ -77,7 +83,8 @@
                                 </div>
                             </form>
                             <form method="post" onSubmit="return confirm('Are you sure?');"
-                                action="{{ route('contact_request.bulk.actions') }}" id="bulk_actions_contact_request_form">
+                                action="{{ route('contact_request.bulk.actions') }}"
+                                id="bulk_actions_contact_request_form">
                                 @csrf
                                 <input type="hidden" name="bulk_action" id="bulk_action" value="delete" />
                                 <div class="row">
@@ -825,7 +832,8 @@
         function setBulkAction(action = 'delete') {
             $('#bulk_action').val(action);
         }
-        function filterReadStatus(status){
+
+        function filterReadStatus(status) {
             $('#read_lead').val(status);
             $('#search_form').submit();
         }

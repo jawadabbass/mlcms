@@ -170,6 +170,7 @@ Route::group(['namespace' => 'Back', 'prefix' => 'adminmedia', 'middleware' => [
     Route::resource('/contact_request', '\App\Http\Controllers\Back\ContactUsController');
     Route::get('/contact_request/convert_client/{id}', [BackContactUsController::class, 'convert_client'])->name('lead_convert_client');
     //Contact us leads
+    Route::get('/contact_request/export/{exportType}', 'ContactUsController@exportLeads')->name('export.leads');
     Route::post('/contact_request/lead_comment', [BackContactUsController::class, 'CommentContactLeads'])->name('lead_comments');
     Route::get('/read_data_contact_lead/{id}', [BackContactUsController::class, 'contactUsReadData'])->name('contact_lead_read');
     Route::post('/contact-request-bulk-actions', [BackContactUsController::class, 'contactUsBulkActions'])->name('contact_request.bulk.actions');

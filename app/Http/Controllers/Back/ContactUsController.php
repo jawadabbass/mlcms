@@ -2,23 +2,25 @@
 
 namespace App\Http\Controllers\Back;
 
-use App\Http\Controllers\Controller;
-use App\Models\Back\AdminAlert;
 use App\Models\Back\Client;
-use App\Models\Back\ContactLeadHistory;
-use App\Models\Back\ClientsHistory;
-use App\Models\Back\ContactUs;
-use App\Models\Back\ContactUsRequest;
 use Illuminate\Http\Request;
+use App\Mail\AssessmentEmail;
+use App\Models\Back\ContactUs;
+use App\Models\Back\AdminAlert;
 use App\Models\Back\CmsModuleData;
 use App\Models\Back\EmailTemplate;
+use App\Exports\ContactLeadsExport;
 use App\Models\Back\ClientPackages;
+use App\Models\Back\ClientsHistory;
+use App\Http\Controllers\Controller;
 use App\Models\Back\MessageTemplate;
-use Illuminate\Support\Facades\Hash;
-use App\Mail\AssessmentEmail;
-use App\Models\Back\AssessmentAnswers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Models\Back\ContactUsRequest;
+use App\Models\Back\AssessmentAnswers;
+use App\Models\Back\ContactLeadHistory;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
@@ -353,5 +355,12 @@ class ContactUsController extends Controller
             Session::flash('msg', 'Marked read successfully');
         }
         return redirect(route('contact_request.index'));
+    }
+
+    public function exportLeads(Request $request, $exportType)
+    {
+        if ('excel' === $exportType) {
+            return Excel::download(new ContactLeadsExport($request), 'Contact-Leads.csv', \Maatwebsite\Excel\Excel::CSV);
+        }
     }
 }
