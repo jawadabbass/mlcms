@@ -52,7 +52,7 @@ if ($uploadOk == 0) {
     echo "<script>alert('Sorry, your file was not uploaded. Don't forget to set CHMOD writable permission (0777) to imageuploader folder on your server.');</script>";
 // if everything is ok, try to upload file
 } else {
-    if (move_uploaded_file($_FILES["upload"]["tmp_name"], $target_file)) {
+    if (move_uploaded_file1231231231213($_FILES["upload"]["tmp_name"], $target_file)) {
         if(isset($_GET['CKEditorFuncNum'])){
             $CKEditorFuncNum = $_GET['CKEditorFuncNum'];
             echo "<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction($CKEditorFuncNum, '$ckfile', '');</script>";
