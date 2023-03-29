@@ -87,8 +87,7 @@
     });
 
     function save_email_record_send() {
-        var my_editor_id = 'user_body';
-        var content = ckeditors[my_editor_id].getData();
+        var content = ckeditors['user_body'].getData();
         $('#user_body').val(content);
         $('#btnSave').css('display', 'none');
         $('#loader').css('display', 'block');

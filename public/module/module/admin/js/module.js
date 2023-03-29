@@ -33,13 +33,11 @@ function update_services_status(id){
 }
 
 function load_services_edit_form(id){
-	var my_editor_id = 'editor1';
-         $('#edit_frm_services').trigger("reset");
+	 $('#edit_frm_services').trigger("reset");
         // set the content empty
         //tinymce.get(my_editor_id).setContent('');
-        ckeditors[my_editor_id].setData('');
-        /*ckeditors[my_editor_id].updateElement();*/
-	$('#edit_footer_menu').prop('checked', false);
+        ckeditors['editor1'].setData('');
+        $('#edit_footer_menu').prop('checked', false);
 	$('#edit_top_menu').prop('checked', false);
 	$.getJSON(baseUrl+'services/get_cms_by_id/'+id, function(data) {
                 $('#edi_name').val(data.name);
@@ -58,8 +56,7 @@ function load_services_edit_form(id){
                 
                 $('#service_id').val(data.ID);
                 //tinymce.activeEditor.execCommand('mceInsertContent', false, data.details);
-                ckeditors[my_editor_id].setData(data.details);
-                /*ckeditors[my_editor_id].updateElement();*/
+                ckeditors['editor1'].setData(data.details);
                 $('#edit_services_form').modal('show');
         });	
 }

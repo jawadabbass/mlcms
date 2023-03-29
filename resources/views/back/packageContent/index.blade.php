@@ -339,8 +339,7 @@
         }
 
         function store_content() {
-            var my_editor_id = 'text_content';
-            var content = ckeditors[my_editor_id].getData();
+            var content = ckeditors['text_content'].getData();
 
             $("#ck_editor").val(content);
             var get_url = "{{ route('package_content_store') }}";
@@ -457,8 +456,7 @@
 
 
         function edit_store_content() {
-            var my_editor_id = 'edit_ck_editor';
-            var content = ckeditors[my_editor_id].getData();
+            var content = ckeditors['edit_ck_editor'].getData();
 
             $("#edit_ck_editor_id").val(content);
             var get_url = "{{ route('package_content_store_edit') }}";

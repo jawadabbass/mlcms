@@ -11,7 +11,6 @@ function load_categories_add_form() {
 }
 
 function load_category_edit_form(id) {
-    var my_editor_id = 'editor1';
     $('#edit_footer_menu').prop('checked', false);
     $('#edit_top_menu').prop('checked', false);
     $("#edit_form_blog_cate").trigger('reset');
@@ -20,8 +19,7 @@ function load_category_edit_form(id) {
     $.getJSON(url, function (data) {
         $('#edit_title').val(data.cate_title);
         $('#edit_cate_slug').val(data.cate_slug);
-        ckeditors[my_editor_id].setData(data.cate_description);
-        /*ckeditors[my_editor_id].updateElement();*/
+        ckeditors['editor1'].setData(data.cate_description);
         $('#category_id').val(data.ID);
         $('#edit_frm_blog_cat').modal('show');
     });
@@ -162,9 +160,7 @@ function load_blog_post_edit_form(id) {
     save_method = 'update';
     var my_editor_id = 'editor1';
     // set the content empty
-    //tinymce.get(my_editor_id).setContent('');
-    ckeditors[my_editor_id].setData('');
-    /*ckeditors[my_editor_id].updateElement();*/
+    ckeditors['editor1'].setData('');
     $('#edit_footer_menu').prop('checked', false);
     $('#edit_top_menu').prop('checked', false);
     $.getJSON(base_url + 'adminmedia/blog/' + id, function (data) {
@@ -203,9 +199,7 @@ function load_blog_post_edit_form(id) {
             seoClass.className = 'seo-edit-modul-hide';
         }
 
-        ckeditors[my_editor_id].setData(data.description);
-        /*ckeditors[my_editor_id].updateElement();*/
-        //tinymce.activeEditor.execCommand('mceInsertContent', false, data.description);
+        ckeditors['editor1'].setData(data.description);
         $('#cms_id').val(data.ID);
         $('#blog_post_form').attr('action', base_url + 'adminmedia/blog/' + data.ID);
         if (!$('#methodPut').length) {
@@ -241,15 +235,9 @@ function remove_blog_post_featured_image(id) {
 }
 
 function save_blog_post() {
-    /* for (instance in ckeditors)
-    {
-        ckeditors[instance].updateElement();
-    }
-    */
     var url = $('#blog_post_form').attr('action');;
     console.log(url);
-    var my_editor_id = 'editor1';
-    var content = ckeditors[my_editor_id].getData();
+    var content = ckeditors['editor1'].getData();
     $('#editor1').val(content);
     $.ajaxSetup({
         headers: {
