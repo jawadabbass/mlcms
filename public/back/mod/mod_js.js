@@ -37,9 +37,9 @@ function getEditDiv_page(pageText, contr, idd) {
     });
 }
 function mod_edit_page(frm, contr, idd, rf) {
-    for (instance in CKEDITOR.instances) {
-        CKEDITOR.instances[instance].updateElement();
-    }
+    /* for (instance in ckeditors) {
+        ckeditors[instance].updateElement();
+    } */
     var pageName = base_url + base_url_admin + "/" + contr + "/" + idd;
     $("#spinner").show();
     var parameters = $(frm).serialize();

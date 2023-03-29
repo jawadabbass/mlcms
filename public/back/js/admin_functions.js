@@ -382,7 +382,7 @@ function validate_edit_plugin_form(the_form) {
         alert("Please provide page slug.");
         return false;
     }
-    if (CKEDITOR.instances['edit_editor1'].getData() == '') {
+    if (ckeditors['edit_editor1'].getData() == '') {
         alert("Please provide page content.");
         return false;
     }
@@ -396,7 +396,7 @@ function load_widgets_edit_form(id) {
     $('#edit_top_menu').prop('checked', false);
     $.getJSON(baseUrl + 'widgets/get_widgets_by_id/' + id, function (data) {
         $('#edit_heading').val(data.heading);
-        CKEDITOR.instances['edit_editor1'].setData(data.content);
+        ckeditors['edit_editor1'].setData(data.content);
         $('#widgets_id').val(data.ID);
         
         $('#edit_page_form').modal('show');
@@ -429,7 +429,7 @@ function validate_edit_block_form(the_form) {
 //		alert("Please provide page heading.");
 //		return false;
 //	  }
-    if (CKEDITOR.instances['edit_editor1'].getData() == '') {
+    if (ckeditors['edit_editor1'].getData() == '') {
         alert("Please provide page content.");
         return false;
     }
@@ -944,7 +944,7 @@ function validate_edit_cms_form(the_form) {
         alert("Please provide email subject.");
         return false;
     }
-    if (CKEDITOR.instances['editor1'].getData() == '') {
+    if (ckeditors['editor1'].getData() == '') {
         alert("Please provide email content.");
         return false;
     }
@@ -955,7 +955,7 @@ function load_email_template_edit_form(id) {
         $('#from_email').val(data.from_email);
         $('#subject').val(data.subject);
         $('#eid').val(data.ID);
-        CKEDITOR.instances['editor1'].setData(data.content);
+        ckeditors['editor1'].setData(data.content);
         $('#edit_email_form').modal('show');
     });
 }
@@ -1085,7 +1085,7 @@ function load_newsletter_edit_form(id) {
         $('#edit_from_email').val(data.from_email);
         $('#edit_email_subject').val(data.email_subject);
         $('#edit_email_interval').val(data.email_interval);
-        CKEDITOR.instances['edit_editor1'].setData(data.email_body)
+        ckeditors['edit_editor1'].setData(data.email_body)
         $('#n_id').val(data.ID);
         $('#edit_newsletter_form').modal('show');
     });
@@ -1121,7 +1121,7 @@ function validate_edit_newsletter_form(the_form) {
         alert("Please provide page slug.");
         return false;
     }
-    if (CKEDITOR.instances['edit_editor1'].getData() == '') {
+    if (ckeditors['edit_editor1'].getData() == '') {
         alert("Please provide page content.");
         return false;
     }
@@ -1549,7 +1549,7 @@ function load_ministries_edit_form(id) {
         $('#edit_phone_no').val(data.phone_no);
         $('#edit_slug').val(data.slug);
         $('#edit_title').val(data.title);
-        CKEDITOR.instances['edit_editor1'].setData(data.content);
+        ckeditors['edit_editor1'].setData(data.content);
         $('#ministries_id').val(data.ID);
         $("#bannerimages").attr('src', '../public/uploads/ministers/thump/' + data.banner_name);
         $('#edit_ministries_form').modal('show');
@@ -1725,7 +1725,7 @@ function load_banners_edit_form(id) {
         tinyMCE.get('edit_editor1').setContent('');
         tinyMCE.get('edit_editor1').setContent(data.banner_desc);
         //tinymce.activeEditor.execCommand('mceInsertContent', false, data.banner_desc);
-        //CKEDITOR.instances['edit_editor1'].setData(data.banner_desc);
+        //ckeditors['edit_editor1'].setData(data.banner_desc);
         $('#banner_id').val(data.ID);
         $('#edit_page_form').modal('show');
     });
@@ -1751,7 +1751,7 @@ function validate_edit_banner_form(the_form) {
         alert("Please provide Banner Alt Tag.");
         return false;
     }
-    if (CKEDITOR.instances['edit_editor1'].getData() == '') {
+    if (ckeditors['edit_editor1'].getData() == '') {
         alert("Please provide Banner content.");
         return false;
     }
@@ -1794,7 +1794,7 @@ function load_events_edit_form(id) {
         $('#edit_start').val(data.start);
         $('#edit_event_slug').val(data.event_slug);
         $('#edit_end').val(data.end);
-        CKEDITOR.instances['edit_editor1'].setData(data.contents);
+        ckeditors['edit_editor1'].setData(data.contents);
         $('#event_id').val(data.ID);
         $('#edit_events_form').modal('show');
     });
@@ -1830,7 +1830,7 @@ function validate_edit_events_form(the_form) {
         alert("Please provide Post slug.");
         return false;
     }
-    if (CKEDITOR.instances['edit_editor1'].getData() == '') {
+    if (ckeditors['edit_editor1'].getData() == '') {
         alert("Please provide Post content.");
         return false;
     }
@@ -1863,7 +1863,7 @@ function load_gallery_edit_form(id) {
         tinyMCE.get('edit_editor1').setContent('');
         tinyMCE.get('edit_editor1').setContent(data.gallery_desc);
         //tinymce.activeEditor.execCommand('mceInsertContent', false, data.gallery_desc);
-        //CKEDITOR.instances['edit_editor1'].setData(data.gallery_desc);
+        //ckeditors['edit_editor1'].setData(data.gallery_desc);
         $('#gallery_id').val(data.ID);
         $('#edit_page_form').modal('show');
     });
@@ -1889,7 +1889,7 @@ function validate_edit_gallery_form(the_form) {
         alert("Please provide gallery Alt Tag.");
         return false;
     }
-    if (CKEDITOR.instances['edit_editor1'].getData() == '') {
+    if (ckeditors['edit_editor1'].getData() == '') {
         alert("Please provide Gallery content.");
         return false;
     }
@@ -1938,7 +1938,7 @@ function load_testimonials_edit_form(id) {
         tinyMCE.get('edit_editor1').setContent('');
         tinyMCE.get('edit_editor1').setContent(data.details);
         //tinymce.activeEditor.execCommand('mceInsertContent', false, data.gallery_desc);
-        //CKEDITOR.instances['edit_editor1'].setData(data.gallery_desc);
+        //ckeditors['edit_editor1'].setData(data.gallery_desc);
         $('#testimonials_id').val(data.ID);
         $('#edit_page_form').modal('show');
     });
@@ -1964,7 +1964,7 @@ function validate_edit_gallery_form(the_form) {
         alert("Please provide gallery Alt Tag.");
         return false;
     }
-    if (CKEDITOR.instances['edit_editor1'].getData() == '') {
+    if (ckeditors['edit_editor1'].getData() == '') {
         alert("Please provide Gallery content.");
         return false;
     }
@@ -2004,8 +2004,8 @@ function load_widgets_edit_form(id) {
     $("#edit_frm_widgets").trigger('reset');
     $.getJSON(baseUrl + 'adminmedia/widgets/' + id, function (data) {
         $('#edit_heading').val(data.heading);
-        CKEDITOR.instances['edit_editor1'].setData(data.content);
-        CKEDITOR.instances['edit_editor1'].updateElement();
+        ckeditors['edit_editor1'].setData(data.content);
+        /* ckeditors['edit_editor1'].updateElement(); */
         var filename = '../public/uploads/widgets/thumb/' + data.featured_image;
         $("#widgetsimages").attr('src', filename);
         // alert('HELLO TESTING HERE');
@@ -2075,7 +2075,7 @@ function validate_edit_widgets_form(the_form) {
         alert("Please provide page heading.");
         return false;
     }
-    if (CKEDITOR.instances['edit_editor1'].getData() == '') {
+    if (ckeditors['edit_editor1'].getData() == '') {
         alert("Please provide page contents.");
         return false;
     }
@@ -2461,7 +2461,7 @@ function validate_edit_pages_form(the_form) {
         alert("Please provide page slug.");
         return false;
     }
-    if (CKEDITOR.instances['edit_editor1'].getData() == '') {
+    if (ckeditors['edit_editor1'].getData() == '') {
         alert("Please provide page content.");
         return false;
     }
@@ -2498,7 +2498,7 @@ function load_video_edit_form(id) {
 //                    $('#featured_img').append(img);
 //                }
         //       $("#icon_img").attr('src', '../public/uploads/social-media-icons/'+data.icon_img);
-        //       CKEDITOR.instances['edit_editor1'].setData(data.banner_desc);
+        //       ckeditors['edit_editor1'].setData(data.banner_desc);
         $('#videos_id').val(data.ID);
         $('#edit_videos_form').modal('show');
     });
@@ -2753,7 +2753,7 @@ function validate_edit_customers_form(the_form) {
         alert("Please provide Banner Alt Tag.");
         return false;
     }
-    if (CKEDITOR.instances['edit_editor1'].getData() == '') {
+    if (ckeditors['edit_editor1'].getData() == '') {
         alert("Please provide Banner content.");
         return false;
     }

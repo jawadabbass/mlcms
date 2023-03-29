@@ -262,7 +262,7 @@ function validate_edit_cms_form(the_form){
 		return false;
 	  }
 	  
-	  if(CKEDITOR.instances['edit_editor1'].getData()==''){
+	  if(ckeditors['edit_editor1'].getData()==''){
 		alert("Please provide page content.");  
 		return false;
 	  }
@@ -299,7 +299,7 @@ function load_cms_edit_form(id){
 	$.getJSON(baseUrl+'adminmedia/cms/get_cms_by_id/'+id, function(data) {
 			$('#edit_heading').val(data.heading);
 			$('#edit_page_slug').val(data.page_slug);
-			CKEDITOR.instances['edit_editor1'].setData(data.content)
+			ckeditors['edit_editor1'].setData(data.content)
 			$('#cms_id').val(data.ID);
 			$('#edit_page_form').modal('show');
 		});	
@@ -805,7 +805,7 @@ function validate_edit_cms_form(the_form){
 		return false;
 	  }
 	  
-	  if(CKEDITOR.instances['edit_editor1'].getData()==''){
+	  if(ckeditors['edit_editor1'].getData()==''){
 		alert("Please provide email content.");  
 		return false;
 	  }

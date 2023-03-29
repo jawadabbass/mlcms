@@ -249,7 +249,7 @@
                                 <label class="form-label">Post Description</label>
 
                                 <textarea id="edit_editor1" name="editor1" rows="8" cols="80"
-                                    placeholder="Describe yourself with 4 words...">
+                                    placeholder="Description...">
 
                                             {{ old('editor1') }}
 

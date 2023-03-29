@@ -54,7 +54,7 @@
                                     @if ($admin_data->show_content == 1)
                                         <div class="mb-2">
                                             <label class="form-label">Widget Content</label>
-                                            <textarea id="editor1" name="editor1" rows="8" cols="80" placeholder="Describe yourself with 4 words...">{{ $widget->content }}</textarea>
+                                            <textarea id="editor1" name="editor1" rows="8" cols="80" placeholder="Widget Content...">{{ $widget->content }}</textarea>
                                         </div>
                                     @endif
 

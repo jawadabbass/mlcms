@@ -37,8 +37,8 @@ function load_services_edit_form(id){
          $('#edit_frm_services').trigger("reset");
         // set the content empty
         //tinymce.get(my_editor_id).setContent('');
-        CKEDITOR.instances[my_editor_id].setData('');
-        CKEDITOR.instances[my_editor_id].updateElement();
+        ckeditors[my_editor_id].setData('');
+        /*ckeditors[my_editor_id].updateElement();*/
 	$('#edit_footer_menu').prop('checked', false);
 	$('#edit_top_menu').prop('checked', false);
 	$.getJSON(baseUrl+'services/get_cms_by_id/'+id, function(data) {
@@ -58,8 +58,8 @@ function load_services_edit_form(id){
                 
                 $('#service_id').val(data.ID);
                 //tinymce.activeEditor.execCommand('mceInsertContent', false, data.details);
-                CKEDITOR.instances[my_editor_id].setData(data.details);
-                CKEDITOR.instances[my_editor_id].updateElement();
+                ckeditors[my_editor_id].setData(data.details);
+                /*ckeditors[my_editor_id].updateElement();*/
                 $('#edit_services_form').modal('show');
         });	
 }

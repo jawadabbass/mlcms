@@ -64,12 +64,3 @@
     </aside>
     @include('back.common_views.spinner')
 @endsection
-@section('beforeBodyClose')
-    <script>
-        $(document).ready(function() {
-            CKEDITOR.replace('fleet_plane_details');
-            CKEDITOR.config.allowedContent = true;
-            CKEDITOR.config.autoParagraph = false;
-        });
-    </script>
-@endsection

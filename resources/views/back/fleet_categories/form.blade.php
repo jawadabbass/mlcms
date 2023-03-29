@@ -30,13 +30,3 @@
         {!! generateFleetCategoriesStatusDropDown($fleetCategoryObj->status, false) !!}
     </select>
 </div>
-
-@section('beforeBodyClose')
-    <script>
-        $(document).ready(function() {
-            CKEDITOR.replace('description');
-            CKEDITOR.config.allowedContent = true;
-            CKEDITOR.config.autoParagraph = false;
-        });
-    </script>
-@endsection

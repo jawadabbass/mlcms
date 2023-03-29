@@ -499,13 +499,13 @@
             save_method = 'add';
             $('#modal_form_title').text('Add {{ ucwords($module->term) }}'); // Set Title to Bootstrap modal title
             var my_editor_id = 'editor1';
-            CKEDITOR.instances[my_editor_id].setData('');
-            CKEDITOR.instances[my_editor_id].updateElement();
+            ckeditors[my_editor_id].setData('');
+            /*ckeditors[my_editor_id].updateElement();*/
         }
         function save() {
             var url;
             var my_editor_id = 'editor1';
-            var content = CKEDITOR.instances[my_editor_id].getData();
+            var content = ckeditors[my_editor_id].getData();
             $('#module_description1').val(content);
             if (save_method == 'add') {
                 url = "{{ admin_url() . 'module/' . $module->type }}";
@@ -623,7 +623,7 @@
     <script type="text/javascript">
         function updatePageContent() {
             var my_editor_id = 'editor1';
-            var content = CKEDITOR.instances[my_editor_id].getData();
+            var content = ckeditors[my_editor_id].getData();
             $('#module_description1').val(content);
             $('#form_edit_1').submit();
         }

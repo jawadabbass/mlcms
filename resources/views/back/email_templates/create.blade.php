@@ -2,7 +2,6 @@
 @section('beforeHeadClose')
     <script src="{{ base_url() }}back/js/plugins/mask/jquery.mask.min.js"></script>
 @endsection
-
 @section('content')
     <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
         <section class="content-header">
@@ -11,7 +10,7 @@
                     <ol class="breadcrumb">
                         <li><a href="{{ admin_url() }}"> <i class="fa-solid fa-dashboard"></i> Home </a></li>
                         <li><a href="{{ route('email_templates.index') }}">Manage Email Template</a></li>
-                    <li class="active">Add New Email Template</li>
+                        <li class="active">Add New Email Template</li>
                     </ol>
                 </div>
                 <div class="col-md-4 col-sm-6"> @include('back.common_views.quicklinks') </div>
@@ -46,25 +45,19 @@
                                 Add New Template
                             </h3>
                         </div>
-                        <form id="validatethis" name="myForm" method="post"
-                            action="{{ route('email_templates.store') }}" enctype="multipart/form-data">
+                        <form id="validatethis" name="myForm" method="post" action="{{ route('email_templates.store') }}"
+                            enctype="multipart/form-data">
                             {{ csrf_field() }}
-
-
-
                             <div class="row">
                                 <div class="col-md-12 form-group">
                                     <label>Title Of Template</label>
                                     <input type="text" name="title" class="form-control" required>
-
                                 </div>
                             </div>
-
                             <div class="row">
                                 <div class="col-md-12 form-group">
                                     <label>Subject</label>
                                     <input type="text" name="Subject" class="form-control" required>
-
                                 </div>
                             </div>
                             <div class="row">
@@ -83,7 +76,6 @@
                                         <option value="fa-angle-double-left">&#xf100; </option>
                                         <option value="fa-angle-double-right">&#xf101; </option>
                                         <option value="fa-angle-double-up">&#xf102; </option>
-
                                         <option value="fa-angle-left">&#xf104; </option>
                                         <option value="fa-angle-right">&#xf105; </option>
                                         <option value="fa-angle-up">&#xf106; </option>
@@ -115,9 +107,7 @@
                                         <option value="fa-bank">&#xf19c;</option>
                                         <option value="fa-bar-chart">&#xf080; </option>
                                         <option value="fa-bar-chart-o">&#xf080; </option>
-
                                         <option value="fa-battery-full">&#xf240; </option>
-
                                         <option value="fa-behance">&#xf1b4; </option>
                                         <option value="fa-behance-square">&#xf1b5; </option>
                                         <option value="fa-bell">&#xf0f3; </option>
@@ -404,7 +394,6 @@
                                         <option value="fa-long-arrow-up">&#xf176; </option>
                                         <option value="fa-magic">&#xf0d0; </option>
                                         <option value="fa-magnet">&#xf076; </option>
-
                                         <option value="fa-mars-stroke-v">&#xf22a; </option>
                                         <option value="fa-maxcdn">&#xf136; </option>
                                         <option value="fa-meanpath">&#xf20c; </option>
@@ -509,11 +498,8 @@
                                         <option value="fa-tags">&#xf02c; </option>
                                     </select>
                                 </div>
-
                             </div>
-
                             <div class="modalpadding">
-
                                 <div id="user_email_area">
                                     <div class="row" style="margin-top:10px;">
                                         <div class="col-sm-12">
@@ -525,7 +511,7 @@
                                                 $arr4 = explode(',', '{COMPANY E-MAIL}');
                                                 $arr = array_merge($arr1, $arr2, $arr4);
                                                 foreach ($arr as $kk => $vv) {
-                                                    echo '<code style="cursor: pointer;"  data-bs-toggle="tooltip" title="Click to insert ' . $vv . '" onclick="insertIntoCkeditor(\'' . $vv . '\')">' . $vv . '</code>, ';
+                                                    echo '<code style="cursor: pointer;"  data-bs-toggle="tooltip" title="Click to insert ' . $vv . '" onclick="insertIntoCkeditor(\'user_body\', \'' . $vv . '\')">' . $vv . '</code>, ';
                                                 }
                                             @endphp
                                             <textarea name="user_body" id="user_body" class="form-control" required=""></textarea>
@@ -553,7 +539,6 @@
         </section>
     </aside>
 @endsection
-
 @section('beforeBodyClose')
     <script>
         var contr = '{{ $settingArr['contr_name'] }}';
@@ -562,63 +547,14 @@
     <link href="{{ asset('back/mod/bootstrap-toggle.min.css') }}" rel="stylesheet">
     <script src="{{ asset('back/mod/bootstrap-toggle.min.js') }}"></script>
     <script src="{{ asset('back/mod/mod_js.js') }}"></script>
-    <script src="{{ asset('back/js/plugins/editor/ckeditor/ckeditor.js') }}"></script>
     <script type="text/javascript">
-        CKEDITOR.replace('user_body');
-
-        function insertIntoCkeditor(str) {
-            CKEDITOR.instances['user_body'].insertText(str);
-        }
-
-        function insertIntoTextArea(str) {
-            // $("#Body").val($("#Body").val()+str);
-            insertAtCaret('Body', str);
-        }
-
-        function insertAtCaret(areaId, text) {
-            var txtarea = document.getElementById(areaId);
-            var scrollPos = txtarea.scrollTop;
-            var strPos = 0;
-            var br = ((txtarea.selectionStart || txtarea.selectionStart == '0') ?
-                "ff" : (document.selection ? "ie" : false));
-            if (br == "ie") {
-                txtarea.focus();
-                var range = document.selection.createRange();
-                range.moveStart('character', -txtarea.value.length);
-                strPos = range.text.length;
-            } else if (br == "ff") strPos = txtarea.selectionStart;
-
-            var front = (txtarea.value).substring(0, strPos);
-            var back = (txtarea.value).substring(strPos, txtarea.value.length);
-            txtarea.value = front + text + back;
-            strPos = strPos + text.length;
-            if (br == "ie") {
-                txtarea.focus();
-                var range = document.selection.createRange();
-                range.moveStart('character', -txtarea.value.length);
-                range.moveStart('character', strPos);
-                range.moveEnd('character', 0);
-                range.select();
-            } else if (br == "ff") {
-                txtarea.selectionStart = strPos;
-                txtarea.selectionEnd = strPos;
-                txtarea.focus();
-            }
-            txtarea.scrollTop = scrollPos;
-        }
-
-
         jQuery(document).ready(function($) {
             $("#user_email_active").change(function(e) {
-
-
                 if ($(this).prop('checked')) {
                     $("#user_email_area").slideDown();
                 } else {
                     $("#user_email_area").slideUp();
                 }
-
-
             });
         });
     </script>

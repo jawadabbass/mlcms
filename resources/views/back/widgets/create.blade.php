@@ -46,7 +46,7 @@
                 </div>
                 <div class="mb-2">
                     <label class="form-label">Widget Content</label>
-                    <textarea id="editor1" name="editor1" rows="8" cols="80" placeholder="Describe yourself with 4 words...">{{ old('editor1') }}</textarea>
+                    <textarea id="editor1" name="editor1" rows="8" cols="80" placeholder="Widget Content...">{{ old('editor1') }}</textarea>
                 </div>
                 <div id="fea_img">
                     <label class="form-label"> Add Widgets Image <span style="font-size: 12px;color: red"> max size:

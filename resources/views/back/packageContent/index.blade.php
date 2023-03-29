@@ -340,7 +340,7 @@
 
         function store_content() {
             var my_editor_id = 'text_content';
-            var content = CKEDITOR.instances[my_editor_id].getData();
+            var content = ckeditors[my_editor_id].getData();
 
             $("#ck_editor").val(content);
             var get_url = "{{ route('package_content_store') }}";
@@ -449,7 +449,7 @@
 
             $("#edit_item").val($id);
 
-            CKEDITOR.instances['edit_ck_editor'].setData($content);
+            ckeditors['edit_ck_editor'].setData($content);
             $("#package_edit_Content").modal('show');
 
 
@@ -458,7 +458,7 @@
 
         function edit_store_content() {
             var my_editor_id = 'edit_ck_editor';
-            var content = CKEDITOR.instances[my_editor_id].getData();
+            var content = ckeditors[my_editor_id].getData();
 
             $("#edit_ck_editor_id").val(content);
             var get_url = "{{ route('package_content_store_edit') }}";
@@ -528,19 +528,5 @@
                 }
             }); // End Aajax Request
         };
-    </script>
-
-    <script type="text/javascript">
-        $(function() {
-            CKEDITOR.replace('text_content');
-            CKEDITOR.config.allowedContent = true;
-            CKEDITOR.config.autoParagraph = false;
-        });
-
-        $(function() {
-            CKEDITOR.replace('edit_content');
-            CKEDITOR.config.allowedContent = true;
-            CKEDITOR.config.autoParagraph = false;
-        });
     </script>
 @endsection

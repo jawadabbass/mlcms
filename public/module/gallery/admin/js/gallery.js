@@ -79,7 +79,7 @@ function load_gallery_edit_form(id){
 
         //tinymce.activeEditor.execCommand('mceInsertContent', false, data.gallery_desc);
 
-        //CKEDITOR.instances['edit_editor1'].setData(data.gallery_desc);
+        //ckeditors['edit_editor1'].setData(data.gallery_desc);
 
         $('#gallery_id').val(data.ID);
 
@@ -133,7 +133,7 @@ function validate_edit_gallery_form(the_form){
 
     }
 
-    if(CKEDITOR.instances['edit_editor1'].getData()==''){
+    if(ckeditors['edit_editor1'].getData()==''){
 
         alert("Please provide Gallery content.");
 

@@ -153,7 +153,7 @@ function loadprocess(thisobj){
     }
 
     function updatePageContent(){
-         var content = CKEDITOR.instances[my_editor_id].getData();
+         var content = ckeditors[my_editor_id].getData();
         $('#module_description1').val(content);
         alert("done");
     }

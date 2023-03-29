@@ -46,7 +46,7 @@
                                         $arr4 = explode(',', '{COMPANY E-MAIL}');
                                         $arr = array_merge($arr1, $arr2, $arr4);
                                         foreach ($arr as $kk => $vv) {
-                                            echo '<code style="cursor: pointer;"  data-toggle="tooltip" title="Click to insert ' . $vv . '" onclick="insertIntoCkeditor(\'' . $vv . '\')">' . $vv . '</code>, ';
+                                            echo '<code style="cursor: pointer;"  data-toggle="tooltip" title="Click to insert ' . $vv . '" onclick="insertIntoCkeditor(\'user_body\', \'' . $vv . '\')">' . $vv . '</code>, ';
                                         }
                                     @endphp
                                     <textarea name="user_body" id="user_body" class="form-control" required="">

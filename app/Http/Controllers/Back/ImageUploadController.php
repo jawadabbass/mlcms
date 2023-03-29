@@ -50,7 +50,7 @@ class ImageUploadController extends Controller
                 $image->module_type = $request->input('module_type');
                 $image->module_id = $request->input('module_id');
                 $image->module_data_id = $request->input('module_data_id');
-                $image->session_id = ($request->input('module_data_id', 0) == 0)? $request->input('session_id'):NULL;
+                $image->session_id = ($request->input('module_data_id', 0) == 0) ? $request->input('session_id') : NULL;
                 $image->image_alt = $request->input('image_alt');
                 $image->image_title = $request->input('image_title');
                 $image->save();
@@ -89,8 +89,29 @@ class ImageUploadController extends Controller
         $moduleDataImages = ModuleDataImage::whereNotNull('session_id')->where('module_data_id', 0)->whereDate('created_at', '<', $date)->get();
 
         foreach ($moduleDataImages as $image) {
-            ImageUploader::deleteImage('module/'.$image->module_type, $image->image_name, true);
+            ImageUploader::deleteImage('module/' . $image->module_type, $image->image_name, true);
             $image->delete();
+        }
+    }
+
+    public function uploadCkeditorImage(Request $request)
+    {
+        $maxImageSize = getMaxUploadSize() * 1024;
+        $validator = Validator::make($request->all(), [
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:' . $maxImageSize
+        ]);
+        if ($validator->passes()) {
+            $folder = 'editor/images';
+            if ($image = $request->file('image')) {
+                $name = ImageUploader::UploadImage($folder . '/', $image, '', 500, 500, false);
+            }
+            return response()->json([
+                'url' => url('uploads/editor/images/' . $name)
+            ]);
+        } else {
+            return response()->json([
+                'error' => ['message' => $validator->errors()->first()]
+            ]);
         }
     }
 }

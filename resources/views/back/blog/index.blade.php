@@ -1,6 +1,5 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('beforeHeadClose')
-    <link href=" {{ base_url() . 'back/bootstrap/css/bootstrap-multiselect.css' }}" rel="stylesheet" type="text/css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet"
         type="text/css" />
     @php $module = "blog" @endphp
@@ -240,7 +239,6 @@
             @if ($errors->any())
                 load_blog_add_form();
             @endif
-            $('#blog_cat').multiselect();
             table = $('#populate-cms-data').DataTable();
         });
     </script>

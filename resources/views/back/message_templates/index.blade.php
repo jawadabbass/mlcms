@@ -137,9 +137,9 @@
         $(document).ready(function() {
 
             var textarea = document.getElementById('add_ckeditor');
-            CKEDITOR.replace(textarea);
+            bindCKeditor(textarea);
             // var u_textarea = document.getElementById('update_ckeditor');
-            // CKEDITOR.replace(u_textarea);
+            // bindCKeditor(u_textarea);
 
             $(document).on('click', '#update_btn', function() {
                 var id = $(this).attr('data-id');
@@ -153,10 +153,7 @@
                         $('#u_id').val(data.id);
                         $('#body').html(data.body);
 
-                        CKEDITOR.replace('body');
-                        CKEDITOR.instances.body.setData("sdda dasdsada");
-
-                        // CKEDITOR.instances.body.setData(data.body);
+                        // ckeditors.body.setData(data.body);
                         $('#u_title').val(data.title);
                         $('#UpdateserviceModal').modal({
                             show: true

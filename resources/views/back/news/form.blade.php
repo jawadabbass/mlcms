@@ -97,11 +97,6 @@
 @section('beforeBodyClose')
     <script>
         $(document).ready(function() {
-            CKEDITOR.replace('description');
-            CKEDITOR.config.allowedContent = true;
-            CKEDITOR.config.autoParagraph = false;
-        });
-        $(document).ready(function() {
             $("#news_date_time").datetimepicker({
                 format:'Y-m-d H:i:s'
             });

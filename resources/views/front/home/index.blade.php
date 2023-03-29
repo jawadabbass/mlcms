@@ -2,7 +2,7 @@
 @section('content')
     @php echo front_dashboard_links(); @endphp
     <!-- Start Banner
-                    ============================================= -->
+                                            ============================================= -->
     <div class="banner-area">
         <div id="bootcarousel" class="carousel inc-top-heading slide carousel-fade animate_text" data-ride="carousel">
             <!-- Wrapper for slides -->
@@ -46,7 +46,7 @@
     </div>
     <!-- End Banner -->
     <!-- Start Our About
-                    ============================================= -->
+                                            ============================================= -->
     <div class="about-area full-width inc-shadow mt default-padding bottom-less">
         <div class="container">
             <div class="row">
@@ -96,7 +96,7 @@
     </div>
     <!-- End Our About -->
     <!-- Start Services
-                    ============================================= -->
+                                            ============================================= -->
     <div class="services-inc-area half-bg default-padding-20 bg-gray">
         <div class="container">
             <div class="row">
@@ -123,7 +123,8 @@
                                 </div>
                                 <div class="info">
                                     <p> @php echo get_excerpt($service->content,100) @endphp </p>
-                                    <a href="{{ url($service->post_slug) }}">Read More <i class="fas fa-angle-double-right"></i></a>
+                                    <a href="{{ url($service->post_slug) }}">Read More <i
+                                            class="fas fa-angle-double-right"></i></a>
                                 </div>
                             </div>
                             <!-- End Single Item -->
@@ -136,7 +137,7 @@
     </div>
     <!-- End Services -->
     <!-- Start Portfolio
-                    ============================================= -->
+                                            ============================================= -->
     <div class="portfolio-area inc-colum default-padding-20 bg-gray">
         <div class="container">
             <div class="row">
@@ -194,7 +195,7 @@
     </div>
     <!-- End Portfolio -->
     <!-- Start Testimonial & Faq
-                    ============================================= -->
+                                            ============================================= -->
     <div class="testimonials-faq about-area default-padding">
         <div class="container">
             <div class="row">
@@ -259,51 +260,43 @@
     </div>
     <!-- End Testimonial & Faq -->
     <!-- Start Achivement
-                    ============================================= -->
+                                            ============================================= -->
     <div class="achivement-area bg-fixed shadow dark text-light default-padding"
         style="background-image: url(img/banner/9.jpg')}});">
         <div class="container">
             <div class="row">
                 <div class="col-md-6 info">
                     @php $achh_page=get_page(181);@endphp
-                    {{-- <h2>@php echo $achh_page->heading; @endphp </h2> --}}
-                    {{-- @php echo $achh_page->content; @endphp --}}
-                    <!--<a href="#" class="btn btn-theme effect btn-md">Start Now</a>-->
+                    <h2>@php echo $achh_page->heading; @endphp </h2>
+                    @php echo $achh_page->content; @endphp
+                    <a href="{{ url($achh_page->post_slug) }}" class="btn btn-theme effect btn-md">Start Now</a>
                 </div>
-                {{-- <div class="col-md-6 achivement-items">
-        <div class="row">
-          <div class="col-md-6 col-sm-6 item">
-            <div class="fun-fact">
-              @php $scwidget = get_widgets(72); @endphp
-              <div class="timer" data-to="{{$scwidget->content}}" data-speed="5000"></div>
-              <span class="medium">{{$scwidget->heading}}</span> </div>
-          </div>
-          <div class="col-md-6 col-sm-6 item">
-            <div class="fun-fact">
-               @php $scwidget = get_widgets(73); @endphp
-              <div class="timer" data-to="{{$scwidget->content}}" data-speed="5000"></div>
-              <span class="medium">{{$scwidget->heading}}</span> </div>
-          </div>
-          <div class="col-md-6 col-sm-6 item">
-            <div class="fun-fact">
-               @php $scwidget = get_widgets(74); @endphp
-              <div class="timer" data-to="{{$scwidget->content}}" data-speed="5000"></div>
-              <span class="medium">{{$scwidget->heading}}</span> </div>
-          </div>
-          <div class="col-md-6 col-sm-6 item">
-            <div class="fun-fact">
-               @php $scwidget = get_widgets(75); @endphp
-              <div class="timer" data-to="{{$scwidget->content}}" data-speed="5000"></div>
-              <span class="medium">{{$scwidget->heading}}</span> </div>
-          </div>
-        </div>
-      </div> --}}
+                <div class="col-md-6 achivement-items">
+                    @php
+                        $scwidget = get_widgets(81);
+                        $af_data = json_decode($scwidget->additional_field_data);
+                    @endphp
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">{{ $scwidget->heading }}</h3>
+                        </div>
+                        <div class="panel-body">
+                            <a href="#" class="thumbnail">
+                            <img class="card-img-top" src="{{ asset('uploads/widgets/' . $scwidget->featured_image) }}"
+                                alt="{{ $scwidget->featured_image_alt }}" title="{{ $scwidget->featured_image_title }}">
+                            </a>
+                            {!! $scwidget->content !!}
+                        </div>
+                        <div class="panel-footer"><a href="{{ $af_data->additional_field_2 }}"
+                                class="btn btn-primary">{{ $af_data->additional_field_1 }}</a></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <!-- End Achivement Area -->
     <!-- Start Blog Area
-                    ============================================= -->
+                                            ============================================= -->
     <div class="blog-area default-padding bottom-less">
         <div class="container">
             <div class="row">
@@ -323,8 +316,7 @@
                             <div class="item">
                                 <div class="thumb">
                                     <a href="{{ base_url() . 'blog/' . $blogsValues['post_slug'] }}">
-                                        @if (!empty($blogsValues['featured_img']) &&
-                                            file_exists(public_path('/uploads/blog/' . $blogsValues['featured_img'])))
+                                        @if (!empty($blogsValues['featured_img']) && file_exists(public_path('/uploads/blog/' . $blogsValues['featured_img'])))
                                             <img src="{{ base_url() . 'uploads/blog/' . $blogsValues['featured_img'] }}"
                                                 title="{{ $blogsValues['featured_img_title'] }}"
                                                 alt="{{ $blogsValues['featured_img_alt'] }}">
@@ -362,7 +354,7 @@
     </div>
     <!-- End Blog Area -->
     <!-- Start Clients Area
-                    ============================================= -->
+                                            ============================================= -->
     <div class="clients-area bg-dark default-padding">
         <div class="container">
             <div class="row">

@@ -89,15 +89,10 @@
             });
         });
 
-        CKEDITOR.replace('editor1');
-        CKEDITOR.config.allowedContent = true;
-        CKEDITOR.config.autoParagraph = false;
-        CKEDITOR.config.disableNativeSpellChecker = false;
-        CKEDITOR.config.scayt_autoStartup = true;
         $('.emailvariables').click(function() {
             var myValue = $(this).text();
             myValue = myValue.trim();
-            CKEDITOR.instances.email_body.insertText(myValue);
+            ckeditors.email_body.insertText(myValue);
         });
     </script>
 @endsection

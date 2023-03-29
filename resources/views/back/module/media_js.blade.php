@@ -1,6 +1,6 @@
 <script type="text/javascript">
     function media_insert_img(url) {
-        CKEDITOR.instances["editor1"].insertHtml('<img src="/' + url + '" alt="">');
+        insertImageIntoCkeditor('editor1', base_url + url);
         $("#media_image").modal('hide');
     }
 
@@ -12,7 +12,6 @@
     }
 
     function media_insert_file(url) {
-        // CKEDITOR.instances["editor1"].insertHtml('<a target="_blank" href="{{ base_url() }}'+url+'">File</a>');
         $("#file_c_url").val(url);
         $("#media_files").modal('hide');
         $("#modal_file_link_text").modal('show');
@@ -21,8 +20,7 @@
     function insert_media_file_html() {
         var url = $("#file_c_url").val();
         var linktxt = $("#link_on_text").val();
-        CKEDITOR.instances["editor1"].insertHtml('<a target="_blank" href="{{ base_url() }}' + url + '">' + linktxt +
-            '</a>');
+        ckeditors['editor1'].execute( 'htmlEmbed', '<a href="'+url+'">'+linktxt+'</a>.' );
         $("#modal_file_link_text").modal('hide');
     }
 
