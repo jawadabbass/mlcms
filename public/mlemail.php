@@ -1,7 +1,10 @@
 <?php
+session_start();
+error_reporting(-1);
+
 $to = $from = $cc = $bcc = $subject = $message = $code = '';
 $code = $_POST['code'];
-if ($code == '2022!') {
+if ($code == 'lushart48') {
     $to = $_POST['to_name'] . ' <' . $_POST['to_email'] . '>';
     $from = $_POST['from_name'] . ' <' . $_POST['from_email'] . '>';
 
@@ -37,8 +40,15 @@ if ($code == '2022!') {
 
     $headers['X-Mailer'] = 'PHP/' . phpversion();
 
-    mail($to, $subject, $message, $headers);
+    if (mail($to, $subject, $message, $headers)) {
+        $_SESSION['msg'] = 'Mail sent successfully!';
+        $_SESSION['msg_type'] = 'success';
+    } else {
+        $_SESSION['msg'] = 'PHP Mail Function failed!';
+        $_SESSION['msg_type'] = 'danger';
+    }
     header('Location: ' . $_SERVER['REQUEST_URI']);
+    exit;
 }
 ?>
 <!doctype html>
@@ -59,6 +69,19 @@ if ($code == '2022!') {
                 <h2>Email Form</h2>
             </div>
 
+            <?php if (!empty($_SESSION['msg'])) { ?>
+                <div class="row g-5">
+                    <div class="offset-lg-2 col-lg-8">
+                        <div class="alert alert-<?php echo $_SESSION['msg_type']; ?>" role="alert">
+                            <?php echo $_SESSION['msg']; ?>
+                        </div>
+                    </div>
+                </div>
+            <?php
+            }
+            $_SESSION['msg'] = '';
+            $_SESSION['msg_type'] = '';
+            ?>
             <div class="row g-5">
                 <div class="offset-lg-2 col-lg-8">
                     <h4 class="mb-3">Email Details</h4>
