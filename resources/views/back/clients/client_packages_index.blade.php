@@ -19,7 +19,7 @@
             <div class="row">
                 <div class="col-xs-12 col-md-12">
                     <div class="box">
-                        <div class="box-body">
+                        <div class="box-body table-responsive">
                             @if (session('success'))
                                 <div style="padding-top:5px;" class="alert alert-success">{{ session('success') }}
                                 </div>

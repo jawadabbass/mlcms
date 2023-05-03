@@ -27,7 +27,7 @@
                             </h3>
                         </div>
                         <div class="row">
-                            <div class="col-md-5">
+                            <div class="col-md-5 table-responsive">
                               <button onclick="editContactRequest({{ $result->id }});"
                                  class="btn btn-warning">Edit</button>
                                  <p class="alert alert-success mt-2 hide" id="editContactRequestMessageAlert"></p>

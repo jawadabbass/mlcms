@@ -136,8 +136,7 @@
                                                 @if (!in_array($row->id, $client_check_array))
                                                     <tr id="trr{{ $row->id }}">
                                                         <td><input type="checkbox" class="client_check"
-                                                                name="client_check[]"
-                                                                value="<?php echo $row->id; ?>" /></td>
+                                                                name="client_check[]" value="<?php echo $row->id; ?>" /></td>
                                                         <td><a style="font-size: 24px;" data-toggle="tooltip"
                                                                 title="" href="javascript:;"
                                                                 onclick="showme_page('#subtrr{{ $row->id }}',this)"
@@ -181,7 +180,8 @@
                                                                     <a class="btn btn-info"
                                                                         href="mailto:{{ $row->email }}"
                                                                         title="Reply via Email">
-                                                                        <i class="fa-solid fa-reply" aria-hidden="true"></i>
+                                                                        <i class="fa-solid fa-reply"
+                                                                            aria-hidden="true"></i>
                                                                         Reply</a>
                                                                     <a class="btn btn-sm btn-danger" href="javascript:"
                                                                         onclick="del_recrod('{{ $row->id }}');"
@@ -192,7 +192,8 @@
                                                                 <div class="col-lg-2">
                                                                     <a href="{{ admin_url() }}manage_clients/{{ $row->id }}"
                                                                         class="btn btn-success  btn-sm"><i
-                                                                            class="fa-solid fa-history" aria-hidden="true"></i>
+                                                                            class="fa-solid fa-history"
+                                                                            aria-hidden="true"></i>
                                                                         History</a>
                                                                 </div>
                                                                 <div class="col-lg-3">
@@ -231,7 +232,8 @@
                                                                         <a onclick="send_assessment_email('{{ $row->id }}','client')"
                                                                             class="btn btn-sm btn-primary"
                                                                             href="javascript:"><i
-                                                                                class="fa-solid fa-envelope-square"></i> ReSend
+                                                                                class="fa-solid fa-envelope-square"></i>
+                                                                            ReSend
                                                                             Questionnaire</a>
                                                                     </div>
                                                                 @elseif($row->assesment_status == 'receive')
@@ -249,7 +251,8 @@
                                                                             onclick="send_assessment_email('{{ $row->id }}','client')"
                                                                             class="btn btn-sm btn-primary"
                                                                             href="javascript:"><i
-                                                                                class="fa-solid fa-envelope-square"></i> Send
+                                                                                class="fa-solid fa-envelope-square"></i>
+                                                                            Send
                                                                             Questionnaire</a>
                                                                     </div>
                                                                 @endif
@@ -558,7 +561,8 @@
                     _token: $("meta[name=csrf-token]").attr("content")
                 },
                 function() {
-                    alertme('<i class="fa-solid fa-check" aria-hidden="true"></i> Status Updated ', 'success', true, 1500);
+                    alertme('<i class="fa-solid fa-check" aria-hidden="true"></i> Status Updated ', 'success', true,
+                        1500);
                 }
             );
         }

@@ -102,188 +102,201 @@
                                         @endif
                                     </div>
                                 </div>
-                                <table class="table table-bordered table-inverse table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                <input type="checkbox" id="contact_request_check_all" />
-                                            </th>
-                                            <th></th>
-                                            <th width="8%">ID</th>
-                                            <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Phone</th>
-                                            <th width="15%">Package</th>
-                                            <th>Date</th>
-                                            <th>Comment</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @php
-                                            $Bstatus = '';
-                                            $BGcolor = '';
-                                        @endphp
-                                        @if (count($result) > 0)
-                                            @foreach ($result as $row)
-                                                @php
-                                                    $bgColor = isset($bgColor) && $bgColor == '#f9f9f9' ? '#FFFFFF' : '#f9f9f9';
-                                                @endphp
-                                                <tr id="trr{{ $row->id }}" onclick="read_data(<?php echo $row->id; ?>)">
-                                                    <td><input type="checkbox" class="contact_request_check"
-                                                            name="contact_request_check[]" value="<?php echo $row->id; ?>" />
-                                                    </td>
-                                                    <td><a style="font-size: 24px;" data-toggle="tooltip" title=""
-                                                            href="javascript:;"
-                                                            onclick="showme_page('#subtrr{{ $row->id }}',this)"
-                                                            data-original-title="Show more"><i
-                                                                class="fa-solid fa-angle-double-down"
-                                                                aria-hidden="true"></i></a></td>
-                                                    <td>{{ $row->id }}
-                                                        @if ($row->read_lead == 0)
-                                                            <strong style="color: red;font-size: 20px;" class="blink_me"
-                                                                id="read11_value-<?php echo $row->id; ?>">!</strong>
-                                                        @endif
-                                                    </td>
-                                                    <td>{{ $row->name }}</td>
-                                                    <td><a href="mailto:{{ $row->email }}">{{ $row->email }}</a></td>
-                                                    <td><a href="tel:{{ $row->phone }}">{{ $row->phone }}</a></td>
-                                                    <td>
-                                                        <select class="form-control"
-                                                            onchange="update_package('{{ $row->id }}',this.value)">
-                                                            <option value="">-Select-</option>
-                                                            @foreach ($get_all_packages as $kk => $package)
-                                                                <option value="{{ $package->id }}"
-                                                                    @if ($row->package_id == $package->id) selected="" @endif>
-                                                                    {{ $package->heading }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </td>
-                                                    <td>{{ format_date($row->dated, 'date_time') }}</td>
-                                                    <td>
-                                                        <a href="javascript:;" data-bs-toggle="popover"
-                                                            class="btn btn-sm btn-success" data-bs-placement="bottom"
-                                                            data-bs-title="User Comment"
-                                                            data-bs-content="{{ $row->comments }}">
-                                                            <i class="fa-solid fa-comment" aria-hidden="true"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                                <tr style="display: none;" id="subtrr{{ $row->id }}">
-                                                    <td colspan="2">
-                                                        <strong>IP: </strong>{{ $row->ip }} <br>
-                                                        <strong>Added By: </strong>{{ $row->user->name ?? '-' }} <br>
-                                                    </td>
-                                                    <td colspan="7">
-                                                        <a class="btn btn-sm btn-info" href="mailto:{{ $row->email }}"
-                                                            title="Reply via Email">
-                                                            <i class="fa-solid fa-reply" aria-hidden="true"></i>
-                                                            Reply</a>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-inverse table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <input type="checkbox" id="contact_request_check_all" />
+                                                </th>
+                                                <th></th>
+                                                <th width="8%">ID</th>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Phone</th>
+                                                <th width="15%">Package</th>
+                                                <th>Date</th>
+                                                <th>Comment</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @php
+                                                $Bstatus = '';
+                                                $BGcolor = '';
+                                            @endphp
+                                            @if (count($result) > 0)
+                                                @foreach ($result as $row)
+                                                    @php
+                                                        $bgColor = isset($bgColor) && $bgColor == '#f9f9f9' ? '#FFFFFF' : '#f9f9f9';
+                                                    @endphp
+                                                    <tr id="trr{{ $row->id }}"
+                                                        onclick="read_data(<?php echo $row->id; ?>)">
+                                                        <td><input type="checkbox" class="contact_request_check"
+                                                                name="contact_request_check[]"
+                                                                value="<?php echo $row->id; ?>" />
+                                                        </td>
+                                                        <td><a style="font-size: 24px;" data-toggle="tooltip"
+                                                                title="" href="javascript:;"
+                                                                onclick="showme_page('#subtrr{{ $row->id }}',this)"
+                                                                data-original-title="Show more"><i
+                                                                    class="fa-solid fa-angle-double-down"
+                                                                    aria-hidden="true"></i></a></td>
+                                                        <td>{{ $row->id }}
+                                                            @if ($row->read_lead == 0)
+                                                                <strong style="color: red;font-size: 20px;"
+                                                                    class="blink_me"
+                                                                    id="read11_value-<?php echo $row->id; ?>">!</strong>
+                                                            @endif
+                                                        </td>
+                                                        <td>{{ $row->name }}</td>
+                                                        <td><a href="mailto:{{ $row->email }}">{{ $row->email }}</a>
+                                                        </td>
+                                                        <td><a href="tel:{{ $row->phone }}">{{ $row->phone }}</a>
+                                                        </td>
+                                                        <td>
+                                                            <select class="form-control"
+                                                                onchange="update_package('{{ $row->id }}',this.value)">
+                                                                <option value="">-Select-</option>
+                                                                @foreach ($get_all_packages as $kk => $package)
+                                                                    <option value="{{ $package->id }}"
+                                                                        @if ($row->package_id == $package->id) selected="" @endif>
+                                                                        {{ $package->heading }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </td>
+                                                        <td>{{ format_date($row->dated, 'date_time') }}</td>
+                                                        <td>
+                                                            <a href="javascript:;" data-bs-toggle="popover"
+                                                                class="btn btn-sm btn-success" data-bs-placement="bottom"
+                                                                data-bs-title="User Comment"
+                                                                data-bs-content="{{ $row->comments }}">
+                                                                <i class="fa-solid fa-comment" aria-hidden="true"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="display: none;" id="subtrr{{ $row->id }}">
+                                                        <td colspan="2">
+                                                            <strong>IP: </strong>{{ $row->ip }} <br>
+                                                            <strong>Added By: </strong>{{ $row->user->name ?? '-' }} <br>
+                                                        </td>
+                                                        <td colspan="7">
+                                                            <a class="btn btn-sm btn-info"
+                                                                href="mailto:{{ $row->email }}"
+                                                                title="Reply via Email">
+                                                                <i class="fa-solid fa-reply" aria-hidden="true"></i>
+                                                                Reply</a>
 
-                                                        <a onclick="comment_model({{ $row->id }})"
-                                                            class="btn btn-success  btn-sm" style="color: white;"><i
-                                                                class="fa-solid fa-pencil" aria-hidden="true"></i> Add
-                                                            Comment</a>
-                                                        <a href="{{ route('contact_request.show', $row->id) }}"
-                                                            class="btn btn-success  btn-sm"><i class="fa-solid fa-history"
-                                                                aria-hidden="true"></i> History</a>
-                                                        @if (isset($clientArr[$row->email]))
-                                                            <a class="btn btn-sm btn-success" target="_blank"
-                                                                href="{{ admin_url() }}manage_clients/{{ $clientArr[$row->email] }}"><i
-                                                                    class="fa-solid fa-user" aria-hidden="true"></i>
-                                                                Existing Client</a>
-                                                        @else
-                                                            <a class="btn btn-sm btn-warning" href="javascript:;"
-                                                                onclick="convert_client('{{ $row->id }}')"><i
-                                                                    class="fa-solid fa-user" aria-hidden="true"></i>
-                                                                Convert to Client</a>
-                                                        @endif
-                                                        <a class="btn btn-sm btn-danger" href="javascript:"
-                                                            onclick="del_recrod('{{ $row->id }}');"
-                                                            title="Delete"><i class="glyphicon glyphicon-trash"></i>
-                                                            Delete</a>
-                                                        <a class="btn btn-sm btn-info"
-                                                            onclick="send_template_email('{{ $row->id }}','lead','single')"
-                                                            href="javascript:"><i
-                                                                class="fa-solid fa-envelope-square"></i>Send
-                                                            Email</a>
-                                                        <a onclick="send_template_sms('{{ $row->id }}','lead','single')"
-                                                            class="btn btn-sm btn-info" href="javascript:"><i
-                                                                class="fa-solid awesome_style fa-share"></i>Send
-                                                            Message</a>
-                                                        @if ($row->assesment_status == 'sent')
-                                                            <a onclick="send_assessment_email('{{ $row->id }}','lead')"
-                                                                class="btn btn-sm btn-primary" href="javascript:"><i
-                                                                    class="fa-solid fa-envelope-square"></i> reSend
-                                                                Questionnaire</a>
-                                                        @elseif($row->assesment_status == 'receive')
-                                                            <a class="btn btn-sm btn-info" href="javascript:"
-                                                                data-toggle="modal"
-                                                                data-target="#largeShoes-<?php echo $row->id; ?>"><i
-                                                                    class="fa-solid fa-envelope-square"></i>View Answered
-                                                                Questions</a>
-                                                        @else
-                                                            <a href="javascript:;"
-                                                                onclick="send_assessment_email('{{ $row->id }}','lead')"
-                                                                class="btn btn-sm btn-primary" href="javascript:"><i
-                                                                    class="fa-solid fa-envelope-square"></i> Send
-                                                                Questionnaire</a>
-                                                        @endif
-                                                        <div class="modal" id="largeShoes-<?php echo $row->id; ?>"
-                                                            tabindex="-1" role="dialog"
-                                                            aria-labelledby="modalLabelLarge" aria-hidden="true">
-                                                            <div class="modal-dialog modal-lg">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h4 class="modal-title" id="modalLabelLarge">
-                                                                            Answered Questions</h4>
-                                                                        <button type="button" class="close"
-                                                                            data-bs-dismiss="modal" aria-label="Close">
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <div class="table-responsive">
-                                                                            <table class="table table-striped">
-                                                                                <thead>
-                                                                                    <tr>
-                                                                                        <th scope="col">Question(s)</th>
-                                                                                        <th scope="col">Answer(s)</th>
-                                                                                    </tr>
-                                                                                </thead>
-                                                                                <tbody>
-                                                                                    @if (!$row->assessment == null)
-                                                                                        @foreach ($row->assessment as $p_question)
-                                                                                            <tr>
-                                                                                                <td>{{ $p_question->assessment_question->question }}
-                                                                                                </td>
-                                                                                                <td>
-                                                                                                    @if (is_array(json_decode($p_question->answer)) || is_object(json_decode($p_question->answer)))
-                                                                                                        @foreach (json_decode($p_question->answer) as $key => $ans)
-                                                                                                            {{ $key }}<br>
-                                                                                                        @endforeach
-                                                                                                    @else
-                                                                                                        {{ $p_question->answer }}
-                                                                                                    @endif
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                        @endforeach
-                                                                                    @endif
-                                                                                </tbody>
-                                                                            </table>
+                                                            <a onclick="comment_model({{ $row->id }})"
+                                                                class="btn btn-success  btn-sm" style="color: white;"><i
+                                                                    class="fa-solid fa-pencil" aria-hidden="true"></i> Add
+                                                                Comment</a>
+                                                            <a href="{{ route('contact_request.show', $row->id) }}"
+                                                                class="btn btn-success  btn-sm"><i
+                                                                    class="fa-solid fa-history" aria-hidden="true"></i>
+                                                                History</a>
+                                                            @if (isset($clientArr[$row->email]))
+                                                                <a class="btn btn-sm btn-success" target="_blank"
+                                                                    href="{{ admin_url() }}manage_clients/{{ $clientArr[$row->email] }}"><i
+                                                                        class="fa-solid fa-user" aria-hidden="true"></i>
+                                                                    Existing Client</a>
+                                                            @else
+                                                                <a class="btn btn-sm btn-warning" href="javascript:;"
+                                                                    onclick="convert_client('{{ $row->id }}')"><i
+                                                                        class="fa-solid fa-user" aria-hidden="true"></i>
+                                                                    Convert to Client</a>
+                                                            @endif
+                                                            <a class="btn btn-sm btn-danger" href="javascript:"
+                                                                onclick="del_recrod('{{ $row->id }}');"
+                                                                title="Delete"><i class="glyphicon glyphicon-trash"></i>
+                                                                Delete</a>
+                                                            <a class="btn btn-sm btn-info"
+                                                                onclick="send_template_email('{{ $row->id }}','lead','single')"
+                                                                href="javascript:"><i
+                                                                    class="fa-solid fa-envelope-square"></i>Send
+                                                                Email</a>
+                                                            <a onclick="send_template_sms('{{ $row->id }}','lead','single')"
+                                                                class="btn btn-sm btn-info" href="javascript:"><i
+                                                                    class="fa-solid awesome_style fa-share"></i>Send
+                                                                Message</a>
+                                                            @if ($row->assesment_status == 'sent')
+                                                                <a onclick="send_assessment_email('{{ $row->id }}','lead')"
+                                                                    class="btn btn-sm btn-primary" href="javascript:"><i
+                                                                        class="fa-solid fa-envelope-square"></i> reSend
+                                                                    Questionnaire</a>
+                                                            @elseif($row->assesment_status == 'receive')
+                                                                <a class="btn btn-sm btn-info" href="javascript:"
+                                                                    data-toggle="modal"
+                                                                    data-target="#largeShoes-<?php echo $row->id; ?>"><i
+                                                                        class="fa-solid fa-envelope-square"></i>View
+                                                                    Answered
+                                                                    Questions</a>
+                                                            @else
+                                                                <a href="javascript:;"
+                                                                    onclick="send_assessment_email('{{ $row->id }}','lead')"
+                                                                    class="btn btn-sm btn-primary" href="javascript:"><i
+                                                                        class="fa-solid fa-envelope-square"></i> Send
+                                                                    Questionnaire</a>
+                                                            @endif
+                                                            <div class="modal" id="largeShoes-<?php echo $row->id; ?>"
+                                                                tabindex="-1" role="dialog"
+                                                                aria-labelledby="modalLabelLarge" aria-hidden="true">
+                                                                <div class="modal-dialog modal-lg">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h4 class="modal-title" id="modalLabelLarge">
+                                                                                Answered Questions</h4>
+                                                                            <button type="button" class="close"
+                                                                                data-bs-dismiss="modal"
+                                                                                aria-label="Close">
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <div class="table-responsive">
+                                                                                <table class="table table-striped">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th scope="col">Question(s)
+                                                                                            </th>
+                                                                                            <th scope="col">Answer(s)
+                                                                                            </th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        @if (!$row->assessment == null)
+                                                                                            @foreach ($row->assessment as $p_question)
+                                                                                                <tr>
+                                                                                                    <td>{{ $p_question->assessment_question->question }}
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        @if (is_array(json_decode($p_question->answer)) || is_object(json_decode($p_question->answer)))
+                                                                                                            @foreach (json_decode($p_question->answer) as $key => $ans)
+                                                                                                                {{ $key }}<br>
+                                                                                                            @endforeach
+                                                                                                        @else
+                                                                                                            {{ $p_question->answer }}
+                                                                                                        @endif
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            @endforeach
+                                                                                        @endif
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    </td>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @else
+                                                <tr>
+                                                    <td> No Record found!</td>
                                                 </tr>
-                                            @endforeach
-                                        @else
-                                            <tr>
-                                                <td> No Record found!</td>
-                                            </tr>
-                                        @endif
-                                    </tbody>
-                                </table>
+                                            @endif
+                                        </tbody>
+                                    </table>
+                                </div>
                             </form>
                         </div>
                     </div>
