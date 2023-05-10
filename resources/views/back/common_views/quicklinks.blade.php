@@ -20,7 +20,7 @@
         </a>
     </li>
     <li class="logout">
-        <a href="{{ route('logout') }}"
+        <a href="{{ route('admin.logout') }}"
             onclick="event.preventDefault();
            document.getElementById('logout-form').submit();"
             data-bs-toggle="tooltip" title="Logout">

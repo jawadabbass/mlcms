@@ -40,7 +40,7 @@
                             {{-- class="btn btn-default btn-flat">Edit</a> --}}
                             {{-- </div> --}}
                             <div class="pull-right">
-                                <a class="btn btn-default btn-flat" href="{{ route('logout') }}"
+                                <a class="btn btn-default btn-flat" href="{{ route('admin.logout') }}"
                                     onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}

@@ -101,7 +101,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <p>&copy; Copyright 2019. All Rights Reserved by <a href="https://www.medialinkers.com">Medialinkers</a></p>
+                    <p>&copy; Copyright {{ date('Y') }}. All Rights Reserved by <a href="https://www.medialinkers.com">Medialinkers</a></p>
                 </div>
                 <div class="col-md-6 text-end link">
                     <ul>
