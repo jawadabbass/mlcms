@@ -234,7 +234,9 @@ class BlogController extends Controller
         ]);
         if ($validator->passes()) {
             $blog = BlogPost::find($request->id);
-            unlink('uploads/'.$request->folder.'/'.$blog->featured_img);
+            if (!empty($blog->featured_img)) {
+                unlink('uploads/' . $request->folder . '/' . $blog->featured_img);
+            }
             $blog->featured_img = '';
             $blog->save();
             echo 'done';

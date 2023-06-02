@@ -41,8 +41,7 @@ class HomeController extends Controller
             BlogPost::where('sts', 'active')->orderBy('dated', 'DESC')->limit(3)->get();
         $get_all_banner =  CmsModuleData::where('sts', 'active')
             ->where('cms_module_id', 2)
-            ->orderBy('ID', 'DESC')
-            ->limit(3)
+            ->orderBy('ID', 'ASC')
             ->get();
         $get_all_features =  CmsModuleData::where('sts', 'active')
             ->where('cms_module_id', 35)

@@ -105,13 +105,13 @@ class PackageContentController extends Controller
 
         if (!$package->type == 'content') {
 
-            if ($package->type == 'video') {
+            if (!empty($package->video) && $package->type == 'video') {
 
                 unlink('uploads/package_content/videos/' . $package->video);
-            } elseif ($package->type == 'image') {
+            } elseif (!empty($package->image) &&  $package->type == 'image') {
 
                 unlink('uploads/package_content/images' . $package->image);
-            } elseif ($package->type == 'document') {
+            } elseif (!empty($package->document) && $package->type == 'document') {
 
                 unlink('uploads/package_content/documents/' . $package->document);
             }

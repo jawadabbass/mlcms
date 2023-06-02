@@ -40,28 +40,37 @@
 
                     <form enctype="multipart/form-data" role="form" method="post"
                         action="{{ route('widget.update', $widget->ID) }}">
-                        <div class="row">
-                            <div class="col-md-12">
-                                @csrf
-                                @if (!$admin_data == null)
-                                    @if ($admin_data->show_heading == 1)
+                        @csrf
+                        @if (!$admin_data == null)
+                            @if ($admin_data->show_heading == 1)
+                                <div class="row">
+                                    <div class="col-md-12">
                                         <div class="mb-2">
                                             <label class="form-label">Heading</label>
                                             <input type="text" class="form-control" id="heading" name="heading"
                                                 value="{{ $widget->heading }}" placeholder="Heading">
                                         </div>
-                                    @endif
-                                    @if ($admin_data->show_content == 1)
+                                    </div>
+                                </div>
+                            @endif
+                            @if ($admin_data->show_content == 1)
+                                <div class="row">
+                                    <div class="col-md-12">
                                         <div class="mb-2">
                                             <label class="form-label">Widget Content</label>
                                             <textarea id="editor1" name="editor1" rows="8" cols="80" placeholder="Widget Content...">{{ $widget->content }}</textarea>
                                         </div>
-                                    @endif
+                                    </div>
+                                </div>
+                            @endif
 
-                                    @if ($admin_data->show_featured_img == 1)
+                            @if ($admin_data->show_featured_img == 1)
+                                <div class="row">
+                                    <div class="col-md-12">
                                         <div id="fea_img">
                                             <label class="form-label"> Add Widgets Image <span
-                                                    style="font-size: 12px;color: red"> max size:
+                                                    style="font-size: 12px;color: red">
+                                                    max size:
                                                     {{ getMaxUploadSize() }}MB </span> @php echo helptooltip('max_image_size') @endphp </label>
                                             <div id="file-field">
                                                 <input type="file" name="module_img" id="module_img"
@@ -92,10 +101,13 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    @endif
-                                @endif
+                                    </div>
+                                </div>
+                            @endif
+                        @endif
 
-
+                        <div class="row">
+                            <div class="col-md-12">
                                 @if (!empty($widget->additional_field_1))
                                     <div class="mb-2" id="edit_field1">
                                         <label class="form-label">{{ $widget->additional_field_1 }}</label>
@@ -166,20 +178,22 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="row">
-                            {{-- <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button> --}}
-                            <div class="col-sm-6 text-start">
-                                <a href="{{ route('widgets.index') }}" class="btn btn-success"><i
-                                        class="fa-solid fa-angle-double-left">Go Back</i></a>
-                            </div>
-                            <div class="col-sm-6 text-end">
-                                <button type="submit" name="submitter" class="btn btn-info">Update</button>
-                            </div>
-
-                        </div>
-
-                    </form>
                 </div>
+            </div>
+            <div class="row">
+                {{-- <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button> --}}
+                <div class="col-sm-6 text-start">
+                    <a href="{{ route('widgets.index') }}" class="btn btn-success"><i
+                            class="fa-solid fa-angle-double-left">Go Back</i></a>
+                </div>
+                <div class="col-sm-6 text-end">
+                    <button type="submit" name="submitter" class="btn btn-info">Update</button>
+                </div>
+
+            </div>
+
+            </form>
+            </div>
             </div>
         </section>
     </aside>

@@ -341,7 +341,7 @@ class ModuleManageController extends Controller
             ImageUploader::deleteImage('module/'.$image->module_type, $image->image_name, true);
             $image->delete();
         }
-        if (file_exists('uploads/module/' . $module->type . '/' . $moduleData->featured_img)) {
+        if (!empty($moduleData->featured_img) && file_exists('uploads/module/' . $module->type . '/' . $moduleData->featured_img)) {
             unlink('uploads/module/' . $module->type . '/' . $moduleData->featured_img);
         }
         $moduleData->delete();
@@ -357,7 +357,7 @@ class ModuleManageController extends Controller
     {
         $id = $request->id;
         $data = CmsModuleData::find($id);
-        if (file_exists('uploads/module/' . $request->type . '/' . $data->featured_img)) {
+        if (!empty($data->featured_img) && file_exists('uploads/module/' . $request->type . '/' . $data->featured_img)) {
             unlink('uploads/module/' . $request->type . '/' . $data->featured_img);
         }
         $data->featured_img = '';

@@ -35,9 +35,10 @@ class ServicesController extends Controller
 		$result = CmsModuleData::where('cms_module_id', 33)
 			->where('sts', 'active')
 			->where('post_slug', 'services/' . $slug)->first();
+			$cmsModuleDataImages = getCmsModuleDataImagesById($result->id);
 		if ($result != null) {
 			$seoArr = SeoArray($result);
-			return view('front.services.show', compact('seoArr', 'result', 'get_all_services'));
+			return view('front.services.show', compact('seoArr', 'result', 'get_all_services', 'cmsModuleDataImages'));
 		} else {
 			$seoArr = array('title' => '404 Not found ');
 			return view('front.home.404', compact('seoArr'));

@@ -185,7 +185,7 @@ class WidgetController extends Controller
     {
         $data = Widget::find($id);
 
-        if (file_exists('uploads/widgets/'.$data->featured_image)) {
+        if (!empty($data->featured_image) && file_exists('uploads/widgets/'.$data->featured_image)) {
             unlink('uploads/widgets/'.$data->featured_image);
         }
         $data->featured_image = '';
