@@ -40,6 +40,7 @@
                         <form role="form" method="post" action="{{ route('admin.update',$user->id) }}">
                             @csrf
                             <input type="hidden" name="_method" value="PUT">
+                            <input type="hidden" name="id" value="{{ $user->id }}">
                             <div class="box-body">
                                 <div class="form-group">
                                     <label for="admin_name">Name</label>

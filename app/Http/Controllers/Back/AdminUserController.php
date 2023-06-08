@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use App\Http\Requests\Back\AdminUserBackFormRequest;
 
 class AdminUserController extends Controller
 {
@@ -43,7 +44,7 @@ class AdminUserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AdminUserBackFormRequest $request)
     {
         $user = new User();
         $user->name = $request->admin_name;
@@ -113,7 +114,7 @@ class AdminUserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(AdminUserBackFormRequest $request, $id)
     {
         $user = User::find($id);
         $user->name = $request->admin_name;
