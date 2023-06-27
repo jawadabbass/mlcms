@@ -36,8 +36,8 @@ function myform_admin_cms_filter($data)
 if (!function_exists('format_date')) {
     function format_date($dated, $type = 'date')
     {
-        if ($dated == '') {
-            return $dated;
+        if ($dated == '' || $dated == '0000-00-00') {
+            return '';
         }
         $date = new DateTime($dated, new DateTimeZone('UTC'));
         $sess = 'America/New_York';
@@ -59,8 +59,8 @@ if (!function_exists('format_date')) {
 if (!function_exists('format_date_tz')) {
     function format_date_tz($dated, $format)
     {
-        if ($dated == '') {
-            return $dated;
+        if ($dated == '' || $dated == '0000-00-00') {
+            return '';
         }
         $sess = 'America/New_York';
         if (session()->has('time_zone')) {
@@ -75,8 +75,8 @@ if (!function_exists('format_date_tz')) {
 if (!function_exists('format_date_front')) {
     function format_date_front($dated, $type = 'date')
     {
-        if ($dated == '') {
-            return $dated;
+        if ($dated == '' || $dated == '0000-00-00') {
+            return '';
         }
         $date = new DateTime($dated, new DateTimeZone('UTC'));
         $format = 'M d, Y';
@@ -95,8 +95,8 @@ if (!function_exists('currency_format')) {
 if (!function_exists('format_date_time')) {
     function format_date_time($dated, $type = 'both')
     {
-        if ($dated == '') {
-            return $dated;
+        if ($dated == '' || $dated == '0000-00-00') {
+            return '';
         }
         $format = \App\Models\Back\Metadata::where('data_key', 'date_time_format')->first()->val1;
         $new_date = date($format, strtotime($dated));
