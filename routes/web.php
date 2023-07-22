@@ -243,6 +243,7 @@ Route::group(['namespace' => 'Back', 'prefix' => 'adminmedia', 'middleware' => [
     Route::resource('/settings', '\App\Http\Controllers\Back\SettingController');
     Route::post('/setting/meta_data', [SettingController::class, 'updateMetaData']);
     Route::post('/setting/captcha', [SettingController::class, 'saveCaptcha']);
+    Route::post('/setting/paypal', [SettingController::class, 'savePaypal']);
     Route::post('/setting/ip-address', [SettingController::class, 'ipAddress']);
     Route::post('/setting/js', [SettingController::class, 'js']);
     Route::post('/setting/admin_logo_favicon', [SettingController::class, 'adminLogoFavicon']);

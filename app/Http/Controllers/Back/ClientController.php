@@ -67,6 +67,7 @@ class ClientController extends Controller
                 $to = date("Y-m-d", strtotime($value[1]));
                 $specialistQuery->whereBetween('dated', [$from, $to]);
             }
+            $specialistQuery->orderBy('dated', 'DESC');
             $result = $specialistQuery->get();
             $result2 = [];
             if (isset($_GET['package']) && !empty($_GET['package'])) {

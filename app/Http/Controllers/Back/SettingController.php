@@ -20,7 +20,7 @@ class SettingController extends Controller
      */
     public function index()
     {
-        $title = config('Constants.SITE_NAME').': Settings';
+        $title = config('Constants.SITE_NAME') . ': Settings';
         $msg = '';
         $setting_result = Setting::first();
         $metaDatas = Metadata::all();
@@ -30,10 +30,8 @@ class SettingController extends Controller
         }
         $countries = Country::all();
         $maxSizeAllowed = $this->file_upload_max_size();
-
         return view('back.setting.index', compact('title', 'msg', 'setting_result', 'metaArray', 'countries', 'maxSizeAllowed'));
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -42,7 +40,6 @@ class SettingController extends Controller
     public function create()
     {
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -54,10 +51,8 @@ class SettingController extends Controller
         $setting->google_analytics = $request->google_analytics;
         $setting->save();
         Session::flash('updated_action', 'Updated');
-
         return redirect()->back();
     }
-
     /**
      * Display the specified resource.
      *
@@ -67,7 +62,7 @@ class SettingController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $title = config('Constants.SITE_NAME').': Settings';
+        $title = config('Constants.SITE_NAME') . ': Settings';
         $msg = '';
         $setting_result = Setting::first();
         $metaDatas = Metadata::all();
@@ -93,11 +88,12 @@ class SettingController extends Controller
             return view('back.setting.restriction', compact('title', 'msg', 'setting_result', 'metaArray', 'countries', 'maxSizeAllowed'));
         } elseif ($id == 'js') {
             return view('back.setting.js', compact('title', 'msg', 'setting_result', 'metaArray', 'countries', 'maxSizeAllowed'));
+        }elseif ($id == 'paypal') {
+            return view('back.setting.paypal', compact('title', 'msg', 'setting_result', 'metaArray', 'countries', 'maxSizeAllowed'));
         } else {
             return view('back.setting.index', compact('title', 'msg', 'setting_result', 'metaArray', 'countries', 'maxSizeAllowed'));
         }
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -116,10 +112,8 @@ class SettingController extends Controller
         $setting->web_down_msg = $request->web_down_msg;
         $setting->save();
         Session::flash('updated_action', 'Updated');
-
         return redirect()->back();
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -135,10 +129,8 @@ class SettingController extends Controller
         $setting->google_adsense_right = $request->google_adsense_right;
         $setting->save();
         Session::flash('updated_action', 'Updated');
-
         return redirect()->back();
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -167,10 +159,8 @@ class SettingController extends Controller
             'max_image_size' => $request->imageMaxSize,
         ]);
         Session::flash('updated_action', 'Updated');
-
         return redirect()->back();
     }
-
     public function saveCaptcha(Request $request)
     {
         $reCaptchaSite = Metadata::where('data_key', 'recaptcha_site_key')->first();
@@ -180,10 +170,8 @@ class SettingController extends Controller
         $reCaptchaSecret->val1 = $request->secretKey;
         $reCaptchaSecret->save();
         Session::flash('updated_action', 'Updated');
-
         return redirect()->back();
     }
-
     public function ipAddress(Request $request)
     {
         $blockIPs = Metadata::where('data_key', 'blocked_ips')->first();
@@ -193,7 +181,6 @@ class SettingController extends Controller
         if (is_array($blockedIPs) && count($blockedIPs) > 0) {
             if ($wholeBlock && isSelfIpBlocked($ip, $blockedIPs)) {
                 Session::flash('error', 'You have denied access to the IP address you are logged in from. This will lock you out of website. The request to add IP was denied by system.');
-
                 return redirect()->back();
             }
             $blockIPs->val1 = implode(',', $blockedIPs);
@@ -206,13 +193,11 @@ class SettingController extends Controller
             if ($request->block_list_active == 1) {
                 if ($wholeBlock && isSelfCountryInBlockedList($ip, $request->blockedCounties)) {
                     Session::flash('error', 'Request Denied. Your own IP is within the list of countries you tried blocking.');
-
                     return redirect()->back();
                 }
             } else {
                 if ($wholeBlock && !isSelfCountryInAllowedList($ip, $request->openedCounties)) {
                     Session::flash('error', 'Request Denied. You have not included your own country in allowed list. You must include your own country and any other country where you want to allow access to your website.');
-
                     return redirect()->back();
                 }
             }
@@ -236,7 +221,6 @@ class SettingController extends Controller
         $blockMsg = Metadata::where('data_key', 'web_blocked_msg')->first();
         $blockMsg->val1 = $request->web_blocked_msg;
         $blockMsg->save();
-
         $negativeKeywordsMetaData = Metadata::where('data_key', 'negative_keywords')->first();
         $negativeKeywords = $request->negativeKeywords;
         if (is_array($negativeKeywords) && count($negativeKeywords) > 0) {
@@ -246,18 +230,14 @@ class SettingController extends Controller
         }
         $negativeKeywordsMetaData->save();
         Session::flash('updated_action', 'Setting has been updated');
-
         return redirect()->back();
     }
-
     public function countries()
     {
         $data = Country::all();
         echo json_encode($data);
-
         return;
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -268,7 +248,6 @@ class SettingController extends Controller
     public function destroy($id)
     {
     }
-
     public function file_upload_max_size()
     {
         static $max_size = -1;
@@ -286,10 +265,8 @@ class SettingController extends Controller
             }
         }
         $max_size = $max_size / 1024;
-
         return $max_size / 1024;
     }
-
     public function parse_size($size)
     {
         $unit = preg_replace('/[^bkmgtpezy]/i', '', $size); // Remove the non-unit characters from the size.
@@ -301,7 +278,6 @@ class SettingController extends Controller
             return round($size);
         }
     }
-
     public function js(Request $request)
     {
         $setting = Setting::first();
@@ -309,10 +285,8 @@ class SettingController extends Controller
         $setting->body_js = $request->body_js;
         $setting->save();
         Session::flash('updated_action', 'Updated');
-
         return redirect()->back();
     }
-
     public function adminLogoFavicon(Request $request)
     {
         $validated = $request->validate([
@@ -320,23 +294,19 @@ class SettingController extends Controller
             'admin_header_logo' => 'image',
             'admin_favicon' => [new CheckIfFavicon()],
         ]);
-
         $setting = Setting::first();
-
         if ($request->hasFile('admin_login_page_logo')) {
             ImageUploader::deleteImage('admin_logo_favicon', $setting->admin_login_page_logo, true);
             $image = $request->file('admin_login_page_logo');
             $fileName = ImageUploader::UploadImage('admin_logo_favicon', $image, '', 800, 800, false);
             $setting->admin_login_page_logo = $fileName;
         }
-
         if ($request->hasFile('admin_header_logo')) {
             ImageUploader::deleteImage('admin_logo_favicon', $setting->admin_header_logo, true);
             $image = $request->file('admin_header_logo');
             $fileName = ImageUploader::UploadImage('admin_logo_favicon', $image, '', 800, 800, false);
             $setting->admin_header_logo = $fileName;
         }
-
         if ($request->hasFile('admin_favicon')) {
             ImageUploader::deleteImage('admin_logo_favicon', $setting->admin_favicon, true);
             $image = $request->file('admin_favicon');
@@ -345,7 +315,31 @@ class SettingController extends Controller
         }
         $setting->save();
         Session::flash('updated_action', 'Updated');
-
+        return redirect()->back();
+    }
+    public function savePaypal(Request $request)
+    {
+        $paypal_live_client_id = Metadata::where('data_key', 'paypal_live_client_id')->first();
+        $paypal_live_client_id->val1 = $request->paypal_live_client_id;
+        $paypal_live_client_id->save();
+        /*************************************** */
+        $paypal_live_secret = Metadata::where('data_key', 'paypal_live_secret')->first();
+        $paypal_live_secret->val1 = $request->paypal_live_secret;
+        $paypal_live_secret->save();
+        /*************************************** */
+        $paypal_sandbox_client_id = Metadata::where('data_key', 'paypal_sandbox_client_id')->first();
+        $paypal_sandbox_client_id->val1 = $request->paypal_sandbox_client_id;
+        $paypal_sandbox_client_id->save();
+        /*************************************** */
+        $paypal_sandbox_secret = Metadata::where('data_key', 'paypal_sandbox_secret')->first();
+        $paypal_sandbox_secret->val1 = $request->paypal_sandbox_secret;
+        $paypal_sandbox_secret->save();
+        /*************************************** */
+        $paypal_mode = Metadata::where('data_key', 'paypal_mode')->first();
+        $paypal_mode->val1 = $request->paypal_mode;
+        $paypal_mode->save();
+        /*************************************** */
+        Session::flash('updated_action', 'Updated');
         return redirect()->back();
     }
 }

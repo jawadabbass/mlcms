@@ -79,6 +79,8 @@ class ModuleController extends Controller
             $cmsModule->feature_img_thmb_height = 210;
         }
         $cmsModule->show_featured_image = $request->show_featured_image;
+        $cmsModule->module_fontawesome_icon = $request->module_fontawesome_icon;
+        $cmsModule->access_level = implode(',', $request->input('access_level', ['super-admin','normal-admin']));
         $cmsModule->show_in_admin_menu = 0;
         $cmsModule->save();
         // Session::flash('added_action', true);
@@ -127,16 +129,13 @@ class ModuleController extends Controller
                 $modMenu->is_pages = '0';
                 $modMenu->permanent_page = '1';
                 $modMenu->content_type = 'module';
-                $modMenu->cms_module_id = '1';
+                $modMenu->cms_module_id = $id;
                 $modMenu->save();
                 $module->mod_menu_id = $modMenu->id;
             }
-
             $stat = 'Yes';
         }
-
         $module->save();
-
         return $stat;
     }
 
@@ -181,8 +180,9 @@ class ModuleController extends Controller
         }
         $cmsModule->feature_img_thmb_height = $request->feature_img_thmb_height;
         $cmsModule->show_featured_image = $request->show_featured_image;
+        $cmsModule->module_fontawesome_icon = $request->module_fontawesome_icon;
+        $cmsModule->access_level = implode(',', $request->input('access_level', ['super-admin','normal-admin']));
         $cmsModule->show_descp = $request->show_descp;
-        $cmsModule->show_in_admin_menu = 1;
         $cmsModule->save();
         Session::flash('update_action', true);
 

@@ -297,6 +297,16 @@
                                     <option value="1">Yes</option>
                                 </select>
                             </div>
+                            <div class="mb-2">
+                                <label class="form-label">Fontawesome Icon:</label>
+                                <input class="form-control icp icp-auto" name="module_fontawesome_icon" id="module_fontawesome_icon" value="" type="text" autocomplete="off" data-placement="topRight" placeholder="fontawsome: fa-youtube"/>
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">Access Level:</label><br/>
+                                <label class="form-label"><input type="checkbox" name="access_level[]" value="super-admin" checked> Super Admin</label><br/>
+                                <label class="form-label"><input type="checkbox" name="access_level[]" value="normal-admin" checked> Normal Admin</label><br/>
+                                <label class="form-label"><input type="checkbox" name="access_level[]" value="reps"> Reps</label><br/>
+                            </div>
                             <div style="clear:both"></div>
                         </div>
                     </div>
@@ -569,6 +579,16 @@
                                     <option value="0">No</option>
                                     <option value="1">Yes</option>
                                 </select>
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">Fontawesome Icon:</label>
+                                <input class="form-control icp icp-auto" name="module_fontawesome_icon" id="edit_module_fontawesome_icon" value="" type="text" autocomplete="off" data-placement="topRight" placeholder="fontawsome: fa-youtube"/>
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">Access Level:</label><br/>
+                                <label class="form-label"><input type="checkbox" name="access_level[]" id="super-admin" value="super-admin"> Super Admin</label><br/>
+                                <label class="form-label"><input type="checkbox" name="access_level[]" id="normal-admin" value="normal-admin"> Normal Admin</label><br/>
+                                <label class="form-label"><input type="checkbox" name="access_level[]"  id="reps" value="reps"> Reps</label><br/>
                             </div>
                             <input type="hidden" name="cmsmodule_id" id="cmsmodule_id" />
                             <div style="clear:both"></div>

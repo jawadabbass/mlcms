@@ -141,13 +141,12 @@
                     </div>
                     <div class="modal-body">
                         <div class="box-body">
-                            <div class="mb-2">
-                                <label for="parent_page">Categories</label>
-                                <select id="blog_cat" class="form-control" multiple="multiple" name="blog_cat[]">
-                                    @foreach ($all_categories as $all_category)
-                                        <option value="{{ $all_category->ID }}">{{ $all_category->cate_title }}</option>
-                                    @endforeach
-                                </select>
+                            <div class="mb-3">
+                                <label>Categories</label><br />
+                                @foreach ($all_categories as $all_category)
+                                    <label><input type="checkbox" name="blog_cat[]" value="{{ $all_category->ID }}" id="blog_cat_{{ $all_category->ID }}">
+                                        {{ $all_category->cate_title }}</label><br />
+                                @endforeach
                             </div>
                             <div class="mb-2" id="form-errors"></div>
                             <div class="mb-2">
@@ -168,12 +167,13 @@
                             <div class="mb-2">
                                 <label class="form-label">Date Posted:</label>
                                 <div id="datepicker" class="mb-2 date">
-                                    <input class="form-control" type="date" id="date" name="datepicker" />
+                                    <input class="form-control" type="date" id="date" name="datepicker" value="{{ date('Y-m-d') }}" />
                                     <span class="mb-2-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                 </div>
                             </div>
                             <div id="fea_img">
-                                <label class="form-label"> Upload Featured Image <span style="font-size: 12px;color: red"> max size:
+                                <label class="form-label"> Upload Featured Image <span style="font-size: 12px;color: red">
+                                        max size:
                                         {{ getMaxUploadSize() }}
                                         MB </span> @php echo helptooltip('max_image_size') @endphp </label>
                                 <div id="file-field">
@@ -231,7 +231,7 @@
         });
     </script>
     <!----- data table include library and script ----->
-    
+
     <script type="text/javascript" src="{{ base_url() . 'back/js/bootstrap-multiselect.js' }}"></script>
     <script type="text/javascript" src="{{ base_url() . 'module/blog/admin/js/blog.js' }}"></script>
     <script type="text/javascript">

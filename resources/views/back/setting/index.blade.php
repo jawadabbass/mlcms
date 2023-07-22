@@ -281,6 +281,7 @@
                 </form>
             </div>
         </section>
+        @include('back.setting.paypal_inner')
         <section class="content" id="traffic-restriction">
             <form name="emp_network_detail" method="post" action="{{ base_url() . 'adminmedia/setting/ip-address' }}">
                 @csrf

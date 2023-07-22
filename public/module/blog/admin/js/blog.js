@@ -167,14 +167,12 @@ function load_blog_post_edit_form(id) {
         save_method = "PUT";
         $('#heading').val(data.title);
         $('#post_slug').val(data.post_slug);
+        $('#date').val(data.dated);
         var abc = data.cate_ids;
         //abc=""+abc+"";
         abc = abc.split(',');
-        $('#blog_cat').multiselect('deselectAll', true);
-        $('#blog_cat').multiselect('updateButtonText');
-        $('#blog_cat').multiselect('refresh');
         abc.forEach(function (item) {
-            $('#blog_cat').multiselect('select', [item]);
+            $('#blog_cat_'+item).prop('checked', true);
         });
 
         if (data.featured_img == null || data.featured_img == '' || data.featured_img == 0) {

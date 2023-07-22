@@ -3,26 +3,26 @@
 namespace App\Helpers;
 
 use App\Models\Back\CmsModule;
+use App\Models\Back\CmsModuleData;
 
 class DashboardLinks
 {
-    public static $arrLinks = [
-        'pages' => ['Manage Pages', 'fa-solid fa-file-text', 'module/cms/', 'user_type' => ['super-admin', 'normal-admin'], ''],
+    public static $beforeModuleLinks = [
         'cmsmodules' => ['CMS Modules', 'fa-solid fa-file', 'modules', 'user_type' => ['super-admin', 'normal-admin'], ''],
         'menu' => ['Positioning Navigations', 'fa-solid fa-tasks', 'menus?position=top', 'user_type' => ['super-admin', 'normal-admin'], ''],
         'contact_request' => ['Manage Leads', 'fa-solid fa-share', 'contact_request', 'user_type' => ['super-admin', 'normal-admin', 'reps'], ''],
         'manage_clients' => ['Manage Clients', 'fa-solid fa-share', 'manage_clients', 'user_type' => ['super-admin', 'normal-admin', 'reps'], ''],
+    ];
+
+    public static $afterModuleLinks = [
         'email_templates' => ['Manage Email Templates', 'fa-solid fa-envelope', 'email_templates', 'user_type' => ['super-admin', 'normal-admin', 'reps'], ''],
         'message' => ['Manage Message Templates', 'fa-solid fa-comment', 'message', 'user_type' => ['super-admin', 'normal-admin', 'reps'], ''],
         'gallery' => ['Manage Gallery', 'fa-solid fa-file-image', 'gallery', 'user_type' => ['super-admin', 'normal-admin'], ''],
-        'banner' => ['Manage Banner', 'fa-solid fa-image', 'module/banner', 'user_type' => ['super-admin', 'normal-admin'], ''],
         'news' => ['Manage News', 'fa-solid fa-newspaper', 'news', 'user_type' => ['super-admin', 'normal-admin'], ''],
         'settings' => ['Manage Contact Page', 'fa-solid fa-share', 'manage_contact', 'user_type' => ['super-admin'], ''],
         'blog' => ['Manage blog', 'fa-solid fa-rss', 'blog', 'user_type' => ['super-admin', 'normal-admin'], ''],
         'products' => ['Products', 'fa-solid fa-shopping-cart', 'products', 'user_type' => ['super-admin', 'normal-admin'], ''],
-        'packages' => ['Packages', 'fa-solid fa-cubes', 'module/package', 'user_type' => ['super-admin', 'normal-admin'], ''],
         'videos' => ['Videos', 'fa-solid fa-film', 'videos', 'user_type' => ['super-admin', 'normal-admin'], ''],
-        'gallery' => ['Gallery', 'fa-solid fa-image', 'gallery', 'user_type' => ['super-admin', 'normal-admin'], ''],
         'widgets' => ['Widgets', 'fa-solid fa-building', 'widgets', 'user_type' => ['super-admin', 'normal-admin'], ''],
         'social_media' => ['Manage Social Media ', 'fa-solid fa-share-alt-square', 'social_media', 'user_type' => ['super-admin', 'normal-admin'], ''],
         'userlog' => ['Admin User Logs', 'fa-solid fa-history', 'user/admin_log', 'user_type' => ['super-admin'], ''],
@@ -44,7 +44,7 @@ class DashboardLinks
         'safeties' => ['Manage Safeties', 'fa-solid fa-hand', 'safeties', 'user_type' => ['super-admin', 'normal-admin'], ''],
         'cache' => ['Cache', 'fa-solid fa-refresh', 'cache', 'user_type' => ['super-admin', 'normal-admin'], ''],
     ];
-    public static $leftLinks = [
+    public static $beforeLeftModuleLinks = [
         'CMS - Content Management System' => [
             'icon' => ['fa-solid fa-pencil'],
             'pages' => ['Manage Pages', 'fa-solid fa-file-text', 'module/cms/', 'user_type' => ['super-admin', 'normal-admin'], ''],
@@ -54,7 +54,6 @@ class DashboardLinks
         ],
         'widgets' => ['Widgets', 'fa-solid fa-puzzle-piece', 'widgets', 'user_type' => ['super-admin', 'normal-admin'], ''],
         'cmsmodules' => ['CMS Modules', 'fa-solid fa-file', 'modules', 'user_type' => ['super-admin', 'normal-admin'], ''],
-        'packages' => ['Packages', 'fa-solid fa-cubes', 'module/package', 'user_type' => ['super-admin', 'normal-admin'], ''],
         'CRM' => [
             'icon' => ['fa-solid fa-user'],
             'contact_request' => ['Manage Leads', 'fa-solid fa-share', 'contact_request', 'user_type' => ['super-admin', 'normal-admin', 'reps'], ''],
@@ -69,11 +68,12 @@ class DashboardLinks
             'payment_options' => ['Payment Options', 'fa-solid fa-money-bill', 'payment_options', 'user_type' => ['super-admin'], ''],
             'user_type' => ['super-admin'],
         ],
+    ];
+
+    public static $afterLeftModuleLinks = [
         'videos' => ['Videos', 'fa-solid fa-film', 'videos', 'user_type' => ['super-admin', 'normal-admin'], ''],
         'gallery' => ['Gallery', 'fa-solid fa-image', 'gallery', 'user_type' => ['super-admin', 'normal-admin'], ''],
-        'banner' => ['Manage Banner', 'fa-solid fa-image', 'module/banner', 'user_type' => ['super-admin', 'normal-admin'], ''],
         'news' => ['Manage News', 'fa-solid fa-newspaper', 'news', 'user_type' => ['super-admin', 'normal-admin'], ''],
-        'testimonials' => ['Testimonials', 'fa-solid fa-comment', 'module/testimonials', 'user_type' => ['super-admin', 'normal-admin'], ''],
         'social_media' => ['Manage Social Media ', 'fa-solid fa-share-alt-square', 'social_media', 'user_type' => ['super-admin', 'normal-admin'], ''],
         'blog' => ['Manage blog', 'fa-solid fa-rss', 'blog', 'user_type' => ['super-admin', 'normal-admin'], ''],
         'products' => ['Products', 'fa-solid fa-shopping-cart', 'products', 'user_type' => ['super-admin', 'normal-admin'], ''],
@@ -97,6 +97,7 @@ class DashboardLinks
             'google_analytics' => ['Google Analytics', 'fa-solid awesome_style fa-bar-chart', 'settings/analytics', 'user_type' => ['super-admin'], ''],
             'google_adsense' => ['Google Adsense', 'fa-solid awesome_style  fa-adn', 'settings/adsense', 'user_type' => ['super-admin'], ''],
             'captcha' => ['Google Captcha', 'fa-solid awesome_style  fa-exclamation-circle', 'settings/captcha', 'user_type' => ['super-admin'], ''],
+            'paypal' => ['Paypal', 'awesome_style fa-brands fa-paypal', 'settings/paypal', 'user_type' => ['super-admin'], ''],
             'disable_website' => ['Disable Website', 'fa-solid awesome_style  fa-ban', 'settings/disable-website', 'user_type' => ['super-admin'], ''],
             'js_settings' => ['Javascript Code', 'fa-solid fa-code', 'settings/js', 'user_type' => ['super-admin'], ''],
             'email_templates' => ['Email Management System', 'fa-solid fa-envelope', 'email_templates', 'user_type' => ['super-admin', 'normal-admin'], ''],
@@ -118,10 +119,12 @@ class DashboardLinks
     public static function get_cms_modules()
     {
         $data = CmsModule::where('show_in_admin_menu', 1)->get();
+        $arr = [];
         if (count($data) > 0) {
-            return $data;
-        } else {
-            return 0;
+            foreach($data as $moduleObj){
+                $arr[$moduleObj->type] = [$moduleObj->title, $moduleObj->module_fontawesome_icon, 'module/'.$moduleObj->type, 'user_type' => explode(',', $moduleObj->access_level), ''];
+            }
         }
+        return $arr;
     }
 }

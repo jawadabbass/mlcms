@@ -62,7 +62,10 @@
                     $currentURL = rtrim($currentURL, '.html');
                     $currentURL = str_replace(base_url(), '', $currentURL);
                     $arrLinks = [];
-                    $arrLinks = \App\Helpers\DashboardLinks::$arrLinks;
+                    $beforeLinks = \App\Helpers\DashboardLinks::$beforeModuleLinks;
+                    $arrLinksModule = \App\Helpers\DashboardLinks::get_cms_modules();
+                    $afterLinks = \App\Helpers\DashboardLinks::$afterModuleLinks;
+                    $arrLinks = array_merge($beforeLinks,$arrLinksModule, $afterLinks);
                 @endphp
                 @foreach ($arrLinks as $key => $val)                
                     @if (isset($val['user_type']) && in_array(auth()->user()->type, $val['user_type']))

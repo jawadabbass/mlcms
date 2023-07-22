@@ -67,6 +67,8 @@ class ContactUsController extends Controller
                 $specialistQuery->where('dated', '>=', $from)
                     ->where('dated', '<=', $to);
             }
+            $specialistQuery->orderBy('dated', 'desc');
+            
             $result = $specialistQuery->paginate(15);
             $serachLink = rtrim($serachLink, '&');
             $result->setPath('?' . $serachLink);

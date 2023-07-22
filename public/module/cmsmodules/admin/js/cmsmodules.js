@@ -60,6 +60,20 @@ function load_cmsmodule_edit_form(id) {
         $('#edit_show_index').val(data.show_index);
         $('#edit_show_descp').val(data.show_descp);
         $('#edit_show_featured_image').val(data.show_featured_image);
+        $('#edit_module_fontawesome_icon').val(data.module_fontawesome_icon);
+
+        let access_level = data.access_level;
+        const accessLevelArray = access_level.split(",");
+        if (accessLevelArray[0] != '') {
+            $('#' + accessLevelArray[0]).prop('checked', true);
+        }
+        if (accessLevelArray[1] != '') {
+            $('#' + accessLevelArray[1]).prop('checked', true);
+        }
+        if (accessLevelArray[2] != '') {
+            $('#' + accessLevelArray[2]).prop('checked', true);
+        }
+        
         if (data.crop_image == 'Yes') {
             $('#edit_crop_image').prop('checked', true);
             $('#edit_feature_img_thmb_height_div').show();

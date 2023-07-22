@@ -16,9 +16,16 @@ class CustomConfigServiceProvider extends ServiceProvider
     public function boot()
     {
         $settings = Setting::first();
-        $paypal_client_id = Metadata::where('data_key', 'paypal_client_id')->first()->val1;
-        $paypal_secret = Metadata::where('data_key', 'paypal_secret')->first()->val1;
+        $paypal_live_client_id = Metadata::where('data_key', 'paypal_live_client_id')->first()->val1;
+        $paypal_sandbox_client_id = Metadata::where('data_key', 'paypal_sandbox_client_id')->first()->val1;
+        $paypal_live_secret = Metadata::where('data_key', 'paypal_live_secret')->first()->val1;
+        $paypal_sandbox_secret = Metadata::where('data_key', 'paypal_sandbox_secret')->first()->val1;
         $paypal_mode = Metadata::where('data_key', 'paypal_mode')->first()->val1;
+
+
+        $paypal_client_id = ($paypal_mode == 'live') ? $paypal_live_client_id : $paypal_sandbox_client_id;
+        $paypal_secret = ($paypal_mode == 'live') ? $paypal_live_secret : $paypal_sandbox_secret;
+
 
         $paypal = [
             'client_id' => $paypal_client_id,

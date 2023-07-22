@@ -5,7 +5,10 @@
                 $currentURL = url()->current();
                 $currentURL = str_replace(admin_url(), '', $currentURL);
                 $arrLinks = [];
-                $arrLinks = \App\Helpers\DashboardLinks::$leftLinks;
+                $beforeLinks = \App\Helpers\DashboardLinks::$beforeLeftModuleLinks;
+                $arrLinksModule = \App\Helpers\DashboardLinks::get_cms_modules();
+                $afterLinks = \App\Helpers\DashboardLinks::$afterLeftModuleLinks;
+                $arrLinks = array_merge($beforeLinks, $arrLinksModule, $afterLinks);
             @endphp
             <li class="{{ $currentURL == admin_url() ? 'active' : '' }}">
                 <a href="{{ admin_url() }}"> <i class="fa-solid fa-dashboard"></i> <span>Dashboard</span></a>

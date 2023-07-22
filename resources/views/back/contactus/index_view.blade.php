@@ -207,16 +207,17 @@
                                                             @endif
                                                             <a class="btn btn-sm btn-danger" href="javascript:"
                                                                 onclick="del_recrod('{{ $row->id }}');"
-                                                                title="Delete"><i class="glyphicon glyphicon-trash"></i>
+                                                                title="Delete"><i
+                                                                class="fa-solid fa-trash" aria-hidden="true"></i>
                                                                 Delete</a>
                                                             <a class="btn btn-sm btn-info"
                                                                 onclick="send_template_email('{{ $row->id }}','lead','single')"
                                                                 href="javascript:"><i
-                                                                    class="fa-solid fa-envelope-square"></i>Send
+                                                                    class="fa-solid fa-envelope-square"></i> Send
                                                                 Email</a>
                                                             <a onclick="send_template_sms('{{ $row->id }}','lead','single')"
                                                                 class="btn btn-sm btn-info" href="javascript:"><i
-                                                                    class="fa-solid awesome_style fa-share"></i>Send
+                                                                    class="fa-solid awesome_style fa-share"></i> Send
                                                                 Message</a>
                                                             @if ($row->assesment_status == 'sent')
                                                                 <a onclick="send_assessment_email('{{ $row->id }}','lead')"

@@ -123,7 +123,7 @@ class BlogController extends Controller
         $blog->meta_keywords = $request->meta_keywords;
         $blog->meta_description = $request->meta_description;
         $blog->canonical_url = $request->canonical_url;
-        $blog->dated = date('Y-m-d');
+        $blog->dated = $request->input('datepicker', date('Y-m-d H:i:s'));
         $blog->save();
 
         return response()->json(['success' => 'New Blog Created Successfully.'.$request->module_id]);
@@ -213,14 +213,9 @@ class BlogController extends Controller
         }
         $blog->featured_img_title = $request->featured_img_title;
         $blog->featured_img_alt = $request->featured_img_alt;
-
-        $changedate = date('Y-m-d', strtotime($request->datepicker)); //exit;
-
-        $blog->dated = $changedate;
-
+        $blog->dated = $request->input('datepicker', date('Y-m-d H:i:s'));
         $blog->meta_description = $request->meta_description;
         $blog->canonical_url = $request->canonical_url;
-        //$blog->dated = date("Y-m-d H:i:s");
         $blog->save();
 
         return response()->json(['success' => 'Blog Post Successfully updated.'.$request->module_id]);

@@ -174,89 +174,65 @@
                                                             </strong><code>{{ $row->user->name ?? '-' }}</code>
                                                             <br>
                                                         </td>
-                                                        <td colspan="5">
-                                                            <div class="row">
-                                                                <div class="col-lg-3">
-                                                                    <a class="btn btn-info"
-                                                                        href="mailto:{{ $row->email }}"
-                                                                        title="Reply via Email">
-                                                                        <i class="fa-solid fa-reply"
-                                                                            aria-hidden="true"></i>
-                                                                        Reply</a>
-                                                                    <a class="btn btn-sm btn-danger" href="javascript:"
-                                                                        onclick="del_recrod('{{ $row->id }}');"
-                                                                        title="Delete"><i
-                                                                            class="glyphicon glyphicon-trash"></i>
-                                                                        Delete</a>
-                                                                </div>
-                                                                <div class="col-lg-2">
-                                                                    <a href="{{ admin_url() }}manage_clients/{{ $row->id }}"
-                                                                        class="btn btn-success  btn-sm"><i
-                                                                            class="fa-solid fa-history"
-                                                                            aria-hidden="true"></i>
-                                                                        History</a>
-                                                                </div>
-                                                                <div class="col-lg-3">
-                                                                    <a href="javascript:;" class="btn btn-success  btn-sm"
-                                                                        style="color:white;"
-                                                                        onclick="comment_model({{ $row->id }})"><i
-                                                                            class="fa-solid fa-pencil"
-                                                                            aria-hidden="true"></i> Add
-                                                                        Comment</a>
-                                                                </div>
-                                                                <div class="col-lg-3">
-                                                                    <a href="{{ admin_url() }}manage_clients/{{ $row->id }}/edit"
-                                                                        class="btn btn-info  btn-sm"><i
-                                                                            class="fa-solid fa-pencil-square-o"
-                                                                            aria-hidden="true"></i>
-                                                                        Edit</a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row" style="margin-top: 10px;">
-                                                                <div class="col-lg-3">
-                                                                    <a class="btn btn-sm btn-info"
-                                                                        onclick="send_template_email('{{ $row->id }}','client','single')"
-                                                                        href="javascript:"><i
-                                                                            class="fa-solid fa-envelope-square"></i>Send
-                                                                        Email</a>
-                                                                </div>
-                                                                <div class="col-lg-3">
-                                                                    <a href="javascript:;"
-                                                                        onclick="send_template_sms('{{ $row->id }}','client','single')"
-                                                                        class="btn btn-sm btn-info" href="javascript:"><i
-                                                                            class="fa-solid awesome_style fa-share"></i>Send
-                                                                        Message</a>
-                                                                </div>
-                                                                @if ($row->assesment_status == 'sent')
-                                                                    <div class="col-lg-3">
-                                                                        <a onclick="send_assessment_email('{{ $row->id }}','client')"
-                                                                            class="btn btn-sm btn-primary"
-                                                                            href="javascript:"><i
-                                                                                class="fa-solid fa-envelope-square"></i>
-                                                                            ReSend
-                                                                            Questionnaire</a>
-                                                                    </div>
-                                                                @elseif($row->assesment_status == 'receive')
-                                                                    <div class="col-lg-3">
-                                                                        <a class="btn btn-sm btn-info" href="javascript:"
-                                                                            data-toggle="modal"
-                                                                            data-target="#largeShoes-<?php echo $row->id; ?>"><i
-                                                                                class="fa-solid fa-envelope-square"></i>View
-                                                                            Answered
-                                                                            Questions</a>
-                                                                    </div>
-                                                                @else
-                                                                    <div class="col-lg-3">
-                                                                        <a href="javascript:;"
-                                                                            onclick="send_assessment_email('{{ $row->id }}','client')"
-                                                                            class="btn btn-sm btn-primary"
-                                                                            href="javascript:"><i
-                                                                                class="fa-solid fa-envelope-square"></i>
-                                                                            Send
-                                                                            Questionnaire</a>
-                                                                    </div>
-                                                                @endif
-                                                            </div>
+                                                        <td colspan="7">
+
+                                                            <a class="btn btn-sm btn-info" href="mailto:{{ $row->email }}"
+                                                                title="Reply via Email">
+                                                                <i class="fa-solid fa-reply" aria-hidden="true"></i>
+                                                                Reply</a>
+                                                            <a class="btn btn-sm btn-danger" href="javascript:"
+                                                                onclick="del_recrod('{{ $row->id }}');"
+                                                                title="Delete">
+                                                                <i
+                                                                    class="fa-solid fa-trash" aria-hidden="true"></i>
+                                                                Delete</a>
+                                                            <a href="{{ admin_url() }}manage_clients/{{ $row->id }}"
+                                                                class="btn btn-success  btn-sm"><i
+                                                                    class="fa-solid fa-history" aria-hidden="true"></i>
+                                                                History</a>
+                                                            <a href="javascript:;" class="btn btn-success  btn-sm"
+                                                                style="color:white;"
+                                                                onclick="comment_model({{ $row->id }})"><i
+                                                                    class="fa-solid fa-pencil" aria-hidden="true"></i> Add
+                                                                Comment</a>
+                                                            <a href="{{ admin_url() }}manage_clients/{{ $row->id }}/edit"
+                                                                class="btn btn-info  btn-sm"><i
+                                                                    class="fa-solid fa-pencil"
+                                                                    aria-hidden="true"></i>
+                                                                Edit</a>
+
+
+                                                            <a class="btn btn-sm btn-info"
+                                                                onclick="send_template_email('{{ $row->id }}','client','single')"
+                                                                href="javascript:"><i
+                                                                    class="fa-solid fa-envelope-square"></i> Send
+                                                                Email</a>
+                                                            <a href="javascript:;"
+                                                                onclick="send_template_sms('{{ $row->id }}','client','single')"
+                                                                class="btn btn-sm btn-info" href="javascript:"><i
+                                                                    class="fa-solid awesome_style fa-share"></i> Send
+                                                                Message</a>
+                                                            @if ($row->assesment_status == 'sent')
+                                                                <a onclick="send_assessment_email('{{ $row->id }}','client')"
+                                                                    class="btn btn-sm btn-primary" href="javascript:"><i
+                                                                        class="fa-solid fa-envelope-square"></i>
+                                                                    ReSend
+                                                                    Questionnaire</a>
+                                                            @elseif($row->assesment_status == 'receive')
+                                                                <a class="btn btn-sm btn-info" href="javascript:"
+                                                                    data-toggle="modal"
+                                                                    data-target="#largeShoes-<?php echo $row->id; ?>"><i
+                                                                        class="fa-solid fa-envelope-square"></i>View
+                                                                    Answered
+                                                                    Questions</a>
+                                                            @else
+                                                                <a href="javascript:;"
+                                                                    onclick="send_assessment_email('{{ $row->id }}','client')"
+                                                                    class="btn btn-sm btn-primary" href="javascript:"><i
+                                                                        class="fa-solid fa-envelope-square"></i>
+                                                                    Send
+                                                                    Questionnaire</a>
+                                                            @endif
                                                             <div class="modal" id="largeShoes-<?php echo $row->id; ?>"
                                                                 tabindex="-1" role="dialog"
                                                                 aria-labelledby="modalLabelLarge" aria-hidden="true">
