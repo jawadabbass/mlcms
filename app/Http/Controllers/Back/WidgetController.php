@@ -1,13 +1,10 @@
 <?php
-
 namespace App\Http\Controllers\Back;
-
 use App\Http\Controllers\Controller;
 use App\Models\Back\Widget;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-
 class WidgetController extends Controller
 {
     /**
@@ -17,14 +14,12 @@ class WidgetController extends Controller
      */
     public function index()
     {
-        $title = FindInsettingArr('business_name').': Block Management';
+        $title = FindInsettingArr('business_name') . ': Block Management';
         $msg = '';
         $this->WidgetNullfields();
         $result = Widget::all();
-
         return view('back.widgets.index', compact('title', 'msg', 'result'));
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -34,7 +29,6 @@ class WidgetController extends Controller
     {
         return view('back.widgets.create');
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -77,21 +71,16 @@ class WidgetController extends Controller
         ];
         $widget->additional_field_data = json_encode($additional_field_data);
         $widget->admin_data = json_encode($admin_data);
-
         $widget->dated = date('Y-m-d H:i:s');
         if (!empty($request->featured_img)) {
             $widget->featured_image = $request->featured_img;
         }
-
         $widget->featured_image_title = $request->featured_image_title;
         $widget->featured_image_alt = $request->featured_image_alt;
-
         $widget->save();
         Session::flash('added_action', 'Created');
-
         return redirect(route('widgets.index'));
     }
-
     /**
      * Display the specified resource.
      *
@@ -102,15 +91,11 @@ class WidgetController extends Controller
     public function show($id)
     {
         $widget = Widget::find($id);
-
         $admin_data = json_decode($widget->admin_data);
         $additional_field_data = json_decode($widget->additional_field_data);
-
         $admin_data = json_decode($widget->admin_data);
-
         return view('back.widgets.edit', compact('widget', 'admin_data', 'additional_field_data'));
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -122,13 +107,12 @@ class WidgetController extends Controller
     {
         if ($id == '') {
             echo 'error';
-
             return;
         }
-        $status = $request->status;
+        $widget = Widget::find($id);
+        $status = $widget->sts;
         if ($status == '') {
             echo 'invalid current status provided.';
-
             return;
         }
         if ($status == 'active') {
@@ -136,14 +120,11 @@ class WidgetController extends Controller
         } else {
             $new_status = 'active';
         }
-        $widget = Widget::find($id);
         $widget->sts = $new_status;
-        $widget->save();
+        $widget->update();
         echo $new_status;
-
         return;
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -155,7 +136,6 @@ class WidgetController extends Controller
     {
         $widget = Widget::find($id);
         $widget->heading = $request->heading;
-
         $widget->content = myform_admin_cms_filter($request->editor1);
         $additional_field_data = [
             'additional_field_1' => $request->additional_field_1,
@@ -168,31 +148,25 @@ class WidgetController extends Controller
             'additional_field_8' => $request->additional_field_8,
         ];
         $widget->additional_field_data = json_encode($additional_field_data);
-
         if (!empty($request->featured_img)) {
             $widget->featured_image = $request->featured_img;
         }
         $widget->featured_image_title = $request->featured_image_title;
         $widget->featured_image_alt = $request->featured_image_alt;
-
         $widget->update();
         Session::flash('update_action', 'Created');
-
         return back();
     }
-
     public function removeFeaturedImage($id)
     {
         $data = Widget::find($id);
-
-        if (!empty($data->featured_image) && file_exists('uploads/widgets/'.$data->featured_image)) {
-            unlink('uploads/widgets/'.$data->featured_image);
+        if (!empty($data->featured_image) && file_exists('uploads/widgets/' . $data->featured_image)) {
+            unlink('uploads/widgets/' . $data->featured_image);
         }
         $data->featured_image = '';
         $data->save();
         echo 'done';
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -203,23 +177,17 @@ class WidgetController extends Controller
     public function destroy($id)
     {
         Widget::destroy($id);
-
         return json_encode(['status' => true]);
     }
-
     public function option($id)
     {
         $widget = Widget::find($id);
-
         $admin_data = json_decode($widget->admin_data);
-
         return view('back.widgets.option', compact('admin_data', 'widget'));
     }
-
     public function optionUpdate(Request $request, $id)
     {
         $widget = Widget::find($id);
-
         $admin_data = [
             'show_heading' => $request->show_heading,
             'show_content' => $request->show_content,
@@ -237,10 +205,8 @@ class WidgetController extends Controller
         $widget->pages_id = $request->pages_id;
         $widget->update();
         Session::flash('update_action', 'Created');
-
         return back();
     }
-
     public function WidgetNullfields()
     {
         $additional_field_data = [

@@ -1,4 +1,7 @@
 @extends('back.layouts.app', ['title' => $title])
+@section('beforeHeadClose')
+    @include('back.common_views.switch_css')
+@endsection
 @section('content')
     <div class="content-wrapper pl-3 pr-2">
         <!-- Block Header (Page header) -->
@@ -68,17 +71,18 @@
                                                 </td>
                                                 <td>{{ substr($row->heading, 0, 36) }}</td>
                                                 <td>{{ format_date($row->dated, 'date') }}</td>
-                                                <td> @php
-                                                    if ($row->sts == 'active') {
-                                                        $class_label = 'success';
-                                                    } else {
-                                                        $class_label = 'danger';
-                                                    }
-                                                @endphp <a
-                                                        onClick="update_widgets_status({{ $row->ID }});"
-                                                        href="javascript:;" id="sts_{{ $row->ID }}"> <span
-                                                            class="label label-{{ $class_label }}">{{ $row->sts }}</span>
-                                                    </a></td>
+                                                <td>
+                                                    <label class="switch">
+                                                        <input type="checkbox" name="{{ 'sts_' . $row->ID }}"
+                                                            id="{{ 'sts_' . $row->ID }}" <?php echo $row->sts == 'active' ? ' checked' : ''; ?>
+                                                            value="<?php echo $row->sts; ?>"
+                                                            onClick="update_widgets_status({{ $row->ID }})">
+                                                        <div class="slider round">
+                                                            <strong class="on">Active</strong>
+                                                            <strong class="off">Inactive</strong>
+                                                        </div>
+                                                    </label>
+                                                </td>
                                                 <td>
                                                     <a href="{{ route('widgets.show', $row->ID) }}"
                                                         class="btn btn-success btn-sm">Edit</a>

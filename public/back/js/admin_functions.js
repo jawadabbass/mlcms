@@ -277,16 +277,6 @@ function delete_services(id) {
     }
 }
 //=======services Module=======
-function update_widgets_status(id) {
-    var current_status = $("#sts_" + id + " span").html();
-    var myurl = baseUrl + 'widgets/status/' + id + '/' + current_status;
-    $.get(myurl, function (sts) {
-        var class_label = 'success';
-        if (sts != 'active')
-            var class_label = 'danger';
-        $("#sts_" + id).html('<span class="label label-' + class_label + '">' + sts + '</span>');
-    });
-}
 function delete_widgets(id) {
     var myurl = baseUrl + 'widgets/delete/' + id;
     var is_confirm = confirm("Are you sure you want to delete this ?");
@@ -386,7 +376,6 @@ function load_widgets_edit_form(id) {
         $('#edit_heading').val(data.heading);
         ckeditors['edit_editor1'].setData(data.content);
         $('#widgets_id').val(data.ID);
-
         $('#edit_page_form').modal('show');
     });
 }
@@ -1997,20 +1986,17 @@ function load_widgets_edit_form(id) {
         var filename = '../public/uploads/widgets/thumb/' + data.featured_image;
         $("#widgetsimages").attr('src', filename);
         // alert('HELLO TESTING HERE');
-
         var img = '<div class="featured-images-main" id="products_img_' + data.ID + '"><img style="width:150px" src="' + baseUrl + 'uploads/widgets/' + data.featured_image + '"><i onClick="remove_widget_image(' + data.ID + ');" class="deleteIcon"></i></div>';
         if (data.featured_image != '') {
             $("#widget_img_div").fadeIn();
             $('#widget_img_div').html('');
             $('#widget_img_div').append(img);
         }
-
         $('#widgets_id').val(data.ID);
         $('#edit_page_form').modal('show');
     });
 }
 function remove_widget_image(id) {
-
     var myurl = baseUrl + 'adminmedia/removeWidgetImage/' + id;
     var is_confirm = confirm("Are you sure you want to delete this image?");
     if (is_confirm) {
@@ -2023,13 +2009,11 @@ function remove_widget_image(id) {
     }
 }
 function update_widgets_status(id) {
-    var current_status = $("#sts_" + id + " span").html();
+    var current_status = 'notset';
     var myurl = baseUrl + 'adminmedia/widgets/' + id + '/edit?status=' + current_status;
     $.get(myurl, function (sts) {
-        var class_label = 'success';
-        if (sts != 'active')
-            var class_label = 'danger';
-        $("#sts_" + id).html('<span class="label label-' + class_label + '">' + sts + '</span>');
+        alertme('<i class="fas fa-check" aria-hidden="true"></i> Done Successfully ',
+            'success', true, 1500);
     });
 }
 function delete_widget(id) {
@@ -2317,7 +2301,6 @@ function load_social_media_edit_form(id) {
         $('#edit_link').val(data.link);
         $('#i_class').val(data.i_class);
         $('#i_class_addon').html('<i class="fa ' + data.i_class + '"></i>');
-
         $('#edit_display_order').val(data.display_order);
         $('#edit-left-sidebar').attr('checked', false);
         if (data.open_in_new_tab == 'Yes') {
