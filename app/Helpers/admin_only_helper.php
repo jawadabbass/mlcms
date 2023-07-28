@@ -103,12 +103,12 @@ function the_icon($icon = 'add')
         $icon = 'edit';
     }
     $arr = array(
-        'add' => '<i class="fa-solid fa-plus-circle" aria-hidden="true"></i>',
-        'edit' => '<i class="fa-solid fa-pen-to-square"></i>',
-        'del' => '<i class="fa-solid fa-minus-circle" aria-hidden="true"></i>',
-        'subm' => '<i class="fa-solid fa-paper-plane" aria-hidden="true"></i>',
-        'info' => '<i class="fa-solid fa-info-circle" aria-hidden="true"></i>',
-        's' => '<i class="fa-solid fa-search" aria-hidden="true"></i>',
+        'add' => '<i class="fas fa-plus-circle" aria-hidden="true"></i>',
+        'edit' => '<i class="fas fa-pen-to-square"></i>',
+        'del' => '<i class="fas fa-minus-circle" aria-hidden="true"></i>',
+        'subm' => '<i class="fas fa-paper-plane" aria-hidden="true"></i>',
+        'info' => '<i class="fas fa-info-circle" aria-hidden="true"></i>',
+        's' => '<i class="fas fa-search" aria-hidden="true"></i>',
     );
     if (isset($arr[$icon])) {
         echo $arr[$icon];
@@ -118,7 +118,7 @@ function the_icon($icon = 'add')
 function getBC($heading, $parentArr = array())
 {
     $tmpStr = '';
-    $tmpStr .= '<ol class="breadcrumb"><li><a href="' . admin_url() . '"><i class="fa-solid fa-dashboard"></i> Home</a>
+    $tmpStr .= '<ol class="breadcrumb"><li><a href="' . admin_url() . '"><i class="fas fa-tachometer-alt"></i> Home</a>
                                     </li>';
     if (!empty($parentArr)) {
         foreach ($parentArr as $key => $val) {
@@ -273,14 +273,14 @@ function filesBasePath()
 function filesExtsAllowed()
 {
     return array(
-        'pdf' => '<i class="fa-solid fa-file-pdf"></i>',
-        'doc' => '<i class="fa-solid fa-file-word"></i>',
-        'docx' => '<i class="fa-solid fa-file-word"></i>',
-        'xls' => '<i class="fa-solid fa-file-excel"></i>',
-        'xlsx' => '<i class="fa-solid fa-file-excel"></i>',
-        'ppt' => '<i class="fa-solid fa-file-powerpoint"></i>',
-        'pptx' => '<i class="fa-solid fa-file-powerpoint"></i>',
-        'txt' => '<i class="fa-solid fa-file"></i>'
+        'pdf' => '<i class="fas fa-file-pdf"></i>',
+        'doc' => '<i class="fas fa-file-word"></i>',
+        'docx' => '<i class="fas fa-file-word"></i>',
+        'xls' => '<i class="fas fa-file-excel"></i>',
+        'xlsx' => '<i class="fas fa-file-excel"></i>',
+        'ppt' => '<i class="fas fa-file-powerpoint"></i>',
+        'pptx' => '<i class="fas fa-file-powerpoint"></i>',
+        'txt' => '<i class="fas fa-file"></i>'
     );
 }
 function checkAccess($user, $accessType)

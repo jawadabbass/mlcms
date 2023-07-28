@@ -1,11 +1,11 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <section class="content-header">
             <div class="row">
                 <div class="col-md-8 col-sm-6">
                     <ol class="breadcrumb">
-                        <li><a href="{{ admin_url() }}"> <i class="fa-solid fa-dashboard"></i> Home </a></li>
+                        <li><a href="{{ admin_url() }}"> <i class="fas fa-tachometer-alt"></i> Home </a></li>
                         <li><a href="{{ admin_url() }}manage_clients">Clients</a></li>
 
                     </ol>
@@ -26,7 +26,7 @@
                                 <br/>
                                 <a
                                     href="{{ admin_url() }}manage_clients/{{ $client->id }}/edit"
-                                    class="btn btn-info  btn-sm"><i class="fa-solid fa-pencil-square-o"
+                                    class="btn btn-info  btn-sm"><i class="fas fa-edit-square-o"
                                         aria-hidden="true"></i>
                                     Update Client</a>
                             </h3>
@@ -112,7 +112,7 @@
                                         <div id="tracking-pre"></div>
                                         <div id="tracking">
                                             <div class="text-center tracking-status-intransit">
-                                                <p class="tracking-status text-tight"><i class="fa-solid fa-history"
+                                                <p class="tracking-status text-tight"><i class="fas fa-history"
                                                         aria-hidden="true"></i> History</p>
                                             </div>
                                             <div class="tracking-list">
@@ -121,19 +121,19 @@
                                                         <div class="tracking-icon status-intransit">
                                                             <div style="font-size:18px;" class="">
                                                                 @if ($val->ref == 1)
-                                                                    <i class="fa-solid fa-money" style="color:green;"
+                                                                    <i class="fas fa-money" style="color:green;"
                                                                         aria-hidden="true"></i>
                                                                 @elseif($val->ref == 2)
-                                                                    <i class="fa-solid fa-plus" style="color:green"></i>
+                                                                    <i class="fas fa-plus" style="color:green"></i>
                                                                 @elseif($val->ref == 3)
-                                                                    <i class="fa-solid fa-envelope-square"
+                                                                    <i class="fas fa-envelope-square"
                                                                         style="color:#b9b929"></i>
                                                                 @elseif($val->ref == 4)
-                                                                    <i class="fa-solid fa-edit" style="color:green"></i>
+                                                                    <i class="fas fa-edit" style="color:green"></i>
                                                                 @elseif($val->ref == 5)
-                                                                    <i class="fa-solid fa-user" style="color:green"></i>
+                                                                    <i class="fas fa-user" style="color:green"></i>
                                                                 @else
-                                                                    <i class="fa-solid fa-edit" style="color:red"></i>
+                                                                    <i class="fas fa-edit" style="color:red"></i>
                                                                 @endif
 
 
@@ -163,7 +163,7 @@
                 </div>
             </div>
         </section>
-    </aside>
+    </div>
 @endsection
 @section('beforeBodyClose')
     <style type="text/css">

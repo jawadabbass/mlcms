@@ -1,12 +1,12 @@
 @extends('back.layouts.app', ['title' => $title ?? ''])
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <!-- Block Header (Page header) -->
         <section class="content-header">
             <div class="row">
                 <div class="col-md-8 col-sm-6">
                     <ol class="breadcrumb">
-                        <li><a href="{{ admin_url() . '' }}"><i class="fa-solid fa-gauge"></i> Home</a></li>
+                        <li><a href="{{ admin_url() . '' }}"><i class="fas fa-gauge"></i> Home</a></li>
                         <li class="active">Widgets Management</li>
                     </ol>
                 </div>
@@ -27,7 +27,7 @@
                 </div>
                 <div class="col-sm-4">
                     <div class="text-end" style="padding-bottom:2px;">
-                        <a href="{{ route('widgets.index') }}" class="btn btn-success"><i class="fa-solid fa-angle-double-left">Go
+                        <a href="{{ route('widgets.index') }}" class="btn btn-success"><i class="fas fa-angle-double-left">Go
                                 Back</i></a>
                     </div>
                 </div>
@@ -136,7 +136,7 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-6 text-start"><a href="{{ route('widgets.index') }}" class="btn btn-success">
-                            <i class="fa-solid fa-angle-double-left">Go Back</i></a>
+                            <i class="fas fa-angle-double-left">Go Back</i></a>
 
                     </div>
                     <div class="col-sm-6 text-end">
@@ -146,7 +146,7 @@
                 </div>
             </form>
         </section>
-    </aside>
+    </div>
 @endsection
 @section('beforeBodyClose')
     <script type="text/javascript">

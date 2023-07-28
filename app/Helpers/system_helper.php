@@ -175,7 +175,7 @@ function cms_edit_page($type = "cms", $id = 0)
                 break;
         }
         return '';
-        // return '<div class="editCont"><a data-bs-toggle="tooltip" data-placement="right" title="Edit" href="'.$editUrl.'" id="editBlog" target="_blank"><i class="fa-solid fa-edit"></i></a></div>';
+        // return '<div class="editCont"><a data-bs-toggle="tooltip" data-placement="right" title="Edit" href="'.$editUrl.'" id="editBlog" target="_blank"><i class="fas fa-edit"></i></a></div>';
     }
 }
 function front_dashboard_links()
@@ -184,8 +184,8 @@ function front_dashboard_links()
         return '<div class="homePg editCont">
             <ul>
                 <li><a data-bs-toggle="tooltip" data-placement="right" title="Dashboard" href="' . admin_url() . '" id="" target="_blank"><i class="fas fa-tachometer-alt"></i></a></li>
-                <li> <a data-bs-toggle="tooltip" data-placement="right" title="Menus" href="' . admin_url() . 'menus" id="" target="_blank"><i class="fa-solid fa-tasks"></i></a></li>
-                <li><a data-bs-toggle="tooltip" data-placement="right" title="Widgets" href="' . admin_url() . 'widgets" id="" target="_blank"><i class="fa-solid fa-puzzle-piece"></i></a></li>
+                <li> <a data-bs-toggle="tooltip" data-placement="right" title="Menus" href="' . admin_url() . 'menus" id="" target="_blank"><i class="fas fa-tasks"></i></a></li>
+                <li><a data-bs-toggle="tooltip" data-placement="right" title="Widgets" href="' . admin_url() . 'widgets" id="" target="_blank"><i class="fas fa-puzzle-piece"></i></a></li>
             </ul>          
         </div>';
     }
@@ -432,6 +432,6 @@ function the_date($date, $dateF = 'd M Y')
 }
 function __shortcode($content)
 {
-    $content = str_replace('{{add_icon}}', '<i class="fa-solid fa-plus" aria-hidden="true"></i>', $content);
+    $content = str_replace('{{add_icon}}', '<i class="fas fa-plus" aria-hidden="true"></i>', $content);
     return $content;
 }

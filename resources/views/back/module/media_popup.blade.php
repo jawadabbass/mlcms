@@ -32,13 +32,13 @@ if($val['album_title']!='root'){
 
                             <div class="col-md-8">
                                 <h1>
-                                    <i class="fa-solid fa-folder-open-o" aria-hidden="true"></i> {{ $val['album_title'] }}
+                                    <i class="fas fa-folder-open-o" aria-hidden="true"></i> {{ $val['album_title'] }}
                                 </h1>
                             </div>
                             <div class="col-md-4 text-end">
                                 <h3>
 
-                                    {{-- <a href="javascript:;" class="btn btn-warning" onClick="edit_album({{$val['album_id']}},'{{$val['album_title']}}');" data-bs-toggle="tooltip" title="Edit Folder"><i class="fa-solid fa-edit" aria-hidden="true"></i></a> --}}
+                                    {{-- <a href="javascript:;" class="btn btn-warning" onClick="edit_album({{$val['album_id']}},'{{$val['album_title']}}');" data-bs-toggle="tooltip" title="Edit Folder"><i class="fas fa-edit" aria-hidden="true"></i></a> --}}
                                     @if ($val['album_title'] != 'root')
                                     @endif
                                 </h3>
@@ -59,7 +59,7 @@ if($val['album_title']!='root'){
                                             <a class="btn btn-success" data-bs-toggle="tooltip" data-placement="left"
                                                 title="Insert Image" href="javascript:;"
                                                 onclick="media_insert_img('{{ $v['url'] }}');"><i
-                                                    class="fa-solid fa-cloud-download" aria-hidden="true"></i></a>
+                                                    class="fas fa-cloud-download" aria-hidden="true"></i></a>
 
                                         </div>
                                     </div>
@@ -109,14 +109,14 @@ if($val['album_title']!='root'){
 
                                 <div class="col-md-8">
                                     <h1>
-                                        <i class="fa-solid fa-folder-open-o" aria-hidden="true"></i>
+                                        <i class="fas fa-folder-open-o" aria-hidden="true"></i>
                                         {{ $val['album_title'] }}
                                     </h1>
                                 </div>
                                 <div class="col-md-4 text-end">
                                     <h3>
 
-                                        {{-- <a href="javascript:;" class="btn btn-warning" onClick="edit_album({{$val['album_id']}},'{{$val['album_title']}}');" data-bs-toggle="tooltip" title="Edit Folder"><i class="fa-solid fa-edit" aria-hidden="true"></i></a> --}}
+                                        {{-- <a href="javascript:;" class="btn btn-warning" onClick="edit_album({{$val['album_id']}},'{{$val['album_title']}}');" data-bs-toggle="tooltip" title="Edit Folder"><i class="fas fa-edit" aria-hidden="true"></i></a> --}}
                                         @if ($val['album_title'] != 'root')
                                         @endif
                                     </h3>
@@ -137,7 +137,7 @@ if($val['album_title']!='root'){
                                                 <a class="btn btn-success" data-bs-toggle="tooltip" data-placement="left"
                                                     title="Insert Image" href="javascript:;"
                                                     onclick="media_insert_portfolio('{{ $v['url'] }}');"><i
-                                                        class="fa-solid fa-cloud-download" aria-hidden="true"></i></a>
+                                                        class="fas fa-cloud-download" aria-hidden="true"></i></a>
 
                                             </div>
                                         </div>

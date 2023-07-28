@@ -1,12 +1,12 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="row">
                 <div class="col-md-8 col-sm-6">
                     <ol class="breadcrumb">
-                        <li><a href="{{ admin_url() }}"> <i class="fa-solid fa-dashboard"></i> Home </a></li>
+                        <li><a href="{{ admin_url() }}"> <i class="fas fa-tachometer-alt"></i> Home </a></li>
                         <li class="active">Manage Clients</li>
                     </ol>
                 </div>
@@ -32,21 +32,21 @@
                             @endif
                             <div class="text-end">
                                 <a href="{{ admin_url() }}manage_clients/create" class="btn btn-info">
-                                    <i class="fa-solid fa-plus-circle" aria-hidden="true"></i> Add New
+                                    <i class="fas fa-plus-circle" aria-hidden="true"></i> Add New
                                     Client</a>
                                 <a href="{{ route('email_templates.index') }}" class="btn btn-info">
-                                    <i class="fa-solid fa-envelope-square" aria-hidden="true"></i>&nbsp;Email Template
+                                    <i class="fas fa-envelope-square" aria-hidden="true"></i>&nbsp;Email Template
                                     Management</a>
                                 <a href="{{ route('message.index') }}" class="btn btn-info">
-                                    <i class="fa-solid awesome_style fa-share" aria-hidden="true"></i>&nbsp;Message Template
+                                    <i class="fas awesome_style fa-share" aria-hidden="true"></i>&nbsp;Message Template
                                     Management</a>
                                 <a href="javascript:;" onclick="send_template_email('','client','combine')"
                                     class="btn btn-info">
-                                    <i class="fa-solid fa-envelope-square" aria-hidden="true"></i>&nbsp;Send Email
+                                    <i class="fas fa-envelope-square" aria-hidden="true"></i>&nbsp;Send Email
                                 </a>
                                 <a href="javascript:;" onclick="send_template_sms('','client','combine')"
                                     class="btn btn-info">
-                                    <i class="fa-solid awesome_style fa-share" aria-hidden="true"></i>&nbsp;Send SMS
+                                    <i class="fas awesome_style fa-share" aria-hidden="true"></i>&nbsp;Send SMS
                                 </a>
                             </div>
                             <br>
@@ -80,12 +80,12 @@
                                         </select>
                                     </div>
                                     <div class="col-md-1 text-start">
-                                        <button type="submit" class="btn btn-info"><i class="fa-solid fa-search"
+                                        <button type="submit" class="btn btn-info"><i class="fas fa-search"
                                                 aria-hidden="true"></i> Search</button>
                                     </div>
                                     <div class="col-md-1" style="margin-left: 20px;">
                                         <a class="btn btn-warning" href="{{ route('manage_clients.index') }}"><i
-                                                class="fa-solid fa-refresh" aria-hidden="true"></i>Reset</a>
+                                                class="fas fa-sync" aria-hidden="true"></i>Reset</a>
                                     </div>
                                 </div>
                             </form>
@@ -141,7 +141,7 @@
                                                                 title="" href="javascript:;"
                                                                 onclick="showme_page('#subtrr{{ $row->id }}',this)"
                                                                 data-original-title="Show more"><i
-                                                                    class="fa-solid fa-angle-double-down"
+                                                                    class="fas fa-angle-double-down"
                                                                     aria-hidden="true"></i></a>
                                                         </td>
                                                         <td>{{ $row->id }}</td>
@@ -178,26 +178,26 @@
 
                                                             <a class="btn btn-sm btn-info" href="mailto:{{ $row->email }}"
                                                                 title="Reply via Email">
-                                                                <i class="fa-solid fa-reply" aria-hidden="true"></i>
+                                                                <i class="fas fa-reply" aria-hidden="true"></i>
                                                                 Reply</a>
                                                             <a class="btn btn-sm btn-danger" href="javascript:"
                                                                 onclick="del_recrod('{{ $row->id }}');"
                                                                 title="Delete">
                                                                 <i
-                                                                    class="fa-solid fa-trash" aria-hidden="true"></i>
+                                                                    class="fas fa-trash" aria-hidden="true"></i>
                                                                 Delete</a>
                                                             <a href="{{ admin_url() }}manage_clients/{{ $row->id }}"
                                                                 class="btn btn-success  btn-sm"><i
-                                                                    class="fa-solid fa-history" aria-hidden="true"></i>
+                                                                    class="fas fa-history" aria-hidden="true"></i>
                                                                 History</a>
                                                             <a href="javascript:;" class="btn btn-success  btn-sm"
                                                                 style="color:white;"
                                                                 onclick="comment_model({{ $row->id }})"><i
-                                                                    class="fa-solid fa-pencil" aria-hidden="true"></i> Add
+                                                                    class="fas fa-edit" aria-hidden="true"></i> Add
                                                                 Comment</a>
                                                             <a href="{{ admin_url() }}manage_clients/{{ $row->id }}/edit"
                                                                 class="btn btn-info  btn-sm"><i
-                                                                    class="fa-solid fa-pencil"
+                                                                    class="fas fa-edit"
                                                                     aria-hidden="true"></i>
                                                                 Edit</a>
 
@@ -205,31 +205,31 @@
                                                             <a class="btn btn-sm btn-info"
                                                                 onclick="send_template_email('{{ $row->id }}','client','single')"
                                                                 href="javascript:"><i
-                                                                    class="fa-solid fa-envelope-square"></i> Send
+                                                                    class="fas fa-envelope-square"></i> Send
                                                                 Email</a>
                                                             <a href="javascript:;"
                                                                 onclick="send_template_sms('{{ $row->id }}','client','single')"
                                                                 class="btn btn-sm btn-info" href="javascript:"><i
-                                                                    class="fa-solid awesome_style fa-share"></i> Send
+                                                                    class="fas awesome_style fa-share"></i> Send
                                                                 Message</a>
                                                             @if ($row->assesment_status == 'sent')
                                                                 <a onclick="send_assessment_email('{{ $row->id }}','client')"
                                                                     class="btn btn-sm btn-primary" href="javascript:"><i
-                                                                        class="fa-solid fa-envelope-square"></i>
+                                                                        class="fas fa-envelope-square"></i>
                                                                     ReSend
                                                                     Questionnaire</a>
                                                             @elseif($row->assesment_status == 'receive')
                                                                 <a class="btn btn-sm btn-info" href="javascript:"
                                                                     data-toggle="modal"
                                                                     data-target="#largeShoes-<?php echo $row->id; ?>"><i
-                                                                        class="fa-solid fa-envelope-square"></i>View
+                                                                        class="fas fa-envelope-square"></i>View
                                                                     Answered
                                                                     Questions</a>
                                                             @else
                                                                 <a href="javascript:;"
                                                                     onclick="send_assessment_email('{{ $row->id }}','client')"
                                                                     class="btn btn-sm btn-primary" href="javascript:"><i
-                                                                        class="fa-solid fa-envelope-square"></i>
+                                                                        class="fas fa-envelope-square"></i>
                                                                     Send
                                                                     Questionnaire</a>
                                                             @endif
@@ -269,14 +269,14 @@
                                                                                                         style="text-align: center;">
                                                                                                         <a style="font-size: 24px;"
                                                                                                             onclick="show_hides('answer_que{{ $q }}')"><i
-                                                                                                                class="fa-solid fa-angle-double-down"
+                                                                                                                class="fas fa-angle-double-down"
                                                                                                                 aria-hidden="true"></i></a>
                                                                                                     </td>
                                                                                                     <td class="up_answer_que{{ $q }}"
                                                                                                         style="display:none;text-align: center;">
                                                                                                         <a style="font-size: 24px;"
                                                                                                             onclick="hide_show('answer_que{{ $q }}')"><i
-                                                                                                                class="fa-solid fa-angle-double-up"
+                                                                                                                class="fas fa-angle-double-up"
                                                                                                                 aria-hidden="true"></i></a>
                                                                                                     </td>
                                                                                                 </tr>
@@ -475,7 +475,7 @@
                 </div>
             </div>
         </td>
-    </aside>
+    </div>
     @include('back.clients.common.modal')
 @endsection
 @section('beforeBodyClose')
@@ -537,7 +537,7 @@
                     _token: $("meta[name=csrf-token]").attr("content")
                 },
                 function() {
-                    alertme('<i class="fa-solid fa-check" aria-hidden="true"></i> Status Updated ', 'success', true,
+                    alertme('<i class="fas fa-check" aria-hidden="true"></i> Status Updated ', 'success', true,
                         1500);
                 }
             );
@@ -713,7 +713,7 @@
                     'status': sts
                 },
                 success: function(data) {
-                    alertme('<i class="fa-solid fa-check" aria-hidden="true"></i> Questionnaire Email Has Been Sent Successfully',
+                    alertme('<i class="fas fa-check" aria-hidden="true"></i> Questionnaire Email Has Been Sent Successfully',
                         'success', true,
                         1500);
                     location.reload();

@@ -21,7 +21,7 @@ class CabinAmenityController extends Controller
      */
     public function index()
     {
-        $title = config('Constants.SITE_NAME') . ': Cabin Amenities Management';
+        $title = FindInsettingArr('business_name') . ': Cabin Amenities Management';
         $msg = '';
 
         return view('back.cabin_amenities.index', compact('title', 'msg'));
@@ -49,8 +49,8 @@ class CabinAmenityController extends Controller
             })
             ->addColumn('action', function ($cabinAmenities) {
                 return '
-                		<a href="' . route('cabinAmenities.edit', ['cabinAmenityObj' => $cabinAmenities->id]) . '" class="btn btn-warning m-2"><i class="fa-solid fa-pencil" aria-hidden="true"></i></a>
-						<a href="javascript:void(0);" onclick="deleteCabinAmenity(' . $cabinAmenities->id . ');"  class="btn btn-danger m-2"><i class="fa-solid fa-trash" aria-hidden="true"></i></a>';
+                		<a href="' . route('cabinAmenities.edit', ['cabinAmenityObj' => $cabinAmenities->id]) . '" class="btn btn-warning m-2"><i class="fas fa-edit" aria-hidden="true"></i></a>
+						<a href="javascript:void(0);" onclick="deleteCabinAmenity(' . $cabinAmenities->id . ');"  class="btn btn-danger m-2"><i class="fas fa-trash" aria-hidden="true"></i></a>';
             })
             ->rawColumns(['status', 'action'])
             ->orderColumns(['title', 'status'], ':column $1')
@@ -69,7 +69,7 @@ class CabinAmenityController extends Controller
      */
     public function create()
     {
-        $title = config('Constants.SITE_NAME') . ': Cabin Amenities Management';
+        $title = FindInsettingArr('business_name') . ': Cabin Amenities Management';
         $msg = '';
         $cabinAmenityObj = new CabinAmenity();
 
@@ -117,7 +117,7 @@ class CabinAmenityController extends Controller
      */
     public function edit(CabinAmenity $cabinAmenityObj)
     {
-        $title = config('Constants.SITE_NAME') . ': Cabin Amenities Management';
+        $title = FindInsettingArr('business_name') . ': Cabin Amenities Management';
         $msg = '';
 
         return view('back.cabin_amenities.edit')
@@ -146,7 +146,7 @@ class CabinAmenityController extends Controller
 
     public function sortCabinAmenities()
     {
-        $title = config('Constants.SITE_NAME') . ': Cabin Amenities Management';
+        $title = FindInsettingArr('business_name') . ': Cabin Amenities Management';
         $msg = '';
 
         return view('back.cabin_amenities.sort')->with('title', $title)
@@ -160,7 +160,7 @@ class CabinAmenityController extends Controller
         $str = '<ul id="sortable">';
         if ($cabinAmenities != null) {
             foreach ($cabinAmenities as $cabinAmenityObj) {
-                $str .= '<li class="ui-state-default" id="' . $cabinAmenityObj->id . '"><i class="fa-solid fa-sort"></i> ' . $cabinAmenityObj->title . '</li>';
+                $str .= '<li class="ui-state-default" id="' . $cabinAmenityObj->id . '"><i class="fas fa-sort"></i> ' . $cabinAmenityObj->title . '</li>';
             }
         }
         echo $str . '</ul>';

@@ -6,12 +6,12 @@
     </div>
 @endsection
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <section class="content-header">
             <div class="row">
                 <div class="col-md-8 col-sm-6">
                     <ol class="breadcrumb">
-                        <li><a href="{{ admin_url() }}"> <i class="fa-solid fa-dashboard"></i> Home </a></li>
+                        <li><a href="{{ admin_url() }}"> <i class="fas fa-tachometer-alt"></i> Home </a></li>
                         <li><a href="{{ route('email_templates.index') }}">Manage Email Template</a></li>
                         <li class="active">Edit Email Template</li>
                     </ol>
@@ -199,7 +199,7 @@
                                         <option value="fa-cubes">&#xf1b3; </option>
                                         <option value="fa-cut">&#xf0c4; </option>
                                         <option value="fa-cutlery">&#xf0f5; </option>
-                                        <option value="fa-dashboard">&#xf0e4; </option>
+                                        <option value="fa-tachometer-alt">&#xf0e4; </option>
                                         <option value="fa-dashcube">&#xf210; </option>
                                         <option value="fa-database">&#xf1c0; </option>
                                         <option value="fa-dedent">&#xf03b; </option>
@@ -256,8 +256,8 @@
                                         <option value="fa-file-picture-o">&#xf1c5; </option>
                                         <option value="fa-file-powerpoint-o">&#xf1c4; </option>
                                         <option value="fa-file-sound-o">&#xf1c7; </option>
-                                        <option value="fa-file-text">&#xf15c; </option>
-                                        <option value="fa-file-text-o">&#xf0f6; </option>
+                                        <option value="fa-file">&#xf15c; </option>
+                                        <option value="fa-file-o">&#xf0f6; </option>
                                         <option value="fa-file-video-o">&#xf1c8; </option>
                                         <option value="fa-file-word-o">&#xf1c2; </option>
                                         <option value="fa-file-zip-o">&#xf1c6; </option>
@@ -426,8 +426,8 @@
                                         <option value="fa-pause">&#xf04c; </option>
                                         <option value="fa-paw">&#xf1b0; </option>
                                         <option value="fa-paypal">&#xf1ed; </option>
-                                        <option value="fa-pencil">&#xf040; </option>
-                                        <option value="fa-pencil-square-o">&#xf044; </option>
+                                        <option value="fa-edit">&#xf040; </option>
+                                        <option value="fa-edit-square-o">&#xf044; </option>
                                         <option value="fa-phone">&#xf095; </option>
                                         <option value="fa-photo">&#xf03e; </option>
                                         <option value="fa-picture-o">&#xf03e; </option>
@@ -461,7 +461,7 @@
                                         <option value="fa-recycle">&#xf1b8; </option>
                                         <option value="fa-reddit">&#xf1a1; </option>
                                         <option value="fa-reddit-square">&#xf1a2; </option>
-                                        <option value="fa-refresh">&#xf021; </option>
+                                        <option value="fa-sync">&#xf021; </option>
                                         <option value="fa-registered">&#xf25d; </option>
                                         <option value="fa-remove">&#xf00d; </option>
                                         <option value="fa-renren">&#xf18b; </option>
@@ -531,7 +531,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-7"><a href="{{ route('email_templates.index') }}"
-                                            class="btn btn-link"><i class="fa-solid fa-angle-double-left"
+                                            class="btn btn-link"><i class="fas fa-angle-double-left"
                                                 aria-hidden="true"></i> Back</a></div>
                                     <div class="col-md-5 text-end">
                                         <input type="hidden" name="idd" value="0" />
@@ -544,7 +544,7 @@
                 </div>
             </div>
         </section>
-    </aside>
+    </div>
 @endsection
 @section('beforeBodyClose')
     <script>

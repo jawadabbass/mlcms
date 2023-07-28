@@ -1,6 +1,6 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <section class="content-header">
             <div class="row">
                 <div class="col-md-4 col-sm-6">
@@ -101,7 +101,7 @@
                 </div>
             </div>
         </section>
-    </aside>
+    </div>
 @endsection
 @section('beforeBodyClose')
     <style type="text/css">

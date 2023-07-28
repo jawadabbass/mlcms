@@ -31,7 +31,7 @@ class CategoriesController extends Controller
 			$catId = 0;
 		}
 		$catName = '';
-		$title = config('Constants.SITE_NAME') . ': Categories Management';
+		$title = FindInsettingArr('business_name') . ': Categories Management';
 		$parentCategory = Category::find($catId);
 		$allParentCategory = Category::orderBy('orderr', 'ASC')->get()->toArray();
 		$result = Category::where('cat', $catId)->orderBy('orderr', 'ASC')->get();

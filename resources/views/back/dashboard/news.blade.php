@@ -1,4 +1,4 @@
-@extends('back.layouts.app', ['title' => config('Constants.SITE_NAME') . ' | Dashboard'])
+@extends('back.layouts.app', ['title' => FindInsettingArr('business_name') . ' | Dashboard'])
 @section('beforeHeadClose')
     <style>
         .archiveWrp ul {
@@ -23,7 +23,7 @@
     </style>
 @endsection
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <section class="content-header">
             <div class="row">
                 <div class="col-md-8 col-sm-6">
@@ -54,7 +54,7 @@
             </ul>
         </div>
         {{ $news->links() }}
-    </aside>
+    </div>
 @endsection
 @section('beforeBodyClose')
     <script>

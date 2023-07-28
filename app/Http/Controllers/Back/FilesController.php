@@ -19,7 +19,7 @@ class FilesController extends Controller
     /* To display all galleries */
     public function index()
     {
-        $title = config('Constants.SITE_NAME') . ': Videos Management';
+        $title = FindInsettingArr('business_name') . ': Videos Management';
         $msg = '';
         $albumsObj    = array();
         // uploads/editor/images/

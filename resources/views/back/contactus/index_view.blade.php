@@ -1,23 +1,18 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="row">
                 <div class="col-md-8 col-sm-6">
-                    <ul class="animation_ul">
-                        <li><a href="{{ admin_url() }}"> <i class="fa-solid fa-dashboard"></i> Home </a></li>
-                        <li class="active">Contact Leads</li>
-                        <li>
-                            <div id="bell_reset">
-                                @if ($contact > 0)
-                                    <div class="ringing-bell blink_me" style="color:red;"> <i
-                                            class='fa-solid fa-bell faa-ring animated fa-3x'></i>
-                                    </div>
-                                @endif
-                            </div>
-                        </li>
-                    </ul>
+                    <div class="animation_ul" id="bell_reset">
+                        <a href="{{ admin_url() }}"> <i class="fas fa-tachometer-alt"></i> Home </a> - Contact Leads
+                        @if ($contact > 0)
+                        <span class="ringing-bell blink_me" style="color:red;"> <i
+                                class='fas fa-bell faa-ring animated fa-2x'></i>
+                        </span>
+                        @endif
+                    </div>
                 </div>
                 <div class="col-md-4 col-sm-6"> @include('back.common_views.quicklinks') </div>
             </div>
@@ -37,21 +32,21 @@
                                 </a>
 
                                 <a href="{{ admin_url() }}contact_request/create" class="btn btn-info">
-                                    <i class="fa-solid fa-plus-circle" aria-hidden="true"></i> Add New
+                                    <i class="fas fa-plus-circle" aria-hidden="true"></i> Add New
                                     Lead</a>
                                 <a href="{{ route('email_templates.index') }}" class="btn btn-info">
-                                    <i class="fa-solid fa-envelope-square" aria-hidden="true"></i>&nbsp;Email Template
+                                    <i class="fas fa-envelope-square" aria-hidden="true"></i>&nbsp;Email Template
                                     Management</a>
                                 <a href="{{ route('message.index') }}" class="btn btn-info">
-                                    <i class="fa-solid awesome_style fa-share" aria-hidden="true"></i>&nbsp;Message Template
+                                    <i class="fas awesome_style fa-share" aria-hidden="true"></i>&nbsp;Message Template
                                     Management</a>
                                 <a href="javascript:;" onclick="send_template_email('','lead','combine')"
                                     class="btn btn-info">
-                                    <i class="fa-solid fa-envelope-square" aria-hidden="true"></i>&nbsp;Send Email
+                                    <i class="fas fa-envelope-square" aria-hidden="true"></i>&nbsp;Send Email
                                 </a>
                                 <a href="javascript:;" onclick="send_template_sms('','lead','combine')"
                                     class="btn btn-info">
-                                    <i class="fa-solid awesome_style fa-share" aria-hidden="true"></i>&nbsp;Send SMS
+                                    <i class="fas awesome_style fa-share" aria-hidden="true"></i>&nbsp;Send SMS
                                 </a>
                             </div>
                             <br>
@@ -73,18 +68,17 @@
                                             class="form-control">
                                     </div>
                                     <div class="col-md-1 text-start">
-                                        <button type="submit" class="btn btn-info"><i class="fa-solid fa-search"
+                                        <button type="submit" class="btn btn-info"><i class="fas fa-search"
                                                 aria-hidden="true"></i> Search</button>
                                     </div>
                                     <div class="col-md-1" style="margin-left: 20px;">
                                         <a class="btn btn-warning" href="{{ route('contact_request.index') }}"><i
-                                                class="fa-solid fa-refresh" aria-hidden="true"></i>Reset</a>
+                                                class="fas fa-sync" aria-hidden="true"></i>Reset</a>
                                     </div>
                                 </div>
                             </form>
                             <form method="post" onSubmit="return confirm('Are you sure?');"
-                                action="{{ route('contact_request.bulk.actions') }}"
-                                id="bulk_actions_contact_request_form">
+                                action="{{ route('contact_request.bulk.actions') }}" id="bulk_actions_contact_request_form">
                                 @csrf
                                 <input type="hidden" name="bulk_action" id="bulk_action" value="delete" />
                                 <div class="row">
@@ -139,7 +133,7 @@
                                                                 title="" href="javascript:;"
                                                                 onclick="showme_page('#subtrr{{ $row->id }}',this)"
                                                                 data-original-title="Show more"><i
-                                                                    class="fa-solid fa-angle-double-down"
+                                                                    class="fas fa-angle-double-down"
                                                                     aria-hidden="true"></i></a></td>
                                                         <td>{{ $row->id }}
                                                             @if ($row->read_lead == 0)
@@ -170,7 +164,7 @@
                                                                 class="btn btn-sm btn-success" data-bs-placement="bottom"
                                                                 data-bs-title="User Comment"
                                                                 data-bs-content="{{ $row->comments }}">
-                                                                <i class="fa-solid fa-comment" aria-hidden="true"></i>
+                                                                <i class="fas fa-comment" aria-hidden="true"></i>
                                                             </a>
                                                         </td>
                                                     </tr>
@@ -183,59 +177,59 @@
                                                             <a class="btn btn-sm btn-info"
                                                                 href="mailto:{{ $row->email }}"
                                                                 title="Reply via Email">
-                                                                <i class="fa-solid fa-reply" aria-hidden="true"></i>
+                                                                <i class="fas fa-reply" aria-hidden="true"></i>
                                                                 Reply</a>
 
                                                             <a onclick="comment_model({{ $row->id }})"
                                                                 class="btn btn-success  btn-sm" style="color: white;"><i
-                                                                    class="fa-solid fa-pencil" aria-hidden="true"></i> Add
+                                                                    class="fas fa-edit" aria-hidden="true"></i> Add
                                                                 Comment</a>
                                                             <a href="{{ route('contact_request.show', $row->id) }}"
-                                                                class="btn btn-success  btn-sm"><i
-                                                                    class="fa-solid fa-history" aria-hidden="true"></i>
+                                                                class="btn btn-success  btn-sm"><i class="fas fa-history"
+                                                                    aria-hidden="true"></i>
                                                                 History</a>
                                                             @if (isset($clientArr[$row->email]))
                                                                 <a class="btn btn-sm btn-success" target="_blank"
                                                                     href="{{ admin_url() }}manage_clients/{{ $clientArr[$row->email] }}"><i
-                                                                        class="fa-solid fa-user" aria-hidden="true"></i>
+                                                                        class="fas fa-user" aria-hidden="true"></i>
                                                                     Existing Client</a>
                                                             @else
                                                                 <a class="btn btn-sm btn-warning" href="javascript:;"
                                                                     onclick="convert_client('{{ $row->id }}')"><i
-                                                                        class="fa-solid fa-user" aria-hidden="true"></i>
+                                                                        class="fas fa-user" aria-hidden="true"></i>
                                                                     Convert to Client</a>
                                                             @endif
                                                             <a class="btn btn-sm btn-danger" href="javascript:"
                                                                 onclick="del_recrod('{{ $row->id }}');"
-                                                                title="Delete"><i
-                                                                class="fa-solid fa-trash" aria-hidden="true"></i>
+                                                                title="Delete"><i class="fas fa-trash"
+                                                                    aria-hidden="true"></i>
                                                                 Delete</a>
                                                             <a class="btn btn-sm btn-info"
                                                                 onclick="send_template_email('{{ $row->id }}','lead','single')"
-                                                                href="javascript:"><i
-                                                                    class="fa-solid fa-envelope-square"></i> Send
+                                                                href="javascript:"><i class="fas fa-envelope-square"></i>
+                                                                Send
                                                                 Email</a>
                                                             <a onclick="send_template_sms('{{ $row->id }}','lead','single')"
                                                                 class="btn btn-sm btn-info" href="javascript:"><i
-                                                                    class="fa-solid awesome_style fa-share"></i> Send
+                                                                    class="fas awesome_style fa-share"></i> Send
                                                                 Message</a>
                                                             @if ($row->assesment_status == 'sent')
                                                                 <a onclick="send_assessment_email('{{ $row->id }}','lead')"
                                                                     class="btn btn-sm btn-primary" href="javascript:"><i
-                                                                        class="fa-solid fa-envelope-square"></i> reSend
+                                                                        class="fas fa-envelope-square"></i> reSend
                                                                     Questionnaire</a>
                                                             @elseif($row->assesment_status == 'receive')
                                                                 <a class="btn btn-sm btn-info" href="javascript:"
                                                                     data-toggle="modal"
                                                                     data-target="#largeShoes-<?php echo $row->id; ?>"><i
-                                                                        class="fa-solid fa-envelope-square"></i>View
+                                                                        class="fas fa-envelope-square"></i>View
                                                                     Answered
                                                                     Questions</a>
                                                             @else
                                                                 <a href="javascript:;"
                                                                     onclick="send_assessment_email('{{ $row->id }}','lead')"
                                                                     class="btn btn-sm btn-primary" href="javascript:"><i
-                                                                        class="fa-solid fa-envelope-square"></i> Send
+                                                                        class="fas fa-envelope-square"></i> Send
                                                                     Questionnaire</a>
                                                             @endif
                                                             <div class="modal" id="largeShoes-<?php echo $row->id; ?>"
@@ -443,7 +437,7 @@
                 </div>
             </div>
         </section>
-    </aside>
+    </div>
     @include('back.clients.common.modal')
 @endsection
 @section('beforeBodyClose')
@@ -511,11 +505,11 @@
                 success: function(response) {
                     var data = JSON.parse(response);
                     if (data.status == 'error') {
-                        alertme('<i class="fa-solid fa-check" aria-hidden="true"></i> Sorry This Client Already Exist ',
+                        alertme('<i class="fas fa-check" aria-hidden="true"></i> Sorry This Client Already Exist ',
                             'danger', true, 1500);
                     } else {
                         // location.reload();
-                        alertme('<i class="fa-solid fa-check" aria-hidden="true"></i> Done Successfully ',
+                        alertme('<i class="fas fa-check" aria-hidden="true"></i> Done Successfully ',
                             'success',
                             true, 1500);
                         $("#trr" + id).fadeOut(1000);
@@ -790,7 +784,7 @@
                     'package_id': sts
                 },
                 success: function(data) {
-                    alertme('<i class="fa-solid fa-check" aria-hidden="true"></i> Package  Updated Successfully',
+                    alertme('<i class="fas fa-check" aria-hidden="true"></i> Package  Updated Successfully',
                         'success', true,
                         1500);
                 },
@@ -807,7 +801,7 @@
                     'status': sts
                 },
                 success: function(data) {
-                    alertme('<i class="fa-solid fa-check" aria-hidden="true"></i> Questionnaire Email Has Been Sent Successfully',
+                    alertme('<i class="fas fa-check" aria-hidden="true"></i> Questionnaire Email Has Been Sent Successfully',
                         'success', true,
                         1500);
                     location.reload();

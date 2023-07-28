@@ -1,20 +1,20 @@
-<script src="{{ base_url() . 'back/js/jquery.min.js' }}"></script>
-<script src="{{ base_url() . 'back/jquery-ui/jquery-ui.min.js' }}"></script>
-<script src="{{ base_url() . 'back/bootstrap/js/bootstrap.bundle.min.js' }}"></script>
-<script type="text/javascript" src="{{ base_url() . 'back/js/js/effects.js' }}"></script>
-<script type="text/javascript" src="{{ base_url() . 'back/js/js/popupjs.js' }}"></script>
-<script type="text/javascript" src="{{ base_url() . 'back/js/js/get_auto.js' }}"></script>
-<script src="{{ base_url() . 'back/fontawesome-iconpicker/dist/js/fontawesome-iconpicker.min.js' }}"></script>
-<script src="{{ base_url() . 'back/js/plugins/timepicker/bootstrap-timepicker.min.js' }}" type="text/javascript">
-</script>
-<script src="{{ base_url() . 'back/js/functions.js' }}" type="text/javascript"></script>
-<script type="text/javascript" src="{{ base_url() . 'back/js/plugins/datatables/jquery.dataTables.js' }}"></script>
-<script src="{{ base_url() . 'module/module/admin/filer/js/jquery.filer.min.js' }}"></script>
+<script src="{{ asset('back/js/jquery.min.js') }}"></script>
+<script src="{{ asset('back/jquery-ui/jquery-ui.min.js') }}"></script>
+<script src="{{ asset('back/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('back/js/js/effects.js') }}"></script>
+<script type="text/javascript" src="{{ asset('back/js/js/popupjs.js') }}"></script>
+<script type="text/javascript" src="{{ asset('back/js/js/get_auto.js') }}"></script>
+<script src="{{ asset('back/fontawesome-iconpicker/dist/js/fontawesome-iconpicker.min.js') }}"></script>
+<script src="{{ asset('back/js/plugins/timepicker/bootstrap-timepicker.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('back/js/functions.js') }}" type="text/javascript"></script>
+<script type="text/javascript" src="{{ asset('back/js/plugins/datatables/jquery.dataTables.js') }}"></script>
+<script src="{{ asset('module/module/admin/filer/js/jquery.filer.min.js') }}"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/super-build/ckeditor.js"></script>
-<script src="{{ base_url() . 'back/js/admin_functions.js?v=22' }}" type="text/javascript"></script>
+<script src="{{ asset('back/js/admin_functions.js?v=22') }}" type="text/javascript"></script>
 <script src="{{ asset('select2/js/select2.full.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('back/datetimepicker/build/jquery.datetimepicker.full.min.js') }}" type="text/javascript">
 </script>
+<script src="{{ asset('back/js/AdminLTE/dist/js/adminlte.min.js') }}"></script>
 @include('back.common_views.common_state_county_city_functions')
 <script>
     $('#selected_image').on('change', function(event) {
@@ -68,6 +68,24 @@
             $(this).siblings('div').toggle();
         });
     });
+
+    function alertme(text, type, autoClose, closeAfterSec) {
+        var type = type || 'success';
+        var autoClose = autoClose || true;
+        var closeAfterSec = closeAfterSec || 3000;
+        $(".alertme").hide();
+        var mhtml =
+            '<div class="alertme" id="div_alert" style="margin:5px;top:3%;position:fixed;z-index:9999;width:100%">' +
+            '<div style="max-width: 700px;margin: 0 auto;" class="alert alert-' + type +
+            ' alert-dismissible"> <button type="button" class="btn-close" data-bs-dismiss="alert"></button> ' + text +
+            '</div></div>';
+        $("body").append(mhtml);
+        if (autoClose) {
+            setTimeout(function() {
+                $(".alertme").hide();
+            }, closeAfterSec);
+        }
+    }
 </script>
 <script>
     const ckeditors = {};

@@ -1,13 +1,13 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="row">
                 <div class="col-md-8 col-sm-6">
                     <ol class="breadcrumb">
                         <li>
-                            <a href="{{ admin_url() }}"> <i class="fa-solid fa-gauge"></i> Home </a>
+                            <a href="{{ admin_url() }}"> <i class="fas fa-gauge"></i> Home </a>
                         </li>
                         <li>
                             <a href="{{ admin_url() . 'module/' . $module->type }}">{{ ucwords($module->term) }}</a>
@@ -26,7 +26,7 @@
                     <div class="modal-header">
                         <h4 id="modal_form_title" class="modal-title"> Add New {{ ucwords($module->term) }} </h4>
                         <a href="{{ admin_url() . 'module/' . $module->type }}" class="go-back"><i
-                                class="fa-solid fa-angle-double-left" aria-hidden="true"></i> Back </a>
+                                class="fas fa-angle-double-left" aria-hidden="true"></i> Back </a>
                     </div>
                     <div class="modal-body form">
                         <div class="box-body">
@@ -70,11 +70,11 @@
                                     <label class="form-label">{{ ucwords($module->term) }} Description</label>
                                     <label for="">
                                         <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#media_image"
-                                            class="btn btn-info"> <i class="fa-solid fa-cloud-download"
+                                            class="btn btn-info"> <i class="fas fa-cloud-download"
                                                 aria-hidden="true"></i>
                                             Insert Image from Media</a>
                                         <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#media_files"
-                                            class="btn btn-warning"> <i class="fa-solid fa-cloud-download"
+                                            class="btn btn-warning"> <i class="fas fa-cloud-download"
                                                 aria-hidden="true"></i>
                                             Insert Document from Media</a>
                                     </label>
@@ -126,7 +126,7 @@
                                             <div class="col-md-4">{{ ucwords($module->additional_field_title_2) }}</div>
                                             <div class="col-md-8"><a href="javascript:;" data-bs-toggle="modal"
                                                     data-bs-target="#media_image_addition" class="btn btn-info"> <i
-                                                        class="fa-solid fa-cloud-download" aria-hidden="true"></i> Insert
+                                                        class="fas fa-cloud-download" aria-hidden="true"></i> Insert
                                                     Image
                                                     from Media</a></div>
                                         </div>
@@ -254,13 +254,13 @@
                         <button type="button" id="btnSave" onclick="save()"
                             class="btn btn-primary pull-right">Save</button>
                         <a href="{{ admin_url() . 'module/' . $module->type }}" class="go-back"><button type="button"
-                                class="btn btn-danger" data-bs-dismiss="modal"><i class="fa-solid fa-angle-double-left"
+                                class="btn btn-danger" data-bs-dismiss="modal"><i class="fas fa-angle-double-left"
                                     aria-hidden="true"></i> Back </button></a>
                     </div>
                 </div>
             </form>
         </section>
-    </aside>
+    </div>
     <!-- /.modal -->
     <div class="modal fade" id="cropper_form" role="dialog">
         <div class="modal-dialog modal-lg">
@@ -409,21 +409,6 @@
                 error: function(jqXHR, textStatus, errorThrown) {}
             });
         }
-
-
-        function update_module_status(id) {
-            var current_status = $("#sts_" + id + " span").html();
-            current_status = current_status.trim();
-            var myurl = baseUrl + 'adminmedia/module/{{ $module->type }}/create?id=' + id + '&&current_status=' +
-                current_status;
-            $.get(myurl, function(sts) {
-                var class_label = 'success';
-                if (sts != 'active')
-                    var class_label = 'danger';
-                $("#sts_" + id).html('<span class="label label-' + class_label + '">' + sts + '</span>');
-            });
-        }
-
 
 
         function add_content() {

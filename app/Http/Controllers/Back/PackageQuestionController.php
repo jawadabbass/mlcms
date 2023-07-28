@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers\Back;
-
 use App\Http\Controllers\Controller;
 use App\Models\Back\CmsModuleData;
 use App\Models\Back\Product;
@@ -10,7 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
-
 class PackageQuestionController extends Controller
 {
     /**
@@ -20,7 +17,6 @@ class PackageQuestionController extends Controller
      */
     public function index()
     {
-
         $sendResult = array('package_id' => '',);
         if (isset($_GET['package_id']) && $_GET['package_id'] == 'All') {
             $searchArr = array();
@@ -34,19 +30,14 @@ class PackageQuestionController extends Controller
                 }
             }
             $searchArr = $sendResult;
-
             foreach ($searchArr as $key => $value) {
                 if ($value == '' || $value == '0') {
                     unset($searchArr[$key]);
                 }
             }
-
             $dataQ = PackageQuestion::with('package');
             $dataQ->orderBy('item_order', 'ASC');
             $products = $dataQ->paginate(20);
-
-
-
             $serachLink = rtrim($serachLink, '&');
             $products->setPath('?' . $serachLink);
         } elseif (isset($_GET['package_id']) && $_GET['package_id'] !== 'All') {
@@ -61,35 +52,27 @@ class PackageQuestionController extends Controller
                 }
             }
             $searchArr = $sendResult;
-
             foreach ($searchArr as $key => $value) {
                 if ($value == '' || $value == '0') {
                     unset($searchArr[$key]);
                 }
             }
-
             $dataQ = PackageQuestion::with('package')->where($searchArr);
             $dataQ->orderBy('item_order', 'ASC');
             $products = $dataQ->paginate(20);
-
-
-
             $serachLink = rtrim($serachLink, '&');
             $products->setPath('?' . $serachLink);
         } else {
             $products = PackageQuestion::with('package')->orderBy('item_order', 'ASC')->paginate(20);
         }
-
-        $title = config('Constants.SITE_NAME') . ': Package Question\'s Management';
+        $title = FindInsettingArr('business_name') . ': Package Question\'s Management';
         $msg = '';
-
         $get_all_packages =  CmsModuleData::where('sts', 'active')
             ->where('cms_module_id', 33)
             ->orderBy('item_order', 'ASC')
             ->get();
         return view('back.package_questions.index', compact('products', 'title', 'msg', 'get_all_packages'));
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -111,7 +94,6 @@ class PackageQuestionController extends Controller
             echo $i . ' ' . $id;
         }
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -120,11 +102,8 @@ class PackageQuestionController extends Controller
      */
     public function store(Request $request)
     {
-
-
         $validator = Validator::make($request->all(), [
             'question' => 'required'
-
         ]);
         if ($validator->passes()) {
             if ($request->additional_fields == 0) {
@@ -133,46 +112,34 @@ class PackageQuestionController extends Controller
                 if (count($request->radio_field) < 2) {
                     return back()->with('error', 'Radio Pattern Atleast 2 Values Required');
                 }
-
                 foreach ($request->radio_field as $key => $radio) {
                     if ($radio == null) {
-
                         return back()->with('error', 'Radio Field Value Can Not Empty');
                     }
                 }
-
                 $data = [
                     'question' => $request->question,
                     'package_id' => $request->package_id,
                     'pattern' => 'radio',
-
                     'value' => json_encode($request->radio_field),
-
                 ];
-
                 $create = \DB::table('package_questions')->insert($data);
                 return back()->with('success', 'Record Added Successfully');
             } elseif ($request->additional_fields == 2) {
                 if (count($request->check_field) < 1) {
                     return back()->with('error', 'Radio Pattern Atleast 2 Values Required');
                 }
-
                 foreach ($request->check_field as $key => $check) {
                     if ($check == null) {
-
                         return back()->with('error', 'Radio Field Value Can Not Empty');
                     }
                 }
-
                 $data = [
                     'question' => $request->question,
                     'package_id' => $request->package_id,
                     'pattern' => 'check',
-
                     'value' => json_encode($request->check_field),
-
                 ];
-
                 $create = \DB::table('package_questions')->insert($data);
                 return back()->with('success', 'Record Added Successfully');
             } else {
@@ -181,9 +148,7 @@ class PackageQuestionController extends Controller
                     'package_id' => $request->package_id,
                     'pattern' => 'input',
                     'value' => 'input',
-
                 ];
-
                 $create = \DB::table('package_questions')->insert($data);
                 return back()->with('success', 'Record Added Successfully');
             }
@@ -193,7 +158,6 @@ class PackageQuestionController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'question' => 'required'
-
         ]);
         if ($validator->passes()) {
             if ($request->additional_fields == 0) {
@@ -202,46 +166,34 @@ class PackageQuestionController extends Controller
                 if (count($request->radio_field) < 2) {
                     return back()->with('error', 'Radio Pattern Atleast 2 Values Required');
                 }
-
                 foreach ($request->radio_field as $key => $radio) {
                     if ($radio == null) {
-
                         return back()->with('error', 'Radio Field Value Can Not Empty');
                     }
                 }
-
                 $data = [
                     'question' => $request->question,
                     'package_id' => $request->package_id,
                     'pattern' => 'radio',
-
                     'value' => json_encode($request->radio_field),
-
                 ];
-
                 $create = \DB::table('package_questions')->where('id', $id)->update($data);
                 return redirect()->route('question.index')->with('success', 'Record Updated Successfully');
             } elseif ($request->additional_fields == 2) {
                 if (count($request->check_field) < 1) {
                     return back()->with('error', 'Radio Pattern Atleast 2 Values Required');
                 }
-
                 foreach ($request->check_field as $key => $check) {
                     if ($check == null) {
-
                         return back()->with('error', 'Radio Field Value Can Not Empty');
                     }
                 }
-
                 $data = [
                     'question' => $request->question,
                     'package_id' => $request->package_id,
                     'pattern' => 'check',
-
                     'value' => json_encode($request->check_field),
-
                 ];
-
                 $create = \DB::table('package_questions')->where('id', $id)->update($data);
                 return redirect()->route('question.index')->with('success', 'Record Updated Successfully');
             } else {
@@ -250,9 +202,7 @@ class PackageQuestionController extends Controller
                     'package_id' => $request->package_id,
                     'pattern' => 'input',
                     'value' => 'input',
-
                 ];
-
                 $create = \DB::table('package_questions')->where('id', $id)->update($data);
                 return redirect()->route('question.index')->with('success', 'Record Updated Successfully');
             }
@@ -266,13 +216,12 @@ class PackageQuestionController extends Controller
      */
     public function show($id, Request $request)
     {
-
-
         if ($id == '') {
             echo 'error';
             return;
         }
-        $status = $request->status;
+        $obj = PackageQuestion::find($id);
+        $status = $obj->sts;
         if ($status == '') {
             echo 'invalid current status provided.';
             return;
@@ -282,13 +231,11 @@ class PackageQuestionController extends Controller
         else
             $new_status = 'active';
 
-        $data = ['sts' => $new_status,];
-
-        $products = \DB::table('package_questions')->where('id', $id)->update($data);
+        $obj->sts = $new_status;
+        $obj->update();
         echo $new_status;
         return;
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -301,12 +248,11 @@ class PackageQuestionController extends Controller
             ->where('cms_module_id', 33)
             ->orderBy('item_order', 'ASC')
             ->get();
-        $title = config('Constants.SITE_NAME') . ':Edit Package Question';
+        $title = FindInsettingArr('business_name') . ':Edit Package Question';
         $msg = '';
         $result = \DB::table('package_questions')->where('id', $id)->first();
         return view('back.package_questions.edit', compact('result', 'title', 'msg', 'packages'));
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -314,8 +260,6 @@ class PackageQuestionController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-
-
     /**
      * Remove the specified resource from storage.
      *
@@ -324,10 +268,8 @@ class PackageQuestionController extends Controller
      */
     public function destroy($id)
     {
-
         $update = \DB::table('package_questions')->where('id', $id)->delete();
     }
-
     public function addView()
     {
         $get_all_packages =  CmsModuleData::where('sts', 'active')

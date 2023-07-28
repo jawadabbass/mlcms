@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers\Back;
-
 use App\Http\Controllers\Controller;
 use App\Models\Back\BlogCategory;
 use App\Models\Back\BlogComment;
@@ -10,7 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-
 class BlogController extends Controller
 {
     /**
@@ -20,15 +17,12 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $title = config('Constants.SITE_NAME').': Blog Posts Management';
+        $title = FindInsettingArr('business_name') . ': Blog Posts Management';
         $msg = '';
-
         $all_categories = BlogCategory::all();
         $result = DB::select(' select *, (select count(comm.ID) from blog_comments as comm where comm.post_id = blog.ID AND comm.reviewed_status= "unreviewed") as total_unrevised_comments  from blog_posts as blog Order By dated DESC');
-
         return view('back.blog.index', compact('title', 'msg', 'all_categories', 'result'));
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -39,13 +33,11 @@ class BlogController extends Controller
         $id = $request->id;
         if ($id == '') {
             echo 'error';
-
             return;
         }
         $status = $request->status;
         if ($status == '') {
             echo 'invalid current status provided.';
-
             return;
         }
         if ($status == 'reviewed') {
@@ -57,10 +49,8 @@ class BlogController extends Controller
         $blogComment->reviewed_status = $new_status;
         $blogComment->save();
         echo $new_status;
-
         return;
     }
-
     /**
      * Show all comments.
      *
@@ -69,10 +59,8 @@ class BlogController extends Controller
     public function comments(Request $request)
     {
         $blogComments = BlogComment::where('post_id', $request->id)->get();
-
         return view('back.blog.comments', compact('blogComments'));
     }
-
     /**
      * Show all comments.
      *
@@ -84,10 +72,8 @@ class BlogController extends Controller
             BlogComment::destroy($request->id);
         }
         echo 'done';
-
         return;
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -118,17 +104,14 @@ class BlogController extends Controller
         }
         $blog->featured_img_title = $request->featured_img_title;
         $blog->featured_img_alt = $request->featured_img_alt;
-
         $blog->meta_title = ($request->meta_title == '') ? $request->heading : $request->meta_title;
         $blog->meta_keywords = $request->meta_keywords;
         $blog->meta_description = $request->meta_description;
         $blog->canonical_url = $request->canonical_url;
         $blog->dated = $request->input('datepicker', date('Y-m-d H:i:s'));
         $blog->save();
-
-        return response()->json(['success' => 'New Blog Created Successfully.'.$request->module_id]);
+        return response()->json(['success' => 'New Blog Created Successfully.' . $request->module_id]);
     }
-
     /**
      * Display the specified resource.
      *
@@ -140,10 +123,8 @@ class BlogController extends Controller
     {
         $blogPost = BlogPost::find($id);
         $blogPost->dated = date('Y-m-d', strtotime($blogPost->dated));
-
         return json_encode($blogPost);
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -155,13 +136,12 @@ class BlogController extends Controller
     {
         if ($id == '') {
             echo 'error';
-
             return;
         }
-        $status = $request->status;
+        $blogCattegory = BlogPost::find($id);
+        $status = $blogCattegory->sts;
         if ($status == '') {
             echo 'invalid current status provided.';
-
             return;
         }
         if ($status == 'active') {
@@ -169,14 +149,11 @@ class BlogController extends Controller
         } else {
             $new_status = 'active';
         }
-        $blogCattegory = BlogPost::find($id);
         $blogCattegory->sts = $new_status;
-        $blogCattegory->save();
+        $blogCattegory->update();
         echo $new_status;
-
         return;
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -200,7 +177,6 @@ class BlogController extends Controller
         } else {
             $category_Ids = '';
         }
-
         $blog->title = $request->heading;
         $blog->author_id = Auth::user()->id;
         $blog->cate_ids = $category_Ids;
@@ -217,10 +193,8 @@ class BlogController extends Controller
         $blog->meta_description = $request->meta_description;
         $blog->canonical_url = $request->canonical_url;
         $blog->save();
-
-        return response()->json(['success' => 'Blog Post Successfully updated.'.$request->module_id]);
+        return response()->json(['success' => 'Blog Post Successfully updated.' . $request->module_id]);
     }
-
     public function removeFeaturedImage(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -239,7 +213,6 @@ class BlogController extends Controller
             echo 'error';
         }
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -252,7 +225,6 @@ class BlogController extends Controller
         BlogComment::where('post_id', $id)->delete();
         BlogPost::destroy($id);
         echo 'done';
-
         return;
     }
 }

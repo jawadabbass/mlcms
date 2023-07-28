@@ -105,11 +105,11 @@ foreach($fArr as $row){
                                     <div class="col-sm-4"></div>
                                     <div class="col-sm-3 text-start"><a class="btn btn-info"
                                             href="<?php echo base_url($settingArr['contr_name']); ?>/add_loc/<?php echo $step - 1; ?>/<?php echo $mod; ?>"><i
-                                                class="fa-solid fa-angle-double-left" aria-hidden="true"></i> Back</a></div>
+                                                class="fas fa-angle-double-left" aria-hidden="true"></i> Back</a></div>
                                     <div class="col-sm-5 text-start">
                                         <input type="hidden" name="idd" value="0" />
                                         <button type="submit" class="btn btn-success">Next <i
-                                                class="fa-solid fa-angle-double-right" aria-hidden="true"></i></button>
+                                                class="fas fa-angle-double-right" aria-hidden="true"></i></button>
                                     </div>
                                 </div>
                             </form>
@@ -119,7 +119,7 @@ foreach($fArr as $row){
             </div>
         </div>
     </section>
-    </aside>
+    </div>
     <div class="modal fade" id="modal_validation">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

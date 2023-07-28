@@ -37,7 +37,7 @@ class InvoiceController extends Controller
         $paypalLib->add_field('return', $returnURL);
         $paypalLib->add_field('cancel_return', $cancelURL);
         $paypalLib->add_field('notify_url', $notifyURL);
-        $paypalLib->add_field('item_name', config('Constants.SITE_NAME'));
+        $paypalLib->add_field('item_name', FindInsettingArr('business_name'));
         //$paypalLib->add_field('custom', $userID);
         $paypalLib->add_field('item_number', $invoiceObj->invoice_id);
         $paypalLib->add_field('email', $invoiceObj->email_address);
@@ -52,8 +52,8 @@ class InvoiceController extends Controller
     }
     function payment_success($slug)
     {
-        $seoArr = ['title' => config('Constants.SITE_NAME') . ': Payment Paid Successfully'];
-        $heading = config('Constants.SITE_NAME') . ': Payment Paid Successfully';
+        $seoArr = ['title' => FindInsettingArr('business_name') . ': Payment Paid Successfully'];
+        $heading = FindInsettingArr('business_name') . ': Payment Paid Successfully';
         $editPageID = 118;
         return view('front.invoice.payment_paypal_success', compact('seoArr', 'editPageID', 'slug'));
     }
@@ -64,8 +64,8 @@ class InvoiceController extends Controller
             ->firstOrFail();
         $invoiceObj->status = 'Canceled';
         $invoiceObj->save();
-        $seoArr = ['title' => config('Constants.SITE_NAME') . ': Payment Paid Canceled'];
-        $heading = config('Constants.SITE_NAME') . ': Payment Paid Canceled';
+        $seoArr = ['title' => FindInsettingArr('business_name') . ': Payment Paid Canceled'];
+        $heading = FindInsettingArr('business_name') . ': Payment Paid Canceled';
         $editPageID = 118;
         return view('front.invoice.payment_paypal_canceled', compact('seoArr', 'editPageID', 'slug'));
     }

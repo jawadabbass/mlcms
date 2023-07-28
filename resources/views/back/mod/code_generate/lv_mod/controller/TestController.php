@@ -33,7 +33,7 @@ class {mod_url_c}Controller extends Controller
    
     public function index()
     {
-        $title = config('Constants.SITE_NAME').': '.$this->settingArr['mainPageTitle'];
+        $title = FindInsettingArr('business_name').': '.$this->settingArr['mainPageTitle'];
         $msg = '';
         $searchDataArrAll = $_GET;
         $queryObj ={mod_url_c}::where($this->settingArr['dbId'],'<>','0');
@@ -65,7 +65,7 @@ class {mod_url_c}Controller extends Controller
     }
     public function set_order()
     {
-        $title = config('Constants.SITE_NAME').': '.$this->settingArr['mainPageTitle'];
+        $title = FindInsettingArr('business_name').': '.$this->settingArr['mainPageTitle'];
         $msg = '';
         $result ={mod_url_c}::orderBy($this->settingArr['db_order_key'],'asc')->get();
         $settingArr=$this->settingArr;
@@ -100,7 +100,7 @@ class {mod_url_c}Controller extends Controller
     {
 	    if(Auth::user()->type != 'super-admin')
 		    return redirect(route('admin.index'));
-	    $title = config('Constants.SITE_NAME').': Admin Users Management | Add new';
+	    $title = FindInsettingArr('business_name').': Admin Users Management | Add new';
         $settingArr=$this->settingArr;
         return view('back.{mod_url}.create',compact('title','settingArr'));
     }
@@ -137,7 +137,7 @@ class {mod_url_c}Controller extends Controller
      */
     public function show($id)
     {
-	    $title = $this->settingArr['mainTitle'].' Detail | '.config('Constants.SITE_NAME');
+	    $title = $this->settingArr['mainTitle'].' Detail | '.FindInsettingArr('business_name');
 	    $msg = '';
         $row={mod_url_c}::find($id);
         $arrFields=$this->arrFView;
@@ -152,7 +152,7 @@ class {mod_url_c}Controller extends Controller
      */
     public function edit($id)
     {
-        $title = config('Constants.SITE_NAME').': Admin Users Management | Add new';
+        $title = FindInsettingArr('business_name').': Admin Users Management | Add new';
         $row = {mod_url_c}::find($id);
         $settingArr=$this->settingArr;
         $dataArr=$this->arrFEdit;
@@ -225,7 +225,7 @@ public function update_feature(Request $request)
 }
     public function edit_ajax(Request $request,$id)
     {
-        $title = $this->settingArr['mainTitle'].' Detail | '.config('Constants.SITE_NAME');
+        $title = $this->settingArr['mainTitle'].' Detail | '.FindInsettingArr('business_name');
         $msg = '';
         $row={mod_url_c}::find($id);
         $arrFields=$this->arrFEdit;

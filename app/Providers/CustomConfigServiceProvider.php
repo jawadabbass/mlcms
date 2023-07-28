@@ -59,7 +59,7 @@ class CustomConfigServiceProvider extends ServiceProvider
         $this->app['config']['site_email'] = $siteMailSettings;
 
         $siteContactSettings = [
-            'business_name' => $settings->employment_network_name,
+            'business_name' => $settings->business_name,
             'working_days' => $settings->working_days,
             'working_hours' => $settings->working_hours,
             'telephone' => $settings->telephone,

@@ -937,9 +937,9 @@ a.go-back {
 }
 table.dataTable thead th,
 .table > thead > tr > th {
-  background-color: #eac459 !important;
+  background-color: #85929E !important;
   padding: 10px 18px 10px 10px !important;
-  color: #fff;
+  color: #000;
 }
 .sorta {
   margin: 0;
@@ -1364,4 +1364,19 @@ div.dataTables_filter input {
 }
 select {
   appearance: auto !important;
+}
+.fade.in {
+  opacity: 1;
+}
+.sgoptions{
+  position: absolute; top: 22px;
+}
+.search_result{
+  background-color: #3f474e; padding: 10px; margin: 10px 0px 10px 0px; list-style: none;
+}
+.search_result li{
+  padding: 5px 0px 0px 0px;
+}
+.search_result li a{
+  color: #ffffff;
 }

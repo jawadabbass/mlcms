@@ -21,7 +21,7 @@ class PerformanceController extends Controller
      */
     public function index()
     {
-        $title = config('Constants.SITE_NAME') . ': Performances Management';
+        $title = FindInsettingArr('business_name') . ': Performances Management';
         $msg = '';
 
         return view('back.performances.index', compact('title', 'msg'));
@@ -49,8 +49,8 @@ class PerformanceController extends Controller
             })
             ->addColumn('action', function ($performances) {
                 return '
-                		<a href="' . route('performances.edit', ['performanceObj' => $performances->id]) . '" class="btn btn-warning m-2"><i class="fa-solid fa-pencil" aria-hidden="true"></i></a>
-						<a href="javascript:void(0);" onclick="deletePerformance(' . $performances->id . ');"  class="btn btn-danger m-2"><i class="fa-solid fa-trash" aria-hidden="true"></i></a>';
+                		<a href="' . route('performances.edit', ['performanceObj' => $performances->id]) . '" class="btn btn-warning m-2"><i class="fas fa-edit" aria-hidden="true"></i></a>
+						<a href="javascript:void(0);" onclick="deletePerformance(' . $performances->id . ');"  class="btn btn-danger m-2"><i class="fas fa-trash" aria-hidden="true"></i></a>';
             })
             ->rawColumns(['status', 'action'])
             ->orderColumns(['title', 'status'], ':column $1')
@@ -69,7 +69,7 @@ class PerformanceController extends Controller
      */
     public function create()
     {
-        $title = config('Constants.SITE_NAME') . ': Performances Management';
+        $title = FindInsettingArr('business_name') . ': Performances Management';
         $msg = '';
         $performanceObj = new Performance();
 
@@ -117,7 +117,7 @@ class PerformanceController extends Controller
      */
     public function edit(Performance $performanceObj)
     {
-        $title = config('Constants.SITE_NAME') . ': Performances Management';
+        $title = FindInsettingArr('business_name') . ': Performances Management';
         $msg = '';
 
         return view('back.performances.edit')
@@ -146,7 +146,7 @@ class PerformanceController extends Controller
 
     public function sortPerformances()
     {
-        $title = config('Constants.SITE_NAME') . ': Performances Management';
+        $title = FindInsettingArr('business_name') . ': Performances Management';
         $msg = '';
 
         return view('back.performances.sort')->with('title', $title)
@@ -160,7 +160,7 @@ class PerformanceController extends Controller
         $str = '<ul id="sortable">';
         if ($performances != null) {
             foreach ($performances as $performanceObj) {
-                $str .= '<li class="ui-state-default" id="' . $performanceObj->id . '"><i class="fa-solid fa-sort"></i> ' . $performanceObj->title . '</li>';
+                $str .= '<li class="ui-state-default" id="' . $performanceObj->id . '"><i class="fas fa-sort"></i> ' . $performanceObj->title . '</li>';
             }
         }
         echo $str . '</ul>';

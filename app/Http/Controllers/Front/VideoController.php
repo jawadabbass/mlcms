@@ -32,7 +32,7 @@ class VideoController extends Controller
                     ->paginate(20);
             }
             $menu_types = MenuType::orderBy('id', 'ASC')->get();
-            $title = config('Constants.SITE_NAME') . ': ' . strtoupper($module->type) . ' Management';
+            $title = FindInsettingArr('business_name') . ': ' . strtoupper($module->type) . ' Management';
             $msg = '';
             return view('back.module.list_videos', compact('module', 'moduleMembers', 'menu_types', 'title', 'msg', 'file_upload_max_size'));
         }

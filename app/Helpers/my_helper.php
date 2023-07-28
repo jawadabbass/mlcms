@@ -295,15 +295,15 @@ function generateModuleDataImageHtml($folder, $image)
                                 onclick="deleteModuleDataImage(' . $image->id . ', \'' . $image->image_name . '\');"
                                 class="mb-1 btn btn-danger" data-bs-toggle="tooltip"
                                 data-placement="left" title="Delete this image"
-                                href="javascript:;"> <i class="fa-solid fa-trash"></i></a>
+                                href="javascript:;"> <i class="fas fa-trash"></i></a>
                             <a title="Crop Image"
                                 onClick="bind_cropper_preview_module_data_image(' . $image->id . ');"
                                 href="javascript:void(0)" class="mb-1 btn btn-warning"><i
-                                    class="fa-solid fa-crop" aria-hidden="true"></i></a>
+                                    class="fas fa-crop" aria-hidden="true"></i></a>
                             <a title="Image Alt/Title"
                                 onClick="openModuleDataImageAltTitleModal(' . $image->id . ');"
                                 href="javascript:void(0)" class="mb-1 btn btn-success"><i
-                                    class="fa-solid fa-bars" aria-hidden="true"></i></a>
+                                    class="fas fa-bars" aria-hidden="true"></i></a>
                         </div>
                     </div>
                 </div>';

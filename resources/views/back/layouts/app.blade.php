@@ -11,25 +11,24 @@
     @include('back.common_views.before_head_close')
     @yield('beforeHeadClose')
 </head>
-
-<body class="skin-black">
-    <div class="lContainer" style="display: none;" id="lContainer">
-        <div class="loader"></div>
-    </div>
-    @include('back.common_views.after_body_open')
-    @include('back.common_views.header')
-    <div class="wrapper row-offcanvas row-offcanvas-left">
+<body class="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed text-sm {{ session('leftSideBar') == 1 ? 'sidebar-collapse' : '' }}">
+    <div class="wrapper">
+        <div class="lContainer" style="display: none;" id="lContainer">
+            <div class="loader"></div>
+        </div>
+        @include('back.common_views.after_body_open')
+        @include('back.common_views.header')
         @include('back.common_views.left_side')
         @yield('content')
+        @include('back.common_views.footer')
+        @include('back.common_views.before_body_close')
+        @yield('beforeBodyClose')
+        <style>
+            .jFiler-theme-default .jFiler-input {
+                width: 100%;
+            }
+        </style>
     </div>
-    @include('back.common_views.footer')
-    @include('back.common_views.before_body_close')
-    @yield('beforeBodyClose')
-    <style>
-        .jFiler-theme-default .jFiler-input {
-            width: 100%;
-        }
-    </style>
 </body>
 
 </html>

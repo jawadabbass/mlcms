@@ -4,14 +4,14 @@
     <link rel="stylesheet" href="{{ base_url() . 'module/menu/admin/drag/stylesheet.css' }}" type="text/css">
 @endsection
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>Positioning Navigations</h1>
             <ol class="breadcrumb">
                 <li>
                     <a href="{{ admin_url() }}">
-                        <i class="fa-solid fa-gauge"></i> Home
+                        <i class="fas fa-gauge"></i> Home
                     </a>
                 </li>
                 <!--<li><a href="#">Examples</a></li>-->
@@ -79,7 +79,7 @@
                 </div>
             </div>
         </section>
-    </aside>
+    </div>
     @include('back.menu.add_edit_view')
 @endsection
 @section('beforeBodyClose')
@@ -120,8 +120,8 @@
                 opener: {
                     active: true,
                     as: 'html', // if as is not set plugin uses background image
-                    close: '<i class="fa-solid fa-minus c3"></i>', // or 'fa-minus c3',  // or './imgs/Remove2.png',
-                    open: '<i class="fa-solid fa-plus"></i>', // or 'fa-plus',  // or'./imgs/Add2.png',
+                    close: '<i class="fas fa-minus c3"></i>', // or 'fa-minus c3',  // or './imgs/Remove2.png',
+                    open: '<i class="fas fa-plus"></i>', // or 'fa-plus',  // or'./imgs/Add2.png',
                     openerCss: {
                         'display': 'inline-block',
                         //'width': '18px', 'height': '18px',

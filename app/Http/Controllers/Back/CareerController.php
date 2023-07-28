@@ -132,13 +132,13 @@ class CareerController extends Controller
     }
     public function jobs_applicants()
     {
-        $title = config('Constants.SITE_NAME') . ': | Jobs Applicants';
+        $title = FindInsettingArr('business_name') . ': | Jobs Applicants';
         $data = CareersApply::orderBy('id', 'desc')->with('careers_details')->get();
         return view('back.careers.applicants', compact('title', 'data'));
     }
     public function jobs_applicants_details($id)
     {
-        $title = config('Constants.SITE_NAME') . ': | Jobs Applicants';
+        $title = FindInsettingArr('business_name') . ': | Jobs Applicants';
         $data = CareersApply::where('id', $id)->with('careers_details')->firstOrFail();
         // return $data;
         return view('back.careers.show', compact('title', 'data'));

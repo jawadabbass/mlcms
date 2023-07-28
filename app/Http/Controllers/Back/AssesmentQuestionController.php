@@ -21,16 +21,12 @@ class AssesmentQuestionController extends Controller
      */
     public function index()
     {
-
-
         $products = AssesmentQuestion::orderBy('item_order', 'ASC')->paginate(20);
-        $title = config('Constants.SITE_NAME') . ':Assesment Question\'s Management';
+        $title = FindInsettingArr('business_name') . ':Assesment Question\'s Management';
         $msg = '';
-
         $number = Metadata::find(57);
         return view('back.assesment_questions.index', compact('products', 'title', 'msg', 'number'));
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -52,7 +48,6 @@ class AssesmentQuestionController extends Controller
             echo $i . ' ' . $id;
         }
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -61,11 +56,8 @@ class AssesmentQuestionController extends Controller
      */
     public function store(Request $request)
     {
-
-
         $validator = Validator::make($request->all(), [
             'question' => 'required'
-
         ]);
         if ($validator->passes()) {
             if ($request->additional_fields == 0) {
@@ -74,42 +66,32 @@ class AssesmentQuestionController extends Controller
                 if (count($request->radio_field) < 2) {
                     return back()->with('error', 'Radio Pattern Atleast 2 Values Required');
                 }
-
                 foreach ($request->radio_field as $key => $radio) {
                     if ($radio == null) {
-
                         return back()->with('error', 'Radio Field Value Can Not Empty');
                     }
                 }
-
                 $data = [
                     'question' => $request->question,
                     'pattern' => 'radio',
                     'value' => json_encode($request->radio_field),
-
                 ];
-
                 $create = \DB::table('assesment_questions')->insert($data);
                 return back()->with('success', 'Record Added Successfully');
             } elseif ($request->additional_fields == 2) {
                 if (count($request->check_field) < 1) {
                     return back()->with('error', 'Radio Pattern Atleast 2 Values Required');
                 }
-
                 foreach ($request->check_field as $key => $check) {
                     if ($check == null) {
-
                         return back()->with('error', 'Radio Field Value Can Not Empty');
                     }
                 }
-
                 $data = [
                     'question' => $request->question,
                     'pattern' => 'check',
                     'value' => json_encode($request->check_field),
-
                 ];
-
                 $create = \DB::table('assesment_questions')->insert($data);
                 return back()->with('success', 'Record Added Successfully');
             } else {
@@ -117,9 +99,7 @@ class AssesmentQuestionController extends Controller
                     'question' => $request->question,
                     'pattern' => 'input',
                     'value' => 'input',
-
                 ];
-
                 $create = \DB::table('assesment_questions')->insert($data);
                 return back()->with('success', 'Record Added Successfully');
             }
@@ -129,7 +109,6 @@ class AssesmentQuestionController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'question' => 'required'
-
         ]);
         if ($validator->passes()) {
             if ($request->additional_fields == 0) {
@@ -138,57 +117,40 @@ class AssesmentQuestionController extends Controller
                 if (count($request->radio_field) < 2) {
                     return back()->with('error', 'Radio Pattern Atleast 2 Values Required');
                 }
-
                 foreach ($request->radio_field as $key => $radio) {
                     if ($radio == null) {
-
                         return back()->with('error', 'Radio Field Value Can Not Empty');
                     }
                 }
-
                 $data = [
                     'question' => $request->question,
-
                     'pattern' => 'radio',
-
                     'value' => json_encode($request->radio_field),
-
                 ];
-
                 $create = \DB::table('assesment_questions')->where('id', $id)->update($data);
                 return redirect()->route('assesment_question.index')->with('success', 'Record Updated Successfully');
             } elseif ($request->additional_fields == 2) {
                 if (count($request->check_field) < 1) {
                     return back()->with('error', 'Radio Pattern Atleast 2 Values Required');
                 }
-
                 foreach ($request->check_field as $key => $check) {
                     if ($check == null) {
-
                         return back()->with('error', 'Radio Field Value Can Not Empty');
                     }
                 }
-
                 $data = [
                     'question' => $request->question,
-
                     'pattern' => 'check',
-
                     'value' => json_encode($request->check_field),
-
                 ];
-
                 $create = \DB::table('assesment_questions')->where('id', $id)->update($data);
                 return redirect()->route('assesment_question.index')->with('success', 'Record Updated Successfully');
             } else {
                 $data = [
                     'question' => $request->question,
-
                     'pattern' => 'input',
                     'value' => 'input',
-
                 ];
-
                 $create = \DB::table('assesment_questions')->where('id', $id)->update($data);
                 return redirect()->route('assesment_question.index')->with('success', 'Record Updated Successfully');
             }
@@ -202,29 +164,27 @@ class AssesmentQuestionController extends Controller
      */
     public function show($id, Request $request)
     {
-
-
         if ($id == '') {
             echo 'error';
             return;
         }
-        $status = $request->status;
+        $obj = AssesmentQuestion::find($id);
+        $status = $obj->sts;
         if ($status == '') {
             echo 'invalid current status provided.';
             return;
         }
+
         if ($status == 'active')
             $new_status = 'blocked';
         else
             $new_status = 'active';
 
-        $data = ['sts' => $new_status,];
-
-        $products = \DB::table('assesment_questions')->where('id', $id)->update($data);
+        $obj->sts = $new_status;
+        $obj->update();
         echo $new_status;
         return;
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -233,13 +193,11 @@ class AssesmentQuestionController extends Controller
      */
     public function edit($id)
     {
-
-        $title = config('Constants.SITE_NAME') . ':Edit Assesment Question';
+        $title = FindInsettingArr('business_name') . ':Edit Assesment Question';
         $msg = '';
         $result = \DB::table('assesment_questions')->where('id', $id)->first();
         return view('back.assesment_questions.edit', compact('result', 'title', 'msg'));
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -247,8 +205,6 @@ class AssesmentQuestionController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-
-
     /**
      * Remove the specified resource from storage.
      *
@@ -257,23 +213,18 @@ class AssesmentQuestionController extends Controller
      */
     public function destroy($id)
     {
-
         $update = \DB::table('assesment_questions')->where('id', $id)->delete();
     }
-
     public function addView()
     {
-
         $title = 'Add New Assesment Question';
         return view('back.assesment_questions.add', compact('title'));
     }
-
     public function update_receipts_assessment_question(Request $request)
     {
-
         $data = Metadata::find(57);
         $data->data_key = json_encode($request->email);
-        $data->val1 ='';
+        $data->val1 = '';
         $data->save();
         return response()->json(['status' => true, 'message' => ' Assessment Questions Answered Recepients Has Been Updated Successfully']);
     }

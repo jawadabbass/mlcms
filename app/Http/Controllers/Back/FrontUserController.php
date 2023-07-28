@@ -17,7 +17,7 @@ class FrontUserController extends Controller
 	 */
 	public function index()
 	{
-		$title = config('Constants.SITE_NAME') . ': Website Users Management';
+		$title = FindInsettingArr('business_name') . ': Website Users Management';
 		$msg = '';
 		$result = User::where('type', 'user')->orderBy('id', 'DESC')->paginate(20);
 		return view('back.users.front.index', compact('title', 'msg', 'result'));
@@ -56,7 +56,7 @@ class FrontUserController extends Controller
 	 */
 	public function edit($id)
 	{
-		$title = config('Constants.SITE_NAME') . ': Admin Users Management | Edit';
+		$title = FindInsettingArr('business_name') . ': Admin Users Management | Edit';
 		$user = User::find($id);
 		return view('back.users.front.edit', compact('user', 'title'));
 	}

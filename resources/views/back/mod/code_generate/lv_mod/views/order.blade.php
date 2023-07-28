@@ -2,7 +2,7 @@
 
 @section('bc')
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ admin_url() }}"><i class="fa-solid fa-gauge"></i> Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ admin_url() }}"><i class="fas fa-gauge"></i> Home</a></li>
         <li class="breadcrumb-item"><a
                 href="{{ admin_url() }}{{ $settingArr['contr_name'] }}">{{ $settingArr['mainPageTitle'] }}</a></li>
         <li class="breadcrumb-item active">Set Order</li>
@@ -10,7 +10,7 @@
 @endsection
 
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
 
         <section class="content">
             @if (\Session::has('added_action'))
@@ -78,7 +78,7 @@
                 </div>
             </div>
         </section>
-    </aside>
+    </div>
 @endsection
 @section('beforeBodyClose')
     <script>

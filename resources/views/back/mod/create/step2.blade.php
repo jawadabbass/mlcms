@@ -86,11 +86,11 @@ $cnt++;
                                     <div class="col-sm-4"></div>
                                     <div class="col-sm-3 text-start"><a class="btn btn-info"
                                             href="{{ admin_url() }}mod/step/1/{{ $mod }}"><i
-                                                class="fa-solid fa-angle-double-left" aria-hidden="true"></i> Back</a></div>
+                                                class="fas fa-angle-double-left" aria-hidden="true"></i> Back</a></div>
                                     <div class="col-sm-5 text-start">
                                         <input type="hidden" name="idd" value="0" />
                                         <button type="submit" class="btn btn-success">Next <i
-                                                class="fa-solid fa-angle-double-right" aria-hidden="true"></i></button>
+                                                class="fas fa-angle-double-right" aria-hidden="true"></i></button>
                                     </div>
                                 </div>
                             </form>
@@ -100,5 +100,5 @@ $cnt++;
             </div>
         </div>
     </section>
-    </aside>
+    </div>
 @endsection

@@ -4,15 +4,16 @@
         type="text/css" />
     @php $module = "blog" @endphp
     <link href="{{ base_url() . 'module/blog/admin/css/' . $module . '.css' }}" rel="stylesheet" type="text/css" />
+@include('back.common_views.switch_css')
 @endsection
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="row">
                 <div class="col-md-8 col-sm-6">
                     <ol class="breadcrumb">
-                        <li><a href="{{ admin_url() }}"> <i class="fa-solid fa-gauge"></i> Home </a></li>
+                        <li><a href="{{ admin_url() }}"> <i class="fas fa-gauge"></i> Home </a></li>
                         <li class="active">Blog Post</li>
                     </ol>
                 </div>
@@ -91,17 +92,17 @@
                                                 <td><a href="{{ base_url() . 'blog/' . $row->post_slug }}"
                                                         target="_bank">Preview</a>
                                                 </td>
-                                                <td> @php
-                                                    if ($row->sts == 'active') {
-                                                        $class_label = 'success';
-                                                    } else {
-                                                        $class_label = 'danger';
-                                                    }
-                                                @endphp
-                                                    <a onClick="update_blog_post_status({{ $row->ID }});"
-                                                        href="javascript:;" id="sts_{{ $row->ID }}"> <span
-                                                            class="label label-{{ $class_label }}">{{ $row->sts }}</span>
-                                                    </a>
+                                                <td>
+                                                    <label class="switch">
+                                                        <input type="checkbox" name="{{ 'sts_' . $row->ID }}"
+                                                            id="{{ 'sts_' . $row->ID }}" <?php echo $row->sts == 'active' ? ' checked' : ''; ?>
+                                                            value="<?php echo $row->sts; ?>"
+                                                            onClick="update_blog_post_status({{ $row->ID }})">
+                                                        <div class="slider round">
+                                                            <strong class="on">Active</strong>
+                                                            <strong class="off">Inactive</strong>
+                                                        </div>
+                                                    </label>
                                                 </td>
                                                 <td><a href="javascript:;"
                                                         onClick="load_blog_post_edit_form({{ $row->ID }});"
@@ -125,7 +126,7 @@
                 </div>
             </div>
         </section>
-    </aside>
+    </div>
     <!-- Add Edit Model-->
     <div class="modal fade" id="blog_post_form_modal" data-backdrop="static">
         <div class="modal-dialog modal-lg">
@@ -144,7 +145,8 @@
                             <div class="mb-3">
                                 <label>Categories</label><br />
                                 @foreach ($all_categories as $all_category)
-                                    <label><input type="checkbox" name="blog_cat[]" value="{{ $all_category->ID }}" id="blog_cat_{{ $all_category->ID }}">
+                                    <label><input type="checkbox" name="blog_cat[]" value="{{ $all_category->ID }}"
+                                            id="blog_cat_{{ $all_category->ID }}">
                                         {{ $all_category->cate_title }}</label><br />
                                 @endforeach
                             </div>
@@ -167,7 +169,8 @@
                             <div class="mb-2">
                                 <label class="form-label">Date Posted:</label>
                                 <div id="datepicker" class="mb-2 date">
-                                    <input class="form-control" type="date" id="date" name="datepicker" value="{{ date('Y-m-d') }}" />
+                                    <input class="form-control" type="date" id="date" name="datepicker"
+                                        value="{{ date('Y-m-d') }}" />
                                     <span class="mb-2-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                 </div>
                             </div>

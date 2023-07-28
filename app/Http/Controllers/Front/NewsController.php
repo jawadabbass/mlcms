@@ -16,7 +16,7 @@ class NewsController extends Controller
         if ($postData != null) {
             $seoArr = getSeoArrayModule($postData->id);
         } else {
-            $seoArr = array('title' => 'Welcome to ' . config('Constants.SITE_NAME'));
+            $seoArr = array('title' => 'Welcome to ' . FindInsettingArr('business_name'));
         }
         $newsCollection = News::where(function ($query) {
             return $query->whereDate('news_date_time', '>=', date('Y-m-d H:i:s'))
@@ -38,7 +38,7 @@ class NewsController extends Controller
         if ($postData != null) {
             $seoArr = getSeoArrayModule($postData->id);
         } else {
-            $seoArr = array('title' => 'Welcome to ' . config('Constants.SITE_NAME'));
+            $seoArr = array('title' => 'Welcome to ' . FindInsettingArr('business_name'));
         }
         $dateTime = strtotime($year.'-'.$month.'-01 00:00:00');
         $newsCollection = News::whereDate('news_date_time', date('Y-m-d', $dateTime))
@@ -58,7 +58,7 @@ class NewsController extends Controller
         if ($postData != null) {
             $seoArr = getSeoArrayModule($postData->id);
         } else {
-            $seoArr = array('title' => 'Welcome to ' . config('Constants.SITE_NAME'));
+            $seoArr = array('title' => 'Welcome to ' . FindInsettingArr('business_name'));
         }
 
         $newsArchive = News::select(DB::raw("YEAR(`news_date_time`) as newsyear, MONTHNAME(`news_date_time`) as newsmonth, MONTH(`news_date_time`) as newsmonthno, count(*) as newscount"))

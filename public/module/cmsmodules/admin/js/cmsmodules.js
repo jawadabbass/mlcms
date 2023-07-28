@@ -99,19 +99,16 @@ function additional_fields_show_hide() {
     }
 }
 
-
-function update_cmsmodule_status(id) {
-    var current_status = $("#sts_" + id + " span").html();
-    current_status = current_status.trim(current_status);
+function update_cmsmodule_status_toggle(id) {
+    var current_status = 'notset';
     var myurl = baseUrl + 'adminmedia/modules/' + id + '/edit?status=' + current_status;
     $.get(myurl, function(sts) {
-        var class_label = 'success';
-        if (sts != 'Yes')
-            var class_label = 'danger';
-        $("#sts_" + id).html('<span class="label label-' + class_label + '">' + sts + '</span>');
+        console.log(sts);
+        alertme('<i class="fas fa-check" aria-hidden="true"></i> Done Successfully ',
+            'success', true, 1500);
     });
-
 }
+
 
 function delete_cmsmodule(id, type) {
     var myurl = baseUrl + 'adminmedia/modules/' + id;

@@ -107,6 +107,15 @@
         });
     }
 
+    function update_module_status_toggle(id) {
+        var current_status = 'notset';
+        var myurl = baseUrl + 'adminmedia/module/{{ $module->type }}/create?id=' + id + '&&current_status=' +
+            current_status;
+        $.get(myurl, function(sts) {
+            alertme('<i class="fas fa-check" aria-hidden="true"></i> Done Successfully ',
+                'success', true, 1500);
+        });
+    }
 
 
     function add_content() {

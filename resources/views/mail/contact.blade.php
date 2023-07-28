@@ -1,4 +1,4 @@
-<h3><strong>Someone has requested to contact from {{ config('Constants.SITE_NAME') }} </strong></h3>
+<h3><strong>Someone has requested to contact from {{ FindInsettingArr('business_name') }} </strong></h3>
 <table width="70%" border="0" cellspacing="1" cellpadding="6"
     style="border:1px solid #ddd; font-family:Arial, Helvetica, sans-serif; font-size:14px;">
     <tr>

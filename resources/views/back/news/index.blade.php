@@ -1,6 +1,6 @@
 @extends('back.layouts.app',['title'=>$title])
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="row">
@@ -8,7 +8,7 @@
                     <ol class="breadcrumb">
                         <li>
                             <a href="{{ base_url() . 'adminmedia' }}">
-                                <i class="fa-solid fa-dashboard"></i> Home
+                                <i class="fas fa-tachometer-alt"></i> Home
                             </a>
                         </li>
                         <li class="active">
@@ -100,7 +100,7 @@
             </div>
         </section>
         <!-- /.content -->
-    </aside>
+    </div>
     @include('back.common_views.spinner')
 @endsection
 @section('beforeBodyClose')

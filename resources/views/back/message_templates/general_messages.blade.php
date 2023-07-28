@@ -1,11 +1,11 @@
 @extends('back.layouts.app',['title' => $title])
 @section('content')
-    <aside class="right-side {{(session('leftSideBar') == 1)?'strech':''}}">
+    <div class="content-wrapper pl-3 pr-2">
         <section>
           <div class="breadcrumb">
             <h1 class="box-title">General Message Templates</h1>
             <ul>
-              <li><a href="{{ admin_url() }}"><i class="fa-solid fa-dashboard"></i> Home</a></li>
+              <li><a href="{{ admin_url() }}"><i class="fas fa-tachometer-alt"></i> Home</a></li>
               <li><a href="{{ route('message.index') }}"> Message Templates</a></li>
               <li class="active">General</li>
             </ul>
@@ -74,10 +74,10 @@
                     <td>
                       @if(isAllowed(116))
                        <a class="btn-sm btn-success my-a" href="javascript:void(0)" id="update_btn" 
-                        data-id="{{$row->id}}"><i class="fa-solid fa-pencil" aria-hidden="true"></i> Edit</a>
+                        data-id="{{$row->id}}"><i class="fas fa-edit" aria-hidden="true"></i> Edit</a>
                         @endif
                         @if(isAllowed(117))
-                        <a class="btn-sm btn-danger my-a"  href="javascript:;" onClick="delete_record({{$row->id}})"><i class="fa-solid fa-trash"></i> Delete</a>
+                        <a class="btn-sm btn-danger my-a"  href="javascript:;" onClick="delete_record({{$row->id}})"><i class="fas fa-trash"></i> Delete</a>
                         @endif
                     </td>
                   </tr>
@@ -89,7 +89,7 @@
           </div>
         </div>
         </section>
-    </aside>
+    </div>
         <!--------- Update Start Modal Here------->
          <div class="modal fade" id="UpdateserviceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
            <div class="modal-dialog modal-lg" role="document">

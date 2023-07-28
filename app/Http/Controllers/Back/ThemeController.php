@@ -15,12 +15,12 @@ class ThemeController extends Controller
      */
     public function index()
     {
-        $title = config('Constants.SITE_NAME') . ': Theme Management';
+        $title = FindInsettingArr('business_name') . ': Theme Management';
         return view('back.manage_theme.index', compact('title'));
     }
     public function save(Request $request)
     {
-        $title = config('Constants.SITE_NAME') . ': Theme Management';
+        $title = FindInsettingArr('business_name') . ': Theme Management';
         if (isset($_POST['beforeHeadClose']) && trim($_POST['beforeHeadClose']) != "") {
             $_POST['beforeHeadClose'];
             $content = $this->replace_public_urls(htmlentities($_POST['beforeHeadClose']));

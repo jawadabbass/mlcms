@@ -1,12 +1,12 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="row">
                 <div class="col-md-8 col-sm-6">
                     <ol class="breadcrumb">
-                        <li><a href="{{ admin_url() }}"> <i class="fa-solid fa-gauge"></i> Home </a></li>
+                        <li><a href="{{ admin_url() }}"> <i class="fas fa-gauge"></i> Home </a></li>
                         <li><a href="{{ admin_url() }}invoice">Payment Options</a></li>
                         <li class="active">Update Payment Option</li>
                     </ol>
@@ -20,7 +20,7 @@
                 <div class="col-xs-12 col-md-12">
                     <div class="box">
                         <div class="box-body">
-                            <h2> <i class="fa-solid fa-plus-circle" aria-hidden="true"></i> Update Payment Option</h2>
+                            <h2> <i class="fas fa-plus-circle" aria-hidden="true"></i> Update Payment Option</h2>
                             @if ($errors->any())
                                 <div class="alert alert-danger">
                                     <ul>
@@ -78,7 +78,7 @@
                 </div>
             </div>
         </section>
-    </aside>
+    </div>
 @endsection
 @section('beforeBodyClose')
     <script>

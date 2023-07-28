@@ -14,7 +14,7 @@ class TestimonialController extends Controller
         if ($postData != null) {
             $seoArr = getSeoArrayModule($postData->id);
         } else {
-            $seoArr = array('title' => 'Welcome to ' . config('Constants.SITE_NAME'));
+            $seoArr = array('title' => 'Welcome to ' . FindInsettingArr('business_name'));
         }
         $testimonials  = CmsModuleData::where('cms_module_id', 22)
             ->orderBy('item_order', 'ASC')

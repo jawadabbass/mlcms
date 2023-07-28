@@ -26,13 +26,11 @@ function load_category_edit_form(id) {
 }
 
 function update_category_status(id) {
-    var current_status = $("#sts_" + id + " span").html();
+    var current_status = 'notset';
     var myurl = base_url + 'adminmedia/blog_categories/' + id + '?status=' + current_status;
-    $.get(myurl, function (sts) {
-        var class_label = 'success';
-        if (sts != 'active')
-            var class_label = 'danger';
-        $("#sts_" + id).html('<span class="label label-' + class_label + '">' + sts + '</span>');
+    $.get(myurl, function(sts) {
+        alertme('<i class="fas fa-check" aria-hidden="true"></i> Done Successfully ',
+            'success', true, 1500);
     });
 }
 
@@ -144,15 +142,14 @@ function delete_blog_post(id) {
 }
 
 function update_blog_post_status(id) {
-    var current_status = $("#sts_" + id + " span").html();
+    var current_status = 'notset';
     var myurl = base_url + 'adminmedia/blog/' + id + '/edit?status=' + current_status;
-    $.get(myurl, function (sts) {
-        var class_label = 'success';
-        if (sts != 'active')
-            var class_label = 'danger';
-        $("#sts_" + id).html('<span class="label label-' + class_label + '">' + sts + '</span>');
+    $.get(myurl, function(sts) {
+        alertme('<i class="fas fa-check" aria-hidden="true"></i> Done Successfully ',
+            'success', true, 1500);
     });
 }
+
 
 function load_blog_post_edit_form(id) {
     reset_model();

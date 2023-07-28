@@ -22,7 +22,7 @@ class CountyController extends Controller
      */
     public function index()
     {
-        $title = config('Constants.SITE_NAME') . ': Counties Management';
+        $title = FindInsettingArr('business_name') . ': Counties Management';
         $msg = '';
         return view('back.counties.index', compact('title', 'msg'));
     }
@@ -58,10 +58,10 @@ class CountyController extends Controller
 					</button>
 					<ul class="dropdown-menu">
 						<li>
-							<a href="' . route('counties.edit', ['countyObj' => $counties->id]) . '" class="text-info"><i class="fa-solid fa-pencil" aria-hidden="true"></i>Edit</a>
+							<a href="' . route('counties.edit', ['countyObj' => $counties->id]) . '" class="text-info"><i class="fas fa-edit" aria-hidden="true"></i>Edit</a>
 						</li>
 						<li>
-							<a href="javascript:void(0);" onclick="deleteCounty(' . $counties->id . ');" class="text-danger"><i class="fa-solid fa-trash" aria-hidden="true"></i>Delete</a>
+							<a href="javascript:void(0);" onclick="deleteCounty(' . $counties->id . ');" class="text-danger"><i class="fas fa-trash" aria-hidden="true"></i>Delete</a>
 						</li>
 					</ul>
 				</div>';
@@ -83,7 +83,7 @@ class CountyController extends Controller
      */
     public function create()
     {
-        $title = config('Constants.SITE_NAME') . ': Counties Management';
+        $title = FindInsettingArr('business_name') . ': Counties Management';
         $msg = '';
         $countyObj = new County();
         return view('back.counties.create')
@@ -127,7 +127,7 @@ class CountyController extends Controller
      */
     public function edit(County $countyObj)
     {
-        $title = config('Constants.SITE_NAME') . ': Counties Management';
+        $title = FindInsettingArr('business_name') . ': Counties Management';
         $msg = '';
         return view('back.counties.edit')
             ->with('countyObj', $countyObj)
@@ -176,7 +176,7 @@ class CountyController extends Controller
 
     public function sortCounties()
     {
-        $title = config('Constants.SITE_NAME') . ': Counties Management';
+        $title = FindInsettingArr('business_name') . ': Counties Management';
         $msg = '';
         return view('back.counties.sort')->with('title', $title)
             ->with('msg', $msg);
@@ -191,7 +191,7 @@ class CountyController extends Controller
         $str = '<ul id="sortable">';
         if ($counties != null) {
             foreach ($counties as $countyObj) {
-                $str .= '<li class="ui-county-default" id="' . $countyObj->id . '"><i class="fa-solid fa-sort"></i> ' . $countyObj->state->state_name . ' - ' . $countyObj->county_name . '</li>';
+                $str .= '<li class="ui-county-default" id="' . $countyObj->id . '"><i class="fas fa-sort"></i> ' . $countyObj->state->state_name . ' - ' . $countyObj->county_name . '</li>';
             }
         }
         echo $str . '</ul>';

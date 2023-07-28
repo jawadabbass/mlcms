@@ -7,12 +7,12 @@
     </div>
 @endsection
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <section class="content-header">
             <div class="row">
                 <div class="col-md-8 col-sm-6">
                     <ol class="breadcrumb">
-                        <li><a href="{{ admin_url() }}"> <i class="fa-solid fa-dashboard"></i> Home </a></li>
+                        <li><a href="{{ admin_url() }}"> <i class="fas fa-tachometer-alt"></i> Home </a></li>
                         <li class="active">Manage Email Templates</li>
                     </ol>
                 </div>
@@ -43,7 +43,7 @@
 
                                 <?php if($settingArr['order_func']==true){?>
                                 <a class="btn btn-md btn-info" title="Edit" href="<?php echo admin_url() . $settingArr['contr_name'] . '/set_order'; ?>"><i
-                                        class="fa-solid fa-sort" aria-hidden="true"></i> Order</a>
+                                        class="fas fa-sort" aria-hidden="true"></i> Order</a>
                                 <?php }?>
 
                                 <a class="btn btn-md btn-info" title="Edit" href="{{ route('email_templates.create') }}"
@@ -66,7 +66,7 @@
                                 </div>
                                 <?php }?>
                                 <div class="col-sm-2">
-                                    <a href="<?php echo base_url(); ?><?php echo $settingArr['contr_name']; ?>/unset_search"><i class="fa-solid fa-refresh"
+                                    <a href="<?php echo base_url(); ?><?php echo $settingArr['contr_name']; ?>/unset_search"><i class="fas fa-sync"
                                             aria-hidden="true"></i> Reset search</a> <input type="submit"
                                         class="btn btn-success" value="Search">
                                 </div>
@@ -127,7 +127,7 @@
                                                     </td>
                                                 @endforeach
                                                 <td>
-                                                    <li class="fa-solid {{ $row->icon_sign_email }}"></li>
+                                                    <li class="fas {{ $row->icon_sign_email }}"></li>
                                                 </td>
                                                 <td>
 
@@ -135,7 +135,7 @@
                                                         <a class="btn btn-sm btn-info" data-bs-toggle="tooltip" title="Edit"
                                                             href="{{ route('email_templates.edit', $row->$idf) }}"><span
                                                                 class="glyphicon glyphicon-edit"></span> <i
-                                                                class="fa-solid fa-pencil" aria-hidden="true"></i></a>
+                                                                class="fas fa-edit" aria-hidden="true"></i></a>
                                                     @endif
 
 
@@ -144,7 +144,7 @@
                                                             <a class="btn btn-sm btn-danger" href="javascript:;"
                                                                 onclick="delete_email_template({{ $row->$idf }},'{{ $settingArr['contr_name'] }}');"
                                                                 data-bs-toggle="tooltip" title="Delete"> <i
-                                                                    class="fa-solid fa-trash" aria-hidden="true"></i></a>
+                                                                    class="fas fa-trash" aria-hidden="true"></i></a>
                                                         @endif
                                                     @endif
 
@@ -167,7 +167,7 @@
                 </div>
             </div>
         </section>
-    </aside>
+    </div>
     <div class="modal fade" id="modal_1">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -176,7 +176,7 @@
                         
                         <span class="sr-only">Close</span>
                     </button>
-                    <h4 class="modal-title"><i class="fa-solid fa-caret-square-o-down" aria-hidden="true"></i> Add Status</h4>
+                    <h4 class="modal-title"><i class="fas fa-caret-square-o-down" aria-hidden="true"></i> Add Status</h4>
                 </div>
                 <div class="modal-body">
                     <form method="post" name="frm" id="frm"
@@ -227,7 +227,7 @@
                     var data = JSON.parse(response);
 
                     location.reload();
-                    alertme('<i class="fa-solid fa-check" aria-hidden="true"></i> Done Successfully ', 'success',
+                    alertme('<i class="fas fa-check" aria-hidden="true"></i> Done Successfully ', 'success',
                         true, 1500);
 
 
@@ -251,7 +251,7 @@
                     var data = JSON.parse(response);
 
                     location.reload();
-                    alertme('<i class="fa-solid fa-check" aria-hidden="true"></i> Done Successfully ', 'success',
+                    alertme('<i class="fas fa-check" aria-hidden="true"></i> Done Successfully ', 'success',
                         true, 1500);
 
 

@@ -1,92 +1,9 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('beforeHeadClose')
-    <style>
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 90px;
-            height: 34px;
-        }
-
-        .switch input {
-            display: none;
-        }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ca2222;
-            -webkit-transition: .4s;
-            transition: .4s;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            -webkit-transition: .4s;
-            transition: .4s;
-        }
-
-        input:checked+.slider {
-            background-color: #2ab934;
-        }
-
-        input:focus+.slider {
-            box-shadow: 0 0 1px #2196F3;
-        }
-
-        input:checked+.slider:before {
-            -webkit-transform: translateX(55px);
-            -ms-transform: translateX(55px);
-            transform: translateX(55px);
-        }
-
-        /*------ ADDED CSS ---------*/
-        .on {
-            display: none;
-        }
-
-        .on,
-        .off {
-            color: white;
-            position: absolute;
-            transform: translate(-50%, -50%);
-            top: 50%;
-            left: 50%;
-            font-size: 10px;
-            font-family: Verdana, sans-serif;
-        }
-
-        input:checked+.slider .on {
-            display: block;
-        }
-
-        input:checked+.slider .off {
-            display: none;
-        }
-
-        /*--------- END --------*/
-        /* Rounded sliders */
-        .slider.round {
-            border-radius: 34px;
-        }
-
-        .slider.round:before {
-            border-radius: 50%;
-        }
-    </style>
+@include('back.common_views.switch_css')
 @endsection
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="row">
@@ -94,7 +11,7 @@
                     <ol class="breadcrumb">
                         <li>
                             <a href="{{ admin_url() }}">
-                                <i class="fa-solid fa-gauge"></i> Home
+                                <i class="fas fa-gauge"></i> Home
                             </a>
                         </li>
                         <li class="active">Product's Management</li>
@@ -172,17 +89,16 @@
                                             </td>
 
                                             <td>
-                                                @php
-                                                    if ($product->sts == 'active') {
-                                                        $class_label = 'success';
-                                                    } else {
-                                                        $class_label = 'danger';
-                                                    }
-                                                @endphp
-                                                <a onClick="update_product_sts({{ $product->ID }});" href="javascript:;"
-                                                    id="sts_{{ $product->ID }}">
-                                                    <div class="label label-{{ $class_label }}">{{ $product->sts }}</div>
-                                                </a>
+                                                <label class="switch">
+                                                    <input type="checkbox" name="{{ 'pro_sts_' . $product->ID }}"
+                                                        id="{{ 'pro_sts_' . $product->ID }}" <?php echo $product->sts == 'active' ? ' checked' : ''; ?>
+                                                        value="<?php echo !empty($product->sts)? $product->sts:'blocked' ; ?>"
+                                                        onClick="update_product_sts_toggle({{ $product->ID }})">
+                                                    <div class="slider round">
+                                                        <strong class="on">Active</strong>
+                                                        <strong class="off">Inactive</strong>
+                                                    </div>
+                                                </label>
                                             </td>
 
                                             <td>
@@ -212,7 +128,7 @@
             </div>
         </section>
         <!-- /.content -->
-    </aside>
+    </div>
     @include('back.common_views.spinner')
 @endsection
 @section('beforeBodyClose')
@@ -241,7 +157,7 @@
                     " product_Sale_Status": product_Sale_Status
                 },
                 success: function(response) {
-                    alertme('<i class="fa-solid fa-check" aria-hidden="true"></i> Done Successfully ',
+                    alertme('<i class="fas fa-check" aria-hidden="true"></i> Done Successfully ',
                         'success', true, 1500);
                 }
             });

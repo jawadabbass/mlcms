@@ -334,7 +334,7 @@ function ModTBuild($txt, $format = '', $baseImg = '')
 	else if ($format == 'img_new2')
 		return '<img src="' . base_url() . $baseImg . 'icon/small/' . $txt . '?abc=' . rand() . '" width="100" >';
 	else if ($format == 'tick_cross') {
-		return ($txt == 'Yes') ? '<i class="fa-solid fa-check text-success" aria-hidden="true"></i>' : '<i class="fa-solid fa-times text-danger" aria-hidden="true"></i>';
+		return ($txt == 'Yes') ? '<i class="fas fa-check text-success" aria-hidden="true"></i>' : '<i class="fas fa-times text-danger" aria-hidden="true"></i>';
 	} else if ($format == 'dd_status_order')
 		return GetDbValue('Title', 'ml_sa_appointment_status', "ID='" . $txt . "'");
 	else if ($format == 'e-msg')
@@ -357,9 +357,9 @@ function ModTBuild($txt, $format = '', $baseImg = '')
 		$txtArr = Mod_site_arr($format);
 		if (isset($txtArr[$txt])) {
 			if ($txt == 'Yes') {
-				return '<span class="text-success"><strong><i class="fa-solid fa-check" aria-hidden="true"></i> ' . $txtArr[$txt] . '</strong><span>';
+				return '<span class="text-success"><strong><i class="fas fa-check" aria-hidden="true"></i> ' . $txtArr[$txt] . '</strong><span>';
 			} else {
-				return '<span class="text-danger">' . $txtArr[$txt] . '<span> <i class="fa-solid fa-times" aria-hidden="true"></i>';
+				return '<span class="text-danger">' . $txtArr[$txt] . '<span> <i class="fas fa-times" aria-hidden="true"></i>';
 			}
 		} else {
 			return $txt;
@@ -381,7 +381,7 @@ function ModTBuild($txt, $format = '', $baseImg = '')
 function ModBC($heading, $parentArr = array())
 {
 	$tmpStr = '';
-	$tmpStr .= '<ol class="breadcrumb"><li><a href="' . admin_url('dashboard') . '"><i class="fa-solid fa-dashboard"></i> Home</a>
+	$tmpStr .= '<ol class="breadcrumb"><li><a href="' . admin_url('dashboard') . '"><i class="fas fa-tachometer-alt"></i> Home</a>
 									</li>';
 	if (!empty($parentArr)) {
 		foreach ($parentArr as $key => $val) {

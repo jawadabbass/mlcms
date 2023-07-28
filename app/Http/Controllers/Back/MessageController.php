@@ -17,7 +17,7 @@ class MessageController extends Controller
     public function index()
     {
 
-        $title = config('Constants.SITE_NAME') . ': | Message Templates';
+        $title = FindInsettingArr('business_name') . ': | Message Templates';
         $result = MessageTemplate::where('type', '!=', 'general')->get();
         return view('back.message_templates.index', compact('title', 'result'));
     }
@@ -90,7 +90,7 @@ class MessageController extends Controller
     public function edit($id)
     {
 
-        $title = config('Constants.SITE_NAME') . ': | Message Template Edit';
+        $title = FindInsettingArr('business_name') . ': | Message Template Edit';
         $data = MessageTemplate::find($id);
         return view('back.message_templates.edit', compact('title', 'data'));
     }

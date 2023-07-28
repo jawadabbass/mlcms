@@ -18,7 +18,7 @@ class BlogController extends Controller
 	public function index()
 	{
 		$postData = CmsModuleData::where('sts', 'active')->where('post_slug', 'blog')->first();
-		$seoArr = array('title' => 'Blog | ' . config('Constants.SITE_NAME'));
+		$seoArr = array('title' => 'Blog | ' . FindInsettingArr('business_name'));
 		if (!empty($postData)) {
 			$seoArr = getSeoArrayModule($postData->id);
 		}
@@ -59,7 +59,7 @@ class BlogController extends Controller
 		}
 		$postData = CmsModuleData::where('sts', 'active')->where('post_slug', 'blog')->first();
 
-		$seoArr = array('title' => $blogCategory->cate_title . ' Category | ' . config('Constants.SITE_NAME'));
+		$seoArr = array('title' => $blogCategory->cate_title . ' Category | ' . FindInsettingArr('business_name'));
 
 		$blogData = BlogPost::where('sts', 'active')
 			->whereRaw("FIND_IN_SET(" . $blogCategory->ID . ",cate_ids)")

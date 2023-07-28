@@ -27,13 +27,13 @@
     </script>
 @endsection
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <section class="content-header">
             <div class="row">
                 <div class="col-md-8 col-sm-6">
                     <ol class="breadcrumb">
                         <li>
-                            <a href="{{ admin_url() }}"> <i class="fa-solid fa-gauge"></i> Home</a>
+                            <a href="{{ admin_url() }}"> <i class="fas fa-gauge"></i> Home</a>
                         </li>
                         <li class="active">Categories</li>
                     </ol>
@@ -59,14 +59,14 @@
                             </select>
                             <div class="myfldrow">
                                 <button type="button" class="sitebtn" onClick="load_category_add_form()"> <i
-                                        class="fa-solid fa-plus-circle" aria-hidden="true"></i>
+                                        class="fas fa-plus-circle" aria-hidden="true"></i>
                                     Add New
                                 </button>
                             </div>
                         </div>
                         <div class="alert alert-warning alert-dismissible">
                             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                            <i class="fa-solid fa-info-circle" aria-hidden="true"></i>
+                            <i class="fas fa-info-circle" aria-hidden="true"></i>
                             {{ 'You can drag and drop to set listing order' }}
                         </div>
                         <div class="">
@@ -82,7 +82,7 @@
                                             $bgColor = isset($bgColor) && $bgColor == '#f9f9f9' ? '#FFFFFF' : '#f9f9f9';
                                             $idDBF = $settingArr['dbId'];
                                         @endphp
-                                        <li id="recordsArray_{{ $row->$idDBF }}"><i class="fa-solid fa-arrows"
+                                        <li id="recordsArray_{{ $row->$idDBF }}"><i class="fas fa-arrows"
                                                 aria-hidden="true"></i>
                                             @if ($row->img != '')
                                                 <img style="background-color: white;"
@@ -92,12 +92,12 @@
                                             <span id="edit_{{ $row->$idDBF }}">{{ $row->title }}</span>
                                             <a class="btn btn-sm btn-danger" href="javascript:;"
                                                 onclick="delete_category_ajax('{{ $row->$idDBF }}');" title="Delete"><i
-                                                    class="fa-solid fa-trash"></i> Delete</a>
+                                                    class="fas fa-trash"></i> Delete</a>
 
                                             <a class="btn btn-sm btn-info" title="Edit" href="javascript:;"
                                                 onClick="load_category_edit_form({{ $row->$idDBF }})">
                                                 {{-- onClick="getEditDiv('Edit', '{{ $settingArr['contr_name']}}', '{{ $row->$idDBF}}');"> --}}
-                                                <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i> Edit</a>
+                                                <i class="fas fa-pen-to-square" aria-hidden="true"></i> Edit</a>
                                         </li>
                                     @endforeach
                                 @else
@@ -108,7 +108,7 @@
                 </div>
             </div>
         </section>
-    </aside>
+    </div>
     <div class="modal fade" id="add_page_form" data-backdrop="static">
         <div class="modal-dialog modal-lg">
             <form id="validatethis" name="myForm" method="post" action="{{ route('categories.store') }}"

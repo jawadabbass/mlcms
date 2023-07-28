@@ -1,12 +1,12 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="row">
                 <div class="col-md-8 col-sm-6">
                     <ol class="breadcrumb">
-                        <li><a href="{{ admin_url() }}"> <i class="fa-solid fa-dashboard"></i> Home </a></li>
+                        <li><a href="{{ admin_url() }}"> <i class="fas fa-tachometer-alt"></i> Home </a></li>
                         <li><a href="{{ admin_url() }}manage_clients">Clients</a></li>
                         <li class="active">Manage Client Packages</li>
                     </ol>
@@ -33,7 +33,7 @@
                             @endif
                             <div class="text-end"><a href="{{ route('manage_client_add_new_packages', $client->id) }}"
                                     class="btn btn-info">
-                                    <i class="fa-solid fa-plus-circle" aria-hidden="true"></i> Add New
+                                    <i class="fas fa-plus-circle" aria-hidden="true"></i> Add New
                                     Package</a></div>
                             <br>
 
@@ -65,7 +65,7 @@
                                                 <td><a style="font-size: 24px;" data-toggle="tooltip" title=""
                                                         href="javascript:;"
                                                         onclick="showme_page('#subtrr{{ $row->id }}',this)"
-                                                        data-original-title="Show more"><i class="fa-solid fa-angle-double-down"
+                                                        data-original-title="Show more"><i class="fas fa-angle-double-down"
                                                             aria-hidden="true"></i></a></td>
                                                 <td>{{ $row->id }}</td>
                                                 <td>{{ $row->clientPackage->heading }}</td>
@@ -92,7 +92,7 @@
                                                         <div class="col-lg-2"><a class="btn btn-sm btn-info"
                                                                 href="javascript:" data-toggle="modal"
                                                                 data-target="#largeShoes-<?php echo $row->id; ?>"><i
-                                                                    class="fa-solid fa-eye"></i>View Pre Qualified
+                                                                    class="fas fa-eye"></i>View Pre Qualified
                                                                 Questions filled of this Package</a>
                                                         </div>
                                                     </div>
@@ -170,7 +170,7 @@
             </div>
             <div> {{ $result->links() }} </div>
         </section>
-    </aside>
+    </div>
 @endsection
 @section('beforeBodyClose')
     <script type="text/javascript" src="{{ base_url() }}back/mod/mod_js.js"></script>
@@ -198,7 +198,7 @@
                     'status': sts
                 },
                 success: function(data) {
-                    alertme('<i class="fa-solid fa-check" aria-hidden="true"></i> Status Updated ', 'success', true,
+                    alertme('<i class="fas fa-check" aria-hidden="true"></i> Status Updated ', 'success', true,
                         1500);
                 },
             });

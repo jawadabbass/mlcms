@@ -24,7 +24,7 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        $title = config('Constants.SITE_NAME') . ': Invoices';
+        $title = FindInsettingArr('business_name') . ': Invoices';
         $msg = '';
 
         $result = Invoice::where('id', '<>', '0')->paginate(20);
@@ -98,7 +98,7 @@ class InvoiceController extends Controller
     public function show($id)
     {
         $level = 1;
-        $title = config('Constants.SITE_NAME') . ': Payment Options | Details';
+        $title = FindInsettingArr('business_name') . ': Payment Options | Details';
         $client = Invoice::find($id);
         $clientName = '';
         $historyArr = [];

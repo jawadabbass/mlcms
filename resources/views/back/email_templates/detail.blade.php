@@ -1,6 +1,6 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <section class="content-header">
             <div class="row">
                 <div class="col-md-8 col-sm-6">
@@ -45,5 +45,5 @@ foreach($arrFields as $key=>$val){
                 </div>
             </div>
         </section>
-    </aside>
+    </div>
 @endsection

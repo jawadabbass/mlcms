@@ -1,7 +1,7 @@
 @extends('back.layouts.app', ['title' => $title])
 
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="row">
@@ -9,7 +9,7 @@
                     <ol class="breadcrumb">
                         <li>
                             <a href="{{ admin_url() }}">
-                                <i class="fa-solid fa-gauge"></i> Home
+                                <i class="fas fa-gauge"></i> Home
                             </a>
                         </li>
                         <li class="active">Jobs Applicants</li>
@@ -78,9 +78,9 @@
                                                onclick="delete_record({{$record->ID}})">
                                                 <i class="glyphicon glyphicon-trash"></i> Delete</a> --}}
                                                 <a class="btn btn-sm btn-success" href="<?php echo admin_url() . 'jobs_applicants_details/' . $record->id; ?>"><i
-                                                        class="fa-solid fa-eye"></i> View Details</a>
+                                                        class="fas fa-eye"></i> View Details</a>
                                                 <a class="btn btn-sm btn-info" href="mailto:{{ $record->email }}"><i
-                                                        class="fa-solid fa-reply"></i> Reply</a>
+                                                        class="fas fa-reply"></i> Reply</a>
                                             </td>
                                         </tr>
                                     @empty
@@ -100,7 +100,7 @@
             </div>
         </section>
         <!-- /.content -->
-    </aside>
+    </div>
 @endsection
 @section('beforeBodyClose')
 @endsection

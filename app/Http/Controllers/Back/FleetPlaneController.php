@@ -28,7 +28,7 @@ class FleetPlaneController extends Controller
      */
     public function index()
     {
-        $title = config('Constants.SITE_NAME').': Fleet Planes Management';
+        $title = FindInsettingArr('business_name').': Fleet Planes Management';
         $msg = '';
 
         return view('back.fleet_planes.index', compact('title', 'msg'));
@@ -70,10 +70,10 @@ class FleetPlaneController extends Controller
 					</button>
 					<ul class="dropdown-menu">
 						<li>
-							<a href="'.route('fleetPlanes.edit', ['fleetPlaneObj' => $fleetPlanes->id]).'" class="text-warning"><i class="fa-solid fa-pencil" aria-hidden="true"></i>Edit</a>
+							<a href="'.route('fleetPlanes.edit', ['fleetPlaneObj' => $fleetPlanes->id]).'" class="text-warning"><i class="fas fa-edit" aria-hidden="true"></i>Edit</a>
 						</li>
 						<li>
-							<a href="javascript:void(0);" onclick="deleteFleetPlane('.$fleetPlanes->id.');" class="text-danger"><i class="fa-solid fa-trash" aria-hidden="true"></i>Delete</a>
+							<a href="javascript:void(0);" onclick="deleteFleetPlane('.$fleetPlanes->id.');" class="text-danger"><i class="fas fa-trash" aria-hidden="true"></i>Delete</a>
 						</li>
                 	</ul>
 				</div>';
@@ -95,7 +95,7 @@ class FleetPlaneController extends Controller
      */
     public function create()
     {
-        $title = config('Constants.SITE_NAME').': Fleet Planes Management';
+        $title = FindInsettingArr('business_name').': Fleet Planes Management';
         $msg = '';
         $fleetPlaneObj = new FleetPlane();
 
@@ -165,7 +165,7 @@ class FleetPlaneController extends Controller
      */
     public function edit(FleetPlane $fleetPlaneObj)
     {
-        $title = config('Constants.SITE_NAME').': Fleet Planes Management';
+        $title = FindInsettingArr('business_name').': Fleet Planes Management';
         $msg = '';
 
         $passengerCapacities = PassengerCapacity::active()->sorted()->get();
@@ -217,7 +217,7 @@ class FleetPlaneController extends Controller
 
     public function sortFleetPlanes()
     {
-        $title = config('Constants.SITE_NAME').': Fleet Planes Management';
+        $title = FindInsettingArr('business_name').': Fleet Planes Management';
         $msg = '';
 
         return view('back.fleet_planes.sort')->with('title', $title)
@@ -233,7 +233,7 @@ class FleetPlaneController extends Controller
         $str = '<ul id="sortable">';
         if ($fleetPlanes != null) {
             foreach ($fleetPlanes as $fleetPlaneObj) {
-                $str .= '<li class="ui-state-default" id="'.$fleetPlaneObj->id.'"><i class="fa-solid fa-sort"></i> '.$fleetPlaneObj->plane_name.'</li>';
+                $str .= '<li class="ui-state-default" id="'.$fleetPlaneObj->id.'"><i class="fas fa-sort"></i> '.$fleetPlaneObj->plane_name.'</li>';
             }
         }
         echo $str.'</ul>';

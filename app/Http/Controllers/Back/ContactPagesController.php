@@ -17,7 +17,7 @@ class ContactPagesController extends Controller
 	 */
 	public function index()
 	{
-		$title = config('Constants.SITE_NAME') . ': Contact Settings';
+		$title = FindInsettingArr('business_name') . ': Contact Settings';
 		$admin_user = User::all();
 		$result = $admin_user;
 		$setting_result = Setting::all();
@@ -100,7 +100,7 @@ class ContactPagesController extends Controller
 		]);
 
 		$setting = Setting::find($id);
-		$setting->employment_network_name = $request->employment_network_name;
+		$setting->business_name = $request->business_name;
 		$setting->telephone = $request->telephone;
 		$setting->fax = $request->fax;
 		$setting->mobile = $request->mobile;

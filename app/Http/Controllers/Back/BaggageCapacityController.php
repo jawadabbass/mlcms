@@ -21,7 +21,7 @@ class BaggageCapacityController extends Controller
      */
     public function index()
     {
-        $title = config('Constants.SITE_NAME') . ': Baggage Capacities Management';
+        $title = FindInsettingArr('business_name') . ': Baggage Capacities Management';
         $msg = '';
 
         return view('back.baggage_capacities.index', compact('title', 'msg'));
@@ -49,8 +49,8 @@ class BaggageCapacityController extends Controller
             })
             ->addColumn('action', function ($baggageCapacities) {
                 return '
-                		<a href="' . route('baggageCapacities.edit', ['baggageCapacityObj' => $baggageCapacities->id]) . '" class="btn btn-warning m-2"><i class="fa-solid fa-pencil" aria-hidden="true"></i></a>
-						<a href="javascript:void(0);" onclick="deleteBaggageCapacity(' . $baggageCapacities->id . ');"  class="btn btn-danger m-2"><i class="fa-solid fa-trash" aria-hidden="true"></i></a>';
+                		<a href="' . route('baggageCapacities.edit', ['baggageCapacityObj' => $baggageCapacities->id]) . '" class="btn btn-warning m-2"><i class="fas fa-edit" aria-hidden="true"></i></a>
+						<a href="javascript:void(0);" onclick="deleteBaggageCapacity(' . $baggageCapacities->id . ');"  class="btn btn-danger m-2"><i class="fas fa-trash" aria-hidden="true"></i></a>';
             })
             ->rawColumns(['status', 'action'])
             ->orderColumns(['title', 'status'], ':column $1')
@@ -69,7 +69,7 @@ class BaggageCapacityController extends Controller
      */
     public function create()
     {
-        $title = config('Constants.SITE_NAME') . ': Baggage Capacities Management';
+        $title = FindInsettingArr('business_name') . ': Baggage Capacities Management';
         $msg = '';
         $baggageCapacityObj = new BaggageCapacity();
 
@@ -117,7 +117,7 @@ class BaggageCapacityController extends Controller
      */
     public function edit(BaggageCapacity $baggageCapacityObj)
     {
-        $title = config('Constants.SITE_NAME') . ': Baggage Capacities Management';
+        $title = FindInsettingArr('business_name') . ': Baggage Capacities Management';
         $msg = '';
 
         return view('back.baggage_capacities.edit')
@@ -146,7 +146,7 @@ class BaggageCapacityController extends Controller
 
     public function sortBaggageCapacities()
     {
-        $title = config('Constants.SITE_NAME') . ': Baggage Capacities Management';
+        $title = FindInsettingArr('business_name') . ': Baggage Capacities Management';
         $msg = '';
 
         return view('back.baggage_capacities.sort')->with('title', $title)
@@ -160,7 +160,7 @@ class BaggageCapacityController extends Controller
         $str = '<ul id="sortable">';
         if ($baggageCapacities != null) {
             foreach ($baggageCapacities as $baggageCapacityObj) {
-                $str .= '<li class="ui-state-default" id="' . $baggageCapacityObj->id . '"><i class="fa-solid fa-sort"></i> ' . $baggageCapacityObj->title . '</li>';
+                $str .= '<li class="ui-state-default" id="' . $baggageCapacityObj->id . '"><i class="fas fa-sort"></i> ' . $baggageCapacityObj->title . '</li>';
             }
         }
         echo $str . '</ul>';

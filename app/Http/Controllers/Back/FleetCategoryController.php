@@ -22,7 +22,7 @@ class FleetCategoryController extends Controller
      */
     public function index()
     {
-        $title = config('Constants.SITE_NAME') . ': Fleet Categories Management';
+        $title = FindInsettingArr('business_name') . ': Fleet Categories Management';
         $msg = '';
 
         return view('back.fleet_categories.index', compact('title', 'msg'));
@@ -56,8 +56,8 @@ class FleetCategoryController extends Controller
             })
             ->addColumn('action', function ($fleetCategories) {
                 return '
-                		<a href="' . route('fleetCategories.edit', ['fleetCategoryObj' => $fleetCategories->id]) . '" class="btn btn-warning m-2"><i class="fa-solid fa-pencil" aria-hidden="true"></i></a>
-						<a href="javascript:void(0);" onclick="deleteFleetCategory(' . $fleetCategories->id . ');"  class="btn btn-danger m-2"><i class="fa-solid fa-trash" aria-hidden="true"></i></a>';
+                		<a href="' . route('fleetCategories.edit', ['fleetCategoryObj' => $fleetCategories->id]) . '" class="btn btn-warning m-2"><i class="fas fa-edit" aria-hidden="true"></i></a>
+						<a href="javascript:void(0);" onclick="deleteFleetCategory(' . $fleetCategories->id . ');"  class="btn btn-danger m-2"><i class="fas fa-trash" aria-hidden="true"></i></a>';
             })
             ->rawColumns(['image', 'status', 'action'])
             ->orderColumns(['title', 'description', 'status'], ':column $1')
@@ -76,7 +76,7 @@ class FleetCategoryController extends Controller
      */
     public function create()
     {
-        $title = config('Constants.SITE_NAME') . ': Fleet Categories Management';
+        $title = FindInsettingArr('business_name') . ': Fleet Categories Management';
         $msg = '';
         $fleetCategoryObj = new FleetCategory();
 
@@ -124,7 +124,7 @@ class FleetCategoryController extends Controller
      */
     public function edit(FleetCategory $fleetCategoryObj)
     {
-        $title = config('Constants.SITE_NAME') . ': Fleet Categories Management';
+        $title = FindInsettingArr('business_name') . ': Fleet Categories Management';
         $msg = '';
 
         return view('back.fleet_categories.edit')
@@ -153,7 +153,7 @@ class FleetCategoryController extends Controller
 
     public function sortFleetCategories()
     {
-        $title = config('Constants.SITE_NAME') . ': Fleet Categories Management';
+        $title = FindInsettingArr('business_name') . ': Fleet Categories Management';
         $msg = '';
 
         return view('back.fleet_categories.sort')->with('title', $title)
@@ -167,7 +167,7 @@ class FleetCategoryController extends Controller
         $str = '<ul id="sortable">';
         if ($fleetCategories != null) {
             foreach ($fleetCategories as $fleetCategoryObj) {
-                $str .= '<li class="ui-state-default" id="' . $fleetCategoryObj->id . '"><i class="fa-solid fa-sort"></i> ' . $fleetCategoryObj->title . '</li>';
+                $str .= '<li class="ui-state-default" id="' . $fleetCategoryObj->id . '"><i class="fas fa-sort"></i> ' . $fleetCategoryObj->title . '</li>';
             }
         }
         echo $str . '</ul>';

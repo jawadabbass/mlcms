@@ -1,11 +1,11 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <section class="content-header">
             <div class="row">
                 <div class="col-md-8 col-sm-6">
                     <ol class="breadcrumb">
-                        <li><a href="{{ admin_url() }}"> <i class="fa-solid fa-gauge"></i> Home </a></li>
+                        <li><a href="{{ admin_url() }}"> <i class="fas fa-gauge"></i> Home </a></li>
                         <li class="active"><a href="{{ admin_url() }}videos">Videos</a></li>
                         <li class="active">Edit</li>
                     </ol>
@@ -68,7 +68,7 @@
                         <p id="old_content" style="display: none;">{{ $rec->content }}</p>
                         <p id="old_type" style="display: none;">{{ $rec->additional_field_4 }}</p>
                         <button id="submit" type="submit" class="btn btn-info"
-                            onClick="document.getElementsById('submit').display='none'"><i class="fa-solid fa-pen-to-square"
+                            onClick="document.getElementsById('submit').display='none'"><i class="fas fa-pen-to-square"
                                 aria-hidden="true"></i> Update</button>
                     </div>
                 </div>
@@ -76,7 +76,7 @@
 
 
         </section>
-    </aside>
+    </div>
 @endsection
 @section('beforeBodyClose')
     <script type="text/javascript">

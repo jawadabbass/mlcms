@@ -1,11 +1,11 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <section class="content-header">
             <div class="row">
                 <div class="col-md-8 col-sm-6">
                     <ol class="breadcrumb">
-                        <li><a href="{{ admin_url() }}"> <i class="fa-solid fa-gauge"></i> Home </a></li>
+                        <li><a href="{{ admin_url() }}"> <i class="fas fa-gauge"></i> Home </a></li>
                         <li class="active">{{ ucwords($module->term) }}</li>
                     </ol>
                 </div>
@@ -41,13 +41,13 @@
                                 @if ($module->show_ordering_options)
                                     <div class="text-end" style="padding-bottom:2px; display: inline;">
                                         <a class="sitebtn" href="{{ admin_url() . 'module/ordering/' . $module->type }}">
-                                            <i class="fa-solid fa-sort" aria-hidden="true"></i> Set Ordering
+                                            <i class="fas fa-sort" aria-hidden="true"></i> Set Ordering
                                         </a>
                                     </div>
                                 @endif
                                 <div class="text-end" style="padding-bottom:2px; display: inline;">
                                     <a class="btn btn-info" href="{{ admin_url() }}testimonial/add"> <i
-                                            class="fa-solid fa-plus-circle" aria-hidden="true"></i> Add New</a>
+                                            class="fas fa-plus-circle" aria-hidden="true"></i> Add New</a>
                                 </div>
                             </div>
                         </div>
@@ -143,7 +143,7 @@
             </div>
             <div> {{ $moduleMembers->links() }} </div>
         </section>
-    </aside>
+    </div>
 @endsection
 @section('beforeBodyClose')
     <script type="text/javascript" src="{{ base_url() . 'module/module/admin/js/module.js' }}"></script>

@@ -20,7 +20,7 @@ class SettingController extends Controller
      */
     public function index()
     {
-        $title = config('Constants.SITE_NAME') . ': Settings';
+        $title = FindInsettingArr('business_name') . ': Settings';
         $msg = '';
         $setting_result = Setting::first();
         $metaDatas = Metadata::all();
@@ -62,7 +62,7 @@ class SettingController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $title = config('Constants.SITE_NAME') . ': Settings';
+        $title = FindInsettingArr('business_name') . ': Settings';
         $msg = '';
         $setting_result = Setting::first();
         $metaDatas = Metadata::all();

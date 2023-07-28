@@ -21,7 +21,7 @@ class PaymentOptionController extends Controller
      */
     public function index()
     {
-        $title = config('Constants.SITE_NAME') . ': Payment Options';
+        $title = FindInsettingArr('business_name') . ': Payment Options';
         $msg = '';
 
         $result = PaymentOption::paginate(20);
@@ -82,7 +82,7 @@ class PaymentOptionController extends Controller
     {
 
         $level = 1;
-        $title = config('Constants.SITE_NAME') . ': Payment Options | Details';
+        $title = FindInsettingArr('business_name') . ': Payment Options | Details';
         $client = PaymentOption::find($id);
         $clientName = '';
 
@@ -109,7 +109,7 @@ class PaymentOptionController extends Controller
         $clientObj = PaymentOption::find(2);
         $clientObj->sts = $request->sts ?? 'No';
         $clientObj->save();
-        Session::flash('msg', '<i class="fa-solid fa-check" aria-hidden="true"></i> Email address has been update successfully');
+        Session::flash('msg', '<i class="fas fa-check" aria-hidden="true"></i> Email address has been update successfully');
         return redirect()->back();
     }
     public function authorize_net(Request $request)
@@ -137,7 +137,7 @@ class PaymentOptionController extends Controller
         $clientObj = PaymentOption::find(5);
         $clientObj->sts = $request->sts ?? 'No';
         $clientObj->save();
-        Session::flash('msg', '<i class="fa-solid fa-check" aria-hidden="true"></i> Email address has been update successfully');
+        Session::flash('msg', '<i class="fas fa-check" aria-hidden="true"></i> Email address has been update successfully');
         return redirect()->back();
     }
     public function status(Request $request)

@@ -265,7 +265,7 @@ if (!function_exists('helptooltip')) {
         ];
         $msg = $arr[$key];
         if ($msg != '') {
-            return '<i class="fa-solid fa-info help_icon" data-bs-toggle="tooltip" title="'.$msg.'" style="font-size: 15px;"></i>';
+            return '<i class="fas fa-info help_icon" data-bs-toggle="tooltip" title="'.$msg.'" style="font-size: 15px;"></i>';
         } else {
             return '';
         }
@@ -287,7 +287,7 @@ if (!function_exists('seo_print')) {
         if (isset($seoArr['title']) && $seoArr['title'] != '') {
             $title = $seoArr['title'];
         } else {
-            $title = config('Constants.SITE_NAME');
+            $title = FindInsettingArr('business_name');
         }
         $metaTags .= '<title>'.$title.'</title>'."\r\n";
         $metaTags .= '<meta property="og:title" content="'.$title.'"/>'."\r\n";

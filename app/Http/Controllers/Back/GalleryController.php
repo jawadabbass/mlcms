@@ -21,7 +21,7 @@ class GalleryController extends Controller
     /* To display all galleries */
     public function index()
     {
-        $title = config('Constants.SITE_NAME') . ': Album Management';
+        $title = FindInsettingArr('business_name') . ': Album Management';
         $msg = '';
         $albumsObj = [];
         $allAlbums = Album::orderBy('order_by', 'asc')->paginate(10);
@@ -321,7 +321,7 @@ class GalleryController extends Controller
     {
         $album_id = request()->route('id');
         $images = AlbumImage::where(['album_id' => $album_id])->orderBy('orderBy', 'asc')->get();
-        $title = config('Constants.SITE_NAME') . ': Gallery Management';
+        $title = FindInsettingArr('business_name') . ': Gallery Management';
         $album_name = Album::where(['id' => $album_id])->first();
         $data = ['title' => $title, 'images' => $images, 'album_name' => $album_name->title];
 

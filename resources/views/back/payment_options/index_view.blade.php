@@ -1,12 +1,12 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="row">
                 <div class="col-md-8 col-sm-6">
                     <ol class="breadcrumb">
-                        <li><a href="{{ admin_url() }}"> <i class="fa-solid fa-gauge"></i> Home </a></li>
+                        <li><a href="{{ admin_url() }}"> <i class="fas fa-gauge"></i> Home </a></li>
                         <li class="active">Payment Options</li>
                     </ol>
                 </div>
@@ -32,7 +32,7 @@
                                 </div>
                             @endif
                             <div class="text-end"><a href="{{ admin_url() }}payment_options/create" class="btn btn-info">
-                                    <i class="fa-solid fa-plus-circle" aria-hidden="true"></i> Add New
+                                    <i class="fas fa-plus-circle" aria-hidden="true"></i> Add New
                                     Payment Option</a></div>
                             <table class="table table-bordered table-inverse table-hover">
                                 <thead>
@@ -97,7 +97,7 @@
                                                             @if ($row->id == 2)
                                                                 <a href="javascript:;" data-bs-toggle="modal"
                                                                     data-bs-target="#modal_1" class="btn btn-info btn-sm"><i
-                                                                        class="fa-solid fa-paypal" aria-hidden="true"></i> Paypal
+                                                                        class="fas fa-paypal" aria-hidden="true"></i> Paypal
                                                                     Email</a>
                                                             @endif
                                                             @if ($row->id == 5)
@@ -108,19 +108,19 @@
                                                             @if ($row->id > 5)
                                                                 <a class="btn btn-sm btn-danger" href="javascript:"
                                                                     onclick="del_recrod('{{ $row->id }}');"
-                                                                    title="Delete"><i class="fa-solid fa-minus-circle"
+                                                                    title="Delete"><i class="fas fa-minus-circle"
                                                                         aria-hidden="true"></i> Delete</a>
                                                             @endif
                                                         </div>
                                                         <div class="col-lg-4">
                                                             <a href="{{ admin_url() }}payment_options/{{ $row->id }}"
-                                                                class="btn btn-info  btn-sm"><i class="fa-solid fa-info-circle"
+                                                                class="btn btn-info  btn-sm"><i class="fas fa-info-circle"
                                                                     aria-hidden="true"></i> Details</a>
                                                         </div>
                                                         <div class="col-lg-3">
                                                             <a href="{{ admin_url() }}payment_options/{{ $row->id }}/edit"
                                                                 class="btn btn-info  btn-sm"><i
-                                                                    class="fa-solid fa-pen-to-square"
+                                                                    class="fas fa-pen-to-square"
                                                                     aria-hidden="true"></i>
                                                                 Edit</a>
                                                         </div>
@@ -144,7 +144,7 @@
             </div>
             <div> {{ $result->links() }} </div>
         </section>
-    </aside>
+    </div>
     <div class="modal fade" id="modal_1">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -298,7 +298,7 @@
                     _token: $("meta[name=csrf-token]").attr("content")
                 },
                 function() {
-                    alertme('<i class="fa-solid fa-check" aria-hidden="true"></i> Status Updated ', 'success', true, 1500);
+                    alertme('<i class="fas fa-check" aria-hidden="true"></i> Status Updated ', 'success', true, 1500);
                 },
                 function() {
                     if (sts == 'Yes') {

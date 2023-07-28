@@ -17,7 +17,7 @@ class AdminLogController extends Controller
      */
     public function index()
     {
-        $title = config('Constants.SITE_NAME') . ': Admin logs';
+        $title = FindInsettingArr('business_name') . ': Admin logs';
         $usersData = AdminLogHistory::with('user')->orderBy('ID', 'DESC')->paginate(25);
         return view('back.users.admin.admin_users_log', compact('title', 'usersData'));
     }

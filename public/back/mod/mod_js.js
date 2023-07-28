@@ -156,18 +156,7 @@ function isJson_page(str) {
     }
     return true;
 }
-function alertme(text, type, autoClose, closeAfterSec) {
-    var type = type || 'success';
-    var autoClose = autoClose || true;
-    var closeAfterSec = closeAfterSec || 3000;
-    $(".alertme").hide();
-    var mhtml = '<div class="alertme" id="div_alert" style="margin:5px;top:3%;position:fixed;z-index:9999;width:100%">' +
-        '<div style="max-width: 700px;margin: 0 auto;" class="alert alert-' + type + ' alert-dismissible"> <button type="button" class="btn-close" data-bs-dismiss="alert"></button> ' + text + '</div></div>';
-    $("body").append(mhtml);
-    if (autoClose) {
-        setTimeout(function () { $(".alertme").hide(); }, closeAfterSec);
-    }
-}
+
 function updatePageStatus(checkval, idd, fld) {
     var sts = '';
     if (checkval == true) {

@@ -26,7 +26,7 @@ class MenuController extends Controller
 		}
 		$menuTypes = MenuType::where('menu_type', $position)->first();
 		$type = MenuType::where('menu_type', $position)->first();
-		$title = config('Constants.SITE_NAME') . ': Menu\'s Management';
+		$title = FindInsettingArr('business_name') . ': Menu\'s Management';
 		$parent_pages = Menu::where('status', 'Y')
 			->where('parent_id', 0)
 			->where('menu_types', $menuTypes->id)

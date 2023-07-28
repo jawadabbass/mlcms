@@ -14,7 +14,7 @@ class FileManagerController extends Controller
 	 */
 	public function index()
 	{
-		$title = config('Constants.SITE_NAME') . ': File Manager';
+		$title = FindInsettingArr('business_name') . ': File Manager';
 		return view('back.file_manager.file_manager_view', compact('title'));
 	}
 	/**

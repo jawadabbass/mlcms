@@ -17,7 +17,7 @@ class ContactFormSetting extends Controller
      */
     public function index()
     {
-        $title = config('Constants.SITE_NAME') . ': Contact Form Settings';
+        $title = FindInsettingArr('business_name') . ': Contact Form Settings';
         $result = ContactBlockIps::orderBy('id', 'DESC')->paginate(15);
         return view('back.contact_pages.contact_settings', compact('title', 'result'));
     }

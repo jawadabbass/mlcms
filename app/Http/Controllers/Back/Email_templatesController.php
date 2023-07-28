@@ -112,7 +112,7 @@ class Email_templatesController extends Controller
         // checkAccess(Auth::user(),1);
 
 
-        $title = config('Constants.SITE_NAME') . ': ' . $this->settingArr['mainPageTitle'];
+        $title = FindInsettingArr('business_name') . ': ' . $this->settingArr['mainPageTitle'];
         $msg = '';
         $result = EmailTemplate::orderBy('ID', 'DESC')->paginate(20);
 
@@ -127,7 +127,7 @@ class Email_templatesController extends Controller
     }
     public function set_order()
     {
-        $title = config('Constants.SITE_NAME') . ': ' . $this->settingArr['mainPageTitle'];
+        $title = FindInsettingArr('business_name') . ': ' . $this->settingArr['mainPageTitle'];
         $msg = '';
         $result = EmailTemplate::orderBy($this->settingArr['db_order_key'], 'asc')->get();
 
@@ -183,7 +183,7 @@ class Email_templatesController extends Controller
 
         $dataArr = $this->arrFAdd;
 
-        $title = config('Constants.SITE_NAME') . ': Admin Users Management | Add new';
+        $title = FindInsettingArr('business_name') . ': Admin Users Management | Add new';
 
         $settingArr = $this->settingArr;
         return view('back.email_templates.create', compact('title', 'settingArr', 'bcArr', 'dataArr', 'status'));
@@ -217,7 +217,7 @@ class Email_templatesController extends Controller
     public function show($id)
     {
 
-        $title = $this->settingArr['mainTitle'] . ' Detail | ' . config('Constants.SITE_NAME');
+        $title = $this->settingArr['mainTitle'] . ' Detail | ' . FindInsettingArr('business_name');
         $msg = '';
         $row = EmailTemplate::find($id);
         $arrFields = $this->arrFView;
@@ -309,7 +309,7 @@ class Email_templatesController extends Controller
             $statusObj->Body = '"{STATUS}" status has been updated by {User}.';
             $statusObj->SenderName = 'Admin';
             $statusObj->Sender = 'admin' . config('Constants.SITE_EMAIL');
-            $statusObj->icon = 'fa-solid fa-sort';
+            $statusObj->icon = 'fas fa-sort';
             $statusObj->icon_class = 'text-warning';
             $statusObj->user_body = '';
             $statusObj->user_status = 'No';
@@ -353,7 +353,7 @@ class Email_templatesController extends Controller
     public function edit_ajax(Request $request, $id)
     {
 
-        $title = $this->settingArr['mainTitle'] . ' Detail | ' . config('Constants.SITE_NAME');
+        $title = $this->settingArr['mainTitle'] . ' Detail | ' . FindInsettingArr('business_name');
 
         $msg = '';
         $row = EmailTemplate::find($id);

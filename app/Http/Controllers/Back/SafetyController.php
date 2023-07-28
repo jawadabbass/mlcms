@@ -21,7 +21,7 @@ class SafetyController extends Controller
      */
     public function index()
     {
-        $title = config('Constants.SITE_NAME') . ': Safeties Management';
+        $title = FindInsettingArr('business_name') . ': Safeties Management';
         $msg = '';
 
         return view('back.safeties.index', compact('title', 'msg'));
@@ -49,8 +49,8 @@ class SafetyController extends Controller
             })
             ->addColumn('action', function ($safeties) {
                 return '
-                		<a href="' . route('safeties.edit', ['safetyObj' => $safeties->id]) . '" class="btn btn-warning m-2"><i class="fa-solid fa-pencil" aria-hidden="true"></i></a>
-						<a href="javascript:void(0);" onclick="deleteSafety(' . $safeties->id . ');"  class="btn btn-danger m-2"><i class="fa-solid fa-trash" aria-hidden="true"></i></a>';
+                		<a href="' . route('safeties.edit', ['safetyObj' => $safeties->id]) . '" class="btn btn-warning m-2"><i class="fas fa-edit" aria-hidden="true"></i></a>
+						<a href="javascript:void(0);" onclick="deleteSafety(' . $safeties->id . ');"  class="btn btn-danger m-2"><i class="fas fa-trash" aria-hidden="true"></i></a>';
             })
             ->rawColumns(['status', 'action'])
             ->orderColumns(['title', 'status'], ':column $1')
@@ -69,7 +69,7 @@ class SafetyController extends Controller
      */
     public function create()
     {
-        $title = config('Constants.SITE_NAME') . ': Safeties Management';
+        $title = FindInsettingArr('business_name') . ': Safeties Management';
         $msg = '';
         $safetyObj = new Safety();
 
@@ -117,7 +117,7 @@ class SafetyController extends Controller
      */
     public function edit(Safety $safetyObj)
     {
-        $title = config('Constants.SITE_NAME') . ': Safeties Management';
+        $title = FindInsettingArr('business_name') . ': Safeties Management';
         $msg = '';
 
         return view('back.safeties.edit')
@@ -146,7 +146,7 @@ class SafetyController extends Controller
 
     public function sortSafeties()
     {
-        $title = config('Constants.SITE_NAME') . ': Safeties Management';
+        $title = FindInsettingArr('business_name') . ': Safeties Management';
         $msg = '';
 
         return view('back.safeties.sort')->with('title', $title)
@@ -160,7 +160,7 @@ class SafetyController extends Controller
         $str = '<ul id="sortable">';
         if ($safeties != null) {
             foreach ($safeties as $safetyObj) {
-                $str .= '<li class="ui-state-default" id="' . $safetyObj->id . '"><i class="fa-solid fa-sort"></i> ' . $safetyObj->title . '</li>';
+                $str .= '<li class="ui-state-default" id="' . $safetyObj->id . '"><i class="fas fa-sort"></i> ' . $safetyObj->title . '</li>';
             }
         }
         echo $str . '</ul>';

@@ -17,16 +17,16 @@
     </style>
 @endsection
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <!-- Inner Header -->
         <section class="content-header">
             <div class="row">
                 <div class="col-md-8 col-sm-6">
                     <ol class="breadcrumb">
                         <li><a href="{{ base_url() . 'adminmedia' }}">
-                                <i class="fa-solid fa-gauge"></i> Home</a></li>
+                                <i class="fas fa-gauge"></i> Home</a></li>
                         <li><a href="{{ base_url() . 'adminmedia/gallery' }}">
-                                <i class="fa-solid fa-gauge"></i> Albums</a></li>
+                                <i class="fas fa-gauge"></i> Albums</a></li>
                         <li class="active">{{ $album_name }}</li>
                     </ol>
                 </div>
@@ -34,7 +34,7 @@
             </div>
         </section>
         <!-- Main Content starts --->
-        <section class="content">
+        <section class="content p-3">
             <div class="row">
                 <div class="col-xs-12 col-md-12">
                     <div class="row">
@@ -44,7 +44,7 @@
                     </div>
                     @if (session('success'))
                         <div class="alert alert-success">
-                            <i class="fa-solid fa-check" aria-hidden="true"></i> {{ session('success') }}
+                            <i class="fas fa-check" aria-hidden="true"></i> {{ session('success') }}
                         </div>
                     @endif
                     @if ($errors->any())
@@ -91,53 +91,59 @@
                 </div>
             </div>
         </section>
-        <div class="myasection">
-            <div class="row sortable121">
-                @forelse($images as $image)
-                    <div class="col-md-4" id="{{ $image->id }}">
-                        <div class="mb-3 sort2">
-                            <div class="imagebox">
-                                <a href="javascript:void(0);" title="{{ $image->image_title }}"
-                                    onclick="openGalleryImageZoomModal('{{ base_url() }}uploads/gallery/{{ $image->album_id }}/{{ $image->imageUrl . '?' . time() }}');">
-                                    <img id="image_{{ $image->id }}" data-imgname="{{ $image->imageUrl }}"
-                                        src="{{ base_url() }}uploads/gallery/{{ $image->album_id }}/thumb/{{ $image->imageUrl . '?' . time() }}"
-                                        style="width:100%" alt="{{ $image->image_alt }}"
-                                        title="{{ $image->image_title }}">
-                                </a>
-                            </div>
-                            <div class="caption myadelbtn">
-                            </div>
-                            <div class="image_btn mt-2">
-                                <span class="drag" title="Drag and Drop to sort"><i class="fa-solid fa-arrows" aria-hidden="true"></i></span>
-                                <a  title="Active/Inactive" onClick="update_status({{ $image->id }}, this)" href="javascript:void(0)"
-                                    class="mb-1 btn btn-{{ $image->status == 1 ? 'success' : 'secondary' }}"
-                                    id="{{ 'status_' . $image->id }}"><i class="fa-solid fa-eye"
-                                        aria-hidden="true"></i></a>
-                                <a  title="Featured/Not Featured" onClick="update_featured({{ $image->id }}, this)" href="javascript:void(0)"
-                                    class="mb-1 btn btn-{{ $image->isFeatured == 1 ? 'success' : 'secondary' }}"
-                                    id="{{ 'featured_' . $image->id }}"><i class="fa-solid fa-star"
-                                        aria-hidden="true"></i></a>
-                                <a  title="Delete Image" onclick="deleteImage({{ $image->id }}, this);" class="mb-1 btn btn-danger"
-                                    data-bs-toggle="tooltip" data-placement="left" title="Delete this image"
-                                    href="javascript:;"> <i class="fa-solid fa-trash"></i></a>
-                                @if ((bool) $image->isBeforeAfter == false)
-                                    <a onClick="markBeforeAfter({{ $image->id }}, this)" href="javascript:void(0)"
-                                        class="mb-1 btn btn-warning">Mark Before After</a>
-                                @endif
-                                <a  title="Crop Image" onClick="bind_cropper_preview_gallery_image({{ $image->album_id }}, {{ $image->id }});"
-                                    href="javascript:void(0)" class="mb-1 btn btn-warning"><i class="fa-solid fa-crop"
-                                        aria-hidden="true"></i></a>
-                                <a  title="Image Alt/Title" onClick="openImageAltTitleModal({{ $image->album_id }}, {{ $image->id }});"
-                                    href="javascript:void(0)" class="mb-1 btn btn-success"><i class="fa-solid fa-bars"
-                                        aria-hidden="true"></i></a>
+        <section class="content p-3">
+            <div class="myasection">
+                <div class="row sortable121">
+                    @forelse($images as $image)
+                        <div class="col-md-4" id="{{ $image->id }}">
+                            <div class="mb-3 sort2">
+                                <div class="imagebox">
+                                    <a href="javascript:void(0);" title="{{ $image->image_title }}"
+                                        onclick="openGalleryImageZoomModal('{{ base_url() }}uploads/gallery/{{ $image->album_id }}/{{ $image->imageUrl . '?' . time() }}');">
+                                        <img id="image_{{ $image->id }}" data-imgname="{{ $image->imageUrl }}"
+                                            src="{{ base_url() }}uploads/gallery/{{ $image->album_id }}/thumb/{{ $image->imageUrl . '?' . time() }}"
+                                            style="width:100%" alt="{{ $image->image_alt }}"
+                                            title="{{ $image->image_title }}">
+                                    </a>
+                                </div>
+                                <div class="caption myadelbtn">
+                                </div>
+                                <div class="image_btn mt-2">
+                                    <span class="drag" title="Drag and Drop to sort"><i class="fas fa-arrows"
+                                            aria-hidden="true"></i></span>
+                                    <a title="Active/Inactive" onClick="update_status({{ $image->id }}, this)"
+                                        href="javascript:void(0)"
+                                        class="mb-1 btn btn-{{ $image->status == 1 ? 'success' : 'secondary' }}"
+                                        id="{{ 'status_' . $image->id }}"><i class="fas fa-eye" aria-hidden="true"></i></a>
+                                    <a title="Featured/Not Featured" onClick="update_featured({{ $image->id }}, this)"
+                                        href="javascript:void(0)"
+                                        class="mb-1 btn btn-{{ $image->isFeatured == 1 ? 'success' : 'secondary' }}"
+                                        id="{{ 'featured_' . $image->id }}"><i class="fas fa-star"
+                                            aria-hidden="true"></i></a>
+                                    <a title="Delete Image" onclick="deleteImage({{ $image->id }}, this);"
+                                        class="mb-1 btn btn-danger" data-bs-toggle="tooltip" data-placement="left"
+                                        title="Delete this image" href="javascript:;"> <i class="fas fa-trash"></i></a>
+                                    @if ((bool) $image->isBeforeAfter == false)
+                                        <a onClick="markBeforeAfter({{ $image->id }}, this)" href="javascript:void(0)"
+                                            class="mb-1 btn btn-warning">Mark Before After</a>
+                                    @endif
+                                    <a title="Crop Image"
+                                        onClick="bind_cropper_preview_gallery_image({{ $image->album_id }}, {{ $image->id }});"
+                                        href="javascript:void(0)" class="mb-1 btn btn-warning"><i class="fas fa-crop"
+                                            aria-hidden="true"></i></a>
+                                    <a title="Image Alt/Title"
+                                        onClick="openImageAltTitleModal({{ $image->album_id }}, {{ $image->id }});"
+                                        href="javascript:void(0)" class="mb-1 btn btn-success"><i class="fas fa-bars"
+                                            aria-hidden="true"></i></a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                @empty
-                    <div>There is no image found in the album.</div>
-                @endforelse
+                    @empty
+                        <div>There is no image found in the album.</div>
+                    @endforelse
+                </div>
             </div>
-        </div>
+        </section>
         <div class="modal fade" id="gallery_image_cropper_form" role="dialog">
             <div class="modal-dialog modal-lg">
                 <form action="#" id="gallery_image_crop_form" class="form-horizontal" enctype="multipart/form-data">
@@ -233,7 +239,7 @@
         <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script src="{{ asset('back/js/cropper.js') }}"></script>
-        @include('back.gallery.gallery_js');
+        @include('back.gallery.gallery_js')
         <script>
             $(function() {
                 $('.sortable121').sortable({

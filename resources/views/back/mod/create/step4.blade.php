@@ -35,5 +35,5 @@
             </div>
         </div>
     </section>
-    </aside>
+    </div>
 @endsection

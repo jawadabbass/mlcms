@@ -7,7 +7,7 @@
     @include('back.common_views.meta_tags')
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('Constants.SITE_NAME') }}</title>
+    <title>{{ FindInsettingArr('business_name') }}</title>
     @include('back.common_views.before_head_close')
     <meta name="robots" content="noindex">
 </head>

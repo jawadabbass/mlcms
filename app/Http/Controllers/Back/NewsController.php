@@ -23,7 +23,7 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $title = config('Constants.SITE_NAME') . ': News Management';
+        $title = FindInsettingArr('business_name') . ': News Management';
         $msg = '';
 
         return view('back.news.index', compact('title', 'msg'));
@@ -67,8 +67,8 @@ class NewsController extends Controller
             })
             ->addColumn('action', function ($news) {
                 return '
-                		<a href="' . route('news.edit', ['newsObj' => $news->id]) . '" class="btn btn-warning m-2"><i class="fa-solid fa-pencil" aria-hidden="true"></i></a>
-						<a href="javascript:void(0);" onclick="deleteNews(' . $news->id . ');"  class="btn btn-danger m-2"><i class="fa-solid fa-trash" aria-hidden="true"></i></a>';
+                		<a href="' . route('news.edit', ['newsObj' => $news->id]) . '" class="btn btn-warning m-2"><i class="fas fa-edit" aria-hidden="true"></i></a>
+						<a href="javascript:void(0);" onclick="deleteNews(' . $news->id . ');"  class="btn btn-danger m-2"><i class="fas fa-trash" aria-hidden="true"></i></a>';
             })
             ->rawColumns(['news_date_time', 'image', 'status', 'action'])
             ->orderColumns(['news_date_time', 'title', 'description', 'status'], ':column $1')
@@ -87,7 +87,7 @@ class NewsController extends Controller
      */
     public function create()
     {
-        $title = config('Constants.SITE_NAME') . ': News Management';
+        $title = FindInsettingArr('business_name') . ': News Management';
         $msg = '';
         $newsObj = new News();
 
@@ -135,7 +135,7 @@ class NewsController extends Controller
      */
     public function edit(News $newsObj)
     {
-        $title = config('Constants.SITE_NAME') . ': News Management';
+        $title = FindInsettingArr('business_name') . ': News Management';
         $msg = '';
 
         return view('back.news.edit')
@@ -164,7 +164,7 @@ class NewsController extends Controller
 
     public function sortNews()
     {
-        $title = config('Constants.SITE_NAME') . ': News Management';
+        $title = FindInsettingArr('business_name') . ': News Management';
         $msg = '';
 
         return view('back.news.sort')->with('title', $title)
@@ -178,7 +178,7 @@ class NewsController extends Controller
         $str = '<ul id="sortable">';
         if ($news != null) {
             foreach ($news as $newsObj) {
-                $str .= '<li class="ui-state-default" id="' . $newsObj->id . '"><i class="fa-solid fa-sort"></i> ' . $newsObj->title . '</li>';
+                $str .= '<li class="ui-state-default" id="' . $newsObj->id . '"><i class="fas fa-sort"></i> ' . $newsObj->title . '</li>';
             }
         }
         echo $str . '</ul>';

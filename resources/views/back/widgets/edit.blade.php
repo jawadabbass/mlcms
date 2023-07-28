@@ -1,12 +1,12 @@
 @extends('back.layouts.app', ['title' => $title ?? ''])
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <!-- Block Header (Page header) -->
         <section class="content-header">
             <div class="row">
                 <div class="col-md-8 col-sm-6">
                     <ol class="breadcrumb">
-                        <li><a href="{{ admin_url() . '' }}"><i class="fa-solid fa-gauge"></i> Home</a></li>
+                        <li><a href="{{ admin_url() . '' }}"><i class="fas fa-gauge"></i> Home</a></li>
                         <li class="active">Widgets Management</li>
                     </ol>
                 </div>
@@ -30,7 +30,7 @@
                         {{-- <input type="button" class="sitebtn" value="Add New Widgets"
                   onClick="load_widgets_add_form();"/> --}}
                         <a href="{{ route('widgets.index') }}" class="btn btn-success"><i
-                                class="fa-solid fa-angle-double-left">Go
+                                class="fas fa-angle-double-left">Go
                                 Back</i></a>
                     </div>
                 </div>
@@ -184,7 +184,7 @@
                 {{-- <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button> --}}
                 <div class="col-sm-6 text-start">
                     <a href="{{ route('widgets.index') }}" class="btn btn-success"><i
-                            class="fa-solid fa-angle-double-left">Go Back</i></a>
+                            class="fas fa-angle-double-left">Go Back</i></a>
                 </div>
                 <div class="col-sm-6 text-end">
                     <button type="submit" name="submitter" class="btn btn-info">Update</button>
@@ -196,7 +196,7 @@
             </div>
             </div>
         </section>
-    </aside>
+    </div>
 @endsection
 @section('beforeBodyClose')
     <script type="text/javascript">

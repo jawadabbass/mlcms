@@ -4,12 +4,12 @@
     <link rel="stylesheet" type="text/css" href="{{base_url() . 'module/contact_form_settings/admin/css/css.css' }}">
 @endsection
 @section('content')
-    <aside class="right-side {{(session('leftSideBar') == 1)?'strech':''}}">
+    <div class="content-wrapper pl-3 pr-2">
         <section class="content-header">
             <div class="row">
                 <div class="col-md-8 col-sm-6">
                     <ol class="breadcrumb">
-                        <li><a href="{{ admin_url() }}"> <i class="fa-solid fa-gauge"></i> Home </a></li>
+                        <li><a href="{{ admin_url() }}"> <i class="fas fa-gauge"></i> Home </a></li>
                         <li class="active">Contact Form Settings</li>
                     </ol>
                 </div>
@@ -127,7 +127,7 @@
                 </div>
             </div>
         </section>
-    </aside>
+    </div>
     <div class="modal fade" id="add_page_form" data-backdrop="static">
         <div class="modal-dialog modal-lg">
             <form name="frm_my" id="frm_faq" enctype="multipart/form-data" role="form" method="post"

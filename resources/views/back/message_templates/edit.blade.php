@@ -1,15 +1,15 @@
 @extends('back.layouts.app', ['title' => $title])
 
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
 
         <section class="content-header">
             <div class="row">
                 <div class="col-md-8 col-sm-6">
                     <ol class="breadcrumb">
-                        <li><a href="{{ admin_url() }}"> <i class="fa-solid fa-dashboard"></i> Home </a></li>
+                        <li><a href="{{ admin_url() }}"> <i class="fas fa-tachometer-alt"></i> Home </a></li>
 
-                        <li><a href="{{ route('message.index') }}"> <i class="fa-solid fa-dashboard"></i>Manage Message Templates
+                        <li><a href="{{ route('message.index') }}"> <i class="fas fa-tachometer-alt"></i>Manage Message Templates
                             </a></li>
 
                         <li class="active">Edit Message Templates</li>
@@ -71,7 +71,7 @@
                 </div>
             </div>
         </section>
-    </aside>
+    </div>
 @endsection
 @section('page_scripts')
     <script src="//cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>

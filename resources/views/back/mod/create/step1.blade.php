@@ -125,7 +125,7 @@
                                         <input name="idd" type="hidden" value="0">
                                         <button class="btn btn-success" type="submit">
                                             Next
-                                            <i aria-hidden="true" class="fa-solid fa-angle-double-right">
+                                            <i aria-hidden="true" class="fas fa-angle-double-right">
                                             </i>
                                         </button>
                                         </input>

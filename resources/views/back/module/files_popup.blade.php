@@ -30,7 +30,7 @@
 
                             <div class="col-md-8">
                                 <h1>
-                                    <i class="fa-solid fa-folder-open-o" aria-hidden="true"></i> {{ $val['album_title'] }}
+                                    <i class="fas fa-folder-open-o" aria-hidden="true"></i> {{ $val['album_title'] }}
                                 </h1>
                             </div>
                             <div class="col-md-4 text-end">
@@ -53,7 +53,7 @@
                                                 if (isset($path_info['extension']) && isset($filesExts[$path_info['extension']])) {
                                                     echo $filesExts[$path_info['extension']];
                                                 } else {
-                                                    echo '<i class="fa-solid fa-file-o" aria-hidden="true"></i>';
+                                                    echo '<i class="fas fa-file-o" aria-hidden="true"></i>';
                                                 }
                                             @endphp
                                         </span>
@@ -63,7 +63,7 @@
                                         <a class="btn btn-success" data-bs-toggle="tooltip" data-placement="left"
                                             title="Insert Document" href="javascript:;"
                                             onclick="media_insert_file('{{ $v['url'] }}');"><i
-                                                class="fa-solid fa-cloud-download" aria-hidden="true"></i></a>
+                                                class="fas fa-cloud-download" aria-hidden="true"></i></a>
 
                                     </div>
 

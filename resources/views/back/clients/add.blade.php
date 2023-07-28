@@ -4,13 +4,13 @@ $city_id = old('city_id', 0);
 @endphp
 @extends('back.layouts.app', ['title' => $title])
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="row">
                 <div class="col-md-8 col-sm-6">
                     <ol class="breadcrumb">
-                        <li><a href="{{ admin_url() }}"> <i class="fa-solid fa-dashboard"></i> Home </a></li>
+                        <li><a href="{{ admin_url() }}"> <i class="fas fa-tachometer-alt"></i> Home </a></li>
                         <li><a href="{{ admin_url() }}manage_clients">Clients</a></li>
                         <li class="active">Add Client</li>
                     </ol>
@@ -25,7 +25,7 @@ $city_id = old('city_id', 0);
                     <div class="box">
                         <div class="box-body">
 
-                            <h2> <i class="fa-solid fa-plus-circle" aria-hidden="true"></i> Add Client</h2>
+                            <h2> <i class="fas fa-plus-circle" aria-hidden="true"></i> Add Client</h2>
                             <br>
 
                             <form role="form" method="POST" id="register_action"
@@ -158,7 +158,7 @@ $city_id = old('city_id', 0);
                 </div>
             </div>
         </section>
-    </aside>
+    </div>
 @endsection
 
 @section('beforeBodyClose')

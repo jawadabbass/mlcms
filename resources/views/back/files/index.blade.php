@@ -1,13 +1,13 @@
 @extends('back.layouts.app', ['title' => $title])
 @include('back.files.files_js');
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <!-- Inner Header -->
         <section class="content-header">
             <div class="row">
                 <div class="col-md-8 col-sm-6">
                     <ol class="breadcrumb">
-                        <li><a href="{{ admin_url() }}"><i class="fa-solid fa-gauge"></i> Home</a></li>
+                        <li><a href="{{ admin_url() }}"><i class="fas fa-gauge"></i> Home</a></li>
                         <li class="active">Files</li>
                     </ol>
                 </div>
@@ -25,12 +25,12 @@
                         </div>
                         <div class="col-sm-4">
                             <div class="text-end" style="padding-bottom:2px;">
-                                <a class="btn btn-warning" href="{{ admin_url() }}media"><i class="fa-solid fa-image"
+                                <a class="btn btn-warning" href="{{ admin_url() }}media"><i class="fas fa-image"
                                         aria-hidden="true"></i>
                                     Manage Images
                                 </a>
                                 <a class="btn btn-info" data-bs-target="#modal-1" data-bs-toggle="modal" href="javascript:;"><i
-                                        class="fa-solid fa-folder-o" aria-hidden="true"></i>
+                                        class="fas fa-folder-o" aria-hidden="true"></i>
                                     Create Folder
                                 </a>
                             </div>
@@ -38,7 +38,7 @@
                     </div>
                     @if (session('success'))
                         <div class="alert alert-success">
-                            <i class="fa-solid fa-check" aria-hidden="true"></i> {{ session('success') }}
+                            <i class="fas fa-check" aria-hidden="true"></i> {{ session('success') }}
                         </div>
                     @endif
                     @if ($errors->any())
@@ -121,7 +121,7 @@
 
                     <div class="col-md-8">
                         <h1>
-                            <i class="fa-solid fa-folder-open-o" aria-hidden="true"></i> {{ $val['album_title'] }}
+                            <i class="fas fa-folder-open-o" aria-hidden="true"></i> {{ $val['album_title'] }}
                         </h1>
                     </div>
                     <div class="col-md-4 text-end">
@@ -129,13 +129,13 @@
                             @if ($val['album_title'] != 'root')
                                 <a href="javascript:;" class="btn btn-danger"
                                     onClick="delete_album('{{ $val['album_path'] }}',{{ $val['album_id'] }});"
-                                    data-bs-toggle="tooltip" title="Delete this Folder and File(s)"><i class="fa-solid fa-trash"
+                                    data-bs-toggle="tooltip" title="Delete this Folder and File(s)"><i class="fas fa-trash"
                                         aria-hidden="true"></i></a>
                             @endif
                             <a href="javascript:;" class="btn btn-success"
                                 onclick="upload_imgs('{{ $val['album_path'] }}');" data-bs-toggle="tooltip"
                                 title="Add File(s) in this Folder">
-                                <i aria-hidden="true" class="fa-solid fa-plus-circle">
+                                <i aria-hidden="true" class="fas fa-plus-circle">
                                 </i>
                             </a>
                         </h3>
@@ -154,7 +154,7 @@
                                         if (isset($path_info['extension']) && isset($filesExts[$path_info['extension']])) {
                                             echo $filesExts[$path_info['extension']];
                                         } else {
-                                            echo '<i class="fa-solid fa-file-o" aria-hidden="true"></i>';
+                                            echo '<i class="fas fa-file-o" aria-hidden="true"></i>';
                                         }
                                     @endphp
                                 </span>
@@ -163,11 +163,11 @@
                                 <a class="btn btn-danger" data-bs-toggle="tooltip" data-placement="left"
                                     title="Delete this file" href="javascript:;"
                                     onclick="delete_image('{{ $v['url'] }}','{{ $imgID }}');"><i
-                                        class="fa-solid fa-trash"></i></a>
+                                        class="fas fa-trash"></i></a>
                                 <span class="badge badge-secondary"><?php echo human_filesize(filesize($v['url'])); ?></span>
                                 <a class="btn btn-success" data-bs-toggle="tooltip" data-placement="left"
                                     title="Copy file path" href="javascript:;"
-                                    onclick="copyMyTxt('{{ $v['url'] }}');"><i class="fa-solid fa-copy"
+                                    onclick="copyMyTxt('{{ $v['url'] }}');"><i class="fas fa-copy"
                                         aria-hidden="true"></i></a>
 
                             </div>
@@ -307,7 +307,7 @@
         <input style="display: none;" type="text" name="txt_copy22" id="txt_copy22" class="form-control"
             value="" placeholder="">
         <div class="spinner" id="spinner" style="display: none;">
-            <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i><span>Processing ...</span>
+            <i class="fas fa-spinner fa-spin" aria-hidden="true"></i><span>Processing ...</span>
         </div>
     @endsection('content')
     @section('beforeBodyClose')

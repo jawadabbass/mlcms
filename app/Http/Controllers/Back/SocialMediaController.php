@@ -16,7 +16,7 @@ class SocialMediaController extends Controller
 	 */
 	public function index()
 	{
-		$title = config('Constants.SITE_NAME') . ': Social Media Management';
+		$title = FindInsettingArr('business_name') . ': Social Media Management';
 		$msg = '';
 		$result = SocialMedia::orderBy('item_order', 'ASC')->get();
 		return view('back.social_media.index', compact('title', 'msg', 'result'));

@@ -192,12 +192,12 @@ class HomeController extends Controller
     }
     public function login()
     {
-        $seoArr = array('title' => 'Welcome to ' . config('Constants.SITE_NAME'));
+        $seoArr = array('title' => 'Welcome to ' . FindInsettingArr('business_name'));
         return view('front.member.login', compact('seoArr'));
     }
     public function signup()
     {
-        $seoArr = array('title' => 'Welcome to ' . config('Constants.SITE_NAME'));
+        $seoArr = array('title' => 'Welcome to ' . FindInsettingArr('business_name'));
         return view('front.member.register', compact('seoArr'));
     }
     public function maintenance()
@@ -208,7 +208,7 @@ class HomeController extends Controller
     public function block(Request $request)
     {
         $data = Metadata::where('data_key', 'web_blocked_msg')->first();
-        $seoArr = array('title' => 'Welcome to ' . config('Constants.SITE_NAME'));
+        $seoArr = array('title' => 'Welcome to ' . FindInsettingArr('business_name'));
         return view('front.home.error', compact('data', 'seoArr'));
     }
     public function addSubscriber(Request $request)

@@ -1,13 +1,16 @@
 @extends('back.layouts.app', ['title' => $title])
+
+@section('beforeBodyClose')
 @include('back.media.media_js');
+@endsection
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <!-- Inner Header -->
         <section class="content-header">
             <div class="row">
                 <div class="col-md-8 col-sm-6">
                     <ol class="breadcrumb">
-                        <li><a href="{{ admin_url() }}"><i class="fa-solid fa-gauge"></i> Home</a></li>
+                        <li><a href="{{ admin_url() }}"><i class="fas fa-gauge"></i> Home</a></li>
                         <li class="active">Manage Images</li>
                     </ol>
                 </div>
@@ -17,6 +20,7 @@
 
         <!-- Main Content starts --->
         <section class="content">
+            <div class="container-fluid">
             <div class="row">
                 <div class="col-xs-12 col-md-12">
                     <div class="row">
@@ -26,11 +30,11 @@
                         <div class="col-sm-4">
                             <div class="text-end" style="padding-bottom:2px;">
                                 <a class="btn btn-warning" href="{{ admin_url() }}files"><i aria-hidden="true"
-                                        class="fa-solid fa-file"></i>
+                                        class="fas fa-file"></i>
                                     Manage Documents
                                 </a>
                                 <a class="btn btn-info" data-bs-target="#modal-1" data-bs-toggle="modal" href="javascript:;"><i
-                                        class="fa-solid fa-folder-o" aria-hidden="true"></i>
+                                        class="fas fa-folder-o" aria-hidden="true"></i>
                                     Create Folder
                                 </a>
                             </div>
@@ -70,15 +74,15 @@
                             </div>
                         </form>
 
-                        </hr>
+                        <hr/>
                     </div>
                     <!-- End Image Uploader  -->
                 </div>
             </div>
-        </section>
+            
         @if (session('success'))
             <div class="alert alert-success">
-                <i class="fa-solid fa-check" aria-hidden="true"></i> {{ session('success') }}
+                <i class="fas fa-check" aria-hidden="true"></i> {{ session('success') }}
             </div>
         @endif
         @if ($errors->any())
@@ -113,23 +117,23 @@
 
                     <div class="col-md-8">
                         <h1>
-                            <i class="fa-solid fa-folder-open-o" aria-hidden="true"></i> {{ $val['album_title'] }}
+                            <i class="fas fa-folder-open-o" aria-hidden="true"></i> {{ $val['album_title'] }}
                         </h1>
                     </div>
                     <div class="col-md-4 text-end">
                         <h3>
 
-                            {{-- <a href="javascript:;" class="btn btn-warning" onClick="edit_album({{$val['album_id']}},'{{$val['album_title']}}');" data-bs-toggle="tooltip" title="Edit Folder"><i class="fa-solid fa-edit" aria-hidden="true"></i></a> --}}
+                            {{-- <a href="javascript:;" class="btn btn-warning" onClick="edit_album({{$val['album_id']}},'{{$val['album_title']}}');" data-bs-toggle="tooltip" title="Edit Folder"><i class="fas fa-edit" aria-hidden="true"></i></a> --}}
                             @if ($val['album_title'] != 'root')
                                 <a href="javascript:;" class="btn btn-danger"
                                     onClick="delete_album('{{ $val['album_path'] }}',{{ $val['album_id'] }});"
-                                    data-bs-toggle="tooltip" title="Delete this Folder and Image(s)"><i class="fa-solid fa-trash"
+                                    data-bs-toggle="tooltip" title="Delete this Folder and Image(s)"><i class="fas fa-trash"
                                         aria-hidden="true"></i></a>
                             @endif
                             <a href="javascript:;" class="btn btn-success"
                                 onclick="upload_imgs('{{ $val['album_path'] }}');" data-bs-toggle="tooltip"
                                 title="Add Image(s) in this Folder">
-                                <i aria-hidden="true" class="fa-solid fa-plus-circle">
+                                <i aria-hidden="true" class="fas fa-plus-circle">
                                 </i>
                             </a>
                         </h3>
@@ -147,12 +151,12 @@
                                 <div class="myadelbtn">
                                     <a class="btn btn-success" data-bs-toggle="tooltip" data-placement="left"
                                         title="Copy image path" href="javascript:;"
-                                        onclick="copyMyTxt('{{ $v['url'] }}');"><i class="fa-solid fa-copy"
+                                        onclick="copyMyTxt('{{ $v['url'] }}');"><i class="fas fa-copy"
                                             aria-hidden="true"></i></a>
                                     <a class="btn btn-danger" data-bs-toggle="tooltip" data-placement="left"
                                         title="Delete this image" href="javascript:;"
                                         onclick="delete_image('{{ $v['url'] }}','{{ $imgID }}');"><i
-                                            class="fa-solid fa-trash"></i></a>
+                                            class="fas fa-trash"></i></a>
                                 </div>
                             </div>
                             <div class="caption">{{ $v['name'] }}</div>
@@ -260,9 +264,11 @@
         <input style="display: none;" type="text" name="txt_copy22" id="txt_copy22" class="form-control"
             value="" placeholder="">
         <div class="spinner" id="spinner" style="display: none;">
-            <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i><span>Processing ...</span>
+            <i class="fas fa-spinner fa-spin" aria-hidden="true"></i><span>Processing ...</span>
         </div>
         </div>
+    </div>
+</section>
     @endsection('content')
     @section('beforeBodyClose')
         <script>

@@ -5,13 +5,13 @@
 </style>
 @extends('back.layouts.app', ['title' => $title ?? ''])
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <!-- Block Header (Page header) -->
         <section class="content-header">
             <div class="row">
                 <div class="col-md-8 col-sm-6">
                     <ol class="breadcrumb">
-                        <li><a href="{{ admin_url() . '' }}"><i class="fa-solid fa-dashboard"></i> Home</a></li>
+                        <li><a href="{{ admin_url() . '' }}"><i class="fas fa-tachometer-alt"></i> Home</a></li>
                         <li class="active">Manage Assessment Questions</li>
                     </ol>
                 </div>
@@ -135,7 +135,7 @@
                 </div>
             </form>
         </section>
-    </aside>
+    </div>
 @endsection
 @section('beforeBodyClose')
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
@@ -171,7 +171,7 @@
                                                                     </div>\
                                                                 <div class="col-md-1" style="margin-top:30px;">\
                                                                 <div class="iconcontent">\
-                                                                <a href="javascript:void(0)" id="adbtn"  onclick="clone_equipment_div()" class="btn btn-xs btn-success"><i class="fa-solid fa-plus"></i></a></div>\
+                                                                <a href="javascript:void(0)" id="adbtn"  onclick="clone_equipment_div()" class="btn btn-xs btn-success"><i class="fas fa-plus"></i></a></div>\
                                                              </div>\
                                                              </div>\
                                                             </div>';
@@ -192,12 +192,12 @@
                                                                 </div>\
                                                                 <div class="col-md-1" style="margin-top: 30px;">\
                                                                 <div class="iconcontent">\
-                                                                <a href="javascript:void(0)"  onclick="remove_equipment_div(this)" id="rmovebtn" class="btn btn-xs btn-danger"><i class="fa-solid fa-minus"></i></a>\
+                                                                <a href="javascript:void(0)"  onclick="remove_equipment_div(this)" id="rmovebtn" class="btn btn-xs btn-danger"><i class="fas fa-minus"></i></a>\
                                                                </div>\
                                                                 </div>\
                                                                   <div class="col-md-1" style="margin-top: 30px; margin-left:5px;">\
                                                                 <div class="iconcontent">\
-                                                                <a href="javascript:void(0)" id="adbtn"  onclick="clone_equipment_div()" class="btn btn-xs btn-success"><i class="fa-solid fa-plus"></i></a></div>\
+                                                                <a href="javascript:void(0)" id="adbtn"  onclick="clone_equipment_div()" class="btn btn-xs btn-success"><i class="fas fa-plus"></i></a></div>\
                                                                 </div>\
                                                                 </div>\
                                                             </div>';
@@ -223,12 +223,12 @@
                                                                 </div>\
                                                                 <div class="col-md-1" style="margin-top: 30px;">\
                                                                 <div class="iconcontent">\
-                                                                <a href="javascript:void(0)" onclick="remove_equipment_div_edit(this)" id="rmovebtn" class="btn btn-xs btn-danger"><i class="fa-solid fa-minus"></i></a>\
+                                                                <a href="javascript:void(0)" onclick="remove_equipment_div_edit(this)" id="rmovebtn" class="btn btn-xs btn-danger"><i class="fas fa-minus"></i></a>\
                                                                    </div> \
                                                                  </div>\
                                                                    <div class="col-md-1" style="margin-top: 30px; margin-left:5px;">\
                                                                 <div class="iconcontent">\
-                                                                <a href="javascript:void(0)" id="adbtn" onclick="clone_equipment_div_edit()" class="btn btn-xs btn-success"><i class="fa-solid fa-plus"></i></a></div> \
+                                                                <a href="javascript:void(0)" id="adbtn" onclick="clone_equipment_div_edit()" class="btn btn-xs btn-success"><i class="fas fa-plus"></i></a></div> \
                                                                  </div>\
                                                                   </div>\
                                                             </div>';
@@ -280,7 +280,7 @@
                                                                     </div>\
                                                                 <div class="col-md-1" style="margin-top:30px;">\
                                                                 <div class="iconcontent">\
-                                                                <a href="javascript:void(0)" id="adbtn"  onclick="clone_equipment_div1()" class="btn btn-xs btn-success"><i class="fa-solid fa-plus"></i></a></div>\
+                                                                <a href="javascript:void(0)" id="adbtn"  onclick="clone_equipment_div1()" class="btn btn-xs btn-success"><i class="fas fa-plus"></i></a></div>\
                                                              </div>\
                                                              </div>\
                                                             </div>';
@@ -300,12 +300,12 @@
                                                                 </div>\
                                                                 <div class="col-md-1" style="margin-top: 30px;">\
                                                                 <div class="iconcontent">\
-                                                                <a href="javascript:void(0)"  onclick="remove_equipment_div1(this)" id="rmovebtn" class="btn btn-xs btn-danger"><i class="fa-solid fa-minus"></i></a>\
+                                                                <a href="javascript:void(0)"  onclick="remove_equipment_div1(this)" id="rmovebtn" class="btn btn-xs btn-danger"><i class="fas fa-minus"></i></a>\
                                                                </div>\
                                                                 </div>\
                                                                   <div class="col-md-1" style="margin-top: 30px; margin-left:5px;">\
                                                                 <div class="iconcontent">\
-                                                                <a href="javascript:void(0)" id="adbtn"  onclick="clone_equipment_div1()" class="btn btn-xs btn-success"><i class="fa-solid fa-plus"></i></a></div>\
+                                                                <a href="javascript:void(0)" id="adbtn"  onclick="clone_equipment_div1()" class="btn btn-xs btn-success"><i class="fas fa-plus"></i></a></div>\
                                                                 </div>\
                                                                 </div>\
                                                             </div>';
@@ -331,12 +331,12 @@
                                                                 </div>\
                                                                 <div class="col-md-1" style="margin-top: 30px;">\
                                                                 <div class="iconcontent">\
-                                                                <a href="javascript:void(0)" onclick="remove_equipment_div_edit1(this)" id="rmovebtn" class="btn btn-xs btn-danger"><i class="fa-solid fa-minus"></i></a>\
+                                                                <a href="javascript:void(0)" onclick="remove_equipment_div_edit1(this)" id="rmovebtn" class="btn btn-xs btn-danger"><i class="fas fa-minus"></i></a>\
                                                                    </div> \
                                                                  </div>\
                                                                    <div class="col-md-1" style="margin-top: 30px; margin-left:5px;">\
                                                                 <div class="iconcontent">\
-                                                                <a href="javascript:void(0)" id="adbtn" onclick="clone_equipment_div_edit1()" class="btn btn-xs btn-success"><i class="fa-solid fa-plus"></i></a></div> \
+                                                                <a href="javascript:void(0)" id="adbtn" onclick="clone_equipment_div_edit1()" class="btn btn-xs btn-success"><i class="fas fa-plus"></i></a></div> \
                                                                  </div>\
                                                                   </div>\
                                                             </div>';

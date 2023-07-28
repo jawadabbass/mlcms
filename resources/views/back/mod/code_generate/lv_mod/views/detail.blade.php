@@ -3,7 +3,7 @@
     <?php echo ModBC('Detail', [$settingArr['contr_name'] => $settingArr['mainPageTitle']]); ?>
 @endsection
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
 
         <section class="content">
             <div class="row">
@@ -39,5 +39,5 @@ foreach($arrFields as $key=>$val){
                 </div>
             </div>
         </section>
-    </aside>
+    </div>
 @endsection

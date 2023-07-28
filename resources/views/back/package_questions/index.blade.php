@@ -1,6 +1,9 @@
 @extends('back.layouts.app', ['title' => $title])
+@section('beforeHeadClose')
+@include('back.common_views.switch_css')
+@endsection
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="row">
@@ -8,7 +11,7 @@
                     <ol class="breadcrumb">
                         <li>
                             <a href="{{ base_url() . 'adminmedia' }}">
-                                <i class="fa-solid fa-dashboard"></i> Home
+                                <i class="fas fa-tachometer-alt"></i> Home
                             </a>
                         </li>
                         <li class="active">Packages Question's Management</li>
@@ -73,7 +76,7 @@
                                 <div class="col-sm-1 form-group">
 
                                     <button type="submit" class="btn">
-                                        <li class="fa-solid fa-search"></li>
+                                        <li class="fas fa-search"></li>
                                     </button>
                                 </div>
                             </div>
@@ -95,18 +98,16 @@
                                             <td>{{ $product->question }}</td>
                                             <td>{{ $product->package->heading }}</td>
                                             <td>
-                                                @php
-                                                    if ($product->sts == 'active') {
-                                                        $class_label = 'success';
-                                                    } else {
-                                                        $class_label = 'danger';
-                                                    }
-                                                @endphp
-                                                <a onClick="update_product_sts({{ $product->id }});" href="javascript:;"
-                                                    id="sts_{{ $product->id }}">
-                                                    <div class="label label-{{ $class_label }}">{{ $product->sts }}
+                                                <label class="switch">
+                                                    <input type="checkbox" name="{{ 'sts_' . $product->id }}"
+                                                        id="{{ 'sts_' . $product->id }}" <?php echo $product->sts == 'active' ? ' checked' : ''; ?>
+                                                        value="<?php echo !empty($product->sts)? $product->sts:'blocked' ; ?>"
+                                                        onClick="update_package_question_sts_toggle({{ $product->id }})">
+                                                    <div class="slider round">
+                                                        <strong class="on">Active</strong>
+                                                        <strong class="off">Inactive</strong>
                                                     </div>
-                                                </a>
+                                                </label>
                                             </td>
                                             <td>
                                                 <a class="btn btn-sm btn-primary"
@@ -139,7 +140,7 @@
             </div>
         </section>
         <!-- /.content -->
-    </aside>
+    </div>
     @include('back.common_views.spinner')
 @endsection
 @section('beforeBodyClose')

@@ -16,7 +16,7 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $seoArr = array('title' => 'Welcome to ' . config('Constants.SITE_NAME'));
+        $seoArr = array('title' => 'Welcome to ' . FindInsettingArr('business_name'));
         $member = Auth::user();
         return view('front.member.dashboard', compact('member', 'seoArr'));
     }
@@ -57,7 +57,7 @@ class ProfileController extends Controller
      */
     public function edit($id)
     {
-        $seoArr = array('title' => 'Welcome to ' . config('Constants.SITE_NAME'));
+        $seoArr = array('title' => 'Welcome to ' . FindInsettingArr('business_name'));
         $member = Auth::user();
         return view('front.member.edit', compact('seoArr', 'member'));
     }

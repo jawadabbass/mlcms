@@ -20,7 +20,7 @@ class ModuleController extends Controller
     {
         $modules = CmsModule::paginate(10);
 
-        $title = config('Constants.SITE_NAME').': Module Management';
+        $title = FindInsettingArr('business_name').': Module Management';
 
         return view('back.modules.index', compact('modules', 'title'));
     }
@@ -110,8 +110,8 @@ class ModuleController extends Controller
      */
     public function edit($id, Request $request)
     {
-        $status = $request->status;
         $module = CmsModule::find($id);
+        $status = $module->show_in_admin_menu == 1? 'Yes':'No';
         if ($status == 'Yes') {
             $module->show_in_admin_menu = 0;
             $stat = 'No';

@@ -1,12 +1,12 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="row">
                 <div class="col-md-8 col-sm-6">
                     <ol class="breadcrumb">
-                        <li><a href="{{ admin_url() }}"> <i class="fa-solid fa-gauge"></i> Home </a></li>
+                        <li><a href="{{ admin_url() }}"> <i class="fas fa-gauge"></i> Home </a></li>
                         <li class="active">Invoices</li>
                     </ol>
                 </div>
@@ -23,7 +23,7 @@
                                 <p class="alert alert-success">{{ Session::get('msg') }}</p>
                             @endif
                             <div class="text-end"><a href="{{ admin_url() }}invoice/send_invoice" class="btn btn-info">
-                                    <i class="fa-solid fa-plus-circle" aria-hidden="true"></i> Create Invoice</a></div>
+                                    <i class="fas fa-plus-circle" aria-hidden="true"></i> Create Invoice</a></div>
                             <table class="table table-bordered table-inverse table-hover">
                                 <thead>
                                     <tr>
@@ -82,7 +82,7 @@
                                                         <a rel="nofollow" data-bs-toggle="tooltip"
                                                             title="Web link using Paypal" target="_blank"
                                                             href="{{ base_url() }}invoice/<?php echo $row->invoice_webkey; ?>"
-                                                            class="get-weblink"><i class="fa-solid fa-external-link"
+                                                            class="get-weblink"><i class="fas fa-external-link"
                                                                 aria-hidden="true"></i> PayPal</a>
                                                     @endif
                                                     @if (isset($PaymentArr[$row->id . '_5']))
@@ -90,7 +90,7 @@
                                                         <a rel="nofollow" data-bs-toggle="tooltip"
                                                             title="Web link using Authoze.NET" target="_blank"
                                                             href="{{ base_url() }}invoice/pay/<?php echo $row->invoice_webkey; ?>"
-                                                            class="get-weblink"><i class="fa-solid fa-external-link"
+                                                            class="get-weblink"><i class="fas fa-external-link"
                                                                 aria-hidden="true"></i> Authoze.NET</a>
                                                     @endif
                                                 </td>
@@ -98,12 +98,12 @@
                                                     @if ($row->status != 'Paid')
                                                         <a href="javascript:;" id="resent_{{ $row->id }}"
                                                             onclick="re_send_invoice('{{ $row->id }}');"
-                                                            class="btn btn-teal btn-sm btn-warning"><i class="fa-solid fa-share"
+                                                            class="btn btn-teal btn-sm btn-warning"><i class="fas fa-share"
                                                                 aria-hidden="true"></i> Resend</a><br><br>
                                                         <a href="javascript:void(0)"
                                                             onClick="del_recrod('{{ $row->id }}')"
                                                             class="btn btn-teal delete_invoice btn-sm btn-danger"><i
-                                                                class="fa-solid fa-minus-circle" aria-hidden="true"></i>
+                                                                class="fas fa-minus-circle" aria-hidden="true"></i>
                                                             Delete</a>
                                                     @endif
                                                 </td>
@@ -129,7 +129,7 @@
                                                         <div class="col-lg-3">
                                                             <a href="{{ admin_url() }}invoice/{{ $row->id }}/edit"
                                                                 class="btn btn-info  btn-sm"><i
-                                                                    class="fa-solid fa-pen-to-square" aria-hidden="true"></i>
+                                                                    class="fas fa-pen-to-square" aria-hidden="true"></i>
                                                                 Edit</a>
                                                         </div>
                                                     </div>
@@ -150,7 +150,7 @@
             </div>
             <div> {{ $result->links() }} </div>
         </section>
-    </aside>
+    </div>
 @endsection
 @section('beforeBodyClose')
     <script type="text/javascript" src="{{ base_url() }}back/mod/mod_js.js"></script>
@@ -204,14 +204,14 @@
                     _token: $("meta[name=csrf-token]").attr("content")
                 },
                 function() {
-                    alertme('<i class="fa-solid fa-check" aria-hidden="true"></i> Status Updated ', 'success', true, 1500);
+                    alertme('<i class="fas fa-check" aria-hidden="true"></i> Status Updated ', 'success', true, 1500);
                 }
             );
 
         }
 
         function re_send_invoice(cid) {
-            $("#resent_" + cid).html('<i class="text-warning fa-solid fa-refresh fa-spin" aria-hidden="true"></i> Resend');
+            $("#resent_" + cid).html('<i class="text-warning fas fa-sync fa-spin" aria-hidden="true"></i> Resend');
             postMyForm(
                 '{{ admin_url() }}' + "invoice/re_send_invoice", {
                     idd: cid,
@@ -222,8 +222,8 @@
                     var cnt = parseInt($("#timesent_" + cid).html());
                     cnt = cnt + 1;
                     $("#timesent_" + cid).html(cnt);
-                    $("#resent_" + cid).html('<i class="text-success fa-solid fa-check" aria-hidden="true"></i> Resend');
-                    alertme('<i class="fa-solid fa-check" aria-hidden="true"></i> Invoice Resent ', 'success', true, 1500);
+                    $("#resent_" + cid).html('<i class="text-success fas fa-check" aria-hidden="true"></i> Resend');
+                    alertme('<i class="fas fa-check" aria-hidden="true"></i> Invoice Resent ', 'success', true, 1500);
                 },
                 function() {
                     $(".fa-spin").hide();

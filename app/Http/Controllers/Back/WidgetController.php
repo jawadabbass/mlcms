@@ -17,7 +17,7 @@ class WidgetController extends Controller
      */
     public function index()
     {
-        $title = config('Constants.SITE_NAME').': Block Management';
+        $title = FindInsettingArr('business_name').': Block Management';
         $msg = '';
         $this->WidgetNullfields();
         $result = Widget::all();

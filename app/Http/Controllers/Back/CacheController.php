@@ -46,7 +46,7 @@ class CacheController extends Controller
 		if ($request->home == 'Yes') {
 			Cache::forget('home');
 		}
-		Session::flash('success', '<i class="fa-solid fa-check" aria-hidden="true"></i> Cache has been cleared successfully !');
+		Session::flash('success', '<i class="fas fa-check" aria-hidden="true"></i> Cache has been cleared successfully !');
 		return redirect(route('cache'));
 	}
 }

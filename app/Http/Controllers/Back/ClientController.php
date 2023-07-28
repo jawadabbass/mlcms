@@ -152,7 +152,7 @@ class ClientController extends Controller
     public function show($id)
     {
         $client = Client::with(['user', 'state'])->find($id);
-        $title = config('Constants.SITE_NAME') . ': Clients | Edit';
+        $title = FindInsettingArr('business_name') . ': Clients | Edit';
         $history = ClientsHistory::where('client_id', $id)->with(['user'])->paginate(10);
         $conditions =  CmsModuleData::where('sts', 'active')
             ->where('cms_module_id', 38)

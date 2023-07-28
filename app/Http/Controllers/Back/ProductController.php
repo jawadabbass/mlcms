@@ -1,12 +1,9 @@
 <?php
-
 namespace App\Http\Controllers\Back;
-
 use App\Http\Controllers\Controller;
 use App\Models\Back\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-
 class ProductController extends Controller
 {
     /**
@@ -16,13 +13,11 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $title = config('Constants.SITE_NAME') . ': PRODUCTS\'s Management';
+        $title = FindInsettingArr('business_name') . ': PRODUCTS\'s Management';
         $msg = '';
         $products = Product::orderBy('item_order', 'ASC')->get();
-
         return view('back.product.index', compact('products', 'title', 'msg'));
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -42,7 +37,6 @@ class ProductController extends Controller
             echo $i . ' ' . $id;
         }
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -71,21 +65,17 @@ class ProductController extends Controller
             }
             $product->product_img_title = $request->product_img_title;
             $product->product_img_alt = $request->product_img_alt;
-
             $product->dated = date('Y-m-d H:i:s');
             $product->save();
-
             return json_encode(['status' => true]);
         }
         $html = '';
         foreach ($validator->errors()->all() as $key => $value) {
             $html .= '<li>' . $value . '</li>';
         }
-
         return json_encode(['status' => false, 'errors' => $html]);
         // return json_encode(["status" => false, 'errors' => $validator->errors()->all()]);
     }
-
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
@@ -104,25 +94,21 @@ class ProductController extends Controller
             }
             $product->product_img_title = $request->product_img_title;
             $product->product_img_alt = $request->product_img_alt;
-
             $product->price = $request->price;
             $product->meta_title = $request->meta_title;
             $product->meta_keywords = $request->meta_keywords;
             $product->meta_description = $request->meta_description;
             $product->canonical_url = $request->canonical_url;
             $product->save();
-
             return json_encode(['status' => true]);
         }
         $html = '';
         foreach ($validator->errors()->all() as $key => $value) {
             $html .= '<li>' . $value . '</li>';
         }
-
         return json_encode(['status' => false, 'errors' => $html]);
         // return json_encode(["status" => false, 'errors' => $validator->errors()->all()]);
     }
-
     /**
      * Display the specified resource.
      *
@@ -134,13 +120,12 @@ class ProductController extends Controller
     {
         if ($id == '') {
             echo 'error';
-
             return;
         }
-        $status = $request->status;
+        $product = Product::find($id);
+        $status = $product->sts;
         if ($status == '') {
             echo 'invalid current status provided.';
-
             return;
         }
         if ($status == 'active') {
@@ -148,14 +133,11 @@ class ProductController extends Controller
         } else {
             $new_status = 'active';
         }
-        $product = Product::find($id);
         $product->sts = $new_status;
-        $product->save();
+        $product->update();
         echo $new_status;
-
         return;
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -166,7 +148,6 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::find($id);
-
         return json_encode($product);
     }
     /**
@@ -177,7 +158,6 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
     /**
      * Remove the specified resource from storage.
      *
@@ -189,7 +169,6 @@ class ProductController extends Controller
     {
         Product::destroy($id);
     }
-
     public function productSellStatus(Request $request)
     {
         $product_status = explode(',', $request->product_Sale_Status)[0];
@@ -200,9 +179,7 @@ class ProductController extends Controller
         } else {
             $result->sell_status = 1;
         }
-
         $result->save();
-
         return json_encode(['status' => true]);
     }
 }

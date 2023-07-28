@@ -18,7 +18,7 @@
                 $def_val='';
                 if($key=='SenderName'){$def_val='Admin';}
                 if($key=='Sender'){$def_val='admin@almondpay.com';}
-                if($key=='icon'){$def_val='fa-solid fa-plus-circle';}
+                if($key=='icon'){$def_val='fas fa-plus-circle';}
                 if($key=='icon_class'){$def_val='text-success';}
                 echo ModFBuild($val,$key,$def_val,'add');
                 ?>

@@ -94,7 +94,7 @@ class ModController extends Controller
     public $arrOrder = array('name' => array('Name', '', ''));
     public function index()
     {
-        $title = config('Constants.SITE_NAME') . ': ' . $this->settingArr['mainPageTitle'];
+        $title = FindInsettingArr('business_name') . ': ' . $this->settingArr['mainPageTitle'];
         $msg = '';
         $queryObj = Mod::where($this->settingArr['dbId'], '<>', '0');
         $searchDataArr = [];
@@ -120,7 +120,7 @@ class ModController extends Controller
     }
     public function set_order()
     {
-        $title = config('Constants.SITE_NAME') . ': ' . $this->settingArr['mainPageTitle'];
+        $title = FindInsettingArr('business_name') . ': ' . $this->settingArr['mainPageTitle'];
         $msg = '';
         $result = Mod::orderBy($this->settingArr['db_order_key'], 'asc')->get();
         $settingArr = $this->settingArr;
@@ -158,7 +158,7 @@ class ModController extends Controller
     {
         if (Auth::user()->type != 'super-admin')
             return redirect(route('admin.index'));
-        $title = config('Constants.SITE_NAME') . ': Admin Users Management | Add new';
+        $title = FindInsettingArr('business_name') . ': Admin Users Management | Add new';
         $settingArr = $this->settingArr;
         return view('back.mod.create', compact('title', 'settingArr'));
     }
@@ -196,7 +196,7 @@ class ModController extends Controller
      */
     public function show($id)
     {
-        $title = $this->settingArr['mainTitle'] . ' Detail | ' . config('Constants.SITE_NAME');
+        $title = $this->settingArr['mainTitle'] . ' Detail | ' . FindInsettingArr('business_name');
         $msg = '';
         $row = Mod::find($id);
         $arrFields = $this->arrFView;
@@ -211,7 +211,7 @@ class ModController extends Controller
      */
     public function edit($id)
     {
-        $title = config('Constants.SITE_NAME') . ': Admin Users Management | Add new';
+        $title = FindInsettingArr('business_name') . ': Admin Users Management | Add new';
         $row = Mod::find($id);
         $settingArr = $this->settingArr;
         $dataArr = $this->arrFEdit;
@@ -290,7 +290,7 @@ class ModController extends Controller
     }
     public function edit_ajax(Request $request, $id)
     {
-        $title = $this->settingArr['mainTitle'] . ' Detail | ' . config('Constants.SITE_NAME');
+        $title = $this->settingArr['mainTitle'] . ' Detail | ' . FindInsettingArr('business_name');
         $msg = '';
         $row = Mod::find($id);
         $arrFields = $this->arrFEdit;

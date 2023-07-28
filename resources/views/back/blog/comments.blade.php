@@ -4,7 +4,7 @@
     <link href="{{ base_url() . 'module/blog/admin/css/' . $module . '.css' }}" rel="stylesheet" type="text/css" />
 @endsection
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="row">
@@ -12,7 +12,7 @@
                     <ol class="breadcrumb">
                         <li>
                             <a href="{{ admin_url() }}">
-                                <i class="fa-solid fa-gauge"></i> Home
+                                <i class="fas fa-gauge"></i> Home
                             </a>
                         </li>
                         <li class="active">Blog Post</li>
@@ -96,7 +96,7 @@
                 </div>
             </div>
         </section>
-    </aside>
+    </div>
 @endsection
 @section('beforeBodyClose')
     <script type="text/javascript" src="{{ base_url() . 'module/blog/admin/js/blog.js' }}"></script>

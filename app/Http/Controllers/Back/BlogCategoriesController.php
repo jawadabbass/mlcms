@@ -1,12 +1,9 @@
 <?php
-
 namespace App\Http\Controllers\Back;
-
 use App\Models\Back\BlogCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
-
 class BlogCategoriesController extends Controller
 {
     /**
@@ -16,7 +13,7 @@ class BlogCategoriesController extends Controller
      */
     public function index()
     {
-        $title = config('Constants.SITE_NAME') . ': Blog Categories Management';
+        $title = FindInsettingArr('business_name') . ': Blog Categories Management';
         $msg = '';
         $result = BlogCategory::all();
         return view('back.blog.categories', compact('title', 'msg', 'result'));
@@ -63,22 +60,20 @@ class BlogCategoriesController extends Controller
     {
         if ($id == '') {
             echo 'error';
-            return;
         }
-        $status = $request->status;
+        $blogCattegory = BlogCategory::find($id);
+        $status = $blogCattegory->sts;
         if ($status == '') {
             echo 'invalid current status provided.';
-            return;
         }
-        if ($status == 'active')
+        if ($status == 'active') {
             $new_status = 'blocked';
-        else
+        } else {
             $new_status = 'active';
-        $blogCattegory = BlogCategory::find($id);
+        }
         $blogCattegory->sts = $new_status;
-        $blogCattegory->save();
+        $blogCattegory->update();
         echo $new_status;
-        return;
     }
     /**
      * Show the form for editing the specified resource.

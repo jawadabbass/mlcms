@@ -16,7 +16,7 @@ class VideoController extends Controller
      */
     public function index()
     {
-        $title = config('Constants.SITE_NAME') . ': Videos Management';
+        $title = FindInsettingArr('business_name') . ': Videos Management';
         $msg = '';
         $result = Video::orderBy('ID', 'DESC')->paginate(10);
         $file_upload_max_size = $this->file_upload_max_size();
@@ -134,7 +134,8 @@ class VideoController extends Controller
             echo 'error';
             return;
         }
-        $status = $request->status;
+        $video = Video::find($id);
+        $status = $video->sts;
         if ($status == '') {
             echo 'invalid current status provided.';
             return;
@@ -143,9 +144,9 @@ class VideoController extends Controller
             $new_status = 'blocked';
         else
             $new_status = 'active';
-        $video = Video::find($id);
+        
         $video->sts = $new_status;
-        $video->save();
+        $video->update();
         echo $new_status;
         return;
     }

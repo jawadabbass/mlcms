@@ -2,12 +2,12 @@
 
 @section('bc')
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ admin_url() }}"><i class="fa-solid fa-gauge"></i> Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ admin_url() }}"><i class="fas fa-gauge"></i> Home</a></li>
         <li class="breadcrumb-item active">{{ $settingArr['mainPageTitle'] }}</li>
     </ol>
 @endsection
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
 
         <section class="content">
             @if (\Session::has('added_action'))
@@ -67,7 +67,7 @@ foreach($arrSearch as $key=>$val){?>
                                 </div>
                                 <?php }?>
                                 <div class="col-sm-2">
-                                    <a href="<?php echo admin_url(); ?><?php echo $settingArr['contr_name']; ?>"><i class="fa-solid fa-refresh"
+                                    <a href="<?php echo admin_url(); ?><?php echo $settingArr['contr_name']; ?>"><i class="fas fa-sync"
                                             aria-hidden="true"></i> Reset search</a>
                                     <input type="hidden" name="sr" value="y">
                                     <button type="submit" class="btn btn-sm btn-success">{!! the_icon('search') !!}
@@ -179,7 +179,7 @@ else{?>
                 </div>
             </div>
         </section>
-    </aside>
+    </div>
 @endsection
 @section('beforeBodyClose')
     <script>

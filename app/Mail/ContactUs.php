@@ -34,7 +34,7 @@ class ContactUs extends Mailable
         $data = $this->data;
         $ip = $this->ip;
 
-        return $this->subject(config('Constants.SITE_NAME').' | Contact Us Form Submitted')
+        return $this->subject(FindInsettingArr('business_name').' | Contact Us Form Submitted')
         ->from($data['email'], $data['name'])
         ->replyTo($data['email'], $data['name'])
         ->view('mail.contact', compact('data', 'ip'));

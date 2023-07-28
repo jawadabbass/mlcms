@@ -1,6 +1,6 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <section class="content-header">
             <div class="row">
                 <div class="col-md-8 col-sm-6">
@@ -58,18 +58,18 @@
                                             <td>
 
                                                 @foreach ($client->paymet_method as $kk => $val)
-                                                    <i class="fa-solid fa-check-square-o" aria-hidden="true"></i>
+                                                    <i class="fas fa-check-square-o" aria-hidden="true"></i>
                                                     @if ($val->fk_payment_option_id == 2)
                                                         <a rel="nofollow" data-bs-toggle="tooltip"
                                                             title="Web link using Paypal" target="_blank"
                                                             href="{{ base_url() }}invoice/<?php echo $client->invoice_webkey; ?>"
-                                                            class="get-weblink"><i class="fa-solid fa-external-link"
+                                                            class="get-weblink"><i class="fas fa-external-link"
                                                                 aria-hidden="true"></i> PayPal</a>
                                                     @elseif($val->fk_payment_option_id == 5)
                                                         <a rel="nofollow" data-bs-toggle="tooltip"
                                                             title="Web link using Authoze.NET" target="_blank"
                                                             href="{{ base_url() }}invoice/pay/<?php echo $client->invoice_webkey; ?>"
-                                                            class="get-weblink"><i class="fa-solid fa-external-link"
+                                                            class="get-weblink"><i class="fas fa-external-link"
                                                                 aria-hidden="true"></i> Authoze.NET</a>
                                                     @else
                                                         {{ $val->payment_name->title }}
@@ -89,7 +89,7 @@
                 </div>
             </div>
         </section>
-    </aside>
+    </div>
 @endsection
 @section('beforeBodyClose')
     <script type="text/javascript">

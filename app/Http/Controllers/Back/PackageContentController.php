@@ -18,7 +18,7 @@ class PackageContentController extends Controller
     public function index($id)
     {
 
-        $title = config('Constants.SITE_NAME') . 'Manage Package Content';
+        $title = FindInsettingArr('business_name') . 'Manage Package Content';
         $main_package =  CmsModuleData::where('sts', 'active')
             ->where('cms_module_id', 37)
             ->where('id', $id)

@@ -18,7 +18,7 @@ class EmailController extends Controller
 	public function index()
 	{
 		checkAccess(Auth::user(), 1);
-		$title = config('Constants.SITE_NAME') . ': Email Templates';
+		$title = FindInsettingArr('business_name') . ': Email Templates';
 		$msg = '';
 		$result = EmailTemplate::all();
 		return view('back.email_template.index', compact('title', 'msg', 'result'));

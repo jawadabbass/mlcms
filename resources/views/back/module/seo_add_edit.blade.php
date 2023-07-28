@@ -1,7 +1,7 @@
 <!-- /.SEO module add here ... -->
 <div>
     <br /><a onclick="showme_seo('#seo-edit-modul',this);" href="javascript:;">Manage SEO <i
-            class="fa-solid fa-angle-double-down" aria-hidden="true"></i></a>
+            class="fas fa-angle-double-down" aria-hidden="true"></i></a>
 </div>
 <div id="seo-edit-modul" class="seo-edit-modul-hide">
     <div>

@@ -1,12 +1,12 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('content')
-    <aside class="right-side">
+<div class="content-wrapper pl-3 pr-2">
         <section class="content-header">
             <h1>Send Invoice</h1>
             <ol class="breadcrumb">
                 <li>
                     <a href="{{ admin_url() }}">
-                        <i class="fa-solid fa-gauge"></i> Home
+                        <i class="fas fa-gauge"></i> Home
                     </a>
                 </li>
                 <li class="active">Send Invoice</li>
@@ -89,7 +89,7 @@
                 </div>
             </div>
         </section>
-    </aside>
+    </div>
 @endsection
 @section('beforeBodyClose')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
@@ -99,7 +99,7 @@
 
             $(".subm").attr('disabled', true);
             var btnText = $(".subm").html();
-            $(".subm").html('<i class="fa-solid fa-refresh fa-spin" aria-hidden="true"></i> Processing');
+            $(".subm").html('<i class="fas fa-sync fa-spin" aria-hidden="true"></i> Processing');
             $.ajax({
                 type: "POST",
                 timeout: 200000,

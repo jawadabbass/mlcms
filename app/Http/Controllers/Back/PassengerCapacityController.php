@@ -21,7 +21,7 @@ class PassengerCapacityController extends Controller
      */
     public function index()
     {
-        $title = config('Constants.SITE_NAME') . ': Passenger Capacities Management';
+        $title = FindInsettingArr('business_name') . ': Passenger Capacities Management';
         $msg = '';
 
         return view('back.passenger_capacities.index', compact('title', 'msg'));
@@ -49,8 +49,8 @@ class PassengerCapacityController extends Controller
             })
             ->addColumn('action', function ($passengerCapacities) {
                 return '
-                		<a href="' . route('passengerCapacities.edit', ['passengerCapacityObj' => $passengerCapacities->id]) . '" class="btn btn-warning m-2"><i class="fa-solid fa-pencil" aria-hidden="true"></i></a>
-						<a href="javascript:void(0);" onclick="deletePassengerCapacity(' . $passengerCapacities->id . ');"  class="btn btn-danger m-2"><i class="fa-solid fa-trash" aria-hidden="true"></i></a>';
+                		<a href="' . route('passengerCapacities.edit', ['passengerCapacityObj' => $passengerCapacities->id]) . '" class="btn btn-warning m-2"><i class="fas fa-edit" aria-hidden="true"></i></a>
+						<a href="javascript:void(0);" onclick="deletePassengerCapacity(' . $passengerCapacities->id . ');"  class="btn btn-danger m-2"><i class="fas fa-trash" aria-hidden="true"></i></a>';
             })
             ->rawColumns(['status', 'action'])
             ->orderColumns(['title', 'status'], ':column $1')
@@ -69,7 +69,7 @@ class PassengerCapacityController extends Controller
      */
     public function create()
     {
-        $title = config('Constants.SITE_NAME') . ': Passenger Capacities Management';
+        $title = FindInsettingArr('business_name') . ': Passenger Capacities Management';
         $msg = '';
         $passengerCapacityObj = new PassengerCapacity();
 
@@ -117,7 +117,7 @@ class PassengerCapacityController extends Controller
      */
     public function edit(PassengerCapacity $passengerCapacityObj)
     {
-        $title = config('Constants.SITE_NAME') . ': Passenger Capacities Management';
+        $title = FindInsettingArr('business_name') . ': Passenger Capacities Management';
         $msg = '';
 
         return view('back.passenger_capacities.edit')
@@ -146,7 +146,7 @@ class PassengerCapacityController extends Controller
 
     public function sortPassengerCapacities()
     {
-        $title = config('Constants.SITE_NAME') . ': Passenger Capacities Management';
+        $title = FindInsettingArr('business_name') . ': Passenger Capacities Management';
         $msg = '';
 
         return view('back.passenger_capacities.sort')->with('title', $title)
@@ -160,7 +160,7 @@ class PassengerCapacityController extends Controller
         $str = '<ul id="sortable">';
         if ($passengerCapacities != null) {
             foreach ($passengerCapacities as $passengerCapacityObj) {
-                $str .= '<li class="ui-state-default" id="' . $passengerCapacityObj->id . '"><i class="fa-solid fa-sort"></i> ' . $passengerCapacityObj->title . '</li>';
+                $str .= '<li class="ui-state-default" id="' . $passengerCapacityObj->id . '"><i class="fas fa-sort"></i> ' . $passengerCapacityObj->title . '</li>';
             }
         }
         echo $str . '</ul>';

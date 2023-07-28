@@ -33,7 +33,7 @@ class ModuleCodeGeneratorController extends Controller
 
     public function index()
     {
-        $title = config('Constants.SITE_NAME') . ': Code Generator';
+        $title = FindInsettingArr('business_name') . ': Code Generator';
         $msg = '';
         return view('back.module_code_generator.index')
             ->with(
@@ -48,7 +48,7 @@ class ModuleCodeGeneratorController extends Controller
 
     public function generateCode(ModuleCodeGeneratorBackFormRequest $request)
     {
-        $title = config('Constants.SITE_NAME') . ': Code Generator';
+        $title = FindInsettingArr('business_name') . ': Code Generator';
         $msg = '';
 
         $this->modelName = $request->MODEL_NAME_STUB;

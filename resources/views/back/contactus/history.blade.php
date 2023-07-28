@@ -1,11 +1,11 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <section class="content-header">
             <div class="row">
                 <div class="col-md-8 col-sm-6">
                     <ol class="breadcrumb">
-                        <li><a href="{{ admin_url() }}"> <i class="fa-solid fa-dashboard"></i> Home </a></li>
+                        <li><a href="{{ admin_url() }}"> <i class="fas fa-tachometer-alt"></i> Home </a></li>
                         <li><a href="{{ admin_url() }}contact_request">Contact Leads</a></li>
 
                     </ol>
@@ -76,7 +76,7 @@
                                         <div id="tracking-pre"></div>
                                         <div id="tracking">
                                             <div class="text-center tracking-status-intransit">
-                                                <p class="tracking-status text-tight"><i class="fa-solid fa-history"
+                                                <p class="tracking-status text-tight"><i class="fas fa-history"
                                                         aria-hidden="true"></i> History</p>
                                             </div>
                                             <div class="tracking-list">
@@ -85,16 +85,16 @@
                                                         <div class="tracking-icon status-intransit">
                                                             <div style="font-size:18px;" class="">
                                                                 @if ($val->ref == 1)
-                                                                    <i class="fa-solid fa-money" style="color:green;"
+                                                                    <i class="fas fa-money" style="color:green;"
                                                                         aria-hidden="true"></i>
                                                                 @elseif($val->ref == 2)
-                                                                    <i class="fa-solid fa-plus" style="color:green;"
+                                                                    <i class="fas fa-plus" style="color:green;"
                                                                         aria-hidden="true"></i>
                                                                 @elseif($val->ref == 3)
-                                                                    <i class="fa-solid fa-envelope-square" style="color:#b9b929;"
+                                                                    <i class="fas fa-envelope-square" style="color:#b9b929;"
                                                                         aria-hidden="true"></i>
                                                                 @else
-                                                                    <i class="fa-solid fa-edit" style="color:red"></i>
+                                                                    <i class="fas fa-edit" style="color:red"></i>
                                                                 @endif
                                                             </div>
                                                         </div>
@@ -122,7 +122,7 @@
                 </div>
             </div>
         </section>
-    </aside>
+    </div>
 
     <div class="modal fade" id="editContactRequestModal" tabindex="-1" role="dialog"
                 aria-labelledby="editContactRequestModalLabel" aria-hidden="true">

@@ -19,7 +19,7 @@ class AdminUserController extends Controller
      */
     public function index()
     {
-        $title = config('Constants.SITE_NAME') . ': Admin Users Management';
+        $title = FindInsettingArr('business_name') . ': Admin Users Management';
         $msg = '';
         $result = User::where('type', '!=', 'user')->get();
         return view('back.users.admin.index', compact('title', 'msg', 'result'));
@@ -34,7 +34,7 @@ class AdminUserController extends Controller
     {
         if (Auth::user()->type != config('Constants.USER_TYPE_SUPER_ADMIN'))
             return redirect(route('admin.index'));
-        $title = config('Constants.SITE_NAME') . ': Admin Users Management | Add new';
+        $title = FindInsettingArr('business_name') . ': Admin Users Management | Add new';
         return view('back.users.admin.create', compact('title'));
     }
 
@@ -68,7 +68,7 @@ class AdminUserController extends Controller
             return redirect(route('admin.index'));
         }
 
-        $title = config('Constants.SITE_NAME') . ': Admin Users Management | Info';
+        $title = FindInsettingArr('business_name') . ': Admin Users Management | Info';
         $msg = '';
         $arrLinks = \App\Helpers\DashboardLinks::$arrLinks;
         $passArrSuperAdmin = array();
@@ -102,7 +102,7 @@ class AdminUserController extends Controller
      */
     public function edit($id)
     {
-        $title = config('Constants.SITE_NAME') . ': Admin Users Management | Add new';
+        $title = FindInsettingArr('business_name') . ': Admin Users Management | Add new';
         $user = User::find($id);
         return view('back.users.admin.edit', compact('user', 'title'));
     }

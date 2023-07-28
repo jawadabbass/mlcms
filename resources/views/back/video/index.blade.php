@@ -1,11 +1,14 @@
 @extends('back.layouts.app', ['title' => $title])
+@section('beforeHeadClose')
+@include('back.common_views.switch_css')
+@endsection
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <section class="content-header">
             <div class="row">
                 <div class="col-md-8 col-sm-6">
                     <ol class="breadcrumb">
-                        <li><a href="{{ admin_url() }}"><i class="fa-solid fa-gauge"></i> Home</a></li>
+                        <li><a href="{{ admin_url() }}"><i class="fas fa-gauge"></i> Home</a></li>
                         <li class="active">Video Management</li>
                     </ol>
                 </div>
@@ -64,16 +67,18 @@
                                             <tr id="row_{{ $row->ID }}">
                                                 <td>{{ format_date($row->dated, 'date') }}</td>
                                                 <td>{!! link2iframe($row->content, $row->video_type, '100%', 250, 'uploads/videos/video/') !!}</td>
-                                                <td> @php
-                                                    if ($row->sts == 'active') {
-                                                        $class_label = 'success';
-                                                    } else {
-                                                        $class_label = 'danger';
-                                                    }
-                                                @endphp <a onClick="update_videos_sts({{ $row->ID }});"
-                                                        href="javascript:;" id="sts_{{ $row->ID }}"> <span
-                                                            class="label label-{{ $class_label }}">{{ $row->sts }}</span>
-                                                    </a></td>
+                                                <td>
+                                                    <label class="switch">
+                                                        <input type="checkbox" name="{{ 'sts_' . $row->ID }}"
+                                                            id="{{ 'sts_' . $row->ID }}" <?php echo $row->sts == 'active' ? ' checked' : ''; ?>
+                                                            value="<?php echo $row->sts; ?>"
+                                                            onClick="update_videos_sts({{ $row->ID }})">
+                                                        <div class="slider round">
+                                                            <strong class="on">Active</strong>
+                                                            <strong class="off">Inactive</strong>
+                                                        </div>
+                                                    </label>
+                                                </td>
                                                 <td>
                                                     <a href="{{ admin_url() }}videos/edit/{{ $row->ID }}"
                                                         class="btn btn-success btn-sm">Edit</a>
@@ -97,7 +102,7 @@
             </div>
             <div> {{ $result->links() }} </div>
         </section>
-    </aside>
+    </div>
     <div class="modal fade" id="add_page_form" data-backdrop="static">
         <div class="modal-dialog modal-lg">
             <form name="frm_block" id="frm_block" role="form" method="post" action="{{ admin_url() . 'videos' }}"

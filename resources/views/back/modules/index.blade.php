@@ -1,12 +1,15 @@
 @extends('back.layouts.app', ['title' => $title])
+@section('beforeHeadClose')
+@include('back.common_views.switch_css')
+@endsection
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="row">
                 <div class="col-md-8 col-sm-6">
                     <ol class="breadcrumb">
-                        <li><a href="{{ admin_url() }}"> <i class="fa-solid fa-gauge"></i> Home </a></li>
+                        <li><a href="{{ admin_url() }}"> <i class="fas fa-gauge"></i> Home </a></li>
                         <li class="active">Modules Management</li>
                     </ol>
                 </div>
@@ -70,19 +73,16 @@
                                                 @if ($module->id == 1)
                                                     Yes
                                                 @else
-                                                    @php
-                                                        if ($module->show_in_admin_menu == 1) {
-                                                            $class_label = 'success';
-                                                        } else {
-                                                            $class_label = 'danger';
-                                                        }
-                                                        
-                                                    @endphp <a
-                                                        onClick="update_cmsmodule_status({{ $module->id }})"
-                                                        href="javascript:" id="{{ 'sts_' . $module->id }}"> <span
-                                                            class="label {{ 'label-' . $class_label }}">
-                                                            {{ $module->show_in_admin_menu == 1 ? 'Yes' : 'No' }} </span>
-                                                    </a>
+                                                <label class="switch">
+                                                    <input type="checkbox" name="{{ 'sts_' . $module->id }}"
+                                                        id="{{ 'sts_' . $module->id }}" <?php echo $module->show_in_admin_menu == 1 ? ' checked' : ''; ?>
+                                                        value="<?php echo $module->show_in_admin_menu; ?>"
+                                                        onClick="update_cmsmodule_status_toggle({{ $module->id }})">
+                                                    <div class="slider round">
+                                                        <strong class="on">Yes</strong>
+                                                        <strong class="off">No</strong>
+                                                    </div>
+                                                </label>
                                                 @endif
                                             </td>
                                             <td>
@@ -114,7 +114,7 @@
             </div>
             <div> {{ $modules->links() }} </div>
         </section>
-    </aside>
+    </div>
     <div class="modal fade" id="add_page_form" data-backdrop="static">
         <div class="modal-dialog modal-lg">
             <form name="frm_cmsmodule" id="frm_cmsmodule" enctype="multipart/form-data" role="form" method="post"

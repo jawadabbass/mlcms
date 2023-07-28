@@ -1,11 +1,14 @@
 @extends('back.layouts.app', ['title' => $title])
+@section('beforeHeadClose')
+@include('back.common_views.switch_css')
+@endsection
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <section class="content-header">
             <div class="row">
                 <div class="col-md-8 col-sm-6">
                     <ol class="breadcrumb">
-                        <li><a href="{{ admin_url() }}"> <i class="fa-solid fa-gauge"></i> Home </a></li>
+                        <li><a href="{{ admin_url() }}"> <i class="fas fa-gauge"></i> Home </a></li>
                         <li class="active">{{ ucwords($module->term) }}</li>
                     </ol>
                 </div>
@@ -41,14 +44,14 @@
                                 @if ($module->show_ordering_options)
                                     <div class="text-end" style="padding-bottom:2px; display: inline;">
                                         <a class="sitebtn" href="{{ admin_url() . 'module/ordering/' . $module->type }}">
-                                            <i class="fa-solid fa-sort" aria-hidden="true"></i> Set Ordering
+                                            <i class="fas fa-sort" aria-hidden="true"></i> Set Ordering
                                         </a>
                                     </div>
                                 @endif
                                 <div class="text-end" style="padding-bottom:2px; display: inline;">
                                     <!--<input type="button" class="sitebtn"
-        value="Add New {{ ucwords($module->term) == 'CMS' ? 'Page' : ucwords($module->term) }}"
-        onclick="add_content()"/>-->
+                value="Add New {{ ucwords($module->term) == 'CMS' ? 'Page' : ucwords($module->term) }}"
+                onclick="add_content()"/>-->
                                     <a class="sitebtn" href="{{ admin_url() . 'module/' . $module->type . '/add' }} "> Add
                                         New
                                         {{ ucwords($module->term) == 'CMS' ? 'Page' : ucwords($module->term) }}</a>
@@ -70,8 +73,9 @@
                                         @if (strcmp($module->type, 'cms'))
                                             <th>{{ ucwords($module->type) }} Status</th>
                                         @endif
-                                        @if($module->id == 37)<th> Package Detail  </th>
-                                        <th> No. Of Users</th>
+                                        @if ($module->id == 37)
+                                            <th> Package Detail </th>
+                                            <th> No. Of Users</th>
                                         @endif
                                         <th>Action</th>
                                     </tr>
@@ -106,37 +110,35 @@
                                             @endif
                                             @if (strcmp($module->type, 'cms'))
                                                 <td>
-                                                    @php
-                                                        if ($moduleMember->sts == 'active') {
-                                                            $class_label = 'success';
-                                                        } else {
-                                                            $class_label = 'danger';
-                                                        }
-                                                    @endphp
-                                                    <a onClick="update_module_status({{ $moduleMember->id }})"
-                                                        href="javascript:" id="{{ 'sts_' . $moduleMember->id }}">
-                                                        <span class="label {{ 'label-' . $class_label }}">
-                                                            {{ $moduleMember->sts }} </span>
-                                                    </a>
+                                                    <label class="switch">
+                                                        <input type="checkbox" name="{{ 'sts_' . $moduleMember->id }}"
+                                                            id="{{ 'sts_' . $moduleMember->id }}" <?php echo $moduleMember->sts == 'active' ? ' checked' : ''; ?>
+                                                            value="<?php echo $moduleMember->sts; ?>"
+                                                            onClick="update_module_status_toggle({{ $moduleMember->id }})">
+                                                        <div class="slider round">
+                                                            <strong class="on">Active</strong>
+                                                            <strong class="off">Inactive</strong>
+                                                        </div>
+                                                    </label>
                                                 </td>
                                             @endif
                                             @if ($moduleMember->cms_module_id == 37)
-                                            <td>{!! substr_replace($moduleMember->content, "...", 195)  !!}</td>
-                                            <td>@php echo package_use_member($moduleMember->id) @endphp </td>
+                                                <td>{!! substr_replace($moduleMember->content, '...', 195) !!}</td>
+                                                <td>@php echo package_use_member($moduleMember->id) @endphp </td>
                                             @endif
                                             <td>
                                                 @if ($moduleMember->permanent_page == '1')
                                                     @if ($moduleMember->content_type == 'module')
                                                         <a class="btn btn-sm btn-primary"
                                                             href="{{ base_url() . 'adminmedia/module/' . $module->type . '/edit/' . $moduleMember->id }}"
-                                                            title="Edit"><i class="fa-solid fa-pencil"></i> Edit</a>
+                                                            title="Edit"><i class="fas fa-edit"></i> Edit</a>
                                                         <a target="_blank" class="btn btn-sm btn-primary"
                                                             href="{{ base_url() . 'adminmedia/module/' . $moduleMember->post_slug }}"
-                                                            title="Edit"><i class="fa-solid fa-wrench"></i> Manage</a>
+                                                            title="Edit"><i class="fas fa-wrench"></i> Manage</a>
                                                     @else
                                                         <a class="btn btn-sm btn-primary"
                                                             href="{{ base_url() . 'adminmedia/module/' . $module->type . '/edit/' . $moduleMember->id }}"
-                                                            title="Edit"><i class="fa-solid fa-pencil"></i> Edit</a>
+                                                            title="Edit"><i class="fas fa-edit"></i> Edit</a>
                                                         @if ($moduleMember->id == 118)
                                                             <a target="_blank" class="btn btn-sm btn-primary"
                                                                 href="{{ base_url() . 'adminmedia/manage_contact' }}"
@@ -151,10 +153,11 @@
                                                 @else
                                                     <a class="btn btn-sm btn-primary"
                                                         href="{{ base_url() . 'adminmedia/module/' . $module->type . '/edit/' . $moduleMember->id }}"
-                                                        title="Edit"><i class="fa-solid fa-pencil"></i> Edit</a>
+                                                        title="Edit"><i class="fas fa-edit"></i> Edit</a>
                                                     <a class="btn btn-sm btn-danger" href="javascript:void(0)"
-                                                        title="Delete" onclick="delete_content({{ $moduleMember->id }})"><i
-                                                            class="fa-solid fa-trash"></i> Delete</a>
+                                                        title="Delete"
+                                                        onclick="delete_content({{ $moduleMember->id }})"><i
+                                                            class="fas fa-trash"></i> Delete</a>
                                                 @endif
                                                 @if ($module->term == 'Classes')
                                                     <a href="{{ route('class.show', $moduleMember->id) }}"
@@ -165,8 +168,10 @@
                                                         class="btn btn-success btn-Sm">View Registered User</a>
                                                 @endif
                                                 @if ($moduleMember->cms_module_id == 37)
-                                                <br/>
-                                                <a href="{{route('package_content_index',$moduleMember->id)}}" class="btn btn-primary" style="margin-top:5px;">Manage Package Content</a>
+                                                    <br />
+                                                    <a href="{{ route('package_content_index', $moduleMember->id) }}"
+                                                        class="btn btn-primary" style="margin-top:5px;">Manage Package
+                                                        Content</a>
                                                 @endif
                                             </td>
                                         </tr>
@@ -185,7 +190,7 @@
             </div>
             <div> {{ $moduleMembers->links() }} </div>
         </section>
-    </aside>
+    </div>
 @endsection
 @section('beforeBodyClose')
     <script type="text/javascript" src="{{ base_url() . 'module/module/admin/js/module.js' }}"></script>
@@ -213,11 +218,12 @@
     <!-- End Bootstrap modal -->
     @php
         if (isset($_GET['id']) && !empty($_GET['id'])) {
-            echo "<script>
+            echo '<script>
                 $(document).ready(function() {
-                    edit_module(".$_GET['id'].")
+                    edit_module('.$_GET['
+                        id '].')
                 });
-            </script>";
+            </script>';
         }
     @endphp
 @endsection

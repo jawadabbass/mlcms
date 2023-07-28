@@ -23,7 +23,7 @@ class StateController extends Controller
      */
     public function index()
     {
-        $title = config('Constants.SITE_NAME') . ': States Management';
+        $title = FindInsettingArr('business_name') . ': States Management';
         $msg = '';
         return view('back.states.index', compact('title', 'msg'));
     }
@@ -56,10 +56,10 @@ class StateController extends Controller
 					</button>
 					<ul class="dropdown-menu">
 						<li>
-							<a href="' . route('states.edit', ['stateObj' => $states->id]) . '" class="text-info"><i class="fa-solid fa-pencil" aria-hidden="true"></i>Edit</a>
+							<a href="' . route('states.edit', ['stateObj' => $states->id]) . '" class="text-info"><i class="fas fa-edit" aria-hidden="true"></i>Edit</a>
 						</li>
 						<li>
-							<a href="javascript:void(0);" onclick="deleteState(' . $states->id . ');" class="text-danger"><i class="fa-solid fa-trash" aria-hidden="true"></i>Delete</a>
+							<a href="javascript:void(0);" onclick="deleteState(' . $states->id . ');" class="text-danger"><i class="fas fa-trash" aria-hidden="true"></i>Delete</a>
 						</li>
 					</ul>
 				</div>';
@@ -81,7 +81,7 @@ class StateController extends Controller
      */
     public function create()
     {
-        $title = config('Constants.SITE_NAME') . ': States Management';
+        $title = FindInsettingArr('business_name') . ': States Management';
         $msg = '';
         $stateObj = new State();
         return view('back.states.create')
@@ -125,7 +125,7 @@ class StateController extends Controller
      */
     public function edit(State $stateObj)
     {
-        $title = config('Constants.SITE_NAME') . ': States Management';
+        $title = FindInsettingArr('business_name') . ': States Management';
         $msg = '';
         return view('back.states.edit')
             ->with('stateObj', $stateObj)
@@ -175,7 +175,7 @@ class StateController extends Controller
 
     public function sortStates()
     {
-        $title = config('Constants.SITE_NAME') . ': States Management';
+        $title = FindInsettingArr('business_name') . ': States Management';
         $msg = '';
         return view('back.states.sort')->with('title', $title)
             ->with('msg', $msg);
@@ -189,7 +189,7 @@ class StateController extends Controller
         $str = '<ul id="sortable">';
         if ($states != null) {
             foreach ($states as $stateObj) {
-                $str .= '<li class="ui-state-default" id="' . $stateObj->id . '"><i class="fa-solid fa-sort"></i> ' . $stateObj->state_name . '</li>';
+                $str .= '<li class="ui-state-default" id="' . $stateObj->id . '"><i class="fas fa-sort"></i> ' . $stateObj->state_name . '</li>';
             }
         }
         echo $str . '</ul>';

@@ -1,11 +1,11 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <section class="content-header">
             <div class="row">
                 <div class="col-md-8 col-sm-6">
                     <ol class="breadcrumb">
-                        <li><a href="{{ admin_url() }}"><i class="fa-solid fa-gauge"></i> Home</a></li>
+                        <li><a href="{{ admin_url() }}"><i class="fas fa-gauge"></i> Home</a></li>
                         <li class="active">Website User Management</li>
                     </ol>
                 </div>
@@ -76,7 +76,7 @@
             </div>
         </div>
         <div> {{ $result->links() }} </div>
-    </aside>
+    </div>
 @endsection
 @section('beforeBodyClose')
     <script>

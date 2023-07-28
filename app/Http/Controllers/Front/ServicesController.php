@@ -17,7 +17,7 @@ class ServicesController extends Controller
 	public function index()
 	{
 		$postData = CmsModuleData::where('sts', 'active')->where('post_slug', 'services')->first();
-		$seoArr = array('title' => 'Services | ' . config('Constants.SITE_NAME'));
+		$seoArr = array('title' => 'Services | ' . FindInsettingArr('business_name'));
 		if (!empty($postData)) {
 			$seoArr = SeoArray($postData);
 		}

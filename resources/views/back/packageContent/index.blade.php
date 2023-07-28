@@ -1,7 +1,7 @@
 @extends('back.layouts.app', ['title' => $title])
 
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="row">
@@ -9,7 +9,7 @@
                     <ol class="breadcrumb">
                         <li>
                             <a href="{{ base_url() . 'adminmedia' }}">
-                                <i class="fa-solid fa-dashboard"></i> Home
+                                <i class="fas fa-tachometer-alt"></i> Home
                             </a>
                         </li>
                         <li class="active">Manage Content Of {{ $main_package->heading }} Package</li>
@@ -166,7 +166,7 @@
                                             <i class="deleteIcon" style="margin-top: 0px !important"
                                                 onclick="delete_record('{{ $show_co->id }}')"><span
                                                     style="display:none;">{{ $show_co->content }};image;{{ $show_co->content }}</span></i>
-                                            <li class="fa-solid fa-edit"
+                                            <li class="fas fa-edit"
                                                 onclick="edit_content_show('{{ $show_co->id }}','{{ $show_co->content }}')"
                                                 style="margin-left: 24px;font-size:14px;color:green;">
                                             </li>
@@ -301,7 +301,7 @@
         <!-- /.content -->
 
 
-    </aside>
+    </div>
 @endsection
 @section('beforeBodyClose')
     <script src="{{ asset('lib/sweetalert/sweetalert2.js') }}"></script>
@@ -365,7 +365,7 @@
                 beforeSend: function(data, status) {
                     $(".subm").attr('disabled', true);
                     $(".cancel").attr('disabled', true);
-                    $(".subm").html('<i class="fa-solid fa-refresh fa-spin" aria-hidden="true"></i> Processing');
+                    $(".subm").html('<i class="fas fa-sync fa-spin" aria-hidden="true"></i> Processing');
 
                 },
                 error: function(xhr) {},
@@ -482,7 +482,7 @@
                 beforeSend: function(data, status) {
                     $(".subm").attr('disabled', true);
                     $(".cancel").attr('disabled', true);
-                    $(".subm").html('<i class="fa-solid fa-refresh fa-spin" aria-hidden="true"></i> Processing');
+                    $(".subm").html('<i class="fas fa-sync fa-spin" aria-hidden="true"></i> Processing');
 
                 },
                 error: function(xhr) {},

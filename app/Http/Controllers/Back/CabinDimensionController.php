@@ -21,7 +21,7 @@ class CabinDimensionController extends Controller
      */
     public function index()
     {
-        $title = config('Constants.SITE_NAME') . ': Cabin Dimensions Management';
+        $title = FindInsettingArr('business_name') . ': Cabin Dimensions Management';
         $msg = '';
 
         return view('back.cabin_dimensions.index', compact('title', 'msg'));
@@ -49,8 +49,8 @@ class CabinDimensionController extends Controller
             })
             ->addColumn('action', function ($cabinDimensions) {
                 return '
-                		<a href="' . route('cabinDimensions.edit', ['cabinDimensionObj' => $cabinDimensions->id]) . '" class="btn btn-warning m-2"><i class="fa-solid fa-pencil" aria-hidden="true"></i></a>
-						<a href="javascript:void(0);" onclick="deleteCabinDimension(' . $cabinDimensions->id . ');"  class="btn btn-danger m-2"><i class="fa-solid fa-trash" aria-hidden="true"></i></a>';
+                		<a href="' . route('cabinDimensions.edit', ['cabinDimensionObj' => $cabinDimensions->id]) . '" class="btn btn-warning m-2"><i class="fas fa-edit" aria-hidden="true"></i></a>
+						<a href="javascript:void(0);" onclick="deleteCabinDimension(' . $cabinDimensions->id . ');"  class="btn btn-danger m-2"><i class="fas fa-trash" aria-hidden="true"></i></a>';
             })
             ->rawColumns(['status', 'action'])
             ->orderColumns(['title', 'status'], ':column $1')
@@ -69,7 +69,7 @@ class CabinDimensionController extends Controller
      */
     public function create()
     {
-        $title = config('Constants.SITE_NAME') . ': Cabin Dimensions Management';
+        $title = FindInsettingArr('business_name') . ': Cabin Dimensions Management';
         $msg = '';
         $cabinDimensionObj = new CabinDimension();
 
@@ -117,7 +117,7 @@ class CabinDimensionController extends Controller
      */
     public function edit(CabinDimension $cabinDimensionObj)
     {
-        $title = config('Constants.SITE_NAME') . ': Cabin Dimensions Management';
+        $title = FindInsettingArr('business_name') . ': Cabin Dimensions Management';
         $msg = '';
 
         return view('back.cabin_dimensions.edit')
@@ -146,7 +146,7 @@ class CabinDimensionController extends Controller
 
     public function sortCabinDimensions()
     {
-        $title = config('Constants.SITE_NAME') . ': Cabin Dimensions Management';
+        $title = FindInsettingArr('business_name') . ': Cabin Dimensions Management';
         $msg = '';
 
         return view('back.cabin_dimensions.sort')->with('title', $title)
@@ -160,7 +160,7 @@ class CabinDimensionController extends Controller
         $str = '<ul id="sortable">';
         if ($cabinDimensions != null) {
             foreach ($cabinDimensions as $cabinDimensionObj) {
-                $str .= '<li class="ui-state-default" id="' . $cabinDimensionObj->id . '"><i class="fa-solid fa-sort"></i> ' . $cabinDimensionObj->title . '</li>';
+                $str .= '<li class="ui-state-default" id="' . $cabinDimensionObj->id . '"><i class="fas fa-sort"></i> ' . $cabinDimensionObj->title . '</li>';
             }
         }
         echo $str . '</ul>';

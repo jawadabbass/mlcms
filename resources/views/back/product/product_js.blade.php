@@ -208,15 +208,12 @@
         }); // fin sortable
     });
 
-    function update_product_sts(id) {
-        var current_status = $("#sts_" + id + " div").html();
-        console.log(current_status);
+    function update_product_sts_toggle(id) {
+        var current_status = 'notset';
         var myurl = base_url + 'adminmedia/products/' + id + '?status=' + current_status;
         $.get(myurl, function(sts) {
-            var class_label = 'success';
-            if (sts != 'active')
-                var class_label = 'danger';
-            $("#sts_" + id).html('<div class="label label-' + class_label + '">' + sts + '</div>');
+            alertme('<i class="fas fa-check" aria-hidden="true"></i> Done Successfully ',
+                        'success', true, 1500);
         });
     }
 </script>

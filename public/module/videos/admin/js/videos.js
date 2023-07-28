@@ -24,13 +24,11 @@ function load_videos_edit_form(id) {
 }
 
 function update_videos_sts(id) {
-    var current_status = $("#sts_" + id + " span").html();
+    var current_status = 'notset';
     var myurl = base_url + 'adminmedia/videos/' + id + '/edit?status=' + current_status;
     $.get(myurl, function (sts) {
-        var class_label = 'success';
-        if (sts != 'active')
-            var class_label = 'danger';
-        $("#sts_" + id).html('<span class="label label-' + class_label + '">' + sts + '</span>');
+        alertme('<i class="fas fa-check" aria-hidden="true"></i> Done Successfully ',
+            'success', true, 1500);
     });
 }
 
@@ -48,7 +46,7 @@ function delete_videos(id) {
         $.ajax({
             type: "DELETE",
             url: myurl,
-            data: {'_token': $('meta[name="csrf-token"]').attr('content')},
+            data: { '_token': $('meta[name="csrf-token"]').attr('content') },
             success: function (data) {
                 data = JSON.parse(data);
                 if (data.status) {

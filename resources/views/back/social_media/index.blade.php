@@ -1,11 +1,11 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <section class="content-header">
             <div class="row">
                 <div class="col-md-8 col-sm-6">
                     <ol class="breadcrumb">
-                        <li><a href="{{ admin_url() }}"><i class="fa-solid fa-gauge"></i> Home</a></li>
+                        <li><a href="{{ admin_url() }}"><i class="fas fa-gauge"></i> Home</a></li>
                         <li class="active">Social Media</li>
                     </ol>
                 </div>
@@ -78,7 +78,7 @@
                                     @if ($result)
                                         @foreach ($result as $row)
                                             <tr id="row_{{ $row->ID }}">
-                                                <td style="font-size:36px;"><i class="fa-solid {{ $row->i_class }}"></i></td>
+                                                <td style="font-size:36px;"><i class="fas {{ $row->i_class }}"></i></td>
                                                 <td>{{ $row->name }}</td>
                                                 <td>{{ $row->link }}</td>
                                                 <td> @php
@@ -113,7 +113,7 @@
                 </div>
             </div>
         </section>
-    </aside>
+    </div>
     <div class="modal fade" id="add_page_form" data-backdrop="static">
         <div class="modal-dialog modal-lg">
             <form name="frm_cms" id="frm_cms" enctype="multipart/form-data" role="form" method="post"

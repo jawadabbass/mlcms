@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers\Back;
-
 use App\Models\Back\Menu;
 use Illuminate\Http\Request;
 use App\Models\Back\Category;
@@ -16,7 +14,6 @@ use App\Models\Back\ModuleDataImage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Laminas\Diactoros\Module;
-
 class ModuleManageController extends Controller
 {
     /**
@@ -51,7 +48,7 @@ class ModuleManageController extends Controller
                 $moduleMembers = $moduleMembers->paginate(100);
             }
             $menu_types = MenuType::orderBy('id', 'ASC')->get();
-            $title = config('Constants.SITE_NAME') . ': ' . strtoupper($module->type) . ' Management';
+            $title = FindInsettingArr('business_name') . ': ' . strtoupper($module->type) . ' Management';
             $msg = '';
             $allParentCategory = Category::orderBy('orderr', 'ASC')->get()->toArray();
             return view('back.module.index', compact('module', 'moduleMembers', 'menu_types', 'title', 'msg', 'allParentCategory'));
@@ -66,11 +63,12 @@ class ModuleManageController extends Controller
     public function create($type, Request $request)
     {
         $id = $request->id;
-        $current_status = $request->current_status;
         if ($id == '') {
             echo 'error';
             exit;
         }
+        $moduleData = CmsModuleData::find($id);
+        $current_status = $moduleData->sts;
         if ($current_status == '') {
             echo 'invalid current status provided.';
             exit;
@@ -83,7 +81,6 @@ class ModuleManageController extends Controller
             $new_status = 'active';
             $menuTableStatus = 'Y';
         }
-        $moduleData = CmsModuleData::find($id);
         if ($moduleData->cms_module_id == 48) {
             if ($moduleData->is_shared_on_pp == 'Yes') {
                 $newJobSts = ($new_status == 'blocked') ? 'inactive' : 'active';
@@ -150,7 +147,6 @@ class ModuleManageController extends Controller
             /**************************************** */
             $this->updateMoreImagesModuleDataId($request, $moduleData->id);
             /**************************************** */
-
             $insert = $moduleData->id;
             $menu_types = $request->menu_type;
             if (isset($menu_types) && !empty($menu_types)) {
@@ -173,9 +169,9 @@ class ModuleManageController extends Controller
         }
         return response()->json(['error' => $validator->errors()->all()]);
     }
-
-    private function updateMoreImagesModuleDataId($request, $moduleDataId){
-        ModuleDataImage::where('session_id', 'like', $request->session_id)->update(['module_data_id'=>$moduleDataId,'session_id'=>NULL ]);
+    private function updateMoreImagesModuleDataId($request, $moduleDataId)
+    {
+        ModuleDataImage::where('session_id', 'like', $request->session_id)->update(['module_data_id' => $moduleDataId, 'session_id' => NULL]);
     }
     /**
      * Display the specified resource.
@@ -266,7 +262,6 @@ class ModuleManageController extends Controller
             $moduleData->featured_img_title = $request->featured_img_title;
             $moduleData->featured_img_alt = $request->featured_img_alt;
             $moduleData->save();
-
             $insert = $moduleData->id;
             $menu_types = $request->menu_type;
             $menus = Menu::where('menu_id', $insert)->get();
@@ -335,10 +330,9 @@ class ModuleManageController extends Controller
     {
         $moduleData = CmsModuleData::find($id);
         $module = CmsModule::find($moduleData->cms_module_id);
-
         $moduleDataImages = ModuleDataImage::where('module_data_id', $id)->get();
         foreach ($moduleDataImages as $image) {
-            ImageUploader::deleteImage('module/'.$image->module_type, $image->image_name, true);
+            ImageUploader::deleteImage('module/' . $image->module_type, $image->image_name, true);
             $image->delete();
         }
         if (!empty($moduleData->featured_img) && file_exists('uploads/module/' . $module->type . '/' . $moduleData->featured_img)) {
@@ -403,7 +397,7 @@ class ModuleManageController extends Controller
             $module = CmsModule::where('type', $type)->first();
             $moduleMembers = CmsModuleData::where('cms_module_id', $module->id)
                 ->orderBy('item_order', 'ASC')->get();
-            $title = config('Constants.SITE_NAME') . ': ' . strtoupper($module->type) . ' Management';
+            $title = FindInsettingArr('business_name') . ': ' . strtoupper($module->type) . ' Management';
             $msg = '';
             return view('back.module.order', compact('module', 'moduleMembers', 'title', 'msg'));
         }
@@ -433,7 +427,7 @@ class ModuleManageController extends Controller
             }
         }
         $menu_types = MenuType::orderBy('id', 'ASC')->get();
-        $title = config('Constants.SITE_NAME') . ': ' . strtoupper($module->type) . ' Management';
+        $title = FindInsettingArr('business_name') . ': ' . strtoupper($module->type) . ' Management';
         $msg = '';
         $allParentCategory = Category::orderBy('orderr', 'ASC')->get()->toArray();
         // >>>>>>>>>>>>>>>>> **Start** Media Section
@@ -545,7 +539,7 @@ class ModuleManageController extends Controller
         }
         $menu_types = MenuType::orderBy('id', 'ASC')->get();
         $menu = Menu::where('menu_id', $id)->get();
-        $title = config('Constants.SITE_NAME') . ': ' . strtoupper($module->type) . ' Management';
+        $title = FindInsettingArr('business_name') . ': ' . strtoupper($module->type) . ' Management';
         $msg = '';
         $allParentCategory = Category::orderBy('orderr', 'ASC')->get()->toArray();
         // >>>>>>>>>>>>>>>>> **Start** Media Section
@@ -557,7 +551,6 @@ class ModuleManageController extends Controller
             ->whereRaw("find_in_set('" . $id . "',pages_id)")
             ->get();
         $templates = Template::all();
-
         $moduleDataImages = ModuleDataImage::where('module_data_id', $id)->get();
         return view('back.module.edit_view', compact('module', 'moduleData', 'menu_types', 'title', 'msg', 'allParentCategory', 'menu', 'albumsObj', 'filesObj', 'filesExts', 'widget', 'templates', 'moduleDataImages'));
     }
@@ -709,7 +702,6 @@ class ModuleManageController extends Controller
         $data->save();
         return redirect('adminmedia/module/careers/add');
     }
-
     public function ajax_crop_module_data_img(Request $request)
     {
         $crop_x = (int) $request->crop_x;
@@ -719,14 +711,12 @@ class ModuleManageController extends Controller
         $fileName = $request->source_image;
         $imageId = $request->image_id;
         $moduleDataImageObj = ModuleDataImage::find($imageId);
-
         $folder = 'module/' . $moduleDataImageObj->module_type;
         ImageUploader::CropImageAndMakeThumb($folder . '/', $fileName, $crop_width, $crop_height, $crop_x, $crop_y);
         $data['cropped_image'] = $fileName;
         echo json_encode($data);
         exit;
     }
-
     public function getModuleDataImageAltTitle(Request $request)
     {
         $imageObj = ModuleDataImage::find($request->image_id);
@@ -735,14 +725,12 @@ class ModuleManageController extends Controller
             'image_title' => $imageObj->image_title,
         ]);
     }
-
     public function saveModuleDataImageAltTitle(Request $request)
     {
         $imageObj = ModuleDataImage::find($request->image_id);
         $imageObj->image_alt = $request->image_alt;
         $imageObj->image_title = $request->image_title;
         $imageObj->update();
-
         return response([
             'image_alt' => $imageObj->image_alt,
             'image_title' => $imageObj->image_title,

@@ -9,12 +9,12 @@
 @endsection
 
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <section class="content-header">
             <div class="row">
                 <div class="col-md-8 col-sm-6">
                     <ol class="breadcrumb">
-                        <li><a href="{{ admin_url() }}"> <i class="fa-solid fa-dashboard"></i> Home </a></li>
+                        <li><a href="{{ admin_url() }}"> <i class="fas fa-tachometer-alt"></i> Home </a></li>
                         <li class="active">Manage Message Templates</li>
                     </ol>
                 </div>
@@ -46,7 +46,7 @@
             <div class="text-end topBtns">
 
                 <button data-bs-toggle="modal" data-bs-target="#AddserviceModal" class="btn btn-success"><i
-                        class="fa-solid fa-plus"></i> Add New Template</button>
+                        class="fas fa-plus"></i> Add New Template</button>
 
 
 
@@ -73,10 +73,10 @@
 
                                     <td>
                                         <a class="btn-sm btn-success my-a" href="{{ route('message.edit', $row->id) }}"
-                                            id="update_btn" data-id="{{ $row->id }}"><i class="fa-solid fa-pencil"
+                                            id="update_btn" data-id="{{ $row->id }}"><i class="fas fa-edit"
                                                 aria-hidden="true"></i> Edit</a>
 
-                                        <!--<a class="btn-sm btn-danger my-a"  href="javascript:;" onClick="delete_record({{ $row->id }})"><i class="fa-solid fa-trash"></i> Delete</a> -->
+                                        <!--<a class="btn-sm btn-danger my-a"  href="javascript:;" onClick="delete_record({{ $row->id }})"><i class="fas fa-trash"></i> Delete</a> -->
                                     </td>
 
                                 </tr>
@@ -90,7 +90,7 @@
                 </table>
             </div>
         </section>
-    </aside>
+    </div>
 
 
     <!--------- ADD Start Modal Here------->

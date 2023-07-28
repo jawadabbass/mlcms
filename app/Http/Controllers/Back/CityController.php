@@ -22,7 +22,7 @@ class CityController extends Controller
      */
     public function index()
     {
-        $title = config('Constants.SITE_NAME') . ': Cities Management';
+        $title = FindInsettingArr('business_name') . ': Cities Management';
         $msg = '';
         return view('back.cities.index', compact('title', 'msg'));
     }
@@ -61,10 +61,10 @@ class CityController extends Controller
 					</button>
 					<ul class="dropdown-menu">
 						<li>
-							<a href="' . route('cities.edit', ['cityObj' => $cities->id]) . '" class="text-info"><i class="fa-solid fa-pencil" aria-hidden="true"></i>Edit</a>
+							<a href="' . route('cities.edit', ['cityObj' => $cities->id]) . '" class="text-info"><i class="fas fa-edit" aria-hidden="true"></i>Edit</a>
 						</li>
 						<li>
-							<a href="javascript:void(0);" onclick="deleteCity(' . $cities->id . ');" class="text-danger"><i class="fa-solid fa-trash" aria-hidden="true"></i>Delete</a>
+							<a href="javascript:void(0);" onclick="deleteCity(' . $cities->id . ');" class="text-danger"><i class="fas fa-trash" aria-hidden="true"></i>Delete</a>
 						</li>
 					</ul>
 				</div>';
@@ -86,7 +86,7 @@ class CityController extends Controller
      */
     public function create()
     {
-        $title = config('Constants.SITE_NAME') . ': Cities Management';
+        $title = FindInsettingArr('business_name') . ': Cities Management';
         $msg = '';
         $cityObj = new City();
         return view('back.cities.create')
@@ -130,7 +130,7 @@ class CityController extends Controller
      */
     public function edit(City $cityObj)
     {
-        $title = config('Constants.SITE_NAME') . ': Cities Management';
+        $title = FindInsettingArr('business_name') . ': Cities Management';
         $msg = '';
         return view('back.cities.edit')
             ->with('cityObj', $cityObj)
@@ -178,7 +178,7 @@ class CityController extends Controller
 
     public function sortCities()
     {
-        $title = config('Constants.SITE_NAME') . ': Cities Management';
+        $title = FindInsettingArr('business_name') . ': Cities Management';
         $msg = '';
         return view('back.cities.sort')->with('title', $title)
             ->with('msg', $msg);
@@ -193,7 +193,7 @@ class CityController extends Controller
         $str = '<ul id="sortable">';
         if ($cities != null) {
             foreach ($cities as $cityObj) {
-                $str .= '<li class="ui-city-default" id="' . $cityObj->id . '"><i class="fa-solid fa-sort"></i> ' . $cityObj->city_name . '</li>';
+                $str .= '<li class="ui-city-default" id="' . $cityObj->id . '"><i class="fas fa-sort"></i> ' . $cityObj->city_name . '</li>';
             }
         }
         echo $str . '</ul>';

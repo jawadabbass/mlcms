@@ -3,12 +3,12 @@
     <link href="{{ base_url() . 'module/settings/admin/css/settings.css' }}" rel="stylesheet" type="text/css" />
 @endsection
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <section class="content-header">
             <div class="row">
                 <div class="col-md-8 col-sm-6">
                     <ol class="breadcrumb">
-                        <li><a href=" {{ admin_url() }}"><i class="fa-solid fa-gauge"></i> Home</a></li>
+                        <li><a href=" {{ admin_url() }}"><i class="fas fa-gauge"></i> Home</a></li>
                         <li class="active">Manage Contact Page</li>
                     </ol>
                 </div>
@@ -73,7 +73,7 @@
                     </div>
                     <div class="col-md-4 col-sm-4">
                         <div class="text-end"><a data-bs-toggle="modal" id="add_new_address" class="sitebtn"
-                                data-bs-target="#myModal" href="javascript:;"><i class="fa-solid fa-plus"></i>
+                                data-bs-target="#myModal" href="javascript:;"><i class="fas fa-plus"></i>
                                 Add New Office Address</a></div>
                     </div>
                 </div>
@@ -95,7 +95,7 @@
                                     </a></h4>
                                 @if ($val->type != 'main')
                                     <div class="remove"><a onClick="deleteAddress({{ $val->ID }})" href="#"> <i
-                                                class="fa-solid fa-times" title="Delete"></i> </a></div>
+                                                class="fas fa-times" title="Delete"></i> </a></div>
                                 @endif
                             </div>
                             <div id="{{ 'collapse' . $cnt }}" class="panel-collapse collapse">
@@ -111,10 +111,10 @@
                                                         <div class="mb-2">
                                                             <label for="email">Name of Business </label>
                                                             <input type="text" class="form-control"
-                                                                id="employment_network_name" name="employment_network_name"
-                                                                value=" {{ old('employment_network_name') ? old('employment_network_name') : $val->employment_network_name }}">
-                                                            @if ($errors->has('employment_network_name'))
-                                                                {{ $errors->first('employment_network_name') }}
+                                                                id="business_name" name="business_name"
+                                                                value=" {{ old('business_name') ? old('business_name') : $val->business_name }}">
+                                                            @if ($errors->has('business_name'))
+                                                                {{ $errors->first('business_name') }}
                                                             @endif
                                                         </div>
                                                     </div>
@@ -223,7 +223,7 @@
                                     
                                         if (count($cc_emails) > 0) {
                                             for ($i = 0; $i < count($cc_emails); $i++) {
-                                                echo '<span  class="cc_email_display">' . $cc_emails[$i] . '<i onclick="remove_to_emails(this, \'to_email\');" class="fa-solid fa-times" aria-hidden="true"></i></span>';
+                                                echo '<span  class="cc_email_display">' . $cc_emails[$i] . '<i onclick="remove_to_emails(this, \'to_email\');" class="fas fa-times" aria-hidden="true"></i></span>';
                                             }
                                         }
                                     }
@@ -248,7 +248,7 @@
                                     
                                         if (count($cc_emails) > 0) {
                                             for ($i = 0; $i < count($cc_emails); $i++) {
-                                                echo '<span  class="cc_email_display">' . $cc_emails[$i] . '<i onclick="remove_cc_emails(this, \'cc_email\');" class="fa-solid fa-times" aria-hidden="true"></i></span>';
+                                                echo '<span  class="cc_email_display">' . $cc_emails[$i] . '<i onclick="remove_cc_emails(this, \'cc_email\');" class="fas fa-times" aria-hidden="true"></i></span>';
                                             }
                                         }
                                     }
@@ -271,7 +271,7 @@
                                     
                                         if (count($bcc_email) > 0) {
                                             for ($i = 0; $i < count($bcc_email); $i++) {
-                                                echo '<span class="bcc_email_display">' . $bcc_email[$i] . '<i onclick="remove_bcc_emails(this, \'bcc_email\');" class="fa-solid fa-times" aria-hidden="true"></i></span>';
+                                                echo '<span class="bcc_email_display">' . $bcc_email[$i] . '<i onclick="remove_bcc_emails(this, \'bcc_email\');" class="fas fa-times" aria-hidden="true"></i></span>';
                                             }
                                         }
                                     }
@@ -312,7 +312,7 @@
                     </div>
                 </div>
         </section>
-    </aside>
+    </div>
     <div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
