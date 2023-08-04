@@ -625,6 +625,7 @@ class ClientController extends Controller
         $returnMsg = 'The message has been sent successfully!';
         $returnStatus = '200';
 
+        $newSmsToArray = [];
         foreach ($smsToArray as $phone) {
             $phone = str_replace(['+', '-'], [''], $phone);
             if (Str::length($phone) == 10) {
