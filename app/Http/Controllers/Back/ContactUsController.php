@@ -226,8 +226,12 @@ class ContactUsController extends Controller
     {
         $title = config("Constants.SITE_NAME") . ': Contact Us Page';
         $result = ContactUs::find($id);
+
+        $pre = ContactUs::where('id', '<', $id)->orderBy('id', 'DESC')->first();
+        $next = ContactUs::where('id', '>', $id)->orderBy('id', 'ASC')->first();
+
         $history = ContactLeadHistory::where('contact_id', $id)->with(['admin'])->paginate(10);
-        return view('back.contactus.history', compact('result', 'title', 'history'));
+        return view('back.contactus.history', compact('result', 'title', 'history','pre', 'next'));
     }
     /**
      * Show the form for editing the specified resource.

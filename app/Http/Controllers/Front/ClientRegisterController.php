@@ -72,7 +72,7 @@ class ClientRegisterController extends Controller
         $option = '';
         $option .= '<option selected disabled>Select City</option>';
         foreach ($cities as $city) {
-            $option .= '<option value="' . $city->city_id . '">' . $city->city_name . '</option>';
+            $option .= '<option value="' . $city->id . '">' . $city->city_name . '</option>';
         }
         echo $option;
     }

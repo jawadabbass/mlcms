@@ -25,7 +25,7 @@
                     $currentURL = str_replace(admin_url(), '', $currentURL);
                     $arrLinks = [];
                     $beforeLinks = \App\Helpers\DashboardLinks::$beforeLeftModuleLinks;
-                    $arrLinksModule = \App\Helpers\DashboardLinks::get_cms_modules();
+                    $arrLinksModule = \App\Helpers\DashboardLinks::get_cms_modules('left');
                     $afterLinks = \App\Helpers\DashboardLinks::$afterLeftModuleLinks;
                     $arrLinks = array_merge($beforeLinks, $arrLinksModule, $afterLinks);
                 @endphp

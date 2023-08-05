@@ -120,9 +120,9 @@ class DashboardLinks
         ],
     ];
 
-    public static function get_cms_modules()
+    public static function get_cms_modules($left_or_dashboard)
     {
-        $data = CmsModule::where('show_in_admin_menu', 1)->get();
+        $data = CmsModule::where('show_in_admin_menu', 1)->where('show_icon_in', 'like', '%show_icon_in_'.$left_or_dashboard.'%')->get();
         $arr = [];
         if (count($data) > 0) {
             foreach($data as $moduleObj){

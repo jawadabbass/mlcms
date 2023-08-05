@@ -24,13 +24,14 @@
                         <div class="box-header">
                             <h3 class="box-title">
                                 Details of Mr /Mr's <code> {!! $result->name !!}</code>
+                                <button onclick="editContactRequest({{ $result->id }});"
+                                    class="btn btn-warning">Edit</button>
                             </h3>
                         </div>
                         <div class="row">
                             <div class="col-md-5 table-responsive">
-                              <button onclick="editContactRequest({{ $result->id }});"
-                                 class="btn btn-warning">Edit</button>
-                                 <p class="alert alert-success mt-2 hide" id="editContactRequestMessageAlert"></p>
+                                <p class="alert alert-success mt-2" style="display: none;"
+                                    id="editContactRequestMessageAlert"></p>
                                 <table class="table border ">
                                     <tbody>
                                         <tr>
@@ -76,8 +77,28 @@
                                         <div id="tracking-pre"></div>
                                         <div id="tracking">
                                             <div class="text-center tracking-status-intransit">
-                                                <p class="tracking-status text-tight"><i class="fas fa-history"
-                                                        aria-hidden="true"></i> History</p>
+                                                <div class="row">
+                                                    <div class="col-md-4 text-left pl-4">
+                                                        @if ($pre)
+                                                            <a href="{{ route('contact_request.show', [$pre->id]) }}"
+                                                                class="btn btn-info"><i
+                                                                    class="fa-solid fa-arrow-circle-left"></i></a>
+                                                        @endif
+                                                    </div>
+                                                    <div class="col-md-4 text-center">
+                                                        <p class="tracking-status text-tight">
+                                                            <span><i class="fa-solid fa-history" aria-hidden="true"></i>
+                                                                History</span>
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-md-4 text-right pr-4">
+                                                        @if ($next)
+                                                            <a href="{{ route('contact_request.show', [$next->id]) }}"
+                                                                class="btn btn-info"><i
+                                                                    class="fa-solid fa-arrow-circle-right"></i></a>
+                                                        @endif
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="tracking-list">
                                                 @foreach ($history as $key => $val)
@@ -125,19 +146,19 @@
     </div>
 
     <div class="modal fade" id="editContactRequestModal" tabindex="-1" role="dialog"
-                aria-labelledby="editContactRequestModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="editContactRequestModalLabel">Edit Contact Request</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body" id="editContactRequestModalBody">
-                            @include('back.contactus.edit_contact_request')
-                        </div>
-                    </div>
+        aria-labelledby="editContactRequestModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editContactRequestModalLabel">Edit Contact Request</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="editContactRequestModalBody">
+                    @include('back.contactus.edit_contact_request')
                 </div>
             </div>
+        </div>
+    </div>
 @endsection
 @section('beforeBodyClose')
     <style type="text/css">
@@ -307,7 +328,7 @@
         }
     </style>
     <script>
-      function editContactRequest(id) {
+        function editContactRequest(id) {
             fetch('{{ admin_url() }}get_contact_request_to_edit/' + id)
                 .then(contatUsRequest => {
                     return contatUsRequest.json();
@@ -337,7 +358,7 @@
                     return response.json();
                 })
                 .then(jsonResponse => {
-                    $('#editContactRequestMessageAlert').text(jsonResponse.message).removeClass('hide');
+                    $('#editContactRequestMessageAlert').text(jsonResponse.message).show('slow');
                     contatUsRequest = jsonResponse.contatUsRequestObj;
 
                     $('#contact_request_details').find('#name').text(getData(contatUsRequest.name));
@@ -354,7 +375,7 @@
         }
 
         function getData(data) {
-            return (data == null)? '':data;
+            return (data == null) ? '' : data;
         }
 
         function getFormattedDate(date) {

@@ -152,13 +152,18 @@ class ClientController extends Controller
     public function show($id)
     {
         $client = Client::with(['user', 'state'])->find($id);
-        $title = FindInsettingArr('business_name') . ': Clients | Edit';
+        $title = config('Constants.SITE_NAME') . ': Clients | Edit';
+        $all_leads =Client::orderBy('id')->get();
+        
+        $pre = Client::where('id', '<', $id)->orderBy('id', 'DESC')->first();
+        $next = Client::where('id', '>', $id)->orderBy('id', 'ASC')->first();
+        
         $history = ClientsHistory::where('client_id', $id)->with(['user'])->paginate(10);
         $conditions =  CmsModuleData::where('sts', 'active')
             ->where('cms_module_id', 38)
             ->orderBy('item_order', 'ASC')
             ->get();
-        return view('back.clients.show', compact('client', 'title', 'history', 'conditions'));
+        return view('back.clients.show', compact('client', 'title', 'history', 'conditions','pre', 'next'));
     }
     public function status(Request $request)
     {

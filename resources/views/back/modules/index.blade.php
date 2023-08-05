@@ -1,6 +1,6 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('beforeHeadClose')
-@include('back.common_views.switch_css')
+    @include('back.common_views.switch_css')
 @endsection
 @section('content')
     <div class="content-wrapper pl-3 pr-2">
@@ -52,6 +52,19 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
                         <div class="box-body table-responsive">
                             <table id="example2" class="table table-bordered table-hover">
                                 <thead>
@@ -73,23 +86,22 @@
                                                 @if ($module->id == 1)
                                                     Yes
                                                 @else
-                                                <label class="switch">
-                                                    <input type="checkbox" name="{{ 'sts_' . $module->id }}"
-                                                        id="{{ 'sts_' . $module->id }}" <?php echo $module->show_in_admin_menu == 1 ? ' checked' : ''; ?>
-                                                        value="<?php echo $module->show_in_admin_menu; ?>"
-                                                        onClick="update_cmsmodule_status_toggle({{ $module->id }})">
-                                                    <div class="slider round">
-                                                        <strong class="on">Yes</strong>
-                                                        <strong class="off">No</strong>
-                                                    </div>
-                                                </label>
+                                                    <label class="switch">
+                                                        <input type="checkbox" name="{{ 'sts_' . $module->id }}"
+                                                            id="{{ 'sts_' . $module->id }}" <?php echo $module->show_in_admin_menu == 1 ? ' checked' : ''; ?>
+                                                            value="<?php echo $module->show_in_admin_menu; ?>"
+                                                            onClick="update_cmsmodule_status_toggle({{ $module->id }})">
+                                                        <div class="slider round">
+                                                            <strong class="on">Yes</strong>
+                                                            <strong class="off">No</strong>
+                                                        </div>
+                                                    </label>
                                                 @endif
                                             </td>
                                             <td>
                                                 <a href="#" data-bs-toggle="modal" data-bs-target="#PageOptionsModal"
                                                     class="btn-sm btn btn-info EditPageOptions"
                                                     data-id="{{ $module->id }}">Page Options</a>
-
                                                 <a href="javascript:;"
                                                     onClick="load_cmsmodule_edit_form({{ $module->id }});"
                                                     class="btn btn-success btn-sm">Edit</a>
@@ -124,7 +136,6 @@
                     <div class="modal-header">
                         <h4 class="modal-title">Add New CMS Module</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-
                         </button>
                     </div>
                     <div class="modal-body">
@@ -141,11 +152,13 @@
                             </div>
                             <div class="mb-2">
                                 <label class="form-label">Type</label>
-                                <input type="text" class="form-control" id="type" name="type" placeholder="Type">
+                                <input type="text" class="form-control" id="type" name="type"
+                                    placeholder="Type">
                             </div>
                             <div class="mb-2" style="display:none;">
                                 <label class="form-label">Description</label>
-                                <textarea id="editor1" name="editor1" class="form-control" rows="8" cols="80" placeholder="Description"></textarea>
+                                <textarea id="editor1" name="editor1" class="form-control" rows="8" cols="80"
+                                    placeholder="Description"></textarea>
                             </div>
                             <div class="mb-2">
                                 <label class="form-label">Additional Fields (Optional)</label>
@@ -299,13 +312,25 @@
                             </div>
                             <div class="mb-2">
                                 <label class="form-label">Fontawesome Icon:</label>
-                                <input class="form-control icp icp-auto" name="module_fontawesome_icon" id="module_fontawesome_icon" value="" type="text" autocomplete="off" data-placement="topRight" placeholder="fontawsome: fa-youtube"/>
+                                <input class="form-control icp icp-auto" name="module_fontawesome_icon"
+                                    id="module_fontawesome_icon" value="" type="text" autocomplete="off"
+                                    data-placement="topRight" placeholder="fontawsome: fa-youtube" />
                             </div>
                             <div class="mb-2">
-                                <label class="form-label">Access Level:</label><br/>
-                                <label class="form-label"><input type="checkbox" name="access_level[]" value="super-admin" checked> Super Admin</label><br/>
-                                <label class="form-label"><input type="checkbox" name="access_level[]" value="normal-admin" checked> Normal Admin</label><br/>
-                                <label class="form-label"><input type="checkbox" name="access_level[]" value="reps"> Reps</label><br/>
+                                <label class="form-label">Access Level:</label><br />
+                                <label class="form-label"><input type="checkbox" name="access_level[]"
+                                        value="super-admin" checked> Super Admin</label><br />
+                                <label class="form-label"><input type="checkbox" name="access_level[]"
+                                        value="normal-admin" checked> Normal Admin</label><br />
+                                <label class="form-label"><input type="checkbox" name="access_level[]" value="reps">
+                                    Reps</label><br />
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">Show Icon:</label><br />
+                                <label class="form-label"><input type="checkbox" name="show_icon_in[]"
+                                        value="show_icon_in_left" checked> Left Side</label><br />
+                                <label class="form-label"><input type="checkbox" name="show_icon_in[]"
+                                        value="show_icon_in_dashboard" checked> Dashboard</label><br />
                             </div>
                             <div style="clear:both"></div>
                         </div>
@@ -329,7 +354,6 @@
                     <div class="modal-header">
                         <h4 class="modal-title">Edit Page Options</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-
                         </button>
                     </div>
                     <div class="modal-body">
@@ -376,7 +400,6 @@
                                 <option value="0">No</option>
                             </select>
                         </div>
-
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
@@ -384,7 +407,6 @@
                     </div>
                 </form>
             </div>
-
         </div>
     </div>
     <!---- New Modal Form for Page options ------->
@@ -398,7 +420,6 @@
                     <div class="modal-header">
                         <h4 class="modal-title">Edit CMS Module</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-
                         </button>
                     </div>
                     <div class="modal-body">
@@ -546,7 +567,7 @@
                                 <label class="form-label">Show Follow Checkbox </label>
                                 <select class="form-control" id="edit_show_follow" name="show_follow">
                                     <option value="1">Yes</option>
-                                    <option value="0">No</option>                                    
+                                    <option value="0">No</option>
                                 </select>
                             </div>
                             <div class="mb-2">
@@ -582,13 +603,26 @@
                             </div>
                             <div class="mb-2">
                                 <label class="form-label">Fontawesome Icon:</label>
-                                <input class="form-control icp icp-auto" name="module_fontawesome_icon" id="edit_module_fontawesome_icon" value="" type="text" autocomplete="off" data-placement="topRight" placeholder="fontawsome: fa-youtube"/>
+                                <input class="form-control icp icp-auto" name="module_fontawesome_icon"
+                                    id="edit_module_fontawesome_icon" value="" type="text" autocomplete="off"
+                                    data-placement="topRight" placeholder="fontawsome: fa-youtube" />
                             </div>
                             <div class="mb-2">
-                                <label class="form-label">Access Level:</label><br/>
-                                <label class="form-label"><input type="checkbox" name="access_level[]" id="super-admin" value="super-admin"> Super Admin</label><br/>
-                                <label class="form-label"><input type="checkbox" name="access_level[]" id="normal-admin" value="normal-admin"> Normal Admin</label><br/>
-                                <label class="form-label"><input type="checkbox" name="access_level[]"  id="reps" value="reps"> Reps</label><br/>
+                                <label class="form-label">Access Level:</label><br />
+                                <label class="form-label"><input type="checkbox" name="access_level[]" id="super-admin"
+                                        value="super-admin"> Super Admin</label><br />
+                                <label class="form-label"><input type="checkbox" name="access_level[]" id="normal-admin"
+                                        value="normal-admin"> Normal Admin</label><br />
+                                <label class="form-label"><input type="checkbox" name="access_level[]" id="reps"
+                                        value="reps"> Reps</label><br />
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">Show Icon:</label><br />
+                                <label class="form-label"><input type="checkbox" name="show_icon_in[]"
+                                        id="show_icon_in_left" value="show_icon_in_left"> Left Side</label><br />
+                                <label class="form-label"><input type="checkbox" name="show_icon_in[]"
+                                        id="show_icon_in_dashboard" value="show_icon_in_dashboard">
+                                    Dashboard</label><br />
                             </div>
                             <input type="hidden" name="cmsmodule_id" id="cmsmodule_id" />
                             <div style="clear:both"></div>

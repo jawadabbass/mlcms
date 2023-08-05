@@ -69,7 +69,7 @@
                         $currentURL = str_replace(base_url(), '', $currentURL);
                         $arrLinks = [];
                         $beforeLinks = \App\Helpers\DashboardLinks::$beforeModuleLinks;
-                        $arrLinksModule = \App\Helpers\DashboardLinks::get_cms_modules();
+                        $arrLinksModule = \App\Helpers\DashboardLinks::get_cms_modules('dashboard');
                         $afterLinks = \App\Helpers\DashboardLinks::$afterModuleLinks;
                         $arrLinks = array_merge($beforeLinks, $arrLinksModule, $afterLinks);
                         $bgClasses = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'dark'];

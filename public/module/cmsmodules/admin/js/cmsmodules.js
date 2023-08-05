@@ -73,6 +73,19 @@ function load_cmsmodule_edit_form(id) {
         if (accessLevelArray[2] != '') {
             $('#' + accessLevelArray[2]).prop('checked', true);
         }
+
+        /******************* */
+        let show_icon_in = data.show_icon_in;
+        const show_icon_in_array = show_icon_in.split(",");
+        console.log(show_icon_in);
+        console.log(show_icon_in_array);
+        if (show_icon_in_array[0] != '') {
+            $('#' + show_icon_in_array[0]).prop('checked', true);
+        }
+        if (show_icon_in_array[1] != '') {
+            $('#' + show_icon_in_array[1]).prop('checked', true);
+        }
+        /******************* */
         
         if (data.crop_image == 'Yes') {
             $('#edit_crop_image').prop('checked', true);

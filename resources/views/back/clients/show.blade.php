@@ -23,7 +23,6 @@
                         <div class="box-header">
                             <h3 class="box-title">
                                 Details of Mr /Mr's <code> {!! $client->name !!}</code>
-                                <br/>
                                 <a
                                     href="{{ admin_url() }}manage_clients/{{ $client->id }}/edit"
                                     class="btn btn-info  btn-sm"><i class="fas fa-edit-square-o"
@@ -64,7 +63,7 @@
                                         </tr>
                                         <tr>
                                             <td>City</td>
-                                            <td>{{ $client->city->city_name }}</td>
+                                            <td>{{ $client->clientCity->city_name }}</td>
                                         </tr>
                                         <tr>
                                             <td>Zip Code</td>
@@ -112,8 +111,28 @@
                                         <div id="tracking-pre"></div>
                                         <div id="tracking">
                                             <div class="text-center tracking-status-intransit">
-                                                <p class="tracking-status text-tight"><i class="fas fa-history"
-                                                        aria-hidden="true"></i> History</p>
+                                                <div class="row">
+                                                    <div class="col-md-4 text-left pl-4">
+                                                        @if ($pre)
+                                                            <a href="{{ route('manage_clients.show', [$pre->id]) }}"
+                                                                class="btn btn-info"><i
+                                                                    class="fa-solid fa-arrow-circle-left"></i></a>
+                                                        @endif
+                                                    </div>
+                                                    <div class="col-md-4 text-center">
+                                                        <p class="tracking-status text-tight">
+                                                            <span><i class="fa-solid fa-history" aria-hidden="true"></i>
+                                                                History</span>
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-md-4 text-right pr-4">
+                                                        @if ($next)
+                                                            <a href="{{ route('manage_clients.show', [$next->id]) }}"
+                                                                class="btn btn-info"><i
+                                                                    class="fa-solid fa-arrow-circle-right"></i></a>
+                                                        @endif
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="tracking-list">
                                                 @foreach ($history as $key => $val)

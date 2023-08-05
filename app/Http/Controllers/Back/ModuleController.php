@@ -44,6 +44,9 @@ class ModuleController extends Controller
         $this->validate($request, [
             'title' => 'required',
             'term' => 'required',
+            'module_fontawesome_icon' => 'required',
+            'access_level' => 'required',
+            'show_icon_in' => 'required',
         ]);
         $cmsModule = new CmsModule();
         $cmsModule->title = $request->title;
@@ -81,6 +84,7 @@ class ModuleController extends Controller
         $cmsModule->show_featured_image = $request->show_featured_image;
         $cmsModule->module_fontawesome_icon = $request->module_fontawesome_icon;
         $cmsModule->access_level = implode(',', $request->input('access_level', ['super-admin','normal-admin']));
+        $cmsModule->show_icon_in = implode(',', $request->input('show_icon_in', ['show_icon_in_left','show_icon_in_dashboard']));
         $cmsModule->show_in_admin_menu = 0;
         $cmsModule->save();
         // Session::flash('added_action', true);
@@ -151,6 +155,9 @@ class ModuleController extends Controller
         $this->validate($request, [
             'title' => 'required',
             'term' => 'required',
+            'module_fontawesome_icon' => 'required',
+            'access_level' => 'required',
+            'show_icon_in' => 'required',
         ]);
         $cmsModule = CmsModule::find($id);
         $cmsModule->title = $request->title;
@@ -182,6 +189,7 @@ class ModuleController extends Controller
         $cmsModule->show_featured_image = $request->show_featured_image;
         $cmsModule->module_fontawesome_icon = $request->module_fontawesome_icon;
         $cmsModule->access_level = implode(',', $request->input('access_level', ['super-admin','normal-admin']));
+        $cmsModule->show_icon_in = implode(',', $request->input('show_icon_in'));
         $cmsModule->show_descp = $request->show_descp;
         $cmsModule->save();
         Session::flash('update_action', true);

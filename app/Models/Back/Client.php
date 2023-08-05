@@ -43,11 +43,11 @@ class Client extends Authenticatable
 
     function state()
     {
-        return $this->belongsTo('App\Models\Back\State', 'state_id', 'id');
+        return $this->belongsTo('App\Models\Back\State', 'state_id', 'id')->withDefault();
     }
 
-    function city()
+    function clientCity()
     {
-        return $this->belongsTo('App\Models\Back\City', 'city_id', 'id');
+        return $this->belongsTo('App\Models\Back\City', 'city_id', 'id')->withDefault();
     }
 }

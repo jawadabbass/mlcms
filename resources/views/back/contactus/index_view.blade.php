@@ -8,9 +8,9 @@
                     <div class="animation_ul" id="bell_reset">
                         <a href="{{ admin_url() }}"> <i class="fas fa-tachometer-alt"></i> Home </a> - Contact Leads
                         @if ($contact > 0)
-                        <span class="ringing-bell blink_me" style="color:red;"> <i
-                                class='fas fa-bell faa-ring animated fa-2x'></i>
-                        </span>
+                            <span class="ringing-bell blink_me" style="color:red;"> <i
+                                    class='fas fa-bell faa-ring animated fa-2x'></i>
+                            </span>
                         @endif
                     </div>
                 </div>
@@ -53,6 +53,9 @@
                             <form method="get" action="{{ route('contact_request.index') }}" id="search_form">
                                 <input type="hidden" name="read_lead" id="read_lead"
                                     value="{{ request()->input('read_lead', 2) }}" />
+                                <input type="hidden" name="previous_sts" id="previous_sts" value="<?php if (isset($_GET['dates'])) {
+                                    echo $_GET['dates'];
+                                } ?>">
                                 <div class="row" onKeyPress="return checkSubmit(event)">
                                     <div class="col-md-3">
                                         <input type="text" name="name" class="form-control"
@@ -60,18 +63,13 @@
                                                 echo $_GET['name'];
                                             } ?>'>
                                     </div>
-                                    <input type="hidden" name="previous_sts" id="previous_sts" value="<?php if (isset($_GET['dates'])) {
-                                        echo $_GET['dates'];
-                                    } ?>">
                                     <div class="col-md-3 form-group">
                                         <input type="text" name="dates" id="reportrange" placeholder="All"
                                             class="form-control">
                                     </div>
-                                    <div class="col-md-1 text-start">
+                                    <div class="col-md-2 text-start">
                                         <button type="submit" class="btn btn-info"><i class="fas fa-search"
                                                 aria-hidden="true"></i> Search</button>
-                                    </div>
-                                    <div class="col-md-1" style="margin-left: 20px;">
                                         <a class="btn btn-warning" href="{{ route('contact_request.index') }}"><i
                                                 class="fas fa-sync" aria-hidden="true"></i>Reset</a>
                                     </div>
@@ -160,7 +158,7 @@
                                                         </td>
                                                         <td>{{ format_date($row->dated, 'date_time') }}</td>
                                                         <td>
-                                                            <a href="javascript:;" data-bs-toggle="popover"
+                                                            <a href="javascript:;" data-bs-toggle="popover" data-bs-trigger="focus"
                                                                 class="btn btn-sm btn-success" data-bs-placement="bottom"
                                                                 data-bs-title="User Comment"
                                                                 data-bs-content="{{ $row->comments }}">
@@ -199,11 +197,6 @@
                                                                         class="fas fa-user" aria-hidden="true"></i>
                                                                     Convert to Client</a>
                                                             @endif
-                                                            <a class="btn btn-sm btn-danger" href="javascript:"
-                                                                onclick="del_recrod('{{ $row->id }}');"
-                                                                title="Delete"><i class="fas fa-trash"
-                                                                    aria-hidden="true"></i>
-                                                                Delete</a>
                                                             <a class="btn btn-sm btn-info"
                                                                 onclick="send_template_email('{{ $row->id }}','lead','single')"
                                                                 href="javascript:"><i class="fas fa-envelope-square"></i>
@@ -232,6 +225,11 @@
                                                                         class="fas fa-envelope-square"></i> Send
                                                                     Questionnaire</a>
                                                             @endif
+                                                            <a class="btn btn-sm btn-danger" href="javascript:"
+                                                                onclick="del_recrod('{{ $row->id }}');"
+                                                                title="Delete"><i class="fas fa-trash"
+                                                                    aria-hidden="true"></i>
+                                                                Delete</a>
                                                             <div class="modal" id="largeShoes-<?php echo $row->id; ?>"
                                                                 tabindex="-1" role="dialog"
                                                                 aria-labelledby="modalLabelLarge" aria-hidden="true">
@@ -452,6 +450,7 @@
         $(document).ready(function() {
             $('[data-bs-toggle="popover"]').popover();
         });
+
         $('html').on('mouseup', function(e) {
             if (!$(e.target).closest('.popover').length) {
                 $('.popover').each(function() {

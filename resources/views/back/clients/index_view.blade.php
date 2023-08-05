@@ -79,11 +79,9 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="col-md-1 text-start">
+                                    <div class="col-md-2 text-start">
                                         <button type="submit" class="btn btn-info"><i class="fas fa-search"
                                                 aria-hidden="true"></i> Search</button>
-                                    </div>
-                                    <div class="col-md-1" style="margin-left: 20px;">
                                         <a class="btn btn-warning" href="{{ route('manage_clients.index') }}"><i
                                                 class="fas fa-sync" aria-hidden="true"></i>Reset</a>
                                     </div>
@@ -92,7 +90,6 @@
                             <form method="post" onSubmit="return confirm('Are you sure?');"
                                 action="{{ route('client.delete') }}" id="delete_client_form">
                                 @csrf
-
                                 <table class="table table-bordered table-inverse table-hover">
                                     <thead>
                                         <tr>
@@ -105,7 +102,7 @@
                                             </th>
                                             <th>ID</th>
                                             <th>First Name</th>
-                                            <th>First Name</th>
+                                            <th>Last Name</th>
                                             <th>Email</th>
                                             <th>Phone</th>
                                             <th>Package</th>
@@ -116,22 +113,18 @@
                                         @php
                                             $Bstatus = '';
                                             $BGcolor = '';
-                                            
                                             $statusArr = ['active', 'Blocked'];
-                                            
                                             $client_check_array = [];
                                         @endphp
                                         @if (count($result) > 0)
                                             @foreach ($result as $row)
                                                 @php
                                                     $bgColor = isset($bgColor) && $bgColor == '#f9f9f9' ? '#FFFFFF' : '#f9f9f9';
-                                                    
                                                     if (isset($_GET['package']) && !empty($_GET['package'])) {
                                                         $response = $_GET['package'];
                                                     } else {
                                                         $response = 'all';
                                                     }
-                                                    
                                                 @endphp
                                                 @if (!in_array($row->id, $client_check_array))
                                                     <tr id="trr{{ $row->id }}">
@@ -175,20 +168,14 @@
                                                             <br>
                                                         </td>
                                                         <td colspan="7">
-
-                                                            <a class="btn btn-sm btn-info" href="mailto:{{ $row->email }}"
+                                                            <a class="btn btn-sm btn-info"
+                                                                href="mailto:{{ $row->email }}"
                                                                 title="Reply via Email">
                                                                 <i class="fas fa-reply" aria-hidden="true"></i>
                                                                 Reply</a>
-                                                            <a class="btn btn-sm btn-danger" href="javascript:"
-                                                                onclick="del_recrod('{{ $row->id }}');"
-                                                                title="Delete">
-                                                                <i
-                                                                    class="fas fa-trash" aria-hidden="true"></i>
-                                                                Delete</a>
                                                             <a href="{{ admin_url() }}manage_clients/{{ $row->id }}"
-                                                                class="btn btn-success  btn-sm"><i
-                                                                    class="fas fa-history" aria-hidden="true"></i>
+                                                                class="btn btn-success  btn-sm"><i class="fas fa-history"
+                                                                    aria-hidden="true"></i>
                                                                 History</a>
                                                             <a href="javascript:;" class="btn btn-success  btn-sm"
                                                                 style="color:white;"
@@ -196,16 +183,13 @@
                                                                     class="fas fa-edit" aria-hidden="true"></i> Add
                                                                 Comment</a>
                                                             <a href="{{ admin_url() }}manage_clients/{{ $row->id }}/edit"
-                                                                class="btn btn-info  btn-sm"><i
-                                                                    class="fas fa-edit"
+                                                                class="btn btn-info  btn-sm"><i class="fas fa-edit"
                                                                     aria-hidden="true"></i>
                                                                 Edit</a>
-
-
                                                             <a class="btn btn-sm btn-info"
                                                                 onclick="send_template_email('{{ $row->id }}','client','single')"
-                                                                href="javascript:"><i
-                                                                    class="fas fa-envelope-square"></i> Send
+                                                                href="javascript:"><i class="fas fa-envelope-square"></i>
+                                                                Send
                                                                 Email</a>
                                                             <a href="javascript:;"
                                                                 onclick="send_template_sms('{{ $row->id }}','client','single')"
@@ -233,6 +217,11 @@
                                                                     Send
                                                                     Questionnaire</a>
                                                             @endif
+                                                            <a class="btn btn-sm btn-danger" href="javascript:"
+                                                                onclick="del_recrod('{{ $row->id }}');"
+                                                                title="Delete">
+                                                                <i class="fas fa-trash" aria-hidden="true"></i>
+                                                                Delete</a>
                                                             <div class="modal" id="largeShoes-<?php echo $row->id; ?>"
                                                                 tabindex="-1" role="dialog"
                                                                 aria-labelledby="modalLabelLarge" aria-hidden="true">
@@ -344,9 +333,7 @@
                                                     </tr>
                                                 @endif
                                                 @php
-                                                    
                                                     $client_check_array[] = $row->id;
-                                                    
                                                 @endphp
                                             @endforeach
                                         @else
@@ -497,7 +484,6 @@
                 });
             }
         });
-
         function del_recrod(id) {
             if (confirmDel()) {
                 $.ajaxSetup({
@@ -527,7 +513,6 @@
                 });
             }
         }
-
         function update_status(cid, sts) {
             console.log(sts);
             postMyForm(
@@ -542,7 +527,6 @@
                 }
             );
         }
-
         function update_conditions(id, val) {
             $.ajaxSetup({
                 headers: {
@@ -583,7 +567,6 @@
                 var start = moment().subtract(Difference_In_Days, 'days');
                 var end = moment();
             }
-
             function cb(start, end) {
                 $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
             }
@@ -611,7 +594,6 @@
             $("#contact_id").val(id);
             $("#exampleModal-comment").modal('show');
         }
-
         function comment_save() {
             var id = $('#contact_id').val();
             $('#btnSave').css('display', 'none');
@@ -668,7 +650,6 @@
                 }
             });
         }
-
         function validateForm1() {
             $("#comment").css('background-color', '');
             var valid = true;
@@ -689,7 +670,6 @@
             }
             return true;
         }
-
         function isEmail(email) {
             var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
             return regex.test(email);
@@ -702,7 +682,6 @@
                 $("#search_form").submit();
             }
         }
-
         function send_assessment_email(id, sts) {
             $.ajax({
                 type: "GET",
@@ -720,19 +699,16 @@
                 },
             });
         }
-
         function show_hides(id) {
             $('.' + id).css("display", "table-row");
             $('.down_' + id).css("display", "none");
             $('.up_' + id).css("display", "block");
         }
-
         function hide_show(id) {
             $('.' + id).css("display", "none");
             $('.down_' + id).css("display", "block");
             $('.up_' + id).css("display", "none");
         }
-
         $('#client_check_all').on('change', function() {
             if ($('#client_check_all').is(':checked')) {
                 $('.client_check').prop('checked', true);
@@ -741,18 +717,15 @@
             }
             checkUncheckDelCheckBoxes();
         })
-
         $('.client_check').on('change', function() {
             checkUncheckDelCheckBoxes();
         })
-
         function checkUncheckDelCheckBoxes() {
             if ($('.client_check:checked').length == $('.client_check').length) {
                 $('#client_check_all').prop('checked', true);
             } else {
                 $('#client_check_all').prop('checked', false);
             }
-
             if ($('.client_check:checked').length > 0) {
                 $('#client_delete_all').show();
             } else {
