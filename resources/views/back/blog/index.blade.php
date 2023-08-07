@@ -4,7 +4,7 @@
         type="text/css" />
     @php $module = "blog" @endphp
     <link href="{{ base_url() . 'module/blog/admin/css/' . $module . '.css' }}" rel="stylesheet" type="text/css" />
-@include('back.common_views.switch_css')
+    @include('back.common_views.switch_css')
 @endsection
 @section('content')
     <div class="content-wrapper pl-3 pr-2">
@@ -33,13 +33,12 @@
                         <div class="row">
                             <div class="col-sm-8">
                                 <h3 class="box-title">All Blog Posts</h3>
-                                <ul class="nav nav-pills blog-nav">
-                                    <li role="presentation" class="active">
-                                        <a href="{{ admin_url() . 'blog' }}" style="padding: 10px;">Blog</a>
+                                <ul class="nav nav-pills">
+                                    <li class="nav-item">
+                                        <a href="{{ admin_url() . 'blog' }}" class="nav-link active">Blog</a>
                                     </li>
-                                    <li role="presentation">
-                                        <a href="{{ admin_url() . 'blog_categories' }}"
-                                            style="padding: 10px;">Categories</a>
+                                    <li class="nav-item">
+                                        <a href="{{ admin_url() . 'blog_categories' }}" class="nav-link">Categories</a>
                                     </li>
                                 </ul>
                             </div>
@@ -143,12 +142,16 @@
                     <div class="modal-body">
                         <div class="box-body">
                             <div class="mb-3">
-                                <label>Categories</label><br />
-                                @foreach ($all_categories as $all_category)
-                                    <label><input type="checkbox" name="blog_cat[]" value="{{ $all_category->ID }}"
-                                            id="blog_cat_{{ $all_category->ID }}">
-                                        {{ $all_category->cate_title }}</label><br />
-                                @endforeach
+                                <div class="row">
+                                    <label>Categories</label><br />
+                                    @foreach ($all_categories as $all_category)
+                                        <div class="col-md-4">
+                                            <label><input type="checkbox" name="blog_cat[]" value="{{ $all_category->ID }}"
+                                                    id="blog_cat_{{ $all_category->ID }}">
+                                                {{ $all_category->cate_title }}</label>
+                                        </div>
+                                    @endforeach
+                                </div>
                             </div>
                             <div class="mb-2" id="form-errors"></div>
                             <div class="mb-2">

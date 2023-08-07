@@ -1,53 +1,72 @@
-@extends('layouts.app_front')
+@extends('layouts.backend.guest')
+
 @section('content')
-    <div class="loginwrap">
-        <div class="loginfrm">
-            <h1>Please Login</h1>
+    <div class="card">
+        <div class="card-body login-card-body">
+            <p class="login-box-msg">{{ __('Login') }}</p>
+
             <form method="POST" action="{{ route('admin.login') }}">
                 @csrf
-                <div class="formwrp">
-                    <div class="loginrow">
-                        <input id="email" type="email"
-                            class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email"
-                            value="{{ old('email') }}" placeholder="User Name" required autofocus>
-                        <i class="fa fa-user" aria-hidden="true"></i>
+                <div class="input-group mb-3">
+                    <input id="email" type="email" class="form-control {{ hasError($errors, 'email') }}" name="email"
+                        value="{{ old('email') }}" required autocomplete="email" autofocus>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-envelope"></span>
+                        </div>
                     </div>
-                    @if ($errors->has('email'))
-                        <span class="invalid-feedback">
-                            <strong>{{ $errors->first('email') }}</strong>
-                        </span>
-                    @endif
-                    <div class="loginrow">
-                        <input id="password" type="password"
-                            class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password"
-                            placeholder="Password" required>
-                        <i class="fa fa-lock" aria-hidden="true"></i>
+                    {!! showErrors($errors, 'email') !!}
+                </div>
+                <div class="input-group mb-3">
+                    <input id="password" type="password" class="form-control {{ hasError($errors, 'password') }}"
+                        name="password" required autocomplete="current-password">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-eye-slash mr-1" onclick="showHidePassword('password', 'eye_icon');" id="eye_icon"></span>
+                            <span class="fas fa-lock"></span>
+                        </div>
                     </div>
-                    @if ($errors->has('password'))
-                        <span class="invalid-feedback">
-                            <strong>{{ $errors->first('password') }}</strong>
-                        </span>
-                    @endif
-                    <div class="form-group">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
+                    {!! showErrors($errors, 'password') !!}
+                </div>
+                <div class="row">
+                    <div class="col-8">
+                        <div class="icheck-primary">
+                            <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                            <label for="remember">
                                 {{ __('Remember Me') }}
                             </label>
                         </div>
                     </div>
-                    <div class="form-group row mb-0">
-                        <div class="col-lg-8 offset-lg-2">
-                            <button type="submit" class="btn">
-                                {{ __('Login') }}
-                            </button>
-                            <div class="forgotlink"><a class="btn-link"
-                                    href="{{ route('admin.password.request') }}">{{ __('Forgot Your Password?') }}</a></div>
-                        </div>
+                    <!-- /.col -->
+                    <div class="col-4">
+                        <button type="submit" class="btn btn-primary btn-block">{{ __('Login') }}</button>
                     </div>
+                    <!-- /.col -->
                 </div>
             </form>
+            @if (Route::has('password.request'))
+                <p class="mb-1">
+                    <a href="{{ route('admin.password.request') }}">
+                        {{ __('Forgot Your Password?') }}
+                    </a>
+                </p>
+            @endif
         </div>
-        <div class="clear"></div>
+        <!-- /.login-card-body -->
     </div>
+@endsection
+@section('beforeBodyClose')
+<script>
+    function showHidePassword(fieldId, eyeId){
+        if($('#'+fieldId).attr('type') == 'password'){
+            $('#'+fieldId).attr('type', 'text');
+            $('#'+eyeId).removeClass('fa-eye-slash');
+            $('#'+eyeId).addClass('fa-eye');
+        }else{
+            $('#'+fieldId).attr('type', 'password');
+            $('#'+eyeId).removeClass('fa-eye');
+            $('#'+eyeId).addClass('fa-eye-slash');
+        }
+    }
+</script>
 @endsection

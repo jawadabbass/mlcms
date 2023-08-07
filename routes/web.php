@@ -59,20 +59,24 @@ use App\Http\Controllers\AdminAuth\VerificationController as AdminAuthVerificati
 */
 
 Auth::routes();
-Route::group(['prefix' => 'adminmedia', 'middleware' => ['ipmiddleware']], function () {
-    Route::get('login', [AdminAuthLoginController::class, 'showLoginForm'])->name('admin.login');
+
+Route::prefix('adminmedia')->name('admin.')->group(function () {
+    Route::get('/', [AdminAuthLoginController::class, 'showLoginForm'])->name('login');
+    Route::get('login', [AdminAuthLoginController::class, 'showLoginForm'])->name('login');
     Route::post('login', [AdminAuthLoginController::class, 'login']);
-    Route::post('logout', [AdminAuthLoginController::class, 'logout'])->name('admin.logout');
-    Route::get('password/reset', [AdminAuthForgotPasswordController::class, 'showLinkRequestForm'])->name('admin.password.request');
-    Route::post('password/email', [AdminAuthForgotPasswordController::class, 'sendResetLinkEmail'])->name('admin.password.email');
-    Route::get('password/reset/{token}', [AdminAuthResetPasswordController::class, 'showResetForm'])->name('admin.password.reset');
-    Route::post('password/reset', [AdminAuthResetPasswordController::class, 'reset'])->name('admin.password.update');
-    Route::get('password/confirm', [AdminAuthConfirmPasswordController::class, 'showConfirmForm'])->name('admin.password.confirm');
+    Route::post('logout', [AdminAuthLoginController::class, 'logout'])->name('logout');
+    Route::get('password/reset', [AdminAuthForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+    Route::post('password/email', [AdminAuthForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+    Route::get('password/reset/{token}', [AdminAuthResetPasswordController::class, 'showResetForm'])->name('password.reset');
+    Route::post('password/reset', [AdminAuthResetPasswordController::class, 'reset'])->name('password.update');
+    Route::get('password/confirm', [AdminAuthConfirmPasswordController::class, 'showConfirmForm'])->name('password.confirm');
     Route::post('password/confirm', [AdminAuthConfirmPasswordController::class, 'confirm']);
-    Route::get('email/verify', [AdminAuthVerificationController::class, 'show'])->name('admin.verification.notice');
-    Route::get('email/verify/{id}/{hash}', [AdminAuthVerificationController::class, 'verify'])->name('admin.verification.verify');
-    Route::post('email/resend', [AdminAuthVerificationController::class, 'resend'])->name('admin.verification.resend');
+    Route::get('email/verify', [AdminAuthVerificationController::class, 'show'])->name('verification.notice');
+    Route::get('email/verify/{id}/{hash}', [AdminAuthVerificationController::class, 'verify'])->name('verification.verify');
+    Route::post('email/resend', [AdminAuthVerificationController::class, 'resend'])->name('verification.resend');
 });
+
+
 Route::group(['prefix' => 'member', 'name' => 'member', 'middleware' => ['auth', 'is_member', 'ipmiddleware']], function () {
     Route::get('/', [UserDashboardController::class, 'index'])->name('dashboard');
 });
