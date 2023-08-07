@@ -41,14 +41,8 @@
                         <div class="row">
                             <div class="col-sm-8">
                                 <h3 class="box-title">All Blog Categories</h3>
-                                <ul class="nav nav-pills">
-                                    <li class="nav-item">
-                                        <a href="{{ admin_url() . 'blog' }}" class="nav-link">Blog</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{ admin_url() . 'blog_categories' }}" class="nav-link active">Categories</a>
-                                    </li>
-                                </ul>
+                                <a href="{{ admin_url() . 'blog' }}" class="btn btn-default">Blog</a>
+                                <a href="{{ admin_url() . 'blog_categories' }}" class="btn btn-primary">Categories</a>
                             </div>
                             <div class="col-sm-4">
                                 <div class="text-end" style="padding-bottom:2px;">
