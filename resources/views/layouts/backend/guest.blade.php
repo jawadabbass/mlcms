@@ -26,7 +26,7 @@
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
-            <a href="{{ url('admin') }}"><img src="{!! getImage('admin_logo_favicon', config('admin_logo_favicon.admin_login_page_logo'), 'main') !!}" /></a>
+            <a href="{{ url('adminmedia') }}"><img src="{!! getImage('admin_logo_favicon', config('admin_logo_favicon.admin_login_page_logo'), 'main') !!}" /></a>
         </div>
         <!-- /.login-logo -->
         @yield('content')
