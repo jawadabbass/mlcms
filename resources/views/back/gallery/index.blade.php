@@ -7,13 +7,13 @@
         <!-- Inner Header -->
         <section class="content-header">
             <div class="row">
-                <div class="col-md-8 col-sm-6">
+                <div class="col-md-5 col-sm-12 jawadcls">
                     <ol class="breadcrumb">
                         <li><a href="{{ base_url() . 'adminmedia' }}"><i class="fas fa-gauge"></i> Home</a></li>
                         <li class="active">Albums</li>
                     </ol>
                 </div>
-                <div class="col-md-4 col-sm-6"> @include('back.common_views.quicklinks') </div>
+                <div class="col-md-7 col-sm-12 jawadcls"> @include('back.common_views.quicklinks') </div>
             </div>
         </section>
 

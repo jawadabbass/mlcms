@@ -1,5 +1,15 @@
 <ul class="stats">
     <li class="refres">
+        <button class="btn btn-success">
+            <i class="fas fa-user" aria-hidden="true"></i>&nbsp;Welcome {{ auth()->user()->name }}
+        </button>
+    </li>
+    <li class="refres">
+        <button class="btn btn-danger">
+            <i class="fa-solid fa-calendar-days"></i>&nbsp;{{ date('M, d Y') }}
+        </button>
+    </li>
+    <li class="refres">
         <a href="#" data-bs-toggle="tooltip" title="Create/Update Sitemap" id="sitemap">
             <i class="fas fa-sitemap" aria-hidden="true"></i>
         </a>

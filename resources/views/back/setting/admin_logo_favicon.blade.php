@@ -6,7 +6,7 @@
     <div class="content-wrapper pl-3 pr-2">
         <section class="content-header">
             <div class="row">
-                <div class="col-md-8 col-sm-6">
+                <div class="col-md-5 col-sm-12 jawadcls">
                     <ol class="breadcrumb">
                         <li>
                             <a href="{{ admin_url() }}"><i class="fas fa-gauge"></i> Home</a>
@@ -14,7 +14,7 @@
                         <li class="active"> Site Settings</li>
                     </ol>
                 </div>
-                <div class="col-md-4 col-sm-6">
+                <div class="col-md-7 col-sm-12 jawadcls">
                     @include('back.common_views.quicklinks')
                 </div>
             </div>

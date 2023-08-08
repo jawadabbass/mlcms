@@ -3,10 +3,10 @@
     <div class="content-wrapper pl-3 pr-2">
         <section class="content-header">
             <div class="row">
-                <div class="col-md-8 col-sm-6">
+                <div class="col-md-5 col-sm-12 jawadcls">
                     <?php echo ModBC('Set Order',array($settingArr['contr_name']=>$settingArr['mainPageTitle']));?>
                 </div>
-                <div class="col-md-4 col-sm-6">
+                <div class="col-md-7 col-sm-12 jawadcls">
                     @include('back.common_views.quicklinks')
                 </div>
             </div>
