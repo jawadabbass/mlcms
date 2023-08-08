@@ -70,25 +70,40 @@ class AdminUserController extends Controller
 
         $title = FindInsettingArr('business_name') . ': Admin Users Management | Info';
         $msg = '';
-        $arrLinks = \App\Helpers\DashboardLinks::$arrLinks;
+        $arrLinks = [];
+        $beforeLinks = \App\Helpers\DashboardLinks::$beforeLeftModuleLinks;
+        $arrLinksModuleLeft = \App\Helpers\DashboardLinks::get_cms_modules('left');
+        $arrLinksModuleDashboard = \App\Helpers\DashboardLinks::get_cms_modules('dashboard');
+        $afterLinks = \App\Helpers\DashboardLinks::$afterLeftModuleLinks;
+        $arrLinks = array_merge($beforeLinks, $arrLinksModuleLeft, $arrLinksModuleDashboard, $afterLinks);
+
+        $arrLinks = array_unique($arrLinks, SORT_REGULAR);
+        //dd($arrLinks);
+
         $passArrSuperAdmin = array();
         foreach ($arrLinks as $key => $val) {
             if (in_array(config('Constants.USER_TYPE_SUPER_ADMIN'), $val['user_type'])) {
-                $passArrSuperAdmin[$val[2]] = $val[0];
+                if (isset($val[2]) && isset($val[0])) {
+                    $passArrSuperAdmin[$val[2]] = $val[0];
+                }
             }
         }
 
         $passArrSubAdmin = array();
         foreach ($arrLinks as $key => $val) {
             if (in_array(config('Constants.USER_TYPE_NORMAL_ADMIN'), $val['user_type'])) {
-                $passArrSubAdmin[$val[2]] = $val[0];
+                if (isset($val[2]) && isset($val[0])) {
+                    $passArrSubAdmin[$val[2]] = $val[0];
+                }
             }
         }
 
         $passArrReps = array();
         foreach ($arrLinks as $key => $val) {
             if (in_array(config('Constants.USER_TYPE_REPS_ADMIN'), $val['user_type'])) {
-                $passArrReps[$val[2]] = $val[0];
+                if (isset($val[2]) && isset($val[0])) {
+                    $passArrReps[$val[2]] = $val[0];
+                }
             }
         }
         return view('back.users.admin.admin_info', compact('title', 'msg', 'passArrSuperAdmin', 'passArrSubAdmin', 'passArrReps'));
