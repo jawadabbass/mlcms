@@ -7,7 +7,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="row">
-                <div class="col-md-5 col-sm-12 jawadcls">
+                <div class="col-md-5 col-sm-12">
                     <ol class="breadcrumb">
                         <li>
                             <a href="{{ admin_url() }}">
@@ -17,7 +17,7 @@
                         <li class="active">Product's Management</li>
                     </ol>
                 </div>
-                <div class="col-md-7 col-sm-12 jawadcls">
+                <div class="col-md-7 col-sm-12">
                     @include('back.common_views.quicklinks')
                 </div>
             </div>

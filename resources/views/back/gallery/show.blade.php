@@ -21,7 +21,7 @@
         <!-- Inner Header -->
         <section class="content-header">
             <div class="row">
-                <div class="col-md-5 col-sm-12 jawadcls">
+                <div class="col-md-5 col-sm-12">
                     <ol class="breadcrumb">
                         <li><a href="{{ base_url() . 'adminmedia' }}">
                                 <i class="fas fa-gauge"></i> Home</a></li>
@@ -30,7 +30,7 @@
                         <li class="active">{{ $album_name }}</li>
                     </ol>
                 </div>
-                <div class="col-md-7 col-sm-12 jawadcls"> @include('back.common_views.quicklinks') </div>
+                <div class="col-md-7 col-sm-12"> @include('back.common_views.quicklinks') </div>
             </div>
         </section>
         <!-- Main Content starts --->

@@ -26,10 +26,10 @@
     <div class="content-wrapper pl-3 pr-2">
         <section class="content-header">
             <div class="row">
-                <div class="col-md-5 col-sm-12 jawadcls">
+                <div class="col-md-5 col-sm-12">
                     <h1> Latest News and Updates </h1>
                 </div>
-                <div class="col-md-7 col-sm-12 jawadcls">
+                <div class="col-md-7 col-sm-12">
                     @include('back.common_views.quicklinks')
                 </div>
             </div>

@@ -26,10 +26,10 @@
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
-                    <div class="col-md-5 col-sm-12 jawadcls">
+                    <div class="col-md-5 col-sm-12">
                         <h1 class="m-0">Dashboard</h1>
                     </div><!-- /.col -->
-                    <div class="col-md-7 col-sm-12 jawadcls">
+                    <div class="col-md-7 col-sm-12">
                         @include('back.common_views.quicklinks')
                     </div><!-- /.col -->
                     <div class="col-sm-12">@include('flash::message')</div>
