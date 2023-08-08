@@ -68,7 +68,7 @@ class ContactUsController extends Controller
                     ->where('dated', '<=', $to);
             }
             $specialistQuery->orderBy('dated', 'desc');
-            
+
             $result = $specialistQuery->paginate(15);
             $serachLink = rtrim($serachLink, '&');
             $result->setPath('?' . $serachLink);
@@ -76,9 +76,11 @@ class ContactUsController extends Controller
             $result = ContactUs::with('user')->with('assessment.assessment_question')->orderBy('dated', 'DESC')->paginate(15);
         }
         $adminAlert = AdminAlert::where('keyy', 'contact_request')->first();
-        $adminAlert->check_dated = date('Y-m-d H:i:s');
-        $adminAlert->total = 0;
-        $adminAlert->save();
+        if (null !== $adminAlert) {
+            $adminAlert->check_dated = date('Y-m-d H:i:s');
+            $adminAlert->total = 0;
+            $adminAlert->save();
+        }
         $contact_data = ContactUs::where('read_lead', 0)->get();
         $contact = count($contact_data);
         $data = array();
@@ -96,14 +98,12 @@ class ContactUsController extends Controller
     public function index1()
     {
         $adminAlert = AdminAlert::where('keyy', 'contact_request')->first();
-        $adminAlert->check_dated = date('Y-m-d H:i:s');
-        $adminAlert->total = 0;
-        $adminAlert->save();
-        $data = array();
-        $data['msg'] = '';
-        $title = config("Constants.SITE_NAME") . ': Contact Us Page';
+        if (null !== $adminAlert) {
+            $adminAlert->check_dated = date('Y-m-d H:i:s');
+            $adminAlert->total = 0;
+            $adminAlert->save();
+        }
         $result = ContactUs::orderBy('id', 'DESC')->get();
-        $clientArr = array();
         return response()->json($result, 200);
     }
     public function getdata($id)
@@ -231,7 +231,7 @@ class ContactUsController extends Controller
         $next = ContactUs::where('id', '>', $id)->orderBy('id', 'ASC')->first();
 
         $history = ContactLeadHistory::where('contact_id', $id)->with(['admin'])->paginate(10);
-        return view('back.contactus.history', compact('result', 'title', 'history','pre', 'next'));
+        return view('back.contactus.history', compact('result', 'title', 'history', 'pre', 'next'));
     }
     /**
      * Show the form for editing the specified resource.
@@ -357,7 +357,7 @@ class ContactUsController extends Controller
             Session::flash('msg', 'Deleted successfully');
         }
         if ($request->bulk_action === 'read') {
-            ContactUs::whereIn('id', $request->contact_request_check)->update(['read_lead'=>1]);
+            ContactUs::whereIn('id', $request->contact_request_check)->update(['read_lead' => 1]);
             Session::flash('msg', 'Marked read successfully');
         }
         return redirect(route('contact_request.index'));
