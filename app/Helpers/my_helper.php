@@ -1,14 +1,15 @@
 <?php
 
-use App\Helpers\ImageUploader;
 use App\Models\Back\City;
+use App\Models\Back\State;
+use App\Models\Back\County;
+use App\Models\Back\Country;
+use App\Models\Back\Metadata;
+use App\Helpers\ImageUploader;
 use App\Models\Back\CmsModule;
 use App\Models\Back\CmsModuleData;
-use App\Models\Back\Country;
-use App\Models\Back\County;
-use App\Models\Back\Metadata;
 use App\Models\Back\ModuleDataImage;
-use App\Models\Back\State;
+use App\Models\Back\PermissionGroup;
 
 function getMetaData()
 {
@@ -423,4 +424,15 @@ function generateModuleCodeFieldLabel($field_counter, $errors, $oldData, $hide_s
                 <button type="button" class="btn btn-danger" onclick="removeField(' . $field_counter . ');">Remove</button>
             </div>
         </div>';
+}
+
+function generatePermissionGroupsDropDown($defaultSelected = '', $createEmptyRow = true)
+{
+    $str = ($createEmptyRow) ? '<option value=""></option>' : '';
+    $permissionGroups = PermissionGroup::all();
+    foreach ($permissionGroups as $permissionGroup) {
+        $selected = ($permissionGroup->id == $defaultSelected) ? 'selected="selected"' : '';
+        $str .= '<option value="' . $permissionGroup->id . '" ' . $selected . '>' . $permissionGroup->title . '</option>';
+    }
+    return $str;
 }
