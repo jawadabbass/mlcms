@@ -1,6 +1,3 @@
-
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/support-ukraine.svg?t=1" />](https://supportukrainenow.org)
-
 # Generate sitemaps with ease
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-sitemap.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-sitemap)
@@ -78,6 +75,10 @@ class Post extends Model implements Sitemapable
     public function toSitemapTag(): Url | string | array
     {
         return route('blog.post.show', $this);
+        return Url::create(route('blog.post.show', $this))
+            ->setLastModificationDate(Carbon::create($this->updated_at))
+            ->setChangeFrequency(Url::CHANGE_FREQUENCY_YEARLY)
+            ->setPriority(0.1);
     }
 }
 ```
@@ -389,6 +390,44 @@ use Spatie\Sitemap\Tags\Url;
 Sitemap::create()
     // here we add an image to a URL
     ->add(Url::create('https://example.com')->addImage('https://example.com/images/home.jpg', 'Home page image'))
+    ->writeToFile($sitemapPath);
+```
+
+#### Adding videos to links
+
+As well as images, videos can be wrapped by URL tags. See https://developers.google.com/search/docs/crawling-indexing/sitemaps/video-sitemaps
+
+You can set required attributes like so:
+
+```php
+use Spatie\Sitemap\Sitemap;
+use Spatie\Sitemap\Tags\Url;
+
+Sitemap::create()
+    ->add(
+        Url::create('https://example.com')
+            ->addVideo('https://example.com/images/thumbnail.jpg', 'Video title', 'Video Description', 'https://example.com/videos/source.mp4', 'https://example.com/video/123')
+    )
+    ->writeToFile($sitemapPath);
+```
+
+If you want to pass the optional parameters like `family_friendly`, `live`, or `platform`:
+
+```php
+use Spatie\Sitemap\Sitemap;
+use Spatie\Sitemap\Tags\Url;
+use Spatie\Sitemap\Tags\Video;
+
+
+$options = ['family_friendly' => Video::OPTION_YES, 'live' => Video::OPTION_NO];
+$allowOptions = ['platform' => Video::OPTION_PLATFORM_MOBILE];
+$denyOptions = ['restriction' => 'CA'];
+
+Sitemap::create()
+    ->add(
+        Url::create('https://example.com')
+            ->addVideo('https://example.com/images/thumbnail.jpg', 'Video title', 'Video Description', 'https://example.com/videos/source.mp4', 'https://example.com/video/123', $options, $allowOptions, $denyOptions)
+    )
     ->writeToFile($sitemapPath);
 ```
 

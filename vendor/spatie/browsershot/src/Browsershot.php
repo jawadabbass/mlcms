@@ -590,23 +590,31 @@ class Browsershot
     public function bodyHtml(): string
     {
         $command = $this->createBodyHtmlCommand();
+        $html = $this->callBrowser($command);
 
-        return $this->callBrowser($command);
+        $this->cleanupTemporaryHtmlFile();
+
+        return $html;
     }
 
     public function base64Screenshot(): string
     {
         $command = $this->createScreenshotCommand();
+        $encodedImage = $this->callBrowser($command);
 
-        return $this->callBrowser($command);
+        $this->cleanupTemporaryHtmlFile();
+
+        return $encodedImage;
     }
 
     public function screenshot(): string
     {
         if ($this->imageManipulations->isEmpty()) {
-            $command = $this->createScreenshotCommand();
 
+            $command = $this->createScreenshotCommand();
             $encodedImage = $this->callBrowser($command);
+
+            $this->cleanupTemporaryHtmlFile();
 
             return base64_decode($encodedImage);
         }
@@ -625,18 +633,16 @@ class Browsershot
     public function pdf(): string
     {
         $command = $this->createPdfCommand();
-
-        $encoded_pdf = $this->callBrowser($command);
+        $encodedPdf = $this->callBrowser($command);
 
         $this->cleanupTemporaryHtmlFile();
 
-        return base64_decode($encoded_pdf);
+        return base64_decode($encodedPdf);
     }
 
     public function savePdf(string $targetPath)
     {
         $command = $this->createPdfCommand($targetPath);
-
         $output = $this->callBrowser($command);
 
         $this->cleanupTemporaryHtmlFile();
@@ -649,20 +655,36 @@ class Browsershot
     public function base64pdf(): string
     {
         $command = $this->createPdfCommand();
+        $encodedPdf = $this->callBrowser($command);
 
-        return $this->callBrowser($command);
+        $this->cleanupTemporaryHtmlFile();
+
+        return $encodedPdf;
     }
 
     public function evaluate(string $pageFunction): string
     {
         $command = $this->createEvaluateCommand($pageFunction);
+        $evaluation = $this->callBrowser($command);
 
-        return $this->callBrowser($command);
+        $this->cleanupTemporaryHtmlFile();
+
+        return $evaluation;
     }
 
     public function triggeredRequests(): array
     {
         $command = $this->createTriggeredRequestsListCommand();
+        $requests = $this->callBrowser($command);
+
+        $this->cleanupTemporaryHtmlFile();
+
+        return json_decode($requests, true);
+    }
+
+    public function redirectHistory(): array
+    {
+        $command = $this->createRedirectHistoryCommand();
 
         return json_decode($this->callBrowser($command), true);
     }
@@ -673,15 +695,21 @@ class Browsershot
     public function consoleMessages(): array
     {
         $command = $this->createConsoleMessagesCommand();
+        $messages = $this->callBrowser($command);
 
-        return json_decode($this->callBrowser($command), true);
+        $this->cleanupTemporaryHtmlFile();
+
+        return json_decode($messages, true);
     }
 
     public function failedRequests(): array
     {
         $command = $this->createFailedRequestsCommand();
+        $requests = $this->callBrowser($command);
 
-        return json_decode($this->callBrowser($command), true);
+        $this->cleanupTemporaryHtmlFile();
+
+        return json_decode($requests, true);
     }
 
     public function applyManipulations(string $imagePath)
@@ -767,6 +795,15 @@ class Browsershot
             : $this->url;
 
         return $this->createCommand($url, 'requestsList');
+    }
+
+    public function createRedirectHistoryCommand(): array
+    {
+        $url = $this->html
+            ? $this->createTemporaryHtmlFile()
+            : $this->url;
+
+        return $this->createCommand($url, 'redirectHistory');
     }
 
     public function createConsoleMessagesCommand(): array
@@ -891,7 +928,9 @@ class Browsershot
     {
         $fullCommand = $this->getFullCommand($command);
 
-        $process = Process::fromShellCommandline($fullCommand)->setTimeout($this->timeout);
+        $process = $this->isWindows() ? new Process($fullCommand) : Process::fromShellCommandline($fullCommand);
+
+        $process->setTimeout($this->timeout);
 
         $process->run();
 
@@ -918,19 +957,18 @@ class Browsershot
     {
         $nodeBinary = $this->nodeBinary ?: 'node';
 
-        $binPath = $this->binPath ?: __DIR__.'/../bin/browser.js';
+        $binPath = $this->binPath ?: __DIR__.'/../bin/browser.cjs';
 
         $optionsCommand = $this->getOptionsCommand(json_encode($command));
 
         if ($this->isWindows()) {
-            $fullCommand =
-                $nodeBinary.' '
-                .escapeshellarg($binPath).' '
-                .'"'
-                .$optionsCommand
-                .'"';
-
-            return escapeshellcmd($fullCommand);
+            // on Windows we will let Symfony/process handle the command escaping
+            // by passing an array to the process instance
+            return [
+                $nodeBinary,
+                $binPath,
+                $optionsCommand,
+            ];
         }
 
         $setIncludePathCommand = "PATH={$this->includePath}";
@@ -965,7 +1003,7 @@ class Browsershot
         }
 
         if ($this->isWindows()) {
-            return str_replace('"', '\"', $command);
+            return $command;
         }
 
         return escapeshellarg($command);
@@ -1014,5 +1052,10 @@ class Browsershot
         $url = $this->html ? $this->createTemporaryHtmlFile() : $this->url;
 
         return $url;
+    }
+
+    public function newHeadless(): self
+    {
+        return $this->setOption('newHeadless', true);
     }
 }

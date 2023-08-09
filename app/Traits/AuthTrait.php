@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Back\Metadata;
 use App\Models\Back\AdminLogHistory;

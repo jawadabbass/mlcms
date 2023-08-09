@@ -3,7 +3,7 @@
 namespace App\Models\Back;
 
 use App\Mail\ContactUs;
-use App\User;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 class ContactLeadHistory extends Model

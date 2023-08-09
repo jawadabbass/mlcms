@@ -27,7 +27,7 @@ class Client extends Authenticatable
 
     function user()
     {
-        return $this->hasOne('App\User', 'id', 'added_by');
+        return $this->hasOne('App\Models\User', 'id', 'added_by');
     }
 
 

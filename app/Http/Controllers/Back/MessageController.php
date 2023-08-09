@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
 use App\Models\Back\MessageTemplate;
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class MessageController extends Controller

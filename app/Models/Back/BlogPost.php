@@ -14,6 +14,6 @@ class BlogPost extends Model
     }
     public function author()
     {
-        return $this->belongsTo('App\User', 'author_id', 'id');
+        return $this->belongsTo('App\Models\User', 'author_id', 'id');
     }
 }

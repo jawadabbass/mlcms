@@ -6,7 +6,6 @@ use App\Models\Back\CmsModule;
 use App\Models\Back\CmsModuleData;
 use App\Models\Back\Country;
 use App\Models\Back\County;
-use App\Models\Back\FleetCategory;
 use App\Models\Back\Metadata;
 use App\Models\Back\ModuleDataImage;
 use App\Models\Back\State;
@@ -335,114 +334,6 @@ function getCmsModuleDataImages($images)
         }
     }
     return $imagesArray;
-}
-
-function generateFleetCategoriesStatusDropDown($defaultSelected = '', $empty = true)
-{
-    $str = ($empty) ? '<option value="">Select...</option>' : '';
-    $statusArray = ['Active' => 'Active', 'Inactive' => 'Inactive'];
-    foreach ($statusArray as $key => $value) {
-        $selected = ($key == $defaultSelected) ? 'selected="selected"' : '';
-        $str .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
-    }
-
-    return $str;
-}
-
-function generatePassengerCapacitiesStatusDropDown($defaultSelected = '', $empty = true)
-{
-    $str = ($empty) ? '<option value="">Select...</option>' : '';
-    $statusArray = ['Active' => 'Active', 'Inactive' => 'Inactive'];
-    foreach ($statusArray as $key => $value) {
-        $selected = ($key == $defaultSelected) ? 'selected="selected"' : '';
-        $str .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
-    }
-
-    return $str;
-}
-
-function generateCabinDimensionsStatusDropDown($defaultSelected = '', $empty = true)
-{
-    $str = ($empty) ? '<option value="">Select...</option>' : '';
-    $statusArray = ['Active' => 'Active', 'Inactive' => 'Inactive'];
-    foreach ($statusArray as $key => $value) {
-        $selected = ($key == $defaultSelected) ? 'selected="selected"' : '';
-        $str .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
-    }
-
-    return $str;
-}
-
-function generateBaggageCapacitiesStatusDropDown($defaultSelected = '', $empty = true)
-{
-    $str = ($empty) ? '<option value="">Select...</option>' : '';
-    $statusArray = ['Active' => 'Active', 'Inactive' => 'Inactive'];
-    foreach ($statusArray as $key => $value) {
-        $selected = ($key == $defaultSelected) ? 'selected="selected"' : '';
-        $str .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
-    }
-
-    return $str;
-}
-
-function generatePerformancesStatusDropDown($defaultSelected = '', $empty = true)
-{
-    $str = ($empty) ? '<option value="">Select...</option>' : '';
-    $statusArray = ['Active' => 'Active', 'Inactive' => 'Inactive'];
-    foreach ($statusArray as $key => $value) {
-        $selected = ($key == $defaultSelected) ? 'selected="selected"' : '';
-        $str .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
-    }
-
-    return $str;
-}
-
-function generateCabinAmenitiesStatusDropDown($defaultSelected = '', $empty = true)
-{
-    $str = ($empty) ? '<option value="">Select...</option>' : '';
-    $statusArray = ['Active' => 'Active', 'Inactive' => 'Inactive'];
-    foreach ($statusArray as $key => $value) {
-        $selected = ($key == $defaultSelected) ? 'selected="selected"' : '';
-        $str .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
-    }
-
-    return $str;
-}
-
-function generateSafetiesStatusDropDown($defaultSelected = '', $empty = true)
-{
-    $str = ($empty) ? '<option value="">Select...</option>' : '';
-    $statusArray = ['Active' => 'Active', 'Inactive' => 'Inactive'];
-    foreach ($statusArray as $key => $value) {
-        $selected = ($key == $defaultSelected) ? 'selected="selected"' : '';
-        $str .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
-    }
-
-    return $str;
-}
-
-function generateFleetCategoriesDropDown($defaultSelected = 0, $empty = true)
-{
-    $str = ($empty) ? '<option value="">Select...</option>' : '';
-    $categoryArray = FleetCategory::select('title', 'id')->active()->sorted()->pluck('title', 'id')->toArray();
-    foreach ($categoryArray as $key => $value) {
-        $selected = ($key == $defaultSelected) ? 'selected="selected"' : '';
-        $str .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
-    }
-
-    return $str;
-}
-
-function generateFleetPlaneStatusDropDown($defaultSelected = '', $empty = true)
-{
-    $str = ($empty) ? '<option value="">Select...</option>' : '';
-    $statusArray = ['Active' => 'Active', 'Inactive' => 'Inactive'];
-    foreach ($statusArray as $key => $value) {
-        $selected = ($key == $defaultSelected) ? 'selected="selected"' : '';
-        $str .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
-    }
-
-    return $str;
 }
 
 function generateNewsStatusDropDown($defaultSelected = '', $empty = true)

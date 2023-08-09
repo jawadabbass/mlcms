@@ -291,12 +291,12 @@ function checkAccessArr($user, $accessTypeArr)
 }
 function adminUserDetails($id)
 {
-    $user = App\User::find($id);
+    $user = App\Models\User::find($id);
     return $user->name . ' (' . $user->email . ')';
 }
 function getClientArr($client_id)
 {
-    return App\User::find($client_id);
+    return App\Models\User::find($client_id);
 }
 function make_arr($arr, $parentKey)
 {
@@ -332,7 +332,7 @@ function insertHistory($key, $dataArr, $client_id = 0, $u_type = 0, $user_id = 0
     $history->save();
     return true;
     if ($emailTemplate->Status == 'Yes') {
-        $emailUsers = App\User::where('on_notification_email', 'Yes')->get();
+        $emailUsers = App\Models\User::where('on_notification_email', 'Yes')->get();
         if ($emailUsers) {
             foreach ($emailUsers as $key => $value) {
                 $emails = [$value->email];

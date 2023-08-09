@@ -31,19 +31,9 @@ class DashboardLinks
         'main_settings' => ['Settings', 'fas  fa-cog', 'settings', 'user_type' => ['super-admin'], ''],
         'media' => ['File Manager', 'fas fa-folder-open', 'media', 'user_type' => ['super-admin'], 'newtab'],
         'categories_reg' => ['Categories', 'fas fa-bars', 'categories', 'user_type' => ['super-admin', 'normal-admin'], ''],
-        /*
         'states' => ['Manage States', 'fas fa-map', 'states', 'user_type' => ['super-admin'], ''],
         'counties' => ['Manage Counties', 'fas fa-map', 'counties', 'user_type' => ['super-admin'], ''],
         'cities' => ['Manage Cities', 'fas fa-map', 'cities', 'user_type' => ['super-admin'], ''],
-        'fleetPlanes' => ['Manage Fleet Planes', 'fas fa-plane', 'fleetPlanes', 'user_type' => ['super-admin', 'normal-admin'], ''],
-        'fleetCategories' => ['Manage Fleet Categories', 'fas fa-list', 'fleetCategories', 'user_type' => ['super-admin', 'normal-admin'], ''],
-        'passengerCapacities' => ['Manage Passenger Capacities', 'fas fa-users', 'passengerCapacities', 'user_type' => ['super-admin', 'normal-admin'], ''],
-        'cabinDimensions' => ['Manage Cabin Dimensions', 'fas fa-plane', 'cabinDimensions', 'user_type' => ['super-admin', 'normal-admin'], ''],
-        'baggageCapacities' => ['Manage Baggage Capacities', 'fas fa-briefcase', 'baggageCapacities', 'user_type' => ['super-admin', 'normal-admin'], ''],
-        'performances' => ['Manage Performances', 'fas fa-running', 'performances', 'user_type' => ['super-admin', 'normal-admin'], ''],
-        'cabinAmenities' => ['Manage Cabin Amenities', 'fas fa-palette', 'cabinAmenities', 'user_type' => ['super-admin', 'normal-admin'], ''],
-        'safeties' => ['Manage Safeties', 'fas fa-hard-hat', 'safeties', 'user_type' => ['super-admin', 'normal-admin'], ''],
-        */
         'cache' => ['Cache', 'fas fa-sync', 'cache', 'user_type' => ['super-admin', 'normal-admin'], ''],
     ];
     public static $beforeLeftModuleLinks = [
@@ -81,19 +71,9 @@ class DashboardLinks
         'products' => ['Products', 'fas fa-shopping-cart', 'products', 'user_type' => ['super-admin', 'normal-admin'], ''],
         'categories_reg' => ['Categories', 'fas fa-bars', 'categories', 'user_type' => ['super-admin', 'normal-admin'], ''],
         'media' => ['File Manager', 'fas fa-folder-open', 'media', 'user_type' => ['super-admin'], 'newtab'],
-        /*
         'states' => ['Manage States', 'fas fa-map', 'states', 'user_type' => ['super-admin'], ''],
         'counties' => ['Manage Counties', 'fas fa-map', 'counties', 'user_type' => ['super-admin'], ''],
         'cities' => ['Manage Cities', 'fas fa-map', 'cities', 'user_type' => ['super-admin'], ''],
-        'fleetPlanes' => ['Manage Fleet Planes', 'fas fa-plane', 'fleetPlanes', 'user_type' => ['super-admin', 'normal-admin'], ''],
-        'fleetCategories' => ['Manage Fleet Categories', 'fas fa-list', 'fleetCategories', 'user_type' => ['super-admin', 'normal-admin'], ''],
-        'passengerCapacities' => ['Manage Passenger Capacities', 'fas fa-users', 'passengerCapacities', 'user_type' => ['super-admin', 'normal-admin'], ''],
-        'cabinDimensions' => ['Manage Cabin Dimensions', 'fas fa-plane', 'cabinDimensions', 'user_type' => ['super-admin', 'normal-admin'], ''],
-        'baggageCapacities' => ['Manage Baggage Capacities', 'fas fa-briefcase', 'baggageCapacities', 'user_type' => ['super-admin', 'normal-admin'], ''],
-        'performances' => ['Manage Performances', 'fas fa-running', 'performances', 'user_type' => ['super-admin', 'normal-admin'], ''],
-        'cabinAmenities' => ['Manage Cabin Amenities', 'fas fa-palette', 'cabinAmenities', 'user_type' => ['super-admin', 'normal-admin'], ''],
-        'safeties' => ['Manage Safeties', 'fas fa-hard-hat', 'safeties', 'user_type' => ['super-admin', 'normal-admin'], ''],
-        */
         'General Settings' => [
             'icon' => ['fas  fa-cog'],
             'admin_logo_favicon' => ['Admin Logo/Favicon', 'fas  fa-cog', 'settings/admin_logo_favicon', 'user_type' => ['super-admin'], ''],

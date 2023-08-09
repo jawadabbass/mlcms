@@ -9,7 +9,7 @@ class TestController extends Controller
 {
 	public function aaa()
 	{
-		$finduser = \App\User::findOrFail(1);
+		$finduser = \App\Models\User::findOrFail(1);
 		if ($finduser) {
 			$dataQ = [
 				'email' => 'admin@test.com',

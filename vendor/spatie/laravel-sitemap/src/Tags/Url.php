@@ -29,6 +29,9 @@ class Url extends Tag
     /** @var \Spatie\Sitemap\Tags\Image[] */
     public array $images = [];
 
+    /** @var \Spatie\Sitemap\Tags\Video[] */
+    public array $videos = [];
+
     public static function create(string $url): static
     {
         return new static($url);
@@ -37,8 +40,6 @@ class Url extends Tag
     public function __construct(string $url)
     {
         $this->url = $url;
-
-        $this->lastModificationDate = Carbon::now();
 
         $this->changeFrequency = static::CHANGE_FREQUENCY_DAILY;
     }
@@ -81,6 +82,13 @@ class Url extends Tag
     public function addImage(string $url, string $caption = '', string $geo_location = '', string $title = '', string $license = ''): static
     {
         $this->images[] = new Image($url, $caption, $geo_location, $title, $license);
+
+        return $this;
+    }
+
+    public function addVideo(string $thumbnailLoc, string $title, string $description, $contentLoc = null, $playerLoc = null, array $options = [], array $allow = [], array $deny = []): static
+    {
+        $this->videos[] = new Video($thumbnailLoc, $title, $description, $contentLoc, $playerLoc, $options, $allow, $deny);
 
         return $this;
     }

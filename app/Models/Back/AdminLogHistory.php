@@ -10,6 +10,6 @@ class AdminLogHistory extends Model
     protected $primaryKey = 'ID';
     public function user()
     {
-        return $this->hasOne('App\User', 'id', 'admin_ID');
+        return $this->hasOne('App\Models\User', 'id', 'admin_ID');
     }
 }

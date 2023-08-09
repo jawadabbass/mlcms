@@ -9,7 +9,7 @@ class ClientsHistory extends Model
     protected $table = 'clients_history';
     function user()
     {
-        return $this->belongsTo('App\User', 'add_by_user_id', 'id');
+        return $this->belongsTo('App\Models\User', 'add_by_user_id', 'id');
     }
     //
 }

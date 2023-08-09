@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\AdminAuth;
 
-use App\User;
+use App\Models\User;
 use App\Traits\AuthTrait;
 use Illuminate\Http\Request;
 use App\Models\Back\Metadata;

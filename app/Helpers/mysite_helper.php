@@ -500,7 +500,7 @@ function admin_url()
  **/
 function isIpBlocked($ip)
 {
-    $blockIPsData = \App\ContactBlockIps::all();
+    $blockIPsData = \App\Models\ContactBlockIps::all();
     $blockIps = [];
     foreach ($blockIPsData as $blockIP) {
         array_push($blockIps, $blockIP->ip_list);

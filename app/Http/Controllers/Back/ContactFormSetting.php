@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Back;
 
-use App\ContactBlockIps;
+use App\Models\ContactBlockIps;
 use App\Models\Back\Setting;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;

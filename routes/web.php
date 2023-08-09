@@ -40,12 +40,21 @@ use App\Http\Controllers\Back\VideoController as BackVideoController;
 use App\Http\Controllers\Back\GalleryController as BackGalleryController;
 use App\Http\Controllers\Back\InvoiceController as BackInvoiceController;
 use App\Http\Controllers\Back\ContactUsController as BackContactUsController;
+
 /************************* */
+
 use App\Http\Controllers\AdminAuth\LoginController as AdminAuthLoginController;
 use App\Http\Controllers\AdminAuth\ForgotPasswordController as AdminAuthForgotPasswordController;
 use App\Http\Controllers\AdminAuth\ResetPasswordController as AdminAuthResetPasswordController;
 use App\Http\Controllers\AdminAuth\ConfirmPasswordController as AdminAuthConfirmPasswordController;
 use App\Http\Controllers\AdminAuth\VerificationController as AdminAuthVerificationController;
+
+/************************* */
+
+use App\Http\Controllers\Back\PermissionController;
+use App\Http\Controllers\Back\PermissionGroupController;
+use App\Http\Controllers\Back\RoleController;
+
 /************************* */
 /*
 |--------------------------------------------------------------------------
@@ -111,7 +120,6 @@ Route::group(['namespace' => 'Front', 'middleware' => ['siteStatus', 'clearCache
 
     Route::get('/getState/{ads}', 'ClientRegisterController@getState')->name('get_state');
     Route::get('/getCity/{ads}', 'ClientRegisterController@getCity')->name('get_city');
-    Route::get('/flight-works/{fleetCategoryId?}/{fleetPlaneId?}/{fleetPlaneNameSlug?}', 'FlightWorkController@index')->name('flight.work.index');
 
     Route::get('updateMailChimpListMembers', [App\Http\Controllers\MailChimpController::class, 'updateMailChimpListMembers'])->name('updateMailChimpListMembers');
     Route::get('getMailChimpListMembers', [App\Http\Controllers\MailChimpController::class, 'getMailChimpListMembers'])->name('getMailChimpListMembers');
@@ -380,110 +388,33 @@ Route::group(['namespace' => 'Back', 'prefix' => 'adminmedia', 'middleware' => [
     Route::put('cities-sort-update', 'CityController@citiesSortUpdate')->name('cities.sort.update');
     Route::post('citiesSortUpdateAjax', 'CityController@citiesSortUpdateAjax')->name('citiesSortUpdateAjax');
 
-    Route::get('/fleetCategories', 'FleetCategoryController@index')->name('fleetCategories.index');
-    Route::get('/fleetCategories/create', 'FleetCategoryController@create')->name('fleetCategories.create');
-    Route::post('/fleetCategories', 'FleetCategoryController@store')->name('fleetCategories.store');
-    Route::get('/fleetCategories/{fleetCategoryObj}/edit', 'FleetCategoryController@edit')->name('fleetCategories.edit');
-    Route::put('/fleetCategories/{fleetCategoryObj}', 'FleetCategoryController@update')->name('fleetCategories.update');
-    Route::get('/fleetCategories/{fleetCategoryObj}', 'FleetCategoryController@show')->name('fleetCategories.show');
-    Route::delete('/fleetCategories/{fleetCategoryObj}', 'FleetCategoryController@destroy')->name('fleetCategories.destroy');
-    Route::get('fetchFleetCategoriesAjax', 'FleetCategoryController@fetchFleetCategoriesAjax')->name('fetchFleetCategoriesAjax');
-    Route::post('updateFleetCategoryStatus', 'FleetCategoryController@updateFleetCategoryStatus')->name('updateFleetCategoryStatus');
-    Route::get('fleetCategories-sort', 'FleetCategoryController@sortFleetCategories')->name('fleetCategories.sort');
-    Route::get('fleetCategories-sort-data', 'FleetCategoryController@fleetCategoriesSortData')->name('fleetCategories.sort.data');
-    Route::put('fleetCategories-sort-update', 'FleetCategoryController@fleetCategoriesSortUpdate')->name('fleetCategories.sort.update');
+    /* Permissions Routes */
+    Route::resource('permissions', PermissionController::class);
+    Route::get('fetchPermissionsAjax', [PermissionController::class, 'fetchPermissionsAjax'])->name('fetchPermissionsAjax');
+    Route::put('make-active-permission', [PermissionController::class, 'makeActivePermission'])->name('make.active.permission');
+    Route::put('make-not-active-permission', [PermissionController::class, 'makeNotActivePermission'])->name('make.not.active.permission');
+    Route::get('permissions-sort', [PermissionController::class, 'sortPermissions'])->name('permissions.sort');
+    Route::get('permissions-sort-data', [PermissionController::class, 'permissionSortData'])->name('permissions.sort.data');
+    Route::put('permissions-sort-update', [PermissionController::class, 'permissionSortUpdate'])->name('permissions.sort.update');
+    Route::put('updatePermissionGroupId', [PermissionController::class, 'updatePermissionGroupId'])->name('updatePermissionGroupId');
 
-    Route::get('/passengerCapacities', 'PassengerCapacityController@index')->name('passengerCapacities.index');
-    Route::get('/passengerCapacities/create', 'PassengerCapacityController@create')->name('passengerCapacities.create');
-    Route::post('/passengerCapacities', 'PassengerCapacityController@store')->name('passengerCapacities.store');
-    Route::get('/passengerCapacities/{passengerCapacityObj}/edit', 'PassengerCapacityController@edit')->name('passengerCapacities.edit');
-    Route::put('/passengerCapacities/{passengerCapacityObj}', 'PassengerCapacityController@update')->name('passengerCapacities.update');
-    Route::get('/passengerCapacities/{passengerCapacityObj}', 'PassengerCapacityController@show')->name('passengerCapacities.show');
-    Route::delete('/passengerCapacities/{passengerCapacityObj}', 'PassengerCapacityController@destroy')->name('passengerCapacities.destroy');
-    Route::get('fetchPassengerCapacitiesAjax', 'PassengerCapacityController@fetchPassengerCapacitiesAjax')->name('fetchPassengerCapacitiesAjax');
-    Route::post('updatePassengerCapacityStatus', 'PassengerCapacityController@updatePassengerCapacityStatus')->name('updatePassengerCapacityStatus');
-    Route::get('passengerCapacities-sort', 'PassengerCapacityController@sortPassengerCapacities')->name('passengerCapacities.sort');
-    Route::get('passengerCapacities-sort-data', 'PassengerCapacityController@passengerCapacitiesSortData')->name('passengerCapacities.sort.data');
-    Route::put('passengerCapacities-sort-update', 'PassengerCapacityController@passengerCapacitiesSortUpdate')->name('passengerCapacities.sort.update');
+    /* Permission Groups Routes */
+    Route::resource('permissionGroup', PermissionGroupController::class);
+    Route::get('fetchPermissionGroupsAjax', [PermissionGroupController::class, 'fetchPermissionGroupsAjax'])->name('fetchPermissionGroupsAjax');
+    Route::put('make-active-permissionGroup', [PermissionGroupController::class, 'makeActivePermissionGroup'])->name('make.active.permissionGroup');
+    Route::put('make-not-active-permissionGroup', [PermissionGroupController::class, 'makeNotActivePermissionGroup'])->name('make.not.active.permissionGroup');
+    Route::get('permissionGroup-sort', [PermissionGroupController::class, 'sortPermissionGroups'])->name('permissionGroup.sort');
+    Route::get('permissionGroup-sort-data', [PermissionGroupController::class, 'permissionGroupSortData'])->name('permissionGroup.sort.data');
+    Route::put('permissionGroup-sort-update', [PermissionGroupController::class, 'permissionGroupSortUpdate'])->name('permissionGroup.sort.update');
 
-    Route::get('/baggageCapacities', 'BaggageCapacityController@index')->name('baggageCapacities.index');
-    Route::get('/baggageCapacities/create', 'BaggageCapacityController@create')->name('baggageCapacities.create');
-    Route::post('/baggageCapacities', 'BaggageCapacityController@store')->name('baggageCapacities.store');
-    Route::get('/baggageCapacities/{baggageCapacityObj}/edit', 'BaggageCapacityController@edit')->name('baggageCapacities.edit');
-    Route::put('/baggageCapacities/{baggageCapacityObj}', 'BaggageCapacityController@update')->name('baggageCapacities.update');
-    Route::get('/baggageCapacities/{baggageCapacityObj}', 'BaggageCapacityController@show')->name('baggageCapacities.show');
-    Route::delete('/baggageCapacities/{baggageCapacityObj}', 'BaggageCapacityController@destroy')->name('baggageCapacities.destroy');
-    Route::get('fetchBaggageCapacitiesAjax', 'BaggageCapacityController@fetchBaggageCapacitiesAjax')->name('fetchBaggageCapacitiesAjax');
-    Route::post('updateBaggageCapacityStatus', 'BaggageCapacityController@updateBaggageCapacityStatus')->name('updateBaggageCapacityStatus');
-    Route::get('baggageCapacities-sort', 'BaggageCapacityController@sortBaggageCapacities')->name('baggageCapacities.sort');
-    Route::get('baggageCapacities-sort-data', 'BaggageCapacityController@baggageCapacitiesSortData')->name('baggageCapacities.sort.data');
-    Route::put('baggageCapacities-sort-update', 'BaggageCapacityController@baggageCapacitiesSortUpdate')->name('baggageCapacities.sort.update');
-
-    Route::get('/cabinDimensions', 'CabinDimensionController@index')->name('cabinDimensions.index');
-    Route::get('/cabinDimensions/create', 'CabinDimensionController@create')->name('cabinDimensions.create');
-    Route::post('/cabinDimensions', 'CabinDimensionController@store')->name('cabinDimensions.store');
-    Route::get('/cabinDimensions/{cabinDimensionObj}/edit', 'CabinDimensionController@edit')->name('cabinDimensions.edit');
-    Route::put('/cabinDimensions/{cabinDimensionObj}', 'CabinDimensionController@update')->name('cabinDimensions.update');
-    Route::get('/cabinDimensions/{cabinDimensionObj}', 'CabinDimensionController@show')->name('cabinDimensions.show');
-    Route::delete('/cabinDimensions/{cabinDimensionObj}', 'CabinDimensionController@destroy')->name('cabinDimensions.destroy');
-    Route::get('fetchCabinDimensionsAjax', 'CabinDimensionController@fetchCabinDimensionsAjax')->name('fetchCabinDimensionsAjax');
-    Route::post('updateCabinDimensionStatus', 'CabinDimensionController@updateCabinDimensionStatus')->name('updateCabinDimensionStatus');
-    Route::get('cabinDimensions-sort', 'CabinDimensionController@sortCabinDimensions')->name('cabinDimensions.sort');
-    Route::get('cabinDimensions-sort-data', 'CabinDimensionController@cabinDimensionsSortData')->name('cabinDimensions.sort.data');
-    Route::put('cabinDimensions-sort-update', 'CabinDimensionController@cabinDimensionsSortUpdate')->name('cabinDimensions.sort.update');
-
-    Route::get('/performances', 'PerformanceController@index')->name('performances.index');
-    Route::get('/performances/create', 'PerformanceController@create')->name('performances.create');
-    Route::post('/performances', 'PerformanceController@store')->name('performances.store');
-    Route::get('/performances/{performanceObj}/edit', 'PerformanceController@edit')->name('performances.edit');
-    Route::put('/performances/{performanceObj}', 'PerformanceController@update')->name('performances.update');
-    Route::get('/performances/{performanceObj}', 'PerformanceController@show')->name('performances.show');
-    Route::delete('/performances/{performanceObj}', 'PerformanceController@destroy')->name('performances.destroy');
-    Route::get('fetchPerformancesAjax', 'PerformanceController@fetchPerformancesAjax')->name('fetchPerformancesAjax');
-    Route::post('updatePerformanceStatus', 'PerformanceController@updatePerformanceStatus')->name('updatePerformanceStatus');
-    Route::get('performances-sort', 'PerformanceController@sortPerformances')->name('performances.sort');
-    Route::get('performances-sort-data', 'PerformanceController@performancesSortData')->name('performances.sort.data');
-    Route::put('performances-sort-update', 'PerformanceController@performancesSortUpdate')->name('performances.sort.update');
-
-    Route::get('/cabinAmenities', 'CabinAmenityController@index')->name('cabinAmenities.index');
-    Route::get('/cabinAmenities/create', 'CabinAmenityController@create')->name('cabinAmenities.create');
-    Route::post('/cabinAmenities', 'CabinAmenityController@store')->name('cabinAmenities.store');
-    Route::get('/cabinAmenities/{cabinAmenityObj}/edit', 'CabinAmenityController@edit')->name('cabinAmenities.edit');
-    Route::put('/cabinAmenities/{cabinAmenityObj}', 'CabinAmenityController@update')->name('cabinAmenities.update');
-    Route::get('/cabinAmenities/{cabinAmenityObj}', 'CabinAmenityController@show')->name('cabinAmenities.show');
-    Route::delete('/cabinAmenities/{cabinAmenityObj}', 'CabinAmenityController@destroy')->name('cabinAmenities.destroy');
-    Route::get('fetchCabinAmenitiesAjax', 'CabinAmenityController@fetchCabinAmenitiesAjax')->name('fetchCabinAmenitiesAjax');
-    Route::post('updateCabinAmenityStatus', 'CabinAmenityController@updateCabinAmenityStatus')->name('updateCabinAmenityStatus');
-    Route::get('cabinAmenities-sort', 'CabinAmenityController@sortCabinAmenities')->name('cabinAmenities.sort');
-    Route::get('cabinAmenities-sort-data', 'CabinAmenityController@cabinAmenitiesSortData')->name('cabinAmenities.sort.data');
-    Route::put('cabinAmenities-sort-update', 'CabinAmenityController@cabinAmenitiesSortUpdate')->name('cabinAmenities.sort.update');
-
-    Route::get('/safeties', 'SafetyController@index')->name('safeties.index');
-    Route::get('/safeties/create', 'SafetyController@create')->name('safeties.create');
-    Route::post('/safeties', 'SafetyController@store')->name('safeties.store');
-    Route::get('/safeties/{safetyObj}/edit', 'SafetyController@edit')->name('safeties.edit');
-    Route::put('/safeties/{safetyObj}', 'SafetyController@update')->name('safeties.update');
-    Route::get('/safeties/{safetyObj}', 'SafetyController@show')->name('safeties.show');
-    Route::delete('/safeties/{safetyObj}', 'SafetyController@destroy')->name('safeties.destroy');
-    Route::get('fetchSafetiesAjax', 'SafetyController@fetchSafetiesAjax')->name('fetchSafetiesAjax');
-    Route::post('updateSafetyStatus', 'SafetyController@updateSafetyStatus')->name('updateSafetyStatus');
-    Route::get('safeties-sort', 'SafetyController@sortSafeties')->name('safeties.sort');
-    Route::get('safeties-sort-data', 'SafetyController@safetiesSortData')->name('safeties.sort.data');
-    Route::put('safeties-sort-update', 'SafetyController@safetiesSortUpdate')->name('safeties.sort.update');
-
-    Route::get('/fleetPlanes', 'FleetPlaneController@index')->name('fleetPlanes.index');
-    Route::get('/fleetPlanes/create', 'FleetPlaneController@create')->name('fleetPlanes.create');
-    Route::post('/fleetPlanes', 'FleetPlaneController@store')->name('fleetPlanes.store');
-    Route::get('/fleetPlanes/{fleetPlaneObj}/edit', 'FleetPlaneController@edit')->name('fleetPlanes.edit');
-    Route::put('/fleetPlanes/{fleetPlaneObj}', 'FleetPlaneController@update')->name('fleetPlanes.update');
-    Route::get('/fleetPlanes/{fleetPlaneObj}', 'FleetPlaneController@show')->name('fleetPlanes.show');
-    Route::delete('/fleetPlanes/{fleetPlaneObj}', 'FleetPlaneController@destroy')->name('fleetPlanes.destroy');
-    Route::get('fetchFleetPlanesAjax', 'FleetPlaneController@fetchFleetPlanesAjax')->name('fetchFleetPlanesAjax');
-    Route::post('updateFleetPlaneStatus', 'FleetPlaneController@updateFleetPlaneStatus')->name('updateFleetPlaneStatus');
-    Route::get('fleetPlanes-sort', 'FleetPlaneController@sortFleetPlanes')->name('fleetPlanes.sort');
-    Route::get('fleetPlanes-sort-data', 'FleetPlaneController@fleetPlanesSortData')->name('fleetPlanes.sort.data');
-    Route::put('fleetPlanes-sort-update', 'FleetPlaneController@fleetPlanesSortUpdate')->name('fleetPlanes.sort.update');
-    Route::post('deletePlaneImageAjax', 'FleetPlaneController@deletePlaneImageAjax')->name('deletePlaneImageAjax');
+    /* Roles Routes */
+    Route::resource('roles', RoleController::class);
+    Route::get('fetchRolesAjax', [RoleController::class, 'fetchRolesAjax'])->name('fetchRolesAjax');
+    Route::put('make-active-roles', [RoleController::class, 'makeActiveRole'])->name('make.active.roles');
+    Route::put('make-not-active-roles', [RoleController::class, 'makeNotActiveRole'])->name('make.not.active.roles');
+    Route::get('roles-sort', [RoleController::class, 'sortRoles'])->name('roles.sort');
+    Route::get('roles-sort-data', [RoleController::class, 'rolesSortData'])->name('roles.sort.data');
+    Route::put('roles-sort-update', [RoleController::class, 'rolesSortUpdate'])->name('roles.sort.update');
 
     Route::get('/module-code-generator', 'ModuleCodeGeneratorController@index')->name('module.code.generator');
     Route::post('/module-code-generator', 'ModuleCodeGeneratorController@generateCode')->name('generate.module.code');

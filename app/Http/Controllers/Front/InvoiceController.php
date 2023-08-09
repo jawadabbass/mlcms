@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Front;
 
-use App\ContactBlockIps;
+use App\Models\ContactBlockIps;
 use App\Mail\ContactUs;
 use App\Models\Back\CmsModuleData;
 use App\Models\Back\ContactUsRequest;

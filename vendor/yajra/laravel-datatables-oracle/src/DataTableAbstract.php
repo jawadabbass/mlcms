@@ -15,8 +15,8 @@ use Yajra\DataTables\Processors\DataProcessor;
 use Yajra\DataTables\Utilities\Helper;
 
 /**
- * @method DataTableAbstract setTransformer($transformer)
- * @method DataTableAbstract setSerializer($transformer)
+ * @method static setTransformer($transformer)
+ * @method static setSerializer($transformer)
  *
  * @property-read mixed $transformer
  * @property-read mixed $serializer
@@ -53,6 +53,7 @@ abstract class DataTableAbstract implements DataTable
      */
     protected array $columnDef = [
         'index' => false,
+        'ignore_getters' => false,
         'append' => [],
         'edit' => [],
         'filter' => [],
@@ -103,10 +104,10 @@ abstract class DataTableAbstract implements DataTable
      * @var array
      */
     protected array $templates = [
-        'DT_RowId' => '',
+        'DT_RowId'    => '',
         'DT_RowClass' => '',
-        'DT_RowData' => [],
-        'DT_RowAttr' => [],
+        'DT_RowData'  => [],
+        'DT_RowAttr'  => [],
     ];
 
     /**
@@ -146,6 +147,8 @@ abstract class DataTableAbstract implements DataTable
     protected array $searchPanes = [];
 
     protected mixed $transformer;
+
+    protected bool $editOnlySelectedColumns = false;
 
     /**
      * Can the DataTable engine be created with these parameters.
@@ -223,6 +226,19 @@ abstract class DataTableAbstract implements DataTable
     }
 
     /**
+     * Prevent the getters Mutators to be applied when converting a collection
+     * of the Models into the final JSON.
+     *
+     * @return $this
+     */
+    public function ignoreGetters(): static
+    {
+        $this->columnDef['ignore_getters'] = true;
+
+        return $this;
+    }
+
+    /**
      * Edit column's content.
      *
      * @param  string  $name
@@ -231,7 +247,13 @@ abstract class DataTableAbstract implements DataTable
      */
     public function editColumn($name, $content): static
     {
-        $this->columnDef['edit'][] = ['name' => $name, 'content' => $content];
+        if ($this->editOnlySelectedColumns) {
+            if (! count($this->request->columns()) || in_array($name, Arr::pluck($this->request->columns(), 'name'))) {
+                $this->columnDef['edit'][] = ['name' => $name, 'content' => $content];
+            }
+        } else {
+            $this->columnDef['edit'][] = ['name' => $name, 'content' => $content];
+        }
 
         return $this;
     }
@@ -585,6 +607,18 @@ abstract class DataTableAbstract implements DataTable
     }
 
     /**
+     * Skip auto filtering as needed.
+     *
+     * @return $this
+     */
+    public function skipAutoFilter(): static
+    {
+        $this->autoFilter = false;
+
+        return $this;
+    }
+
+    /**
      * Push a new column name to blacklist.
      *
      * @param  string  $column
@@ -867,10 +901,10 @@ abstract class DataTableAbstract implements DataTable
     protected function render(array $data): JsonResponse
     {
         $output = $this->attachAppends([
-            'draw' => $this->request->draw(),
-            'recordsTotal' => $this->totalRecords,
+            'draw'            => $this->request->draw(),
+            'recordsTotal'    => $this->totalRecords,
             'recordsFiltered' => $this->filteredRecords ?? 0,
-            'data' => $data,
+            'data'            => $data,
         ]);
 
         if ($this->config->isDebugging()) {
@@ -934,11 +968,11 @@ abstract class DataTableAbstract implements DataTable
         $this->getLogger()->error($exception);
 
         return new JsonResponse([
-            'draw' => $this->request->draw(),
-            'recordsTotal' => $this->totalRecords,
+            'draw'            => $this->request->draw(),
+            'recordsTotal'    => $this->totalRecords,
             'recordsFiltered' => 0,
-            'data' => [],
-            'error' => $error ? __($error) : "Exception Message:\n\n".$exception->getMessage(),
+            'data'            => [],
+            'error'           => $error ? __($error) : "Exception Message:\n\n".$exception->getMessage(),
         ]);
     }
 
@@ -1038,5 +1072,12 @@ abstract class DataTableAbstract implements DataTable
     protected function getPrimaryKeyName(): string
     {
         return 'id';
+    }
+
+    public function editOnlySelectedColumns(): static
+    {
+        $this->editOnlySelectedColumns = true;
+
+        return $this;
     }
 }
