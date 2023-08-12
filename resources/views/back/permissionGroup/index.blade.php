@@ -67,6 +67,7 @@
                         id="permissionGroupDatatableAjax">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th>Permission Group Title</th>
                                 <th>Actions</th>
                             </tr>
@@ -100,6 +101,10 @@
                     }
                 },
                 columns: [{
+                        data: 'sort_order',
+                        name: 'sort_order'
+                    },
+                    {
                         data: 'title',
                         name: 'title'
                     },

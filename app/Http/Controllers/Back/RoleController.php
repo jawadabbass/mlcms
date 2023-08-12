@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Back\PermissionRole;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\RoleFormRequest;
+use App\Http\Requests\Back\RoleFormRequest;
 use Illuminate\Support\Facades\Redirect;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -32,7 +32,7 @@ class RoleController extends Controller
     {
         hasPermission('View Roles');
 
-        $roles = Role::select('*')->onlyCompany()->withoutGlobalScopes();
+        $roles = Role::select('*')->withoutGlobalScopes();
         return Datatables::of($roles)
             ->filter(function ($query) use ($request) {
                 if ($request->has('title') && !empty($request->title)) {
@@ -45,32 +45,16 @@ class RoleController extends Controller
             ->addColumn('action', function ($roles) {
                 $editStr = $deleteStr = '';
                 if(isAllowed('Edit Role')){
-                    $editStr = '<a href="' . route('roles.edit', [$roles->id]) . '" class="btn btn-sm btn-clean btn-icon" title="Edit details">
-                    <i class="la la-edit"></i>
+                    $editStr = '<a href="' . route('roles.edit', [$roles->id]) . '" class="btn btn-warning mr-1" title="Edit details">
+                    <i class="fas fa-edit"></i>
                 </a>';
                 }
                 if(isAllowed('Delete Role')){
-                    $deleteStr = '<a href="javascript:void(0);" onclick="deleteRole(\'' . $roles->id . '\');" class="btn btn-sm btn-clean btn-icon" title="Delete">
-                    <i class="la la-trash"></i>
+                    $deleteStr = '<a href="javascript:void(0);" onclick="deleteRole(\'' . $roles->id . '\');" class="btn btn-danger" title="Delete">
+                    <i class="fas fa-trash"></i>
                 </a>';
                 }
-                return '
-                <div class="dropdown dropdown-inline">
-                    <a href="javascript:;" class="btn btn-sm btn-clean btn-icon" data-toggle="dropdown">
-                        <i class="la la-cog"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                        <ul class="nav nav-hoverable flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <i class="nav-icon la la-edit"></i>
-                                    <span class="nav-text">Edit Details</span>
-                                </a>
-                            </li>
-
-                        </ul>
-                    </div>
-                </div>'.$editStr.$deleteStr;
+                return $editStr.$deleteStr;
             })
             ->rawColumns(['action', 'title'])
             ->orderColumns(['role', 'status'], ':column $1')
@@ -107,12 +91,13 @@ class RoleController extends Controller
 
         $role = new Role();
         $role->title = $request->input('title');
-        $role->created_by_company_id = Auth::user()->company_id;
         $role->created_by_user_id = Auth::id();
         $role->save();
         /*         * ************************************ */
 
         $this->setRolePermissions($request, $role);
+
+        setUserPermissionsInSession();
 
         flash('Role has been added!', 'success');
         return Redirect::route('roles.index');
@@ -155,12 +140,11 @@ class RoleController extends Controller
         hasPermission('Edit Role');
 
         $role->title = $request->input('title');
-        $role->created_by_company_id = Auth::user()->company_id;
         $role->save();
         /*         * ************************************ */
 
         $this->setRolePermissions($request, $role);
-
+        setUserPermissionsInSession();
         flash('Role has been updated!', 'success');
         return Redirect::route('roles.index');
     }
@@ -192,6 +176,8 @@ class RoleController extends Controller
         PermissionRole::where('role_id', 'like', $role->id)->delete();
         RoleUser::where('role_id', 'like', $role->id)->delete();
         $role->delete();
+
+        setUserPermissionsInSession();
         echo 'ok';
     }
 
@@ -204,6 +190,7 @@ class RoleController extends Controller
             $role = Role::withoutGlobalScopes()->findOrFail($id);
             $role->status = 'active';
             $role->update();
+            setUserPermissionsInSession();
             echo 'ok';
         } catch (ModelNotFoundException $e) {
             echo 'notok';
@@ -219,6 +206,7 @@ class RoleController extends Controller
             $role = Role::withoutGlobalScopes()->findOrFail($id);
             $role->status = 'inactive';
             $role->update();
+            setUserPermissionsInSession();
             echo 'ok';
         } catch (ModelNotFoundException $e) {
             echo 'notok';

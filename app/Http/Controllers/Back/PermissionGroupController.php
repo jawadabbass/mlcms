@@ -30,7 +30,7 @@ class PermissionGroupController extends Controller
     {
         hasPermission('View Permission Groups');
 
-        $permissionGroups = PermissionGroup::select('*')->withoutGlobalScope(ActiveScope::class);
+        $permissionGroups = PermissionGroup::select('*')->withoutGlobalScopes();
         return Datatables::of($permissionGroups)
             ->filter(function ($query) use ($request) {
                 if ($request->has('title') && !empty($request->title)) {
@@ -42,12 +42,12 @@ class PermissionGroupController extends Controller
             })
             ->addColumn('action', function ($permissionGroups) {
                 $editStr = $deleteStr = '';
-                if(isAllowed('Edit Role')){
+                if(isAllowed('Edit Permission Group')){
                     $editStr = '<a href="' . route('permissionGroup.edit', [$permissionGroups->id]) . '" class="btn btn-warning mr-2" title="Edit details">
                     <i class="fas fa-edit"></i>
                 </a>';
                 }
-                if(isAllowed('Delete Role')){
+                if(isAllowed('Delete Permission Group')){
                     $deleteStr = '<a href="javascript:void(0);" onclick="deletePermissionGroup(\'' . $permissionGroups->id . '\');" class="btn btn-danger mr-2" title="Delete">
                     <i class="fas fa-trash"></i>
                 </a>';
@@ -91,6 +91,8 @@ class PermissionGroupController extends Controller
         $permissionGroup->title = $request->input('title');
         $permissionGroup->save();
         /*         * ************************************ */
+        setUserPermissionsInSession();
+
         flash('Permission Group has been added!', 'success');
         return Redirect::route('permissionGroup.index');
     }
@@ -134,6 +136,7 @@ class PermissionGroupController extends Controller
         $permissionGroup->title = $request->input('title');
         $permissionGroup->save();
         /*         * ************************************ */
+        setUserPermissionsInSession();
         flash('Permission Group has been updated!', 'success');
         return Redirect::route('permissionGroup.index');
     }
@@ -148,6 +151,7 @@ class PermissionGroupController extends Controller
     {
         hasPermission('Delete Permission Group');
         $permissionGroup->delete();
+        setUserPermissionsInSession();
         echo 'ok';
     }
 

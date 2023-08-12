@@ -156,7 +156,7 @@ class ModController extends Controller
      */
     public function create()
     {
-        if (Auth::user()->type != 'super-admin')
+        if (Auth::user()->type != 'admin')
             return redirect(route('admin.index'));
         $title = FindInsettingArr('business_name') . ': Admin Users Management | Add new';
         $settingArr = $this->settingArr;

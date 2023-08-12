@@ -3,11 +3,12 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Back\Role;
 use Laravel\Sanctum\HasApiTokens;
+use App\Notifications\AdminVerifyEmail;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Notifications\AdminVerifyEmail;
 use App\Notifications\AdminResetPassword as AdminResetPasswordNotification;
 use Illuminate\Auth\Notifications\ResetPassword as ResetPasswordNotification;
 
@@ -21,9 +22,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'id', 'name', 'email', 'phone', 'type', 'is_super_admin', 'active', 'created_at', 'updated_at', 'api_token', 'on_notification_email', 'profile_image', 'address_line_1', 'address_line_2', 'zipcode', 'city', 'state', 'country'
     ];
 
     /**
@@ -53,9 +52,7 @@ class User extends Authenticatable
     public function sendPasswordResetNotification($token)
     {
         if(
-            $this->type === config('Constants.USER_TYPE_SUPER_ADMIN') ||
-            $this->type === config('Constants.USER_TYPE_NORMAL_ADMIN') ||
-            $this->type === config('Constants.USER_TYPE_REPS_ADMIN')
+            $this->type === 'admin'
         ){
             $this->notify(new AdminResetPasswordNotification($token));
         }else{

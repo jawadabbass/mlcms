@@ -396,7 +396,7 @@ Route::group(['namespace' => 'Back', 'prefix' => 'adminmedia', 'middleware' => [
     Route::get('permissions-sort', [PermissionController::class, 'sortPermissions'])->name('permissions.sort');
     Route::get('permissions-sort-data', [PermissionController::class, 'permissionSortData'])->name('permissions.sort.data');
     Route::put('permissions-sort-update', [PermissionController::class, 'permissionSortUpdate'])->name('permissions.sort.update');
-    Route::put('updatePermissionGroupId', [PermissionController::class, 'updatePermissionGroupId'])->name('updatePermissionGroupId');
+    Route::post('updatePermissionGroupId', [PermissionController::class, 'updatePermissionGroupId'])->name('updatePermissionGroupId');
 
     /* Permission Groups Routes */
     Route::resource('permissionGroup', PermissionGroupController::class);

@@ -9,7 +9,7 @@ use App\Models\Back\PermissionRole;
 use App\Models\Back\PermissionGroup;
 use Illuminate\Support\Facades\Redirect;
 use Yajra\DataTables\Facades\DataTables;
-use App\Http\Requests\PermissionFormRequest;
+use App\Http\Requests\Back\PermissionFormRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Controllers\Controller;
 
@@ -53,32 +53,16 @@ class PermissionController extends Controller
             ->addColumn('action', function ($permissions) {
                 $editStr = $deleteStr = '';
                 if(isAllowed('Edit Permission')){
-                    $editStr = '<a href="' . route('permissions.edit', [$permissions->id]) . '" class="btn btn-sm btn-clean btn-icon" title="Edit details">
-                    <i class="la la-edit"></i>
+                    $editStr = '<a href="' . route('permissions.edit', [$permissions->id]) . '" class="btn btn-warning mr-1" title="Edit details">
+                    <i class="fas fa-edit"></i>
                 </a>';
                 }
                 if(isAllowed('Delete Permission')){
-                    $deleteStr = '<a href="javascript:void(0);" onclick="deletePermission(\'' . $permissions->id . '\');" class="btn btn-sm btn-clean btn-icon" title="Delete">
-                    <i class="la la-trash"></i>
+                    $deleteStr = '<a href="javascript:void(0);" onclick="deletePermission(\'' . $permissions->id . '\');" class="btn btn-danger" title="Delete">
+                    <i class="fas fa-trash"></i>
                 </a>';
                 }
-                return '
-                <div class="dropdown dropdown-inline">
-                    <a href="javascript:;" class="btn btn-sm btn-clean btn-icon" data-toggle="dropdown">
-                        <i class="la la-cog"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                        <ul class="nav nav-hoverable flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <i class="nav-icon la la-edit"></i>
-                                    <span class="nav-text">Edit Details</span>
-                                </a>
-                            </li>
-
-                        </ul>
-                    </div>
-                </div>'.$editStr.$deleteStr;
+                return $editStr.$deleteStr;
             })
             ->rawColumns(['action', 'title', 'permission_group_id'])
             ->orderColumns(['title', 'status'], ':column $1')
@@ -121,6 +105,7 @@ class PermissionController extends Controller
         $permission->permission_group_id = $request->input('permission_group_id');
         $permission->save();
         /*         * ************************************ */
+        setUserPermissionsInSession();
         flash('Permission has been added!', 'success');
         return Redirect::route('permissions.index');
     }
@@ -167,6 +152,7 @@ class PermissionController extends Controller
         $permission->permission_group_id = $request->input('permission_group_id');
         $permission->save();
         /*         * ************************************ */
+        setUserPermissionsInSession();
         flash('Permission has been updated!', 'success');
         return Redirect::route('permissions.index');
     }
@@ -183,6 +169,7 @@ class PermissionController extends Controller
 
         PermissionRole::where('permission_id', 'like', $permission->id)->delete();
         $permission->delete();
+        setUserPermissionsInSession();
         echo 'ok';
     }
 
@@ -195,6 +182,7 @@ class PermissionController extends Controller
             $permission = Permission::withoutGlobalScopes()->findOrFail($id);
             $permission->status = 'active';
             $permission->update();
+            setUserPermissionsInSession();
             echo 'ok';
         } catch (ModelNotFoundException $e) {
             echo 'notok';
@@ -210,6 +198,7 @@ class PermissionController extends Controller
             $permission = Permission::withoutGlobalScopes()->findOrFail($id);
             $permission->status = 'inactive';
             $permission->update();
+            setUserPermissionsInSession();
             echo 'ok';
         } catch (ModelNotFoundException $e) {
             echo 'notok';
@@ -261,6 +250,7 @@ class PermissionController extends Controller
         $data = Permission::withoutGlobalScopes()->find($request->id);
         $data->permission_group_id = $request->permission_group_id;
         $data->save();
+        setUserPermissionsInSession();
         return response()->json(['status' => 'success', 'message' => $data->permission_group_id]);
     }
 

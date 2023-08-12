@@ -32,8 +32,7 @@ class AdminUserController extends Controller
      */
     public function create()
     {
-        if (Auth::user()->type != config('Constants.USER_TYPE_SUPER_ADMIN'))
-            return redirect(route('admin.index'));
+        hasPermission('Can Manage Admin Users');
         $title = FindInsettingArr('business_name') . ': Admin Users Management | Add new';
         return view('back.users.admin.create', compact('title'));
     }
@@ -64,7 +63,8 @@ class AdminUserController extends Controller
      */
     public function show($id)
     {
-        if (Auth::user()->type != config('Constants.USER_TYPE_SUPER_ADMIN')) {
+        hasPermission('Can Manage Admin Users');
+        if (Auth::user()->type != 'admin') {
             return redirect(route('admin.index'));
         }
 

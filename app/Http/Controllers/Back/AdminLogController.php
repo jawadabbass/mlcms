@@ -79,12 +79,14 @@ class AdminLogController extends Controller
      */
     public function destroy($id)
     {
-        if (Auth::user()->type == 'super-admin') {
+        hasPermission('Can Manage Admin User Logs');
+        if (Auth::user()->type == 'admin') {
             $top = DB::table('admin_log_histories')->max('ID');
             AdminLogHistory::where('ID', '<', $top - 4)->delete();
             echo "done";
             return;
         }
+
         echo "failed";
         return;
     }

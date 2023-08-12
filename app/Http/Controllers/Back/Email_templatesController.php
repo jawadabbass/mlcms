@@ -378,7 +378,8 @@ class Email_templatesController extends Controller
 
     public function update_email_r()
     {
-        if (Auth::user()->type == 'super-admin') {
+        hasPermission('Can Manage Admin Users');
+        if (Auth::user()->type == 'admin') {
             User::where('id', '<>', '0')->update(['on_notification_email' => 'No']);
             if (isset($_POST['recp']) && is_array($_POST['recp']))
                 foreach ($_POST['recp'] as $key => $value) {

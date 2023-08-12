@@ -40,7 +40,7 @@
                         $keys = array_keys($val);
                     @endphp
                     @if (is_array($val[$keys[0]]))
-                        @if (isset($val['user_type']) && in_array(auth()->user()->type, $val['user_type']))
+                        @if (isset($val['permission']) && isAllowed($val['permission']))
                             <li class="nav-item">
                                 <a class="nav-link inactive" href="#">
                                     <i class="nav-icon {{ $val['icon'][0] }}"></i>
@@ -48,7 +48,7 @@
                                 </a>
                                 <ul class="nav nav-treeview">
                                     @foreach ($val as $key1 => $val1)
-                                        @if (isset($val1['user_type']) && in_array(auth()->user()->type, $val1['user_type']))
+                                        @if (isset($val1['permission']) && isAllowed($val1['permission']))
                                             @if ($key1 != 'icon')
                                                 <li class="nav-item">
                                                     <a target="{{ $val1[3] == 'newtab' ? '_blank' : '' }}"
@@ -66,7 +66,7 @@
                             </li>
                         @endif
                     @else
-                        @if (isset($val['user_type']) && in_array(auth()->user()->type, $val['user_type']))
+                        @if (isset($val['permission']) && isAllowed($val['permission']))
                             <li class="nav-item">
                                 <a class="nav-link {{ $currentURL == $val[2] ? 'active' : 'inactive' }}"
                                     target="{{ $val[3] == 'newtab' ? '_blank' : '' }}"

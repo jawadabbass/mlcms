@@ -10,7 +10,7 @@ class IsMember
 {
     public function handle(Request $request, Closure $next, $guard = null)
     {
-        if (Auth::guard($guard)->check() && Auth::guard($guard)->user()->type == config('Constants.USER_TYPE_FRONT_USER')) {
+        if (Auth::guard($guard)->check() && Auth::guard($guard)->user()->type == 'user') {
             return $next($request);
         }
         abort(403, 'Unauthorized');

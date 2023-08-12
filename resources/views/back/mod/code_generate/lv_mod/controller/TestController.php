@@ -98,7 +98,7 @@ class {mod_url_c}Controller extends Controller
      */
     public function create()
     {
-	    if(Auth::user()->type != 'super-admin')
+	    if(Auth::user()->type == 'user')
 		    return redirect(route('admin.index'));
 	    $title = FindInsettingArr('business_name').': Admin Users Management | Add new';
         $settingArr=$this->settingArr;

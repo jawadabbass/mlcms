@@ -18,10 +18,7 @@ class AdminMiddleware
     {
         if (
             Auth::guard($guard)->check() &&
-            (Auth::guard($guard)->user()->type == config('Constants.USER_TYPE_SUPER_ADMIN') ||
-                Auth::guard($guard)->user()->type == config('Constants.USER_TYPE_NORMAL_ADMIN') ||
-                Auth::guard($guard)->user()->type == config('Constants.USER_TYPE_REPS_ADMIN')
-            )
+            Auth::guard($guard)->user()->type == 'admin'
         ) {
             return $next($request);
         }

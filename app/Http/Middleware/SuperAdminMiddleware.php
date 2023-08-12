@@ -16,7 +16,7 @@ class SuperAdminMiddleware
 	 */
 	public function handle($request, Closure $next, $guard = null)
 	{
-		if (Auth::guard($guard)->check() && Auth::user()->type == config('Constants.USER_TYPE_SUPER_ADMIN')) {
+		if (Auth::guard($guard)->check() && (int)Auth::user()->is_super_admin === 1) {
 			return $next($request);
 		}
 		return redirect('/');

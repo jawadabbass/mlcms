@@ -201,7 +201,7 @@ function is_admin()
 {
     if (\Auth::check()) {
         $type = \Auth::user()->type;
-        if ($type == 'super-admin' || $type == 'normal-admin') {
+        if ($type == 'admin') {
             return true;
         }
     }

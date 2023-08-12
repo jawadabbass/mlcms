@@ -76,7 +76,7 @@
                         $bgClassCounter = 0;
                     @endphp
                     @foreach ($arrLinks as $key => $val)
-                        @if (isset($val['user_type']) && in_array(auth()->user()->type, $val['user_type']))
+                        @if (isset($val['permission']) && isAllowed($val['permission']))
                             <div class="col-md-4">
                                 <a target="{{ $val[3] == 'newtab' ? '_blank' : '' }}" style="color: unset;"
                                                 href="{{ admin_url() . '' . $val[2] }}">

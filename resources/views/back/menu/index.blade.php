@@ -7,7 +7,7 @@
     <div class="content-wrapper pl-3 pr-2">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>Positioning Navigations</h1>
+            <h1>Positioning Navigation</h1>
             <ol class="breadcrumb">
                 <li>
                     <a href="{{ admin_url() }}">
@@ -15,7 +15,7 @@
                     </a>
                 </li>
                 <!--<li><a href="#">Examples</a></li>-->
-                <li class="active">Positioning Navigations</li>
+                <li class="active">Positioning Navigation</li>
             </ol>
         </section>
         <!-- Main content -->
