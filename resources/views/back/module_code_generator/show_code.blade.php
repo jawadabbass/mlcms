@@ -27,8 +27,8 @@
         <section class="content">
             <div class="row">
                 <div class="col-xs-12 col-md-12">
-                    <div class="box">
-                        <div class="alert alert-success">{!! $msg !!}</div>
+                    <div class="card">
+                        <div class="card-body">{!! $msg !!}</div>
                     </div>
                     <!-- /.box -->
                     <!-- /.box -->
