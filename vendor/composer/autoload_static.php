@@ -143,7 +143,6 @@ class ComposerStaticInit65edb0bec44975a3b2ab5422e8bd5280
         'fa0319b5b82f24f47587007826b740cc' => __DIR__ . '/..' . '/wyrihaximus/constants/src/HTTPStatusCodes/constants_include.php',
         'a135adc8de6a81a445603d9aa0bdbdae' => __DIR__ . '/..' . '/wyrihaximus/constants/src/Numeric/constants_include.php',
         '4a1f389d6ce373bda9e57857d3b61c84' => __DIR__ . '/..' . '/barryvdh/laravel-debugbar/src/helpers.php',
-        'cf44199717bf3055b6c87791a4b20b22' => __DIR__ . '/..' . '/bepsvpt/secure-headers/src/helpers.php',
         'e23faeee409e941dc9b4c80386209c39' => __DIR__ . '/..' . '/laracasts/flash/src/Laracasts/Flash/functions.php',
         'c72349b1fe8d0deeedd3a52e8aa814d8' => __DIR__ . '/..' . '/mockery/mockery/library/helpers.php',
         'ce9671a430e4846b44e1c68c7611f9f5' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery.php',
@@ -344,7 +343,6 @@ class ComposerStaticInit65edb0bec44975a3b2ab5422e8bd5280
         'B' => 
         array (
             'Brick\\Math\\' => 11,
-            'Bepsvpt\\SecureHeaders\\' => 22,
             'Barryvdh\\DomPDF\\' => 16,
             'Barryvdh\\Debugbar\\' => 18,
         ),
@@ -890,10 +888,6 @@ class ComposerStaticInit65edb0bec44975a3b2ab5422e8bd5280
         array (
             0 => __DIR__ . '/..' . '/brick/math/src',
         ),
-        'Bepsvpt\\SecureHeaders\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/bepsvpt/secure-headers/src',
-        ),
         'Barryvdh\\DomPDF\\' => 
         array (
             0 => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src',
@@ -1035,6 +1029,7 @@ class ComposerStaticInit65edb0bec44975a3b2ab5422e8bd5280
         'App\\Http\\Middleware\\RedirectIfAdminAuthenticated' => __DIR__ . '/../..' . '/app/Http/Middleware/RedirectIfAdminAuthenticated.php',
         'App\\Http\\Middleware\\RedirectIfAuthenticated' => __DIR__ . '/../..' . '/app/Http/Middleware/RedirectIfAuthenticated.php',
         'App\\Http\\Middleware\\RequirePassword' => __DIR__ . '/../..' . '/app/Http/Middleware/RequirePassword.php',
+        'App\\Http\\Middleware\\SecurityHeaders' => __DIR__ . '/../..' . '/app/Http/Middleware/SecurityHeaders.php',
         'App\\Http\\Middleware\\TrimStrings' => __DIR__ . '/../..' . '/app/Http/Middleware/TrimStrings.php',
         'App\\Http\\Middleware\\TrustHosts' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustHosts.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
@@ -1201,15 +1196,6 @@ class ComposerStaticInit65edb0bec44975a3b2ab5422e8bd5280
         'Barryvdh\\DomPDF\\Facade\\Pdf' => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src/Facade/Pdf.php',
         'Barryvdh\\DomPDF\\PDF' => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src/PDF.php',
         'Barryvdh\\DomPDF\\ServiceProvider' => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src/ServiceProvider.php',
-        'Bepsvpt\\SecureHeaders\\Builders\\Builder' => __DIR__ . '/..' . '/bepsvpt/secure-headers/src/Builders/Builder.php',
-        'Bepsvpt\\SecureHeaders\\Builders\\ClearSiteDataBuilder' => __DIR__ . '/..' . '/bepsvpt/secure-headers/src/Builders/ClearSiteDataBuilder.php',
-        'Bepsvpt\\SecureHeaders\\Builders\\ContentSecurityPolicyBuilder' => __DIR__ . '/..' . '/bepsvpt/secure-headers/src/Builders/ContentSecurityPolicyBuilder.php',
-        'Bepsvpt\\SecureHeaders\\Builders\\ExpectCertificateTransparencyBuilder' => __DIR__ . '/..' . '/bepsvpt/secure-headers/src/Builders/ExpectCertificateTransparencyBuilder.php',
-        'Bepsvpt\\SecureHeaders\\Builders\\PermissionsPolicyBuilder' => __DIR__ . '/..' . '/bepsvpt/secure-headers/src/Builders/PermissionsPolicyBuilder.php',
-        'Bepsvpt\\SecureHeaders\\Builders\\StrictTransportSecurityBuilder' => __DIR__ . '/..' . '/bepsvpt/secure-headers/src/Builders/StrictTransportSecurityBuilder.php',
-        'Bepsvpt\\SecureHeaders\\SecureHeaders' => __DIR__ . '/..' . '/bepsvpt/secure-headers/src/SecureHeaders.php',
-        'Bepsvpt\\SecureHeaders\\SecureHeadersMiddleware' => __DIR__ . '/..' . '/bepsvpt/secure-headers/src/SecureHeadersMiddleware.php',
-        'Bepsvpt\\SecureHeaders\\SecureHeadersServiceProvider' => __DIR__ . '/..' . '/bepsvpt/secure-headers/src/SecureHeadersServiceProvider.php',
         'Brick\\Math\\BigDecimal' => __DIR__ . '/..' . '/brick/math/src/BigDecimal.php',
         'Brick\\Math\\BigInteger' => __DIR__ . '/..' . '/brick/math/src/BigInteger.php',
         'Brick\\Math\\BigNumber' => __DIR__ . '/..' . '/brick/math/src/BigNumber.php',

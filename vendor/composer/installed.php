@@ -3,7 +3,7 @@
         'name' => 'laravel/laravel',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '67362b09ba554d2b8dd533c639428d4afbc1449a',
+        'reference' => '9654215007a8e182b3194dca7ff2d1f538d51c9c',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -34,15 +34,6 @@
             'reference' => '9843d2be423670fb434f4c978b3c0f4dd92c87a6',
             'type' => 'library',
             'install_path' => __DIR__ . '/../barryvdh/laravel-dompdf',
-            'aliases' => array(),
-            'dev_requirement' => false,
-        ),
-        'bepsvpt/secure-headers' => array(
-            'pretty_version' => '7.4.0',
-            'version' => '7.4.0.0',
-            'reference' => '639e99c72bdfe3d6f933f0a1e0abe1ca722e2e67',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../bepsvpt/secure-headers',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
@@ -484,7 +475,7 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '67362b09ba554d2b8dd533c639428d4afbc1449a',
+            'reference' => '9654215007a8e182b3194dca7ff2d1f538d51c9c',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -1045,8 +1036,8 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0|2.0|3.0',
-                1 => '1.0.0 || 2.0.0 || 3.0.0',
+                0 => '1.0.0 || 2.0.0 || 3.0.0',
+                1 => '1.0|2.0|3.0',
             ),
         ),
         'psr/simple-cache' => array(
