@@ -7,7 +7,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
 
-class AdminEnsureEmailIsVerified
+class EnsureEmailIsVerified
 {
     /**
      * Handle an incoming request.
@@ -19,12 +19,18 @@ class AdminEnsureEmailIsVerified
      */
     public function handle($request, Closure $next, $redirectToRoute = null)
     {
-        if (! $request->user() ||
+        if (
+            !$request->user() ||
             ($request->user() instanceof MustVerifyEmail &&
-            ! $request->user()->hasVerifiedEmail())) {
+                !$request->user()->hasVerifiedEmail())
+        ) {
+            $redirectLink = 'verification.notice';
+            if ($request->user()->type == 'admin') {
+                $redirectLink = 'admin.verification.notice';
+            }
             return $request->expectsJson()
-                    ? abort(403, 'Your email address is not verified.')
-                    : Redirect::guest(URL::route($redirectToRoute ?: 'admin.verification.notice'));
+                ? abort(403, 'Your email address is not verified.')
+                : Redirect::guest(URL::route($redirectToRoute ?: $redirectLink));
         }
 
         return $next($request);

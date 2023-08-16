@@ -70,7 +70,6 @@ use App\Http\Controllers\Back\RoleController;
 Auth::routes();
 
 Route::prefix('adminmedia')->name('admin.')->group(function () {
-    Route::get('/', [AdminAuthLoginController::class, 'showLoginForm'])->name('login');
     Route::get('login', [AdminAuthLoginController::class, 'showLoginForm'])->name('login');
     Route::post('login', [AdminAuthLoginController::class, 'login']);
     Route::post('logout', [AdminAuthLoginController::class, 'logout'])->name('logout');
@@ -86,7 +85,7 @@ Route::prefix('adminmedia')->name('admin.')->group(function () {
 });
 
 
-Route::group(['prefix' => 'member', 'name' => 'member', 'middleware' => ['auth', 'is_member', 'ipmiddleware']], function () {
+Route::group(['prefix' => 'member', 'name' => 'member', 'middleware' => ['auth', 'ipmiddleware']], function () {
     Route::get('/', [UserDashboardController::class, 'index'])->name('dashboard');
 });
 Route::group(['namespace' => 'Front', 'middleware' => ['siteStatus', 'clearCache', 'ipmiddleware']], function () {
@@ -131,7 +130,7 @@ Route::group(['namespace' => 'Front', 'middleware' => ['siteStatus', 'clearCache
     Route::post('unsubscribe-newsletter', [App\Http\Controllers\MailChimpController::class, 'unsubscribeNewsletter'])->name('unsubscribeNewsletter');
     Route::get('unsubscribe-newsletter-thanks', [App\Http\Controllers\MailChimpController::class, 'unsubscribeNewsletterThanks'])->name('unsubscribeNewsletterThanks');
 });
-Route::group(['namespace' => 'Back', 'prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'is_admin', 'ipmiddleware']], function () {
+Route::group(['namespace' => 'Back', 'prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddleware']], function () {
     Route::get('/', [DashboardController::class, 'index']);
     Route::get('/aaa', function () {
         return view('back.common_views.script');

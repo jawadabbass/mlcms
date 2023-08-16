@@ -28,14 +28,12 @@ class LoginController extends Controller
     | to conveniently provide its functionality to your applications.
     |
     */
-
     /**
      * Where to redirect users after login.
      *
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::ADMIN_HOME;
-
     /**
      * Create a new controller instance.
      *
@@ -45,17 +43,14 @@ class LoginController extends Controller
     {
         $this->middleware('admin_guest')->except('logout');
     }
-
     public function showLoginForm()
     {
         return view('admin_auth.login');
     }
-
     protected function authenticated(Request $request, User $user)
     {
         return $this->setSession($request);
     }
-
     public function logout(Request $request)
     {
         $this->performLogout($request);
@@ -69,7 +64,6 @@ class LoginController extends Controller
             ? new JsonResponse([], 204)
             : redirect('/adminmedia');
     }
-
     public function performLogout(Request $request)
     {
         $adminLogs = AdminLogHistory::where('admin_id', Auth::user()->id)->where('ip_address', $request->ip())->orderBy('session_start', 'DESC')->first();

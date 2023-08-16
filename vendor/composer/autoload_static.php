@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit0dc209307679f50bbb2e87bb8c8dc706
+class ComposerStaticInit65edb0bec44975a3b2ab5422e8bd5280
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -631,8 +631,8 @@ class ComposerStaticInit0dc209307679f50bbb2e87bb8c8dc706
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -1025,20 +1025,16 @@ class ComposerStaticInit0dc209307679f50bbb2e87bb8c8dc706
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\AdminAuthenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/AdminAuthenticate.php',
-        'App\\Http\\Middleware\\AdminEnsureEmailIsVerified' => __DIR__ . '/../..' . '/app/Http/Middleware/AdminEnsureEmailIsVerified.php',
-        'App\\Http\\Middleware\\AdminMiddleware' => __DIR__ . '/../..' . '/app/Http/Middleware/AdminMiddleware.php',
-        'App\\Http\\Middleware\\AdminRequirePassword' => __DIR__ . '/../..' . '/app/Http/Middleware/AdminRequirePassword.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
         'App\\Http\\Middleware\\CheckForMaintenanceMode' => __DIR__ . '/../..' . '/app/Http/Middleware/CheckForMaintenanceMode.php',
         'App\\Http\\Middleware\\ClearCache' => __DIR__ . '/../..' . '/app/Http/Middleware/ClearCache.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
+        'App\\Http\\Middleware\\EnsureEmailIsVerified' => __DIR__ . '/../..' . '/app/Http/Middleware/EnsureEmailIsVerified.php',
         'App\\Http\\Middleware\\IPMiddleware' => __DIR__ . '/../..' . '/app/Http/Middleware/IPMiddleware.php',
-        'App\\Http\\Middleware\\IsAdmin' => __DIR__ . '/../..' . '/app/Http/Middleware/IsAdmin.php',
-        'App\\Http\\Middleware\\IsMember' => __DIR__ . '/../..' . '/app/Http/Middleware/IsMember.php',
         'App\\Http\\Middleware\\PreventRequestsDuringMaintenance' => __DIR__ . '/../..' . '/app/Http/Middleware/PreventRequestsDuringMaintenance.php',
         'App\\Http\\Middleware\\RedirectIfAdminAuthenticated' => __DIR__ . '/../..' . '/app/Http/Middleware/RedirectIfAdminAuthenticated.php',
         'App\\Http\\Middleware\\RedirectIfAuthenticated' => __DIR__ . '/../..' . '/app/Http/Middleware/RedirectIfAuthenticated.php',
-        'App\\Http\\Middleware\\SuperAdminMiddleware' => __DIR__ . '/../..' . '/app/Http/Middleware/SuperAdminMiddleware.php',
+        'App\\Http\\Middleware\\RequirePassword' => __DIR__ . '/../..' . '/app/Http/Middleware/RequirePassword.php',
         'App\\Http\\Middleware\\TrimStrings' => __DIR__ . '/../..' . '/app/Http/Middleware/TrimStrings.php',
         'App\\Http\\Middleware\\TrustHosts' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustHosts.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
@@ -9031,10 +9027,10 @@ class ComposerStaticInit0dc209307679f50bbb2e87bb8c8dc706
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit0dc209307679f50bbb2e87bb8c8dc706::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit0dc209307679f50bbb2e87bb8c8dc706::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit0dc209307679f50bbb2e87bb8c8dc706::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit0dc209307679f50bbb2e87bb8c8dc706::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit65edb0bec44975a3b2ab5422e8bd5280::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit65edb0bec44975a3b2ab5422e8bd5280::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit65edb0bec44975a3b2ab5422e8bd5280::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit65edb0bec44975a3b2ab5422e8bd5280::$classMap;
 
         }, null, ClassLoader::class);
     }
