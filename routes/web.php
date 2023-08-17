@@ -245,7 +245,18 @@ Route::group(['namespace' => 'Back', 'prefix' => 'adminmedia', 'middleware' => [
     Route::post('widgets/option/update/{id}', [WidgetController::class, 'optionUpdate'])->name('widget.option.update');
     Route::get('removeWidgetImage/{id}', [WidgetController::class, 'removeFeaturedImage']);
     Route::resource('/social_media', '\App\Http\Controllers\Back\SocialMediaController');
-    Route::resource('/user/admin', '\App\Http\Controllers\Back\AdminUserController');
+    
+    /* Admin Users Routes */
+    Route::get('admin-users', [App\Http\Controllers\Back\AdminUserController::class, 'index'])->name('admin.users.index');
+    Route::get('admin-user/create', [App\Http\Controllers\Back\AdminUserController::class, 'create'])->name('admin.user.create');
+    Route::post('admin-user', [App\Http\Controllers\Back\AdminUserController::class, 'store'])->name('admin.user.store');
+    Route::get('admin-user/{user}', [App\Http\Controllers\Back\AdminUserController::class, 'show'])->name('admin.user.show');
+    Route::get('admin-user/{user}/edit', [App\Http\Controllers\Back\AdminUserController::class, 'edit'])->name('admin.user.edit');
+    Route::put('admin-user/{user}', [App\Http\Controllers\Back\AdminUserController::class, 'update'])->name('admin.user.update');
+    Route::delete('admin-user/{user}', [App\Http\Controllers\Back\AdminUserController::class, 'destroy'])->name('admin.user.destroy');
+    Route::get('admin-users-fetch-ajax', [App\Http\Controllers\Back\AdminUserController::class, 'fetchUsersAjax'])->name('admin.user.fetch.ajax');
+    /* Route::resource('/user/admin', '\App\Http\Controllers\Back\AdminUserController'); */
+
     Route::resource('/user/admin_log', '\App\Http\Controllers\Back\AdminLogController');
     Route::resource('/user/front', '\App\Http\Controllers\Back\FrontUserController');
     Route::resource('/categories', '\App\Http\Controllers\Back\CategoriesController');

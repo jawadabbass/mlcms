@@ -113,7 +113,7 @@ class DashboardLinks
         ],
         'adminusers' => [
             'Manage Admin Users',
-            'fas fa-lock', 'user/admin',
+            'fas fa-lock', 'admin-users',
             'permission' => 'Can Manage Admin Users',
             ''
         ],
@@ -393,7 +393,7 @@ class DashboardLinks
             ],
             'adminusers' => [
                 'Manage Admin Users',
-                'fas fa-lock', 'user/admin',
+                'fas fa-lock', 'admin-users',
                 'permission' => 'Can Manage Admin Users',
                 ''
             ],
