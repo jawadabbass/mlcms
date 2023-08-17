@@ -5,10 +5,10 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Back\Role;
 use Laravel\Sanctum\HasApiTokens;
-use App\Notifications\AdminVerifyEmail;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Notifications\AdminVerifyEmail;
 use App\Notifications\AdminResetPassword as AdminResetPasswordNotification;
 use Illuminate\Auth\Notifications\ResetPassword as ResetPasswordNotification;
 
