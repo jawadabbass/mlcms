@@ -62,18 +62,6 @@ function load_cmsmodule_edit_form(id) {
         $('#edit_show_featured_image').val(data.show_featured_image);
         $('#edit_module_fontawesome_icon').val(data.module_fontawesome_icon);
 
-        let access_level = data.access_level;
-        const accessLevelArray = access_level.split(",");
-        if (accessLevelArray[0] != '') {
-            $('#' + accessLevelArray[0]).prop('checked', true);
-        }
-        if (accessLevelArray[1] != '') {
-            $('#' + accessLevelArray[1]).prop('checked', true);
-        }
-        if (accessLevelArray[2] != '') {
-            $('#' + accessLevelArray[2]).prop('checked', true);
-        }
-
         /******************* */
         let show_icon_in = data.show_icon_in;
         const show_icon_in_array = show_icon_in.split(",");

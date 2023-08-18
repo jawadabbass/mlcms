@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Back;
 use App\Http\Controllers\Controller;
 use App\Models\Back\CmsModule;
 use App\Models\Back\CmsModuleData;
+use App\Models\Back\Permission;
+use App\Models\Back\PermissionGroup;
+use App\Models\Back\PermissionRole;
+use App\Models\Back\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use PhpParser\Node\Expr\Cast\String_;
@@ -20,7 +24,7 @@ class ModuleController extends Controller
     {
         $modules = CmsModule::paginate(10);
 
-        $title = FindInsettingArr('business_name').': Module Management';
+        $title = FindInsettingArr('business_name') . ': Module Management';
 
         return view('back.modules.index', compact('modules', 'title'));
     }
@@ -44,9 +48,8 @@ class ModuleController extends Controller
         $this->validate($request, [
             'title' => 'required',
             'term' => 'required',
-            'module_fontawesome_icon' => 'required',
-            'access_level' => 'required',
-            'show_icon_in' => 'required',
+            /* 'module_fontawesome_icon' => 'required',
+            'show_icon_in' => 'required', */
         ]);
         $cmsModule = new CmsModule();
         $cmsModule->title = $request->title;
@@ -83,11 +86,14 @@ class ModuleController extends Controller
         }
         $cmsModule->show_featured_image = $request->show_featured_image;
         $cmsModule->module_fontawesome_icon = $request->module_fontawesome_icon;
-        $cmsModule->access_level = implode(',', $request->input('access_level', ['super-admin','normal-admin']));
-        $cmsModule->show_icon_in = implode(',', $request->input('show_icon_in', ['show_icon_in_left','show_icon_in_dashboard']));
+        $cmsModule->show_icon_in = implode(',', $request->input('show_icon_in', ['show_icon_in_left', 'show_icon_in_dashboard']));
         $cmsModule->show_in_admin_menu = 0;
         $cmsModule->save();
-        // Session::flash('added_action', true);
+        /************************** */
+        /************************** */
+        $this->savePermissionGroup($cmsModule);
+        /************************** */
+        /************************** */
         return redirect(route('modules.index'));
     }
 
@@ -115,7 +121,7 @@ class ModuleController extends Controller
     public function edit($id, Request $request)
     {
         $module = CmsModule::find($id);
-        $status = $module->show_in_admin_menu == 1? 'Yes':'No';
+        $status = $module->show_in_admin_menu == 1 ? 'Yes' : 'No';
         if ($status == 'Yes') {
             $module->show_in_admin_menu = 0;
             $stat = 'No';
@@ -140,6 +146,11 @@ class ModuleController extends Controller
             $stat = 'Yes';
         }
         $module->save();
+        /***************************** */
+        /***************************** */
+        $this->updatePermissionGroup($module);
+        /***************************** */
+        /***************************** */
         return $stat;
     }
 
@@ -155,9 +166,8 @@ class ModuleController extends Controller
         $this->validate($request, [
             'title' => 'required',
             'term' => 'required',
-            'module_fontawesome_icon' => 'required',
-            'access_level' => 'required',
-            'show_icon_in' => 'required',
+            /* 'module_fontawesome_icon' => 'required',
+            'show_icon_in' => 'required', */
         ]);
         $cmsModule = CmsModule::find($id);
         $cmsModule->title = $request->title;
@@ -188,10 +198,15 @@ class ModuleController extends Controller
         $cmsModule->feature_img_thmb_height = $request->feature_img_thmb_height;
         $cmsModule->show_featured_image = $request->show_featured_image;
         $cmsModule->module_fontawesome_icon = $request->module_fontawesome_icon;
-        $cmsModule->access_level = implode(',', $request->input('access_level', ['super-admin','normal-admin']));
         $cmsModule->show_icon_in = implode(',', $request->input('show_icon_in'));
         $cmsModule->show_descp = $request->show_descp;
         $cmsModule->save();
+
+        /***************************** */
+        /***************************** */
+        $this->updatePermissionGroup($cmsModule);
+        /***************************** */
+        /***************************** */
         Session::flash('update_action', true);
 
         return redirect(route('modules.index'));
@@ -209,6 +224,11 @@ class ModuleController extends Controller
         CmsModuleData::where('cms_module_id', $id)->delete();
 
         $cmsModule = CmsModule::find($id);
+        /***************************** */
+        /***************************** */
+        $this->deletePermissionGroup($cmsModule);
+        /***************************** */
+        /***************************** */
         $cmsModule->delete();
         CmsModuleData::where('id', $cmsModule->mod_menu_id)->delete();
         echo 'done';
@@ -233,5 +253,81 @@ class ModuleController extends Controller
 
         return redirect(route('modules.index'));
         cp('Here updatePageOptions');
+    }
+
+    private function savePermissionGroup($cmsModule)
+    {
+        $lastPermGroupObj = PermissionGroup::select('sort_order')->whereNotNull('module_id')->orderBy('sort_order', 'desc')->first();
+        $permGroupObj = new PermissionGroup();
+        $permGroupObj->module_id = $cmsModule->id;
+        $permGroupObj->title = $cmsModule->title;
+        $permGroupObj->sort_order = $lastPermGroupObj->sort_order + 1;
+        $permGroupObj->status = ((bool)$cmsModule->show_in_admin_menu)? 'active':'inactive';
+        $permGroupObj->save();
+        /*********************** */
+        $this->savePermission($permGroupObj);
+    }
+
+    private function updatePermissionGroup($cmsModule)
+    {
+        $permGroupObj = PermissionGroup::where('module_id', $cmsModule->id)->withOutGlobalScopes()->first();
+        $permGroupObj->title = $cmsModule->title;
+        $permGroupObj->status = ($cmsModule->show_in_admin_menu == 1)? 'active':'inactive';
+        $permGroupObj->update();
+        /********************* */
+        $this->updatePermission($permGroupObj);
+    }
+
+    private function deletePermissionGroup($cmsModule)
+    {
+        $permGroupObj = PermissionGroup::where('module_id', $cmsModule->id)->withOutGlobalScopes()->first();
+        /********************* */
+        $this->deletePermission($permGroupObj);
+        /********************* */
+        $permGroupObj->delete();
+    }
+
+    private function savePermission($permGroupObj)
+    {
+        $permObj = new Permission();
+        $permObj->permission_group_id = $permGroupObj->id;
+        $permObj->title = 'Can Manage '.$permGroupObj->title;
+        $permObj->sort_order = 1;
+        $permObj->status = $permGroupObj->status;
+        $permObj->save();
+        /************************** */
+        $this->savePermissionRole($permObj);
+    }
+
+    private function updatePermission($permGroupObj)
+    {
+        $permObj = Permission::where('permission_group_id', $permGroupObj->id)->withOutGlobalScopes()->first();
+        $permObj->title = 'Can Manage '.$permGroupObj->title;
+        $permObj->sort_order = 1;
+        $permObj->status = $permGroupObj->status;
+        $permObj->update();
+    }
+
+    private function deletePermission($permGroupObj)
+    {
+        $permObj = Permission::where('permission_group_id', $permGroupObj->id)->withOutGlobalScopes()->first();
+        $this->deletePermissionRole($permObj);
+        $permObj->delete();
+    }
+
+    private function savePermissionRole($permObj)
+    {
+        $roles = Role::withOutGlobalScopes()->get();
+        foreach($roles as $roleObj){
+            $permRoleObj = new PermissionRole();
+            $permRoleObj->permission_id = $permObj->id;
+            $permRoleObj->role_id = $roleObj->id;
+            $permRoleObj->save();
+        }
+    }
+
+    private function deletePermissionRole($permObj)
+    {
+        PermissionRole::where('permission_id', $permObj->id)->delete();
     }
 }
