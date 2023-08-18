@@ -1045,6 +1045,7 @@ class ComposerStaticInit65edb0bec44975a3b2ab5422e8bd5280
         'App\\Http\\Requests\\Back\\PermissionGroupFormRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Back/PermissionGroupFormRequest.php',
         'App\\Http\\Requests\\Back\\RoleFormRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Back/RoleFormRequest.php',
         'App\\Http\\Requests\\Back\\StateBackFormRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Back/StateBackFormRequest.php',
+        'App\\Http\\Requests\\Back\\UserFormRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Back/UserFormRequest.php',
         'App\\Http\\Requests\\Request' => __DIR__ . '/../..' . '/app/Http/Requests/Request.php',
         'App\\Mail\\AssessmentAnswer' => __DIR__ . '/../..' . '/app/Mail/AssessmentAnswer.php',
         'App\\Mail\\AssessmentEmail' => __DIR__ . '/../..' . '/app/Mail/AssessmentEmail.php',

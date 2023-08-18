@@ -116,6 +116,7 @@ return array(
     'App\\Http\\Requests\\Back\\PermissionGroupFormRequest' => $baseDir . '/app/Http/Requests/Back/PermissionGroupFormRequest.php',
     'App\\Http\\Requests\\Back\\RoleFormRequest' => $baseDir . '/app/Http/Requests/Back/RoleFormRequest.php',
     'App\\Http\\Requests\\Back\\StateBackFormRequest' => $baseDir . '/app/Http/Requests/Back/StateBackFormRequest.php',
+    'App\\Http\\Requests\\Back\\UserFormRequest' => $baseDir . '/app/Http/Requests/Back/UserFormRequest.php',
     'App\\Http\\Requests\\Request' => $baseDir . '/app/Http/Requests/Request.php',
     'App\\Mail\\AssessmentAnswer' => $baseDir . '/app/Mail/AssessmentAnswer.php',
     'App\\Mail\\AssessmentEmail' => $baseDir . '/app/Mail/AssessmentEmail.php',
