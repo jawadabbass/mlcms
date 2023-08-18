@@ -75,6 +75,9 @@ function isSuperAdmin()
 
 function isPermissionValid($permission)
 {
+    if (empty($permission)) {
+        abort(403, 'Empty Permission to check');
+    }
     $all_permission_titles_array = (array)session('all_permission_titles_array');
     $is_valid_permission = false;
     if (str_contains($permission, '<|>')) {
@@ -90,7 +93,7 @@ function isPermissionValid($permission)
         }
     }
     if (!$is_valid_permission) {
-        abort(403, 'Invalid Permission to check : ' . implode(', ', (array)$permission));
+        abort(403, 'Invalid Permission to check : ' . $permission);
     }
 }
 function generateRolesCheckBoxes($user)
@@ -139,4 +142,11 @@ function generatePermissionsCheckBoxes($role)
         $str .= '<div class="col-md-12">&nbsp;</div>';
     }
     return $str . '</div>';
+}
+
+function checkPermissionAvailable($key, $val){
+    if (isset($val['permission']) && empty($val['permission'])) {
+        echo $key . ' has no permission';
+        exit();
+    }
 }

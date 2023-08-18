@@ -426,14 +426,7 @@ class DashboardLinks
         $permissionTitlesArray = [];
         $permissionsGroupObj = PermissionGroup::where('module_id', $moduleObj->id)->first();
         /***************************** */
-        $user = User::find(Auth::id());
-        $roleIdsArray = $user->getUserRoleIds();
-        if (count($roleIdsArray) > 0) {
-            $permissionIdsArray = PermissionRole::whereIn('role_id', $roleIdsArray)->pluck('permission_id')->toArray();
-            if (count($permissionIdsArray) > 0) {
-                $permissionTitlesArray = Permission::where('permission_group_id', $permissionsGroupObj->id)->whereIn('id', $permissionIdsArray)->pluck('title')->toArray();
-            }
-        }
+        $permissionTitlesArray = Permission::where('permission_group_id', $permissionsGroupObj->id)->pluck('title')->toArray();
         return $permissionTitlesArray;
     }
 }

@@ -40,6 +40,9 @@
                         $keys = array_keys($val);
                     @endphp
                     @if (is_array($val[$keys[0]]))
+                        @php
+                            checkPermissionAvailable($key, $val);
+                        @endphp
                         @if (isset($val['permission']) && isAllowed($val['permission']))
                             <li class="nav-item">
                                 <a class="nav-link inactive" href="#">
@@ -48,6 +51,9 @@
                                 </a>
                                 <ul class="nav nav-treeview">
                                     @foreach ($val as $key1 => $val1)
+                                        @php
+                                            checkPermissionAvailable($val1[0], $val1);
+                                        @endphp
                                         @if (isset($val1['permission']) && isAllowed($val1['permission']))
                                             @if ($key1 != 'icon')
                                                 <li class="nav-item">
@@ -66,6 +72,9 @@
                             </li>
                         @endif
                     @else
+                        @php
+                            checkPermissionAvailable($val[0], $val);
+                        @endphp
                         @if (isset($val['permission']) && isAllowed($val['permission']))
                             <li class="nav-item">
                                 <a class="nav-link {{ $currentURL == $val[2] ? 'active' : 'inactive' }}"
