@@ -1,0 +1,13 @@
+Must be only 1 super admin should be available in system.
+
+
+Super Admin User (in Users table is_super_admin=1) is for developer only.
+It has access to all functionalities. i.e.
+* CMS Modules Management
+* Permissions and Permissions Group Management.
+
+
+Client(Owner) will have some restricted access. (i.e Currently Admin Level 1 role)
+There is no need to give access to functionalities. i.e.
+* Modules Management
+* Permissions and Permissions Group Managemnt
