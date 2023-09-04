@@ -1,6 +1,6 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('beforeHeadClose')
-@include('back.common_views.switch_css')
+    @include('back.common_views.switch_css')
 @endsection
 @section('content')
     <div class="content-wrapper pl-3 pr-2">
@@ -47,7 +47,9 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="text-end" style="padding-bottom:2px;">
-                                    <a href="{{ admin_url() }}videos/add" class="btn btn-info">Add New Videos</a>
+                                    @if (isAllowed('Can Add Videos'))
+                                        <a href="{{ admin_url() }}videos/add" class="btn btn-info">Add New Videos</a>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -80,10 +82,14 @@
                                                     </label>
                                                 </td>
                                                 <td>
-                                                    <a href="{{ admin_url() }}videos/edit/{{ $row->ID }}"
-                                                        class="btn btn-success btn-sm">Edit</a>
-                                                    <a href="javascript:delete_videos({{ $row->ID }});"
-                                                        class="btn btn-danger btn-sm">Delete</a>
+                                                    @if (isAllowed('Can Edit Videos'))
+                                                        <a href="{{ admin_url() }}videos/edit/{{ $row->ID }}"
+                                                            class="btn btn-success btn-sm mr-2">Edit</a>
+                                                    @endif
+                                                    @if (isAllowed('Can Delete Videos'))
+                                                        <a href="javascript:delete_videos({{ $row->ID }});"
+                                                            class="btn btn-danger btn-sm">Delete</a>
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -121,8 +127,8 @@
                     <div class="modal-header">
                         <h4 class="modal-title">Add New Video</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-          
-        </button>
+
+                        </button>
                     </div>
                     <div class="modal-body">
                         <!-- /.box-header -->
@@ -188,8 +194,8 @@
                     <div class="modal-header">
                         <h4 class="modal-title">Edit Video</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-          
-        </button>
+
+                        </button>
                     </div>
                     <div class="modal-body">
                         <div class="box-body">

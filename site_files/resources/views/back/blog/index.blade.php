@@ -33,12 +33,19 @@
                         <div class="row">
                             <div class="col-sm-8">
                                 <h3 class="box-title">All Blog Posts</h3>
-                                <a href="{{ admin_url() . 'blog' }}" class="btn btn-primary">Blog</a>
-                                <a href="{{ admin_url() . 'blog_categories' }}" class="btn btn-default">Categories</a>
+                                @if (isAllowed('Can Manage Blog'))
+                                    <a href="{{ admin_url() . 'blog' }}" class="btn btn-primary">Blog</a>
+                                @endif
+                                @if (isAllowed('Can Manage Blog Categories'))
+                                    <a href="{{ admin_url() . 'blog_categories' }}" class="btn btn-default">Categories</a>
+                                @endif
                             </div>
                             <div class="col-sm-4">
                                 <div class="text-end" style="padding-bottom:2px;">
-                                    <input type="button" class="sitebtn" value="Add New Post" onClick="add_blog_post();" />
+                                    @if (isAllowed('Can Add Blog'))
+                                        <input type="button" class="sitebtn" value="Add New Post"
+                                            onClick="add_blog_post();" />
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -86,22 +93,29 @@
                                                         target="_bank">Preview</a>
                                                 </td>
                                                 <td>
-                                                    <label class="switch">
-                                                        <input type="checkbox" name="{{ 'sts_' . $row->ID }}"
-                                                            id="{{ 'sts_' . $row->ID }}" <?php echo $row->sts == 'active' ? ' checked' : ''; ?>
-                                                            value="<?php echo $row->sts; ?>"
-                                                            onClick="update_blog_post_status({{ $row->ID }})">
-                                                        <div class="slider round">
-                                                            <strong class="on">Active</strong>
-                                                            <strong class="off">Inactive</strong>
-                                                        </div>
-                                                    </label>
+                                                    @if (isAllowed('Can Edit Blog'))
+                                                        <label class="switch">
+                                                            <input type="checkbox" name="{{ 'sts_' . $row->ID }}"
+                                                                id="{{ 'sts_' . $row->ID }}" <?php echo $row->sts == 'active' ? ' checked' : ''; ?>
+                                                                value="<?php echo $row->sts; ?>"
+                                                                onClick="update_blog_post_status({{ $row->ID }})">
+                                                            <div class="slider round">
+                                                                <strong class="on">Active</strong>
+                                                                <strong class="off">Inactive</strong>
+                                                            </div>
+                                                        </label>
+                                                    @endif
                                                 </td>
-                                                <td><a href="javascript:;"
-                                                        onClick="load_blog_post_edit_form({{ $row->ID }});"
-                                                        class="btn btn-success btn-sm">Edit</a> <a
-                                                        href="javascript:delete_blog_post({{ $row->ID }});"
-                                                        class="btn btn-danger btn-sm">Delete</a>
+                                                <td>
+                                                    @if (isAllowed('Can Edit Blog'))
+                                                        <a href="javascript:;"
+                                                            onClick="load_blog_post_edit_form({{ $row->ID }});"
+                                                            class="btn btn-success btn-sm">Edit</a>
+                                                    @endif
+                                                    @if (isAllowed('Can Delete Blog'))
+                                                        <a href="javascript:delete_blog_post({{ $row->ID }});"
+                                                            class="btn btn-danger btn-sm">Delete</a>
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @endforeach

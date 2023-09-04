@@ -120,14 +120,6 @@
                                         <p>Permission Groups</p>
                                     </a>
                                 </li>
-                                <li class="menu-item" aria-haspopup="true">
-                                    <a href="{{ route('permissionGroup.index') }}" class="menu-link">
-                                        <i class="menu-bullet menu-bullet-dot">
-                                            <span></span>
-                                        </i>
-                                        <span class="menu-text">Permission Groups</span>
-                                    </a>
-                                </li>
                             @endif
                         </ul>
                     </li>

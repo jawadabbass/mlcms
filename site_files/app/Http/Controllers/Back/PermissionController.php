@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers\Back;
 
-use App\Models\Back\Permission;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use RecursiveIteratorIterator;
+use App\Models\Back\Permission;
+use RecursiveDirectoryIterator;
 use App\Models\Back\PermissionRole;
+use App\Http\Controllers\Controller;
 use App\Models\Back\PermissionGroup;
 use Illuminate\Support\Facades\Redirect;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\Back\PermissionFormRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Http\Controllers\Controller;
 
 class PermissionController extends Controller
 {
@@ -23,19 +25,17 @@ class PermissionController extends Controller
     public function index()
     {
         hasPermission('View Permissions');
-
         return view('back.permission.index');
     }
-
     public function fetchPermissionsAjax(Request $request)
     {
         hasPermission('View Permissions');
-
-        $permissions = Permission::select('*')->withoutGlobalScopes();
+        $permissionGroupIds = PermissionGroup::select('id')->where('module_id', 0)->withoutGlobalScopes()->pluck('id')->toArray();
+        $permissions = Permission::select('*')->whereIn('permission_group_id', $permissionGroupIds)->withoutGlobalScopes();
         return Datatables::of($permissions)
             ->filter(function ($query) use ($request) {
                 if ($request->has('title') && !empty($request->title)) {
-                    $query->where('permissions.title', 'like', '%'.$request->get('title').'%');
+                    $query->where('permissions.title', 'like', '%' . $request->get('title') . '%');
                 }
                 if ($request->has('permission_group_id') && !empty($request->permission_group_id)) {
                     $query->where('permissions.permission_group_id', $request->get('permission_group_id'));
@@ -45,24 +45,24 @@ class PermissionController extends Controller
                 return Str::limit($permissions->title, 100, '...');
             })
             ->addColumn('permission_group_id', function ($permissions) {
-                $str = '<select class="form-control" name="permission_group_id" id="permission_group_id_'.$permissions->id.'" onchange="updatePermissionGroupId(\''.$permissions->id.'\', \''.$permissions->permission_group_id.'\', this.value);">';
+                $str = '<select class="form-control" name="permission_group_id" id="permission_group_id_' . $permissions->id . '" onchange="updatePermissionGroupId(\'' . $permissions->id . '\', \'' . $permissions->permission_group_id . '\', this.value);">';
                 $str .= generatePermissionGroupsDropDown($permissions->permission_group_id);
                 $str .= '</select>';
                 return $str;
             })
             ->addColumn('action', function ($permissions) {
                 $editStr = $deleteStr = '';
-                if(isAllowed('Edit Permission')){
+                if (isAllowed('Edit Permission')) {
                     $editStr = '<a href="' . route('permissions.edit', [$permissions->id]) . '" class="btn btn-warning mr-1" title="Edit details">
                     <i class="fas fa-edit"></i>
                 </a>';
                 }
-                if(isAllowed('Delete Permission')){
+                if (isAllowed('Delete Permission')) {
                     $deleteStr = '<a href="javascript:void(0);" onclick="deletePermission(\'' . $permissions->id . '\');" class="btn btn-danger" title="Delete">
                     <i class="fas fa-trash"></i>
                 </a>';
                 }
-                return $editStr.$deleteStr;
+                return $editStr . $deleteStr;
             })
             ->rawColumns(['action', 'title', 'permission_group_id'])
             ->orderColumns(['title', 'status'], ':column $1')
@@ -73,7 +73,6 @@ class PermissionController extends Controller
         //$query = $dataTable->getQuery()->get();
         //return $query;
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -82,14 +81,12 @@ class PermissionController extends Controller
     public function create()
     {
         hasPermission('Add new Permission');
-
         $permission = new Permission();
         $permissionGroups = PermissionGroup::all();
         return view('back.permission.create')
-        ->with('permission', $permission)
-        ->with('permissionGroups', $permissionGroups);
+            ->with('permission', $permission)
+            ->with('permissionGroups', $permissionGroups);
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -99,7 +96,6 @@ class PermissionController extends Controller
     public function store(PermissionFormRequest $request)
     {
         hasPermission('Add new Permission');
-
         $permission = new Permission();
         $permission->title = $request->input('title');
         $permission->permission_group_id = $request->input('permission_group_id');
@@ -109,7 +105,6 @@ class PermissionController extends Controller
         flash('Permission has been added!', 'success');
         return Redirect::route('permissions.index');
     }
-
     /**
      * Display the specified resource.
      *
@@ -120,23 +115,21 @@ class PermissionController extends Controller
     {
         //
     }
-
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Permission $permission)
+    public function edit($id)
     {
         hasPermission('Edit Permission');
-
+        $permission = Permission::where('id', $id)->withOutGlobalScopes()->first();
         $permissionGroups = PermissionGroup::all();
         return view('back.permission.edit')
             ->with('permission', $permission)
             ->with('permissionGroups', $permissionGroups);
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -144,19 +137,61 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PermissionFormRequest $request, Permission $permission)
+    public function update(PermissionFormRequest $request, $id)
     {
         hasPermission('Edit Permission');
-
-        $permission->title = $request->input('title');
+        $permission = Permission::where('id', $id)->withOutGlobalScopes()->first();
+        $old_permission_title = $permission->title;
+        $new_permission_title = $request->input('title');
+        $permission->title = $new_permission_title;
         $permission->permission_group_id = $request->input('permission_group_id');
         $permission->save();
         /*         * ************************************ */
+        $this->updatePermissionTitleInFiles($old_permission_title, $new_permission_title);
+        /*         * ************************************ */
         setUserPermissionsInSession();
-        flash('Permission has been updated!', 'success');
+        flash('Permission has been updated; In Database and files too!', 'success');
         return Redirect::route('permissions.index');
     }
-
+    private function updatePermissionTitleInFiles($old_permission_title, $new_permission_title)
+    {
+        $path_of_file = base_path('app/Helpers/DashboardLinks.php');
+        $contents = file_get_contents($path_of_file);
+        $new_contents = str_replace($old_permission_title, $new_permission_title, $contents);
+        file_put_contents($path_of_file, $new_contents);
+        /********************************** */
+        $dir = new RecursiveDirectoryIterator(base_path('app/Http/Controllers'));
+        $files = new RecursiveIteratorIterator($dir);
+        foreach ($files as $file) {
+            $name_of_file = $file->getFileName();
+            $path_of_file = $file->getPath() . "/" . $file->getFileName();
+            $fileSize = filesize($path_of_file);
+            if (!is_dir($file)) {
+                $contents = file_get_contents($path_of_file);
+                $new_contents = str_replace("isAllowed('" . $old_permission_title . "')", "isAllowed('" . $new_permission_title . "')", $contents);
+                $new_contents = str_replace('isAllowed("' . $old_permission_title . '")', 'isAllowed("' . $new_permission_title . '")', $new_contents);
+                $new_contents = str_replace("hasPermission('" . $old_permission_title . "')", "hasPermission('" . $new_permission_title . "')", $new_contents);
+                $new_contents = str_replace('hasPermission("' . $old_permission_title . '")', 'hasPermission("' . $new_permission_title . '")', $new_contents);
+                file_put_contents($path_of_file, $new_contents);
+            }
+        }
+        /************************************* */
+        $dir = new RecursiveDirectoryIterator(base_path('resources/views'));
+        $files = new RecursiveIteratorIterator($dir);
+        foreach ($files as $file) {
+            $name_of_file = $file->getFileName();
+            $path_of_file = $file->getPath() . "/" . $file->getFileName();
+            $fileSize = filesize($path_of_file);
+            if (!is_dir($file)) {
+                $contents = file_get_contents($path_of_file);
+                $new_contents = str_replace("isAllowed('" . $old_permission_title . "')", "isAllowed('" . $new_permission_title . "')", $contents);
+                $new_contents = str_replace('isAllowed("' . $old_permission_title . '")', 'isAllowed("' . $new_permission_title . '")', $new_contents);
+                $new_contents = str_replace("hasPermission('" . $old_permission_title . "')", "hasPermission('" . $new_permission_title . "')", $new_contents);
+                $new_contents = str_replace('hasPermission("' . $old_permission_title . '")', 'hasPermission("' . $new_permission_title . '")', $new_contents);
+                file_put_contents($path_of_file, $new_contents);
+            }
+        }
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -166,17 +201,14 @@ class PermissionController extends Controller
     public function destroy(Permission $permission)
     {
         hasPermission('Delete Permission');
-
         PermissionRole::where('permission_id', 'like', $permission->id)->delete();
         $permission->delete();
         setUserPermissionsInSession();
         echo 'ok';
     }
-
     public function makeActivePermission(Request $request)
     {
         hasPermission('Edit Permission');
-
         $id = $request->input('id');
         try {
             $permission = Permission::withoutGlobalScopes()->findOrFail($id);
@@ -188,11 +220,9 @@ class PermissionController extends Controller
             echo 'notok';
         }
     }
-
     public function makeNotActivePermission(Request $request)
     {
         hasPermission('Edit Permission');
-
         $id = $request->input('id');
         try {
             $permission = Permission::withoutGlobalScopes()->findOrFail($id);
@@ -204,21 +234,18 @@ class PermissionController extends Controller
             echo 'notok';
         }
     }
-
     public function sortPermissions()
     {
         hasPermission('Sort Permissions');
-
         return view('back.permission.sort');
     }
-
     public function permissionSortData(Request $request)
     {
         hasPermission('Sort Permissions');
-
         $permissions = Permission::select('permissions.id', 'permissions.title', 'permissions.sort_order')
-        ->where('permissions.permission_group_id', 'like', $request->permission_group_id)
-        ->get();
+            ->where('permissions.permission_group_id', 'like', $request->permission_group_id)
+            ->withOutGlobalScopes()
+            ->get();
         $str = '<ul id="sortable">';
         if ($permissions != null) {
             foreach ($permissions as $permission) {
@@ -227,11 +254,9 @@ class PermissionController extends Controller
         }
         echo $str . '</ul>';
     }
-
     public function permissionSortUpdate(Request $request)
     {
         hasPermission('Sort Permissions');
-
         $permissionOrder = $request->input('permissionOrder');
         $permissionOrderArray = explode(',', $permissionOrder);
         $count = 1;
@@ -242,16 +267,13 @@ class PermissionController extends Controller
             $count++;
         }
     }
-
     public function updatePermissionGroupId(Request $request)
     {
         hasPermission('Edit Permission');
-
         $data = Permission::withoutGlobalScopes()->find($request->id);
         $data->permission_group_id = $request->permission_group_id;
         $data->save();
         setUserPermissionsInSession();
         return response()->json(['status' => 'success', 'message' => $data->permission_group_id]);
     }
-
 }

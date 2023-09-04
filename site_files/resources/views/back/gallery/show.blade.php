@@ -61,32 +61,35 @@
                         </div>
                     @endif
                     <!-- Image Uploader  -->
-                    <div class="upload_adm_area" id="upload_adm_area">
-                        <h5>Upload Image(s) </h5>
-                        <hr>
-                        <form action="{{ route('upload_album_images') }}" enctype="multipart/form-data" method="post">
-                            {{ csrf_field() }}
-                            <input type="hidden" name="album" value="{{ request()->route('id') }}">
-                            <div class="row">
-                                <div class="col-md-12 mb-3">
-                                    <input class="form-control" id="uploadFile" multiple="" name="uploadFile[]"
-                                        type="file" onchange="uploaded_files_show();" />
-                                    <div class="text-danger"><em>Max :</em> {{ getMaxUploadSize() }} MB</div>
+                    @if (isAllowed('Can Add Gallery'))
+                        <div class="upload_adm_area" id="upload_adm_area">
+                            <h5>Upload Image(s) </h5>
+                            <hr>
+                            <form action="{{ route('upload_album_images') }}" enctype="multipart/form-data" method="post">
+                                {{ csrf_field() }}
+                                <input type="hidden" name="album" value="{{ request()->route('id') }}">
+                                <div class="row">
+                                    <div class="col-md-12 mb-3">
+                                        <input class="form-control" id="uploadFile" multiple="" name="uploadFile[]"
+                                            type="file" onchange="uploaded_files_show();" />
+                                        <div class="text-danger"><em>Max :</em> {{ getMaxUploadSize() }} MB</div>
+                                    </div>
+                                    <div class="col-md-12 mb-3">
+                                        <input type="checkbox" name="isBeforeAfter" value="1"
+                                            style="width: 15px; height:15px;" /> <b>Is Before After?</b>
+                                    </div>
+                                    <div class="col-md-12 mb-3">
+                                        <input onclick="document.getElementById('spinner').style.display='block'"
+                                            class="btn btn-success" name="submitImage" type="submit"
+                                            value="Upload Image(s)" />
+                                    </div>
                                 </div>
-                                <div class="col-md-12 mb-3">
-                                    <input type="checkbox" name="isBeforeAfter" value="1"
-                                        style="width: 15px; height:15px;" /> <b>Is Before After?</b>
+                                <div id="image_preview" class="row">
                                 </div>
-                                <div class="col-md-12 mb-3">
-                                    <input onclick="document.getElementById('spinner').style.display='block'"
-                                        class="btn btn-success" name="submitImage" type="submit" value="Upload Image(s)" />
-                                </div>
-                            </div>
-                            <div id="image_preview" class="row">
-                            </div>
-                        </form>
-                        </hr>
-                    </div>
+                            </form>
+                            </hr>
+                        </div>
+                    @endif
                     <!-- End Image Uploader  -->
                 </div>
             </div>
@@ -109,32 +112,49 @@
                                 <div class="caption myadelbtn">
                                 </div>
                                 <div class="image_btn mt-2">
-                                    <span class="drag" title="Drag and Drop to sort"><i class="fas fa-arrows"
-                                            aria-hidden="true"></i></span>
-                                    <a title="Active/Inactive" onClick="update_status({{ $image->id }}, this)"
-                                        href="javascript:void(0)"
-                                        class="mb-1 btn btn-{{ $image->status == 1 ? 'success' : 'secondary' }}"
-                                        id="{{ 'status_' . $image->id }}"><i class="fas fa-eye" aria-hidden="true"></i></a>
-                                    <a title="Featured/Not Featured" onClick="update_featured({{ $image->id }}, this)"
-                                        href="javascript:void(0)"
-                                        class="mb-1 btn btn-{{ $image->isFeatured == 1 ? 'success' : 'secondary' }}"
-                                        id="{{ 'featured_' . $image->id }}"><i class="fas fa-star"
-                                            aria-hidden="true"></i></a>
-                                    <a title="Delete Image" onclick="deleteImage({{ $image->id }}, this);"
-                                        class="mb-1 btn btn-danger" data-bs-toggle="tooltip" data-placement="left"
-                                        title="Delete this image" href="javascript:;"> <i class="fas fa-trash"></i></a>
-                                    @if ((bool) $image->isBeforeAfter == false)
-                                        <a onClick="markBeforeAfter({{ $image->id }}, this)" href="javascript:void(0)"
-                                            class="mb-1 btn btn-warning">Mark Before After</a>
+                                    @if (isAllowed('Can Sort Gallery'))
+                                        <span class="drag" title="Drag and Drop to sort"><i class="fas fa-arrows"
+                                                aria-hidden="true"></i></span>
                                     @endif
-                                    <a title="Crop Image"
-                                        onClick="bind_cropper_preview_gallery_image({{ $image->album_id }}, {{ $image->id }});"
-                                        href="javascript:void(0)" class="mb-1 btn btn-warning"><i class="fas fa-crop"
-                                            aria-hidden="true"></i></a>
-                                    <a title="Image Alt/Title"
-                                        onClick="openImageAltTitleModal({{ $image->album_id }}, {{ $image->id }});"
-                                        href="javascript:void(0)" class="mb-1 btn btn-success"><i class="fas fa-bars"
-                                            aria-hidden="true"></i></a>
+                                    @if (isAllowed('Can Edit Gallery'))
+                                        <a title="Active/Inactive" onClick="update_status({{ $image->id }}, this)"
+                                            href="javascript:void(0)"
+                                            class="mb-1 btn btn-{{ $image->status == 1 ? 'success' : 'secondary' }}"
+                                            id="{{ 'status_' . $image->id }}"><i class="fas fa-eye"
+                                                aria-hidden="true"></i></a>
+                                    @endif
+                                    @if (isAllowed('Can Edit Gallery'))
+                                        <a title="Featured/Not Featured"
+                                            onClick="update_featured({{ $image->id }}, this)" href="javascript:void(0)"
+                                            class="mb-1 btn btn-{{ $image->isFeatured == 1 ? 'success' : 'secondary' }}"
+                                            id="{{ 'featured_' . $image->id }}"><i class="fas fa-star"
+                                                aria-hidden="true"></i></a>
+                                    @endif
+                                    @if (isAllowed('Can Delete Gallery'))
+                                        <a title="Delete Image" onclick="deleteImage({{ $image->id }}, this);"
+                                            class="mb-1 btn btn-danger" data-bs-toggle="tooltip" data-placement="left"
+                                            title="Delete this image" href="javascript:;"> <i
+                                                class="fas fa-trash"></i></a>
+                                    @endif
+                                    @if (isAllowed('Can Edit Gallery'))
+                                        @if ((bool) $image->isBeforeAfter == false)
+                                            <a onClick="markBeforeAfter({{ $image->id }}, this)"
+                                                href="javascript:void(0)" class="mb-1 btn btn-warning">Mark Before
+                                                After</a>
+                                        @endif
+                                    @endif
+                                    @if (isAllowed('Can Edit Gallery'))
+                                        <a title="Crop Image"
+                                            onClick="bind_cropper_preview_gallery_image({{ $image->album_id }}, {{ $image->id }});"
+                                            href="javascript:void(0)" class="mb-1 btn btn-warning"><i class="fas fa-crop"
+                                                aria-hidden="true"></i></a>
+                                    @endif
+                                    @if (isAllowed('Can Edit Gallery'))
+                                        <a title="Image Alt/Title"
+                                            onClick="openImageAltTitleModal({{ $image->album_id }}, {{ $image->id }});"
+                                            href="javascript:void(0)" class="mb-1 btn btn-success"><i class="fas fa-bars"
+                                                aria-hidden="true"></i></a>
+                                    @endif
                                 </div>
                             </div>
                         </div>

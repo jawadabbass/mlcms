@@ -30,7 +30,7 @@ class PermissionGroupController extends Controller
     {
         hasPermission('View Permission Groups');
 
-        $permissionGroups = PermissionGroup::select('*')->withoutGlobalScopes();
+        $permissionGroups = PermissionGroup::select('*')->where('module_id', 0)->withoutGlobalScopes();
         return Datatables::of($permissionGroups)
             ->filter(function ($query) use ($request) {
                 if ($request->has('title') && !empty($request->title)) {
@@ -42,17 +42,17 @@ class PermissionGroupController extends Controller
             })
             ->addColumn('action', function ($permissionGroups) {
                 $editStr = $deleteStr = '';
-                if(isAllowed('Edit Permission Group')){
+                if (isAllowed('Edit Permission Group')) {
                     $editStr = '<a href="' . route('permissionGroup.edit', [$permissionGroups->id]) . '" class="btn btn-warning mr-2" title="Edit details">
                     <i class="fas fa-edit"></i>
                 </a>';
                 }
-                if(isAllowed('Delete Permission Group')){
+                if (isAllowed('Delete Permission Group')) {
                     $deleteStr = '<a href="javascript:void(0);" onclick="deletePermissionGroup(\'' . $permissionGroups->id . '\');" class="btn btn-danger mr-2" title="Delete">
                     <i class="fas fa-trash"></i>
                 </a>';
                 }
-                return $editStr.$deleteStr;
+                return $editStr . $deleteStr;
             })
             ->rawColumns(['action', 'title'])
             ->orderColumns(['title', 'status'], ':column $1')
@@ -114,10 +114,11 @@ class PermissionGroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(PermissionGroup $permissionGroup)
+    public function edit($id)
     {
         hasPermission('Edit Permission Group');
-
+        $permissionGroup = PermissionGroup::where('id', $id)->where('module_id', 0)
+            ->withOutGlobalScopes()->first();
         return view('back.permissionGroup.edit')
             ->with('permissionGroup', $permissionGroup);
     }
@@ -129,9 +130,11 @@ class PermissionGroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PermissionGroupFormRequest $request, PermissionGroup $permissionGroup)
+    public function update(PermissionGroupFormRequest $request, $id)
     {
         hasPermission('Edit Permission Group');
+        $permissionGroup = PermissionGroup::where('id', $id)->where('module_id', 0)
+            ->withOutGlobalScopes()->first();
 
         $permissionGroup->title = $request->input('title');
         $permissionGroup->save();
@@ -167,7 +170,9 @@ class PermissionGroupController extends Controller
         hasPermission('Sort Permission Groups');
 
         $permissionGroups = PermissionGroup::select('permissions_group.id', 'permissions_group.title', 'permissions_group.sort_order')
-        ->get();
+            ->where('module_id', 0)
+            ->withOutGlobalScopes()
+            ->get();
         $str = '<ul id="sortable">';
         if ($permissionGroups != null) {
             foreach ($permissionGroups as $permissionGroup) {
@@ -191,5 +196,4 @@ class PermissionGroupController extends Controller
             $count++;
         }
     }
-
 }

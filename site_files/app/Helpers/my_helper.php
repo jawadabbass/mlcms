@@ -429,7 +429,7 @@ function generateModuleCodeFieldLabel($field_counter, $errors, $oldData, $hide_s
 function generatePermissionGroupsDropDown($defaultSelected = '', $createEmptyRow = true)
 {
     $str = ($createEmptyRow) ? '<option value=""></option>' : '';
-    $permissionGroups = PermissionGroup::all();
+    $permissionGroups = PermissionGroup::where('module_id', 0)->withOutGlobalScopes()->get();
     foreach ($permissionGroups as $permissionGroup) {
         $selected = ($permissionGroup->id == $defaultSelected) ? 'selected="selected"' : '';
         $str .= '<option value="' . $permissionGroup->id . '" ' . $selected . '>' . $permissionGroup->title . '</option>';

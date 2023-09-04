@@ -69,9 +69,14 @@ class NewsController extends Controller
                 return $str;
             })
             ->addColumn('action', function ($news) {
-                return '
-                		<a href="' . route('news.edit', ['newsObj' => $news->id]) . '" class="btn btn-warning m-2"><i class="fas fa-edit" aria-hidden="true"></i></a>
-						<a href="javascript:void(0);" onclick="deleteNews(' . $news->id . ');"  class="btn btn-danger m-2"><i class="fas fa-trash" aria-hidden="true"></i></a>';
+                $edit = $delete = '';
+                if (isAllowed('Can Edit News')){
+                    $edit = '<a href="' . route('news.edit', ['newsObj' => $news->id]) . '" class="btn btn-warning m-2"><i class="fas fa-edit" aria-hidden="true"></i></a>';
+                }
+                if (isAllowed('Can Delete News')){
+                    $delete = '<a href="javascript:void(0);" onclick="deleteNews(' . $news->id . ');"  class="btn btn-danger m-2"><i class="fas fa-trash" aria-hidden="true"></i></a>';
+                }
+                return $edit.$delete;
             })
             ->rawColumns(['news_date_time', 'image', 'status', 'action'])
             ->orderColumns(['news_date_time', 'title', 'description', 'status'], ':column $1')

@@ -41,13 +41,19 @@
                         <div class="row">
                             <div class="col-sm-8">
                                 <h3 class="box-title">All Blog Categories</h3>
-                                <a href="{{ admin_url() . 'blog' }}" class="btn btn-default">Blog</a>
-                                <a href="{{ admin_url() . 'blog_categories' }}" class="btn btn-primary">Categories</a>
+                                @if (isAllowed('Can Manage Blog'))
+                                    <a href="{{ admin_url() . 'blog' }}" class="btn btn-default">Blog</a>
+                                @endif
+                                @if (isAllowed('Can Manage Blog Categories'))
+                                    <a href="{{ admin_url() . 'blog_categories' }}" class="btn btn-primary">Categories</a>
+                                @endif
                             </div>
                             <div class="col-sm-4">
                                 <div class="text-end" style="padding-bottom:2px;">
-                                    <input type="button" class="sitebtn" value="Add New Category"
-                                        onClick="load_categories_add_form();" />
+                                    @if (isAllowed('Can Add Blog Category'))
+                                        <input type="button" class="sitebtn" value="Add New Category"
+                                            onClick="load_categories_add_form();" />
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -71,24 +77,32 @@
                                                 <td>@php echo substr($row->cate_description, 0, 60) @endphp</td>
                                                 <td>{{ format_date($row->dated, 'date') }}</td>
                                                 <td>
-                                                    <label class="switch">
-                                                        <input type="checkbox" name="{{ 'sts_' . $row->ID }}"
-                                                            id="{{ 'cat_sts_' . $row->ID }}" <?php echo $row->sts == 'active' ? ' checked' : ''; ?>
-                                                            value="<?php echo $row->sts; ?>"
-                                                            onClick="update_category_status({{ $row->ID }})">
-                                                        <div class="slider round">
-                                                            <strong class="on">Active</strong>
-                                                            <strong class="off">Inactive</strong>
-                                                        </div>
-                                                    </label>
+                                                    @if (isAllowed('Can Edit Blog Category'))
+                                                        <label class="switch">
+                                                            <input type="checkbox" name="{{ 'sts_' . $row->ID }}"
+                                                                id="{{ 'cat_sts_' . $row->ID }}" <?php echo $row->sts == 'active' ? ' checked' : ''; ?>
+                                                                value="<?php echo $row->sts; ?>"
+                                                                onClick="update_category_status({{ $row->ID }})">
+                                                            <div class="slider round">
+                                                                <strong class="on">Active</strong>
+                                                                <strong class="off">Inactive</strong>
+                                                            </div>
+                                                        </label>
+                                                    @endif
                                                 </td>
                                                 <td><a href="{{ 'blog/category/' . $row->cate_slug }}.html"
                                                         target="_bank">Preview</a></td>
-                                                <td><a href="javascript:;"
-                                                        onClick="load_category_edit_form({{ $row->ID }});"
-                                                        class="btn btn-success btn-sm">Edit</a> <a
-                                                        href="javascript:delete_category({{ $row->ID }});"
-                                                        class="btn btn-danger btn-sm">Delete</a></td>
+                                                <td>
+                                                    @if (isAllowed('Can Edit Blog Category'))
+                                                        <a href="javascript:;"
+                                                            onClick="load_category_edit_form({{ $row->ID }});"
+                                                            class="btn btn-success btn-sm">Edit</a>
+                                                    @endif
+                                                    @if (isAllowed('Can Delete Blog Category'))
+                                                        <a href="javascript:delete_category({{ $row->ID }});"
+                                                            class="btn btn-danger btn-sm">Delete</a>
+                                                    @endif
+                                                </td>
                                             </tr>
                                         @endforeach
                                     @else

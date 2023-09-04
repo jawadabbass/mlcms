@@ -19,8 +19,7 @@ class SettingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //hasPermission('');
+    {        
         $title = FindInsettingArr('business_name') . ': Settings';
         $msg = '';
         $setting_result = Setting::first();
@@ -39,8 +38,7 @@ class SettingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        //hasPermission('');
+    {        
     }
     /**
      * Store a newly created resource in storage.
@@ -49,7 +47,7 @@ class SettingController extends Controller
      */
     public function store(Request $request)
     {
-        //hasPermission('');
+        hasPermission('Can Manage Google Analytics');
         $setting = Setting::first();
         $setting->google_analytics = $request->google_analytics;
         $setting->save();
@@ -64,8 +62,7 @@ class SettingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request, $id)
-    {
-        //hasPermission('');
+    {        
         $title = FindInsettingArr('business_name') . ': Settings';
         $msg = '';
         $setting_result = Setting::first();
@@ -107,6 +104,7 @@ class SettingController extends Controller
      */
     public function edit($id, Request $request)
     {
+        hasPermission('Can Manage Disable Website');
         $setting = Setting::first();
         if (isset($request->web_down_status)) {
             $setting->web_down_status = '1';
@@ -127,6 +125,7 @@ class SettingController extends Controller
      */
     public function update(Request $request, $id)
     {
+        hasPermission('Can Manage Google Adsense');
         $setting = Setting::first();
         $setting->google_adsense_footer = $request->google_adsense_footer;
         $setting->google_adsense_left = $request->google_adsense_left;
@@ -144,6 +143,7 @@ class SettingController extends Controller
      */
     public function updateMetaData(Request $request)
     {
+        hasPermission('Can Manage Basic Settings');
         $timeZone = Metadata::where('data_key', 'time_zone')->first();
         $timeZone->val1 = $request->timeZone;
         $timeZone->save();
@@ -167,6 +167,7 @@ class SettingController extends Controller
     }
     public function saveCaptcha(Request $request)
     {
+        hasPermission('Can Manage Google Captcha');
         $reCaptchaSite = Metadata::where('data_key', 'recaptcha_site_key')->first();
         $reCaptchaSite->val1 = $request->siteKey;
         $reCaptchaSite->save();
@@ -178,6 +179,7 @@ class SettingController extends Controller
     }
     public function ipAddress(Request $request)
     {
+        hasPermission('Can Manage Block Traffic');
         $blockIPs = Metadata::where('data_key', 'blocked_ips')->first();
         $blockedIPs = $request->ipAddresses;
         $ip = $request->ip();
@@ -284,6 +286,7 @@ class SettingController extends Controller
     }
     public function js(Request $request)
     {
+        hasPermission('Can Manage Javascript Code');
         $setting = Setting::first();
         $setting->head_js = $request->head_js;
         $setting->body_js = $request->body_js;
@@ -293,6 +296,7 @@ class SettingController extends Controller
     }
     public function adminLogoFavicon(Request $request)
     {
+        hasPermission('Can Manage Admin Logo/Favicon');
         $validated = $request->validate([
             'admin_login_page_logo' => 'image',
             'admin_header_logo' => 'image',
@@ -323,6 +327,7 @@ class SettingController extends Controller
     }
     public function savePaypal(Request $request)
     {
+        hasPermission('Can Manage Paypal');
         $paypal_live_client_id = Metadata::where('data_key', 'paypal_live_client_id')->first();
         $paypal_live_client_id->val1 = $request->paypal_live_client_id;
         $paypal_live_client_id->save();

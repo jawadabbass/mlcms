@@ -58,8 +58,10 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="text-end" style="padding-bottom:2px;">
-                                    <input type="button" class="sitebtn" value="Add Social Media"
-                                        onClick="load_social_media_add_form();" />
+                                    @if (isAllowed('Can Add Social Media'))
+                                        <input type="button" class="sitebtn" value="Add Social Media"
+                                            onClick="load_social_media_add_form();" />
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -92,11 +94,17 @@
                                                         href="javascript:;" id="sts_{{ $row->ID }}"> <i
                                                             class="label label-{{ $class_label }}">{{ $row->sts }}</i>
                                                     </a></td>
-                                                <td><a href="javascript:;"
-                                                        onClick="load_social_media_edit_form({{ $row->ID }});"
-                                                        class="btn btn-success btn-sm">Edit</a> <a
-                                                        href="javascript:delete_social_media({{ $row->ID }});"
-                                                        class="btn btn-danger btn-sm">Delete</a> <span></span></td>
+                                                <td>
+                                                    @if (isAllowed('Can Edit Social Media'))
+                                                        <a href="javascript:;"
+                                                            onClick="load_social_media_edit_form({{ $row->ID }});"
+                                                            class="btn btn-success btn-sm mr-2">Edit</a>
+                                                    @endif
+                                                    @if (isAllowed('Can Delete Social Media'))
+                                                        <a href="javascript:delete_social_media({{ $row->ID }});"
+                                                            class="btn btn-danger btn-sm">Delete</a>
+                                                    @endif
+                                                </td>
                                             </tr>
                                         @endforeach
                                     @else
@@ -123,8 +131,8 @@
                     <div class="modal-header">
                         <h4 class="modal-title">Add New Social Media</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-          
-        </button>
+
+                        </button>
                     </div>
                     <div class="modal-body">
                         <div class="box-body">
@@ -146,7 +154,9 @@
                             </div>
                             <div class="mb-2">
                                 <label class="form-label">Social Media Icon </label>
-                                <input class="form-control icp icp-auto" name="i_class" id="i_classs" value="" type="text" autocomplete="off" data-placement="topRight" placeholder="fontawsome: fa-youtube"/>
+                                <input class="form-control icp icp-auto" name="i_class" id="i_classs" value=""
+                                    type="text" autocomplete="off" data-placement="topRight"
+                                    placeholder="fontawsome: fa-youtube" />
                             </div>
                             <div class="mb-2">
                                 <label class="form-label">Open in new tab</label>
@@ -173,8 +183,8 @@
                     <div class="modal-header">
                         <h4 class="modal-title">Edit Social Media</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-          
-        </button>
+
+                        </button>
                     </div>
                     <div class="modal-body">
                         <div class="box-body">
@@ -195,7 +205,9 @@
                             </div>
                             <div class="mb-2">
                                 <label class="form-label">Social Media Icon </label>
-                                <input class="form-control icp icp-auto" name="edit_i_class" id="i_class" value="{{ old('edit_i_class', '') }}" type="text" autocomplete="off" data-placement="topRight" placeholder="fontawsome: fa-youtube"/>
+                                <input class="form-control icp icp-auto" name="edit_i_class" id="i_class"
+                                    value="{{ old('edit_i_class', '') }}" type="text" autocomplete="off"
+                                    data-placement="topRight" placeholder="fontawsome: fa-youtube" />
                             </div>
                             <div class="mb-2">
                                 <input type="hidden" name="socail_media_id" id="socail_media_id" />

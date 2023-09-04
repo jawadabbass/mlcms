@@ -1,4 +1,4 @@
-@extends('back.layouts.app',['title'=>$title])
+@extends('back.layouts.app', ['title' => $title])
 @section('content')
     <div class="content-wrapper pl-3 pr-2">
         <!-- Content Header (Page header) -->
@@ -33,7 +33,7 @@
                                 <div class="box-header">
                                     <h3 class="box-title">All News</h3>
                                 </div>
-                            </div>                            
+                            </div>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body table-responsive">
@@ -50,11 +50,15 @@
 
                                     <div class="col-sm-8 text-end">
                                         <div class="text-end" style="padding-bottom:2px;">
-                                            <a href="{{ route('news.create') }}" class="sitebtn">Add News</a>
+                                            @if (isAllowed('Can Add News'))
+                                                <a href="{{ route('news.create') }}" class="sitebtn">Add News</a>
+                                            @endif
                                         </div>
-                                        <a href="{{ route('news.sort') }}" class="btn btn-warning">
-                                            <i class="la la-bars"></i>Sort News
-                                        </a>
+                                        @if (isAllowed('Can Sort News'))
+                                            <a href="{{ route('news.sort') }}" class="btn btn-warning">
+                                                <i class="la la-bars"></i>Sort News
+                                            </a>
+                                        @endif
                                     </div>
 
                                 </div>
@@ -62,11 +66,13 @@
                                 <div class="row mb-3" id="filterForm" style="display: none;">
                                     <div class="col-md-3 form-group">
                                         <label>Title</label>
-                                        <input id="title" name="title" type="text" placeholder="Title" value="{{ request('title', '') }}" class="form-control">
+                                        <input id="title" name="title" type="text" placeholder="Title"
+                                            value="{{ request('title', '') }}" class="form-control">
                                     </div>
                                     <div class="col-md-3 form-group">
                                         <label>Description</label>
-                                        <input id="description" name="description" type="text" placeholder="Description" value="{{ request('description', '') }}" class="form-control">
+                                        <input id="description" name="description" type="text" placeholder="Description"
+                                            value="{{ request('description', '') }}" class="form-control">
                                     </div>
                                     <div class="col-md-3 form-group">
                                         <label for="status">Status:</label>
@@ -79,7 +85,7 @@
                                     id="newsDatatableAjax">
                                     <thead>
                                         <tr>
-                                            <th>News<br/>Date</th>
+                                            <th>News<br />Date</th>
                                             <th>Image</th>
                                             <th>Title</th>
                                             <th>Description</th>
@@ -125,8 +131,7 @@
                         d.status = $('#status').val();
                     }
                 },
-                columns: [
-                    {
+                columns: [{
                         data: 'news_date_time',
                         name: 'news_date_time'
                     },
@@ -221,7 +226,6 @@
                 $('#status_' + id).val(prev_status);
             }
         }
-
     </script>
     <!-- Filer -->
 @endsection

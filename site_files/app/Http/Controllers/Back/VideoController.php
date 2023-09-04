@@ -30,7 +30,7 @@ class VideoController extends Controller
      */
     public function create()
     {
-        hasPermission('Can Manage Videos');
+        hasPermission('Can Add Videos');
     }
     /**
      * Store a newly created resource in storage.
@@ -40,7 +40,7 @@ class VideoController extends Controller
      */
     public function store(Request $request)
     {
-        hasPermission('Can Manage Videos');
+        hasPermission('Can Add Videos');
         $request->validate([
             'heading' => 'required',
         ]);
@@ -134,7 +134,7 @@ class VideoController extends Controller
      */
     public function edit($id, Request $request)
     {
-        hasPermission('Can Manage Videos');
+        hasPermission('Can Edit Videos');
         if ($id == '') {
             echo 'error';
             return;
@@ -164,7 +164,7 @@ class VideoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        hasPermission('Can Manage Videos');
+        hasPermission('Can Edit Videos');
         $request->validate([
             'edit_heading' => 'required',
             'edit_content' => 'required',
@@ -210,7 +210,7 @@ class VideoController extends Controller
      */
     public function destroy($id)
     {
-        hasPermission('Can Manage Videos');
+        hasPermission('Can Delete Videos');
         Video::destroy($id);
         return json_encode(array("status" => true));
     }
@@ -315,14 +315,14 @@ class VideoController extends Controller
     }
     public function add_video()
     {
-        hasPermission('Can Manage Videos');
+        hasPermission('Can Add Videos');
         $title = 'Add Video';
         $file_upload_max_size = $this->file_upload_max_size();
         return view('back.video.add_video', compact('title', 'file_upload_max_size'));
     }
     public function edit_video($id)
     {
-        hasPermission('Can Manage Videos');
+        hasPermission('Can Edit Videos');
         $title = 'Edit Video';
         $rec = Video::find($id);
         $file_upload_max_size = $this->file_upload_max_size();
@@ -330,7 +330,7 @@ class VideoController extends Controller
     }
     public function post_add_video(Request $request)
     {
-        hasPermission('Can Manage Videos');
+        hasPermission('Can Add Videos');
         $request->validate([
             'fimg' => 'mimes:jpg,png,jpeg'
         ]);
@@ -399,7 +399,7 @@ class VideoController extends Controller
     }
     public function post_edit_video(Request $request)
     {
-        hasPermission('Can Manage Videos');
+        hasPermission('Can Edit Videos');
         
         $idd = (int)$request->idd;
         if ($idd == 0) {
