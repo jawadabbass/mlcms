@@ -71,7 +71,7 @@ class ErrorLogClearCommand extends Command
         }
 
         /***************************** */
-        
+
         $logFilePath = realpath(storage_path('logs/laravel.log'));
         if (!$logFilePath) {
             throw new RuntimeException('Error log path not found.');
@@ -81,5 +81,6 @@ class ErrorLogClearCommand extends Command
         fclose($file);
 
         $this->components->info('Error log cleared successfully.');
+        /*********************************** */
     }
 }
