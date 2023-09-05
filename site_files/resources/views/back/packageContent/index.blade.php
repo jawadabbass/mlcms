@@ -418,7 +418,7 @@
 
             swal({
                 title: "Are you sure?",
-                text: "Deleting the item may remove it from all  Clients Purshed Package?",
+                text: "Deleting the item may remove it from all  Clients Purchased Package?",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",

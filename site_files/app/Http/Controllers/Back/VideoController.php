@@ -336,14 +336,12 @@ class VideoController extends Controller
         ]);
         $img_name = '';
         $file = $request->file('fimg');
-        $file2 = $request->file('fimg');
         if (isset($_FILES['fimg']) && $_FILES['fimg']['tmp_name'] != '') {
             $name = $file->getClientOriginalName();
             $fileExtension = $file->getClientOriginalExtension();
             $name = str_replace('.' . $fileExtension, '', $name) . '-' . time() . rand(1111, 4444) . '.' . $fileExtension;
             $img_name = strtolower(str_replace(' ', '-', $name));
 
-            //$file2->move(public_path() . '/uploads/module/Videos/', $img_name);
             $file->move(public_path() . '/uploads/videos/thumb/', $img_name);
 
             $image = \Image::make(sprintf('uploads/videos/thumb/%s', $img_name))->resize(80, 60)->save();
@@ -410,14 +408,12 @@ class VideoController extends Controller
         ]);
         $img_name = '';
         $file = $request->file('fimg');
-        $file2 = $request->file('fimg');
         if (isset($_FILES['fimg']) && $_FILES['fimg']['tmp_name'] != '') {
             $name = $file->getClientOriginalName();
             $fileExtension = $file->getClientOriginalExtension();
             $name = str_replace('.' . $fileExtension, '', $name) . '-' . time() . rand(1111, 4444) . '.' . $fileExtension;
             $img_name = strtolower(str_replace(' ', '-', $name));
 
-            //$file2->move(public_path() . '/uploads/module/Videos/', $img_name);
             $file->move(public_path() . '/uploads/videos/thumb/', $img_name);
 
             $image = \Image::make(sprintf('uploads/videos/thumb/%s', $img_name))->resize(80, 60)->save();

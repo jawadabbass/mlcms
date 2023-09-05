@@ -17,37 +17,30 @@ class PackageContentController extends Controller
      */
     public function index($id)
     {
-
         $title = FindInsettingArr('business_name') . 'Manage Package Content';
         $main_package =  CmsModuleData::where('sts', 'active')
             ->where('cms_module_id', 37)
             ->where('id', $id)
             ->first();
         $images = PackageContent::where('package_id', $id)->whereNotNull('image')->get();
-
         $videos = PackageContent::where('package_id', $id)->whereNotNull('video')->get();
-
         $documents = PackageContent::where('package_id', $id)->whereNotNull('document')->get();
-
         $contents = PackageContent::where('package_id', $id)->whereNotNull('content')->get();
         return view('back.packageContent.index', compact('title', 'main_package', 'images', 'videos', 'documents', 'contents'));
     }
-
-
     public function store(Request $request)
     {
-
         $type = $request->type;
         $package_content = new PackageContent();
         $package_content->type_content = $type;
         $package_content->package_id = $request->package_id;
-
         if ($type == 'video') {
-
+            $request->validate([
+                'video' => 'required|mimes:mp4'
+            ]);
             if ($request->hasFile('video')) {
                 $size_bits = $request->file('video')->getSize();
                 $video_size_mb = number_format($size_bits / 1048576, 2);
-
                 if ($video_size_mb > 1024) {
                     return response()->json(['status' => 'danger', 'message' => '   Sorry Video Size Can Not Exceed More Than 1 GB']);
                 } else {
@@ -58,11 +51,12 @@ class PackageContentController extends Controller
                 }
             }
         } elseif ($type == 'image') {
-
+            $request->validate([
+                'image' => 'required|mimetypes:image/jpeg,image/jpg,image/png,image/svg+xml,image/gif,image/x-png,image/tiff,image/tif,image/avif,image/bmp'
+            ]);
             if ($request->hasFile('image')) {
                 $size_bits = $request->file('image')->getSize();
                 $video_size_mb = number_format($size_bits / 1048576, 2);
-
                 if ($video_size_mb > 10) {
                     return response()->json(['status' => 'danger', 'message' => '   Sorry Image Size Can Not Exceed More Than 10 MB']);
                 } else {
@@ -73,11 +67,12 @@ class PackageContentController extends Controller
                 }
             }
         } elseif ($type == 'document') {
-
+            $request->validate([
+                'document' => 'required|mimetypes:application/pdf,application/x-pdf'
+            ]);
             if ($request->hasFile('document')) {
                 $size_bits = $request->file('document')->getSize();
                 $video_size_mb = number_format($size_bits / 1048576, 2);
-
                 if ($video_size_mb > 15) {
                     return response()->json(['status' => 'danger', 'message' => '   Sorry Document Size Can Not Exceed More Than 15 MB']);
                 } else {
@@ -90,47 +85,29 @@ class PackageContentController extends Controller
         } else {
             $package_content->content = $request->ck_editor;
         }
-
         $package_content->save();
-
         return response()->json(['status' => 'success', 'message' => 'Content Added Successfully In Package']);
     }
-
-
     public function delete($id)
     {
-
         $package = PackageContent::find($id);
-
-
         if (!$package->type == 'content') {
-
             if (!empty($package->video) && $package->type == 'video') {
-
                 unlink('uploads/package_content/videos/' . $package->video);
             } elseif (!empty($package->image) &&  $package->type == 'image') {
-
                 unlink('uploads/package_content/images' . $package->image);
             } elseif (!empty($package->document) && $package->type == 'document') {
-
                 unlink('uploads/package_content/documents/' . $package->document);
             }
         }
-
         $package->delete();
         return response()->json(['status' => 'success', 'message' => 'Record deleted successfully']);
     }
-
-
     function editStoreContent(Request $request)
     {
-
-
         $package = PackageContent::find($request->edit_item);
         $package->content = $request->edit_ck_editor;
-
         $package->save();
-
         return response()->json(['status' => 'success', 'message' => 'Record updated  successfully']);
     }
 }

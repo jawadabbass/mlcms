@@ -110,17 +110,7 @@ class CategoriesController extends Controller
 	public function update(Request $request, $id)
 	{
 		hasPermission('Can Manage Categories');
-		$this->validate($request, [
-			// 'cimg' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-		]);
 		$category = Category::find($request->edit_id);
-		if ($request->hasFile('cimg')) {
-			$image = $request->file('cimg');
-			$name = time() . '.' . $image->getClientOriginalExtension();
-			$destinationPath = public_path('/uploads/categories');
-			$image->move($destinationPath, $name);
-			$category->img = $name;
-		}
 		$category->title = $request->edit_title;
 		$category->save();
 		Session::flash('update_action', 'Added Successfully');

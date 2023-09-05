@@ -1,8 +1,11 @@
 <?php
 
+use RecursiveIteratorIterator;
+use RecursiveDirectoryIterator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\Back\RoleController;
 use App\Http\Controllers\Back\CacheController;
 use App\Http\Controllers\Back\FilesController;
 use App\Http\Controllers\Back\MediaController;
@@ -26,6 +29,7 @@ use App\Http\Controllers\Front\InvoiceController;
 use App\Http\Controllers\Back\DashboardController;
 use App\Http\Controllers\Front\GalleryCFrontoller;
 use App\Http\Controllers\Front\ServicesController;
+use App\Http\Controllers\Back\PermissionController;
 use App\Http\Controllers\Front\ContactUsController;
 use App\Http\Controllers\Front\MailChimpController;
 use App\Http\Controllers\Back\ImageUploadController;
@@ -34,7 +38,11 @@ use App\Http\Controllers\Back\ModuleManageController;
 use App\Http\Controllers\Front\TestimonialController;
 use App\Http\Controllers\Back\PaymentOptionController;
 use App\Http\Controllers\Back\Email_templatesController;
+use App\Http\Controllers\Back\PermissionGroupController;
 use App\Http\Controllers\Back\BlogController as BackBlogController;
+
+/************************* */
+
 use App\Http\Controllers\HomeController as UserDashboardController;
 use App\Http\Controllers\Back\VideoController as BackVideoController;
 use App\Http\Controllers\Back\GalleryController as BackGalleryController;
@@ -44,16 +52,10 @@ use App\Http\Controllers\Back\ContactUsController as BackContactUsController;
 /************************* */
 
 use App\Http\Controllers\AdminAuth\LoginController as AdminAuthLoginController;
-use App\Http\Controllers\AdminAuth\ForgotPasswordController as AdminAuthForgotPasswordController;
-use App\Http\Controllers\AdminAuth\ResetPasswordController as AdminAuthResetPasswordController;
-use App\Http\Controllers\AdminAuth\ConfirmPasswordController as AdminAuthConfirmPasswordController;
 use App\Http\Controllers\AdminAuth\VerificationController as AdminAuthVerificationController;
-
-/************************* */
-
-use App\Http\Controllers\Back\PermissionController;
-use App\Http\Controllers\Back\PermissionGroupController;
-use App\Http\Controllers\Back\RoleController;
+use App\Http\Controllers\AdminAuth\ResetPasswordController as AdminAuthResetPasswordController;
+use App\Http\Controllers\AdminAuth\ForgotPasswordController as AdminAuthForgotPasswordController;
+use App\Http\Controllers\AdminAuth\ConfirmPasswordController as AdminAuthConfirmPasswordController;
 
 /************************* */
 /*
@@ -444,6 +446,7 @@ Route::get('/clear-cache', function () {
     Artisan::call('view:clear');
     Artisan::call('optimize:clear');
     Artisan::call('errorlog:clear');
+    /*************************** */
     return 'Cache is cleared';
 });
 Route::group(['namespace' => 'Front', 'middleware' => ['siteStatus', 'clearCache', 'ipmiddleware']], function () {

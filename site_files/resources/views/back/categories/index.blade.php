@@ -139,11 +139,8 @@
                         </div>
                         <div class="modal-footer">
                             <div class="row">
-                                <div class="col-sm-4"></div>
-                                <div class="col-sm-4 text-end">
+                                <div class="col-sm-12 text-end">
                                     <button type="button" class="btn btn-info" data-bs-dismiss="modal">Cancel</button>
-                                </div>
-                                <div class="col-sm-4 text-end">
                                     <button type="button" onclick="return submitForm_cat(myForm,'<?php echo $settingArr['contr_name']; ?>');"
                                         class="btn btn-success">Submit
                                     </button>
@@ -179,24 +176,14 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-4 text-end">Image:</div>
-                                <div class="col-sm-8">
-                                    <input type="file" class="form-control" name="cimg" id="cimg"
-                                        value="" />
-                                </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-sm-6">&nbsp;</div>
                                 <div class="col-sm-6"></div>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <div class="row">
-                                <div class="col-sm-4"></div>
-                                <div class="col-sm-4 text-end">
+                                <div class="col-sm-12 text-end">
                                     <button type="button" class="btn btn-info" data-bs-dismiss="modal">Cancel</button>
-                                </div>
-                                <div class="col-sm-4 text-end">
                                     <button type="button" onclick="return editForm_cat();" class="btn btn-success">Save
                                     </button>
                                 </div>
