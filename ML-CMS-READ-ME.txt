@@ -1,5 +1,6 @@
-Must be only 1 super admin should be available in system.
+Must be only 1 super admin available in system.
 
+************************************
 
 Super Admin User (in Users table is_super_admin=1) is for developer only.
 It has access to all functionalities. i.e.
@@ -7,7 +8,28 @@ It has access to all functionalities. i.e.
 * Permissions and Permissions Group Management.
 
 
+************************************
+
+
 Client(Owner) will have some restricted access. (i.e Currently Admin Level 1 role)
 There is no need to give access to functionalities. i.e.
 * Modules Management
-* Permissions and Permissions Group Managemnt
+* Permissions and Permissions Group Managemnt(But can Manage Roles)
+
+
+
+************************************
+************************************
+Current Users In System
+************************************
+Role        :   Super Admin
+User        :   superadmin@medialinkers.com
+Password    :   12May2@@9
+-----------------------------------
+Role        :   Admin Level-1
+User        :   service@medialinkers.com
+Password    :   12May2@@9
+-----------------------------------
+Role        :   Admin Level-2
+User        :   jawad@medialinkers.com
+Password    :   12May2@@9
