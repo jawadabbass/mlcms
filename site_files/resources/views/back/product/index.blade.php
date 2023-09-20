@@ -50,7 +50,9 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="text-end" style="padding-bottom:2px;">
-                                    <input type="button" class="sitebtn" value="Add Product" onclick="add_product()" />
+                                    @if(isAllowed('Can Add Product'))
+                                        <input type="button" class="sitebtn" value="Add Product" onclick="add_product()" />
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -102,13 +104,19 @@
                                             </td>
 
                                             <td>
+                                                @if(isAllowed('Can Edit Product'))
                                                 <a class="btn btn-sm btn-primary" href="javascript:void(0);" title="Edit"
                                                     onclick="edit_product({{ $product->ID }})">
                                                     <i class="glyphicon glyphicon-pencil"></i> Edit</a>
+                                                @endif
+                                                @if(isAllowed('Can Delete Product'))
                                                 <a class="btn btn-sm btn-danger" href="javascript:void(0);" title="Delete"
                                                     onclick="delete_product({{ $product->ID }})">
                                                     <i class="glyphicon glyphicon-trash"></i> Delete</a>
+                                                @endif
+                                                @if(isAllowed('Can Sort Products'))
                                                 <span></span>
+                                                @endif
                                             </td>
                                         </tr>
                                     @empty

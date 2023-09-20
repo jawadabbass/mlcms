@@ -46,7 +46,7 @@ class CategoriesController extends Controller
 	 */
 	public function create(Request $request)
 	{
-		hasPermission('Can Manage Categories');
+		hasPermission('Can Add Category');
 		$action = $request->action;
 		$updateRecordsArray = $request->recordsArray;
 		if ($action == "updateRecordsListings") {
@@ -68,7 +68,7 @@ class CategoriesController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		hasPermission('Can Manage Categories');
+		hasPermission('Can Add Category');
 		$category = new Category();
 		$category->title = $request->title;
 		$category->orderr = 0;
@@ -96,7 +96,7 @@ class CategoriesController extends Controller
 	 */
 	public function edit($id)
 	{
-		hasPermission('Can Manage Categories');
+		hasPermission('Can Edit Category');
 		$category = Category::find($id);
 		return json_encode($category);
 	}
@@ -109,7 +109,7 @@ class CategoriesController extends Controller
 	 */
 	public function update(Request $request, $id)
 	{
-		hasPermission('Can Manage Categories');
+		hasPermission('Can Edit Category');
 		$category = Category::find($request->edit_id);
 		$category->title = $request->edit_title;
 		$category->save();
@@ -125,7 +125,7 @@ class CategoriesController extends Controller
 	 */
 	public function destroy($id)
 	{
-		hasPermission('Can Manage Categories');
+		hasPermission('Can Delete Category');
 		Category::destroy($id);
 		return json_encode(array("status" => true));
 	}

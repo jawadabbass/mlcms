@@ -57,17 +57,25 @@ class CityController extends Controller
                 return $str;
             })
             ->addColumn('action', function ($cities) {
+                $editStr = '';
+                $deleteStr = '';
+                if(isAllowed('Can Edit City')){
+                    $editStr = '<li>
+                    <a href="' . route('cities.edit', ['cityObj' => $cities->id]) . '" class="text-info"><i class="fas fa-edit" aria-hidden="true"></i>Edit</a>
+                </li>';
+                }
+                if(isAllowed('Can Delete City')){
+                    $deleteStr = '<li>
+                    <a href="javascript:void(0);" onclick="deleteCity(' . $cities->id . ');" class="text-danger"><i class="fas fa-trash" aria-hidden="true"></i>Delete</a>
+                </li>';
+                }
                 return '
                 <div class="btn-group">
 					<button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action
 					</button>
 					<ul class="dropdown-menu">
-						<li>
-							<a href="' . route('cities.edit', ['cityObj' => $cities->id]) . '" class="text-info"><i class="fas fa-edit" aria-hidden="true"></i>Edit</a>
-						</li>
-						<li>
-							<a href="javascript:void(0);" onclick="deleteCity(' . $cities->id . ');" class="text-danger"><i class="fas fa-trash" aria-hidden="true"></i>Delete</a>
-						</li>
+						'.$editStr.'
+						'.$deleteStr.'
 					</ul>
 				</div>';
             })
@@ -88,7 +96,7 @@ class CityController extends Controller
      */
     public function create()
     {
-        hasPermission('Can Manage Cities');
+        hasPermission('Can Add City');
         $title = FindInsettingArr('business_name') . ': Cities Management';
         $msg = '';
         $cityObj = new City();
@@ -106,7 +114,7 @@ class CityController extends Controller
      */
     public function store(CityBackFormRequest $request)
     {
-        hasPermission('Can Manage Cities');
+        hasPermission('Can Add City');
         $cityObj = new City();
         $cityObj = $this->setCityValues($request, $cityObj);
         $cityObj->save();
@@ -134,7 +142,7 @@ class CityController extends Controller
      */
     public function edit(City $cityObj)
     {
-        hasPermission('Can Manage Cities');
+        hasPermission('Can Edit City');
         $title = FindInsettingArr('business_name') . ': Cities Management';
         $msg = '';
         return view('back.cities.edit')
@@ -152,7 +160,7 @@ class CityController extends Controller
      */
     public function update(CityBackFormRequest $request, City $cityObj)
     {
-        hasPermission('Can Manage Cities');
+        hasPermission('Can Edit City');
         $cityObj = $this->setCityValues($request, $cityObj);
         $cityObj->save();
 
@@ -170,14 +178,14 @@ class CityController extends Controller
      */
     public function destroy(City $cityObj)
     {
-        hasPermission('Can Manage Cities');
+        hasPermission('Can Delete City');
         $cityObj->delete();
         echo 'ok';
     }
 
     public function updateCityStatus(Request $request)
     {
-        hasPermission('Can Manage Cities');
+        hasPermission('Can Edit City');
         $cityObj = City::find($request->id);
         $cityObj = $this->setCityStatus($request, $cityObj);
         $cityObj->update();
@@ -186,7 +194,7 @@ class CityController extends Controller
 
     public function sortCities()
     {
-        hasPermission('Can Manage Cities');
+        hasPermission('Can Sort Cities');
         $title = FindInsettingArr('business_name') . ': Cities Management';
         $msg = '';
         return view('back.cities.sort')->with('title', $title)
@@ -195,7 +203,7 @@ class CityController extends Controller
 
     public function citiesSortData(Request $request)
     {
-        hasPermission('Can Manage Cities');
+        hasPermission('Can Sort Cities');
         $cities = City::select('cities.id', 'cities.city_name', 'cities.sort_order')
             ->where('county_id', $request->county_id)
             ->where('status', 'like', 'active')
@@ -211,7 +219,7 @@ class CityController extends Controller
 
     public function citiesSortUpdate(Request $request)
     {
-        hasPermission('Can Manage Cities');
+        hasPermission('Can Sort Cities');
         $citiesOrder = $request->input('citiesOrder');
         $citiesOrderArray = explode(',', $citiesOrder);
         $count = 1;

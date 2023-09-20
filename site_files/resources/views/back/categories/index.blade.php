@@ -58,10 +58,12 @@
                                 @endforeach
                             </select>
                             <div class="myfldrow">
-                                <button type="button" class="sitebtn" onClick="load_category_add_form()"> <i
-                                        class="fas fa-plus-circle" aria-hidden="true"></i>
-                                    Add New
-                                </button>
+                                @if (isAllowed('Can Add Category'))
+                                    <button type="button" class="sitebtn" onClick="load_category_add_form()"> <i
+                                            class="fas fa-plus-circle" aria-hidden="true"></i>
+                                        Add New
+                                    </button>
+                                @endif
                             </div>
                         </div>
                         <div class="alert alert-warning alert-dismissible">
@@ -90,14 +92,17 @@
                                                     alt="">
                                             @endif
                                             <span id="edit_{{ $row->$idDBF }}">{{ $row->title }}</span>
-                                            <a class="btn btn-sm btn-danger" href="javascript:;"
-                                                onclick="delete_category_ajax('{{ $row->$idDBF }}');" title="Delete"><i
-                                                    class="fas fa-trash"></i> Delete</a>
-
-                                            <a class="btn btn-sm btn-info" title="Edit" href="javascript:;"
-                                                onClick="load_category_edit_form({{ $row->$idDBF }})">
-                                                {{-- onClick="getEditDiv('Edit', '{{ $settingArr['contr_name']}}', '{{ $row->$idDBF}}');"> --}}
-                                                <i class="fas fa-pen-to-square" aria-hidden="true"></i> Edit</a>
+                                            @if (isAllowed('Can Delete Category'))
+                                                <a class="btn btn-sm btn-danger" href="javascript:;"
+                                                    onclick="delete_category_ajax('{{ $row->$idDBF }}');"
+                                                    title="Delete"><i class="fas fa-trash"></i> Delete</a>
+                                            @endif
+                                            @if (isAllowed('Can Edit Category'))
+                                                <a class="btn btn-sm btn-info" title="Edit" href="javascript:;"
+                                                    onClick="load_category_edit_form({{ $row->$idDBF }})">
+                                                    {{-- onClick="getEditDiv('Edit', '{{ $settingArr['contr_name']}}', '{{ $row->$idDBF}}');"> --}}
+                                                    <i class="fas fa-pen-to-square" aria-hidden="true"></i> Edit</a>
+                                            @endif
                                         </li>
                                     @endforeach
                                 @else

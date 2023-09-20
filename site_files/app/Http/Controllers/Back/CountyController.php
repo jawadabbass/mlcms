@@ -54,17 +54,25 @@ class CountyController extends Controller
                 return $str;
             })
             ->addColumn('action', function ($counties) {
+                $editStr = '';
+                $deleteStr = '';
+                if (isAllowed('Can Edit County')){
+                    $editStr = '<li>
+                    <a href="' . route('counties.edit', ['countyObj' => $counties->id]) . '" class="text-info"><i class="fas fa-edit" aria-hidden="true"></i>Edit</a>
+                </li>';
+                }
+                if (isAllowed('Can Delete County')){
+                    $deleteStr = '<li>
+                    <a href="javascript:void(0);" onclick="deleteCounty(' . $counties->id . ');" class="text-danger"><i class="fas fa-trash" aria-hidden="true"></i>Delete</a>
+                </li>';
+                }
                 return '
                 <div class="btn-group">
 					<button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action
 					</button>
 					<ul class="dropdown-menu">
-						<li>
-							<a href="' . route('counties.edit', ['countyObj' => $counties->id]) . '" class="text-info"><i class="fas fa-edit" aria-hidden="true"></i>Edit</a>
-						</li>
-						<li>
-							<a href="javascript:void(0);" onclick="deleteCounty(' . $counties->id . ');" class="text-danger"><i class="fas fa-trash" aria-hidden="true"></i>Delete</a>
-						</li>
+						'.$editStr.'
+						'.$deleteStr.'
 					</ul>
 				</div>';
             })
@@ -85,7 +93,7 @@ class CountyController extends Controller
      */
     public function create()
     {
-        hasPermission('Can Manage Counties');
+        hasPermission('Can Add County');
         $title = FindInsettingArr('business_name') . ': Counties Management';
         $msg = '';
         $countyObj = new County();
@@ -103,7 +111,7 @@ class CountyController extends Controller
      */
     public function store(CountyBackFormRequest $request)
     {
-        hasPermission('Can Manage Counties');
+        hasPermission('Can Add County');
         $countyObj = new County();
         $countyObj = $this->setCountyValues($request, $countyObj);
         $countyObj->save();
@@ -131,7 +139,7 @@ class CountyController extends Controller
      */
     public function edit(County $countyObj)
     {
-        hasPermission('Can Manage Counties');
+        hasPermission('Can Edit County');
         $title = FindInsettingArr('business_name') . ': Counties Management';
         $msg = '';
         return view('back.counties.edit')
@@ -149,7 +157,7 @@ class CountyController extends Controller
      */
     public function update(CountyBackFormRequest $request, County $countyObj)
     {
-        hasPermission('Can Manage Counties');
+        hasPermission('Can Edit County');
         $countyObj = $this->setCountyValues($request, $countyObj);
         $countyObj->save();
 
@@ -167,7 +175,7 @@ class CountyController extends Controller
      */
     public function destroy(County $countyObj)
     {
-        hasPermission('Can Manage Counties');
+        hasPermission('Can Delete County');
         City::where('county_id', $countyObj->id)->delete();
         $countyObj->delete();
         echo 'ok';
@@ -175,7 +183,7 @@ class CountyController extends Controller
 
     public function updateCountyStatus(Request $request)
     {
-        hasPermission('Can Manage Counties');
+        hasPermission('Can Delete County');
         $countyObj = County::find($request->id);
         $countyObj = $this->setCountyStatus($request, $countyObj);
         $countyObj->update();
@@ -184,7 +192,7 @@ class CountyController extends Controller
 
     public function sortCounties()
     {
-        hasPermission('Can Manage Counties');
+        hasPermission('Can Sort Counties');
         $title = FindInsettingArr('business_name') . ': Counties Management';
         $msg = '';
         return view('back.counties.sort')->with('title', $title)
@@ -193,7 +201,7 @@ class CountyController extends Controller
 
     public function countiesSortData(Request $request)
     {
-        hasPermission('Can Manage Counties');
+        hasPermission('Can Sort Counties');
         $counties = County::select('counties.id', 'counties.state_id', 'counties.county_name', 'counties.sort_order')
             ->where('state_id', $request->state_id)
             ->where('status', 'like', 'active')
@@ -209,7 +217,7 @@ class CountyController extends Controller
 
     public function countiesSortUpdate(Request $request)
     {
-        hasPermission('Can Manage Counties');
+        hasPermission('Can Sort Counties');
         $countiesOrder = $request->input('countiesOrder');
         $countiesOrderArray = explode(',', $countiesOrder);
         $count = 1;

@@ -1,4 +1,4 @@
-@extends('back.layouts.app',['title'=>$title])
+@extends('back.layouts.app', ['title' => $title])
 
 @section('content')
     <div class="content-wrapper pl-3 pr-2">
@@ -48,7 +48,9 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="text-end" style="padding-bottom:2px;">
-                                    <a href="{{ route('states.create') }}" class="sitebtn">Add State</a>
+                                    @if (isAllowed('Can Add State'))
+                                        <a href="{{ route('states.create') }}" class="sitebtn">Add State</a>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -64,13 +66,15 @@
                                         <button type="button" class="btn btn-warning" onclick="hideFilters();"
                                             id="hideFilterBtn" style="display: none;">Hide Filters</button><br><br>
                                     </div>
-                                     
+
                                     <div class="col-lg-6 text-end">
-                                        <a href="{{ route('states.sort') }}" class="btn btn-warning">
-                                            <i class="la la-bars"></i>Sort States
-                                        </a>
+                                        @if (isAllowed('Can Sort States'))
+                                            <a href="{{ route('states.sort') }}" class="btn btn-warning">
+                                                <i class="la la-bars"></i>Sort States
+                                            </a>
+                                        @endif
                                     </div>
-                                    
+
                                 </div>
 
                                 <div class="row" id="filterForm" style="display: none;">
@@ -140,8 +144,7 @@
                         d.status = $('#status').val();
                     }
                 },
-                columns: [
-                    {
+                columns: [{
                         data: 'state_code',
                         name: 'state_code'
                     },

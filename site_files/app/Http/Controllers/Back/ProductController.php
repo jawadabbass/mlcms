@@ -26,7 +26,7 @@ class ProductController extends Controller
      */
     public function create(Request $request)
     {
-        hasPermission('Can Manage Products');
+        hasPermission('Can Add Product');
         $list_order = $request->list_order;
         $list = explode(',', $list_order);
         $i = 1;
@@ -46,7 +46,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        hasPermission('Can Manage Products');
+        hasPermission('Can Add Product');
         $validator = Validator::make($request->all(), [
             'product_name' => 'required',
             'product_slug' => 'required',
@@ -81,7 +81,7 @@ class ProductController extends Controller
     }
     public function update(Request $request, $id)
     {
-        hasPermission('Can Manage Products');
+        hasPermission('Can Edit Product');
         $validator = Validator::make($request->all(), [
             'product_name' => 'required',
             'product_slug' => 'required',
@@ -122,7 +122,7 @@ class ProductController extends Controller
      */
     public function show($id, Request $request)
     {
-        hasPermission('Can Manage Products');
+        hasPermission('Can Edit Product');
         if ($id == '') {
             echo 'error';
             return;
@@ -152,7 +152,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        hasPermission('Can Manage Products');
+        hasPermission('Can Edit Product');
         $product = Product::find($id);
         return json_encode($product);
     }
@@ -173,12 +173,12 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        hasPermission('Can Manage Products');
+        hasPermission('Can Delete Product');
         Product::destroy($id);
     }
     public function productSellStatus(Request $request)
     {
-        hasPermission('Can Manage Products');
+        hasPermission('Can Edit Product');
         $product_status = explode(',', $request->product_Sale_Status)[0];
         $id = explode(',', $request->product_Sale_Status)[1];
         $result = Product::where('id', $id)->first();

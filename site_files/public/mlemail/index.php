@@ -16,23 +16,24 @@ if (isset($_POST['code']) && !empty($_POST['code']) && $_POST['code'] == $pass_c
     header('Location: ' . $_SERVER['REQUEST_URI']);
     exit;
 }
+$http_post = str_replace('www.', '', $_SERVER['HTTP_HOST']);
 
 $send_with = 'mail';
-$smtp_host = $_SERVER['HTTP_HOST'];
+$smtp_host = $http_post;
 $smtp_port = 465;
-$smtp_username = 'admin@' . $_SERVER['HTTP_HOST'];
+$smtp_username = 'admin@' . $http_post;
 $smtp_password = '4)eEwJTb$Er2';
 $smtp_encryption = 'ssl';
 $to_name = 'ML-Service';
 $to_email = 'service@medialinkers.com';
 $from_name = 'Admin Department';
-$from_email = 'admin@' . $_SERVER['HTTP_HOST'];
+$from_email = 'admin@' . $http_post;
 $cc_name = 'John Doe';
-$cc_email = 'johndoe@' . $_SERVER['HTTP_HOST'];
+$cc_email = 'johndoe@' . $http_post;
 $bcc_name = 'John Smith';
-$bcc_email = 'johnsmith@' . $_SERVER['HTTP_HOST'];
+$bcc_email = 'johnsmith@' . $http_post;
 $subject = 'Testing Email Functionality';
-$message = 'Email recieved from ' . $_SERVER['HTTP_HOST'];
+$message = 'Email recieved from ' . $http_post;
 $code = '';
 
 if (isset($_COOKIE[$cookie_name])) {

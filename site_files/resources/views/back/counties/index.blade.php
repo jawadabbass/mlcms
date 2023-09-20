@@ -1,4 +1,4 @@
-@extends('back.layouts.app',['title'=>$title])
+@extends('back.layouts.app', ['title' => $title])
 
 @section('content')
     <div class="content-wrapper pl-3 pr-2">
@@ -48,7 +48,9 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="text-end" style="padding-bottom:2px;">
-                                    <a href="{{ route('counties.create') }}" class="sitebtn">Add County</a>
+                                    @if (isAllowed('Can Add County'))
+                                        <a href="{{ route('counties.create') }}" class="sitebtn">Add County</a>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -64,13 +66,15 @@
                                         <button type="button" class="btn btn-warning" onclick="hideFilters();"
                                             id="hideFilterBtn" style="display: none;">Hide Filters</button><br><br>
                                     </div>
-                                     
+
                                     <div class="col-lg-6 text-end">
-                                        <a href="{{ route('counties.sort') }}" class="btn btn-warning">
-                                            <i class="la la-bars"></i>Sort Counties
-                                        </a>
+                                        @if (isAllowed('Can Sort Counties'))
+                                            <a href="{{ route('counties.sort') }}" class="btn btn-warning">
+                                                <i class="la la-bars"></i>Sort Counties
+                                            </a>
+                                        @endif
                                     </div>
-                                    
+
                                 </div>
 
                                 <div class="row" id="filterForm" style="display: none;">
@@ -98,7 +102,7 @@
                                     <thead>
                                         <tr>
                                             <th>County Name</th>
-                                            <th>State</th>                                            
+                                            <th>State</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
@@ -141,8 +145,7 @@
                         d.status = $('#status').val();
                     }
                 },
-                columns: [
-                    {
+                columns: [{
                         data: 'county_name',
                         name: 'county_name'
                     },
