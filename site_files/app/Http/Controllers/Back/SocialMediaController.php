@@ -16,7 +16,6 @@ class SocialMediaController extends Controller
 	 */
 	public function index()
 	{
-		hasPermission('Can Manage Social Media');
 		$title = FindInsettingArr('business_name') . ': Social Media Management';
 		$msg = '';
 		$result = SocialMedia::orderBy('item_order', 'ASC')->get();
@@ -29,7 +28,6 @@ class SocialMediaController extends Controller
 	 */
 	public function create(Request $request)
 	{
-		hasPermission('Can Add Social Media');
 		$list_order = $request->list_order;
 		$list = explode(',', $list_order);
 		$i = 1;
@@ -51,7 +49,6 @@ class SocialMediaController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		hasPermission('Can Add Social Media');
 		$request->validate([
 			'name' => 'required',
 			'alt_tag' => 'required',
@@ -82,7 +79,6 @@ class SocialMediaController extends Controller
 	 */
 	public function show($id)
 	{
-		hasPermission('Can Manage Social Media');
 		$widget = SocialMedia::find($id);
 		return json_encode($widget);
 	}
@@ -94,7 +90,6 @@ class SocialMediaController extends Controller
 	 */
 	public function edit($id, Request $request)
 	{
-		hasPermission('Can Edit Social Media');
 		if ($id == '') {
 			echo 'error';
 			return;
@@ -123,7 +118,6 @@ class SocialMediaController extends Controller
 	 */
 	public function update(Request $request, $id)
 	{
-		hasPermission('Can Edit Social Media');
 		$request->validate([
 			'edit_name' => 'required',
 			'edit_alt_tag' => 'required',
@@ -152,7 +146,6 @@ class SocialMediaController extends Controller
 	 */
 	public function destroy($id)
 	{
-		hasPermission('Can Delete Social Media');
 		SocialMedia::destroy($id);
 		return json_encode(array("status" => true));
 	}

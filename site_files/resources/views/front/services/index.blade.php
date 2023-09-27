@@ -1,6 +1,6 @@
 @extends('front.layout.app')
 @section('beforeHeadClose')
-    <link href="{{ base_url() . 'module/blog/front/css/blog.css' }}" rel="stylesheet" type="text/css" />
+    <link href="{{ public_path_to_storage('') . 'module/blog/front/css/blog.css' }}" rel="stylesheet" type="text/css" />
 @endsection
 @section('content')
     @php echo cms_edit_page("module/services");@endphp

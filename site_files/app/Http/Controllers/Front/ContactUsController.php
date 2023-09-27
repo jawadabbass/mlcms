@@ -31,7 +31,7 @@ class ContactUsController extends Controller
             'name' => ['required'],
             'email' => ['required', 'email'],
             'phone' => ['required'],
-            'comments' => ['required'],
+            /* 'comments' => ['required'], */
             'g-recaptcha-response' => 'required|recaptcha',
         ];
 
@@ -40,7 +40,7 @@ class ContactUsController extends Controller
             'email.required' => 'Email is required',
             'email.email' => 'Valid Email is required',
             'phone.required' => 'Phone is required',
-            'comments.required' => 'Message is required',
+            /* 'comments.required' => 'Message is required', */
             'g-recaptcha-response.required' => 'Please verify yourself',
             'g-recaptcha-response.recaptcha' => 'Please verify yourself',
         ];

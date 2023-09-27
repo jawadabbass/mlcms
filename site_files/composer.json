@@ -8,6 +8,7 @@
         "php": "^8.0|^8.1",
         "authorizenet/authorizenet": "^2.0",
         "barryvdh/laravel-dompdf": "^2.0",
+        "bepsvpt/secure-headers": "^7.2",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "^2.7",
         "laracasts/flash": "^3.2",

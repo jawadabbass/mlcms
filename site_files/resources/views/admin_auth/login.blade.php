@@ -4,6 +4,7 @@
     <div class="card">
         <div class="card-body login-card-body">
             <p class="login-box-msg">{{ __('Login') }}</p>
+
             <form method="POST" action="{{ route('admin.login') }}">
                 @csrf
                 <div class="input-group mb-3">

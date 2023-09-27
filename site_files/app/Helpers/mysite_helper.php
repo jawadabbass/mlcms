@@ -29,7 +29,7 @@ function myform_admin_cms_filter($data)
 {
     $siteLink = base_url();
     $data = str_replace('../', '', $data);
-    $tmp = str_replace('public/userfile/', $siteLink.'public/userfile/', $data);
+    $tmp = str_replace('public/userfile/', $siteLink . 'public/userfile/', $data);
 
     return $tmp;
 }
@@ -53,7 +53,7 @@ if (!function_exists('format_date')) {
             $format = session('date_format');
         }
 
-        return $date->format($format)."\n";
+        return $date->format($format) . "\n";
     }
 }
 if (!function_exists('format_date_tz')) {
@@ -69,7 +69,7 @@ if (!function_exists('format_date_tz')) {
         $date = new DateTime($dated, new DateTimeZone('UTC'));
         $date->setTimezone(new DateTimeZone($sess));
 
-        return $date->format($format)."\n";
+        return $date->format($format) . "\n";
     }
 }
 if (!function_exists('format_date_front')) {
@@ -81,7 +81,7 @@ if (!function_exists('format_date_front')) {
         $date = new DateTime($dated, new DateTimeZone('UTC'));
         $format = 'M d, Y';
 
-        return $date->format($format)."\n";
+        return $date->format($format) . "\n";
     }
 }
 if (!function_exists('currency_format')) {
@@ -121,7 +121,7 @@ if (!function_exists('stext')) {
         $string = strip_tags($string);
         if (strlen($string) > $limit) {
             $stringCut = substr($string, 0, $limit);
-            $string = substr($stringCut, 0, strrpos($stringCut, ' ')).'... <a href="'.$link.'">Read More</a>';
+            $string = substr($stringCut, 0, strrpos($stringCut, ' ')) . '... <a href="' . $link . '">Read More</a>';
         }
 
         return $string;
@@ -189,7 +189,7 @@ if (!function_exists('us_phone_format')) {
         $strArea = substr($strPhone, 0, 3);
         $strPrefix = substr($strPhone, 3, 3);
         $strNumber = substr($strPhone, 6, 4);
-        $strPhone = '('.$strArea.') '.$strPrefix.'-'.$strNumber;
+        $strPhone = '(' . $strArea . ') ' . $strPrefix . '-' . $strNumber;
 
         return $strPhone;
     }
@@ -201,7 +201,7 @@ function tz_list()
     foreach (timezone_identifiers_list() as $key => $zone) {
         date_default_timezone_set($zone);
         $zones_array[$key]['zone'] = $zone;
-        $zones_array[$key]['diff_from_GMT'] = 'UTC/GMT '.date('P', $timestamp);
+        $zones_array[$key]['diff_from_GMT'] = 'UTC/GMT ' . date('P', $timestamp);
     }
 
     return $zones_array;
@@ -215,7 +215,7 @@ if (!function_exists('us_ssn_format')) {
         $strArea = substr($ssn, 0, 3);
         $strPrefix = substr($ssn, 3, 2);
         $strNumber = substr($ssn, 5, 4);
-        $strSSN = $strArea.'-'.$strPrefix.'-'.$strNumber;
+        $strSSN = $strArea . '-' . $strPrefix . '-' . $strNumber;
 
         return $strSSN;
     }
@@ -260,12 +260,12 @@ if (!function_exists('helptooltip')) {
             'no_follow' => 'If this is checked, then Google will not further crawl to any other link from this page.',
             'indexing' => 'If you select this, it means you want Google to index this page. In other words, it will appear in Google search engine. We recommend this option should be checked.',
             'no_indexing' => 'If you select this, it means you do not want Google to index this page. In other words, it will never appear in Google search engine. We recommend this option should be unchecked.',
-            'max_image_size' => 'Maximum allowed image size: '.getMaxUploadSize().'MB',
+            'max_image_size' => 'Maximum allowed image size: ' . getMaxUploadSize() . 'MB',
             'sub_cat_link' => 'This would be the link of your sub category ',
         ];
         $msg = $arr[$key];
         if ($msg != '') {
-            return '<i class="fas fa-info help_icon" data-bs-toggle="tooltip" title="'.$msg.'" style="font-size: 15px;"></i>';
+            return '<i class="fas fa-info help_icon" data-bs-toggle="tooltip" title="' . $msg . '" style="font-size: 15px;"></i>';
         } else {
             return '';
         }
@@ -280,34 +280,34 @@ if (!function_exists('seo_print')) {
         $metaTags = '';
         $noFollowNoIndex = ['max-image-preview:large'];
 
-        $metaTags .= '<meta property="og:locale" content="en_US" />'."\r\n";
-        $metaTags .= '<meta property="og:type" content="website" />'."\r\n";
-        $metaTags .= '<meta property="og:url" content="'.$url_current.'" />'."\r\n";
-        $metaTags .= '<meta name="twitter:card" content="summary" />'."\r\n";
+        $metaTags .= '<meta property="og:locale" content="en_US" />' . "\r\n";
+        $metaTags .= '<meta property="og:type" content="website" />' . "\r\n";
+        $metaTags .= '<meta property="og:url" content="' . $url_current . '" />' . "\r\n";
+        $metaTags .= '<meta name="twitter:card" content="summary" />' . "\r\n";
         if (isset($seoArr['title']) && $seoArr['title'] != '') {
             $title = $seoArr['title'];
         } else {
             $title = FindInsettingArr('business_name');
         }
-        $metaTags .= '<title>'.$title.'</title>'."\r\n";
-        $metaTags .= '<meta property="og:title" content="'.$title.'"/>'."\r\n";
-        $metaTags .= '<meta property="twitter:title" content="'.$title.'"/>'."\r\n";
+        $metaTags .= '<title>' . $title . '</title>' . "\r\n";
+        $metaTags .= '<meta property="og:title" content="' . $title . '"/>' . "\r\n";
+        $metaTags .= '<meta property="twitter:title" content="' . $title . '"/>' . "\r\n";
 
         if (isset($seoArr['keywords']) && $seoArr['keywords'] != '') {
-            $metaTags .= '<meta name="keywords" content="'.$seoArr['keywords'].'">'."\r\n";
+            $metaTags .= '<meta name="keywords" content="' . $seoArr['keywords'] . '">' . "\r\n";
         }
         if (isset($seoArr['descp']) && $seoArr['descp'] != '') {
             $description = $seoArr['descp'];
         } else {
             $description = $title;
         }
-        $metaTags .= '<meta name="description" content="'.$description.'">'."\r\n";
-        $metaTags .= '<meta name="og:description" content="'.$description.'">'."\r\n";
-        $metaTags .= '<meta name="twitter:description" content="'.$description.'">'."\r\n";
-        $metaTags .= '<meta name="og:site_name" content="'.$description.'">'."\r\n";
+        $metaTags .= '<meta name="description" content="' . $description . '">' . "\r\n";
+        $metaTags .= '<meta name="og:description" content="' . $description . '">' . "\r\n";
+        $metaTags .= '<meta name="twitter:description" content="' . $description . '">' . "\r\n";
+        $metaTags .= '<meta name="og:site_name" content="' . $description . '">' . "\r\n";
 
         if (isset($seoArr['canonical_url']) && $seoArr['canonical_url'] != '') {
-            $metaTags .= '<link rel="canonical" href="'.$seoArr['canonical_url'].'" />'."\r\n";
+            $metaTags .= '<link rel="canonical" href="' . $seoArr['canonical_url'] . '" />' . "\r\n";
         }
         if (isset($seoArr['index']) && $seoArr['index'] == '1') {
             $noFollowNoIndex[] = 'INDEX';
@@ -319,7 +319,7 @@ if (!function_exists('seo_print')) {
         } else {
             $noFollowNoIndex[] = 'NOFOLLOW';
         }
-        $metaTags .= '<meta name="robots" content="'.implode(',', $noFollowNoIndex).'">'."\r\n";
+        $metaTags .= '<meta name="robots" content="' . implode(',', $noFollowNoIndex) . '">' . "\r\n";
         $metaTags .= '
         <script type="application/ld+json" class="aioseo-schema">
         {
@@ -327,73 +327,73 @@ if (!function_exists('seo_print')) {
             "@graph": [
                 {
                     "@type": "WebSite",
-                    "@id": "'.$url_current.'/#website",
-                    "url": "'.$url_current.'/",
-                    "name": "'.$title.'",
-                    "description": "'.$description.'",
+                    "@id": "' . $url_current . '/#website",
+                    "url": "' . $url_current . '/",
+                    "name": "' . $title . '",
+                    "description": "' . $description . '",
                     "inLanguage": "en-US",
                     "publisher": {
-                        "@id": "'.$url_current.'/#organization"
+                        "@id": "' . $url_current . '/#organization"
                     },
                     "potentialAction": {
                         "@type": "SearchAction",
                         "target": {
                             "@type": "EntryPoint",
-                            "urlTemplate": "'.base_url().'blog/search?s={search_term_string}"
+                            "urlTemplate": "' . base_url() . 'blog/search?s={search_term_string}"
                         },
                         "query-input": "required name=search_term_string"
                     }
                 },
                 {
                     "@type": "Organization",
-                    "@id": "'.$url_current.'/#organization",
-                    "name": "'.$description.'",
-                    "url": "'.$url_current.'/"
+                    "@id": "' . $url_current . '/#organization",
+                    "name": "' . $description . '",
+                    "url": "' . $url_current . '/"
                 },
                 {
                     "@type": "BreadcrumbList",
-                    "@id": "'.$url_current.'/#breadcrumblist",
+                    "@id": "' . $url_current . '/#breadcrumblist",
                     "itemListElement": [
                         {
                             "@type": "ListItem",
-                            "@id": "'.$url_current.'/#listItem",
+                            "@id": "' . $url_current . '/#listItem",
                             "position": 1,
                             "item": {
                                 "@type": "WebPage",
-                                "@id": "'.$url_current.'/",
-                                "name": "'.$current_page_name.'",
-                                "description": "'.$description.'",
-                                "url": "'.$url_current.'/"
+                                "@id": "' . $url_current . '/",
+                                "name": "' . $current_page_name . '",
+                                "description": "' . $description . '",
+                                "url": "' . $url_current . '/"
                             },
-                            "nextItem": "'.$url_current.'/#listItem"
+                            "nextItem": "' . $url_current . '/#listItem"
                         },
                         {
                             "@type": "ListItem",
-                            "@id": "'.$url_current.'/#listItem",
+                            "@id": "' . $url_current . '/#listItem",
                             "position": 2,
                             "item": {
                                 "@type": "WebPage",
-                                "@id": "'.$url_current.'/",
-                                "name": "'.$current_page_name.'",
-                                "description": "'.$description.'",
-                                "url": "'.$url_current.'/"
+                                "@id": "' . $url_current . '/",
+                                "name": "' . $current_page_name . '",
+                                "description": "' . $description . '",
+                                "url": "' . $url_current . '/"
                             },
-                            "previousItem": "'.$url_current.'/#listItem"
+                            "previousItem": "' . $url_current . '/#listItem"
                         }
                     ]
                 },
                 {
                     "@type": "WebPage",
-                    "@id": "'.$url_current.'/#webpage",
-                    "url": "'.$url_current.'/",
-                    "name": "'.$title.'",
-                    "description": "'.$description.'",
+                    "@id": "' . $url_current . '/#webpage",
+                    "url": "' . $url_current . '/",
+                    "name": "' . $title . '",
+                    "description": "' . $description . '",
                     "inLanguage": "en-US",
                     "isPartOf": {
-                        "@id": "'.$url_current.'/#website"
+                        "@id": "' . $url_current . '/#website"
                     },
                     "breadcrumb": {
-                        "@id": "'.$url_current.'/#breadcrumblist"
+                        "@id": "' . $url_current . '/#breadcrumblist"
                     }
                 }
             ]
@@ -435,7 +435,7 @@ function myform_getmsg($text = '', $msgType = 's')
         $msgType = 'success';
     }
     if ($text != '') {
-        return '<div class="alert alert-'.$msgType.' alert-dismissible fade in" role="alert"><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> '.$text.'</div>';
+        return '<div class="alert alert-' . $msgType . ' alert-dismissible fade in" role="alert"><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> ' . $text . '</div>';
     }
 }
 function display_with_children($parentRow, $level, $type)
@@ -444,19 +444,19 @@ function display_with_children($parentRow, $level, $type)
     $prelink = ($parentRow['is_external_link'] == 'N') ? base_url() : '';
 
     if ($parentRow['menu_id'] == 0) {
-        $link_str .= '<a class="page-linke clickable" target="_blank" href="'.$prelink.$parentRow['menu_url'].'">Link</a>';
+        $link_str .= '<a class="page-linke clickable" target="_blank" href="' . $prelink . $parentRow['menu_url'] . '">Link</a>';
     } else {
         $pageObj = CmsModuleData::where('id', $parentRow['menu_id'])->first();
-        $page = ' - (Page : '.$pageObj->heading.')';
-        $link_str .= '<a class="page-linke clickable" target="_blank" href="'.$prelink.$parentRow['menu_url'].'">Link</a>';
+        $page = ' - (Page : ' . $pageObj->heading . ')';
+        $link_str .= '<a class="page-linke clickable" target="_blank" href="' . $prelink . $parentRow['menu_url'] . '">Link</a>';
     }
 
-    $action_str = '<li class="sortableListsOpen" id="item_'.$parentRow['id'].'" data-module="'.$parentRow['id'].'">'
-        .'<div class="chilnav row">'
-        .'<div class="col-lg-9">'.$parentRow['menu_label'].$page.'</div>'
-        .'<div class="col-lg-3">'
-        .'<a class="btn btn-sm btn-primary clickable" href="javascript:void(0)" title="Edit" onclick="edit_menu('.$parentRow['menu_id'].','.$parentRow['id'].')"><i class="glyphicon glyphicon-pencil"></i> Edit Text</a>'
-        .'&nbsp<a class="btn btn-sm btn-danger clickable" href="javascript:void(0)" title="Delete" onclick="delete_menu('.$parentRow['id'].')"><i class="glyphicon glyphicon-trash"></i> Remove Link</a>&nbsp'.$link_str;
+    $action_str = '<li class="sortableListsOpen" id="item_' . $parentRow['id'] . '" data-module="' . $parentRow['id'] . '">'
+        . '<div class="chilnav row">'
+        . '<div class="col-lg-9">' . $parentRow['menu_label'] . $page . '</div>'
+        . '<div class="col-lg-3">'
+        . '<a class="btn btn-sm btn-primary clickable" href="javascript:void(0)" title="Edit" onclick="edit_menu(' . $parentRow['menu_id'] . ',' . $parentRow['id'] . ')"><i class="glyphicon glyphicon-pencil"></i> Edit Text</a>'
+        . '&nbsp<a class="btn btn-sm btn-danger clickable" href="javascript:void(0)" title="Delete" onclick="delete_menu(' . $parentRow['id'] . ')"><i class="glyphicon glyphicon-trash"></i> Remove Link</a>&nbsp' . $link_str;
 
     $action_str .= '</div></div>';
     echo $action_str;
@@ -485,7 +485,7 @@ function get_child_pages_array_by_parent_id($parent_id, $type_id)
 }
 function base_url()
 {
-    return url('/').'/';
+    return url('/') . '/';
 }
 function site_link()
 {
@@ -493,7 +493,7 @@ function site_link()
 }
 function admin_url()
 {
-    return base_url().'adminmedia/';
+    return base_url() . 'adminmedia/';
 }
 /**
  * Check whether contact us page is block for this specific ip.
@@ -507,8 +507,8 @@ function isIpBlocked($ip)
     }
     if ($ip != '::1') {
         $arrIP = explode('.', $ip);
-        $ip3 = $arrIP[0].'.'.$arrIP[1].'.'.$arrIP[2].'.*';
-        $ip2 = $arrIP[0].'.'.$arrIP[1].'.*.*';
+        $ip3 = $arrIP[0] . '.' . $arrIP[1] . '.' . $arrIP[2] . '.*';
+        $ip2 = $arrIP[0] . '.' . $arrIP[1] . '.*.*';
         if (in_array($ip, $blockIps) || in_array($ip3, $blockIps) || in_array($ip2, $blockIps)) {
             return true;
         }
@@ -527,8 +527,8 @@ function isSelfIpBlocked($ip, $blockIPsData)
     }
     if ($ip != '::1') {
         $arrIP = explode('.', $ip);
-        $ip3 = $arrIP[0].'.'.$arrIP[1].'.'.$arrIP[2].'.*';
-        $ip2 = $arrIP[0].'.'.$arrIP[1].'.*.*';
+        $ip3 = $arrIP[0] . '.' . $arrIP[1] . '.' . $arrIP[2] . '.*';
+        $ip2 = $arrIP[0] . '.' . $arrIP[1] . '.*.*';
         if (in_array($ip, $blockIps) || in_array($ip3, $blockIps) || in_array($ip2, $blockIps)) {
             return true;
         }
@@ -546,13 +546,14 @@ function isSelfCountryInBlockedList($ip, $blockCountryList)
         array_push($blockCountries, $blockCountry);
     }
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, 'http://iplocation.managemultiplewebsites.com/api/ip/find?ip='.$ip);
+    curl_setopt($ch, CURLOPT_URL, 'https://api.iplocation.net/?ip=' . $ip);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $data = curl_exec($ch);
     if (curl_errno($ch)) {
     }
     curl_close($ch);
-    $countryCode = str_replace('"', '', $data);
+    $data = json_decode($data);
+    $countryCode = $data->country_code2;
     if (in_array($countryCode, $blockCountries)) {
         return true;
     }
@@ -565,17 +566,18 @@ function isSelfCountryInBlockedList($ip, $blockCountryList)
 function isSelfCountryInAllowedList($ip, $allowedCountryList)
 {
     $allowedCountries = [];
-    foreach ($allowedCountryList as $blockCountry) {
-        array_push($allowedCountries, $blockCountry);
+    foreach ($allowedCountryList as $allowedCountry) {
+        array_push($allowedCountries, $allowedCountry);
     }
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, 'http://iplocation.managemultiplewebsites.com/api/ip/find?ip='.$ip);
+    curl_setopt($ch, CURLOPT_URL, 'https://api.iplocation.net/?ip=' . $ip);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $data = curl_exec($ch);
     if (curl_errno($ch)) {
     }
     curl_close($ch);
-    $countryCode = str_replace('"', '', $data);
+    $data = json_decode($data);
+    $countryCode = $data->country_code2;
     if (in_array($countryCode, $allowedCountries)) {
         return true;
     }
@@ -602,22 +604,23 @@ function isContactUsBlock($ip)
         $blockIps = explode(',', $metaArray['blocked_ips']);
         if ($ip != '::1') {
             $arrIP = explode('.', $ip);
-            $ip3 = $arrIP[0].'.'.$arrIP[1].'.'.$arrIP[2].'.0';
-            $ip2 = $arrIP[0].'.'.$arrIP[1].'.0.0';
-            $ip1 = $arrIP[0].'.0.0.0';
+            $ip3 = $arrIP[0] . '.' . $arrIP[1] . '.' . $arrIP[2] . '.0';
+            $ip2 = $arrIP[0] . '.' . $arrIP[1] . '.0.0';
+            $ip1 = $arrIP[0] . '.0.0.0';
             if (in_array($ip, $blockIps) || in_array($ip3, $blockIps) || in_array($ip2, $blockIps) || in_array($ip1, $blockIps)) {
                 return true;
             }
         }
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, 'http://localhost/IPLocation/public/api/ip/find?ip=115.186.181.62');
+        curl_setopt($ch, CURLOPT_URL, 'https://api.iplocation.net/?ip=' . $ip);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $data = curl_exec($ch);
         if (curl_errno($ch)) {
             return false;
         }
         curl_close($ch);
-        $countryCode = str_replace('"', '', $data);
+        $data = json_decode($data);
+        $countryCode = $data->country_code2;
         if ($metaArray['block_list_active'] == 1) {
             if (strpos($metaArray['blocked_countries'], $countryCode) !== false) {
                 if (!strcmp($metaArray['blocked_area'], 'contact_us')) {
@@ -697,9 +700,9 @@ if (!function_exists('break_email')) {
         $email_address = explode('@', $email_address);
         $username = $email_address[0];
         $dom = explode('.', $email_address[1]);
-        $email_body .= '"'.$username.'" + "&#64;" + ';
+        $email_body .= '"' . $username . '" + "&#64;" + ';
         foreach ($dom as $key => $d) {
-            $email_body .= '"'.$d.'"';
+            $email_body .= '"' . $d . '"';
             if ($key < (count($dom) - 1)) {
                 $email_body .= ' + "&#46;" + ';
             }
@@ -714,7 +717,7 @@ if (!function_exists('break_email')) {
             $script_body .= $email_body;
         }
         $script_body .= ');';
-        $script = $script_open.$script_body.$script_close;
+        $script = $script_open . $script_body . $script_close;
 
         return $script;
     }
@@ -734,9 +737,9 @@ if (!function_exists('break_mailto')) {
         $email_address = explode('@', $email_address);
         $username = $email_address[0];
         $dom = explode('.', $email_address[1]);
-        $email_body .= '"'.$username.'" + "&#64;" + ';
+        $email_body .= '"' . $username . '" + "&#64;" + ';
         foreach ($dom as $key => $d) {
-            $email_body .= '"'.$d.'"';
+            $email_body .= '"' . $d . '"';
             if ($key < (count($dom) - 1)) {
                 $email_body .= ' + "&#46;" + ';
             }
@@ -747,7 +750,7 @@ if (!function_exists('break_mailto')) {
             $script_body .= ' + "\'>" + ';
             $regex = '/[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})/';
             if (!(preg_match($regex, trim($text), $email_is) === 1)) {
-                $script_body .= '"'.$text.'"';
+                $script_body .= '"' . $text . '"';
             } else {
                 $script_body .= $email_body;
             }
@@ -756,7 +759,7 @@ if (!function_exists('break_mailto')) {
             $script_body .= $email_body;
         }
         $script_body .= ');';
-        $script = $script_open.$script_body.$script_close;
+        $script = $script_open . $script_body . $script_close;
 
         return $script;
     }
@@ -788,7 +791,7 @@ if (!function_exists('show_text')) {
         $string = strip_tags($string);
         if (strlen($string) > $limit) {
             $stringCut = substr($string, 0, $limit);
-            $string = substr($stringCut, 0, strrpos($stringCut, ' ')).'...';
+            $string = substr($stringCut, 0, strrpos($stringCut, ' ')) . '...';
         }
 
         return $string;
@@ -813,7 +816,7 @@ if (!function_exists('cp')) {
             if ($text == '_sepr') {
                 echo '<br/>========================</br/>';
             } else {
-                echo '<span style="color:red;"><strong>HERE: '.$no.'::=>::</strong></span>'.$text;
+                echo '<span style="color:red;"><strong>HERE: ' . $no . '::=>::</strong></span>' . $text;
             }
         }
         if ($no == '') {
@@ -825,7 +828,7 @@ if (!function_exists('cp')) {
 }
 function selectVal($val, $selectedV)
 {
-    $vv = 'value="'.$val.'"';
+    $vv = 'value="' . $val . '"';
     if ($val == $selectedV) {
         $vv .= ' selected';
     }
@@ -838,25 +841,34 @@ function childCategories($id)
 
     return $childCategoryObj;
 }
-function seo_img_tags($imgName = '')
+function seo_img_tags($imgName = '', $default = '', $is_dynamic = false)
 {
+    if (empty($default)) {
+        $default = FindInsettingArr('business_name');
+    }
+    if ($is_dynamic) {
+        return 'title="' . $default . '" alt="' . $default . '" loading="lazy"';
+    }
     $seoImageArr = explode('/', $imgName);
     $seoImageArr = array_reverse($seoImageArr);
     if (isset($seoImageArr[0])) {
         $imgName = $seoImageArr[0];
     }
-
-    $imageSeoArr = \App\Models\Back\CmsModuleData::where('sts', 'active')
+    $imageSeoArr =  CmsModuleData::where('sts', 'active')
         ->where('cms_module_id', 48)
-        ->where('heading', $imgName)
+        ->where('heading', 'like', $imgName)
         ->select('additional_field_1', 'additional_field_2', 'heading')
-        ->orderBy('item_order', 'ASC')
         ->first();
-    if ($imageSeoArr) {
-        return 'title="'.$imageSeoArr->additional_field_1.'" alt="'.$imageSeoArr->additional_field_2.'"';
-    } else {
-        return '';
+    if (null === $imageSeoArr) {
+        $imageSeoArr = new CmsModuleData();
+        $imageSeoArr->cms_module_id = 48;
+        $imageSeoArr->sts = 'active';
+        $imageSeoArr->heading = $imgName;
+        $imageSeoArr->additional_field_1 = $default;
+        $imageSeoArr->additional_field_2 = $default;
+        $imageSeoArr->save();
     }
+    return 'title="' . $imageSeoArr->additional_field_1 . '" alt="' . $imageSeoArr->additional_field_2 . '" loading="lazy"';
 }
 function dev_ips()
 {
@@ -887,7 +899,7 @@ function client_package($id, $response)
     $html = '';
     $i = 1;
     foreach ($packages as $package) {
-        $html .= '<div>'.$i.'= '.$package->clientPackage['heading'].'</div>';
+        $html .= '<div>' . $i . '= ' . $package->clientPackage['heading'] . '</div>';
         ++$i;
     }
 
@@ -901,7 +913,7 @@ function goals($id)
     if (!empty($sm)) {
         $goals = json_decode($sm['goals_values']);
         foreach ($goals as $goal) {
-            $res .= '<tr style="display:block;"><td style="display:block;">'.$goal.'</td></tr>';
+            $res .= '<tr style="display:block;"><td style="display:block;">' . $goal . '</td></tr>';
         }
     }
 

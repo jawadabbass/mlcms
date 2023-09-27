@@ -82,8 +82,8 @@
             success: function(data) {
                 console.log(data.cropped_image);
                 $('#featured_img').val(data.cropped_image);
-                $('.jFiler-item-thumb-image').find('img').attr('src', base_url +
-                    'uploads/module/{{ $module->type }}/thumb/' + data.cropped_image);
+                $('.jFiler-item-thumb-image').find('img').attr('src', public_path_to_uploads +
+                    'module/{{ $module->type }}/thumb/' + data.cropped_image);
                 $('#cropper_form').modal('hide');
             },
             error: function(jqXHR, textStatus, errorThrown) {}

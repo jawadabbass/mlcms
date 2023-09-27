@@ -69,18 +69,18 @@ function format_records($getArr, $module_id, $moduleArr, $dateFormat)
             } else if ($subKey == 'featured_img') {
                 if ($subValue != '') {
                     if ($module_id == 2 || $module_id == 33) {
-                        $dataArr[$key][$subKey] = base_url() . 'uploads/module/' . $moduleArr['type'] . '/' . $subValue;
-                        $dataArr[$key]['main_img'] = base_url() . 'uploads/module/' . $moduleArr['type'] . '/' . $subValue;
+                        $dataArr[$key][$subKey] = public_path_to_uploads('module/' . $moduleArr['type'] . '/' . $subValue);
+                        $dataArr[$key]['main_img'] = public_path_to_uploads('module/' . $moduleArr['type'] . '/' . $subValue);
                     } else {
-                        $dataArr[$key][$subKey] = base_url() . 'uploads/module/' . $moduleArr['type'] . '/thumb/' . $subValue;
-                        $dataArr[$key]['main_img'] = base_url() . 'uploads/module/' . $moduleArr['type'] . '/' . $subValue;
+                        $dataArr[$key][$subKey] = public_path_to_uploads('module/' . $moduleArr['type'] . '/thumb/' . $subValue);
+                        $dataArr[$key]['main_img'] = public_path_to_uploads('module/' . $moduleArr['type'] . '/' . $subValue);
                     }
                 } else {
                     // noImg.jpg
-                    if (file_exists(public_path() . '/uploads/module/' . $moduleArr['type'] . '/thumb/no_image.jpg')) {
-                        $dataArr[$key][$subKey] = base_url() . 'uploads/module/' . $moduleArr['type'] . '/thumb/no_image.jpg';
+                    if (file_exists(storage_path_to_uploads('module/' . $moduleArr['type'] . '/thumb/no_image.jpg'))) {
+                        $dataArr[$key][$subKey] = public_path_to_uploads('module/' . $moduleArr['type'] . '/thumb/no_image.jpg');
                     } else {
-                        $dataArr[$key][$subKey] = base_url() . 'front/images/no_image.jpg';
+                        $dataArr[$key][$subKey] = getImage('front/images', 'no_image.jpg');
                     }
                 }
             } else if ($subKey == 'dated') {
@@ -101,7 +101,7 @@ function format_record($subValsArr, $module_id, $moduleArr, $dateFormat)
             $dataArr[$kk] = base_url() . $subValsArr[$kk];
         } else if ($kk == 'featured_img') {
             if ($subValsArr[$kk] != '') {
-                $dataArr[$kk] = base_url() . 'uploads/module/' . $moduleArr['type'] . '/' . $subValsArr[$kk];
+                $dataArr[$kk] = public_path_to_uploads('module/' . $moduleArr['type'] . '/' . $subValsArr[$kk]);
             } else {
                 $dataArr[$kk] = '';
             }
@@ -201,21 +201,20 @@ function is_admin()
 {
     if (\Auth::check()) {
         $type = \Auth::user()->type;
-        if ($type == 'admin') {
+        if ($type == 'super-admin' || $type == 'normal-admin') {
             return true;
         }
     }
     return false;
 }
-function link2iframe($link, $type, $w = '100%', $h = '250', $videoURL = 'uploads/module/testimonial/video/')
+function link2iframe($link, $type, $w = '100%', $h = '250', $videoURL = 'module/testimonials/video/')
 {
-
     if ($type == 'Text') {
         return $link;
     }
     if ($type == 'upload') {
 
-        return '<video width="' . $w . '" height="' . $h . '" controls> <source src="' . base_url() . $videoURL . $link . '" type="video/mp4"> <source src="movie.ogg" type="video/ogg"> Your browser does not support the video tag. </video> ';
+        return '<video width="' . $w . '" height="' . $h . '" controls> <source src="' . public_path_to_uploads($videoURL . $link) . '" type="video/mp4"> <source src="movie.ogg" type="video/ogg"> Your browser does not support the video tag. </video> ';
     }
     if ($type == 'Youtube') {
 

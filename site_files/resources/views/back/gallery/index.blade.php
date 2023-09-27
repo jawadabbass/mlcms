@@ -1,6 +1,6 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('beforeHeadClose')
-    @include('back.common_views.switch_css')
+@include('back.common_views.switch_css')
 @endsection
 @section('content')
     <div class="content-wrapper pl-3 pr-2">
@@ -29,12 +29,10 @@
                         </div>
                         <div class="col-sm-4">
                             <div class="text-end" style="padding-bottom:2px;">
-                                @if (isAllowed('Can Add Gallery'))
-                                    <a class="btn btn-info" data-bs-target="#modal-1" data-bs-toggle="modal"
-                                        href="javascript:;"><i aria-hidden="true" class="fas fa-plus-circle"></i>
-                                        Add Album
-                                    </a>
-                                @endif
+                                <a class="btn btn-info" data-bs-target="#modal-1" data-bs-toggle="modal"
+                                    href="javascript:;"><i aria-hidden="true" class="fas fa-plus-circle"></i>
+                                    Add Album
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -81,52 +79,43 @@
                                 <td>{{ $loop->index + 1 }}</td>
                                 <td>{{ $album->title }}</td>
                                 <td>
-                                    <img src="{{ base_url() }}uploads/gallery/{{ $album->f_img }}" width="100">
+                                    <img src="{{ public_path_to_uploads('') }}gallery/{{ $album->f_img }}" width="100">
                                 </td>
                                 <td class="text-center">
-                                    @if (isAllowed('Can Edit Gallery'))
-                                        <label class="switch">
-                                            <input type="checkbox" name="{{ 'sts_' . $album->id }}"
-                                                id="{{ 'sts_' . $album->id }}" <?php echo $album->status == 1 ? ' checked' : ''; ?>
-                                                value="<?php echo $album->status; ?>"
-                                                onClick="activate_album({{ $album->id }}, this);">
-                                            <div class="slider round">
-                                                <strong class="on">Active</strong>
-                                                <strong class="off">Inactive</strong>
-                                            </div>
-                                        </label>
-                                    @endif
+                                    <label class="switch">
+                                        <input type="checkbox" name="{{ 'sts_' . $album->id }}"
+                                            id="{{ 'sts_' . $album->id }}" <?php echo $album->status == 1 ? ' checked' : ''; ?>
+                                            value="<?php echo $album->status; ?>"
+                                            onClick="activate_album({{ $album->id }}, this);">
+                                        <div class="slider round">
+                                            <strong class="on">Active</strong>
+                                            <strong class="off">Inactive</strong>
+                                        </div>
+                                    </label>
                                 </td>
                                 <td class="text-center">
-                                    @if (isAllowed('Can Edit Gallery'))
-                                        <a href="javascript:;" class="text-white"
-                                            onclick="isFeatured({{ $album->id }}, this)">
-                                            {!! $album->isFeatured == 1
-                                                ? '<i class="fas fa-star bg-success bg-success p-2 text-white" aria-hidden="true"></i>'
-                                                : "<i class='fas fa-star p-2 bg-secondary' aria-hidden='true'></i>" !!}
-                                        </a>
-                                    @endif
+                                    <a href="javascript:;" class="text-white"
+                                        onclick="isFeatured({{ $album->id }}, this)">
+                                        {!! $album->isFeatured == 1
+                                            ? '<i class="fas fa-star bg-success bg-success p-2 text-white" aria-hidden="true"></i>'
+                                            : "<i class='fas fa-star p-2 bg-secondary' aria-hidden='true'></i>" !!}
+                                    </a>
                                 </td>
                                 <td>
-                                    @if (isAllowed('Can Edit Gallery'))
-                                        <a href="javascript:;" class="btn btn-warning"
-                                            onClick="edit_album({{ $album->id }},'{{ $album->title }}');"
-                                            data-bs-toggle="tooltip" title="Edit Album"><i class="fas fa-edit"
-                                                aria-hidden="true"></i></a>
-                                    @endif
-                                    @if (isAllowed('Can Add Gallery'))
-                                        <a href="{{ route('album.gallery.create', $album->id) }}" class="btn btn-success"
-                                            data-bs-toggle="tooltip" title="Add Image(s) in this Album">
-                                            <i aria-hidden="true" class="fas fa-plus-circle">
-                                            </i>
-                                        </a>
-                                    @endif
-                                    @if (isAllowed('Can Delete Gallery'))
-                                        <a href="javascript:;" class="btn btn-danger"
-                                            onclick="deleteAlbum({{ $album->id }}, this)" data-bs-toggle="tooltip"
-                                            title="Delete this Album and Image(s)"><i class="fas fa-trash"
-                                                aria-hidden="true"></i></a>
-                                    @endif
+                                    <a href="javascript:;" class="btn btn-warning"
+                                        onClick="edit_album({{ $album->id }},'{{ $album->title }}');"
+                                        data-bs-toggle="tooltip" title="Edit Album"><i class="fas fa-edit"
+                                            aria-hidden="true"></i></a>
+                                    <a href="{{ route('album.gallery.create', $album->id) }}" class="btn btn-success"
+                                        data-bs-toggle="tooltip" title="Add Image(s) in this Album">
+                                        <i aria-hidden="true" class="fas fa-plus-circle">
+                                        </i>
+                                    </a>
+                                    <a href="javascript:;" class="btn btn-danger"
+                                        onclick="deleteAlbum({{ $album->id }}, this)" data-bs-toggle="tooltip"
+                                        title="Delete this Album and Image(s)"><i class="fas fa-trash"
+                                            aria-hidden="true"></i></a>
+                                    <span></span>
                                 </td>
                             </tr>
                         @empty
@@ -247,7 +236,7 @@
 
     @section('beforeBodyClose')
         @include('back.gallery.gallery_js')
-        <script src="{{ asset('lib/sweetalert/sweetalert2.js') }}"></script>
+        <script src="{{ public_path_to_storage('lib/sweetalert/sweetalert2.js') }}"></script>
 
         <script>
             $.ajaxSetup({
@@ -269,7 +258,7 @@
                     processData: false,
                     success: function(data) {
                         alertme('<i class="fas fa-check" aria-hidden="true"></i> Done Successfully ',
-                            'success', true, 1500);
+            'success', true, 1500);
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         alert('Error adding / update data');

@@ -1,37 +1,30 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-<link href="{{ asset('back/jquery-ui/jquery-ui.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('back/datetimepicker/build/jquery.datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('module/videos/admin/css/videos.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('module/products/admin/css/products.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('module/menu/admin/css/menu.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('module/module/admin/css/module.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('back/bootstrap/css/bootstrap-reboot.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('back/bootstrap/css/bootstrap-grid.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('back/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('back/fontawesome/css/all.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('back/css/ionicons.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('back/css/datatables/dataTables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('back/css/datatables/jquery.dataTables.css') }}" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" href="{{ asset('module/module/admin/filer/css/jquery.filer.css') }}">
-<link href="{{ asset('select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('back/js/AdminLTE/dist/css/adminlte.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('back/fontawesome-iconpicker/dist/css/fontawesome-iconpicker.min.css') }}" rel="stylesheet"
+<link href="{{ public_path_to_storage('back/jquery-ui/jquery-ui.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ public_path_to_storage('back/datetimepicker/build/jquery.datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ public_path_to_storage('module/videos/admin/css/videos.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ public_path_to_storage('module/products/admin/css/products.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ public_path_to_storage('module/menu/admin/css/menu.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ public_path_to_storage('module/module/admin/css/module.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ public_path_to_storage('back/bootstrap/css/bootstrap-reboot.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ public_path_to_storage('back/bootstrap/css/bootstrap-grid.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ public_path_to_storage('back/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ public_path_to_storage('back/fontawesome/css/all.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ public_path_to_storage('back/css/ionicons.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ public_path_to_storage('back/css/datatables/dataTables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ public_path_to_storage('back/css/datatables/jquery.dataTables.css') }}" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="{{ public_path_to_storage('module/module/admin/filer/css/jquery.filer.css') }}">
+<link href="{{ public_path_to_storage('select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ public_path_to_storage('back/js/AdminLTE/dist/css/adminlte.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ public_path_to_storage('back/fontawesome-iconpicker/dist/css/fontawesome-iconpicker.min.css') }}" rel="stylesheet"
     type="text/css" />
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css"
-    rel="stylesheet">
-<link href="{{ base_url() . 'module/settings/admin/css/settings.css' }}" rel="stylesheet" type="text/css" />
-<link href="{{ base_url() . 'back/css/magicsuggest.css' }}" rel="stylesheet" type="text/css" />
-<link href="{{ base_url() . 'module/settings/admin/css/setting.css' }}" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.1.0/css/flag-icon.min.css"
-    integrity="sha256-D+ZpDJjhGxa5ffyQkuTvwii4AntFGBZa4jUhSpdlhjM=" crossorigin="anonymous" />
-<link href="{{ asset('back/css/admin_dev_style.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ public_path_to_storage('back/css/admin_dev_style.css') }}" rel="stylesheet" type="text/css" />
 <script>
     var base_url = '{{ base_url() }}';
     var base_url_main = '{{ base_url() }}';
     var base_url_admin = '{{ config('Constants.base_url_admin') }}';
-    var base_admin_image = '{{ base_url() . 'back/images/' }}';
+    var base_admin_image = '{{ public_path_to_storage('') . 'back/images/' }}';
     var baseUrl = '{{ base_url() }}';
-    var front_uploads = '{{ base_url() . 'uploads' }}';
+    var public_path_to_uploads = '{{ public_path_to_uploads('') }}';
 </script>
 <style>
     .ck-editor__editable[role="textbox"] {

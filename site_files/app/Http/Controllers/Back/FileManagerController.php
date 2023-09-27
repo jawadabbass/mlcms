@@ -14,7 +14,6 @@ class FileManagerController extends Controller
 	 */
 	public function index()
 	{
-		hasPermission('Can Use File Manager');
 		$title = FindInsettingArr('business_name') . ': File Manager';
 		return view('back.file_manager.file_manager_view', compact('title'));
 	}
@@ -25,7 +24,7 @@ class FileManagerController extends Controller
 	 */
 	public function create()
 	{
-		hasPermission('Can Use File Manager');
+		//
 	}
 	/**
 	 * Store a newly created resource in storage.
@@ -35,7 +34,7 @@ class FileManagerController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		hasPermission('Can Use File Manager');
+		//
 	}
 	/**
 	 * Display the specified resource.
@@ -45,7 +44,7 @@ class FileManagerController extends Controller
 	 */
 	public function show($id)
 	{
-		hasPermission('Can Use File Manager');
+		//
 	}
 	/**
 	 * Show the form for editing the specified resource.
@@ -55,7 +54,7 @@ class FileManagerController extends Controller
 	 */
 	public function edit($id)
 	{
-		hasPermission('Can Use File Manager');
+		//
 	}
 	/**
 	 * Update the specified resource in storage.
@@ -66,7 +65,7 @@ class FileManagerController extends Controller
 	 */
 	public function update(Request $request, $id)
 	{
-		hasPermission('Can Use File Manager');
+		//
 	}
 	/**
 	 * Remove the specified resource from storage.
@@ -76,6 +75,6 @@ class FileManagerController extends Controller
 	 */
 	public function destroy($id)
 	{
-		hasPermission('Can Use File Manager');
+		//
 	}
 }

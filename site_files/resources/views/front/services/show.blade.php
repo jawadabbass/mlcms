@@ -10,7 +10,7 @@
                 <div class="row">
                     <div class="blog-items">
                         <div class="services-content col-md-8">
-                            <img src="{{ asset('uploads/module/'.$result->module->type.'/' . $result->featured_img) }}" title="{{ $result->featured_img_title }}" alt="{{ $result->featured_img_alt }}">
+                            <img src="{{ public_path_to_uploads('module/services/' . $result->featured_img) }}" title="{{ $result->featured_img_title }}" alt="{{ $result->featured_img_alt }}">
                             <div class="info">
                                 <h2>{{ $result->heading }}</h2>
                                 <div class="content"> {{ $result->content }} </div>

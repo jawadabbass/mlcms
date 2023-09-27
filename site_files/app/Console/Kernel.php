@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\ErrorLogClearCommand::class,
+        //
     ];
     /**
      * Define the application's command schedule.

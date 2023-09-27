@@ -43,7 +43,7 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="text-end" style="padding-bottom:2px;">
-                                    @if (isAllowed('Can Manage Admin Users'))
+                                    @if (Auth::user()->type == config('Constants.USER_TYPE_SUPER_ADMIN'))
                                         <a type="button" class="sitebtn" href="{{ route('admin.create') }}">Add
                                             New Admin User</a>
                                     @endif
@@ -57,7 +57,7 @@
                                         <th>Created Date</th>
                                         <th>Name</th>
                                         <th>Email</th>
-                                        @if (isAllowed('Can Manage Admin Users'))
+                                        @if (Auth::user()->type == config('Constants.USER_TYPE_SUPER_ADMIN'))
                                             <th>Type</th>
                                             <th>Action</th>
                                         @endif
@@ -70,10 +70,18 @@
                                                 <td>{{ format_date($row->created_at, 'date') }}</td>
                                                 <td>{{ $row->name }}</td>
                                                 <td>{{ $row->email }}</td>
-                                                @if (isAllowed('Can Manage Admin Users'))
+                                                @if (Auth::user()->type == config('Constants.USER_TYPE_SUPER_ADMIN'))
                                                     <td>
-                                                        @if ($row->type == 'admin')
+                                                        @if ($row->type == config('Constants.USER_TYPE_SUPER_ADMIN'))
                                                             Super Admin
+                                                        @endif
+
+                                                        @if ($row->type == config('Constants.USER_TYPE_NORMAL_ADMIN'))
+                                                            Normal Admin
+                                                        @endif
+
+                                                        @if ($row->type == config('Constants.USER_TYPE_REPS_ADMIN'))
+                                                            Reps
                                                         @endif
                                                     </td>
                                                     <td>

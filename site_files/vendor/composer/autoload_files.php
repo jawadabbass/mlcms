@@ -142,6 +142,7 @@ return array(
     'fa0319b5b82f24f47587007826b740cc' => $vendorDir . '/wyrihaximus/constants/src/HTTPStatusCodes/constants_include.php',
     'a135adc8de6a81a445603d9aa0bdbdae' => $vendorDir . '/wyrihaximus/constants/src/Numeric/constants_include.php',
     '4a1f389d6ce373bda9e57857d3b61c84' => $vendorDir . '/barryvdh/laravel-debugbar/src/helpers.php',
+    'cf44199717bf3055b6c87791a4b20b22' => $vendorDir . '/bepsvpt/secure-headers/src/helpers.php',
     'e23faeee409e941dc9b4c80386209c39' => $vendorDir . '/laracasts/flash/src/Laracasts/Flash/functions.php',
     'c72349b1fe8d0deeedd3a52e8aa814d8' => $vendorDir . '/mockery/mockery/library/helpers.php',
     'ce9671a430e4846b44e1c68c7611f9f5' => $vendorDir . '/mockery/mockery/library/Mockery.php',

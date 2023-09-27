@@ -5,7 +5,7 @@
                 @foreach($get_all_banner as $get_all_ban)
                     <li>
                         <img height="320"
-                             src="{{ base_url() }}uploads/module/{{ $get_all_ban->module->type }}/{{ $get_all_ban->featured_img}}"  title="{{ $get_all_ban->featured_img_title }}" alt="{{ $get_all_ban->featured_img_alt }}"/>
+                             src="{{ public_path_to_uploads('') }}module/banner/{{ $get_all_ban->featured_img}}"  title="{{ $get_all_ban->featured_img_title }}" alt="{{ $get_all_ban->featured_img_alt }}"/>
                         <div class="sliderTxt">
                             <div class="container">
                                 @php echo $get_all_ban->content @endphp

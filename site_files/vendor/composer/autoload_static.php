@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit65edb0bec44975a3b2ab5422e8bd5280
+class ComposerStaticInit87cadf3193e8c750aa2b4d3a7e17ae52
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -143,6 +143,7 @@ class ComposerStaticInit65edb0bec44975a3b2ab5422e8bd5280
         'fa0319b5b82f24f47587007826b740cc' => __DIR__ . '/..' . '/wyrihaximus/constants/src/HTTPStatusCodes/constants_include.php',
         'a135adc8de6a81a445603d9aa0bdbdae' => __DIR__ . '/..' . '/wyrihaximus/constants/src/Numeric/constants_include.php',
         '4a1f389d6ce373bda9e57857d3b61c84' => __DIR__ . '/..' . '/barryvdh/laravel-debugbar/src/helpers.php',
+        'cf44199717bf3055b6c87791a4b20b22' => __DIR__ . '/..' . '/bepsvpt/secure-headers/src/helpers.php',
         'e23faeee409e941dc9b4c80386209c39' => __DIR__ . '/..' . '/laracasts/flash/src/Laracasts/Flash/functions.php',
         'c72349b1fe8d0deeedd3a52e8aa814d8' => __DIR__ . '/..' . '/mockery/mockery/library/helpers.php',
         'ce9671a430e4846b44e1c68c7611f9f5' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery.php',
@@ -343,6 +344,7 @@ class ComposerStaticInit65edb0bec44975a3b2ab5422e8bd5280
         'B' => 
         array (
             'Brick\\Math\\' => 11,
+            'Bepsvpt\\SecureHeaders\\' => 22,
             'Barryvdh\\DomPDF\\' => 16,
             'Barryvdh\\Debugbar\\' => 18,
         ),
@@ -359,8 +361,8 @@ class ComposerStaticInit65edb0bec44975a3b2ab5422e8bd5280
         ),
         'voku\\' => 
         array (
-            0 => __DIR__ . '/..' . '/voku/html-min/src/voku',
-            1 => __DIR__ . '/..' . '/voku/portable-ascii/src/voku',
+            0 => __DIR__ . '/..' . '/voku/portable-ascii/src/voku',
+            1 => __DIR__ . '/..' . '/voku/html-min/src/voku',
         ),
         'tubalmartin\\CssMin\\' => 
         array (
@@ -388,8 +390,8 @@ class ComposerStaticInit65edb0bec44975a3b2ab5422e8bd5280
         ),
         'WyriHaximus\\Compress\\' => 
         array (
-            0 => __DIR__ . '/..' . '/wyrihaximus/compress/src',
-            1 => __DIR__ . '/..' . '/wyrihaximus/compress-contracts/src',
+            0 => __DIR__ . '/..' . '/wyrihaximus/compress-contracts/src',
+            1 => __DIR__ . '/..' . '/wyrihaximus/compress/src',
         ),
         'Whoops\\' => 
         array (
@@ -629,8 +631,8 @@ class ComposerStaticInit65edb0bec44975a3b2ab5422e8bd5280
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-factory/src',
-            1 => __DIR__ . '/..' . '/psr/http-message/src',
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+            1 => __DIR__ . '/..' . '/psr/http-factory/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -888,6 +890,10 @@ class ComposerStaticInit65edb0bec44975a3b2ab5422e8bd5280
         array (
             0 => __DIR__ . '/..' . '/brick/math/src',
         ),
+        'Bepsvpt\\SecureHeaders\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/bepsvpt/secure-headers/src',
+        ),
         'Barryvdh\\DomPDF\\' => 
         array (
             0 => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src',
@@ -937,7 +943,6 @@ class ComposerStaticInit65edb0bec44975a3b2ab5422e8bd5280
     public static $classMap = array (
         'App\\Classes\\Check' => __DIR__ . '/../..' . '/app/Classes/Check.php',
         'App\\Classes\\paypal_lib' => __DIR__ . '/../..' . '/app/Classes/paypal_lib.php',
-        'App\\Console\\Commands\\ErrorLogClearCommand' => __DIR__ . '/../..' . '/app/Console/Commands/ErrorLogClearCommand.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Exports\\ContactLeadsExport' => __DIR__ . '/../..' . '/app/Exports/ContactLeadsExport.php',
@@ -989,10 +994,7 @@ class ComposerStaticInit65edb0bec44975a3b2ab5422e8bd5280
         'App\\Http\\Controllers\\Back\\PackageContentController' => __DIR__ . '/../..' . '/app/Http/Controllers/Back/PackageContentController.php',
         'App\\Http\\Controllers\\Back\\PackageQuestionController' => __DIR__ . '/../..' . '/app/Http/Controllers/Back/PackageQuestionController.php',
         'App\\Http\\Controllers\\Back\\PaymentOptionController' => __DIR__ . '/../..' . '/app/Http/Controllers/Back/PaymentOptionController.php',
-        'App\\Http\\Controllers\\Back\\PermissionController' => __DIR__ . '/../..' . '/app/Http/Controllers/Back/PermissionController.php',
-        'App\\Http\\Controllers\\Back\\PermissionGroupController' => __DIR__ . '/../..' . '/app/Http/Controllers/Back/PermissionGroupController.php',
         'App\\Http\\Controllers\\Back\\ProductController' => __DIR__ . '/../..' . '/app/Http/Controllers/Back/ProductController.php',
-        'App\\Http\\Controllers\\Back\\RoleController' => __DIR__ . '/../..' . '/app/Http/Controllers/Back/RoleController.php',
         'App\\Http\\Controllers\\Back\\SearchController' => __DIR__ . '/../..' . '/app/Http/Controllers/Back/SearchController.php',
         'App\\Http\\Controllers\\Back\\SendInvoice' => __DIR__ . '/../..' . '/app/Http/Controllers/Back/SendInvoice.php',
         'App\\Http\\Controllers\\Back\\SettingController' => __DIR__ . '/../..' . '/app/Http/Controllers/Back/SettingController.php',
@@ -1020,17 +1022,20 @@ class ComposerStaticInit65edb0bec44975a3b2ab5422e8bd5280
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\AdminAuthenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/AdminAuthenticate.php',
+        'App\\Http\\Middleware\\AdminEnsureEmailIsVerified' => __DIR__ . '/../..' . '/app/Http/Middleware/AdminEnsureEmailIsVerified.php',
+        'App\\Http\\Middleware\\AdminMiddleware' => __DIR__ . '/../..' . '/app/Http/Middleware/AdminMiddleware.php',
+        'App\\Http\\Middleware\\AdminRequirePassword' => __DIR__ . '/../..' . '/app/Http/Middleware/AdminRequirePassword.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
         'App\\Http\\Middleware\\CheckForMaintenanceMode' => __DIR__ . '/../..' . '/app/Http/Middleware/CheckForMaintenanceMode.php',
         'App\\Http\\Middleware\\ClearCache' => __DIR__ . '/../..' . '/app/Http/Middleware/ClearCache.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
-        'App\\Http\\Middleware\\EnsureEmailIsVerified' => __DIR__ . '/../..' . '/app/Http/Middleware/EnsureEmailIsVerified.php',
         'App\\Http\\Middleware\\IPMiddleware' => __DIR__ . '/../..' . '/app/Http/Middleware/IPMiddleware.php',
+        'App\\Http\\Middleware\\IsAdmin' => __DIR__ . '/../..' . '/app/Http/Middleware/IsAdmin.php',
+        'App\\Http\\Middleware\\IsMember' => __DIR__ . '/../..' . '/app/Http/Middleware/IsMember.php',
         'App\\Http\\Middleware\\PreventRequestsDuringMaintenance' => __DIR__ . '/../..' . '/app/Http/Middleware/PreventRequestsDuringMaintenance.php',
         'App\\Http\\Middleware\\RedirectIfAdminAuthenticated' => __DIR__ . '/../..' . '/app/Http/Middleware/RedirectIfAdminAuthenticated.php',
         'App\\Http\\Middleware\\RedirectIfAuthenticated' => __DIR__ . '/../..' . '/app/Http/Middleware/RedirectIfAuthenticated.php',
-        'App\\Http\\Middleware\\RequirePassword' => __DIR__ . '/../..' . '/app/Http/Middleware/RequirePassword.php',
-        'App\\Http\\Middleware\\SecurityHeaders' => __DIR__ . '/../..' . '/app/Http/Middleware/SecurityHeaders.php',
+        'App\\Http\\Middleware\\SuperAdminMiddleware' => __DIR__ . '/../..' . '/app/Http/Middleware/SuperAdminMiddleware.php',
         'App\\Http\\Middleware\\TrimStrings' => __DIR__ . '/../..' . '/app/Http/Middleware/TrimStrings.php',
         'App\\Http\\Middleware\\TrustHosts' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustHosts.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
@@ -1042,11 +1047,7 @@ class ComposerStaticInit65edb0bec44975a3b2ab5422e8bd5280
         'App\\Http\\Requests\\Back\\CountyBackFormRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Back/CountyBackFormRequest.php',
         'App\\Http\\Requests\\Back\\ModuleCodeGeneratorBackFormRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Back/ModuleCodeGeneratorBackFormRequest.php',
         'App\\Http\\Requests\\Back\\NewsBackFormRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Back/NewsBackFormRequest.php',
-        'App\\Http\\Requests\\Back\\PermissionFormRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Back/PermissionFormRequest.php',
-        'App\\Http\\Requests\\Back\\PermissionGroupFormRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Back/PermissionGroupFormRequest.php',
-        'App\\Http\\Requests\\Back\\RoleFormRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Back/RoleFormRequest.php',
         'App\\Http\\Requests\\Back\\StateBackFormRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Back/StateBackFormRequest.php',
-        'App\\Http\\Requests\\Back\\UserFormRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Back/UserFormRequest.php',
         'App\\Http\\Requests\\Request' => __DIR__ . '/../..' . '/app/Http/Requests/Request.php',
         'App\\Mail\\AssessmentAnswer' => __DIR__ . '/../..' . '/app/Mail/AssessmentAnswer.php',
         'App\\Mail\\AssessmentEmail' => __DIR__ . '/../..' . '/app/Mail/AssessmentEmail.php',
@@ -1109,12 +1110,7 @@ class ComposerStaticInit65edb0bec44975a3b2ab5422e8bd5280
         'App\\Models\\Back\\PackageQuestion' => __DIR__ . '/../..' . '/app/Models/Back/PackageQuestion.php',
         'App\\Models\\Back\\Page' => __DIR__ . '/../..' . '/app/Models/Back/Page.php',
         'App\\Models\\Back\\PaymentOption' => __DIR__ . '/../..' . '/app/Models/Back/PaymentOption.php',
-        'App\\Models\\Back\\Permission' => __DIR__ . '/../..' . '/app/Models/Back/Permission.php',
-        'App\\Models\\Back\\PermissionGroup' => __DIR__ . '/../..' . '/app/Models/Back/PermissionGroup.php',
-        'App\\Models\\Back\\PermissionRole' => __DIR__ . '/../..' . '/app/Models/Back/PermissionRole.php',
         'App\\Models\\Back\\Product' => __DIR__ . '/../..' . '/app/Models/Back/Product.php',
-        'App\\Models\\Back\\Role' => __DIR__ . '/../..' . '/app/Models/Back/Role.php',
-        'App\\Models\\Back\\RoleUser' => __DIR__ . '/../..' . '/app/Models/Back/RoleUser.php',
         'App\\Models\\Back\\Setting' => __DIR__ . '/../..' . '/app/Models/Back/Setting.php',
         'App\\Models\\Back\\SocialMedia' => __DIR__ . '/../..' . '/app/Models/Back/SocialMedia.php',
         'App\\Models\\Back\\State' => __DIR__ . '/../..' . '/app/Models/Back/State.php',
@@ -1137,8 +1133,6 @@ class ComposerStaticInit65edb0bec44975a3b2ab5422e8bd5280
         'App\\Providers\\HelpersProvider' => __DIR__ . '/../..' . '/app/Providers/HelpersProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
         'App\\Rules\\CheckIfFavicon' => __DIR__ . '/../..' . '/app/Rules/CheckIfFavicon.php',
-        'App\\Scopes\\ActiveScope' => __DIR__ . '/../..' . '/app/Scopes/ActiveScope.php',
-        'App\\Scopes\\SortedScope' => __DIR__ . '/../..' . '/app/Scopes/SortedScope.php',
         'App\\Traits\\Active' => __DIR__ . '/../..' . '/app/Traits/Active.php',
         'App\\Traits\\AuthTrait' => __DIR__ . '/../..' . '/app/Traits/AuthTrait.php',
         'App\\Traits\\CityTrait' => __DIR__ . '/../..' . '/app/Traits/CityTrait.php',
@@ -1198,6 +1192,15 @@ class ComposerStaticInit65edb0bec44975a3b2ab5422e8bd5280
         'Barryvdh\\DomPDF\\Facade\\Pdf' => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src/Facade/Pdf.php',
         'Barryvdh\\DomPDF\\PDF' => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src/PDF.php',
         'Barryvdh\\DomPDF\\ServiceProvider' => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src/ServiceProvider.php',
+        'Bepsvpt\\SecureHeaders\\Builders\\Builder' => __DIR__ . '/..' . '/bepsvpt/secure-headers/src/Builders/Builder.php',
+        'Bepsvpt\\SecureHeaders\\Builders\\ClearSiteDataBuilder' => __DIR__ . '/..' . '/bepsvpt/secure-headers/src/Builders/ClearSiteDataBuilder.php',
+        'Bepsvpt\\SecureHeaders\\Builders\\ContentSecurityPolicyBuilder' => __DIR__ . '/..' . '/bepsvpt/secure-headers/src/Builders/ContentSecurityPolicyBuilder.php',
+        'Bepsvpt\\SecureHeaders\\Builders\\ExpectCertificateTransparencyBuilder' => __DIR__ . '/..' . '/bepsvpt/secure-headers/src/Builders/ExpectCertificateTransparencyBuilder.php',
+        'Bepsvpt\\SecureHeaders\\Builders\\PermissionsPolicyBuilder' => __DIR__ . '/..' . '/bepsvpt/secure-headers/src/Builders/PermissionsPolicyBuilder.php',
+        'Bepsvpt\\SecureHeaders\\Builders\\StrictTransportSecurityBuilder' => __DIR__ . '/..' . '/bepsvpt/secure-headers/src/Builders/StrictTransportSecurityBuilder.php',
+        'Bepsvpt\\SecureHeaders\\SecureHeaders' => __DIR__ . '/..' . '/bepsvpt/secure-headers/src/SecureHeaders.php',
+        'Bepsvpt\\SecureHeaders\\SecureHeadersMiddleware' => __DIR__ . '/..' . '/bepsvpt/secure-headers/src/SecureHeadersMiddleware.php',
+        'Bepsvpt\\SecureHeaders\\SecureHeadersServiceProvider' => __DIR__ . '/..' . '/bepsvpt/secure-headers/src/SecureHeadersServiceProvider.php',
         'Brick\\Math\\BigDecimal' => __DIR__ . '/..' . '/brick/math/src/BigDecimal.php',
         'Brick\\Math\\BigInteger' => __DIR__ . '/..' . '/brick/math/src/BigInteger.php',
         'Brick\\Math\\BigNumber' => __DIR__ . '/..' . '/brick/math/src/BigNumber.php',
@@ -9020,10 +9023,10 @@ class ComposerStaticInit65edb0bec44975a3b2ab5422e8bd5280
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit65edb0bec44975a3b2ab5422e8bd5280::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit65edb0bec44975a3b2ab5422e8bd5280::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit65edb0bec44975a3b2ab5422e8bd5280::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit65edb0bec44975a3b2ab5422e8bd5280::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit87cadf3193e8c750aa2b4d3a7e17ae52::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit87cadf3193e8c750aa2b4d3a7e17ae52::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit87cadf3193e8c750aa2b4d3a7e17ae52::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit87cadf3193e8c750aa2b4d3a7e17ae52::$classMap;
 
         }, null, ClassLoader::class);
     }

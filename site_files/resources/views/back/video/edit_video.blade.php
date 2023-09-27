@@ -55,7 +55,7 @@
                             value="" placeholder=""></div>
                     <div class="col-md-2">
                         @if ($rec->video_img != '')
-                            <img class="img-circle" src="{{ base_url() }}uploads/videos/thumb/{{ $rec->video_img }}"
+                            <img class="img-circle" src="{{ public_path_to_uploads('') }}videos/thumb/{{ $rec->video_img }}"
                                 alt="">
                         @endif
                     </div>

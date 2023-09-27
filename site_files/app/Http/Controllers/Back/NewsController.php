@@ -23,7 +23,6 @@ class NewsController extends Controller
      */
     public function index()
     {
-        hasPermission('Can Manage News');
         $title = FindInsettingArr('business_name') . ': News Management';
         $msg = '';
 
@@ -32,8 +31,6 @@ class NewsController extends Controller
 
     public function fetchNewsAjax(Request $request)
     {
-        hasPermission('Can Manage News');
-
         $news = News::select('*');
 
         return Datatables::of($news)
@@ -69,14 +66,9 @@ class NewsController extends Controller
                 return $str;
             })
             ->addColumn('action', function ($news) {
-                $edit = $delete = '';
-                if (isAllowed('Can Edit News')){
-                    $edit = '<a href="' . route('news.edit', ['newsObj' => $news->id]) . '" class="btn btn-warning m-2"><i class="fas fa-edit" aria-hidden="true"></i></a>';
-                }
-                if (isAllowed('Can Delete News')){
-                    $delete = '<a href="javascript:void(0);" onclick="deleteNews(' . $news->id . ');"  class="btn btn-danger m-2"><i class="fas fa-trash" aria-hidden="true"></i></a>';
-                }
-                return $edit.$delete;
+                return '
+                		<a href="' . route('news.edit', ['newsObj' => $news->id]) . '" class="btn btn-warning m-2"><i class="fas fa-edit" aria-hidden="true"></i></a>
+						<a href="javascript:void(0);" onclick="deleteNews(' . $news->id . ');"  class="btn btn-danger m-2"><i class="fas fa-trash" aria-hidden="true"></i></a>';
             })
             ->rawColumns(['news_date_time', 'image', 'status', 'action'])
             ->orderColumns(['news_date_time', 'title', 'description', 'status'], ':column $1')
@@ -95,7 +87,6 @@ class NewsController extends Controller
      */
     public function create()
     {
-        hasPermission('Can Add News');
         $title = FindInsettingArr('business_name') . ': News Management';
         $msg = '';
         $newsObj = new News();
@@ -115,7 +106,6 @@ class NewsController extends Controller
      */
     public function store(NewsBackFormRequest $request)
     {
-        hasPermission('Can Add News');
         $newsObj = new News();
         $newsObj = $this->setNewsValues($request, $newsObj);
         $newsObj->save();
@@ -134,7 +124,6 @@ class NewsController extends Controller
      */
     public function show($id)
     {
-        hasPermission('Can Manage News');
     }
 
     /**
@@ -146,7 +135,6 @@ class NewsController extends Controller
      */
     public function edit(News $newsObj)
     {
-        hasPermission('Can Edit News');
         $title = FindInsettingArr('business_name') . ': News Management';
         $msg = '';
 
@@ -166,7 +154,6 @@ class NewsController extends Controller
      */
     public function update(NewsBackFormRequest $request, News $newsObj)
     {
-        hasPermission('Can Edit News');
         $newsObj = $this->setNewsValues($request, $newsObj);
         $newsObj->save();
 
@@ -177,7 +164,6 @@ class NewsController extends Controller
 
     public function sortNews()
     {
-        hasPermission('Can Sort News');
         $title = FindInsettingArr('business_name') . ': News Management';
         $msg = '';
 
@@ -187,7 +173,6 @@ class NewsController extends Controller
 
     public function newsSortData(Request $request)
     {
-        hasPermission('Can Sort News');
         $news = News::select('news.id', 'news.title', 'news.sort_order')
             ->orderBy('sort_order', 'ASC')->get();
         $str = '<ul id="sortable">';
@@ -201,7 +186,6 @@ class NewsController extends Controller
 
     public function newsSortUpdate(Request $request)
     {
-        hasPermission('Can Sort News');
         $newsOrder = $request->input('newsOrder');
         $newsOrderArray = explode(',', $newsOrder);
         $count = 1;
@@ -215,7 +199,6 @@ class NewsController extends Controller
 
     public function updateNewsStatus(Request $request)
     {
-        hasPermission('Can Edit News');
         $newsObj = News::find($request->id);
         $newsObj = $this->setNewsStatus($request, $newsObj);
         $newsObj->save();
@@ -225,7 +208,6 @@ class NewsController extends Controller
 
     public function destroy(News $newsObj)
     {
-        hasPermission('Can Delete News');
         ImageUploader::deleteImage('news', $newsObj->image, true);
         $newsObj->delete();
         echo 'ok';

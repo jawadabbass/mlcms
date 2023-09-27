@@ -1,6 +1,6 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('beforeHeadClose')
-    @include('back.common_views.switch_css')
+@include('back.common_views.switch_css')
 @endsection
 @section('content')
     <div class="content-wrapper pl-3 pr-2">
@@ -47,9 +47,7 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="text-end" style="padding-bottom:2px;">
-                                    @if (isAllowed('Can Add Videos'))
-                                        <a href="{{ admin_url() }}videos/add" class="btn btn-info">Add New Videos</a>
-                                    @endif
+                                    <a href="{{ admin_url() }}videos/add" class="btn btn-info">Add New Videos</a>
                                 </div>
                             </div>
                         </div>
@@ -68,7 +66,7 @@
                                         @foreach ($result as $row)
                                             <tr id="row_{{ $row->ID }}">
                                                 <td>{{ format_date($row->dated, 'date') }}</td>
-                                                <td>{!! link2iframe($row->content, $row->video_type, '100%', 250, 'uploads/videos/video/') !!}</td>
+                                                <td>{!! link2iframe($row->content, $row->video_type, '100%', 250, 'videos/video/') !!}</td>
                                                 <td>
                                                     <label class="switch">
                                                         <input type="checkbox" name="{{ 'sts_' . $row->ID }}"
@@ -82,14 +80,10 @@
                                                     </label>
                                                 </td>
                                                 <td>
-                                                    @if (isAllowed('Can Edit Videos'))
-                                                        <a href="{{ admin_url() }}videos/edit/{{ $row->ID }}"
-                                                            class="btn btn-success btn-sm mr-2">Edit</a>
-                                                    @endif
-                                                    @if (isAllowed('Can Delete Videos'))
-                                                        <a href="javascript:delete_videos({{ $row->ID }});"
-                                                            class="btn btn-danger btn-sm">Delete</a>
-                                                    @endif
+                                                    <a href="{{ admin_url() }}videos/edit/{{ $row->ID }}"
+                                                        class="btn btn-success btn-sm">Edit</a>
+                                                    <a href="javascript:delete_videos({{ $row->ID }});"
+                                                        class="btn btn-danger btn-sm">Delete</a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -127,8 +121,8 @@
                     <div class="modal-header">
                         <h4 class="modal-title">Add New Video</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-
-                        </button>
+          
+        </button>
                     </div>
                     <div class="modal-body">
                         <!-- /.box-header -->
@@ -194,8 +188,8 @@
                     <div class="modal-header">
                         <h4 class="modal-title">Edit Video</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-
-                        </button>
+          
+        </button>
                     </div>
                     <div class="modal-body">
                         <div class="box-body">
@@ -266,5 +260,5 @@
             $("#add_type_" + radioValue).show();
         }
     </script>
-    <script type="text/javascript" src="{{ base_url() . 'module/videos/admin/js/videos.js' }}"></script>
+    <script type="text/javascript" src="{{ public_path_to_storage('') . 'module/videos/admin/js/videos.js' }}"></script>
 @endsection

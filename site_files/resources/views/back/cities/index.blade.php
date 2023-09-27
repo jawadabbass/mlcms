@@ -1,4 +1,4 @@
-@extends('back.layouts.app', ['title' => $title])
+@extends('back.layouts.app',['title'=>$title])
 
 @section('content')
     <div class="content-wrapper pl-3 pr-2">
@@ -48,9 +48,7 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="text-end" style="padding-bottom:2px;">
-                                    @if (isAllowed('Can Add City'))
-                                        <a href="{{ route('cities.create') }}" class="sitebtn">Add City</a>
-                                    @endif
+                                    <a href="{{ route('cities.create') }}" class="sitebtn">Add City</a>
                                 </div>
                             </div>
                         </div>
@@ -68,11 +66,9 @@
                                     </div>
 
                                     <div class="col-lg-6 text-end">
-                                        @if (isAllowed('Can Sort Cities'))
-                                            <a href="{{ route('cities.sort') }}" class="btn btn-warning">
-                                                <i class="la la-bars"></i>Sort Cities
-                                            </a>
-                                        @endif
+                                        <a href="{{ route('cities.sort') }}" class="btn btn-warning">
+                                            <i class="la la-bars"></i>Sort Cities
+                                        </a>
                                     </div>
 
                                 </div>

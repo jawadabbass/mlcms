@@ -13,7 +13,6 @@ class BlogCategoriesController extends Controller
      */
     public function index()
     {
-        hasPermission('Can Manage Blog Categories');
         $title = FindInsettingArr('business_name') . ': Blog Categories Management';
         $msg = '';
         $result = BlogCategory::all();
@@ -36,7 +35,6 @@ class BlogCategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        hasPermission('Can Add Blog Category');
         $request->validate([
             'title' =>  'required',
             'cate_slug' => 'required',
@@ -60,7 +58,6 @@ class BlogCategoriesController extends Controller
      */
     public function show($id, Request $request)
     {
-        hasPermission('Can Edit Blog Category');
         if ($id == '') {
             echo 'error';
         }
@@ -86,7 +83,6 @@ class BlogCategoriesController extends Controller
      */
     public function edit($id)
     {
-        hasPermission('Can Add Blog Category');
         $blogCategory = BlogCategory::find($id);
         return json_encode($blogCategory);
     }
@@ -99,7 +95,6 @@ class BlogCategoriesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        hasPermission('Can Add Blog Category');
         $request->validate([
             'title' =>  'required',
             'cate_slug' => 'required',
@@ -123,7 +118,6 @@ class BlogCategoriesController extends Controller
      */
     public function destroy($id)
     {
-        hasPermission('Can Delete Blog Category');
         BlogCategory::destroy($id);
         return json_encode(array("status" => true));
     }

@@ -1,7 +1,7 @@
 @extends('back.layouts.app',['title' => $title])
 @section('beforeHeadClose')
-    <script src="{{ base_url() . 'module/contact_form_settings/admin/js/my_js.js' }}" type="text/javascript"></script>
-    <link rel="stylesheet" type="text/css" href="{{base_url() . 'module/contact_form_settings/admin/css/css.css' }}">
+    <script src="{{ public_path_to_storage('') . 'module/contact_form_settings/admin/js/my_js.js' }}" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="{{public_path_to_storage('') . 'module/contact_form_settings/admin/css/css.css' }}">
 @endsection
 @section('content')
     <div class="content-wrapper pl-3 pr-2">

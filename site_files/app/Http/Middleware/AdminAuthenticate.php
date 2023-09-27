@@ -13,7 +13,7 @@ class AdminAuthenticate extends Middleware
         }
 
         foreach ($guards as $guard) {
-            if ($this->auth->guard($guard)->check() && $this->auth->guard($guard)->user()->type == 'admin') {
+            if ($this->auth->guard($guard)->check() && $this->auth->guard($guard)->user()->type != 'user') {
                 return $this->auth->shouldUse($guard);
             }
         }

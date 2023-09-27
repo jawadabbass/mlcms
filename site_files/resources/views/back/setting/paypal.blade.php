@@ -1,4 +1,9 @@
 @extends('back.layouts.app', ['title' => $title])
+@section('beforeHeadClose')
+    <link href="{{ public_path_to_storage('') . 'module/settings/admin/css/settings.css' }}" rel="stylesheet" type="text/css" />
+    <link href="{{ public_path_to_storage('') . 'back/css/magicsuggest.css' }}" rel="stylesheet" type="text/css" />
+    <link href="{{ public_path_to_storage('') . 'module/settings/admin/css/setting.css' }}" rel="stylesheet" type="text/css" />
+@endsection
 @section('content')
     <div class="content-wrapper pl-3 pr-2">
         <section class="content-header">
@@ -49,4 +54,10 @@
         @endif
         @include('back.setting.paypal_inner')
     </div>
+@endsection
+@section('beforeBodyClose')
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css"
+        rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <script type="text/javascript" src="{{ public_path_to_storage('') . 'module/settings/admin/js/settings.js' }}"></script>
 @endsection

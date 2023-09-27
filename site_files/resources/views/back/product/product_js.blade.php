@@ -58,7 +58,7 @@
                 $('[name="canonical_url"]').val(data.canonical_url);
                 if (data.product_img != '') {
                     $('#product_img_div').show();
-                    $('#product_img_div').html('<img style="width:100px" src="' + front_uploads +
+                    $('#product_img_div').html('<img style="width:100px" src="' + public_path_to_uploads +
                         '/products/' + data.product_img +
                         '"><i onclick="remove_products_image(0);" class="deleteIcon"></i>');
                 } else {

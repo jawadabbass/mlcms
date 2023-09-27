@@ -305,17 +305,17 @@
     @include('back.module.module_data_images.module_data_images_popups')
 @endsection
 @section('beforeBodyClose')
-    <script type="text/javascript" src="{{ base_url() . 'module/module/admin/js/module.js' }}"></script>
+    <script type="text/javascript" src="{{ public_path_to_storage('') . 'module/module/admin/js/module.js' }}"></script>
 
     <!-- Filer -->
-    <link rel="stylesheet" href="{{ base_url() . 'module/module/admin/crop-avatar/cropper.css' }}">
+    <link rel="stylesheet" href="{{ public_path_to_storage('') . 'module/module/admin/crop-avatar/cropper.css' }}">
     <style>
         img {
             max-width: 100%;
         }
     </style>
-    <script src="{{ base_url() . 'module/module/admin/crop-avatar/cropper.js' }}"></script>
-    <script type="text/javascript" src="{{ base_url() . 'back/js/std_functions.js' }}"></script>
+    <script src="{{ public_path_to_storage('') . 'module/module/admin/crop-avatar/cropper.js' }}"></script>
+    <script type="text/javascript" src="{{ public_path_to_storage('') . 'back/js/std_functions.js' }}"></script>
     <!------------ Module JS Functions ---------------------->
     @include('back.module.module_data_images.module_data_images_js')
     <script type="text/javascript">
@@ -402,8 +402,7 @@
                 success: function(data) {
                     console.log(data.cropped_image);
                     $('#featured_img').val(data.cropped_image);
-                    $('.jFiler-item-thumb-image').find('img').attr('src', base_url +
-                        'uploads/module/{{ $module->type }}/thumb/' + data.cropped_image);
+                    $('.jFiler-item-thumb-image').find('img').attr('src', public_path_to_uploads + 'module/{{ $module->type }}/thumb/' + data.cropped_image);
                     $('#cropper_form').modal('hide');
                 },
                 error: function(jqXHR, textStatus, errorThrown) {}
@@ -537,7 +536,7 @@
         var show_cropper = {{ $module->crop_image == 'Yes' ? 1 : 0 }};
         var module_id = "{{ $module->type }}";
     </script>
-    <script type="text/javascript" src="{{ base_url() . 'back/js/fileUploader.js' }}"></script>
+    <script type="text/javascript" src="{{ public_path_to_storage('') . 'back/js/fileUploader.js' }}"></script>
     <!-- Bootstrap modal -->
     <div id="loading" class="loadinggif" style="display: none;"></div>
     <!-- End Bootstrap modal -->

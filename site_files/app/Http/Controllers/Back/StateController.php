@@ -23,7 +23,6 @@ class StateController extends Controller
      */
     public function index()
     {
-        hasPermission('Can Manage States');
         $title = FindInsettingArr('business_name') . ': States Management';
         $msg = '';
         return view('back.states.index', compact('title', 'msg'));
@@ -31,7 +30,6 @@ class StateController extends Controller
 
     public function fetchStatesAjax(Request $request)
     {
-        hasPermission('Can Manage States');
         $states = State::select('*');
         return Datatables::of($states)
             ->filter(function ($query) use ($request) {
@@ -52,27 +50,17 @@ class StateController extends Controller
                 return $str;
             })
             ->addColumn('action', function ($states) {
-                $editStr = '';
-                $deleteStr = '';
-
-                if (isAllowed('Can Edit State')) {
-                    $editStr = '<li>
-                    <a href="' . route('states.edit', ['stateObj' => $states->id]) . '" class="text-info"><i class="fas fa-edit" aria-hidden="true"></i>Edit</a>
-                </li>';
-                }
-                if (isAllowed('Can Delete State')) {
-                    $deleteStr = '<li>
-                    <a href="javascript:void(0);" onclick="deleteState(' . $states->id . ');" class="text-danger"><i class="fas fa-trash" aria-hidden="true"></i>Delete</a>
-                </li>';
-                }
-
                 return '
                 <div class="btn-group">
 					<button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action
 					</button>
 					<ul class="dropdown-menu">
-						' . $editStr . '
-						' . $deleteStr . '
+						<li>
+							<a href="' . route('states.edit', ['stateObj' => $states->id]) . '" class="text-info"><i class="fas fa-edit" aria-hidden="true"></i>Edit</a>
+						</li>
+						<li>
+							<a href="javascript:void(0);" onclick="deleteState(' . $states->id . ');" class="text-danger"><i class="fas fa-trash" aria-hidden="true"></i>Delete</a>
+						</li>
 					</ul>
 				</div>';
             })
@@ -93,7 +81,6 @@ class StateController extends Controller
      */
     public function create()
     {
-        hasPermission('Can Add State');
         $title = FindInsettingArr('business_name') . ': States Management';
         $msg = '';
         $stateObj = new State();
@@ -111,7 +98,6 @@ class StateController extends Controller
      */
     public function store(StateBackFormRequest $request)
     {
-        hasPermission('Can Add State');
         $stateObj = new State();
         $stateObj = $this->setStateValues($request, $stateObj);
         $stateObj->save();
@@ -139,7 +125,6 @@ class StateController extends Controller
      */
     public function edit(State $stateObj)
     {
-        hasPermission('Can Edit State');
         $title = FindInsettingArr('business_name') . ': States Management';
         $msg = '';
         return view('back.states.edit')
@@ -157,7 +142,6 @@ class StateController extends Controller
      */
     public function update(StateBackFormRequest $request, State $stateObj)
     {
-        hasPermission('Can Edit State');
         $stateObj = $this->setStateValues($request, $stateObj);
         $stateObj->save();
 
@@ -175,7 +159,6 @@ class StateController extends Controller
      */
     public function destroy(State $stateObj)
     {
-        hasPermission('Can Delete State');
         County::where('state_id', $stateObj->id)->delete();
         City::where('state_id', $stateObj->id)->delete();
         $stateObj->delete();
@@ -184,7 +167,6 @@ class StateController extends Controller
 
     public function updateStateStatus(Request $request)
     {
-        hasPermission('Can Edit State');
         $stateObj = State::find($request->id);
         $stateObj = $this->setStateStatus($request, $stateObj);
         $stateObj->update();
@@ -193,7 +175,6 @@ class StateController extends Controller
 
     public function sortStates()
     {
-        hasPermission('Can Sort States');
         $title = FindInsettingArr('business_name') . ': States Management';
         $msg = '';
         return view('back.states.sort')->with('title', $title)
@@ -202,7 +183,6 @@ class StateController extends Controller
 
     public function statesSortData(Request $request)
     {
-        hasPermission('Can Sort States');
         $states = State::select('states.id', 'states.state_name', 'states.sort_order')
             ->where('status', 'like', 'active')
             ->orderBy('sort_order', 'ASC')->get();
@@ -217,7 +197,6 @@ class StateController extends Controller
 
     public function statesSortUpdate(Request $request)
     {
-        hasPermission('Can Sort States');
         $statesOrder = $request->input('statesOrder');
         $statesOrderArray = explode(',', $statesOrder);
         $count = 1;

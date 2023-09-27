@@ -65,7 +65,7 @@
                                             <tr id="row_{{ $row->ID }}">
                                                 <td>
                                                     @if ($row->featured_image)
-                                                        <img src="{{ asset('uploads/widgets/' . $row->featured_image) }}"
+                                                        <img src="{{ public_path_to_uploads('widgets/' . $row->featured_image) }}"
                                                             style="width:150px;height:80px;">
                                                     @endif
                                                 </td>

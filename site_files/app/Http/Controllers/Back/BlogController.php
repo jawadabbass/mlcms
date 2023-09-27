@@ -17,7 +17,6 @@ class BlogController extends Controller
      */
     public function index()
     {
-        hasPermission('Can Manage Blog');
         $title = FindInsettingArr('business_name') . ': Blog Posts Management';
         $msg = '';
         $all_categories = BlogCategory::all();
@@ -31,7 +30,6 @@ class BlogController extends Controller
      */
     public function create(Request $request)
     {
-        hasPermission('Can Manage Comments');
         $id = $request->id;
         if ($id == '') {
             echo 'error';
@@ -60,7 +58,6 @@ class BlogController extends Controller
      */
     public function comments(Request $request)
     {
-        hasPermission('Can Manage Comments');
         $blogComments = BlogComment::where('post_id', $request->id)->get();
         return view('back.blog.comments', compact('blogComments'));
     }
@@ -71,7 +68,6 @@ class BlogController extends Controller
      */
     public function deleteComment(Request $request)
     {
-        hasPermission('Can Manage Comments');
         if (isset($request->id)) {
             BlogComment::destroy($request->id);
         }
@@ -85,7 +81,6 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
-        hasPermission('Can Add Blog');
         $request->validate([
             'heading' => 'required',
             'post_slug' => 'required',
@@ -126,7 +121,6 @@ class BlogController extends Controller
      */
     public function show($id)
     {
-        hasPermission('Can Manage Blog');
         $blogPost = BlogPost::find($id);
         $blogPost->dated = date('Y-m-d', strtotime($blogPost->dated));
         return json_encode($blogPost);
@@ -140,7 +134,6 @@ class BlogController extends Controller
      */
     public function edit($id, Request $request)
     {
-        hasPermission('Can Edit Blog');
         if ($id == '') {
             echo 'error';
             return;
@@ -170,7 +163,6 @@ class BlogController extends Controller
      */
     public function update(Request $request, $id)
     {
-        hasPermission('Can Edit Blog');
         $request->validate([
             'cms_id' => 'required',
             'heading' => 'required',
@@ -205,7 +197,6 @@ class BlogController extends Controller
     }
     public function removeFeaturedImage(Request $request)
     {
-        hasPermission('Can Edit Blog');
         $validator = Validator::make($request->all(), [
             'id' => 'required',
             'folder' => 'required',
@@ -213,7 +204,7 @@ class BlogController extends Controller
         if ($validator->passes()) {
             $blog = BlogPost::find($request->id);
             if (!empty($blog->featured_img)) {
-                unlink('uploads/' . $request->folder . '/' . $blog->featured_img);
+                unlink(storage_path_to_uploads($request->folder . '/' . $blog->featured_img));
             }
             $blog->featured_img = '';
             $blog->save();
@@ -231,7 +222,6 @@ class BlogController extends Controller
      */
     public function destroy($id)
     {
-        hasPermission('Can Delete Blog');
         BlogComment::where('post_id', $id)->delete();
         BlogPost::destroy($id);
         echo 'done';

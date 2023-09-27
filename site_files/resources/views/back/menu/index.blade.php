@@ -1,13 +1,13 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('beforeHeadClose')
     @php $module = 'menu' @endphp
-    <link rel="stylesheet" href="{{ base_url() . 'module/menu/admin/drag/stylesheet.css' }}" type="text/css">
+    <link rel="stylesheet" href="{{ public_path_to_storage('') . 'module/menu/admin/drag/stylesheet.css' }}" type="text/css">
 @endsection
 @section('content')
     <div class="content-wrapper pl-3 pr-2">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>Positioning Navigation</h1>
+            <h1>Positioning Navigations</h1>
             <ol class="breadcrumb">
                 <li>
                     <a href="{{ admin_url() }}">
@@ -15,7 +15,7 @@
                     </a>
                 </li>
                 <!--<li><a href="#">Examples</a></li>-->
-                <li class="active">Positioning Navigation</li>
+                <li class="active">Positioning Navigations</li>
             </ol>
         </section>
         <!-- Main content -->
@@ -83,9 +83,9 @@
     @include('back.menu.add_edit_view')
 @endsection
 @section('beforeBodyClose')
-    <script type="text/javascript" src="{{ base_url() . 'module/menu/admin/drag/jquery-sortable-lists.js' }}"></script>
+    <script type="text/javascript" src="{{ public_path_to_storage('') . 'module/menu/admin/drag/jquery-sortable-lists.js' }}"></script>
     {{-- <script type="text/javascript" --}}
-    {{-- src="{{base_url() . 'module/menu/admin/js/menu.js'}}"></script> --}}
+    {{-- src="{{public_path_to_storage('') . 'module/menu/admin/js/menu.js'}}"></script> --}}
     
     @include('back.menu.menu_js')
     <!-- End Bootstrap modal -->

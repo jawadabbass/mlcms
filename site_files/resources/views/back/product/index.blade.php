@@ -50,9 +50,7 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="text-end" style="padding-bottom:2px;">
-                                    @if(isAllowed('Can Add Product'))
-                                        <input type="button" class="sitebtn" value="Add Product" onclick="add_product()" />
-                                    @endif
+                                    <input type="button" class="sitebtn" value="Add Product" onclick="add_product()" />
                                 </div>
                             </div>
                         </div>
@@ -104,19 +102,13 @@
                                             </td>
 
                                             <td>
-                                                @if(isAllowed('Can Edit Product'))
                                                 <a class="btn btn-sm btn-primary" href="javascript:void(0);" title="Edit"
                                                     onclick="edit_product({{ $product->ID }})">
                                                     <i class="glyphicon glyphicon-pencil"></i> Edit</a>
-                                                @endif
-                                                @if(isAllowed('Can Delete Product'))
                                                 <a class="btn btn-sm btn-danger" href="javascript:void(0);" title="Delete"
                                                     onclick="delete_product({{ $product->ID }})">
                                                     <i class="glyphicon glyphicon-trash"></i> Delete</a>
-                                                @endif
-                                                @if(isAllowed('Can Sort Products'))
                                                 <span></span>
-                                                @endif
                                             </td>
                                         </tr>
                                     @empty
@@ -140,7 +132,7 @@
     @include('back.common_views.spinner')
 @endsection
 @section('beforeBodyClose')
-    <script src="{{ base_url() . 'module/products/admin/js/products.js' }}" type="text/javascript"></script>
+    <script src="{{ public_path_to_storage('') . 'module/products/admin/js/products.js' }}" type="text/javascript"></script>
     <script>
         var uploadUrl = "{{ admin_url() }}module_image/upload_image";
         var deleteUrl = "{{ admin_url() }}module_image/remove_image";
@@ -149,8 +141,8 @@
         var csrfToken = $('meta[name="csrf-token"]').attr('content');
         var show_cropper = false;
     </script>
-    <script type="text/javascript" src="{{ base_url() . 'back/js/fileUploader.js' }}"></script>
-    <script type="text/javascript" src="{{ base_url() . 'module/settings/admin/js/settings.js' }}"></script>
+    <script type="text/javascript" src="{{ public_path_to_storage('') . 'back/js/fileUploader.js' }}"></script>
+    <script type="text/javascript" src="{{ public_path_to_storage('') . 'module/settings/admin/js/settings.js' }}"></script>
     <script type="text/javascript" src="{{ base_url() }}back/mod/mod_js.js"></script>
     @include('back.product.product_js')
     @include('back.product.add_edit_view')

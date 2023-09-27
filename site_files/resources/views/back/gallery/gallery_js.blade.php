@@ -172,7 +172,7 @@
         $('#gallery_image_crop_form').find('#album_id').val(album_id);
         $('#gallery_image_crop_form').find('#image_id').val(image_id);
         let image_name = $('#image_' + image_id).attr('data-imgname');
-        let path = '{{ base_url() }}uploads/gallery/';
+        let path = '{{ public_path_to_uploads("gallery/") }}';
         $('#gallery_image_crop_form').find('#image').attr('src', path + album_id + '/' + image_name);
         $('#gallery_image_crop_form').find('#source_image').val(image_name);
         $('#gallery_image_cropper_form').modal('show');
@@ -224,8 +224,7 @@
             data: $('#gallery_image_crop_form').serialize(),
             success: function(data) {
                 console.log(data.cropped_image);
-                $('#image_' + image_id).attr('src', base_url + 'uploads/gallery/' + album_id +
-                    '/thumb/' + data.cropped_image);
+                $('#image_' + image_id).attr('src', public_path_to_uploads+'gallery/' + album_id + '/thumb/' + data.cropped_image);
                 $('#image_' + image_id).attr('data-imgname', data.cropped_image);
                 $('#gallery_image_crop_form').find('#image').attr('src', '');
                 $('#gallery_image_crop_form').find('#source_image').val('');

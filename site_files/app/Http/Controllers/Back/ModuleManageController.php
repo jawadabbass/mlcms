@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers\Back;
-
 use App\Models\Back\Menu;
 use Illuminate\Http\Request;
 use App\Models\Back\Category;
@@ -16,7 +14,6 @@ use App\Models\Back\ModuleDataImage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Laminas\Diactoros\Module;
-
 class ModuleManageController extends Controller
 {
     /**
@@ -31,7 +28,6 @@ class ModuleManageController extends Controller
         $type = trim($type);
         if ($type != '') {
             $module = CmsModule::where('type', $type)->first();
-            hasPermission('Can Manage ' . $module->title);
             // echo "<pre>";
             // print_r( $module);
             // exit;
@@ -72,7 +68,6 @@ class ModuleManageController extends Controller
             exit;
         }
         $moduleData = CmsModuleData::find($id);
-        hasPermission('Can Edit ' . $moduleData->title);
         $current_status = $moduleData->sts;
         if ($current_status == '') {
             echo 'invalid current status provided.';
@@ -109,17 +104,14 @@ class ModuleManageController extends Controller
      */
     public function store($type, Request $request)
     {
-        $module_id = $request->module_id;
-        $module_type = CmsModule::find($module_id);
-        hasPermission('Can Add ' . $module_type->title);
-        
         $validator = Validator::make($request->all(), [
             'module_heading' => 'required',
             'module_slug' => 'required',
             'module_description' => '',
         ]);
         if ($validator->passes()) {
-
+            $module_id = $request->module_id;
+            $module_type = CmsModule::find($module_id);
             $moduleData = new CmsModuleData();
             $moduleData->heading = $request->module_heading;
             $page_slug = $request->module_slug;
@@ -206,13 +198,6 @@ class ModuleManageController extends Controller
         } else {
             $data['module_data'] = CmsModule::find($data->cms_module_id);
         }
-        
-        /**************************** */
-        /**************************** */
-        hasPermission('Can Edit ' . $data['module_data']->title);
-        /**************************** */
-        /**************************** */
-
         if (isset($data['module_data']->type)) {
             $data['post_slug'] = str_replace($data['module_data']->type . '/', '', $data['post_slug']);
         }
@@ -228,18 +213,12 @@ class ModuleManageController extends Controller
      */
     public function update(Request $request, $type, $id)
     {
-        $module_id = $type;
-        $module_type = CmsModule::find($module_id);
-        
-        /**************************** */
-        /**************************** */
-        hasPermission('Can Edit ' . $module_type->title);
-        /**************************** */
-        /**************************** */
         $validator = Validator::make($request->all(), [
             'module_heading' => 'required',
             'module_description' => '',
         ]);
+        $module_id = $type;
+        $module_type = CmsModule::find($module_id);
         $moduleData = CmsModuleData::find($id);
         if ($validator->passes()) {
             $moduleData->heading = $request->module_heading;
@@ -351,20 +330,13 @@ class ModuleManageController extends Controller
     {
         $moduleData = CmsModuleData::find($id);
         $module = CmsModule::find($moduleData->cms_module_id);
-
-        /**************************** */
-        /**************************** */
-        hasPermission('Can Delete ' . $module->title);
-        /**************************** */
-        /**************************** */
-
         $moduleDataImages = ModuleDataImage::where('module_data_id', $id)->get();
         foreach ($moduleDataImages as $image) {
             ImageUploader::deleteImage('module/' . $image->module_type, $image->image_name, true);
             $image->delete();
         }
-        if (!empty($moduleData->featured_img) && file_exists('uploads/module/' . $module->type . '/' . $moduleData->featured_img)) {
-            unlink('uploads/module/' . $module->type . '/' . $moduleData->featured_img);
+        if (!empty($moduleData->featured_img) && file_exists(storage_path_to_uploads('module/' . $module->type . '/' . $moduleData->featured_img))) {
+            unlink(storage_path_to_uploads('module/' . $module->type . '/' . $moduleData->featured_img));
         }
         $moduleData->delete();
         Menu::where('menu_id', $id)->delete();
@@ -379,8 +351,8 @@ class ModuleManageController extends Controller
     {
         $id = $request->id;
         $data = CmsModuleData::find($id);
-        if (!empty($data->featured_img) && file_exists('uploads/module/' . $request->type . '/' . $data->featured_img)) {
-            unlink('uploads/module/' . $request->type . '/' . $data->featured_img);
+        if (!empty($data->featured_img) && file_exists(storage_path_to_uploads('module/' . $request->type . '/' . $data->featured_img))) {
+            unlink(storage_path_to_uploads('module/' . $request->type . '/' . $data->featured_img));
         }
         $data->featured_img = '';
         $data->save();
@@ -391,8 +363,8 @@ class ModuleManageController extends Controller
         $module_id = $request->module_id;
         $module = CmsModule::find($module_id);
         $module_type = $module->type;
-        $upload_dir = public_path() . '/uploads/module/' . $module_type . '/';
-        $upload_dir_thumb = public_path() . '/uploads/module/' . $module_type . '/thumb';
+        $upload_dir = storage_path_to_uploads('module/' . $module_type . '/');
+        $upload_dir_thumb = storage_path_to_uploads('module/' . $module_type . '/thumb');
         $crop_x = $request->crop_x;
         $crop_y = $request->crop_y;
         $crop_height = $request->crop_height;
@@ -454,11 +426,6 @@ class ModuleManageController extends Controller
                 abort(404);
             }
         }
-        /**************************** */
-        /**************************** */
-        hasPermission('Can Add ' . $module->title);
-        /**************************** */
-        /**************************** */
         $menu_types = MenuType::orderBy('id', 'ASC')->get();
         $title = FindInsettingArr('business_name') . ': ' . strtoupper($module->type) . ' Management';
         $msg = '';
@@ -479,7 +446,6 @@ class ModuleManageController extends Controller
     public function filesObj()
     {
         $albumsObj = [];
-        // uploads/editor/images/
         $folodersArr = [];
         $filesBasePath = filesBasePath();
         $folodersArr = array_filter(glob($filesBasePath . '*'), 'is_dir');
@@ -513,7 +479,6 @@ class ModuleManageController extends Controller
     public function get_images()
     {
         $albumsObj = [];
-        // uploads/editor/images/
         $folodersArr = [];
         $mediaBasePath = mediaBasePath();
         $folodersArr = array_filter(glob($mediaBasePath . '*'), 'is_dir');
@@ -553,11 +518,6 @@ class ModuleManageController extends Controller
                 abort(404);
             }
         }
-        /**************************** */
-        /**************************** */
-        hasPermission('Can Edit ' . $module->title);
-        /**************************** */
-        /**************************** */
         if ($id == 0) {
             abort(404);
         } else {
@@ -603,10 +563,6 @@ class ModuleManageController extends Controller
     public function run_script()
     {
         $ID = 0;
-        // if(isset($_GET['id'])){
-        //     $ID=(int)$_GET['id'];
-        // }
-        // $url='';
         if (isset($_GET['url'])) {
             $url = trim($_GET['url']);
             $ID = \DB::table('wp_postmeta')
@@ -614,14 +570,6 @@ class ModuleManageController extends Controller
                 ->where('meta_value', $url)
                 ->value('post_id');
         }
-        // if($ID==0){
-        //     cp('Page not found.');
-        // }
-        // SELECT * FROM wp_posts WHERE post_type='post' AND post_status='publish';
-        // $blogArr=DB::table('wp_posts')->where('post_type','post')->where('post_status','publish')
-        // ->get();
-        // foreach ($blogArr as $key => $value) {
-        //     $ID=$value->ID;
         $old_posts = \DB::table('wp_posts')->where('ID', $ID)->orderBy('ID', 'ASC')->first();
         $old_postmeta = \DB::table('wp_postmeta')->where('post_id', $ID)->get();
         $act_url = '';
@@ -650,23 +598,6 @@ class ModuleManageController extends Controller
         $lastID = DB::table('cms_module_datas')->insertGetId($arr);
         // }
         return redirect()->back();
-        // \DB::table('menus')->truncate();
-        // $old_menu=\DB::table('aaa_menus')->orderBy('parent_id','ASC')->get();
-        // foreach ($old_menu as $key => $value) {
-        //     $arr=[];
-        //     $arr['id']=$value->menu_id;
-        //     $arr['menu_label']=$value->menu_label;
-        //     $arr['menu_url']=$value->menu_url;
-        //     $arr['menu_types']=1;
-        //     $arr['menu_sort_order']=$value->topmenu_sort_order;
-        //     // $arr['leftmenu_sort_order']=$value->leftmenu_sort_order;
-        //     // $arr['footermenu_sort_order']=$value->footermenu_sort_order;
-        //     $arr['status']=$value->status;
-        //     $arr['parent_id']=$value->parent_id;
-        //     //$arr[]=
-        //    \DB::table('menus')->insert($arr);
-        // }
-        // cp('DONE');
     }
     public function script_add_blog_posts()
     {

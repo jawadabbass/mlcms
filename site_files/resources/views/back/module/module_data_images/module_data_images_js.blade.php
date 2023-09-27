@@ -114,7 +114,7 @@
     function bind_cropper_preview_module_data_image(image_id) {
         $('#module_data_image_crop_form').find('#image_id').val(image_id);
         let image_name = $('#image_' + image_id).attr('data-imgname');
-        let path = '{{ base_url() }}uploads/'+folder+'/';
+        let path = '{{ public_path_to_uploads('') }}'+folder+'/';
         $('#module_data_image_crop_form').find('#image').attr('src', path + '/' + image_name);
         $('#module_data_image_crop_form').find('#source_image').val(image_name);
         $('#module_data_image_cropper_form').modal('show');
@@ -165,7 +165,7 @@
             data: $('#module_data_image_crop_form').serialize(),
             success: function(data) {
                 console.log(data.cropped_image);
-                $('#image_' + image_id).attr('src', base_url + 'uploads/' + folder +
+                $('#image_' + image_id).attr('src', public_path_to_uploads + folder +
                     '/thumb/' + data.cropped_image);
                 $('#image_' + image_id).attr('data-imgname', data.cropped_image);
                 $('#module_data_image_crop_form').find('#image').attr('src', '');

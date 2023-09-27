@@ -1,4 +1,4 @@
-<script type="text/javascript" src="<?php echo base_url('../public/js/admin/plugins/tinymce/js/tinymce/tinymce.min.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo public_path_to_storage('js/admin/plugins/tinymce/js/tinymce/tinymce.min.js'); ?>"></script>
 <script>
     $(function() {
         tinyMCE.init({
@@ -26,7 +26,7 @@
     });
 
     function RoxyFileBrowser(field_name, url, type, win) {
-        var roxyFileman = '<?php echo str_replace(base_url_admin . '/', '', base_url()); ?>public/userfile/index.html';
+        var roxyFileman = '{{ public_path_to_storage("userfile/index.html") }}';
         if (roxyFileman.indexOf("?") < 0) {
             roxyFileman += "?type=" + type;
         } else {

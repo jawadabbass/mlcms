@@ -392,5 +392,5 @@
     <!-- Filer -->
     
     
-    <script type="text/javascript" src="{{ asset('back/js/fileUploader2.js') }}"></script>
+    <script type="text/javascript" src="{{ public_path_to_storage('back/js/fileUploader2.js') }}"></script>
 @endsection

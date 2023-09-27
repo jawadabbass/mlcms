@@ -63,7 +63,7 @@ class RequirePassword
             }
 
             $redirectLink = 'password.confirm';
-            if ($request->user()->type == 'admin') {
+            if ($request->user()->type != 'user') {
                 $redirectLink = 'admin.password.confirm';
             }
 

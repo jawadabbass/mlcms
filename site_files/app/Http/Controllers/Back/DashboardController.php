@@ -93,7 +93,6 @@ class DashboardController extends Controller
         Artisan::call('config:clear');
         Artisan::call('view:clear');
         Artisan::call('optimize:clear');
-        Artisan::call('errorlog:clear');
 
         return redirect()->back();
     }

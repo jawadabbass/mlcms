@@ -3,7 +3,6 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Models\Back\Role;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -22,7 +21,9 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'id', 'name', 'email', 'phone', 'type', 'is_super_admin', 'active', 'created_at', 'updated_at', 'api_token', 'on_notification_email', 'profile_image', 'address_line_1', 'address_line_2', 'zipcode', 'city', 'state', 'country'
+        'name',
+        'email',
+        'password',
     ];
 
     /**
@@ -52,28 +53,13 @@ class User extends Authenticatable
     public function sendPasswordResetNotification($token)
     {
         if(
-            $this->type === 'admin'
+            $this->type === config('Constants.USER_TYPE_SUPER_ADMIN') ||
+            $this->type === config('Constants.USER_TYPE_NORMAL_ADMIN') ||
+            $this->type === config('Constants.USER_TYPE_REPS_ADMIN')
         ){
             $this->notify(new AdminResetPasswordNotification($token));
         }else{
             $this->notify(new ResetPasswordNotification($token));
         }
-    }
-
-    public function roles()
-    {
-        return $this->belongsToMany(Role::class, 'role_user', 'user_id', 'role_id');
-    }
-
-    public function getUserRoleIds()
-    {
-        $roleIdsArray = [];
-        if ($this->roles->count() > 0) {
-            $roles = $this->roles;
-            foreach ($roles as $role) {
-                $roleIdsArray[] = $role->id;
-            }
-        }
-        return $roleIdsArray;
     }
 }

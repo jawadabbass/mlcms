@@ -1,13 +1,13 @@
 @extends('front.layout.app')
 @section('beforeHeadClose')
-    <link href="{{ base_url() . 'module/blog/front/css/blog.css' }}" rel="stylesheet" type="text/css" />
+    <link href="{{ public_path_to_storage('') . 'module/blog/front/css/blog.css' }}" rel="stylesheet" type="text/css" />
 @endsection
 @section('content')
     @php echo cms_edit_page("blog",$blog_post_details->ID);@endphp
     {!! cms_page_heading($blog_post_details->title) !!}
     <div class="about-wrap">
         <!-- Start Blog
-        ============================================= -->
+            ============================================= -->
         <div class="blog-area single full-blog right-sidebar full-blog default-padding-20">
             <div class="container">
                 <div class="row">
@@ -16,22 +16,22 @@
                             <div class="item">
                                 <!-- Start Post Thumb -->
                                 <div class="thumb">
-                                    @if (!empty($blog_post_details->featured_img) &&
-                                        file_exists(public_path('/uploads/blog/' . $blog_post_details->featured_img)))
-                                        <img src="{{ base_url() . 'uploads/blog/' . $blog_post_details->featured_img }}" title="{{ $blog_post_details->featured_img_title }}" alt="{{ $blog_post_details->featured_img_alt }}">
+                                    @if (
+                                        !empty($blog_post_details->featured_img) &&
+                                            file_exists(storage_path_to_uploads('blog/' . $blog_post_details->featured_img)))
+                                        <img src="{{ public_path_to_uploads('blog/' . $blog_post_details->featured_img) }}"
+                                            title="{{ $blog_post_details->featured_img_title }}"
+                                            alt="{{ $blog_post_details->featured_img_alt }}">
                                     @else
-                                        <img src="{{ base_url() . 'back/images/no_image.jpg' }}" title="{{ $blog_post_details->featured_img_title }}" alt="{{ $blog_post_details->featured_img_alt }}">
+                                        <img src="{{ public_path_to_uploads('back/images/no_image.jpg') }}"
+                                            title="{{ $blog_post_details->featured_img_title }}"
+                                            alt="{{ $blog_post_details->featured_img_alt }}">
                                     @endif
-                                    <!--<img src="assets/img/blog/v1.jpg" alt="Thumb">-->
                                     <span class="post-formats"><i class="fas fa-image"></i></span>
                                 </div>
                                 <!-- Start Post Thumb -->
                                 <div class="info content-box">
                                     <div class="meta">
-                                        <!--<div class="cats">
-                                            <a href="#">Business</a>
-                                            <a href="#">Assets</a>
-                                        </div>-->
                                         <div class="date">
                                             <i class="fas fa-calendar-alt"></i> 29 Feb, 2019
                                         </div>
@@ -40,67 +40,6 @@
                                     <h3>{{ $blog_post_details->title }}
                                     </h3>
                                     @php echo $blog_post_details->description @endphp
-                                    <!-- Start Post Tag
-                                    <div class="post-tags share">
-                                        <div class="tags">
-                                            <span>Tags: </span>
-                                            <a href="#">Consulting</a>
-                                            <a href="#">Planing</a>
-                                            <a href="#">Business</a>
-                                            <a href="#">Fashion</a>
-                                        </div>
-                                    </div>
-                                    End Post Tags -->
-                                    <!-- Start Author Post
-                                    <div class="author-bio">
-                                        <div class="avatar">
-                                            <img src="assets/img/team/7.jpg" alt="Author">
-                                        </div>
-                                        <div class="content">
-                                            <p>
-                                                Supply as so period it enough income he genius. Themselves acceptance bed sympathize get dissimilar way admiration son. Design for are edward regret met lovers. This are calm case roof and.
-                                            </p>
-                                            <h4> - Jonkey Rotham</h4>
-                                        </div>
-                                    </div>
-                                    End Author Post -->
-                                    <!-- Start Comments Form
-                                    <div class="comments-area">
-                                        <div class="comments-title">
-                                            <h4>
-                                                5 comments
-                                            </h4>
-                                            <div class="comments-list">
-                                                <div class="commen-item">
-                                                    <div class="avatar">
-                                                        <img src="assets/img/team/4.jpg" alt="Author">
-                                                    </div>
-                                                    <div class="content">
-                                                        <h5>Jonathom Doe</h5>
-                                                        <div class="comments-info">
-                                                            <p>July 15, 2018</p> <a href="#"><i class="fa fa-reply"></i>Reply</a>
-                                                        </div>
-                                                        <p>
-                                                            Delivered ye sportsmen zealously arranging frankness estimable as. Nay any article enabled musical shyness yet sixteen yet blushes. Entire its the did figure wonder off.
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <div class="commen-item reply">
-                                                    <div class="avatar">
-                                                        <img src="assets/img/team/5.jpg" alt="Author">
-                                                    </div>
-                                                    <div class="content">
-                                                        <h5>Spark Lee</h5>
-                                                        <div class="comments-info">
-                                                            <p>July 15, 2018</p> <a href="#"><i class="fa fa-reply"></i>Reply</a>
-                                                        </div>
-                                                        <p>
-                                                            Delivered ye sportsmen zealously arranging frankness estimable as. Nay any article enabled musical shyness yet sixteen yet blushes. Entire its the did figure wonder off.
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>-->
                                     <div class="comments-form">
                                         <div class="title">
                                             <h4>Leave a comments</h4>

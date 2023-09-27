@@ -1,6 +1,6 @@
 @extends('front.layout.app')
 @section('beforeHeadClose')
-    <link href="{{ base_url() . 'module/blog/front/css/blog.css' }}" rel="stylesheet" type="text/css" />
+    <link href="{{ public_path_to_storage('') . 'module/blog/front/css/blog.css' }}" rel="stylesheet" type="text/css" />
     <script src='https://www.google.com/recaptcha/api.js'></script>
     <style>
         .error-bg {
@@ -20,7 +20,7 @@
     @php echo cms_edit_page('cms',$data->id);@endphp
     <div class="about-wrap">
         <!-- Start Breadcrumb
-                                                                            ============================================= -->
+                                                                                ============================================= -->
         <div class="breadcrumb-area shadow dark bg-fixed text-center text-light"
             style="background-image: url(<?php echo base_url(); ?>front/img/banner/23.jpg);">
             <div class="container">
@@ -37,7 +37,7 @@
         </div>
         <!-- End Breadcrumb -->
         <!-- Start Contact Area
-                                                                            ============================================= -->
+                                                                                ============================================= -->
         <div class="contact-area default-padding">
             <div class="container">
                 <div class="row">
@@ -84,8 +84,8 @@
                                         <div class="form-group">
                                             <input name="name" type="text" placeholder="Name"
                                                 value="{{ old('name') }}" class="form-control" id="name" required>
-                                                <div id="name-error" class="error"></div>
-                                            </div>
+                                            <div id="name-error" class="error"></div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -93,21 +93,21 @@
                                         <div class="form-group">
                                             <input name="email" type="email" placeholder="Email"
                                                 value="{{ old('email') }}" class="form-control" id="email" required>
-                                                <div id="email-error" class="error"></div>
+                                            <div id="email-error" class="error"></div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <input name="phone" type="text" placeholder="Phone"
                                                 value="{{ old('phone') }}" class="form-control" id="phone" required>
-                                                <div id="phone-error" class="error"></div>
+                                            <div id="phone-error" class="error"></div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="row">
                                         <div class="form-group comments">
-                                            <textarea name="comments" placeholder="Message" class="form-control" rows="6" id="comments" required>{{ old('comments') }}</textarea>
+                                            <textarea name="comments" placeholder="Message" class="form-control" rows="6" id="comments">{{ old('comments') }}</textarea>
                                             <div id="comments-error" class="error"></div>
                                         </div>
                                     </div>
@@ -128,7 +128,7 @@
         </div>
         <!-- End Contact Area -->
         <!-- Start Google Maps
-                                                                            ============================================= -->
+                                                                                ============================================= -->
         @if ($settingArr->google_map_status == 1)
             <div class="maps-area">
                 <div class="container-full">
@@ -160,10 +160,11 @@
                     phone: {
                         required: true,
                         phoneUS: true
-                    },
-                    comments: {
-                        required: true
                     }
+                    /* ,
+                                        comments: {
+                                            required: true
+                                        } */
                 },
                 messages: {
                     name: {
@@ -176,10 +177,11 @@
                     phone: {
                         required: "Please provide phone",
                         phoneUS: "Valid phone number required"
-                    },
-                    comments: {
-                        required: "Please provide message"
                     }
+                    /* ,
+                                        comments: {
+                                            required: "Please provide message"
+                                        } */
                 },
                 errorElement: "div",
                 errorPlacement: function(error, element) {
@@ -260,9 +262,9 @@
                     if (data.status === 422) {
                         var responseText = $.parseJSON(data.responseText);
                         $.each(responseText.errors, function(key, value) {
-                            $('#'+key+'-error').html(value);
-                            $('#'+key+'-error').addClass('formValidationErrors');
-                            $('#'+key+'-error').show();
+                            $('#' + key + '-error').html(value);
+                            $('#' + key + '-error').addClass('formValidationErrors');
+                            $('#' + key + '-error').show();
                             scrollToErrors('.formValidationErrors');
                         });
                     }

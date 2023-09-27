@@ -1,4 +1,9 @@
 @extends('back.layouts.app', ['title' => $title])
+@section('beforeHeadClose')
+    <link href="{{ public_path_to_storage('') . 'module/settings/admin/css/settings.css' }}" rel="stylesheet" type="text/css" />
+    <link href="{{ public_path_to_storage('') . 'back/css/magicsuggest.css' }}" rel="stylesheet" type="text/css" />
+    <link href="{{ public_path_to_storage('') . 'module/settings/admin/css/setting.css' }}" rel="stylesheet" type="text/css" />
+@endsection
 @section('content')
     <div class="content-wrapper pl-3 pr-2">
         <section class="content-header">
@@ -47,6 +52,33 @@
                 </div>
             </div>
         @endif
-        @include('back.setting.templates.analytics_inner')
+        <section class="content" id="google-analytics">
+            <div class="box">
+                <h2 class="box-title">
+                    <i class="fas fa-arrow-circle-o-down" aria-hidden="true"></i> Google Analytics Code
+                    @php echo helptooltip('google_analytics_content') @endphp
+                </h2>
+                <form name="emp_network_detail" method="post" action="{{ route('settings.store') }}">
+                    @csrf
+                    <div class="mb-2">
+                        <div id="g_analy">
+                            <div class="myfldrow">
+                                <textarea class="form-control" name="google_analytics">{{ $setting_result->google_analytics }}</textarea>
+                                <p>Copy google analytics code with "script" tag and paste above</p>
+                                <p><a href="https://www.google.com/analytics" target="_blank">Sign Up or Manage
+                                        Analytics </a> by clicking this link</p>
+                            </div>
+                            <input type="submit" name="change_network_details" value="update" class="sitebtn" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
     </div>
+@endsection
+@section('beforeBodyClose')
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css"
+        rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <script type="text/javascript" src="{{ public_path_to_storage('') . 'module/settings/admin/js/settings.js' }}"></script>
 @endsection

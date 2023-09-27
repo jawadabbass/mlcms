@@ -76,7 +76,7 @@
                                         <tr>
                                             <td><strong>File</strong></td>
                                             <td><a target="_blank"
-                                                    href="{{ asset('uploads/jobs_apply/' . $data->attachment) }}">{{ $data->attachment }}</a>
+                                                    href="{{ public_path_to_uploads('jobs_apply/' . $data->attachment) }}">{{ $data->attachment }}</a>
                                             </td>
                                         </tr>
                                         <tr>

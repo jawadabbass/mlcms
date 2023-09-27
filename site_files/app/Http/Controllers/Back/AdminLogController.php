@@ -17,7 +17,6 @@ class AdminLogController extends Controller
      */
     public function index()
     {
-        hasPermission('Can Manage Admin User Logs');
         $title = FindInsettingArr('business_name') . ': Admin logs';
         $usersData = AdminLogHistory::with('user')->orderBy('ID', 'DESC')->paginate(25);
         return view('back.users.admin.admin_users_log', compact('title', 'usersData'));
@@ -80,14 +79,12 @@ class AdminLogController extends Controller
      */
     public function destroy($id)
     {
-        hasPermission('Can Manage Admin User Logs');
-        if (Auth::user()->type == 'admin') {
+        if (Auth::user()->type == 'super-admin') {
             $top = DB::table('admin_log_histories')->max('ID');
             AdminLogHistory::where('ID', '<', $top - 4)->delete();
             echo "done";
             return;
         }
-
         echo "failed";
         return;
     }

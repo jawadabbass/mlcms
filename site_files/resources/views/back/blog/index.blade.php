@@ -3,7 +3,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet"
         type="text/css" />
     @php $module = "blog" @endphp
-    <link href="{{ base_url() . 'module/blog/admin/css/' . $module . '.css' }}" rel="stylesheet" type="text/css" />
+    <link href="{{ public_path_to_storage('') . 'module/blog/admin/css/' . $module . '.css' }}" rel="stylesheet" type="text/css" />
     @include('back.common_views.switch_css')
 @endsection
 @section('content')
@@ -33,19 +33,12 @@
                         <div class="row">
                             <div class="col-sm-8">
                                 <h3 class="box-title">All Blog Posts</h3>
-                                @if (isAllowed('Can Manage Blog'))
-                                    <a href="{{ admin_url() . 'blog' }}" class="btn btn-primary">Blog</a>
-                                @endif
-                                @if (isAllowed('Can Manage Blog Categories'))
-                                    <a href="{{ admin_url() . 'blog_categories' }}" class="btn btn-default">Categories</a>
-                                @endif
+                                <a href="{{ admin_url() . 'blog' }}" class="btn btn-primary">Blog</a>
+                                <a href="{{ admin_url() . 'blog_categories' }}" class="btn btn-default">Categories</a>
                             </div>
                             <div class="col-sm-4">
                                 <div class="text-end" style="padding-bottom:2px;">
-                                    @if (isAllowed('Can Add Blog'))
-                                        <input type="button" class="sitebtn" value="Add New Post"
-                                            onClick="add_blog_post();" />
-                                    @endif
+                                    <input type="button" class="sitebtn" value="Add New Post" onClick="add_blog_post();" />
                                 </div>
                             </div>
                         </div>
@@ -70,12 +63,12 @@
                                                 <td>
                                                     @if (!empty($row->featured_img))
                                                         <img width="80"
-                                                            src="{{ base_url() . 'uploads/blog/' . $row->featured_img }}"
+                                                            src="{{ public_path_to_uploads('') . 'blog/' . $row->featured_img }}"
                                                             title="{{ $row->featured_img_title }}"
                                                             alt="{{ $row->featured_img_alt }}">
                                                     @else
                                                         <img width="80"
-                                                            src="{{ base_url() . 'back/images/no_image.jpg' }}"
+                                                            src="{{ public_path_to_storage('') . 'back/images/no_image.jpg' }}"
                                                             title="{{ $row->featured_img_title }}"
                                                             alt="{{ $row->featured_img_alt }}">
                                                     @endif
@@ -93,29 +86,22 @@
                                                         target="_bank">Preview</a>
                                                 </td>
                                                 <td>
-                                                    @if (isAllowed('Can Edit Blog'))
-                                                        <label class="switch">
-                                                            <input type="checkbox" name="{{ 'sts_' . $row->ID }}"
-                                                                id="{{ 'sts_' . $row->ID }}" <?php echo $row->sts == 'active' ? ' checked' : ''; ?>
-                                                                value="<?php echo $row->sts; ?>"
-                                                                onClick="update_blog_post_status({{ $row->ID }})">
-                                                            <div class="slider round">
-                                                                <strong class="on">Active</strong>
-                                                                <strong class="off">Inactive</strong>
-                                                            </div>
-                                                        </label>
-                                                    @endif
+                                                    <label class="switch">
+                                                        <input type="checkbox" name="{{ 'sts_' . $row->ID }}"
+                                                            id="{{ 'sts_' . $row->ID }}" <?php echo $row->sts == 'active' ? ' checked' : ''; ?>
+                                                            value="<?php echo $row->sts; ?>"
+                                                            onClick="update_blog_post_status({{ $row->ID }})">
+                                                        <div class="slider round">
+                                                            <strong class="on">Active</strong>
+                                                            <strong class="off">Inactive</strong>
+                                                        </div>
+                                                    </label>
                                                 </td>
-                                                <td>
-                                                    @if (isAllowed('Can Edit Blog'))
-                                                        <a href="javascript:;"
-                                                            onClick="load_blog_post_edit_form({{ $row->ID }});"
-                                                            class="btn btn-success btn-sm">Edit</a>
-                                                    @endif
-                                                    @if (isAllowed('Can Delete Blog'))
-                                                        <a href="javascript:delete_blog_post({{ $row->ID }});"
-                                                            class="btn btn-danger btn-sm">Delete</a>
-                                                    @endif
+                                                <td><a href="javascript:;"
+                                                        onClick="load_blog_post_edit_form({{ $row->ID }});"
+                                                        class="btn btn-success btn-sm">Edit</a> <a
+                                                        href="javascript:delete_blog_post({{ $row->ID }});"
+                                                        class="btn btn-danger btn-sm">Delete</a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -236,7 +222,7 @@
         var show_cropper = false;
         var save_method = "POST";
     </script>
-    <script type="text/javascript" src="{{ base_url() . 'back/js/fileUploader.js' }}"></script>
+    <script type="text/javascript" src="{{ public_path_to_storage('') . 'back/js/fileUploader.js' }}"></script>
     <script type="text/javascript">
         $(document).ready(function(e) {
             $("#heading").change(function() {
@@ -246,8 +232,8 @@
     </script>
     <!----- data table include library and script ----->
 
-    <script type="text/javascript" src="{{ base_url() . 'back/js/bootstrap-multiselect.js' }}"></script>
-    <script type="text/javascript" src="{{ base_url() . 'module/blog/admin/js/blog.js' }}"></script>
+    <script type="text/javascript" src="{{ public_path_to_storage('') . 'back/js/bootstrap-multiselect.js' }}"></script>
+    <script type="text/javascript" src="{{ public_path_to_storage('') . 'module/blog/admin/js/blog.js' }}"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             @if ($errors->any())

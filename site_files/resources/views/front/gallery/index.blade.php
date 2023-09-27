@@ -44,8 +44,8 @@
                                                             <!-- Single Item -->
                                                             <div class="pf-item album_{{ $image->album_id }}">
                                                                 @php
-                                                                    $thumb_img_url = base_url() . 'uploads/gallery/' . $image->album_id . '/thumb/' . $image->imageUrl . '?' . time();
-                                                                    $img_url = base_url() . 'uploads/gallery/' . $image->album_id . '/' . $image->imageUrl . '?' . time();
+                                                                    $thumb_img_url = public_path_to_uploads('') . 'gallery/' . $image->album_id . '/thumb/' . $image->imageUrl . '?' . time();
+                                                                    $img_url = public_path_to_uploads('') . 'gallery/' . $image->album_id . '/' . $image->imageUrl . '?' . time();
                                                                 @endphp
                                                                 <div class="effect-left-swipe">
                                                                     <div class="imagebox">

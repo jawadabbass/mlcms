@@ -55,7 +55,7 @@
 
                                             <i class="deleteIcon" onclick="delete_record('{{ $show_img->id }}')"><span
                                                     style="display:none;">{{ $show_img->image }};image;{{ $show_img->image }}</span></i>
-                                            <img src="{{ asset('uploads/package_content/images/' . $show_img->image) }}"
+                                            <img src="{{ public_path_to_uploads('package_content/images/' . $show_img->image) }}"
                                                 height="200px">
                                         </div>
                                     @endforeach
@@ -93,7 +93,7 @@
                                                     style="display:none;">{{ $show_vd->video }};image;{{ $show_vd->video }}</span></i>
                                             <video id="video1" width="300">
                                                 <source
-                                                    src="{{ asset('uploads/package_content/videos/' . $show_vd->video) }}"
+                                                    src="{{ public_path_to_uploads('package_content/videos/' . $show_vd->video) }}"
                                                     type="video/mp4">
                                             </video>
                                         </div>
@@ -130,7 +130,7 @@
                                             <i class="deleteIcon" onclick="delete_record('{{ $show_do->id }}')"><span
                                                     style="display:none;">{{ $show_do->document }};image;{{ $show_do->document }}</span></i>
                                             <iframe
-                                                src="{{ asset('uploads/package_content/documents/' . $show_do->document) }}"
+                                                src="{{ public_path_to_uploads('package_content/documents/' . $show_do->document) }}"
                                                 width="180px" height="180px"></iframe>
                                         </div>
                                     @endforeach
@@ -304,7 +304,7 @@
     </div>
 @endsection
 @section('beforeBodyClose')
-    <script src="{{ asset('lib/sweetalert/sweetalert2.js') }}"></script>
+    <script src="{{ public_path_to_storage('lib/sweetalert/sweetalert2.js') }}"></script>
     <script>
         function PackageManageContentShow($type) {
 
@@ -418,7 +418,7 @@
 
             swal({
                 title: "Are you sure?",
-                text: "Deleting the item may remove it from all  Clients Purchased Package?",
+                text: "Deleting the item may remove it from all  Clients Purshed Package?",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",

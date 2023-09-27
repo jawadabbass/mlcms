@@ -25,7 +25,7 @@ class EnsureEmailIsVerified
                 !$request->user()->hasVerifiedEmail())
         ) {
             $redirectLink = 'verification.notice';
-            if ($request->user()->type == 'admin') {
+            if ($request->user()->type != 'user') {
                 $redirectLink = 'admin.verification.notice';
             }
             return $request->expectsJson()

@@ -5,7 +5,7 @@
     <div class="footer-top bg-gray">
         <div class="container">
             <div class="row">
-                <div class="col-md-4 col-sm-4 logo"> <a href="#"><img src="{{ asset('front/img/logo.png') }}"
+                <div class="col-md-4 col-sm-4 logo"> <a href="#"><img src="{{ public_path_to_storage('front/img/logo.png') }}"
                             alt="Logo"></a> </div>
                 <div class="col-md-8 col-sm-8 form text-end">
                     @if (\Session::has('added_subscriber'))
@@ -80,7 +80,7 @@
                             @foreach ($blogData as $blog)
                                 <li>
                                     <div class="thumb"> <a href="{{ url('blog/'.$blog->post_slug) }}"> <img
-                                                src="{{ asset('uploads/blog/' . $blog->featured_img) }}"  title="{{ $blog->featured_img_title }}" alt="{{ $blog->featured_img_alt }}">
+                                                src="{{ public_path_to_uploads('blog/' . $blog->featured_img) }}"  title="{{ $blog->featured_img_title }}" alt="{{ $blog->featured_img_alt }}">
                                         </a> </div>
                                     <div class="info"> <a href="{{ url('blog/'.$blog->post_slug) }}">{{ $blog->title }}</a>
                                         <div class="meta-title"> <span class="post-date">

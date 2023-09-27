@@ -1,15 +1,15 @@
 <?php
 
-use App\Models\Back\City;
-use App\Models\Back\State;
-use App\Models\Back\County;
-use App\Models\Back\Country;
-use App\Models\Back\Metadata;
 use App\Helpers\ImageUploader;
+use App\Models\Back\City;
 use App\Models\Back\CmsModule;
 use App\Models\Back\CmsModuleData;
+use App\Models\Back\Country;
+use App\Models\Back\County;
+use App\Models\Back\FleetCategory;
+use App\Models\Back\Metadata;
 use App\Models\Back\ModuleDataImage;
-use App\Models\Back\PermissionGroup;
+use App\Models\Back\State;
 
 function getMetaData()
 {
@@ -76,10 +76,10 @@ function getUserImage($user)
 {
     $profileImage = $user->profile_image;
 
-    return ImageUploader::print_image_src($profileImage, 'profile_images', '/front/images/no-image.jpg');
+    return ImageUploader::print_image_src($profileImage, 'profile_images', 'storage/front/images/no-image.jpg');
 }
 
-function getImage($folder, $image, $defaultSize = 'thumb')
+function getImage($folder, $image, $defaultSize = 'main')
 {
     if ($defaultSize == 'main') {
         $defaultSize = '';
@@ -87,7 +87,27 @@ function getImage($folder, $image, $defaultSize = 'thumb')
         $defaultSize = '/' . $defaultSize;
     }
 
-    return ImageUploader::print_image_src($image, $folder . $defaultSize, '/front/images/no-image-available.png');
+    return ImageUploader::print_image_src($image, $folder . $defaultSize, 'storage/front/images/no-image-available.png');
+}
+
+function storage_path_to_uploads($path)
+{
+    return ImageUploader::real_public_path() . $path;
+}
+
+function storage_path_to_public($path)
+{
+    return ImageUploader::storage_path_to_public() . $path;
+}
+
+function public_path_to_uploads($path)
+{
+    return ImageUploader::public_path() . $path;
+}
+
+function public_path_to_storage($path)
+{
+    return ImageUploader::public_path_to_storage() . $path;
 }
 
 function getProfileAddress()
@@ -282,10 +302,10 @@ function generateModuleDataImageHtml($folder, $image)
                     <div class="mb-3">
                         <div class="imagebox">
                             <a href="javascript:void(0);" title="' . $image->image_title . '"
-                                onclick="openModuleDataImageZoomModal(\'' . base_url() . 'uploads/' . $folder . '/' . $image->image_name . '?' . time() . '\');">
+                                onclick="openModuleDataImageZoomModal(\'' . public_path_to_uploads($folder . '/' . $image->image_name . '?' . time()) . '\');">
                                 <img id="image_' . $image->id . '"
                                     data-imgname="' . $image->image_name . '"
-                                    src="' . base_url() . 'uploads/' . $folder . '/thumb/' . $image->image_name . '?' . time() . '"
+                                    src="' . public_path_to_uploads($folder . '/thumb/' . $image->image_name . '?' . time()) . '"
                                     style="width:100%" alt="' . $image->image_alt . '"
                                     title="' . $image->image_title . '">
                             </a>
@@ -329,12 +349,120 @@ function getCmsModuleDataImages($images)
     $imagesArray = [];
     if (count($images) > 0) {
         foreach ($images as $image) {
-            $thumb = base_url() . 'uploads/module/' . $image->module_type . '/thumb/' . $image->image_name;
-            $main = base_url() . 'uploads/module/' . $image->module_type . '/' . $image->image_name;
+            $thumb = public_path_to_uploads('module/' . $image->module_type . '/thumb/' . $image->image_name);
+            $main = public_path_to_uploads('module/' . $image->module_type . '/' . $image->image_name);
             $imagesArray[] = (object)['thumb' => $thumb, 'main' => $main, 'image_alt' => $image->image_alt, 'image_title' => $image->image_title ];
         }
     }
     return $imagesArray;
+}
+
+function generateFleetCategoriesStatusDropDown($defaultSelected = '', $empty = true)
+{
+    $str = ($empty) ? '<option value="">Select...</option>' : '';
+    $statusArray = ['Active' => 'Active', 'Inactive' => 'Inactive'];
+    foreach ($statusArray as $key => $value) {
+        $selected = ($key == $defaultSelected) ? 'selected="selected"' : '';
+        $str .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
+    }
+
+    return $str;
+}
+
+function generatePassengerCapacitiesStatusDropDown($defaultSelected = '', $empty = true)
+{
+    $str = ($empty) ? '<option value="">Select...</option>' : '';
+    $statusArray = ['Active' => 'Active', 'Inactive' => 'Inactive'];
+    foreach ($statusArray as $key => $value) {
+        $selected = ($key == $defaultSelected) ? 'selected="selected"' : '';
+        $str .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
+    }
+
+    return $str;
+}
+
+function generateCabinDimensionsStatusDropDown($defaultSelected = '', $empty = true)
+{
+    $str = ($empty) ? '<option value="">Select...</option>' : '';
+    $statusArray = ['Active' => 'Active', 'Inactive' => 'Inactive'];
+    foreach ($statusArray as $key => $value) {
+        $selected = ($key == $defaultSelected) ? 'selected="selected"' : '';
+        $str .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
+    }
+
+    return $str;
+}
+
+function generateBaggageCapacitiesStatusDropDown($defaultSelected = '', $empty = true)
+{
+    $str = ($empty) ? '<option value="">Select...</option>' : '';
+    $statusArray = ['Active' => 'Active', 'Inactive' => 'Inactive'];
+    foreach ($statusArray as $key => $value) {
+        $selected = ($key == $defaultSelected) ? 'selected="selected"' : '';
+        $str .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
+    }
+
+    return $str;
+}
+
+function generatePerformancesStatusDropDown($defaultSelected = '', $empty = true)
+{
+    $str = ($empty) ? '<option value="">Select...</option>' : '';
+    $statusArray = ['Active' => 'Active', 'Inactive' => 'Inactive'];
+    foreach ($statusArray as $key => $value) {
+        $selected = ($key == $defaultSelected) ? 'selected="selected"' : '';
+        $str .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
+    }
+
+    return $str;
+}
+
+function generateCabinAmenitiesStatusDropDown($defaultSelected = '', $empty = true)
+{
+    $str = ($empty) ? '<option value="">Select...</option>' : '';
+    $statusArray = ['Active' => 'Active', 'Inactive' => 'Inactive'];
+    foreach ($statusArray as $key => $value) {
+        $selected = ($key == $defaultSelected) ? 'selected="selected"' : '';
+        $str .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
+    }
+
+    return $str;
+}
+
+function generateSafetiesStatusDropDown($defaultSelected = '', $empty = true)
+{
+    $str = ($empty) ? '<option value="">Select...</option>' : '';
+    $statusArray = ['Active' => 'Active', 'Inactive' => 'Inactive'];
+    foreach ($statusArray as $key => $value) {
+        $selected = ($key == $defaultSelected) ? 'selected="selected"' : '';
+        $str .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
+    }
+
+    return $str;
+}
+
+function generateFleetCategoriesDropDown($defaultSelected = 0, $empty = true)
+{
+    $str = ($empty) ? '<option value="">Select...</option>' : '';
+    $categoryArray = FleetCategory::select('title', 'id')->active()->sorted()->pluck('title', 'id')->toArray();
+    foreach ($categoryArray as $key => $value) {
+        $selected = ($key == $defaultSelected) ? 'selected="selected"' : '';
+        $str .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
+    }
+
+    return $str;
+}
+
+function generateFleetPlaneStatusDropDown($defaultSelected = '', $empty = true)
+{
+    $str = ($empty) ? '<option value="">Select...</option>' : '';
+    $statusArray = ['Active' => 'Active', 'Inactive' => 'Inactive'];
+    foreach ($statusArray as $key => $value) {
+        $selected = ($key == $defaultSelected) ? 'selected="selected"' : '';
+        $str .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
+    }
+
+    return $str;
 }
 
 function generateNewsStatusDropDown($defaultSelected = '', $empty = true)
@@ -424,15 +552,4 @@ function generateModuleCodeFieldLabel($field_counter, $errors, $oldData, $hide_s
                 <button type="button" class="btn btn-danger" onclick="removeField(' . $field_counter . ');">Remove</button>
             </div>
         </div>';
-}
-
-function generatePermissionGroupsDropDown($defaultSelected = '', $createEmptyRow = true)
-{
-    $str = ($createEmptyRow) ? '<option value=""></option>' : '';
-    $permissionGroups = PermissionGroup::where('module_id', 0)->withOutGlobalScopes()->get();
-    foreach ($permissionGroups as $permissionGroup) {
-        $selected = ($permissionGroup->id == $defaultSelected) ? 'selected="selected"' : '';
-        $str .= '<option value="' . $permissionGroup->id . '" ' . $selected . '>' . $permissionGroup->title . '</option>';
-    }
-    return $str;
 }

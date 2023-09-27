@@ -6,11 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" type="image/png" href="{!! getImage('admin_logo_favicon', config('admin_logo_favicon.admin_favicon'), 'main') !!}">
-    <title>{{ $title?? 'MLCMS' }}</title>
+    <title>{{ $title }}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @include('back.common_views.before_head_close')
     @yield('beforeHeadClose')
-    @stack('beforeHeadClose')
 </head>
 <body class="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed text-sm {{ session('leftSideBar') == 1 ? 'sidebar-collapse' : '' }}">
     <div class="wrapper">
@@ -24,7 +23,6 @@
         @include('back.common_views.footer')
         @include('back.common_views.before_body_close')
         @yield('beforeBodyClose')
-        @stack('beforeBodyClose')
         <style>
             .jFiler-theme-default .jFiler-input {
                 width: 100%;

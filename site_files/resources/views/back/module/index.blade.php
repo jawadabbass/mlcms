@@ -1,6 +1,6 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('beforeHeadClose')
-    @include('back.common_views.switch_css')
+@include('back.common_views.switch_css')
 @endsection
 @section('content')
     <div class="content-wrapper pl-3 pr-2">
@@ -41,7 +41,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-6" style="text-align: right">
-                                @if ($module->show_ordering_options && isAllowed('Can Edit ' . $module->type))
+                                @if ($module->show_ordering_options)
                                     <div class="text-end" style="padding-bottom:2px; display: inline;">
                                         <a class="sitebtn" href="{{ admin_url() . 'module/ordering/' . $module->type }}">
                                             <i class="fas fa-sort" aria-hidden="true"></i> Set Ordering
@@ -49,12 +49,12 @@
                                     </div>
                                 @endif
                                 <div class="text-end" style="padding-bottom:2px; display: inline;">
-                                    @if (isAllowed('Can Add ' . $module->type))
-                                        <a class="sitebtn" href="{{ admin_url() . 'module/' . $module->type . '/add' }} ">
-                                            Add
-                                            New
-                                            {{ ucwords($module->term) == 'CMS' ? 'Page' : ucwords($module->term) }}</a>
-                                    @endif
+                                    <!--<input type="button" class="sitebtn"
+                value="Add New {{ ucwords($module->term) == 'CMS' ? 'Page' : ucwords($module->term) }}"
+                onclick="add_content()"/>-->
+                                    <a class="sitebtn" href="{{ admin_url() . 'module/' . $module->type . '/add' }} "> Add
+                                        New
+                                        {{ ucwords($module->term) == 'CMS' ? 'Page' : ucwords($module->term) }}</a>
                                 </div>
                             </div>
                         </div>
@@ -87,7 +87,7 @@
                                                 <td>
                                                     @if (!empty($moduleMember->featured_img))
                                                         <img width="100"
-                                                            src="{{ base_url() . 'uploads/module/' . $module->type . '/' . $moduleMember->featured_img }}">
+                                                            src="{{ public_path_to_uploads('') . 'module/' . $module->type . '/' . $moduleMember->featured_img }}">
                                                     @endif
                                                 </td>
                                             @endif
@@ -129,56 +129,49 @@
                                             <td>
                                                 @if ($moduleMember->permanent_page == '1')
                                                     @if ($moduleMember->content_type == 'module')
-                                                        @if (isAllowed('Can Edit ' . $module->type))
-                                                            <a class="btn btn-sm btn-primary"
-                                                                href="{{ base_url() . 'adminmedia/module/' . $module->type . '/edit/' . $moduleMember->id }}"
-                                                                title="Edit"><i class="fas fa-edit"></i> Edit</a>
-                                                        @endif
-                                                        @if (isAllowed('Can Manage ' . $module->type))
-                                                            <a target="_blank" class="btn btn-sm btn-primary"
-                                                                href="{{ base_url() . 'adminmedia/module/' . $moduleMember->post_slug }}"
-                                                                title="Edit"><i class="fas fa-wrench"></i> Manage</a>
-                                                        @endif
-                                                    @else
-                                                        @if (isAllowed('Can Edit ' . $module->type))
-                                                            <a class="btn btn-sm btn-primary"
-                                                                href="{{ base_url() . 'adminmedia/module/' . $module->type . '/edit/' . $moduleMember->id }}"
-                                                                title="Edit"><i class="fas fa-edit"></i> Edit</a>
-                                                        @endif
-                                                        @if ($moduleMember->id == 118)
-                                                            @if (isAllowed('Can Manage Contact Page'))
-                                                                <a target="_blank" class="btn btn-sm btn-primary"
-                                                                    href="{{ base_url() . 'adminmedia/manage_contact' }}"
-                                                                    title="Manage">Manage</a>
-                                                            @endif
-                                                        @endif
-                                                        @if ($moduleMember->id == 175)
-                                                            @if (isAllowed('Can Manage Gallery'))
-                                                                <a target="_blank" class="btn btn-sm btn-primary"
-                                                                    href="{{ base_url() . 'adminmedia/gallery' }}"
-                                                                    title="Edit"> Manage</a>
-                                                            @endif
-                                                        @endif
-                                                    @endif
-                                                @else
-                                                    @if (isAllowed('Can Edit ' . $module->type))
                                                         <a class="btn btn-sm btn-primary"
                                                             href="{{ base_url() . 'adminmedia/module/' . $module->type . '/edit/' . $moduleMember->id }}"
                                                             title="Edit"><i class="fas fa-edit"></i> Edit</a>
+                                                        <a target="_blank" class="btn btn-sm btn-primary"
+                                                            href="{{ base_url() . 'adminmedia/module/' . $moduleMember->post_slug }}"
+                                                            title="Edit"><i class="fas fa-wrench"></i> Manage</a>
+                                                    @else
+                                                        <a class="btn btn-sm btn-primary"
+                                                            href="{{ base_url() . 'adminmedia/module/' . $module->type . '/edit/' . $moduleMember->id }}"
+                                                            title="Edit"><i class="fas fa-edit"></i> Edit</a>
+                                                        @if ($moduleMember->id == 118)
+                                                            <a target="_blank" class="btn btn-sm btn-primary"
+                                                                href="{{ base_url() . 'adminmedia/manage_contact' }}"
+                                                                title="Manage">Manage</a>
+                                                        @endif
+                                                        @if ($moduleMember->id == 175)
+                                                            <a target="_blank" class="btn btn-sm btn-primary"
+                                                                href="{{ base_url() . 'adminmedia/gallery' }}"
+                                                                title="Edit"> Manage</a>
+                                                        @endif
                                                     @endif
-                                                    @if (isAllowed('Can Delete ' . $module->type))
-                                                        <a class="btn btn-sm btn-danger" href="javascript:void(0)"
-                                                            title="Delete"
-                                                            onclick="delete_content({{ $moduleMember->id }})"><i
-                                                                class="fas fa-trash"></i> Delete</a>
-                                                    @endif
+                                                @else
+                                                    <a class="btn btn-sm btn-primary"
+                                                        href="{{ base_url() . 'adminmedia/module/' . $module->type . '/edit/' . $moduleMember->id }}"
+                                                        title="Edit"><i class="fas fa-edit"></i> Edit</a>
+                                                    <a class="btn btn-sm btn-danger" href="javascript:void(0)"
+                                                        title="Delete"
+                                                        onclick="delete_content({{ $moduleMember->id }})"><i
+                                                            class="fas fa-trash"></i> Delete</a>
+                                                @endif
+                                                @if ($module->term == 'Classes')
+                                                    <a href="{{ route('class.show', $moduleMember->id) }}"
+                                                        class="btn btn-success btn-sm">View Registered
+                                                        User</a>
+                                                @elseif($module->term == 'Camps')
+                                                    <a href="{{ route('camp.show', $moduleMember->id) }}"
+                                                        class="btn btn-success btn-Sm">View Registered User</a>
                                                 @endif
                                                 @if ($moduleMember->cms_module_id == 37)
-                                                    @if (isAllowed('Can Manage ' . $module->type))
-                                                        <a href="{{ route('package_content_index', $moduleMember->id) }}"
-                                                            class="btn btn-primary" style="margin-top:5px;">Manage Package
-                                                            Content</a>
-                                                    @endif
+                                                    <br />
+                                                    <a href="{{ route('package_content_index', $moduleMember->id) }}"
+                                                        class="btn btn-primary" style="margin-top:5px;">Manage Package
+                                                        Content</a>
                                                 @endif
                                             </td>
                                         </tr>
@@ -200,17 +193,17 @@
     </div>
 @endsection
 @section('beforeBodyClose')
-    <script type="text/javascript" src="{{ base_url() . 'module/module/admin/js/module.js' }}"></script>
+    <script type="text/javascript" src="{{ public_path_to_storage('') . 'module/module/admin/js/module.js' }}"></script>
     <!-- Filer -->
-    <link rel="stylesheet" href="{{ base_url() . 'module/module/admin/crop-avatar/cropper.css' }}">
+    <link rel="stylesheet" href="{{ public_path_to_storage('') . 'module/module/admin/crop-avatar/cropper.css' }}">
     <style>
         img {
             max-width: 100%;
         }
     </style>
-    <script src="{{ base_url() . 'module/module/admin/crop-avatar/cropper.js' }}"></script>
+    <script src="{{ public_path_to_storage('') . 'module/module/admin/crop-avatar/cropper.js' }}"></script>
     @include('back.module.module_js')
-    <script type="text/javascript" src="{{ base_url() . 'back/js/std_functions.js' }}"></script>
+    <script type="text/javascript" src="{{ public_path_to_storage('') . 'back/js/std_functions.js' }}"></script>
     <script>
         var uploadUrl = "{{ admin_url() }}module_image/upload_image";
         var deleteUrl = "{{ admin_url() }}module_image/remove_image";
@@ -220,7 +213,7 @@
         var show_cropper = {{ $module->crop_image == 'Yes' ? 1 : 0 }};
         var module_id = "{{ $module->type }}";
     </script>
-    <script type="text/javascript" src="{{ base_url() . 'back/js/fileUploader.js' }}"></script>
+    <script type="text/javascript" src="{{ public_path_to_storage('') . 'back/js/fileUploader.js' }}"></script>
     <div id="loading" class="loadinggif" style="display: none;"></div>
     <!-- End Bootstrap modal -->
     @php

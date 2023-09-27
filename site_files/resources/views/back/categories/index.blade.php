@@ -1,7 +1,7 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('beforeHeadClose')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script type="text/javascript" src="{{ base_url() . 'back/js/js/jquery-ui-1.7.1.custom.min.js' }}"></script>
+    <script type="text/javascript" src="{{ public_path_to_storage('') . 'back/js/js/jquery-ui-1.7.1.custom.min.js' }}"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             $(function() {
@@ -58,12 +58,10 @@
                                 @endforeach
                             </select>
                             <div class="myfldrow">
-                                @if (isAllowed('Can Add Category'))
-                                    <button type="button" class="sitebtn" onClick="load_category_add_form()"> <i
-                                            class="fas fa-plus-circle" aria-hidden="true"></i>
-                                        Add New
-                                    </button>
-                                @endif
+                                <button type="button" class="sitebtn" onClick="load_category_add_form()"> <i
+                                        class="fas fa-plus-circle" aria-hidden="true"></i>
+                                    Add New
+                                </button>
                             </div>
                         </div>
                         <div class="alert alert-warning alert-dismissible">
@@ -88,21 +86,18 @@
                                                 aria-hidden="true"></i>
                                             @if ($row->img != '')
                                                 <img style="background-color: white;"
-                                                    src="{{ base_url() }}uploads/categories/{{ $row->img }}"
+                                                    src="{{ public_path_to_uploads('categories/'.$row->img) }}"
                                                     alt="">
                                             @endif
                                             <span id="edit_{{ $row->$idDBF }}">{{ $row->title }}</span>
-                                            @if (isAllowed('Can Delete Category'))
-                                                <a class="btn btn-sm btn-danger" href="javascript:;"
-                                                    onclick="delete_category_ajax('{{ $row->$idDBF }}');"
-                                                    title="Delete"><i class="fas fa-trash"></i> Delete</a>
-                                            @endif
-                                            @if (isAllowed('Can Edit Category'))
-                                                <a class="btn btn-sm btn-info" title="Edit" href="javascript:;"
-                                                    onClick="load_category_edit_form({{ $row->$idDBF }})">
-                                                    {{-- onClick="getEditDiv('Edit', '{{ $settingArr['contr_name']}}', '{{ $row->$idDBF}}');"> --}}
-                                                    <i class="fas fa-pen-to-square" aria-hidden="true"></i> Edit</a>
-                                            @endif
+                                            <a class="btn btn-sm btn-danger" href="javascript:;"
+                                                onclick="delete_category_ajax('{{ $row->$idDBF }}');" title="Delete"><i
+                                                    class="fas fa-trash"></i> Delete</a>
+
+                                            <a class="btn btn-sm btn-info" title="Edit" href="javascript:;"
+                                                onClick="load_category_edit_form({{ $row->$idDBF }})">
+                                                {{-- onClick="getEditDiv('Edit', '{{ $settingArr['contr_name']}}', '{{ $row->$idDBF}}');"> --}}
+                                                <i class="fas fa-pen-to-square" aria-hidden="true"></i> Edit</a>
                                         </li>
                                     @endforeach
                                 @else
@@ -144,8 +139,11 @@
                         </div>
                         <div class="modal-footer">
                             <div class="row">
-                                <div class="col-sm-12 text-end">
+                                <div class="col-sm-4"></div>
+                                <div class="col-sm-4 text-end">
                                     <button type="button" class="btn btn-info" data-bs-dismiss="modal">Cancel</button>
+                                </div>
+                                <div class="col-sm-4 text-end">
                                     <button type="button" onclick="return submitForm_cat(myForm,'<?php echo $settingArr['contr_name']; ?>');"
                                         class="btn btn-success">Submit
                                     </button>
@@ -181,14 +179,24 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <div class="col-sm-4 text-end">Image:</div>
+                                <div class="col-sm-8">
+                                    <input type="file" class="form-control" name="cimg" id="cimg"
+                                        value="" />
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-sm-6">&nbsp;</div>
                                 <div class="col-sm-6"></div>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <div class="row">
-                                <div class="col-sm-12 text-end">
+                                <div class="col-sm-4"></div>
+                                <div class="col-sm-4 text-end">
                                     <button type="button" class="btn btn-info" data-bs-dismiss="modal">Cancel</button>
+                                </div>
+                                <div class="col-sm-4 text-end">
                                     <button type="button" onclick="return editForm_cat();" class="btn btn-success">Save
                                     </button>
                                 </div>

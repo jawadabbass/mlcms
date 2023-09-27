@@ -6,7 +6,6 @@
             margin: 0 0 0 0;
             padding: 0;
         }
-
         .archiveWrp ul li {
             background: #fff;
             padding: 10px;
@@ -15,7 +14,6 @@
             border-left: 2px solid #4aa9e9;
             box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
         }
-
         .archiveWrp ul li a {
             color: #4aa9e9;
             text-decoration: underline
@@ -76,32 +74,28 @@
                         $arrLinks = array_merge($beforeLinks, $arrLinksModule, $afterLinks);
                         $bgClasses = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'dark'];
                         $bgClassCounter = 0;
-                        //dd($arrLinks);
                     @endphp
                     @foreach ($arrLinks as $key => $val)
-                        @php
-                        checkPermissionAvailable($val[0], $val);
-                        @endphp
-                        @if (isset($val['permission']) && isAllowed($val['permission']))
+                        @if (isset($val['user_type']) && in_array(auth()->user()->type, $val['user_type']))
                             <div class="col-md-4">
                                 <a target="{{ $val[3] == 'newtab' ? '_blank' : '' }}" style="color: unset;"
-                                    href="{{ admin_url() . '' . $val[2] }}">
-                                    <div class="small-box bg-{{ $bgClasses[$bgClassCounter++] }}">
-                                        <div class="inner">
-                                            <h5>
-                                                @if (isset($adminAlerts[$key]) && $adminAlerts[$key] != '0' && $adminAlerts[$key] != '')
-                                                    <span class="badge">{{ $adminAlerts[$key] }}</span>
-                                                @endif <br>{{ $val[0] }}
-                                            </h5>
-                                        </div>
-                                        <div class="icon">
-                                            <i class="fas {{ $val[1] }}"></i>
-                                        </div>
-                                        <span class="small-box-footer">
-                                            {{ $val[0] }} <i class="fas fa-arrow-circle-right"></i>
-                                        </span>
+                                                href="{{ admin_url() . '' . $val[2] }}">
+                                <div class="small-box bg-{{ $bgClasses[$bgClassCounter++] }}">
+                                    <div class="inner">
+                                        <h5>
+                                            @if (isset($adminAlerts[$key]) && $adminAlerts[$key] != '0' && $adminAlerts[$key] != '')
+                                                <span class="badge">{{ $adminAlerts[$key] }}</span>
+                                            @endif <br>{{ $val[0] }}
+                                        </h5>
                                     </div>
-                                </a>
+                                    <div class="icon">
+                                        <i class="fas {{ $val[1] }}"></i>
+                                    </div>
+                                    <span class="small-box-footer">
+                                        {{ $val[0] }} <i class="fas fa-arrow-circle-right"></i>
+                                    </span>
+                                </div>
+                            </a>
                             </div>
                         @endif
                         @php

@@ -9,7 +9,7 @@ class ContactUs extends Model
     protected $table = 'contact_us_requests';
 
     function user(){
-    	return $this->hasOne('App\user','id','added_by');
+    	return $this->hasOne('App\Models\User','id','added_by');
     }
     
      function assessment(){

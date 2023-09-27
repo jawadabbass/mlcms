@@ -74,7 +74,7 @@
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-bs-toggle="collapse" data-target="#navbar-menu"> <i
                         class="fa fa-bars"></i> </button>
-                <a class="navbar-brand" href="{{ base_url() }}"> <img src="{{ asset('front/img/logo.png') }}"
+                <a class="navbar-brand" href="{{ base_url() }}"> <img src="{{ public_path_to_storage('front/img/logo.png') }}"
                         class="logo" alt="Logo"> </a>
             </div>
             <!-- End Header Navigation -->

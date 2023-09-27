@@ -30,20 +30,15 @@
                     $arrLinks = array_merge($beforeLinks, $arrLinksModule, $afterLinks);
                 @endphp
                 <li class="nav-item">
-                    <a class="nav-link  {{ $currentURL == rtrim(admin_url(), '/') ? 'active' : 'inactive' }}"
-                        href="{{ admin_url() }}"> <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>Dashboard</p>
-                    </a>
+                    <a class="nav-link  {{ $currentURL == rtrim(admin_url(), '/') ? 'active' : 'inactive' }}" href="{{ admin_url() }}"> <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>Dashboard</p></a>
                 </li>
                 @foreach ($arrLinks as $key => $val)
                     @php
                         $keys = array_keys($val);
                     @endphp
                     @if (is_array($val[$keys[0]]))
-                        @php
-                            checkPermissionAvailable($key, $val);
-                        @endphp
-                        @if (isset($val['permission']) && isAllowed($val['permission']))
+                        @if (isset($val['user_type']) && in_array(auth()->user()->type, $val['user_type']))
                             <li class="nav-item">
                                 <a class="nav-link inactive" href="#">
                                     <i class="nav-icon {{ $val['icon'][0] }}"></i>
@@ -51,15 +46,11 @@
                                 </a>
                                 <ul class="nav nav-treeview">
                                     @foreach ($val as $key1 => $val1)
-                                        @php
-                                            checkPermissionAvailable($val1[0], $val1);
-                                        @endphp
-                                        @if (isset($val1['permission']) && isAllowed($val1['permission']))
+                                        @if (isset($val1['user_type']) && in_array(auth()->user()->type, $val1['user_type']))
                                             @if ($key1 != 'icon')
                                                 <li class="nav-item">
                                                     <a target="{{ $val1[3] == 'newtab' ? '_blank' : '' }}"
-                                                        class="nav-link  {{ $currentURL == $val1[2] ? 'active' : '' }}"
-                                                        href="{{ admin_url() . $val1[2] }}">
+                                                        class="nav-link  {{ $currentURL == $val1[2] ? 'active' : '' }}" href="{{ admin_url() . $val1[2] }}">
                                                         <i class="nav-icon {{ $val1[1] }}"></i>
                                                         <p>{{ $val1[0] }}</p>
                                                     </a>
@@ -72,13 +63,9 @@
                             </li>
                         @endif
                     @else
-                        @php
-                            checkPermissionAvailable($val[0], $val);
-                        @endphp
-                        @if (isset($val['permission']) && isAllowed($val['permission']))
+                        @if (isset($val['user_type']) && in_array(auth()->user()->type, $val['user_type']))
                             <li class="nav-item">
-                                <a class="nav-link {{ $currentURL == $val[2] ? 'active' : 'inactive' }}"
-                                    target="{{ $val[3] == 'newtab' ? '_blank' : '' }}"
+                                <a class="nav-link {{ $currentURL == $val[2] ? 'active' : 'inactive' }}" target="{{ $val[3] == 'newtab' ? '_blank' : '' }}"
                                     href="{{ admin_url() . $val[2] }}">
                                     <i class="nav-icon {{ $val[1] }}"></i>
                                     <p>{{ $val[0] }}</p>
@@ -87,51 +74,14 @@
                         @endif
                     @endif
                 @endforeach
-                @if (isAllowed('View Roles') || isAllowed('View Permissions') || isAllowed('View Permission Groups'))
-                    <li class="nav-item">
-                        <a class="nav-link inactive" href="#">
-                            <i class="nav-icon fas fa-users"></i>
-                            <p>Roles &amp; Permissions<i class="right fas fa-angle-left"></i></p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            @if (isAllowed('View Roles'))
-                                <li class="nav-item">
-                                    <a href="{{ route('roles.index') }}"
-                                        class="nav-link {{ $currentURL == route('roles.index') ? 'active' : '' }}">
-                                        <i class="nav-icon fas fa-user"></i>
-                                        <p>Roles</p>
-                                    </a>
-                                </li>
-                            @endif
-                            @if (isAllowed('View Permissions'))
-                                <li class="nav-item">
-                                    <a href="{{ route('permissions.index') }}"
-                                        class="nav-link {{ $currentURL == route('permissions.index') ? 'active' : '' }}">
-                                        <i class="nav-icon fas fa-door-open"></i>
-                                        <p>Permissions</p>
-                                    </a>
-                                </li>
-                            @endif
-                            @if (isAllowed('View Permission Groups'))
-                                <li class="nav-item">
-                                    <a href="{{ route('permissionGroup.index') }}"
-                                        class="nav-link {{ $currentURL == route('permissionGroup.index') ? 'active' : '' }}">
-                                        <i class="nav-icon fas fa-list"></i>
-                                        <p>Permission Groups</p>
-                                    </a>
-                                </li>
-                            @endif
-                        </ul>
-                    </li>
-                @endif
             </ul>
             <button class="btn btn-danger mt-1 w-100" onclick="$('#logout-form').submit();">
                 <i class="nav-icon fas fa-sign-out-alt"></i> Log Out
             </button>
-            <br />
-            <br />
-            <br />
-            <br />
+            <br/>
+            <br/>
+            <br/>
+            <br/>
         </nav>
         <!-- /.sidebar-menu -->
     </div>

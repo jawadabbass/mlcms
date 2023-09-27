@@ -19,11 +19,9 @@ class MediaController extends Controller
     /* To display all galleries */
     public function index()
     {
-        hasPermission('Can Use File Manager');
         $title = FindInsettingArr('business_name') . ': Videos Management';
         $msg = '';
         $albumsObj    = array();
-        // uploads/editor/images/
         $folodersArr = array();
         $mediaBasePath = mediaBasePath();
         $folodersArr = array_filter(glob($mediaBasePath . '*'), 'is_dir');
@@ -59,7 +57,6 @@ class MediaController extends Controller
     }
     public function add_album(Request $request)
     {
-        hasPermission('Can Use File Manager');
         $validatord = Validator::make(
             $request->all(),
             [
@@ -78,11 +75,10 @@ class MediaController extends Controller
     }
     public function update_album(Request $request)
     {
-        hasPermission('Can Use File Manager');
     }
     public function upload_album_images(Request $request)
     {
-        hasPermission('Can Use File Manager');
+
         $maxImageSize = getMaxUploadSize() * 1024;
         $validator = Validator::make(
             $request->all(),
@@ -120,7 +116,6 @@ class MediaController extends Controller
      */
     public function destroy($id, Request $request)
     {
-        hasPermission('Can Use File Manager');
         $fileWithPath = $request->imgpath;
         if (!$this->sec_check(mediaBasePath(), $fileWithPath)) {
             cp('err');
@@ -139,7 +134,6 @@ class MediaController extends Controller
      */
     public function delete_album($id)
     {
-        hasPermission('Can Use File Manager');
         if (isset($_POST['imgpath'])) {
             if (!$this->sec_check(mediaBasePath(), $_POST['imgpath'])) {
                 cp('err');
@@ -151,7 +145,6 @@ class MediaController extends Controller
     }
     function delete_files($target)
     {
-        hasPermission('Can Use File Manager');
         if (is_dir($target)) {
             $files = glob($target . '*', GLOB_MARK); //GLOB_MARK adds a slash to directories returned
             foreach ($files as $file) {

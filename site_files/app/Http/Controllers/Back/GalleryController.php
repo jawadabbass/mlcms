@@ -21,7 +21,6 @@ class GalleryController extends Controller
     /* To display all galleries */
     public function index()
     {
-        hasPermission('Can Manage Gallery');
         $title = FindInsettingArr('business_name') . ': Album Management';
         $msg = '';
         $albumsObj = [];
@@ -32,7 +31,6 @@ class GalleryController extends Controller
 
     public function imagesOrder()
     {
-        hasPermission('Can Sort Gallery');
         $list_order = request()->list_order;
         $list = explode(',', $list_order);
         $i = 1;
@@ -48,7 +46,6 @@ class GalleryController extends Controller
 
     public function imageStatus()
     {
-        hasPermission('Can Edit Gallery');
         $album = AlbumImage::where(['id' => request('id')])->first();
         if ($album->status == 1) {
             $album->update([
@@ -72,7 +69,6 @@ class GalleryController extends Controller
     }
     public function imageIsFeatured()
     {
-        hasPermission('Can Edit Gallery');
         $album = AlbumImage::where(['id' => request('id')])->first();
         if ($album->isFeatured == 1) {
             $album->update([
@@ -97,7 +93,6 @@ class GalleryController extends Controller
 
     public function order(Request $request)
     {
-        hasPermission('Can Sort Gallery');
         $list_order = $request->list_order;
         $list = explode(',', $list_order);
         $i = 1;
@@ -113,7 +108,6 @@ class GalleryController extends Controller
 
     public function activate()
     {
-        hasPermission('Can Edit Gallery');
         $album = Album::where('id', request('id'))->first();
         if ($album->status == 1) {
             $album->update([
@@ -141,7 +135,6 @@ class GalleryController extends Controller
 
     public function isFeatured()
     {
-        hasPermission('Can Edit Gallery');
         $album = Album::where(['id' => request('id'), 'status' => 1])->first();
         if (!$album) {
             return response([
@@ -179,7 +172,6 @@ class GalleryController extends Controller
 
     public function add_album(Request $request)
     {
-        hasPermission('Can Add Gallery');
         $validatord = Validator::make(
             $request->all(),
             [
@@ -217,7 +209,6 @@ class GalleryController extends Controller
 
     public function update_album(Request $request)
     {
-        hasPermission('Can Edit Gallery');
         $validationArr = [];
         $maxImageSize = getMaxUploadSize() * 1024;
         $imageUploaded = false;
@@ -249,7 +240,6 @@ class GalleryController extends Controller
 
     public function upload_album_images(Request $request)
     {
-        hasPermission('Can Add Gallery');
         $maxImageSize = getMaxUploadSize() * 1024;
         $validator = Validator::make(
             $request->all(),
@@ -291,7 +281,6 @@ class GalleryController extends Controller
      */
     public function destroy($id, Request $request)
     {
-        hasPermission('Can Delete Gallery');
         $galleryItem = Image::find($id);
         ImageUploader::deleteImage('gallery/' . $request->album_id . '/', $galleryItem->imageUrl);
         $galleryItem->delete();
@@ -304,7 +293,6 @@ class GalleryController extends Controller
      */
     public function deleteImage()
     {
-        hasPermission('Can Delete Gallery');
         $image = AlbumImage::where('id', request('id'))->first();
         ImageUploader::deleteImage('gallery/' . $image->album_id . '/', $image->imageUrl);
         $image->delete();
@@ -317,7 +305,6 @@ class GalleryController extends Controller
 
     public function delete_album($id)
     {
-        hasPermission('Can Delete Gallery');
         $allImage = DB::table('images')->where('album_id', $id)->get();
         foreach ($allImage as $key => $value) {
             $galleryItem = Image::find($value->id);
@@ -332,7 +319,6 @@ class GalleryController extends Controller
 
     public function create()
     {
-        hasPermission('Can Add Gallery');
         $album_id = request()->route('id');
         $images = AlbumImage::where(['album_id' => $album_id])->orderBy('orderBy', 'asc')->get();
         $title = FindInsettingArr('business_name') . ': Gallery Management';
@@ -344,7 +330,6 @@ class GalleryController extends Controller
 
     public function markBeforeAfter()
     {
-        hasPermission('Can Edit Gallery');
         $image = AlbumImage::where(['id' => request('id')])->first();
         ImageUploader::MarkImageBeforAfter('gallery/' . $image->album_id . '/', $image->imageUrl, true);
         $image->update([
@@ -354,13 +339,12 @@ class GalleryController extends Controller
         return response([
             'status' => true,
             'message' => 'marked',
-            'src' => asset('uploads/gallery/' . $image->album_id . '/thumb/' . $image->imageUrl . '?' . time()),
+            'src' => public_path_to_uploads('gallery/' . $image->album_id . '/thumb/' . $image->imageUrl . '?' . time()),
         ]);
     }
 
     public function ajax_crop_gallery_img(Request $request)
     {
-        hasPermission('Can Manage Gallery');
         $album_id = $request->album_id;
         $crop_x = (int) $request->crop_x;
         $crop_y = (int) $request->crop_y;
@@ -376,7 +360,6 @@ class GalleryController extends Controller
 
     public function getGalleryImageAltTitle(Request $request)
     {
-        hasPermission('Can Edit Gallery');
         $imageObj = AlbumImage::where(['id' => $request->image_id])->first();
         return response([
             'image_alt' => $imageObj->image_alt,
@@ -386,7 +369,6 @@ class GalleryController extends Controller
 
     public function saveGalleryImageAltTitle(Request $request)
     {
-        hasPermission('Can Edit Gallery');
         $imageObj = AlbumImage::where(['id' => $request->image_id])->first();
         $imageObj->image_alt = $request->image_alt;
         $imageObj->image_title = $request->image_title;

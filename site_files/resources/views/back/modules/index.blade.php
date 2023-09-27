@@ -315,7 +315,16 @@
                                 <input class="form-control icp icp-auto" name="module_fontawesome_icon"
                                     id="module_fontawesome_icon" value="" type="text" autocomplete="off"
                                     data-placement="topRight" placeholder="fontawsome: fa-youtube" />
-                            </div>                
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">Access Level:</label><br />
+                                <label class="form-label"><input type="checkbox" name="access_level[]"
+                                        value="super-admin" checked> Super Admin</label><br />
+                                <label class="form-label"><input type="checkbox" name="access_level[]"
+                                        value="normal-admin" checked> Normal Admin</label><br />
+                                <label class="form-label"><input type="checkbox" name="access_level[]" value="reps">
+                                    Reps</label><br />
+                            </div>
                             <div class="mb-2">
                                 <label class="form-label">Show Icon:</label><br />
                                 <label class="form-label"><input type="checkbox" name="show_icon_in[]"
@@ -599,6 +608,15 @@
                                     data-placement="topRight" placeholder="fontawsome: fa-youtube" />
                             </div>
                             <div class="mb-2">
+                                <label class="form-label">Access Level:</label><br />
+                                <label class="form-label"><input type="checkbox" name="access_level[]" id="super-admin"
+                                        value="super-admin"> Super Admin</label><br />
+                                <label class="form-label"><input type="checkbox" name="access_level[]" id="normal-admin"
+                                        value="normal-admin"> Normal Admin</label><br />
+                                <label class="form-label"><input type="checkbox" name="access_level[]" id="reps"
+                                        value="reps"> Reps</label><br />
+                            </div>
+                            <div class="mb-2">
                                 <label class="form-label">Show Icon:</label><br />
                                 <label class="form-label"><input type="checkbox" name="show_icon_in[]"
                                         id="show_icon_in_left" value="show_icon_in_left"> Left Side</label><br />
@@ -650,5 +668,5 @@
             });
         });
     </script>
-    <script type="text/javascript" src="{{ base_url() . 'module/cmsmodules/admin/js/cmsmodules.js' }}"></script>
+    <script type="text/javascript" src="{{ public_path_to_storage('') . 'module/cmsmodules/admin/js/cmsmodules.js' }}"></script>
 @endsection

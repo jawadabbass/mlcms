@@ -14,7 +14,7 @@
                                 @foreach ($videos as $video)
                                     <div class="col-md-3 col-sm-6">
                                         <div class="video-pic">
-                                            {!! link2iframe($video['content'], $video['video_type'], '100%', '200', 'uploads/videos/video/') !!}
+                                            {!! link2iframe($video['content'], $video['video_type'], '100%', '200', 'videos/video/') !!}
                                         </div>
                                     </div>
                                 @endforeach

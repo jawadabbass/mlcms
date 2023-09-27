@@ -16,7 +16,6 @@ class VideoController extends Controller
      */
     public function index()
     {
-        hasPermission('Can Manage Videos');
         $title = FindInsettingArr('business_name') . ': Videos Management';
         $msg = '';
         $result = Video::orderBy('ID', 'DESC')->paginate(10);
@@ -30,7 +29,6 @@ class VideoController extends Controller
      */
     public function create()
     {
-        hasPermission('Can Add Videos');
     }
     /**
      * Store a newly created resource in storage.
@@ -40,7 +38,6 @@ class VideoController extends Controller
      */
     public function store(Request $request)
     {
-        hasPermission('Can Add Videos');
         $request->validate([
             'heading' => 'required',
         ]);
@@ -53,7 +50,7 @@ class VideoController extends Controller
             $fileExtension = $file->getClientOriginalExtension();
             $name = str_replace('.' . $fileExtension, '', $name) . '-' . time() . rand(1111, 4444) . '.' . $fileExtension;
             $video_name = strtolower(str_replace(' ', '-', $name));
-            $file->move(public_path() . '/uploads/videos/video/', $video_name);
+            $file->move(storage_path_to_uploads('videos/video/' . $video_name));
             $request->validate([
                 'video_img' => 'required|mimes:jpg,png,jpeg'
             ]);
@@ -62,12 +59,12 @@ class VideoController extends Controller
             $fileExtension = $file->getClientOriginalExtension();
             $name = str_replace('.' . $fileExtension, '', $name) . '-' . time() . rand(1111, 4444) . '.' . $fileExtension;
             $img_name = strtolower(str_replace(' ', '-', $name));
-            $file->move(public_path() . '/uploads/videos/thumb/', $img_name);
+            $file->move(storage_path_to_uploads('videos/thumb/' . $img_name));
 
 
 
-            $image = \Image::make(sprintf('uploads/videos/thumb/%s', $img_name))->resize(80, 60)->save();
-            $localIframe = '<video width="100%" height="446" controls> <source src="' . base_url() . 'uploads/videos/video/' . $video_name . '" type="video/mp4"> <source src="movie.ogg" type="video/ogg"> Your browser does not support the video tag. </video>';
+            $image = \Image::make(storage_path_to_uploads('videos/thumb/'.$img_name))->resize(80, 60)->save();
+            $localIframe = '<video width="100%" height="446" controls> <source src="' . public_path_to_uploads('videos/video/' . $video_name) . '" type="video/mp4"> <source src="movie.ogg" type="video/ogg"> Your browser does not support the video tag. </video>';
             $video = new Video;
             $video->heading    = $request->heading;
             $video->content = $localIframe;
@@ -104,9 +101,9 @@ class VideoController extends Controller
         $video->dated = date("Y-m-d H:i:s");
         $video->Save();
 
-        $image_source = public_path() . '/uploads/videos/' . $video->ID . ".jpg";
+        $image_source = storage_path_to_uploads('videos/' . $video->ID . ".jpg");
         file_put_contents($image_source, $image);
-        $output_file = public_path() . '/uploads/videos/thumb/' . $video->ID . ".jpg";
+        $output_file = storage_path_to_uploads('videos/thumb/' . $video->ID . ".jpg");
         copyImage1($image_source, 101, 60, $output_file);
         $video = Video::find($video->ID);
         $video->video_img = $video->ID . ".jpg";
@@ -122,7 +119,6 @@ class VideoController extends Controller
      */
     public function show($id)
     {
-        hasPermission('Can Manage Videos');
         $video = Video::find($id);
         return json_encode($video);
     }
@@ -134,7 +130,6 @@ class VideoController extends Controller
      */
     public function edit($id, Request $request)
     {
-        hasPermission('Can Edit Videos');
         if ($id == '') {
             echo 'error';
             return;
@@ -149,7 +144,7 @@ class VideoController extends Controller
             $new_status = 'blocked';
         else
             $new_status = 'active';
-        
+
         $video->sts = $new_status;
         $video->update();
         echo $new_status;
@@ -164,7 +159,6 @@ class VideoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        hasPermission('Can Edit Videos');
         $request->validate([
             'edit_heading' => 'required',
             'edit_content' => 'required',
@@ -188,9 +182,9 @@ class VideoController extends Controller
 
         $thumbnail_url = get_video_thumbnail($content);
         $image = @file_get_contents($thumbnail_url);
-        $image_source = public_path() . '/uploads/videos/' . $request->video_id . ".jpg";
+        $image_source = storage_path_to_uploads('videos/' . $request->video_id . ".jpg");
         file_put_contents($image_source, $image);
-        $output_file = public_path() . '/uploads/videos/thumb/' . $request->video_id . ".jpg";
+        $output_file = storage_path_to_uploads('videos/thumb/' . $request->video_id . ".jpg");
         copyImage1($image_source, 101, 60, $output_file);
         $video = Video::find($request->video_id);
         $video->video_img = $request->video_id . ".jpg";
@@ -210,7 +204,6 @@ class VideoController extends Controller
      */
     public function destroy($id)
     {
-        hasPermission('Can Delete Videos');
         Video::destroy($id);
         return json_encode(array("status" => true));
     }
@@ -315,14 +308,12 @@ class VideoController extends Controller
     }
     public function add_video()
     {
-        hasPermission('Can Add Videos');
         $title = 'Add Video';
         $file_upload_max_size = $this->file_upload_max_size();
         return view('back.video.add_video', compact('title', 'file_upload_max_size'));
     }
     public function edit_video($id)
     {
-        hasPermission('Can Edit Videos');
         $title = 'Edit Video';
         $rec = Video::find($id);
         $file_upload_max_size = $this->file_upload_max_size();
@@ -330,21 +321,22 @@ class VideoController extends Controller
     }
     public function post_add_video(Request $request)
     {
-        hasPermission('Can Add Videos');
         $request->validate([
             'fimg' => 'mimes:jpg,png,jpeg'
         ]);
         $img_name = '';
         $file = $request->file('fimg');
+        $file2 = $request->file('fimg');
         if (isset($_FILES['fimg']) && $_FILES['fimg']['tmp_name'] != '') {
             $name = $file->getClientOriginalName();
             $fileExtension = $file->getClientOriginalExtension();
             $name = str_replace('.' . $fileExtension, '', $name) . '-' . time() . rand(1111, 4444) . '.' . $fileExtension;
             $img_name = strtolower(str_replace(' ', '-', $name));
 
-            $file->move(public_path() . '/uploads/videos/thumb/', $img_name);
+            //$file2->move(storage_path_to_uploads('module/Videos/', $img_name));
+            $file->move(storage_path_to_uploads('videos/thumb/' . $img_name));
 
-            $image = \Image::make(sprintf('uploads/videos/thumb/%s', $img_name))->resize(80, 60)->save();
+            $image = \Image::make(storage_path_to_uploads('videos/thumb/'.$img_name))->resize(80, 60)->save();
         }
         if ($request->testimonial_type == 'upload') {
             $request->validate([
@@ -355,7 +347,7 @@ class VideoController extends Controller
             $fileExtension = $file->getClientOriginalExtension();
             $name = str_replace('.' . $fileExtension, '', $name) . '-' . time() . rand(1111, 4444) . '.' . $fileExtension;
             $video_name = strtolower(str_replace(' ', '-', $name));
-            $file->move(public_path() . '/uploads/videos/video/', $video_name);
+            $file->move(storage_path_to_uploads('videos/video/' . $video_name));
             $Video = new Video;
             $Video->video_type = $request->testimonial_type;
             $Video->short_detail = $request->descp;
@@ -383,9 +375,9 @@ class VideoController extends Controller
                     $imgLink = vimeoid2img($vimeoID);
                     $image = @file_get_contents($imgLink);
                 }
-                $image_source = public_path() . '/uploads/videos/' . $Video->ID . ".jpg";
+                $image_source = storage_path_to_uploads('videos/' . $Video->ID . ".jpg");
                 file_put_contents($image_source, $image);
-                $output_file = public_path() . '/uploads/videos/thumb/' . $Video->ID . ".jpg";
+                $output_file = storage_path_to_uploads('videos/thumb/' . $Video->ID . ".jpg");
                 copyImage1($image_source, 101, 60, $output_file);
                 $video = Video::find($Video->ID);
                 $video->video_img = $video->ID . ".jpg";
@@ -397,8 +389,6 @@ class VideoController extends Controller
     }
     public function post_edit_video(Request $request)
     {
-        hasPermission('Can Edit Videos');
-        
         $idd = (int)$request->idd;
         if ($idd == 0) {
             abort(404);
@@ -408,15 +398,17 @@ class VideoController extends Controller
         ]);
         $img_name = '';
         $file = $request->file('fimg');
+        $file2 = $request->file('fimg');
         if (isset($_FILES['fimg']) && $_FILES['fimg']['tmp_name'] != '') {
             $name = $file->getClientOriginalName();
             $fileExtension = $file->getClientOriginalExtension();
             $name = str_replace('.' . $fileExtension, '', $name) . '-' . time() . rand(1111, 4444) . '.' . $fileExtension;
             $img_name = strtolower(str_replace(' ', '-', $name));
 
-            $file->move(public_path() . '/uploads/videos/thumb/', $img_name);
+            //$file2->move(storage_path_to_uploads('module/Videos/', $img_name));
+            $file->move(storage_path_to_uploads('videos/thumb/' . $img_name));
 
-            $image = \Image::make(sprintf('uploads/videos/thumb/%s', $img_name))->resize(80, 60)->save();
+            $image = \Image::make(storage_path_to_uploads('videos/thumb/'.$img_name))->resize(80, 60)->save();
         }
         if ($request->testimonial_type == 'upload') {
             $request->validate([
@@ -427,7 +419,7 @@ class VideoController extends Controller
             $fileExtension = $file->getClientOriginalExtension();
             $name = str_replace('.' . $fileExtension, '', $name) . '-' . time() . rand(1111, 4444) . '.' . $fileExtension;
             $video_name = strtolower(str_replace(' ', '-', $name));
-            $file->move(public_path() . '/uploads/videos/video/', $video_name);
+            $file->move(storage_path_to_uploads('videos/video/' . $video_name));
             $Video = Video::find($idd);
             $Video->video_type = $request->testimonial_type;
             if ($video_name != '') {

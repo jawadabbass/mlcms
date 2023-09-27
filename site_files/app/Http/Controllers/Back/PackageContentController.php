@@ -35,9 +35,6 @@ class PackageContentController extends Controller
         $package_content->type_content = $type;
         $package_content->package_id = $request->package_id;
         if ($type == 'video') {
-            $request->validate([
-                'video' => 'required|mimes:mp4'
-            ]);
             if ($request->hasFile('video')) {
                 $size_bits = $request->file('video')->getSize();
                 $video_size_mb = number_format($size_bits / 1048576, 2);
@@ -46,14 +43,11 @@ class PackageContentController extends Controller
                 } else {
                     $imageName = $request->video->getClientOriginalName();
                     $newFileName = substr($imageName, 0, (strrpos($imageName, ".")));
-                    $request->video->move('uploads/package_content/videos', $imageName);
+                    $request->video->move(storage_path_to_uploads('package_content/videos/'), $imageName);
                     $package_content->video = $imageName;
                 }
             }
         } elseif ($type == 'image') {
-            $request->validate([
-                'image' => 'required|mimetypes:image/jpeg,image/jpg,image/png,image/svg+xml,image/gif,image/x-png,image/tiff,image/tif,image/avif,image/bmp'
-            ]);
             if ($request->hasFile('image')) {
                 $size_bits = $request->file('image')->getSize();
                 $video_size_mb = number_format($size_bits / 1048576, 2);
@@ -62,14 +56,11 @@ class PackageContentController extends Controller
                 } else {
                     $imageName = $request->image->getClientOriginalName();
                     $newFileName = substr($imageName, 0, (strrpos($imageName, ".")));
-                    $request->image->move('uploads/package_content/images', $imageName);
+                    $request->image->move(storage_path_to_uploads('package_content/images/'), $imageName);
                     $package_content->image = $imageName;
                 }
             }
         } elseif ($type == 'document') {
-            $request->validate([
-                'document' => 'required|mimetypes:application/pdf,application/x-pdf'
-            ]);
             if ($request->hasFile('document')) {
                 $size_bits = $request->file('document')->getSize();
                 $video_size_mb = number_format($size_bits / 1048576, 2);
@@ -78,7 +69,7 @@ class PackageContentController extends Controller
                 } else {
                     $imageName = $request->document->getClientOriginalName();
                     $newFileName = substr($imageName, 0, (strrpos($imageName, ".")));
-                    $request->document->move('uploads/package_content/documents', $imageName);
+                    $request->document->move(storage_path_to_uploads('package_content/documents/'), $imageName);
                     $package_content->document = $imageName;
                 }
             }
@@ -93,11 +84,11 @@ class PackageContentController extends Controller
         $package = PackageContent::find($id);
         if (!$package->type == 'content') {
             if (!empty($package->video) && $package->type == 'video') {
-                unlink('uploads/package_content/videos/' . $package->video);
+                unlink(storage_path_to_uploads('package_content/videos/' . $package->video));
             } elseif (!empty($package->image) &&  $package->type == 'image') {
-                unlink('uploads/package_content/images' . $package->image);
+                unlink(storage_path_to_uploads('package_content/images/' . $package->image));
             } elseif (!empty($package->document) && $package->type == 'document') {
-                unlink('uploads/package_content/documents/' . $package->document);
+                unlink(storage_path_to_uploads('package_content/documents/' . $package->document));
             }
         }
         $package->delete();

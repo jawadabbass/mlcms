@@ -61,7 +61,7 @@
                                             <td>
                                                 @if ($moduleMember->featured_img != '')
                                                     <img width="100"
-                                                        src="{{ base_url() }}uploads/module/{{ $module->type }}/{{ $moduleMember->featured_img }}"
+                                                        src="{{ public_path_to_uploads('') }}module/{{ $module->type }}/{{ $moduleMember->featured_img }}"
                                                         alt="">
                                                 @else
                                                     -

@@ -76,10 +76,10 @@
                                                 <td>
                                                     @if (!empty($moduleMember->featured_img))
                                                         <img width="100"
-                                                            src="{{ base_url() . 'uploads/module/' . $module->type . '/thumb/' . $moduleMember->featured_img }}">
+                                                            src="{{ public_path_to_uploads('') . 'module/' . $module->type . '/thumb/' . $moduleMember->featured_img }}">
                                                     @else
                                                         <img width="100"
-                                                            src="{{ base_url() . 'uploads/module/' . $module->type . '/thumb/no-image.jpg' }}">
+                                                            src="{{ public_path_to_uploads('') . 'module/' . $module->type . '/thumb/no-image.jpg' }}">
                                                     @endif
                                                 </td>
                                             @endif
@@ -146,16 +146,16 @@
     </div>
 @endsection
 @section('beforeBodyClose')
-    <script type="text/javascript" src="{{ base_url() . 'module/module/admin/js/module.js' }}"></script>
-    <link rel="stylesheet" href="{{ base_url() . 'module/module/admin/crop-avatar/cropper.css' }}">
+    <script type="text/javascript" src="{{ public_path_to_storage('') . 'module/module/admin/js/module.js' }}"></script>
+    <link rel="stylesheet" href="{{ public_path_to_storage('') . 'module/module/admin/crop-avatar/cropper.css' }}">
     <style>
         img {
             max-width: 100%;
         }
     </style>
-    <script src="{{ base_url() . 'module/module/admin/crop-avatar/cropper.js' }}"></script>
+    <script src="{{ public_path_to_storage('') . 'module/module/admin/crop-avatar/cropper.js' }}"></script>
     @include('back.module.module_js')
-    <script type="text/javascript" src="{{ base_url() . 'back/js/std_functions.js' }}"></script>
+    <script type="text/javascript" src="{{ public_path_to_storage('') . 'back/js/std_functions.js' }}"></script>
     <script>
         var uploadUrl = "{{ admin_url() }}module_image/upload_image";
         var deleteUrl = "{{ admin_url() }}module_image/remove_image";
@@ -165,7 +165,7 @@
         var show_cropper = {{ $module->crop_image == 'Yes' ? 1 : 0 }};
         var module_id = "{{ $module->type }}";
     </script>
-    <script type="text/javascript" src="{{ base_url() . 'back/js/fileUploader.js' }}"></script>
+    <script type="text/javascript" src="{{ public_path_to_storage('') . 'back/js/fileUploader.js' }}"></script>
     <!-- Bootstrap modal -->
     @include('back.module.add_edit_view')
     <div id="loading" class="loadinggif" style="display: none;"></div>

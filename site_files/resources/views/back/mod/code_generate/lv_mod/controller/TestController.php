@@ -1,6 +1,6 @@
 <?php
 namespace App\Http\Controllers\Back;
-use App\Models\User;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -98,7 +98,7 @@ class {mod_url_c}Controller extends Controller
      */
     public function create()
     {
-	    if(Auth::user()->type == 'user')
+	    if(Auth::user()->type != 'super-admin')
 		    return redirect(route('admin.index'));
 	    $title = FindInsettingArr('business_name').': Admin Users Management | Add new';
         $settingArr=$this->settingArr;

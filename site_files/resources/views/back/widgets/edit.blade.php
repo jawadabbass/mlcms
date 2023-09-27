@@ -80,7 +80,7 @@
                                             @if (!empty($widget->featured_image))
                                                 <span id="featured_img" style="padding-left:2px;" class="err featured_img">
                                                     <div class="featured-images-main" id="products_img_undefined"><img
-                                                            style="width:100px" src="<?php echo base_url() . 'uploads/widgets/' . $widget->featured_image; ?>"><i
+                                                            style="width:100px" src="<?php echo public_path_to_uploads('') . 'widgets/' . $widget->featured_image; ?>"><i
                                                             onclick="remove_widget_featured_image({{ $widget->ID }});"
                                                             class="deleteIcon"></i></div>
                                                 </span>
@@ -242,5 +242,5 @@
         var csrfToken = $('meta[name="csrf-token"]').attr('content');
         var show_cropper = false;
     </script>
-    <script type="text/javascript" src="{{ asset('back/js/fileUploader2.js') }}"></script>
+    <script type="text/javascript" src="{{ public_path_to_storage('back/js/fileUploader2.js') }}"></script>
 @endsection

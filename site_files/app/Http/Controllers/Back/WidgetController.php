@@ -160,8 +160,8 @@ class WidgetController extends Controller
     public function removeFeaturedImage($id)
     {
         $data = Widget::find($id);
-        if (!empty($data->featured_image) && file_exists('uploads/widgets/' . $data->featured_image)) {
-            unlink('uploads/widgets/' . $data->featured_image);
+        if (!empty($data->featured_image) && file_exists(storage_path_to_uploads('widgets/' . $data->featured_image))) {
+            unlink(storage_path_to_uploads('widgets/' . $data->featured_image));
         }
         $data->featured_image = '';
         $data->save();
@@ -176,6 +176,7 @@ class WidgetController extends Controller
      */
     public function destroy($id)
     {
+        $this->removeFeaturedImage($id);
         Widget::destroy($id);
         return json_encode(['status' => true]);
     }

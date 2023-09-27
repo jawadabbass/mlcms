@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
-use App\Http\Controllers\Back\RoleController;
 use App\Http\Controllers\Back\CacheController;
 use App\Http\Controllers\Back\FilesController;
 use App\Http\Controllers\Back\MediaController;
@@ -27,7 +26,6 @@ use App\Http\Controllers\Front\InvoiceController;
 use App\Http\Controllers\Back\DashboardController;
 use App\Http\Controllers\Front\GalleryCFrontoller;
 use App\Http\Controllers\Front\ServicesController;
-use App\Http\Controllers\Back\PermissionController;
 use App\Http\Controllers\Front\ContactUsController;
 use App\Http\Controllers\Front\MailChimpController;
 use App\Http\Controllers\Back\ImageUploadController;
@@ -36,26 +34,17 @@ use App\Http\Controllers\Back\ModuleManageController;
 use App\Http\Controllers\Front\TestimonialController;
 use App\Http\Controllers\Back\PaymentOptionController;
 use App\Http\Controllers\Back\Email_templatesController;
-use App\Http\Controllers\Back\PermissionGroupController;
 use App\Http\Controllers\Back\BlogController as BackBlogController;
-
-/************************* */
-
 use App\Http\Controllers\HomeController as UserDashboardController;
 use App\Http\Controllers\Back\VideoController as BackVideoController;
 use App\Http\Controllers\Back\GalleryController as BackGalleryController;
 use App\Http\Controllers\Back\InvoiceController as BackInvoiceController;
 use App\Http\Controllers\Back\ContactUsController as BackContactUsController;
-
-/************************* */
-
 use App\Http\Controllers\AdminAuth\LoginController as AdminAuthLoginController;
 use App\Http\Controllers\AdminAuth\VerificationController as AdminAuthVerificationController;
 use App\Http\Controllers\AdminAuth\ResetPasswordController as AdminAuthResetPasswordController;
 use App\Http\Controllers\AdminAuth\ForgotPasswordController as AdminAuthForgotPasswordController;
 use App\Http\Controllers\AdminAuth\ConfirmPasswordController as AdminAuthConfirmPasswordController;
-
-/************************* */
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -68,7 +57,6 @@ use App\Http\Controllers\AdminAuth\ConfirmPasswordController as AdminAuthConfirm
 */
 
 Auth::routes();
-
 Route::prefix('adminmedia')->name('admin.')->group(function () {
     Route::get('login', [AdminAuthLoginController::class, 'showLoginForm'])->name('login');
     Route::post('login', [AdminAuthLoginController::class, 'login']);
@@ -83,8 +71,6 @@ Route::prefix('adminmedia')->name('admin.')->group(function () {
     Route::get('email/verify/{id}/{hash}', [AdminAuthVerificationController::class, 'verify'])->name('verification.verify');
     Route::post('email/resend', [AdminAuthVerificationController::class, 'resend'])->name('verification.resend');
 });
-
-
 Route::group(['prefix' => 'member', 'name' => 'member', 'middleware' => ['auth', 'ipmiddleware']], function () {
     Route::get('/', [UserDashboardController::class, 'index'])->name('dashboard');
 });
@@ -116,10 +102,8 @@ Route::group(['namespace' => 'Front', 'middleware' => ['siteStatus', 'clearCache
     //Stripe
     Route::get('stripe', [InvoiceController::class, 'stripe']);
     Route::post('stripe', [InvoiceController::class, 'stripePost'])->name('stripe.post');
-
     Route::get('/getState/{ads}', 'ClientRegisterController@getState')->name('get_state');
     Route::get('/getCity/{ads}', 'ClientRegisterController@getCity')->name('get_city');
-
     Route::get('updateMailChimpListMembers', [MailChimpController::class, 'updateMailChimpListMembers'])->name('updateMailChimpListMembers');
     Route::get('getMailChimpListMembers', [MailChimpController::class, 'getMailChimpListMembers'])->name('getMailChimpListMembers');
     Route::get('testUpdateMailChimpListMember', [MailChimpController::class, 'testUpdateMailChimpListMember'])->name('testUpdateMailChimpListMember');
@@ -161,12 +145,9 @@ Route::group(['namespace' => 'Back', 'prefix' => 'adminmedia', 'middleware' => [
     Route::post('uploadCkeditorImage', [ImageUploadController::class, 'uploadCkeditorImage'])->name('uploadCkeditorImage');
     Route::post('/module_image/remove_image', [ImageUploadController::class, 'removeUploadedImage']);
     Route::post('/module_image/upload_more_images', [ImageUploadController::class, 'uploadMoreImages']);
-
     Route::post('/save_module_data_image_crop_image', [ModuleManageController::class, 'ajax_crop_module_data_img']);
     Route::post('/getModuleDataImageAltTitle', [ModuleManageController::class, 'getModuleDataImageAltTitle']);
     Route::post('/saveModuleDataImageAltTitle', [ModuleManageController::class, 'saveModuleDataImageAltTitle']);
-
-
     Route::post('/modules/updatePageOptions', [ModuleController::class, 'updatePageOptions']);
     Route::post('/payment_options/paypal_email', [PaymentOptionController::class, 'paypal_email']);
     Route::post('/payment_options/authorize_net', [PaymentOptionController::class, 'authorize_net']);
@@ -245,18 +226,7 @@ Route::group(['namespace' => 'Back', 'prefix' => 'adminmedia', 'middleware' => [
     Route::post('widgets/option/update/{id}', [WidgetController::class, 'optionUpdate'])->name('widget.option.update');
     Route::get('removeWidgetImage/{id}', [WidgetController::class, 'removeFeaturedImage']);
     Route::resource('/social_media', '\App\Http\Controllers\Back\SocialMediaController');
-    
-    /* Admin Users Routes */
-    Route::get('admin-users', [App\Http\Controllers\Back\AdminUserController::class, 'index'])->name('admin.users.index');
-    Route::get('admin-user/create', [App\Http\Controllers\Back\AdminUserController::class, 'create'])->name('admin.user.create');
-    Route::post('admin-user', [App\Http\Controllers\Back\AdminUserController::class, 'store'])->name('admin.user.store');
-    Route::get('admin-user/{user}', [App\Http\Controllers\Back\AdminUserController::class, 'show'])->name('admin.user.show');
-    Route::get('admin-user/{user}/edit', [App\Http\Controllers\Back\AdminUserController::class, 'edit'])->name('admin.user.edit');
-    Route::put('admin-user/{user}', [App\Http\Controllers\Back\AdminUserController::class, 'update'])->name('admin.user.update');
-    Route::delete('admin-user/{user}', [App\Http\Controllers\Back\AdminUserController::class, 'destroy'])->name('admin.user.destroy');
-    Route::get('admin-users-fetch-ajax', [App\Http\Controllers\Back\AdminUserController::class, 'fetchUsersAjax'])->name('admin.user.fetch.ajax');
-    /* Route::resource('/user/admin', '\App\Http\Controllers\Back\AdminUserController'); */
-
+    Route::resource('/user/admin', '\App\Http\Controllers\Back\AdminUserController');
     Route::resource('/user/admin_log', '\App\Http\Controllers\Back\AdminLogController');
     Route::resource('/user/front', '\App\Http\Controllers\Back\FrontUserController');
     Route::resource('/categories', '\App\Http\Controllers\Back\CategoriesController');
@@ -303,7 +273,6 @@ Route::group(['namespace' => 'Back', 'prefix' => 'adminmedia', 'middleware' => [
     Route::resource('/contact_request', 'ContactUsController');
     Route::get('/get_contact_request_to_edit/{id}', [BackContactUsController::class, 'getContactRequestToEdit'])->name('get_contact_request_to_edit');
     Route::post('/update_contact_request', [BackContactUsController::class, 'updateContactRequest'])->name('update_contact_request');
-
     Route::post('/contact_request/lead_comment', 'ContactUsController@CommentContactLeads')->name('lead_comments');
     Route::get('/read_data_contact_lead/{id}', 'ContactUsController@contactUsReadData')->name('contact_lead_read');
     Route::get('/package-change-contact-lead', 'ContactUsController@packageChangeLeads')->name('package-change-contact-lead');
@@ -315,8 +284,6 @@ Route::group(['namespace' => 'Back', 'prefix' => 'adminmedia', 'middleware' => [
     Route::post('/clients-update-record/{id}', 'ClientController@update')->name('client_update_record_store');
     Route::get('/client_email_template/{id}', 'ClientController@ClientEmailTemplate')->name('client_email_templates');
     Route::post('/client-delete', 'ClientController@clientDelete')->name('client.delete');
-
-
     //sms send start
     Route::get('/client_sms_template/{id}', 'ClientController@ClientSMSTemplate')->name('client_sms_templates');
     Route::post('/send_sms_template_client', 'ClientController@sendSMSClient')->name('send_sms_template_client');
@@ -341,7 +308,6 @@ Route::group(['namespace' => 'Back', 'prefix' => 'adminmedia', 'middleware' => [
     Route::resource('/message', 'MessageController');
     Route::post('custom_msg_store', 'MessageController@custom_msg_store')->name('custom_msg_store');
     Route::post('custom_msg_update/{id}', 'MessageController@custom_msg_update')->name('custom_msg_update');
-
     Route::get('/news', 'NewsController@index')->name('news.index');
     Route::get('/news/create', 'NewsController@create')->name('news.create');
     Route::post('/news', 'NewsController@store')->name('news.store');
@@ -354,7 +320,6 @@ Route::group(['namespace' => 'Back', 'prefix' => 'adminmedia', 'middleware' => [
     Route::get('news-sort', 'NewsController@sortNews')->name('news.sort');
     Route::get('news-sort-data', 'NewsController@newsSortData')->name('news.sort.data');
     Route::put('news-sort-update', 'NewsController@newsSortUpdate')->name('news.sort.update');
-
     /* States Routes */
     Route::get('/states', 'StateController@index')->name('states.index');
     Route::get('/states/create', 'StateController@create')->name('states.create');
@@ -368,7 +333,6 @@ Route::group(['namespace' => 'Back', 'prefix' => 'adminmedia', 'middleware' => [
     Route::get('states-sort', 'StateController@sortStates')->name('states.sort');
     Route::get('states-sort-data', 'StateController@statesSortData')->name('states.sort.data');
     Route::put('states-sort-update', 'StateController@statesSortUpdate')->name('states.sort.update');
-
     /* Counties Routes */
     Route::get('/counties', 'CountyController@index')->name('counties.index');
     Route::get('/counties/create', 'CountyController@create')->name('counties.create');
@@ -382,7 +346,6 @@ Route::group(['namespace' => 'Back', 'prefix' => 'adminmedia', 'middleware' => [
     Route::get('counties-sort', 'CountyController@sortCounties')->name('counties.sort');
     Route::get('counties-sort-data', 'CountyController@countiesSortData')->name('counties.sort.data');
     Route::put('counties-sort-update', 'CountyController@countiesSortUpdate')->name('counties.sort.update');
-
     /* Cities Routes */
     Route::get('/cities', 'CityController@index')->name('cities.index');
     Route::get('/cities/create', 'CityController@create')->name('cities.create');
@@ -397,43 +360,12 @@ Route::group(['namespace' => 'Back', 'prefix' => 'adminmedia', 'middleware' => [
     Route::get('cities-sort-data', 'CityController@citiesSortData')->name('cities.sort.data');
     Route::put('cities-sort-update', 'CityController@citiesSortUpdate')->name('cities.sort.update');
     Route::post('citiesSortUpdateAjax', 'CityController@citiesSortUpdateAjax')->name('citiesSortUpdateAjax');
-
-    /* Permissions Routes */
-    Route::resource('permissions', PermissionController::class);
-    Route::get('fetchPermissionsAjax', [PermissionController::class, 'fetchPermissionsAjax'])->name('fetchPermissionsAjax');
-    Route::put('make-active-permission', [PermissionController::class, 'makeActivePermission'])->name('make.active.permission');
-    Route::put('make-not-active-permission', [PermissionController::class, 'makeNotActivePermission'])->name('make.not.active.permission');
-    Route::get('permissions-sort', [PermissionController::class, 'sortPermissions'])->name('permissions.sort');
-    Route::get('permissions-sort-data', [PermissionController::class, 'permissionSortData'])->name('permissions.sort.data');
-    Route::put('permissions-sort-update', [PermissionController::class, 'permissionSortUpdate'])->name('permissions.sort.update');
-    Route::post('updatePermissionGroupId', [PermissionController::class, 'updatePermissionGroupId'])->name('updatePermissionGroupId');
-
-    /* Permission Groups Routes */
-    Route::resource('permissionGroup', PermissionGroupController::class);
-    Route::get('fetchPermissionGroupsAjax', [PermissionGroupController::class, 'fetchPermissionGroupsAjax'])->name('fetchPermissionGroupsAjax');
-    Route::put('make-active-permissionGroup', [PermissionGroupController::class, 'makeActivePermissionGroup'])->name('make.active.permissionGroup');
-    Route::put('make-not-active-permissionGroup', [PermissionGroupController::class, 'makeNotActivePermissionGroup'])->name('make.not.active.permissionGroup');
-    Route::get('permissionGroup-sort', [PermissionGroupController::class, 'sortPermissionGroups'])->name('permissionGroup.sort');
-    Route::get('permissionGroup-sort-data', [PermissionGroupController::class, 'permissionGroupSortData'])->name('permissionGroup.sort.data');
-    Route::put('permissionGroup-sort-update', [PermissionGroupController::class, 'permissionGroupSortUpdate'])->name('permissionGroup.sort.update');
-
-    /* Roles Routes */
-    Route::resource('roles', RoleController::class);
-    Route::get('fetchRolesAjax', [RoleController::class, 'fetchRolesAjax'])->name('fetchRolesAjax');
-    Route::put('make-active-roles', [RoleController::class, 'makeActiveRole'])->name('make.active.roles');
-    Route::put('make-not-active-roles', [RoleController::class, 'makeNotActiveRole'])->name('make.not.active.roles');
-    Route::get('roles-sort', [RoleController::class, 'sortRoles'])->name('roles.sort');
-    Route::get('roles-sort-data', [RoleController::class, 'rolesSortData'])->name('roles.sort.data');
-    Route::put('roles-sort-update', [RoleController::class, 'rolesSortUpdate'])->name('roles.sort.update');
-
     Route::get('/module-code-generator', 'ModuleCodeGeneratorController@index')->name('module.code.generator');
     Route::post('/module-code-generator', 'ModuleCodeGeneratorController@generateCode')->name('generate.module.code');
 });
-
 Route::view('permission_denied', 'front.home.permission_denied');
 Route::get('/maintenance', 'Front\HomeController@maintenance');
 Route::get('/block', 'Front\HomeController@block');
-
 Route::post('searchZipCodeAjax', 'Front\AjaxController@searchZipCodeAjax')->name('searchZipCodeAjax');
 Route::post('filterCountiesAjax', 'Front\AjaxController@filterCountiesAjax')->name('filterCountiesAjax');
 Route::post('filterCitiesAjax', 'Front\AjaxController@filterCitiesAjax')->name('filterCitiesAjax');
@@ -443,7 +375,6 @@ Route::get('/clear-cache', function () {
     Artisan::call('config:clear');
     Artisan::call('view:clear');
     Artisan::call('optimize:clear');
-    Artisan::call('errorlog:clear');
     /*************************** */
     return 'Cache is cleared';
 });

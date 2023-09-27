@@ -12,7 +12,7 @@
                 @if (!empty($about->featured_img))
                     <div class="col-md-3">
                         <div class="about-pic">
-                            <img src="{{ base_url() . 'uploads/module/'.$about->module->type.'/' . $about->featured_img }}" class="thumbnail"
+                            <img src="{{ public_path_to_uploads('') . 'module/cms/' . $about->featured_img }}" class="thumbnail"
                                 title="{{ $about->featured_img_title }}" alt="{{ $about->featured_img_alt }}">
                         </div>
                     </div>

@@ -19,15 +19,13 @@ class FilesController extends Controller
     /* To display all galleries */
     public function index()
     {
-        hasPermission('Can Use File Manager');
         $title = FindInsettingArr('business_name') . ': Videos Management';
         $msg = '';
         $albumsObj    = array();
-        // uploads/editor/images/
         $folodersArr = array();
         $filesBasePath = filesBasePath();
         $folodersArr = array_filter(glob($filesBasePath . '*'), 'is_dir');
-
+        
         $cnt = 0;
         //>>>>>>>>>>>>>>>>> **Start** Root Files
         $folderName = 'root';
@@ -58,7 +56,6 @@ class FilesController extends Controller
     }
     public function add_album(Request $request)
     {
-        hasPermission('Can Use File Manager');
         $validatord = Validator::make(
             $request->all(),
             [
@@ -77,11 +74,9 @@ class FilesController extends Controller
     }
     public function update_album(Request $request)
     {
-        hasPermission('Can Use File Manager');
     }
     public function upload_album_images(Request $request)
     {
-        hasPermission('Can Use File Manager');
         $maxImageSize = getMaxUploadSize() * 1024;
         $exts = implode(',', keyArray(filesExtsAllowed()));
         $validator = Validator::make(
@@ -107,10 +102,10 @@ class FilesController extends Controller
         }
         foreach ($request->file('uploadFile') as $key => $value) {
             $imageName = $value->getClientOriginalName();
-            if (file_exists($request->album . $imageName)) {
+            if (file_exists(storage_path_to_uploads($request->album .'/'. $imageName))) {
                 $imageName = rand(11111, 99999) . '_' . time() . '_' . $value->getClientOriginalName();
             }
-            $value->move(public_path($request->album), $imageName);
+            $value->move(storage_path_to_uploads($request->album), $imageName);
         }
 
         return back()->with('success', 'Images Uploaded Successfully.');
@@ -120,7 +115,6 @@ class FilesController extends Controller
      */
     public function destroy($id, Request $request)
     {
-        hasPermission('Can Use File Manager');
         $fileWithPath = $request->imgpath;
         if (!$this->sec_check(filesBasePath(), $fileWithPath)) {
             cp('err');
@@ -139,7 +133,6 @@ class FilesController extends Controller
      */
     public function delete_album($id)
     {
-        hasPermission('Can Use File Manager');
         if (isset($_POST['imgpath'])) {
             if (!$this->sec_check(filesBasePath(), $_POST['imgpath'])) {
                 cp('err');
@@ -151,7 +144,6 @@ class FilesController extends Controller
     }
     function delete_files($target)
     {
-        hasPermission('Can Use File Manager');
         if (is_dir($target)) {
             $files = glob($target . '*', GLOB_MARK); //GLOB_MARK adds a slash to directories returned
             foreach ($files as $file) {

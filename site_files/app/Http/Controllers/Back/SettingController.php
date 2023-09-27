@@ -19,7 +19,7 @@ class SettingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {        
+    {
         $title = FindInsettingArr('business_name') . ': Settings';
         $msg = '';
         $setting_result = Setting::first();
@@ -38,7 +38,7 @@ class SettingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {        
+    {
     }
     /**
      * Store a newly created resource in storage.
@@ -47,7 +47,6 @@ class SettingController extends Controller
      */
     public function store(Request $request)
     {
-        hasPermission('Can Manage Google Analytics');
         $setting = Setting::first();
         $setting->google_analytics = $request->google_analytics;
         $setting->save();
@@ -62,7 +61,7 @@ class SettingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request, $id)
-    {        
+    {
         $title = FindInsettingArr('business_name') . ': Settings';
         $msg = '';
         $setting_result = Setting::first();
@@ -73,23 +72,23 @@ class SettingController extends Controller
         }
         $countries = Country::all();
         $maxSizeAllowed = $this->file_upload_max_size();
-        if ($id == 'admin_logo_favicon' && isAllowed('Can Manage Admin Logo/Favicon')) {
+        if ($id == 'admin_logo_favicon') {
             return view('back.setting.admin_logo_favicon', compact('title', 'msg', 'setting_result', 'metaArray', 'countries', 'maxSizeAllowed'));
-        } elseif ($id == 'basic' && isAllowed('Can Manage Basic Settings')) {
+        } elseif ($id == 'basic') {
             return view('back.setting.basic', compact('title', 'msg', 'setting_result', 'metaArray', 'countries', 'maxSizeAllowed'));
-        } elseif ($id == 'adsense' && isAllowed('Can Manage Google Adsense')) {
+        } elseif ($id == 'adsense') {
             return view('back.setting.adsense', compact('title', 'msg', 'setting_result', 'metaArray', 'countries', 'maxSizeAllowed'));
-        } elseif ($id == 'analytics' && isAllowed('Can Manage Google Analytics')) {
+        } elseif ($id == 'analytics') {
             return view('back.setting.analytics', compact('title', 'msg', 'setting_result', 'metaArray', 'countries', 'maxSizeAllowed'));
-        } elseif ($id == 'captcha' && isAllowed('Can Manage Google Captcha')) {
+        } elseif ($id == 'captcha') {
             return view('back.setting.captcha', compact('title', 'msg', 'setting_result', 'metaArray', 'countries', 'maxSizeAllowed'));
-        } elseif ($id == 'disable-website' && isAllowed('Can Manage Disable Website')) {
+        } elseif ($id == 'disable-website') {
             return view('back.setting.disable-website', compact('title', 'msg', 'setting_result', 'metaArray', 'countries', 'maxSizeAllowed'));
-        } elseif ($id == 'restriction' && isAllowed('Can Manage Block Traffic')) {
+        } elseif ($id == 'restriction') {
             return view('back.setting.restriction', compact('title', 'msg', 'setting_result', 'metaArray', 'countries', 'maxSizeAllowed'));
-        } elseif ($id == 'js' && isAllowed('Can Manage Javascript Code')) {
+        } elseif ($id == 'js') {
             return view('back.setting.js', compact('title', 'msg', 'setting_result', 'metaArray', 'countries', 'maxSizeAllowed'));
-        }elseif ($id == 'paypal' && isAllowed('Can Manage Paypal')) {
+        }elseif ($id == 'paypal') {
             return view('back.setting.paypal', compact('title', 'msg', 'setting_result', 'metaArray', 'countries', 'maxSizeAllowed'));
         } else {
             return view('back.setting.index', compact('title', 'msg', 'setting_result', 'metaArray', 'countries', 'maxSizeAllowed'));
@@ -104,7 +103,6 @@ class SettingController extends Controller
      */
     public function edit($id, Request $request)
     {
-        hasPermission('Can Manage Disable Website');
         $setting = Setting::first();
         if (isset($request->web_down_status)) {
             $setting->web_down_status = '1';
@@ -125,7 +123,6 @@ class SettingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        hasPermission('Can Manage Google Adsense');
         $setting = Setting::first();
         $setting->google_adsense_footer = $request->google_adsense_footer;
         $setting->google_adsense_left = $request->google_adsense_left;
@@ -143,7 +140,6 @@ class SettingController extends Controller
      */
     public function updateMetaData(Request $request)
     {
-        hasPermission('Can Manage Basic Settings');
         $timeZone = Metadata::where('data_key', 'time_zone')->first();
         $timeZone->val1 = $request->timeZone;
         $timeZone->save();
@@ -167,7 +163,6 @@ class SettingController extends Controller
     }
     public function saveCaptcha(Request $request)
     {
-        hasPermission('Can Manage Google Captcha');
         $reCaptchaSite = Metadata::where('data_key', 'recaptcha_site_key')->first();
         $reCaptchaSite->val1 = $request->siteKey;
         $reCaptchaSite->save();
@@ -179,7 +174,6 @@ class SettingController extends Controller
     }
     public function ipAddress(Request $request)
     {
-        hasPermission('Can Manage Block Traffic');
         $blockIPs = Metadata::where('data_key', 'blocked_ips')->first();
         $blockedIPs = $request->ipAddresses;
         $ip = $request->ip();
@@ -286,7 +280,6 @@ class SettingController extends Controller
     }
     public function js(Request $request)
     {
-        hasPermission('Can Manage Javascript Code');
         $setting = Setting::first();
         $setting->head_js = $request->head_js;
         $setting->body_js = $request->body_js;
@@ -296,7 +289,6 @@ class SettingController extends Controller
     }
     public function adminLogoFavicon(Request $request)
     {
-        hasPermission('Can Manage Admin Logo/Favicon');
         $validated = $request->validate([
             'admin_login_page_logo' => 'image',
             'admin_header_logo' => 'image',
@@ -327,7 +319,6 @@ class SettingController extends Controller
     }
     public function savePaypal(Request $request)
     {
-        hasPermission('Can Manage Paypal');
         $paypal_live_client_id = Metadata::where('data_key', 'paypal_live_client_id')->first();
         $paypal_live_client_id->val1 = $request->paypal_live_client_id;
         $paypal_live_client_id->save();

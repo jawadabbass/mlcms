@@ -193,7 +193,7 @@ class ImageUploader
         return $fileName;
     }
 
-    public static function print_image($image_name, $image_path, $width = 0, $height = 0, $alt_title_txt = '', $default_image = '/images/no-image-available.png')
+    public static function print_image($image_name, $image_path, $width = 0, $height = 0, $alt_title_txt = '', $default_image = 'storage/images/no-image-available.png')
     {
         echo self::get_image($image_name, $image_path, $width, $height, $alt_title_txt, $default_image);
     }
@@ -203,7 +203,7 @@ class ImageUploader
         echo self::get_doc($doc_path, $doc_title, $alt_title_txt);
     }
 
-    public static function get_image($image_name, $image_path, $width = 0, $height = 0, $alt_title_txt = '', $default_image = '/images/no-image-available.png')
+    public static function get_image($image_name, $image_path, $width = 0, $height = 0, $alt_title_txt = '', $default_image = 'storage/images/no-image-available.png')
     {
         $dimensions = '';
         if ($width > 0 && $height > 0) {
@@ -218,12 +218,12 @@ class ImageUploader
         return '<img src="'.$image_src.'" '.$dimensions.' alt="'.$alt_title_txt.'" title="'.$alt_title_txt.'">';
     }
 
-    public static function print_image_src($image_name, $image_path, $default_image = '/images/no-image-available.png')
+    public static function print_image_src($image_name, $image_path, $default_image = 'images/no-image-available.png')
     {
         if (!empty($image_name) && !empty($image_path) && file_exists(ImageUploader::real_public_path().$image_path.'/'.$image_name)) {
             return ImageUploader::public_path().$image_path.'/'.$image_name;
         } else {
-            return asset($default_image);
+            return self::public_path_to_storage($default_image);
         }
     }
 
@@ -236,7 +236,7 @@ class ImageUploader
         }
     }
 
-    public static function print_image_relative($image_name, $image_path, $width = 0, $height = 0, $alt_title_txt = '', $default_image = '/images/no-image-available.png')
+    public static function print_image_relative($image_name, $image_path, $width = 0, $height = 0, $alt_title_txt = '', $default_image = 'images/no-image-available.png')
     {
         $dimensions = '';
         if ($width > 0 && $height > 0) {
@@ -249,7 +249,7 @@ class ImageUploader
         if (!empty($image_name)) {
             echo '<img src="'.$image_path.'/'.$image_name.'" '.$dimensions.' alt="'.$alt_title_txt.'" title="'.$alt_title_txt.'">';
         } else {
-            echo '<img src="'.asset($default_image).'" '.$dimensions.' alt="'.$alt_title_txt.'" title="'.$alt_title_txt.'">';
+            echo '<img src="'. self::public_path_to_storage($default_image).'" '.$dimensions.' alt="'.$alt_title_txt.'" title="'.$alt_title_txt.'">';
         }
     }
 
@@ -266,22 +266,32 @@ class ImageUploader
     public static function createDirectory($directoryPath)
     {
         if (!file_exists($directoryPath)) {
-            mkdir($directoryPath, 0777, true);
+            mkdir($directoryPath, 0775, true);
         }
     }
 
     public static function public_path()
     {
-        return url('/').DIRECTORY_SEPARATOR.'uploads'.DIRECTORY_SEPARATOR;
+        return self::public_path_to_storage().'uploads'.DIRECTORY_SEPARATOR;
+    }
+
+    public static function public_path_to_storage()
+    {
+        return url('/').DIRECTORY_SEPARATOR.'storage'.DIRECTORY_SEPARATOR;
     }
 
     public static function real_public_path()
     {
-        return public_path().DIRECTORY_SEPARATOR.'uploads'.DIRECTORY_SEPARATOR;
+        return self::storage_path_to_public().'uploads'.DIRECTORY_SEPARATOR;
+    }
+
+    public static function storage_path_to_public()
+    {
+        return storage_path(DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR);
     }
 
     public static function font_path()
     {
-        return public_path().DIRECTORY_SEPARATOR.'font'.DIRECTORY_SEPARATOR.'sabandija'.DIRECTORY_SEPARATOR.'Sabandija.ttf';
+        return self::storage_path_to_public().'font'.DIRECTORY_SEPARATOR.'sabandija'.DIRECTORY_SEPARATOR.'Sabandija.ttf';
     }
 }

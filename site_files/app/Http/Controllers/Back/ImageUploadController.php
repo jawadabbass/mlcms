@@ -106,7 +106,7 @@ class ImageUploadController extends Controller
                 $name = ImageUploader::UploadImage($folder . '/', $image, '', 500, 500, false);
             }
             return response()->json([
-                'url' => url('uploads/editor/images/' . $name)
+                'url' => public_path_to_uploads($folder .'/'. $name)
             ]);
         } else {
             return response()->json([

@@ -3,16 +3,12 @@ function ModFBuild($fieldArr, $key, $val, $fieldFunc = '', $otherAttr = '')
 { //main Func
 	$type = $fieldArr[1];
 	$fieldName = $fieldArr[0];
-
 	$fieldID = $fieldFunc . '_' . $key;
-
 	$validationClassArr = array('phone' => 'vv_phone', 'email' => 'vv_email');
 	$validationClass = '';
 	if (isset($validationClassArr[$type])) {
 		$validationClass = ' ' . $validationClassArr[$type];
 	}
-
-
 	if ($type == 'img' || substr($type, 0, 4) == 'img_') {
 		$img = '<input type="file" class="form-control" name="' . $key . '" id="' . $key . '" value="' . $val . '" />';
 		return $img;
@@ -46,7 +42,6 @@ function ModFBuild($fieldArr, $key, $val, $fieldFunc = '', $otherAttr = '')
 			$isChecked = 'checked';
 		}
 		return '
-				
 				 <div class="checkbox checkbox-danger">
 				<label class="checkbox-inline">
                         <input type="checkbox" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" name="' . $key . '" id="' . $fieldID . '" data-on="Yes" data-off="No" value="Yes" ' . $isChecked . '>
@@ -57,7 +52,6 @@ function ModFBuild($fieldArr, $key, $val, $fieldFunc = '', $otherAttr = '')
 			$isChecked = 'checked';
 		}
 		return '
-				
 				 <div class="checkbox checkbox-danger">
 				<label class="checkbox-inline">
                         <input type="checkbox" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" name="' . $key . '" id="' . $fieldID . '" data-on="Active" data-off="Inactive" value="Yes" ' . $isChecked . '>
@@ -74,41 +68,27 @@ function ModFBuild($fieldArr, $key, $val, $fieldFunc = '', $otherAttr = '')
 		return drawDropDown($key, 'select * from settings_category WHERE cat=1 order by orderr asc', 'title', 'title', $val, '', '-Type of Service-');
 	} else if ($type == 'SA_Product') {
 		$loc_id = GetDbValue('loc_id', 'ml_loc_categories', "id='" . (int)$val . "'");
-
 		$loc_id = checkLocID($loc_id);
 		$dropDownDbValue = 'id';
 		$dropDownDbText = 'title';
 		$selectValue = $val;
-
-
 		$tempVar = '<select class="form-control" name="' . $key . '" id="' . $fieldID . '">';
-
 		$tempVar .= '<option value="" selected>-Product-</option>';
-
-
 		$RSParent = Run('select * from ml_loc_cat_group WHERE loc_id=\'' . $loc_id . '\' order by orderr asc');
-
 		foreach ($RSParent as $kkkk => $val) {
-
-
 			$tempVar .= '<optgroup label="' . $val->title . '">';
-
 			$RS = Run('select * from ml_loc_categories WHERE cat=\'' . $val->id . '\' order by orderr asc');
 			foreach ($RS as $key => $getVal) {
 				$tempVar .= '<option value="' . $getVal->$dropDownDbValue . '" ';
 				if ($selectValue == $getVal->$dropDownDbValue)
 					$tempVar .= 'selected';
-
 				$tempVar .= '>' . $getVal->$dropDownDbText . '</option>';
 			}
 			$tempVar .= '</optgroup>';
 		}
-
-
 		$tempVar .= '</select>';
 		return $tempVar;
 	} else if ($type == 'Package_ID') {
-
 		$pkArr = GetDbRowArr('*', 'ml_sa_appointment_packages', "id='" . (int)$val . "'");
 		$loc_id = $pkArr['loc_id'];
 		$dropDownDbValue = 'id';
@@ -117,20 +97,10 @@ function ModFBuild($fieldArr, $key, $val, $fieldFunc = '', $otherAttr = '')
 		$dropDownDbText2 = 'title';
 		$selectValue = $val;
 		$tempVar = '<select class="form-control" onchange="change_feet_base(this.value);" name="' . $key . '" id="' . $fieldID . '">';
-
 		$tempVar .= '<option value="" selected>-Package-</option>';
-
-
 		$RSParent = Run('select * from ml_loc_cat_group WHERE loc_id=\'' . $loc_id . '\' order by orderr asc');
-
 		foreach ($RSParent as $kkkk => $val) {
-
-
 			$tempVar .= '<optgroup label="' . $val->title . '">';
-
-
-
-
 			$RS = Run('select * from ml_loc_categories WHERE cat=\'' . $val->id . '\' order by orderr asc');
 			foreach ($RS as $key => $getVal) {
 				$tempVar .= '<optgroup label="-' . $getVal->$dropDownDbText . '">';
@@ -139,14 +109,11 @@ function ModFBuild($fieldArr, $key, $val, $fieldFunc = '', $otherAttr = '')
 					$tempVar .= '<option value="' . $getVal2->$dropDownDbValue2 . '" ';
 					if ($selectValue == $getVal2->$dropDownDbValue2)
 						$tempVar .= 'selected';
-
 					$tempVar .= '>--' . $getVal2->$dropDownDbText2 . '</option>';
 				}
 			}
 			$tempVar .= '</optgroup>';
 		}
-
-
 		$tempVar .= '</select>';
 		return $tempVar;
 	} else if ($type == 'textarea' || $type == 'editor') {
@@ -173,7 +140,6 @@ function ModFBuild($fieldArr, $key, $val, $fieldFunc = '', $otherAttr = '')
 		$arrD = myform_fname($type, $fieldName);
 		return Arr2Dropdown($key, $arrD, $val, '', '');
 	} else if (substr($type, 0, 4) == 'dyn_') { //General Dropdown
-
 		$arrD = Mod_site_Dynmic($type);
 		//$arrD=myform_fname($type,$fieldName);
 		return Arr2Dropdown($key, $arrD, $val, '', '');
@@ -190,23 +156,18 @@ function ModFBuild($fieldArr, $key, $val, $fieldFunc = '', $otherAttr = '')
 	} else if ($type == '') {
 		$type = 'text';
 	}
-
 	$img = '<input type="' . $type . '" class="form-control' . $validationClass . '" placeholder="' . $fieldName . '" name="' . $key . '" id="' . $fieldID . '" value="' . htmlspecialchars($val) . '" />';
 	return $img;
 } //end ModFBuild
 //Post to Query Array			
 function ModBuildPostData($dataArr)
 {
-
 	$dataArrInsert = array();
-
 	$autoArr = array();
 	if (isset($dataArr['auto'])) {
 		$autoArr = $dataArr['auto'];
 		unset($dataArr['auto']);
 	}
-
-
 	$CI = &get_instance();
 	foreach ($dataArr as $key => $val) {
 		if ($val[1] == 'cb' || $val[1] == 'dd_status_yn') {
@@ -222,9 +183,7 @@ function ModBuildPostData($dataArr)
 		} else {
 			if (in_array($val[1], array('img'))) {
 			} else if (substr($val[1], 0, 4) == 'img_') {
-
 				$imgSettingArr = explode('__', $val[1]);
-
 				$upload_dir_name = $imgSettingArr[3]; //directory
 				$field_name = $key;
 				$thumb_width = $imgSettingArr[1];
@@ -233,15 +192,12 @@ function ModBuildPostData($dataArr)
 				$data_upload = array(
 					'file_field_name' => $field_name,
 					'files' => $_FILES,
-					'upload_dir' => realpath(APPPATH . '../public/uploads/' . $upload_dir_name),
+					'upload_dir' => storage_path_to_uploads($upload_dir_name),
 					'thumb_width' => $thumb_width,
 					'thumb_height' => $thumb_height,
 					'max_size' => MAX_IMAGE_SIZE, // 5MB
 					'extensions' => $extensions
-
 				);
-
-
 				$data = upload_file_helper($data_upload);
 				$dataArrInsert[$key] = $data['file_name'];
 			} else {
@@ -249,16 +205,13 @@ function ModBuildPostData($dataArr)
 			}
 		}
 	}
-
 	if (!empty($autoArr)) {
 		foreach ($autoArr as $key => $val) {
 			$dataArrInsert[$key] = ModAutoFValue($val[1], $val[2]);
 		}
 	}
-
 	return $dataArrInsert;
 }
-
 //Auto Add/update Case
 function ModAutoFValue($keyy, $def = '')
 {
@@ -284,7 +237,6 @@ function ModAutoFValue($keyy, $def = '')
 		return '';
 	}
 }
-
 //Field Format .... on Listing Page.
 function ModTBuild($txt, $format = '', $baseImg = '')
 {
@@ -292,7 +244,6 @@ function ModTBuild($txt, $format = '', $baseImg = '')
 	if ($format == '')
 		return stripslashes($txt);
 	else if ($format == 'date' || $format == 'cdate' || $format == 'date_only') {
-
 		return format_date($txt, 'M. d, Y'); //'M. d, Y'
 	} else if ($format == 'datetime')
 		return format_date($txt);
@@ -326,9 +277,8 @@ function ModTBuild($txt, $format = '', $baseImg = '')
 		return '<img src="' . base_url() . $baseImg . $txt . '" >';
 	else if ($format == 'img_round')
 		return '<img src="' . base_url() . $baseImg . $txt . '" class="img-circle" >';
-
 	else if ($format == 'img_pop')
-		return '<img style="cursor:pointer;" onclick="displayImage(\'' . base_url() . 'public/uploads/gallery/' . $txt . '\');" src="' . base_url() . $baseImg . $txt . '" width="100" >';
+		return '<img style="cursor:pointer;" onclick="displayImage(\'' . public_path_to_uploads('gallery/' . $txt) . '\');" src="' . base_url() . $baseImg . $txt . '" width="100" >';
 	else if ($format == 'img_new')
 		return '<img src="' . base_url() . $baseImg . 'small/' . $txt . '?abc=' . rand() . '" width="100" >';
 	else if ($format == 'img_new2')
@@ -369,14 +319,13 @@ function ModTBuild($txt, $format = '', $baseImg = '')
 	else if ($format == 'video') {
 		$retV = youtube_link_to_iframe($txt, '200', '200');
 		if ($retV == $txt && stristr($txt, '.mp4')) {
-			$retV = '<video controls="" width="200" height="200"><source src="http://localhost/de/locations/public/video/' . $txt . '" type="video/mp4">
+			$retV = '<video controls="" width="200" height="200"><source src="' . public_path_to_uploads('video/' . $txt) . '" type="video/mp4">
 	  <source src="movie.ogg" type="video/ogg">Your browser does not support the video tag.</video>';
 		}
 		return $retV;
 	} else
 		return stripslashes($txt);
 }
-
 //BreadCrumbs
 function ModBC($heading, $parentArr = array())
 {
@@ -389,30 +338,25 @@ function ModBC($heading, $parentArr = array())
 		}
 	}
 	$tmpStr .= '<li class="active">' . $heading . '</li></ol>';
-
 	return $tmpStr;
 }
-
 function Mod_f($fType, $key, $label, $defaultValue = '', $validate = 'trim', $fieldFunc = '', $otherAttr = '')
 {
 	$fieldArr = array($label, $fType, $validate);
 	return ModFBuild($fieldArr, $key, $defaultValue, $fieldFunc, $otherAttr);
 }
-
 //Create Textbox HTML
 function Mod_tb($key, $label, $defaultValue = '', $validate = 'trim', $fieldFunc = '', $otherAttr = '')
 {
 	$fieldArr = array($label, 'text', $validate);
 	return ModFBuild($fieldArr, $key, $defaultValue, $fieldFunc, $otherAttr);
 }
-
 //Create Textarea HTML
 function Mod_ta($key, $label, $validate = 'trim', $defaultValue = '', $fieldFunc = '', $otherAttr = '')
 {
 	$fieldArr = array($label, 'textarea', $validate);
 	return ModFBuild($fieldArr, $key, $defaultValue, $fieldFunc, $otherAttr);
 }
-
 //Create Auto Complete
 function Mod_list($id, $type)
 { //Textbox autcomplete
@@ -424,7 +368,6 @@ function Mod_list($id, $type)
 		return Mod_arr_list($id, $arr);
 	}
 }
-
 //Auto Complete HTML Build
 function Mod_arr_list($id, $arr)
 {
@@ -435,7 +378,6 @@ function Mod_arr_list($id, $arr)
 	$str .= '</datalist>';
 	return $str;
 }
-
 //This will change Site wide
 function Mod_site_arr($type, $selectText = '')
 {
@@ -454,27 +396,17 @@ function Mod_site_arr($type, $selectText = '')
 			'New Zealand Citizen' => 'New Zealand Citizen',
 			'Afghan Citizen' => 'Afghan Citizen',
 			'Russia Citizen' => 'Russia Citizen'
-
-
-
-
-
 		),
-
 	);
-
 	//if($type=='dd_serv'){return Q2Arr('ml_loc_services_templates','loc_sid','title','1');}
-
 	if (!isset($arr[$type])) {
 		echo error_show($type . 'create Array for "mod/Mod_site_arr"');
 		exit;
 	}
 	return $arr[$type];
 }
-
 function Mod_site_Dynmic($type)
 {
-
 	if ($type == 'dyn_admin_users') {
 		return Q2Arr('dve_admin', 'ID', 'admin_name', "1", '-User-');
 	} else {
@@ -482,7 +414,6 @@ function Mod_site_Dynmic($type)
 		exit;
 	}
 }
-
 //Create Add/Edit Array for auto add/edit.
 function Mod_create_process_arr($row, $default_val = 'trim')
 {
@@ -491,7 +422,6 @@ function Mod_create_process_arr($row, $default_val = 'trim')
 		echo '<br/>';
 	}
 }
-
 //Auto Field name with DB key(id)
 function Mod_auto_name_to_Key($key)
 {
@@ -502,9 +432,7 @@ function Mod_auto_name_to_Key($key)
 		'ip' => 'IP',
 		'pass' => 'Password',
 		'userid' => 'ID'
-
 	);
-
 	if (isset($arrCommaon[$key])) {
 		return $arrCommaon[$key];
 	} else {
@@ -527,7 +455,6 @@ function Mod_convert_validation_arr($arr)
 			} else {
 				$tmpArr1[$key] = $value[2];
 			}
-
 			$tmpArr2[$key . '.required'] = $value[0] . ' field is required.';
 		}
 	}
@@ -536,7 +463,6 @@ function Mod_convert_validation_arr($arr)
 // validation step 2 *** insert in db
 function Mod_convert_db_value($request, $kk, $vv)
 {
-
 	if ($vv[1] == 'cb' || stristr($vv[1], 'slide_flag__')) {
 		if ($request->has($kk)) {
 			return 'Yes';
@@ -547,19 +473,16 @@ function Mod_convert_db_value($request, $kk, $vv)
 		return $request->$kk;
 	}
 }
-
 //Image upload code
 function upload_file_helper($data_upload)
 {
 	$CI = &get_instance();
 	if ($data_upload['files']) {
-
 		$_FILES[$data_upload['file_field_name']]['name'] = $data_upload['files'][$data_upload['file_field_name']]['name'];
 		$_FILES[$data_upload['file_field_name']]['type'] = $data_upload['files'][$data_upload['file_field_name']]['type'];
 		$_FILES[$data_upload['file_field_name']]['tmp_name'] = $data_upload['files'][$data_upload['file_field_name']]['tmp_name'];
 		$_FILES[$data_upload['file_field_name']]['error'] = $data_upload['files'][$data_upload['file_field_name']]['error'];
 		$_FILES[$data_upload['file_field_name']]['size'] = $data_upload['files'][$data_upload['file_field_name']]['size'];
-
 		$upload_dir = $data_upload['upload_dir'];
 		if (!is_dir($upload_dir)) {
 			mkdir($upload_dir);
@@ -578,7 +501,6 @@ function upload_file_helper($data_upload)
 			return $upload_data;
 		} else {
 			$upload_data = $CI->upload->data();
-
 			chmod($upload_dir . '/thumb/', 0777);
 			$thumb_config['image_library'] = 'gd2';
 			$thumb_config['source_image']	= $upload_dir . '/' . $upload_data['file_name'];

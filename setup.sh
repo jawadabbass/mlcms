@@ -6,8 +6,8 @@ sudo chmod 755 $(sudo find site_files -type d)
 sudo chmod -R 774 site_files/public/uploads
 sudo chmod -R 774 site_files/vendor
 sudo chmod -R 774 site_files/storage
-sudo chmod -R 774 site_files/app
-sudo chmod -R 774 site_files/resources
-sudo chmod -R 774 site_files/routes
+#sudo chmod -R 774 site_files/app
+#sudo chmod -R 774 site_files/resources
+#sudo chmod -R 774 site_files/routes
 sudo chmod -R 774 site_files/composer.lock
 sudo chmod -R 774 site_files/composer.json

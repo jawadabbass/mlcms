@@ -12,7 +12,7 @@
                     @php $b_class=($b_count==0)?'active':''; @endphp
                     <div class="item {{ $b_class }}">
                         <div class="slider-thumb bg-fixed"
-                            style="background-image: url({{ asset('uploads/module/'.$banner->module->type.'/' . $banner->featured_img) }});">
+                            style="background-image: url({{ public_path_to_uploads('module/banner/' . $banner->featured_img) }});">
                         </div>
                         <div class="box-table shadow dark">
                             <div class="box-cell">
@@ -68,7 +68,7 @@
                         </div>
                     </div>
                     <div class="col-md-6 thumb"> <img
-                            src="{{ asset('uploads/module/cms/' . $about_us_page->featured_img) }}"
+                            src="{{ public_path_to_uploads('module/cms/' . $about_us_page->featured_img) }}"
                             title="{{ $about_us_page->featured_img_title }}" alt="{{ $about_us_page->featured_img_alt }}">
                     </div>
                 </div>
@@ -115,7 +115,7 @@
                             <!-- Single Item -->
                             <div class="item">
                                 <div class="thumb"> <img
-                                        src="{{ asset('uploads/module/'.$service->module->type.'/' . $service->featured_img) }}"
+                                        src="{{ public_path_to_uploads('module/services/' . $service->featured_img) }}"
                                         title="{{ $service->featured_img_title }}" alt="{{ $service->featured_img_alt }}">
                                     <div class="overlay"> <a href="#"> <i class="flaticon-report"></i>
                                             <h4>{{ $service->heading }}</h4>
@@ -167,8 +167,8 @@
                                     <!-- Single Item -->
                                     <div class="pf-item album_{{ $image->album_id }}">
                                         @php
-                                            $thumb_img_url = base_url() . 'uploads/gallery/' . $image->album_id . '/thumb/' . $image->imageUrl . '?' . time();
-                                            $img_url = base_url() . 'uploads/gallery/' . $image->album_id . '/' . $image->imageUrl . '?' . time();
+                                            $thumb_img_url = public_path_to_uploads('gallery/' . $image->album_id . '/thumb/' . $image->imageUrl . '?' . time());
+                                            $img_url = public_path_to_uploads('gallery/' . $image->album_id . '/' . $image->imageUrl . '?' . time());
                                         @endphp
                                         <div class="effect-left-swipe">
                                             <div class="imagebox">
@@ -209,7 +209,7 @@
                                 <p> {{ $testimonial->content }} </p>
                                 <div class="author">
                                     <div class="thumb"> <img
-                                            src="{{ asset('uploads/module/'.$testimonial->module->type.'/' . $testimonial->featured_img) }}"
+                                            src="{{ public_path_to_uploads('module/testimonials/' . $testimonial->featured_img) }}"
                                             title="{{ $testimonial->featured_img_title }}"
                                             alt="{{ $testimonial->featured_img_alt }}"> </div>
                                     <div class="info"> <span>- {{ $testimonial->additional_field_1 }}</span>
@@ -282,7 +282,7 @@
                         </div>
                         <div class="panel-body">
                             <a href="#" class="thumbnail">
-                            <img class="card-img-top" src="{{ asset('uploads/widgets/' . $scwidget->featured_image) }}"
+                            <img class="card-img-top" src="{{ public_path_to_uploads('widgets/' . $scwidget->featured_image) }}"
                                 alt="{{ $scwidget->featured_image_alt }}" title="{{ $scwidget->featured_image_title }}">
                             </a>
                             {!! $scwidget->content !!}
@@ -316,12 +316,12 @@
                             <div class="item">
                                 <div class="thumb">
                                     <a href="{{ base_url() . 'blog/' . $blogsValues['post_slug'] }}">
-                                        @if (!empty($blogsValues['featured_img']) && file_exists(public_path('/uploads/blog/' . $blogsValues['featured_img'])))
-                                            <img src="{{ base_url() . 'uploads/blog/' . $blogsValues['featured_img'] }}"
+                                        @if (!empty($blogsValues['featured_img']) && file_exists(storage_path_to_uploads('blog/' . $blogsValues['featured_img'])))
+                                            <img src="{{ public_path_to_uploads('blog/' . $blogsValues['featured_img']) }}"
                                                 title="{{ $blogsValues['featured_img_title'] }}"
                                                 alt="{{ $blogsValues['featured_img_alt'] }}">
                                         @else
-                                            <img src="{{ base_url() . 'back/images/no_image.jpg' }}"
+                                            <img src="{{ public_path_to_uploads('back/images/no_image.jpg') }}"
                                                 title="{{ $blogsValues['featured_img_title'] }}"
                                                 alt="{{ $blogsValues['featured_img_alt'] }}">
                                         @endif
@@ -368,7 +368,7 @@
                         @foreach ($get_all_partners as $partner)
                             <div class="single-item">
                                 <a href="#">
-                                    <img src="{{ asset('uploads/module/'.$partner->module->type.'/' . $partner->featured_img) }}"
+                                    <img src="{{ public_path_to_uploads('module/partners/' . $partner->featured_img) }}"
                                         title="{{ $partner->featured_img_title }}"
                                         alt="{{ $partner->featured_img_alt }}">
                                 </a>
