@@ -1,5 +1,7 @@
 <?php
 namespace App\Http\Controllers\Back;
+
+use App\Helpers\ImageUploader;
 use App\Http\Controllers\Controller;
 use App\Models\Back\Widget;
 use Illuminate\Http\Request;
@@ -160,12 +162,11 @@ class WidgetController extends Controller
     public function removeFeaturedImage($id)
     {
         $data = Widget::find($id);
-        if (!empty($data->featured_image) && file_exists(storage_path_to_uploads('widgets/' . $data->featured_image))) {
-            unlink(storage_path_to_uploads('widgets/' . $data->featured_image));
+        if (null !== $data) {
+            ImageUploader::deleteImage('widgets/', $data->featured_image);
+            $data->featured_image = '';
+            $data->save();
         }
-        $data->featured_image = '';
-        $data->save();
-        echo 'done';
     }
     /**
      * Remove the specified resource from storage.

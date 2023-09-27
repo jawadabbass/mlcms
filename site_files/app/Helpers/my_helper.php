@@ -92,7 +92,7 @@ function getImage($folder, $image, $defaultSize = 'main')
 
 function storage_path_to_uploads($path)
 {
-    return ImageUploader::real_public_path() . $path;
+    return ImageUploader::storage_path_to_uploads() . $path;
 }
 
 function storage_path_to_public($path)
