@@ -172,7 +172,7 @@
         var csrfToken = $('meta[name="csrf-token"]').attr('content');
         var show_cropper = false;
     </script>
-    <script type="text/javascript" src="{{ public_path_to_storage('back/js/fileUploader2.js') }}"></script>
+    <script type="text/javascript" src="{{ asset_storage('back/js/fileUploader2.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function(e) {
             $("#heading").change(function() {

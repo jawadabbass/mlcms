@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
   <?php echo seo_print($seoArr); ?>
-  <link href="<?php echo public_path_to_storage('module/blog/front/css/blog.css'); ?>" rel="stylesheet" type="text/css" />
+  <link href="<?php echo asset_storage('module/blog/front/css/blog.css'); ?>" rel="stylesheet" type="text/css" />
   <?php $this->load->view('../../common_views/before_head_close'); ?>
 </head>
 
@@ -32,10 +32,10 @@
               <li class="col-md-12">
                 <div class="inner-col">
                   <div class="articles-image">
-                    <?php if (file_exists(storage_path_to_uploads('blog/thumb/'.$blogsValues['featured_img'])) && !empty($blogsValues['featured_img'])) { ?>
-                      <img src="<?php echo public_path_to_uploads('blog/thumb/'.$blogsValues['featured_img']); ?>"  title="<?php echo $blogsValues['featured_img_title']; ?>"  alt="<?php echo $blogsValues['featured_img_alt']; ?>">
+                    <?php if (file_exists(storage_uploads('blog/thumb/'.$blogsValues['featured_img'])) && !empty($blogsValues['featured_img'])) { ?>
+                      <img src="<?php echo asset_uploads('blog/thumb/'.$blogsValues['featured_img']); ?>"  title="<?php echo $blogsValues['featured_img_title']; ?>"  alt="<?php echo $blogsValues['featured_img_alt']; ?>">
                     <?php } else { ?>
-                      <img src="<?php echo public_path_to_uploads('images/admin_images/no_image.jpg'); ?>" title="<?php echo $blogsValues['featured_img_title']; ?>"  alt="<?php echo $blogsValues['featured_img_alt']; ?>">
+                      <img src="<?php echo asset_uploads('images/admin_images/no_image.jpg'); ?>" title="<?php echo $blogsValues['featured_img_title']; ?>"  alt="<?php echo $blogsValues['featured_img_alt']; ?>">
                     <?php } ?>
                   </div>
                   <div class="head">

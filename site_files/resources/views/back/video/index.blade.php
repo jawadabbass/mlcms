@@ -260,5 +260,5 @@
             $("#add_type_" + radioValue).show();
         }
     </script>
-    <script type="text/javascript" src="{{ public_path_to_storage('') . 'module/videos/admin/js/videos.js' }}"></script>
+    <script type="text/javascript" src="{{ asset_storage('') . 'module/videos/admin/js/videos.js' }}"></script>
 @endsection

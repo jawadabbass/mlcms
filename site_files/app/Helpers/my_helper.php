@@ -90,24 +90,24 @@ function getImage($folder, $image, $defaultSize = 'main')
     return ImageUploader::print_image_src($image, $folder . $defaultSize, 'storage/front/images/no-image-available.png');
 }
 
-function storage_path_to_uploads($path)
+function storage_uploads($path)
 {
-    return ImageUploader::storage_path_to_uploads() . $path;
+    return ImageUploader::storage_uploads() . $path;
 }
 
-function storage_path_to_public($path)
+function storage_public($path)
 {
-    return ImageUploader::storage_path_to_public() . $path;
+    return ImageUploader::storage_public() . $path;
 }
 
-function public_path_to_uploads($path)
+function asset_uploads($path)
 {
-    return ImageUploader::public_path() . $path;
+    return ImageUploader::asset_uploads() . $path;
 }
 
-function public_path_to_storage($path)
+function asset_storage($path)
 {
-    return ImageUploader::public_path_to_storage() . $path;
+    return ImageUploader::asset_storage() . $path;
 }
 
 function getProfileAddress()
@@ -302,10 +302,10 @@ function generateModuleDataImageHtml($folder, $image)
                     <div class="mb-3">
                         <div class="imagebox">
                             <a href="javascript:void(0);" title="' . $image->image_title . '"
-                                onclick="openModuleDataImageZoomModal(\'' . public_path_to_uploads($folder . '/' . $image->image_name . '?' . time()) . '\');">
+                                onclick="openModuleDataImageZoomModal(\'' . asset_uploads($folder . '/' . $image->image_name . '?' . time()) . '\');">
                                 <img id="image_' . $image->id . '"
                                     data-imgname="' . $image->image_name . '"
-                                    src="' . public_path_to_uploads($folder . '/thumb/' . $image->image_name . '?' . time()) . '"
+                                    src="' . asset_uploads($folder . '/thumb/' . $image->image_name . '?' . time()) . '"
                                     style="width:100%" alt="' . $image->image_alt . '"
                                     title="' . $image->image_title . '">
                             </a>
@@ -349,8 +349,8 @@ function getCmsModuleDataImages($images)
     $imagesArray = [];
     if (count($images) > 0) {
         foreach ($images as $image) {
-            $thumb = public_path_to_uploads('module/' . $image->module_type . '/thumb/' . $image->image_name);
-            $main = public_path_to_uploads('module/' . $image->module_type . '/' . $image->image_name);
+            $thumb = asset_uploads('module/' . $image->module_type . '/thumb/' . $image->image_name);
+            $main = asset_uploads('module/' . $image->module_type . '/' . $image->image_name);
             $imagesArray[] = (object)['thumb' => $thumb, 'main' => $main, 'image_alt' => $image->image_alt, 'image_title' => $image->image_title ];
         }
     }

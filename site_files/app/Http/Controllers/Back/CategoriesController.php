@@ -112,7 +112,7 @@ class CategoriesController extends Controller
 		if ($request->hasFile('cimg')) {
 			$image = $request->file('cimg');
 			$name = time() . '.' . $image->getClientOriginalExtension();
-			$destinationPath = storage_path_to_uploads('categories');
+			$destinationPath = storage_uploads('categories');
 			$image->move($destinationPath, $name);
 			$category->img = $name;
 		}

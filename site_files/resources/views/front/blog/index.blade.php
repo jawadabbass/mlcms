@@ -1,6 +1,6 @@
 @extends('front.layout.app')
 @section('beforeHeadClose')
-    <link href="{{ public_path_to_storage('') . 'module/blog/front/css/blog.css' }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset_storage('') . 'module/blog/front/css/blog.css' }}" rel="stylesheet" type="text/css" />
 @endsection
 @section('content')
     @php echo cms_edit_page("blog");@endphp
@@ -21,11 +21,11 @@
                                         <div class="thumb">
                                             <a href="{{ base_url() . 'blog/' . $blogsValues['post_slug'] }}">
                                                 @if (!empty($blogsValues['featured_img']) &&
-                                                    file_exists(storage_path_to_uploads('blog/' . $blogsValues['featured_img'])))
-                                                    <img src="{{ public_path_to_uploads('blog/' . $blogsValues['featured_img']) }}"
+                                                    file_exists(storage_uploads('blog/' . $blogsValues['featured_img'])))
+                                                    <img src="{{ asset_uploads('blog/' . $blogsValues['featured_img']) }}"
                                                         title="{{ $blogsValues['featured_img_title'] }}" alt="{{ $blogsValues['featured_img_alt'] }}">
                                                 @else
-                                                    <img src="{{ public_path_to_uploads('back/images/no_image.jpg') }}" title="{{ $blogsValues['featured_img_title'] }}" alt="{{ $blogsValues['featured_img_alt'] }}">
+                                                    <img src="{{ asset_uploads('back/images/no_image.jpg') }}" title="{{ $blogsValues['featured_img_title'] }}" alt="{{ $blogsValues['featured_img_alt'] }}">
                                                 @endif
                                             </a>
                                             <span class="post-formats"><i class="fas fa-image"></i></span>

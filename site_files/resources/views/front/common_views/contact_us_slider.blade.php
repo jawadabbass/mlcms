@@ -4,7 +4,7 @@
                 <ul class="slides">
                     <?php if(count($banners) > 0):
                         foreach($banners as $bannerValue): ?>
-                    <li><img style='max-height: 225px;' src="<?php echo public_path_to_uploads('banners/' . $bannerValue->banner_name); ?>" alt="<?php echo $bannerValue->alt_tag; ?>"></li>
+                    <li><img style='max-height: 225px;' src="<?php echo asset_uploads('banners/' . $bannerValue->banner_name); ?>" alt="<?php echo $bannerValue->alt_tag; ?>"></li>
                     <?php endforeach; endif; ?>
                     <div style="clear:both;"></div>
                 </ul>

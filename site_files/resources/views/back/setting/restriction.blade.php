@@ -1,8 +1,8 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('beforeHeadClose')
-    <link href="{{ public_path_to_storage('') . 'module/settings/admin/css/settings.css' }}" rel="stylesheet" type="text/css" />
-    <link href="{{ public_path_to_storage('') . 'back/css/magicsuggest.css' }}" rel="stylesheet" type="text/css" />
-    <link href="{{ public_path_to_storage('') . 'module/settings/admin/css/setting.css' }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset_storage('') . 'module/settings/admin/css/settings.css' }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset_storage('') . 'back/css/magicsuggest.css' }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset_storage('') . 'module/settings/admin/css/setting.css' }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.1.0/css/flag-icon.min.css"
         integrity="sha256-D+ZpDJjhGxa5ffyQkuTvwii4AntFGBZa4jUhSpdlhjM=" crossorigin="anonymous" />
 @endsection
@@ -176,8 +176,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css"
         rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-    <script type="text/javascript" src="{{ public_path_to_storage('') . 'module/settings/admin/js/settings.js' }}"></script>
-    <script type="text/javascript" src="{{ public_path_to_storage('') . 'back/js/magicsuggest.js' }}"></script>
+    <script type="text/javascript" src="{{ asset_storage('') . 'module/settings/admin/js/settings.js' }}"></script>
+    <script type="text/javascript" src="{{ asset_storage('') . 'back/js/magicsuggest.js' }}"></script>
     <script type="text/javascript">
         var countryList = new Array();
         var url = '{{ admin_url() }}';

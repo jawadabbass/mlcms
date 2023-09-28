@@ -79,7 +79,7 @@
                                 <td>{{ $loop->index + 1 }}</td>
                                 <td>{{ $album->title }}</td>
                                 <td>
-                                    <img src="{{ public_path_to_uploads('') }}gallery/{{ $album->f_img }}" width="100">
+                                    <img src="{{ asset_uploads('') }}gallery/{{ $album->f_img }}" width="100">
                                 </td>
                                 <td class="text-center">
                                     <label class="switch">
@@ -236,7 +236,7 @@
 
     @section('beforeBodyClose')
         @include('back.gallery.gallery_js')
-        <script src="{{ public_path_to_storage('lib/sweetalert/sweetalert2.js') }}"></script>
+        <script src="{{ asset_storage('lib/sweetalert/sweetalert2.js') }}"></script>
 
         <script>
             $.ajaxSetup({

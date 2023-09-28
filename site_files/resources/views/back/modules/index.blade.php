@@ -668,5 +668,5 @@
             });
         });
     </script>
-    <script type="text/javascript" src="{{ public_path_to_storage('') . 'module/cmsmodules/admin/js/cmsmodules.js' }}"></script>
+    <script type="text/javascript" src="{{ asset_storage('') . 'module/cmsmodules/admin/js/cmsmodules.js' }}"></script>
 @endsection

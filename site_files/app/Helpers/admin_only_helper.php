@@ -264,11 +264,11 @@ function StdNumber($number)
 }
 function mediaBasePath()
 {
-    return storage_path_to_uploads('editor/images/');
+    return storage_uploads('editor/images/');
 }
 function filesBasePath()
 {
-    return storage_path_to_uploads('editor/files/');
+    return storage_uploads('editor/files/');
 }
 function filesExtsAllowed()
 {

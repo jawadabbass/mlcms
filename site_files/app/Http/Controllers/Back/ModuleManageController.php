@@ -335,8 +335,8 @@ class ModuleManageController extends Controller
             ImageUploader::deleteImage('module/' . $image->module_type, $image->image_name, true);
             $image->delete();
         }
-        if (!empty($moduleData->featured_img) && file_exists(storage_path_to_uploads('module/' . $module->type . '/' . $moduleData->featured_img))) {
-            unlink(storage_path_to_uploads('module/' . $module->type . '/' . $moduleData->featured_img));
+        if (!empty($moduleData->featured_img) && file_exists(storage_uploads('module/' . $module->type . '/' . $moduleData->featured_img))) {
+            unlink(storage_uploads('module/' . $module->type . '/' . $moduleData->featured_img));
         }
         $moduleData->delete();
         Menu::where('menu_id', $id)->delete();
@@ -351,8 +351,8 @@ class ModuleManageController extends Controller
     {
         $id = $request->id;
         $data = CmsModuleData::find($id);
-        if (!empty($data->featured_img) && file_exists(storage_path_to_uploads('module/' . $request->type . '/' . $data->featured_img))) {
-            unlink(storage_path_to_uploads('module/' . $request->type . '/' . $data->featured_img));
+        if (!empty($data->featured_img) && file_exists(storage_uploads('module/' . $request->type . '/' . $data->featured_img))) {
+            unlink(storage_uploads('module/' . $request->type . '/' . $data->featured_img));
         }
         $data->featured_img = '';
         $data->save();
@@ -363,8 +363,8 @@ class ModuleManageController extends Controller
         $module_id = $request->module_id;
         $module = CmsModule::find($module_id);
         $module_type = $module->type;
-        $upload_dir = storage_path_to_uploads('module/' . $module_type . '/');
-        $upload_dir_thumb = storage_path_to_uploads('module/' . $module_type . '/thumb');
+        $upload_dir = storage_uploads('module/' . $module_type . '/');
+        $upload_dir_thumb = storage_uploads('module/' . $module_type . '/thumb');
         $crop_x = $request->crop_x;
         $crop_y = $request->crop_y;
         $crop_height = $request->crop_height;

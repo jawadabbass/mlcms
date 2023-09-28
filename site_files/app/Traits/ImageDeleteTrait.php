@@ -11,9 +11,9 @@ trait ImageDeleteTrait
     {
         if (!empty($path) && !empty($image) && !is_null($image)) {
             if ($haveSubFolders) {
-                File::delete(ImageUploader::storage_path_to_uploads().$path.'/'.'thumb/'.$image);
+                File::delete(ImageUploader::storage_uploads().$path.'/'.'thumb/'.$image);
             }
-            File::delete(ImageUploader::storage_path_to_uploads().$path.'/'.$image);
+            File::delete(ImageUploader::storage_uploads().$path.'/'.$image);
         }
     }
 }

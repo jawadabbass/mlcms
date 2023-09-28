@@ -145,7 +145,7 @@
 
         </div>
     </div>
-    <script src="{{ public_path_to_storage('lib/sweetalert/sweetalert2.js') }}"></script>
+    <script src="{{ asset_storage('lib/sweetalert/sweetalert2.js') }}"></script>
     <script src="https://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
     <script>
         baseUrl = "{{ base_url() }}";

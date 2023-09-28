@@ -4,7 +4,7 @@
         $('#image_preview').html("");
         var total_file = document.getElementById("uploadFile").files.length;
         for (var i = 0; i < total_file; i++) {
-            $('#image_preview').append("<div class=\"col-md-1\"><img src='" + URL.createObjectURL(event.target.files[
+            $('#image_preview').append("<div class=\"col-md-1 card\"><img src='" + URL.createObjectURL(event.target.files[
                 i]) + "'></div>");
         }
     }
@@ -158,7 +158,7 @@
     function copyMyTxt(txt) {
 
         $("#txt_copy22").show();
-        $("#txt_copy22").val('{{ base_url() }}' + '' + txt);
+        $("#txt_copy22").val(txt);
         var copyText = document.getElementById("txt_copy22");
         copyText.select();
         copyText.setSelectionRange(0, 99999)

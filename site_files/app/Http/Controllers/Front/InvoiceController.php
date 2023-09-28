@@ -30,7 +30,7 @@ class InvoiceController extends Controller
         $returnURL = base_url() . 'invoice/success/' . $invoiceObj->invoice_webkey; //payment success url
         $cancelURL = base_url() . 'invoice/cancel/' . $invoiceObj->invoice_webkey; //payment cancel url
         $notifyURL = base_url() . 'invoice/ipn'; //ipn url
-        $logo = public_path_to_storage('images/Untitled-1.png');
+        $logo = asset_storage('images/Untitled-1.png');
 
 
         $paypalLib->add_field('business', get_meta_val('paypal_email'));

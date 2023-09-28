@@ -1,7 +1,7 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('beforeHeadClose')
     @php $module = 'menu' @endphp
-    <link rel="stylesheet" href="{{ public_path_to_storage('') . 'module/menu/admin/drag/stylesheet.css' }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset_storage('') . 'module/menu/admin/drag/stylesheet.css' }}" type="text/css">
 @endsection
 @section('content')
     <div class="content-wrapper pl-3 pr-2">
@@ -83,9 +83,9 @@
     @include('back.menu.add_edit_view')
 @endsection
 @section('beforeBodyClose')
-    <script type="text/javascript" src="{{ public_path_to_storage('') . 'module/menu/admin/drag/jquery-sortable-lists.js' }}"></script>
+    <script type="text/javascript" src="{{ asset_storage('') . 'module/menu/admin/drag/jquery-sortable-lists.js' }}"></script>
     {{-- <script type="text/javascript" --}}
-    {{-- src="{{public_path_to_storage('') . 'module/menu/admin/js/menu.js'}}"></script> --}}
+    {{-- src="{{asset_storage('') . 'module/menu/admin/js/menu.js'}}"></script> --}}
     
     @include('back.menu.menu_js')
     <!-- End Bootstrap modal -->

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Back;
 
+use App\Helpers\ImageUploader;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -100,12 +101,9 @@ class FilesController extends Controller
         if (!$this->sec_check(filesBasePath(), $request->album)) {
             cp('err');
         }
+        $album_name = str_ireplace(storage_uploads(''), '', $request->album);
         foreach ($request->file('uploadFile') as $key => $value) {
-            $imageName = $value->getClientOriginalName();
-            if (file_exists(storage_path_to_uploads($request->album .'/'. $imageName))) {
-                $imageName = rand(11111, 99999) . '_' . time() . '_' . $value->getClientOriginalName();
-            }
-            $value->move(storage_path_to_uploads($request->album), $imageName);
+            ImageUploader::UploadDoc($album_name, $value);
         }
 
         return back()->with('success', 'Images Uploaded Successfully.');

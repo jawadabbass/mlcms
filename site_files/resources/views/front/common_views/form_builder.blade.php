@@ -103,7 +103,7 @@
             <div class="row">
                 <div class="col-sm-4"><label></label></div>
                 <div class="col-sm-8">
-                    <span style="display:none"><img src="<?php echo public_path_to_storage('images/common/loader.gif'); ?>" /></span>
+                    <span style="display:none"><img src="<?php echo asset_storage('images/common/loader.gif'); ?>" /></span>
                     <?php
                     if (!isset($formButtonText)) {
                         $formButtonText = 'Update';

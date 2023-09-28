@@ -18,7 +18,7 @@
     </div>
     @yield('content')
     <div class="sitecredits">Powered By <a title="MediaLinkers" href="http://www.medialinkers.com" target="_blank"><img
-                src="{{ public_path_to_storage('') . 'back/images/ml-icon.png' }}" /></a></div>
+                src="{{ asset_storage('') . 'back/images/ml-icon.png' }}" /></a></div>
 </body>
 
 </html>

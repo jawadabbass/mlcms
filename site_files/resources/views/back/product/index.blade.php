@@ -132,7 +132,7 @@
     @include('back.common_views.spinner')
 @endsection
 @section('beforeBodyClose')
-    <script src="{{ public_path_to_storage('') . 'module/products/admin/js/products.js' }}" type="text/javascript"></script>
+    <script src="{{ asset_storage('') . 'module/products/admin/js/products.js' }}" type="text/javascript"></script>
     <script>
         var uploadUrl = "{{ admin_url() }}module_image/upload_image";
         var deleteUrl = "{{ admin_url() }}module_image/remove_image";
@@ -141,8 +141,8 @@
         var csrfToken = $('meta[name="csrf-token"]').attr('content');
         var show_cropper = false;
     </script>
-    <script type="text/javascript" src="{{ public_path_to_storage('') . 'back/js/fileUploader.js' }}"></script>
-    <script type="text/javascript" src="{{ public_path_to_storage('') . 'module/settings/admin/js/settings.js' }}"></script>
+    <script type="text/javascript" src="{{ asset_storage('') . 'back/js/fileUploader.js' }}"></script>
+    <script type="text/javascript" src="{{ asset_storage('') . 'module/settings/admin/js/settings.js' }}"></script>
     <script type="text/javascript" src="{{ base_url() }}back/mod/mod_js.js"></script>
     @include('back.product.product_js')
     @include('back.product.add_edit_view')

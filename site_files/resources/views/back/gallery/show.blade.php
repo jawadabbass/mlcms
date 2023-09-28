@@ -1,7 +1,7 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('beforeHeadClose')
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-    <link href="{{ public_path_to_storage('back/css/cropper.css') }}" rel="stylesheet">
+    <link href="{{ asset_storage('back/css/cropper.css') }}" rel="stylesheet">
     <style>
         .sortable121 span i {
             background-color: #b4b3b3;
@@ -99,9 +99,9 @@
                             <div class="mb-3 sort2">
                                 <div class="imagebox">
                                     <a href="javascript:void(0);" title="{{ $image->image_title }}"
-                                        onclick="openGalleryImageZoomModal('{{ public_path_to_uploads('') }}gallery/{{ $image->album_id }}/{{ $image->imageUrl . '?' . time() }}');">
+                                        onclick="openGalleryImageZoomModal('{{ asset_uploads('') }}gallery/{{ $image->album_id }}/{{ $image->imageUrl . '?' . time() }}');">
                                         <img id="image_{{ $image->id }}" data-imgname="{{ $image->imageUrl }}"
-                                            src="{{ public_path_to_uploads('') }}gallery/{{ $image->album_id }}/thumb/{{ $image->imageUrl . '?' . time() }}"
+                                            src="{{ asset_uploads('') }}gallery/{{ $image->album_id }}/thumb/{{ $image->imageUrl . '?' . time() }}"
                                             style="width:100%" alt="{{ $image->image_alt }}"
                                             title="{{ $image->image_title }}">
                                     </a>
@@ -238,7 +238,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
         <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-        <script src="{{ public_path_to_storage('back/js/cropper.js') }}"></script>
+        <script src="{{ asset_storage('back/js/cropper.js') }}"></script>
         @include('back.gallery.gallery_js')
         <script>
             $(function() {

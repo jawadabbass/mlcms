@@ -87,7 +87,7 @@
                                                 <td>
                                                     @if (!empty($moduleMember->featured_img))
                                                         <img width="100"
-                                                            src="{{ public_path_to_uploads('') . 'module/' . $module->type . '/' . $moduleMember->featured_img }}">
+                                                            src="{{ asset_uploads('') . 'module/' . $module->type . '/' . $moduleMember->featured_img }}">
                                                     @endif
                                                 </td>
                                             @endif
@@ -193,17 +193,17 @@
     </div>
 @endsection
 @section('beforeBodyClose')
-    <script type="text/javascript" src="{{ public_path_to_storage('') . 'module/module/admin/js/module.js' }}"></script>
+    <script type="text/javascript" src="{{ asset_storage('') . 'module/module/admin/js/module.js' }}"></script>
     <!-- Filer -->
-    <link rel="stylesheet" href="{{ public_path_to_storage('') . 'module/module/admin/crop-avatar/cropper.css' }}">
+    <link rel="stylesheet" href="{{ asset_storage('') . 'module/module/admin/crop-avatar/cropper.css' }}">
     <style>
         img {
             max-width: 100%;
         }
     </style>
-    <script src="{{ public_path_to_storage('') . 'module/module/admin/crop-avatar/cropper.js' }}"></script>
+    <script src="{{ asset_storage('') . 'module/module/admin/crop-avatar/cropper.js' }}"></script>
     @include('back.module.module_js')
-    <script type="text/javascript" src="{{ public_path_to_storage('') . 'back/js/std_functions.js' }}"></script>
+    <script type="text/javascript" src="{{ asset_storage('') . 'back/js/std_functions.js' }}"></script>
     <script>
         var uploadUrl = "{{ admin_url() }}module_image/upload_image";
         var deleteUrl = "{{ admin_url() }}module_image/remove_image";
@@ -213,7 +213,7 @@
         var show_cropper = {{ $module->crop_image == 'Yes' ? 1 : 0 }};
         var module_id = "{{ $module->type }}";
     </script>
-    <script type="text/javascript" src="{{ public_path_to_storage('') . 'back/js/fileUploader.js' }}"></script>
+    <script type="text/javascript" src="{{ asset_storage('') . 'back/js/fileUploader.js' }}"></script>
     <div id="loading" class="loadinggif" style="display: none;"></div>
     <!-- End Bootstrap modal -->
     @php

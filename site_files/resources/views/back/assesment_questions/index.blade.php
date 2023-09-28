@@ -204,7 +204,7 @@
     @include('back.common_views.spinner')
 @endsection
 @section('beforeBodyClose')
-    <script src="{{ public_path_to_storage('') . 'module/products/admin/js/products.js' }}" type="text/javascript"></script>
+    <script src="{{ asset_storage('') . 'module/products/admin/js/products.js' }}" type="text/javascript"></script>
     
     <!-- Filer -->
     
@@ -217,8 +217,8 @@
         var csrfToken = $('meta[name="csrf-token"]').attr('content');
         var show_cropper = false;
     </script>
-    <script src="{{ public_path_to_storage('lib/sweetalert/sweetalert2.js') }}"></script>
-    <script type="text/javascript" src="{{ public_path_to_storage('') . 'back/js/fileUploader.js' }}"></script>
+    <script src="{{ asset_storage('lib/sweetalert/sweetalert2.js') }}"></script>
+    <script type="text/javascript" src="{{ asset_storage('') . 'back/js/fileUploader.js' }}"></script>
     @include('back.assesment_questions.question_js')
 
     <script type="text/javascript">

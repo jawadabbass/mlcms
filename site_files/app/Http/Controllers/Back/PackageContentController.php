@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Back;
 
+use App\Helpers\ImageUploader;
 use App\Http\Controllers\Controller;
 use App\Models\Back\CmsModuleData;
 use App\Models\Back\PackageContent;
@@ -30,6 +31,10 @@ class PackageContentController extends Controller
     }
     public function store(Request $request)
     {
+        $main_package =  CmsModuleData::where('sts', 'active')
+            ->where('cms_module_id', 37)
+            ->where('id', $request->package_id)
+            ->first();
         $type = $request->type;
         $package_content = new PackageContent();
         $package_content->type_content = $type;
@@ -41,10 +46,8 @@ class PackageContentController extends Controller
                 if ($video_size_mb > 1024) {
                     return response()->json(['status' => 'danger', 'message' => '   Sorry Video Size Can Not Exceed More Than 1 GB']);
                 } else {
-                    $imageName = $request->video->getClientOriginalName();
-                    $newFileName = substr($imageName, 0, (strrpos($imageName, ".")));
-                    $request->video->move(storage_path_to_uploads('package_content/videos/'), $imageName);
-                    $package_content->video = $imageName;
+                    $videoName = ImageUploader::UploadDoc('package_content/videos/', $request->video, $main_package->heading);
+                    $package_content->video = $videoName;
                 }
             }
         } elseif ($type == 'image') {
@@ -54,9 +57,7 @@ class PackageContentController extends Controller
                 if ($video_size_mb > 10) {
                     return response()->json(['status' => 'danger', 'message' => '   Sorry Image Size Can Not Exceed More Than 10 MB']);
                 } else {
-                    $imageName = $request->image->getClientOriginalName();
-                    $newFileName = substr($imageName, 0, (strrpos($imageName, ".")));
-                    $request->image->move(storage_path_to_uploads('package_content/images/'), $imageName);
+                    $imageName = ImageUploader::UploadDoc('package_content/images/', $request->image, $main_package->heading);
                     $package_content->image = $imageName;
                 }
             }
@@ -67,10 +68,8 @@ class PackageContentController extends Controller
                 if ($video_size_mb > 15) {
                     return response()->json(['status' => 'danger', 'message' => '   Sorry Document Size Can Not Exceed More Than 15 MB']);
                 } else {
-                    $imageName = $request->document->getClientOriginalName();
-                    $newFileName = substr($imageName, 0, (strrpos($imageName, ".")));
-                    $request->document->move(storage_path_to_uploads('package_content/documents/'), $imageName);
-                    $package_content->document = $imageName;
+                    $documentName = ImageUploader::UploadDoc('package_content/documents/', $request->document, $main_package->heading);
+                    $package_content->document = $documentName;
                 }
             }
         } else {
@@ -82,13 +81,13 @@ class PackageContentController extends Controller
     public function delete($id)
     {
         $package = PackageContent::find($id);
-        if (!$package->type == 'content') {
-            if (!empty($package->video) && $package->type == 'video') {
-                unlink(storage_path_to_uploads('package_content/videos/' . $package->video));
-            } elseif (!empty($package->image) &&  $package->type == 'image') {
-                unlink(storage_path_to_uploads('package_content/images/' . $package->image));
-            } elseif (!empty($package->document) && $package->type == 'document') {
-                unlink(storage_path_to_uploads('package_content/documents/' . $package->document));
+        if ($package->type_content != 'content') {
+            if (!empty($package->video) && $package->type_content == 'video') {
+                unlink(storage_uploads('package_content/videos/' . $package->video));
+            } elseif (!empty($package->image) &&  $package->type_content == 'image') {
+                unlink(storage_uploads('package_content/images/' . $package->image));
+            } elseif (!empty($package->document) && $package->type_content == 'document') {
+                unlink(storage_uploads('package_content/documents/' . $package->document));
             }
         }
         $package->delete();

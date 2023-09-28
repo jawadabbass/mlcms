@@ -550,10 +550,10 @@
     <script>
         var contr = '{{ $settingArr['contr_name'] }}';
     </script>
-    <link href="{{ public_path_to_storage('back/mod/mod_css.css') }}" rel="stylesheet">
-    <link href="{{ public_path_to_storage('back/mod/bootstrap-toggle.min.css') }}" rel="stylesheet">
-    <script src="{{ public_path_to_storage('back/mod/bootstrap-toggle.min.js') }}"></script>
-    <script src="{{ public_path_to_storage('back/mod/mod_js.js') }}"></script>
+    <link href="{{ asset_storage('back/mod/mod_css.css') }}" rel="stylesheet">
+    <link href="{{ asset_storage('back/mod/bootstrap-toggle.min.css') }}" rel="stylesheet">
+    <script src="{{ asset_storage('back/mod/bootstrap-toggle.min.js') }}"></script>
+    <script src="{{ asset_storage('back/mod/mod_js.js') }}"></script>
     <script type="text/javascript">
         jQuery(document).ready(function($) {
             $("#user_email_active").change(function(e) {

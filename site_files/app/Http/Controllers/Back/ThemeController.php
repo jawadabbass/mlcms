@@ -69,17 +69,17 @@ class ThemeController extends Controller
     }
     public function replace_public_urls($content)
     {
-        $content = str_replace("href=&quot;", "href=&quot;{{public_path_to_storage('front/", $content);
-        $content = str_replace("src=&quot;", "src=&quot;{{public_path_to_storage('front/", $content);
+        $content = str_replace("href=&quot;", "href=&quot;{{asset_storage('front/", $content);
+        $content = str_replace("src=&quot;", "src=&quot;{{asset_storage('front/", $content);
         $rep_from = [".css", ".ico", ".jpg", ".png", ".jpeg", ".js"];
         $rep_with = [".css')}}", ".ico')}}", ".jpg')}}", ".png')}}", ".jpeg')}}", ".js')}}"];
         //$rep_with=[".css')}}",".ico')}}",".jpg')}}",".png')}}",".jpeg')}}",".js')}}"];
         $content = str_replace($rep_from, $rep_with, $content);
-        //After effecetd URLs  <a href="<?php echo e(public_path_to_storage('front/mailto
-        $content = str_replace("a href=&quot;{{public_path_to_storage('front/", "a href=&quot;", $content);
-        $content = str_replace("href=&quot;{{public_path_to_storage('front/#", "href=&quot;#", $content);
-        $content = str_replace("href=&quot;{{public_path_to_storage('front/mailto", "href=&quot;mailto", $content);
-        $content = str_replace("href=&quot;{{public_path_to_storage('front/tel", "href=&quot;tel", $content);
+        //After effecetd URLs  <a href="<?php echo e(asset_storage('front/mailto
+        $content = str_replace("a href=&quot;{{asset_storage('front/", "a href=&quot;", $content);
+        $content = str_replace("href=&quot;{{asset_storage('front/#", "href=&quot;#", $content);
+        $content = str_replace("href=&quot;{{asset_storage('front/mailto", "href=&quot;mailto", $content);
+        $content = str_replace("href=&quot;{{asset_storage('front/tel", "href=&quot;tel", $content);
 
         return $content;
     }

@@ -1,7 +1,7 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('beforeHeadClose')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script type="text/javascript" src="{{ public_path_to_storage('') . 'back/js/js/jquery-ui-1.7.1.custom.min.js' }}"></script>
+    <script type="text/javascript" src="{{ asset_storage('') . 'back/js/js/jquery-ui-1.7.1.custom.min.js' }}"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             $(function() {
@@ -86,7 +86,7 @@
                                                 aria-hidden="true"></i>
                                             @if ($row->img != '')
                                                 <img style="background-color: white;"
-                                                    src="{{ public_path_to_uploads('categories/'.$row->img) }}"
+                                                    src="{{ asset_uploads('categories/'.$row->img) }}"
                                                     alt="">
                                             @endif
                                             <span id="edit_{{ $row->$idDBF }}">{{ $row->title }}</span>

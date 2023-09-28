@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Back;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Helpers\ImageUploader;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\DB;
 
 class MediaController extends Controller
 {
@@ -24,6 +25,7 @@ class MediaController extends Controller
         $albumsObj    = array();
         $folodersArr = array();
         $mediaBasePath = mediaBasePath();
+        $album_path = mediaBasePath();
         $folodersArr = array_filter(glob($mediaBasePath . '*'), 'is_dir');
 
         $cnt = 0;
@@ -51,7 +53,7 @@ class MediaController extends Controller
                 'all' => $filesArr
             );
         }
-        // cp($albumsObj);
+        //dd($albumsObj);
         //$albumsObj    = Album::orderBy('id', 'DESC')->paginate(10);
         return view('back.media.index', compact('title', 'msg', 'albumsObj'));
     }
@@ -102,12 +104,10 @@ class MediaController extends Controller
         request()->validate([
             'uploadFile' => 'required',
         ]);
+
+        $album_name = str_ireplace(storage_uploads(''), '', $request->album);
         foreach ($request->file('uploadFile') as $key => $value) {
-            $imageName = $value->getClientOriginalName();
-            if (file_exists($request->album . $imageName)) {
-                $imageName = rand(11111, 99999) . '_' . time() . '_' . $value->getClientOriginalName();
-            }
-            $value->move(public_path($request->album), $imageName);
+            ImageUploader::UploadDoc($album_name, $value);
         }
         return back()->with('success', 'Images Uploaded Successfully.');
     }

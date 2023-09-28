@@ -339,7 +339,7 @@ class GalleryController extends Controller
         return response([
             'status' => true,
             'message' => 'marked',
-            'src' => public_path_to_uploads('gallery/' . $image->album_id . '/thumb/' . $image->imageUrl . '?' . time()),
+            'src' => asset_uploads('gallery/' . $image->album_id . '/thumb/' . $image->imageUrl . '?' . time()),
         ]);
     }
 

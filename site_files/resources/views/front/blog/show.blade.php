@@ -1,6 +1,6 @@
 @extends('front.layout.app')
 @section('beforeHeadClose')
-    <link href="{{ public_path_to_storage('') . 'module/blog/front/css/blog.css' }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset_storage('') . 'module/blog/front/css/blog.css' }}" rel="stylesheet" type="text/css" />
 @endsection
 @section('content')
     @php echo cms_edit_page("blog",$blog_post_details->ID);@endphp
@@ -18,12 +18,12 @@
                                 <div class="thumb">
                                     @if (
                                         !empty($blog_post_details->featured_img) &&
-                                            file_exists(storage_path_to_uploads('blog/' . $blog_post_details->featured_img)))
-                                        <img src="{{ public_path_to_uploads('blog/' . $blog_post_details->featured_img) }}"
+                                            file_exists(storage_uploads('blog/' . $blog_post_details->featured_img)))
+                                        <img src="{{ asset_uploads('blog/' . $blog_post_details->featured_img) }}"
                                             title="{{ $blog_post_details->featured_img_title }}"
                                             alt="{{ $blog_post_details->featured_img_alt }}">
                                     @else
-                                        <img src="{{ public_path_to_uploads('back/images/no_image.jpg') }}"
+                                        <img src="{{ asset_uploads('back/images/no_image.jpg') }}"
                                             title="{{ $blog_post_details->featured_img_title }}"
                                             alt="{{ $blog_post_details->featured_img_alt }}">
                                     @endif

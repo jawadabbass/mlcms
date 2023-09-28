@@ -71,7 +71,7 @@
                                         <td>{{$record->address}}</td> --}}
                                             {{-- <td>{{$record->cover_letter}}</td> --}}
                                             <td><a target="_blank"
-                                                    href="{{ public_path_to_uploads('jobs_apply/' . $record->attachment) }}">{{ $record->attachment }}</a>
+                                                    href="{{ asset_uploads('jobs_apply/' . $record->attachment) }}">{{ $record->attachment }}</a>
                                             </td>
                                             <td>
                                                 {{-- <a class="btn btn-sm btn-danger" href="javascript:void(0);" title="Delete"

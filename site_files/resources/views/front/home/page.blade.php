@@ -10,7 +10,7 @@
                 @if (!empty($data->featured_img))
                 <div class="col-md-3">
                     <div class="about-pic">
-                        <img src="{{ public_path_to_uploads('') . 'module/cms/' . $data->featured_img }}" class="thumbnail"
+                        <img src="{{ asset_uploads('') . 'module/cms/' . $data->featured_img }}" class="thumbnail"
                             title="{{ $data->featured_img_title }}" alt="{{ $data->featured_img_alt }}">
                     </div>
                 </div>

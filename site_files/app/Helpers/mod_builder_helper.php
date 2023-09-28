@@ -192,7 +192,7 @@ function ModBuildPostData($dataArr)
 				$data_upload = array(
 					'file_field_name' => $field_name,
 					'files' => $_FILES,
-					'upload_dir' => storage_path_to_uploads($upload_dir_name),
+					'upload_dir' => storage_uploads($upload_dir_name),
 					'thumb_width' => $thumb_width,
 					'thumb_height' => $thumb_height,
 					'max_size' => MAX_IMAGE_SIZE, // 5MB
@@ -278,7 +278,7 @@ function ModTBuild($txt, $format = '', $baseImg = '')
 	else if ($format == 'img_round')
 		return '<img src="' . base_url() . $baseImg . $txt . '" class="img-circle" >';
 	else if ($format == 'img_pop')
-		return '<img style="cursor:pointer;" onclick="displayImage(\'' . public_path_to_uploads('gallery/' . $txt) . '\');" src="' . base_url() . $baseImg . $txt . '" width="100" >';
+		return '<img style="cursor:pointer;" onclick="displayImage(\'' . asset_uploads('gallery/' . $txt) . '\');" src="' . base_url() . $baseImg . $txt . '" width="100" >';
 	else if ($format == 'img_new')
 		return '<img src="' . base_url() . $baseImg . 'small/' . $txt . '?abc=' . rand() . '" width="100" >';
 	else if ($format == 'img_new2')
@@ -319,7 +319,7 @@ function ModTBuild($txt, $format = '', $baseImg = '')
 	else if ($format == 'video') {
 		$retV = youtube_link_to_iframe($txt, '200', '200');
 		if ($retV == $txt && stristr($txt, '.mp4')) {
-			$retV = '<video controls="" width="200" height="200"><source src="' . public_path_to_uploads('video/' . $txt) . '" type="video/mp4">
+			$retV = '<video controls="" width="200" height="200"><source src="' . asset_uploads('video/' . $txt) . '" type="video/mp4">
 	  <source src="movie.ogg" type="video/ogg">Your browser does not support the video tag.</video>';
 		}
 		return $retV;

@@ -204,7 +204,7 @@ class BlogController extends Controller
         if ($validator->passes()) {
             $blog = BlogPost::find($request->id);
             if (!empty($blog->featured_img)) {
-                unlink(storage_path_to_uploads($request->folder . '/' . $blog->featured_img));
+                unlink(storage_uploads($request->folder . '/' . $blog->featured_img));
             }
             $blog->featured_img = '';
             $blog->save();

@@ -3,7 +3,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet"
         type="text/css" />
     @php $module = "blog" @endphp
-    <link href="{{ public_path_to_storage('') . 'module/blog/admin/css/' . $module . '.css' }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset_storage('') . 'module/blog/admin/css/' . $module . '.css' }}" rel="stylesheet" type="text/css" />
     @include('back.common_views.switch_css')
 @endsection
 @section('content')
@@ -63,12 +63,12 @@
                                                 <td>
                                                     @if (!empty($row->featured_img))
                                                         <img width="80"
-                                                            src="{{ public_path_to_uploads('') . 'blog/' . $row->featured_img }}"
+                                                            src="{{ asset_uploads('') . 'blog/' . $row->featured_img }}"
                                                             title="{{ $row->featured_img_title }}"
                                                             alt="{{ $row->featured_img_alt }}">
                                                     @else
                                                         <img width="80"
-                                                            src="{{ public_path_to_storage('') . 'back/images/no_image.jpg' }}"
+                                                            src="{{ asset_storage('') . 'back/images/no_image.jpg' }}"
                                                             title="{{ $row->featured_img_title }}"
                                                             alt="{{ $row->featured_img_alt }}">
                                                     @endif
@@ -222,7 +222,7 @@
         var show_cropper = false;
         var save_method = "POST";
     </script>
-    <script type="text/javascript" src="{{ public_path_to_storage('') . 'back/js/fileUploader.js' }}"></script>
+    <script type="text/javascript" src="{{ asset_storage('') . 'back/js/fileUploader.js' }}"></script>
     <script type="text/javascript">
         $(document).ready(function(e) {
             $("#heading").change(function() {
@@ -232,8 +232,8 @@
     </script>
     <!----- data table include library and script ----->
 
-    <script type="text/javascript" src="{{ public_path_to_storage('') . 'back/js/bootstrap-multiselect.js' }}"></script>
-    <script type="text/javascript" src="{{ public_path_to_storage('') . 'module/blog/admin/js/blog.js' }}"></script>
+    <script type="text/javascript" src="{{ asset_storage('') . 'back/js/bootstrap-multiselect.js' }}"></script>
+    <script type="text/javascript" src="{{ asset_storage('') . 'module/blog/admin/js/blog.js' }}"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             @if ($errors->any())

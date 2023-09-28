@@ -55,7 +55,7 @@
                 $('[name="meta_description"]').val(data.meta_description);
                 if (data.product_img != '') {
                     $('#product_img_div').show();
-                    $('#product_img_div').html('<img style="width:100px" src="'+public_path_to_uploads + '/products/' + data.product_img+'"><i onclick="remove_products_image(0);" class="deleteIcon"></i>');
+                    $('#product_img_div').html('<img style="width:100px" src="'+asset_uploads + '/products/' + data.product_img+'"><i onclick="remove_products_image(0);" class="deleteIcon"></i>');
                 }
                 else {
                     $('#product_img_div').hide();

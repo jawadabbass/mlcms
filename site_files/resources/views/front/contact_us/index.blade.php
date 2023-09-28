@@ -1,6 +1,6 @@
 @extends('front.layout.app')
 @section('beforeHeadClose')
-    <link href="{{ public_path_to_storage('') . 'module/blog/front/css/blog.css' }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset_storage('') . 'module/blog/front/css/blog.css' }}" rel="stylesheet" type="text/css" />
     <script src='https://www.google.com/recaptcha/api.js'></script>
     <style>
         .error-bg {

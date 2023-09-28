@@ -150,7 +150,7 @@
                             <div class="filedata">
                                 <span class="fileico">
                                     @php
-                                        $path_info = pathinfo($v['url']);
+                                        $path_info = pathinfo(storage_uploads($v['url']));
                                         if (isset($path_info['extension']) && isset($filesExts[$path_info['extension']])) {
                                             echo $filesExts[$path_info['extension']];
                                         } else {
@@ -159,15 +159,15 @@
                                     @endphp
                                 </span>
                                 <a target="_blank" class="filepath"
-                                    href="{{ base_url() . $v['url'] }}">{{ $v['name'] }}</a>
+                                    href="{{ asset_uploads($v['url']) }}">{{ $v['name'] }}</a>
                                 <a class="btn btn-danger" data-bs-toggle="tooltip" data-placement="left"
                                     title="Delete this file" href="javascript:;"
-                                    onclick="delete_image('{{ $v['url'] }}','{{ $imgID }}');"><i
+                                    onclick="delete_image('{{ storage_uploads($v['url']) }}','{{ $imgID }}');"><i
                                         class="fas fa-trash"></i></a>
-                                <span class="badge badge-secondary"><?php echo human_filesize(filesize($v['url'])); ?></span>
+                                <span class="badge badge-secondary"><?php echo human_filesize(filesize(storage_uploads($v['url']))); ?></span>
                                 <a class="btn btn-success" data-bs-toggle="tooltip" data-placement="left"
                                     title="Copy file path" href="javascript:;"
-                                    onclick="copyMyTxt('{{ $v['url'] }}');"><i class="fas fa-copy"
+                                    onclick="copyMyTxt('{{ asset_uploads($v['url']) }}');"><i class="fas fa-copy"
                                         aria-hidden="true"></i></a>
 
                             </div>

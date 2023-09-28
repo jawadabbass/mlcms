@@ -147,7 +147,7 @@
     function copyMyTxt(txt) {
 
         $("#txt_copy22").show();
-        $("#txt_copy22").val('{{ base_url() }}' + '' + txt);
+        $("#txt_copy22").val(txt);
         var copyText = document.getElementById("txt_copy22");
         copyText.select();
         copyText.setSelectionRange(0, 99999)

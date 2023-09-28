@@ -2,7 +2,7 @@
 @section('beforeHeadClose')
     @include('back.common_views.switch_css')
     @php $module = "blog" @endphp
-    <link href="{{ public_path_to_storage('') . 'module/blog/admin/css/' . $module . '.css' }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset_storage('') . 'module/blog/admin/css/' . $module . '.css' }}" rel="stylesheet" type="text/css" />
 @endsection
 @section('content')
     <div class="content-wrapper pl-3 pr-2">
@@ -206,5 +206,5 @@
             @endif
         </script>
     @endif
-    <script type="text/javascript" src="{{ public_path_to_storage('') . 'module/blog/admin/js/' . $module . '.js' }}"></script>
+    <script type="text/javascript" src="{{ asset_storage('') . 'module/blog/admin/js/' . $module . '.js' }}"></script>
 @endsection
