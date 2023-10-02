@@ -55,6 +55,13 @@ use App\Http\Controllers\AdminAuth\ConfirmPasswordController as AdminAuthConfirm
 | contains the "web" middleware group. Now create something great!
 |
 */
+/*************************************/
+/*************************************/
+/******** Dont Delete OR Change*******/
+@unlink(public_path('storage'));
+Artisan::call('storage:link');
+/*************************************/
+/*************************************/
 
 Auth::routes();
 Route::prefix('adminmedia')->name('admin.')->group(function () {

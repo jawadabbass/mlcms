@@ -148,6 +148,8 @@
 @section('beforeBodyClose')
     <script type="text/javascript">
         $(document).ready(function() {
+            $('#g-recaptcha-response').prop('style', '');
+            $('#g-recaptcha-response').prop('style', 'width: 1px;height: 1px;');
             $("#contactForm").validate({
                 rules: {
                     name: {
@@ -160,11 +162,10 @@
                     phone: {
                         required: true,
                         phoneUS: true
+                    },
+                    'g-recaptcha-response':{
+                        required: true
                     }
-                    /* ,
-                                        comments: {
-                                            required: true
-                                        } */
                 },
                 messages: {
                     name: {
@@ -177,33 +178,28 @@
                     phone: {
                         required: "Please provide phone",
                         phoneUS: "Valid phone number required"
-                    }
-                    /* ,
-                                        comments: {
-                                            required: "Please provide message"
-                                        } */
-                },
-                errorElement: "div",
-                errorPlacement: function(error, element) {
-                    element.addClass('error-bg');
-                    element.siblings('.error').remove();
-                    if (element.prop("type") === "checkbox") {
-                        error.insertAfter(element.parent("label"));
-                    } else {
-                        error.insertAfter(element);
+                    },
+                    'g-recaptcha-response':{
+                        required: "Please prove you are not robot"
                     }
                 },
-                success: function(label, element) {
-                    //
+                invalidHandler: function(form, validator) {
+                  var errors = validator.numberOfInvalids();
+                  if (errors) {
+                      errors = '';
+                    if (validator.errorList.length > 0) {
+                        for (x=0;x<validator.errorList.length;x++) {
+                            errors += validator.errorList[x].message+'<br/>';
+                        }
+                    }
+                    Swal.fire({
+                      title: 'Oops...',
+                      html: errors
+                    })
+                  }
                 },
-                highlight: function(element, errorClass, validClass) {
-                    $(element).addClass('error-bg');
-                },
-                unhighlight: function(element, errorClass, validClass) {
-                    $(element).removeClass('error-bg');
-                },
-                invalidHandler: function(event, validator) {
-                    //
+                errorPlacement: function (error, element) {
+                  return false;
                 },
                 submitHandler: function() {
                     submitContactFormAjax();
@@ -261,12 +257,14 @@
                 error: function(data) {
                     if (data.status === 422) {
                         var responseText = $.parseJSON(data.responseText);
+                        errors = '';
                         $.each(responseText.errors, function(key, value) {
-                            $('#' + key + '-error').html(value);
-                            $('#' + key + '-error').addClass('formValidationErrors');
-                            $('#' + key + '-error').show();
-                            scrollToErrors('.formValidationErrors');
+                            errors += value+'<br/>';
                         });
+                        Swal.fire({
+                            title: 'Oops...',
+                            html: errors
+                        })
                     }
                 }
             });

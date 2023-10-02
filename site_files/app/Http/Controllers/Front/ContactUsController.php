@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\Front;
 
-use App\Http\Controllers\Controller;
 use App\Mail\ContactUs;
-use App\Models\Back\CmsModuleData;
-use App\Models\Back\ContactUsRequest;
-use App\Models\Back\Metadata;
 use App\Models\Back\Setting;
 use Illuminate\Http\Request;
+use App\Models\Back\Metadata;
+use App\Models\Back\CmsModuleData;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Session;
+use App\Models\Back\ContactUsRequest;
 
 class ContactUsController extends Controller
 {
@@ -31,7 +30,6 @@ class ContactUsController extends Controller
             'name' => ['required'],
             'email' => ['required', 'email'],
             'phone' => ['required'],
-            /* 'comments' => ['required'], */
             'g-recaptcha-response' => 'required|recaptcha',
         ];
 
@@ -40,9 +38,8 @@ class ContactUsController extends Controller
             'email.required' => 'Email is required',
             'email.email' => 'Valid Email is required',
             'phone.required' => 'Phone is required',
-            /* 'comments.required' => 'Message is required', */
-            'g-recaptcha-response.required' => 'Please verify yourself',
-            'g-recaptcha-response.recaptcha' => 'Please verify yourself',
+            'g-recaptcha-response.required' => 'Please prove you are not robot',
+            'g-recaptcha-response.recaptcha' => 'Failed to prove you are not robot',
         ];
 
         $validatedData = $request->validate($validationRules, $validationMessages);
