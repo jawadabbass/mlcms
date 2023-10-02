@@ -20,7 +20,7 @@
     @php echo cms_edit_page('cms',$data->id);@endphp
     <div class="about-wrap">
         <!-- Start Breadcrumb
-                                                                                ============================================= -->
+                                                                                        ============================================= -->
         <div class="breadcrumb-area shadow dark bg-fixed text-center text-light"
             style="background-image: url(<?php echo base_url(); ?>front/img/banner/23.jpg);">
             <div class="container">
@@ -37,7 +37,7 @@
         </div>
         <!-- End Breadcrumb -->
         <!-- Start Contact Area
-                                                                                ============================================= -->
+                                                                                        ============================================= -->
         <div class="contact-area default-padding">
             <div class="container">
                 <div class="row">
@@ -128,7 +128,7 @@
         </div>
         <!-- End Contact Area -->
         <!-- Start Google Maps
-                                                                                ============================================= -->
+                                                                                        ============================================= -->
         @if ($settingArr->google_map_status == 1)
             <div class="maps-area">
                 <div class="container-full">
@@ -148,8 +148,6 @@
 @section('beforeBodyClose')
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#g-recaptcha-response').prop('style', '');
-            $('#g-recaptcha-response').prop('style', 'width: 1px;height: 1px;');
             $("#contactForm").validate({
                 rules: {
                     name: {
@@ -163,7 +161,7 @@
                         required: true,
                         phoneUS: true
                     },
-                    'g-recaptcha-response':{
+                    'g-recaptcha-response': {
                         required: true
                     }
                 },
@@ -179,27 +177,17 @@
                         required: "Please provide phone",
                         phoneUS: "Valid phone number required"
                     },
-                    'g-recaptcha-response':{
-                        required: "Please prove you are not robot"
+                    'g-recaptcha-response': {
+                        required: "Please prove you are not a robot"
                     }
                 },
-                invalidHandler: function(form, validator) {
-                  var errors = validator.numberOfInvalids();
-                  if (errors) {
-                      errors = '';
-                    if (validator.errorList.length > 0) {
-                        for (x=0;x<validator.errorList.length;x++) {
-                            errors += validator.errorList[x].message+'<br/>';
-                        }
-                    }
-                    Swal.fire({
-                      title: 'Oops...',
-                      html: errors
-                    })
-                  }
-                },
-                errorPlacement: function (error, element) {
-                  return false;
+                errorPlacement: function(error, element) {
+                    var key = element[0].id;
+                    $('#' + key + '-error').html(error);
+                    $('#' + key + '-error').addClass('formValidationErrors');
+                    $('#' + key + '-error').show();
+                    scrollToErrors('.formValidationErrors');
+                    $('#g-recaptcha-response').hide();
                 },
                 submitHandler: function() {
                     submitContactFormAjax();
@@ -208,6 +196,8 @@
         });
 
         function submitContactForm() {
+            $('#g-recaptcha-response').prop('style', 'width:1px;height:1px;');
+            $('#g-recaptcha-response').show();
             $('#contactForm').submit();
         }
         $('#phone').inputmask("999-999-9999");
@@ -257,14 +247,12 @@
                 error: function(data) {
                     if (data.status === 422) {
                         var responseText = $.parseJSON(data.responseText);
-                        errors = '';
                         $.each(responseText.errors, function(key, value) {
-                            errors += value+'<br/>';
+                            $('#' + key + '-error').html(value);
+                            $('#' + key + '-error').addClass('formValidationErrors');
+                            $('#' + key + '-error').show();
+                            scrollToErrors('.formValidationErrors');
                         });
-                        Swal.fire({
-                            title: 'Oops...',
-                            html: errors
-                        })
                     }
                 }
             });
