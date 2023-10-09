@@ -1,6 +1,6 @@
 <script type="text/javascript">
     function media_insert_img(url) {
-        insertImageIntoCkeditor('editor1', base_url + url);
+        insertImageIntoCkeditor('editor1', url);
         $("#media_image").modal('hide');
     }
 

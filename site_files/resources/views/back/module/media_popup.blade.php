@@ -2,10 +2,8 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                
                 <h4 class="modal-title">Media Library</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                    
                     <span class="sr-only">Close</span>
                 </button>
             </div>
@@ -29,7 +27,6 @@
                         <div class="row mystr section_{{ $val['album_id'] }}" <?php 
 if($val['album_title']!='root'){
       ?><?php } ?>>
-
                             <div class="col-md-8">
                                 <h1>
                                     <i class="fas fa-folder-open-o" aria-hidden="true"></i> {{ $val['album_title'] }}
@@ -37,7 +34,6 @@ if($val['album_title']!='root'){
                             </div>
                             <div class="col-md-4 text-end">
                                 <h3>
-
                                     {{-- <a href="javascript:;" class="btn btn-warning" onClick="edit_album({{$val['album_id']}},'{{$val['album_title']}}');" data-bs-toggle="tooltip" title="Edit Folder"><i class="fas fa-edit" aria-hidden="true"></i></a> --}}
                                     @if ($val['album_title'] != 'root')
                                     @endif
@@ -52,18 +48,15 @@ if($val['album_title']!='root'){
                                     $imgID = $val['album_id'] . '_' . $k;
                                 @endphp
                                 <div class="col-md-3 mb30" id="id_{{ $imgID }}">
-
                                     <div class="thumbnail">
-                                        <img alt="Lights" src="{{ base_url() . $v['url'] }}" style="width:100%">
+                                        <img alt="Lights" src="{{ asset_uploads($v['url']) }}" style="width:100%">
                                         <div class="myadelbtn">
                                             <a class="btn btn-success" data-bs-toggle="tooltip" data-placement="left"
                                                 title="Insert Image" href="javascript:;"
-                                                onclick="media_insert_img('{{ $v['url'] }}');"><i
+                                                onclick="media_insert_img('{{ asset_uploads($v['url']) }}');"><i
                                                     class="fas fa-cloud-download" aria-hidden="true"></i></a>
-
                                         </div>
                                     </div>
-
                                 </div>
                             @endforeach
                         </div>
@@ -78,10 +71,8 @@ if($val['album_title']!='root'){
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    
                     <h4 class="modal-title">Media Library</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                        
                         <span class="sr-only">Close</span>
                     </button>
                 </div>
@@ -106,7 +97,6 @@ if($val['album_title']!='root'){
                                 <?php 
 if($val['album_title']!='root'){
       ?><?php } ?>>
-
                                 <div class="col-md-8">
                                     <h1>
                                         <i class="fas fa-folder-open-o" aria-hidden="true"></i>
@@ -115,7 +105,6 @@ if($val['album_title']!='root'){
                                 </div>
                                 <div class="col-md-4 text-end">
                                     <h3>
-
                                         {{-- <a href="javascript:;" class="btn btn-warning" onClick="edit_album({{$val['album_id']}},'{{$val['album_title']}}');" data-bs-toggle="tooltip" title="Edit Folder"><i class="fas fa-edit" aria-hidden="true"></i></a> --}}
                                         @if ($val['album_title'] != 'root')
                                         @endif
@@ -130,18 +119,15 @@ if($val['album_title']!='root'){
                                         $imgID = $val['album_id'] . '_' . $k;
                                     @endphp
                                     <div class="col-md-3 mb30" id="id_{{ $imgID }}">
-
                                         <div class="thumbnail">
-                                            <img alt="Lights" src="{{ base_url() . $v['url'] }}" style="width:100%">
+                                            <img alt="Lights" src="{{ asset_uploads($v['url']) }}" style="width:100%">
                                             <div class="myadelbtn">
-                                                <a class="btn btn-success" data-bs-toggle="tooltip" data-placement="left"
-                                                    title="Insert Image" href="javascript:;"
-                                                    onclick="media_insert_portfolio('{{ $v['url'] }}');"><i
+                                                <a class="btn btn-success" data-bs-toggle="tooltip"
+                                                    data-placement="left" title="Insert Image" href="javascript:;"
+                                                    onclick="media_insert_portfolio('{{ asset_uploads($v['url']) }}');"><i
                                                         class="fas fa-cloud-download" aria-hidden="true"></i></a>
-
                                             </div>
                                         </div>
-
                                     </div>
                                 @endforeach
                             </div>

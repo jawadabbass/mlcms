@@ -2,10 +2,8 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                
                 <h4 class="modal-title"> Documents/Files</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                    
                     <span class="sr-only">Close</span>
                 </button>
             </div>
@@ -27,7 +25,6 @@
                 @foreach ($filesObj as $kk => $val)
                     <div class="myasection mediaup">
                         <div class="row mystr section_{{ $val['album_id'] }}">
-
                             <div class="col-md-8">
                                 <h1>
                                     <i class="fas fa-folder-open-o" aria-hidden="true"></i> {{ $val['album_title'] }}
@@ -49,7 +46,7 @@
                                     <div class="filedata">
                                         <span class="fileico">
                                             @php
-                                                $path_info = pathinfo($v['url']);
+                                                $path_info = pathinfo(storage_uploads($v['url']));
                                                 if (isset($path_info['extension']) && isset($filesExts[$path_info['extension']])) {
                                                     echo $filesExts[$path_info['extension']];
                                                 } else {
@@ -58,15 +55,13 @@
                                             @endphp
                                         </span>
                                         <a target="_blank" class="filepath"
-                                            href="{{ base_url() . $v['url'] }}">{{ $v['name'] }}</a>
-                                        <span class="badge badge-secondary"><?php echo human_filesize(filesize($v['url'])); ?></span>
+                                            href="{{ storage_uploads($v['url']) }}">{{ $v['name'] }}</a>
+                                        <span class="badge badge-secondary"><?php echo human_filesize(filesize(storage_uploads($v['url']))); ?></span>
                                         <a class="btn btn-success" data-bs-toggle="tooltip" data-placement="left"
                                             title="Insert Document" href="javascript:;"
-                                            onclick="media_insert_file('{{ $v['url'] }}');"><i
+                                            onclick="media_insert_file('{{ asset_uploads($v['url']) }}');"><i
                                                 class="fas fa-cloud-download" aria-hidden="true"></i></a>
-
                                     </div>
-
                                 </li>
                             @endforeach
                         </ul>
@@ -89,14 +84,11 @@
                     <input type="hidden" id="file_c_url" name="file_c_url" value="" />
                     <div class="mb-2-append">
                         <span class="mb-2-text">
-
                             <a href="javascript:;" onClick="insert_media_file_html();" class="btn btn-info">Insert</a>
                         </span>
                     </div>
                 </div>
-
             </div>
-
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->

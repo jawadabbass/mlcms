@@ -2,24 +2,22 @@
 
 namespace App\Http\Controllers\Front;
 
-use App\Http\Controllers\Controller;
-use App\Models\Back\CmsModuleData;
-use App\Models\Back\CmsModule;
-use App\Models\Back\Metadata;
-use Illuminate\Http\Request;
-use App\Models\Back\MenuType;
-use App\Models\Back\Image;
+use Auth;
 use App\Models\Back\Album;
+use App\Models\Back\Image;
+use Illuminate\Http\Request;
 use App\Models\Back\BlogPost;
-use App\Models\Back\BlogCategory;
-use App\Models\Back\FleetCategory;
-use App\Models\Back\FleetPlane;
+use App\Models\Back\MenuType;
+use App\Models\Back\Metadata;
+use App\Models\Back\CmsModule;
 use App\Models\Back\Subscribers;
+use App\Models\Back\BlogCategory;
+use App\Models\Back\CmsModuleData;
+use Illuminate\Support\Facades\URL;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Facades\Cache;
-use Auth;
 
 class HomeController extends Controller
 {
