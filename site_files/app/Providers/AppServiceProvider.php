@@ -27,16 +27,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        @symlink(storage_path('app/public'), public_path('storage'));
+
         Paginator::useBootstrap();
         Validator::extend('recaptcha', 'App\\Validators\\ReCaptcha@validate');
-
-        /*************************************/
-        /*************************************/
-        /******** Dont Delete OR Change*******/
-        @unlink(public_path('storage'));
-        Artisan::call('storage:link');
-        /*************************************/
-        /*************************************/
 
         Livewire::setUpdateRoute(function ($handle) {
             $url = env('LIVEWIRE_UPDATE_ENDPOINT');

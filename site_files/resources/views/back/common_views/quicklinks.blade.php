@@ -1,7 +1,7 @@
 <ul class="stats">
     <li class="refres">
         <button class="btn btn-success">
-            <i class="fas fa-user" aria-hidden="true"></i>&nbsp;Welcome {{ auth()->user()->name }}
+            <i class="fas fa-user" aria-hidden="true"></i>&nbsp;Welcome {{ auth()->check() ? auth()->user()->name : '' }}
         </button>
     </li>
     <li class="refres">
@@ -35,6 +35,6 @@
            document.getElementById('logout-form').submit();"
             data-bs-toggle="tooltip" title="Logout">
             <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
-        </a>        
+        </a>
     </li>
 </ul>
