@@ -15,6 +15,7 @@ use App\Models\Back\BlogCategory;
 use App\Models\Back\CmsModuleData;
 use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
+use App\Models\Back\BannerPopup;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
@@ -68,7 +69,9 @@ class HomeController extends Controller
             ->get();
         $albums = Album::paginate(20);
         $images = Image::paginate(20);
-        return view('front.home.index', compact('news_results', 'seoArr', 'tesimonialsArr', 'blogData', 'get_all_banner', 'get_all_features', 'get_all_services', 'albums', 'images', 'get_all_testimonials', 'get_all_faqs', 'get_all_partners'));
+
+        $frontPageBannerPopup = BannerPopup::find(1);
+        return view('front.home.index', compact('news_results', 'seoArr', 'tesimonialsArr', 'blogData', 'get_all_banner', 'get_all_features', 'get_all_services', 'albums', 'images', 'get_all_testimonials', 'get_all_faqs', 'get_all_partners', 'frontPageBannerPopup'));
         // $html=view('front.home.index',compact('news_results', 'seoArr','tesimonialsArr','blogData'))->render();
 
         // $parser = \WyriHaximus\HtmlCompress\Factory::construct();

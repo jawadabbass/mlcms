@@ -19,6 +19,7 @@ use App\Http\Controllers\Front\VideoController;
 use App\Http\Controllers\Back\ProductController;
 use App\Http\Controllers\Back\SettingController;
 use App\Http\Controllers\Back\SiteMapController;
+use App\Livewire\Back\BannerPopups\BannerPopupsList;
 use App\Http\Controllers\Back\AdminLogController;
 use App\Http\Controllers\Back\ContactFormSetting;
 use App\Http\Controllers\Front\GalleryController;
@@ -55,13 +56,6 @@ use App\Http\Controllers\AdminAuth\ConfirmPasswordController as AdminAuthConfirm
 | contains the "web" middleware group. Now create something great!
 |
 */
-/*************************************/
-/*************************************/
-/******** Dont Delete OR Change*******/
-@unlink(public_path('storage'));
-Artisan::call('storage:link');
-/*************************************/
-/*************************************/
 
 Auth::routes();
 Route::prefix('adminmedia')->name('admin.')->group(function () {
@@ -367,9 +361,14 @@ Route::group(['namespace' => 'Back', 'prefix' => 'adminmedia', 'middleware' => [
     Route::get('cities-sort-data', 'CityController@citiesSortData')->name('cities.sort.data');
     Route::put('cities-sort-update', 'CityController@citiesSortUpdate')->name('cities.sort.update');
     Route::post('citiesSortUpdateAjax', 'CityController@citiesSortUpdateAjax')->name('citiesSortUpdateAjax');
-    Route::get('/module-code-generator', 'ModuleCodeGeneratorController@index')->name('module.code.generator');
-    Route::post('/module-code-generator', 'ModuleCodeGeneratorController@generateCode')->name('generate.module.code');
 });
+
+Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddleware']], function () {
+    /* Banner Popups Routes */
+    Route::get('/banner-popups', BannerPopupsList::class);
+});
+
+
 Route::view('permission_denied', 'front.home.permission_denied');
 Route::get('/maintenance', 'Front\HomeController@maintenance');
 Route::get('/block', 'Front\HomeController@block');

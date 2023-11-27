@@ -32,6 +32,9 @@ class Url extends Tag
     /** @var \Spatie\Sitemap\Tags\Video[] */
     public array $videos = [];
 
+    /** @var \Spatie\Sitemap\Tags\News[] */
+    public array $news = [];
+
     public static function create(string $url): static
     {
         return new static($url);
@@ -79,16 +82,28 @@ class Url extends Tag
         return $this;
     }
 
-    public function addImage(string $url, string $caption = '', string $geo_location = '', string $title = '', string $license = ''): static
-    {
+    public function addImage(
+        string $url,
+        string $caption = '',
+        string $geo_location = '',
+        string $title = '',
+        string $license = ''
+    ): static {
         $this->images[] = new Image($url, $caption, $geo_location, $title, $license);
 
         return $this;
     }
 
-    public function addVideo(string $thumbnailLoc, string $title, string $description, $contentLoc = null, $playerLoc = null, array $options = [], array $allow = [], array $deny = []): static
+    public function addVideo(string $thumbnailLoc, string $title, string $description, $contentLoc = null, $playerLoc = null, array $options = [], array $allow = [], array $deny = [], array $tags = []): static
     {
-        $this->videos[] = new Video($thumbnailLoc, $title, $description, $contentLoc, $playerLoc, $options, $allow, $deny);
+        $this->videos[] = new Video($thumbnailLoc, $title, $description, $contentLoc, $playerLoc, $options, $allow, $deny, $tags);
+
+        return $this;
+    }
+
+    public function addNews(string $name, string $language, string $title, DateTimeInterface $publicationDate, array $options = []): static
+    {
+        $this->news[] = new News($name, $language, $title, $publicationDate, $options);
 
         return $this;
     }
@@ -98,7 +113,7 @@ class Url extends Tag
         return parse_url($this->url, PHP_URL_PATH) ?? '';
     }
 
-    public function segments(?int $index = null): array | string | null
+    public function segments(?int $index = null): array|string|null
     {
         $segments = collect(explode('/', $this->path()))
             ->filter(function ($value) {

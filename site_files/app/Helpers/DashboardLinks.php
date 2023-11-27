@@ -25,6 +25,7 @@ class DashboardLinks
         'videos' => ['Videos', 'fas fa-film', 'videos', 'user_type' => ['super-admin', 'normal-admin'], ''],
         'widgets' => ['Widgets', 'fas fa-building', 'widgets', 'user_type' => ['super-admin', 'normal-admin'], ''],
         'social_media' => ['Manage Social Media ', 'fas fa-share-alt-square', 'social_media', 'user_type' => ['super-admin', 'normal-admin'], ''],
+        'banner_popups' => ['Banner Popups', 'fas fa-file-image', 'banner-popups', 'user_type' => ['super-admin', 'normal-admin'], ''],
         'userlog' => ['Admin User Logs', 'fas fa-history', 'user/admin_log', 'user_type' => ['super-admin'], ''],
         'adminusers' => ['Manage Admin Users ', 'fas fa-lock', 'user/admin', 'user_type' => ['super-admin'], ''],
         'load_users' => ['Manage Frontend Users ', 'fas fa-users', 'user/front', 'user_type' => ['super-admin'], ''],
@@ -81,6 +82,7 @@ class DashboardLinks
         'products' => ['Products', 'fas fa-shopping-cart', 'products', 'user_type' => ['super-admin', 'normal-admin'], ''],
         'categories_reg' => ['Categories', 'fas fa-bars', 'categories', 'user_type' => ['super-admin', 'normal-admin'], ''],
         'media' => ['File Manager', 'fas fa-folder-open', 'media', 'user_type' => ['super-admin'], 'newtab'],
+        'banner_popups' => ['Banner Popups', 'fas fa-file-image', 'banner-popups', 'user_type' => ['super-admin', 'normal-admin'], ''],
         /*
         'states' => ['Manage States', 'fas fa-map', 'states', 'user_type' => ['super-admin'], ''],
         'counties' => ['Manage Counties', 'fas fa-map', 'counties', 'user_type' => ['super-admin'], ''],
@@ -122,11 +124,11 @@ class DashboardLinks
 
     public static function get_cms_modules($left_or_dashboard)
     {
-        $data = CmsModule::where('show_in_admin_menu', 1)->where('show_icon_in', 'like', '%show_icon_in_'.$left_or_dashboard.'%')->get();
+        $data = CmsModule::where('show_in_admin_menu', 1)->where('show_icon_in', 'like', '%show_icon_in_' . $left_or_dashboard . '%')->get();
         $arr = [];
         if (count($data) > 0) {
-            foreach($data as $moduleObj){
-                $arr[$moduleObj->type] = [$moduleObj->title, $moduleObj->module_fontawesome_icon, 'module/'.$moduleObj->type, 'user_type' => explode(',', $moduleObj->access_level), ''];
+            foreach ($data as $moduleObj) {
+                $arr[$moduleObj->type] = [$moduleObj->title, $moduleObj->module_fontawesome_icon, 'module/' . $moduleObj->type, 'user_type' => explode(',', $moduleObj->access_level), ''];
             }
         }
         return $arr;

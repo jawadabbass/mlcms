@@ -26,6 +26,7 @@
         <!--footer end-->
     </div>
     @include('front.common_views.footer')
+    @include('front.common_views.front_banner_popup')
     @include('front.common_views.before_body_close')
     @yield('beforeBodyClose')
     @yield('page_scripts')
