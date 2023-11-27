@@ -1,4 +1,4 @@
-@if (!is_null($frontPageBannerPopup))
+@if (isset($frontPageBannerPopup) && !is_null($frontPageBannerPopup))
     @if ($frontPageBannerPopup->status == 'active')
         <!-- Modal -->
         <div class="modal fade" id="front_banner_popup_modal" tabindex="-1" role="dialog"
