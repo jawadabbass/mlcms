@@ -15,16 +15,19 @@ use App\Http\Controllers\Front\ContactUsController;
 use App\Http\Controllers\Front\MailChimpController;
 use App\Http\Controllers\Front\TestimonialController;
 use App\Http\Controllers\Back\BlogController as BackBlogController;
+use App\Http\Controllers\Back\CityController as BackCityController;
 use App\Http\Controllers\Back\MenuController as BackMenuController;
 use App\Http\Controllers\Back\NewsController as BackNewsController;
 use App\Http\Controllers\HomeController as UserDashboardController;
 use App\Http\Controllers\Back\CacheController as BackCacheController;
 use App\Http\Controllers\Back\FilesController as BackFilesController;
 use App\Http\Controllers\Back\MediaController as BackMediaController;
+use App\Http\Controllers\Back\StateController as BackStateController;
 use App\Http\Controllers\Back\ThemeController as BackThemeController;
 use App\Http\Controllers\Back\VideoController as BackVideoController;
 use App\Http\Controllers\Back\CareerController as BackCareerController;
 use App\Http\Controllers\Back\ClientController as BackClientController;
+use App\Http\Controllers\Back\CountyController as BackCountyController;
 use App\Http\Controllers\Back\ModuleController as BackModuleController;
 use App\Http\Controllers\Back\SearchController as BackSearchController;
 use App\Http\Controllers\Back\WidgetController as BackWidgetController;
@@ -63,7 +66,11 @@ use App\Http\Controllers\AdminAuth\ConfirmPasswordController as AdminAuthConfirm
 |
 */
 
-Auth::routes();
+/************************************* */
+/************************************* */
+/***********  ADMINMEDIA ************* */
+/************************************* */
+/************************************* */
 Route::prefix('adminmedia')->name('admin.')->group(function () {
     Route::get('login', [AdminAuthLoginController::class, 'showLoginForm'])->name('login');
     Route::post('login', [AdminAuthLoginController::class, 'login']);
@@ -78,49 +85,7 @@ Route::prefix('adminmedia')->name('admin.')->group(function () {
     Route::get('email/verify/{id}/{hash}', [AdminAuthVerificationController::class, 'verify'])->name('verification.verify');
     Route::post('email/resend', [AdminAuthVerificationController::class, 'resend'])->name('verification.resend');
 });
-Route::group(['prefix' => 'member', 'name' => 'member', 'middleware' => ['auth', 'ipmiddleware']], function () {
-    Route::get('/', [UserDashboardController::class, 'index'])->name('dashboard');
-});
-Route::group(['middleware' => ['siteStatus', 'clearCache', 'ipmiddleware']], function () {
-    Route::get('/', [HomeController::class, 'index'])->name('web.index');
-    Route::get('/about-us', [HomeController::class, 'aboutUs']);
-    Route::get('/atlanta_webdesign_portfolio.html', [HomeController::class, 'Portfolio'])->name('portfolio');
-    Route::get('/frequently_asked_questions', [HomeController::class, 'FAQs']);
-    Route::get('/news', [NewsController::class, 'index']);
-    Route::get('/news/{year}/{month}', [NewsController::class, 'page']);
-    Route::get('/news-details/{id}/{slug}', [NewsController::class, 'single']);
-    Route::get('/contact-us', [ContactUsController::class, 'index'])->name('contact');
-    Route::post('/contact-us', [ContactUsController::class, 'save']);
-    Route::get('/refresh', [ContactUsController::class, 'refresh']);
-    Route::get('/blog/category/{slug}', [BlogController::class, 'category']);
-    Route::get('/blog/search', [BlogController::class, 'search']);
-    Route::resource('/blog', BlogController::class);
-    Route::get('/testimonials', [TestimonialController::class, 'index']);
-    Route::get('/videos', [VideoController::class, 'index']);
-    Route::get('/gallery', [GalleryController::class, 'index']);
-    Route::post('/addSubscriber', [HomeController::class, 'addSubscriber']);
-    Route::get('/services/{slug}', [ServicesController::class, 'show']);
-    Route::get('/services', [ServicesController::class, 'index']);
-    Route::get('/invoice/{slug}', [InvoiceController::class, 'paypal']);
-    Route::get('/invoice/cancel/{slug}', [InvoiceController::class, 'payment_cancel']);
-    Route::get('/invoice/success/{slug}', [InvoiceController::class, 'payment_success']);
-    Route::get('/invoice/pay/{slug}', [InvoiceController::class, 'authorize_net']);
-    Route::post('/invoice/pay/post', [InvoiceController::class, 'post_authorize_net']);
-    //Stripe
-    Route::get('stripe', [InvoiceController::class, 'stripe']);
-    Route::post('stripe', [InvoiceController::class, 'stripePost'])->name('stripe.post');
-    Route::get('/getState/{ads}', [ClientRegisterController::class, 'getState'])->name('get_state');
-    Route::get('/getCity/{ads}', [ClientRegisterController::class, 'getCity'])->name('get_city');
-    Route::get('updateMailChimpListMembers', [MailChimpController::class, 'updateMailChimpListMembers'])->name('updateMailChimpListMembers');
-    Route::get('getMailChimpListMembers', [MailChimpController::class, 'getMailChimpListMembers'])->name('getMailChimpListMembers');
-    Route::get('testUpdateMailChimpListMember', [MailChimpController::class, 'testUpdateMailChimpListMember'])->name('testUpdateMailChimpListMember');
-    Route::get('testRemoveMailChimpListMember', [MailChimpController::class, 'testRemoveMailChimpListMember'])->name('testRemoveMailChimpListMember');
-    Route::post('subscribe-newsletter', [MailChimpController::class, 'subscribeNewsletter'])->name('subscribeNewsletter');
-    Route::get('subscribe-newsletter-thanks', [MailChimpController::class, 'subscribeNewsletterThanks'])->name('subscribeNewsletterThanks');
-    Route::get('unsubscribe-newsletter', [MailChimpController::class, 'unsubscribeNewsletterForm'])->name('unsubscribeNewsletterForm');
-    Route::post('unsubscribe-newsletter', [MailChimpController::class, 'unsubscribeNewsletter'])->name('unsubscribeNewsletter');
-    Route::get('unsubscribe-newsletter-thanks', [MailChimpController::class, 'unsubscribeNewsletterThanks'])->name('unsubscribeNewsletterThanks');
-});
+/*********************************** */
 Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddleware']], function () {
     Route::get('/', [BackDashboardController::class, 'index']);
     Route::get('/aaa', function () {
@@ -256,7 +221,6 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     Route::get('/site-map', [BackSiteMapController::class, 'siteMap']);
     Route::resource('/manage-theme', BackThemeController::class);
     Route::post('/manage-theme/update', [BackThemeController::class, 'save']);
-    /*DCODE HERE*/
     //package qustion start
     Route::resource('/question', BackPackageQuestionController::class);
     Route::get('/addView', [BackPackageQuestionController::class, 'addView'])->name('question.addView');
@@ -373,6 +337,54 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     Route::get('/banner-popups', BackBannerPopupsList::class)->name('banner-popups-list');
     Route::get('/sort-banner-popups', BackSortBannerPopups::class)->name('sort-banner-popups');
 });
+/************************************* */
+/************************************* */
+/***********  Front ****************** */
+/************************************* */
+/************************************* */
+Auth::routes();
+Route::group(['middleware' => ['siteStatus', 'clearCache', 'ipmiddleware']], function () {
+    Route::get('/', [HomeController::class, 'index'])->name('web.index');
+    Route::get('/about-us', [HomeController::class, 'aboutUs']);
+    Route::get('/atlanta_webdesign_portfolio.html', [HomeController::class, 'Portfolio'])->name('portfolio');
+    Route::get('/frequently_asked_questions', [HomeController::class, 'FAQs']);
+    Route::get('/news', [NewsController::class, 'index']);
+    Route::get('/news/{year}/{month}', [NewsController::class, 'page']);
+    Route::get('/news-details/{id}/{slug}', [NewsController::class, 'single']);
+    Route::get('/contact-us', [ContactUsController::class, 'index'])->name('contact');
+    Route::post('/contact-us', [ContactUsController::class, 'save']);
+    Route::get('/refresh', [ContactUsController::class, 'refresh']);
+    Route::get('/blog/category/{slug}', [BlogController::class, 'category']);
+    Route::get('/blog/search', [BlogController::class, 'search']);
+    Route::resource('/blog', BlogController::class);
+    Route::get('/testimonials', [TestimonialController::class, 'index']);
+    Route::get('/videos', [VideoController::class, 'index']);
+    Route::get('/gallery', [GalleryController::class, 'index']);
+    Route::post('/addSubscriber', [HomeController::class, 'addSubscriber']);
+    Route::get('/services/{slug}', [ServicesController::class, 'show']);
+    Route::get('/services', [ServicesController::class, 'index']);
+    Route::get('/invoice/{slug}', [InvoiceController::class, 'paypal']);
+    Route::get('/invoice/cancel/{slug}', [InvoiceController::class, 'payment_cancel']);
+    Route::get('/invoice/success/{slug}', [InvoiceController::class, 'payment_success']);
+    Route::get('/invoice/pay/{slug}', [InvoiceController::class, 'authorize_net']);
+    Route::post('/invoice/pay/post', [InvoiceController::class, 'post_authorize_net']);
+    //Stripe
+    Route::get('stripe', [InvoiceController::class, 'stripe']);
+    Route::post('stripe', [InvoiceController::class, 'stripePost'])->name('stripe.post');
+    Route::get('/getState/{ads}', [ClientRegisterController::class, 'getState'])->name('get_state');
+    Route::get('/getCity/{ads}', [ClientRegisterController::class, 'getCity'])->name('get_city');
+    Route::get('updateMailChimpListMembers', [MailChimpController::class, 'updateMailChimpListMembers'])->name('updateMailChimpListMembers');
+    Route::get('getMailChimpListMembers', [MailChimpController::class, 'getMailChimpListMembers'])->name('getMailChimpListMembers');
+    Route::get('testUpdateMailChimpListMember', [MailChimpController::class, 'testUpdateMailChimpListMember'])->name('testUpdateMailChimpListMember');
+    Route::get('testRemoveMailChimpListMember', [MailChimpController::class, 'testRemoveMailChimpListMember'])->name('testRemoveMailChimpListMember');
+    Route::post('subscribe-newsletter', [MailChimpController::class, 'subscribeNewsletter'])->name('subscribeNewsletter');
+    Route::get('subscribe-newsletter-thanks', [MailChimpController::class, 'subscribeNewsletterThanks'])->name('subscribeNewsletterThanks');
+    Route::get('unsubscribe-newsletter', [MailChimpController::class, 'unsubscribeNewsletterForm'])->name('unsubscribeNewsletterForm');
+    Route::post('unsubscribe-newsletter', [MailChimpController::class, 'unsubscribeNewsletter'])->name('unsubscribeNewsletter');
+    Route::get('unsubscribe-newsletter-thanks', [MailChimpController::class, 'unsubscribeNewsletterThanks'])->name('unsubscribeNewsletterThanks');
+});
+/******************************* */
+/******************************* */
 Route::view('permission_denied', 'front.home.permission_denied');
 Route::get('/maintenance', [HomeController::class, 'maintenance']);
 Route::get('/block', [HomeController::class, 'block']);
@@ -391,4 +403,12 @@ Route::get('/clear-cache', function () {
 });
 Route::group(['middleware' => ['siteStatus', 'clearCache', 'ipmiddleware']], function () {
     Route::get('/{slug}', [HomeController::class, 'page']);
+});
+/************************************* */
+/************************************* */
+/***********  Member ***************** */
+/************************************* */
+/************************************* */
+Route::group(['prefix' => 'member', 'name' => 'member', 'middleware' => ['auth', 'ipmiddleware']], function () {
+    Route::get('/', [UserDashboardController::class, 'index'])->name('dashboard');
 });
