@@ -45,9 +45,9 @@
                                     Filters</button>
                             </div>
                             <div class="col-lg-6 text-end">
-                                <a href="{{ route('counties.sort') }}" class="btn btn-warning">
+                                {{-- <a href="{{ route('counties.sort') }}" class="btn btn-warning">
                                     <i class="la la-bars"></i>Sort Banner Popups
-                                </a>
+                                </a> --}}
                             </div>
                         </div>
                         <div class="row" style="display: {{ $show_filter ? 'block' : 'none' }};">
@@ -120,9 +120,11 @@
                                         <td>
                                             <button class="btn btn-small btn-warning"
                                                 wire:click="showEditBannerPopupModal({{ $bannerPopUpObj->id }})">Edit</button>
-                                            <button class="btn btn-small btn-danger" type="button"
-                                                wire:click="delete({{ $bannerPopUpObj->id }})"
-                                                wire:confirm="Are you sure you want to delete this Banner Popup?">Delete</button>
+                                            @if ($bannerPopUpObj->id != 1)
+                                                <button class="btn btn-small btn-danger" type="button"
+                                                    wire:click="delete({{ $bannerPopUpObj->id }})"
+                                                    wire:confirm="Are you sure you want to delete this Banner Popup?">Delete</button>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

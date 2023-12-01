@@ -15,7 +15,6 @@ use App\Models\Back\BlogCategory;
 use App\Models\Back\CmsModuleData;
 use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
-use App\Models\Back\BannerPopup;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
@@ -31,7 +30,9 @@ class HomeController extends Controller
     public function index()
     {
 
-        //if(Cache::has('home') && Auth::check()==false){return Cache::get('home'); }
+        if (Cache::has('web_index_page') && Auth::check() == false) {
+            return Cache::get('web_index_page');
+        }
 
         $news_results =  get_all(32, NULL, 3);  // (limit,start,module_id)
         $tesimonialsArr = get_alls(15, NULL, 22);
@@ -69,16 +70,12 @@ class HomeController extends Controller
             ->get();
         $albums = Album::paginate(20);
         $images = Image::paginate(20);
-
-        $frontPageBannerPopup = BannerPopup::find(1);
-        return view('front.home.index', compact('news_results', 'seoArr', 'tesimonialsArr', 'blogData', 'get_all_banner', 'get_all_features', 'get_all_services', 'albums', 'images', 'get_all_testimonials', 'get_all_faqs', 'get_all_partners', 'frontPageBannerPopup'));
-        // $html=view('front.home.index',compact('news_results', 'seoArr','tesimonialsArr','blogData'))->render();
-
-        // $parser = \WyriHaximus\HtmlCompress\Factory::construct();
-        // $html = $parser->compress($html);
-        // if(Auth::check()==false){
-        // Cache::put('home', $html,cacheTime());
-        // }
+        $html = view('front.home.index', compact('news_results', 'seoArr', 'tesimonialsArr', 'blogData', 'get_all_banner', 'get_all_features', 'get_all_services', 'albums', 'images', 'get_all_testimonials', 'get_all_faqs', 'get_all_partners'))->render();
+        $parser = \WyriHaximus\HtmlCompress\Factory::construct();
+        $html = $parser->compress($html);
+        if (Auth::check() == false) {
+            Cache::put('web_index_page', $html, cacheTime());
+        }
         return $html;
     }
     public function aboutUs()

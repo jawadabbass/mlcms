@@ -245,22 +245,22 @@ class ImageUploader
     }
     public static function asset_uploads()
     {
-        return self::asset_storage() . 'uploads' . DIRECTORY_SEPARATOR;
+        return self::asset_storage() . 'uploads' . '/';
     }
     public static function asset_storage()
     {
-        return asset('storage') . DIRECTORY_SEPARATOR;
+        return asset('storage') . '/';
     }
     public static function storage_uploads()
     {
-        return self::storage_public() . 'uploads' . DIRECTORY_SEPARATOR;
+        return self::storage_public() . 'uploads' . '/';
     }
     public static function storage_public()
     {
-        return storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR);
+        return storage_path('app' . '/' . 'public' . '/');
     }
     public static function font_path()
     {
-        return self::storage_public() . 'font' . DIRECTORY_SEPARATOR . 'sabandija' . DIRECTORY_SEPARATOR . 'Sabandija.ttf';
+        return self::storage_public() . 'font' . '/' . 'sabandija' . '/' . 'Sabandija.ttf';
     }
 }

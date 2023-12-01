@@ -27,8 +27,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        @symlink(storage_path('app/public'), public_path('storage'));
-
+        Artisan::call('storage:link');
         Paginator::useBootstrap();
         Validator::extend('recaptcha', 'App\\Validators\\ReCaptcha@validate');
 

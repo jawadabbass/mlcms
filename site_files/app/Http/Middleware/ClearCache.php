@@ -18,7 +18,7 @@ class ClearCache
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::check() && (Auth::user()->type == 'admin')) {
+        if (Auth::check()) {
             Cache::flush();
             Artisan::call('cache:clear');
             Artisan::call('route:clear');

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Cache;
 use App\Http\Controllers\Back\CacheController;
 use App\Http\Controllers\Back\FilesController;
 use App\Http\Controllers\Back\MediaController;
@@ -76,7 +77,7 @@ Route::group(['prefix' => 'member', 'name' => 'member', 'middleware' => ['auth',
     Route::get('/', [UserDashboardController::class, 'index'])->name('dashboard');
 });
 Route::group(['namespace' => 'Front', 'middleware' => ['siteStatus', 'clearCache', 'ipmiddleware']], function () {
-    Route::get('/', [HomeController::class, 'index']);
+    Route::get('/', [HomeController::class, 'index'])->name('web.index');
     Route::get('/about-us', [HomeController::class, 'aboutUs']);
     Route::get('/atlanta_webdesign_portfolio.html', [HomeController::class, 'Portfolio'])->name('portfolio');
     Route::get('/frequently_asked_questions', [HomeController::class, 'FAQs']);
@@ -376,6 +377,7 @@ Route::post('searchZipCodeAjax', 'Front\AjaxController@searchZipCodeAjax')->name
 Route::post('filterCountiesAjax', 'Front\AjaxController@filterCountiesAjax')->name('filterCountiesAjax');
 Route::post('filterCitiesAjax', 'Front\AjaxController@filterCitiesAjax')->name('filterCitiesAjax');
 Route::get('/clear-cache', function () {
+    Cache::flush();
     Artisan::call('cache:clear');
     Artisan::call('route:clear');
     Artisan::call('config:clear');
