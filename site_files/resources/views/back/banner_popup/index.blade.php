@@ -25,17 +25,17 @@
                     <div class="row">
                         <div class="col-sm-8">
                             <div class="box-header">
-                                <h3 class="box-title">All Banner Popups</h3>
+                                <h3 class="box-title">Banner Popup</h3>
                             </div>
                         </div>
                         <div class="col-sm-4 text-right">
-                            <button wire:click="showCreateBannerPopupModal" class="btn btn-success">Add Banner
-                                Popup</button>
+                           {{--  <button wire:click="showCreateBannerPopupModal" class="btn btn-success">Add Banner
+                                Popup</button> --}}
                         </div>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body table-responsive">
-                        <div class="row">
+                    {{-- <div class="row">
                             <div class="col-lg-6">
                                 <button type="button" class="btn btn-info" wire:click="showFilters"
                                     style="display: {{ $show_filter ? 'none' : 'block' }};">Show
@@ -45,18 +45,18 @@
                                     Filters</button>
                             </div>
                             <div class="col-lg-6 text-end">
-                                {{-- <a href="{{ route('counties.sort') }}" class="btn btn-warning">
+                                <a wire:navigate href="{{ route('sort-banner-popups') }}" class="btn btn-warning">
                                     <i class="la la-bars"></i>Sort Banner Popups
-                                </a> --}}
+                                </a>
                             </div>
-                        </div>
+                        </div> 
                         <div class="row" style="display: {{ $show_filter ? 'block' : 'none' }};">
                             <div class="col-md-3 form-group">
                                 <label for="banner_title">Banner Title</label>
                                 <input type="text" name="banner_title" id="banner_title" placeholder="Banner Title"
                                     wire:model.live="banner_title" class="form-control">
                             </div>
-                        </div>
+                        </div> 
                         <div class="row">
                             <div class="col-md-6 form-group">
                                 <div class="row">
@@ -89,6 +89,7 @@
                                 </div>
                             </div>
                         </div>
+                        --}}
                         <div>
                             @if (session()->has('message'))
                                 <div class="alert alert-success">
@@ -179,7 +180,6 @@
                             <select wire:model.defer="form.status"
                                 class="form-control @error('form.status') is-invalid @enderror" id="status"
                                 aria-describedby="status_help">
-
                                 <option value="">Select Status</option>
                                 <option value="active">Active</option>
                                 <option value="inactive">Inactive</option>
@@ -199,38 +199,45 @@
 @script
     <script>
         $(document).ready(function() {
-            function resetModalAndForm() {
-                @this.set('message', '');
-                @this.set('form.banner_title', '');
-                @this.set('form.content', '');
-                $('.ck').remove();
-            }
 
-            window.addEventListener('openBannerPopupFormModal', event => {
-                $("#banner_popup_modal").modal('show');
+            function makeCKEditor() {
                 CKEDITOR.ClassicEditor.create(document.querySelector('#banner_popup_content'),
                         getCKEditorConfigArray())
                     .then(editor => {
-                        editor.setData(@this.get('form.content'));
                         editor.model.document.on('change:data', () => {
                             @this.set('form.content', editor.getData());
                         });
+                        window.banner_popup_editor = editor;
                     })
                     .catch(error => {
                         console.error(error);
                     });
-            });
+            }
 
-            window.addEventListener('closeBannerPopupFormModal', event => {
+            function openModal() {
+                $("#banner_popup_modal").modal('show');
+                window.banner_popup_editor.setData(@this.get('form.content'));
+            }
+
+            function hideModal() {
                 setTimeout(() => {
-                    resetModalAndForm();
+                    resetForm();
                     $("#banner_popup_modal").modal('hide');
                 }, 2000);
-            });
-            var banner_popup_modal = document.getElementById('banner_popup_modal')
-            banner_popup_modal.addEventListener('hidden.bs.modal', function(event) {
-                resetModalAndForm();
-            });
+            }
+
+            function resetForm() {
+                @this.set('message', '');
+                @this.set('form.banner_title', '');
+                @this.set('form.content', '');
+            }
+
+            window.addEventListener('openBannerPopupFormModal', (event) => openModal());
+            window.addEventListener('closeBannerPopupFormModal', (event) => hideModal());
+            var banner_popup_modal = document.getElementById('banner_popup_modal');
+            banner_popup_modal.addEventListener('hidden.bs.modal', (event) => resetForm());
+
+            makeCKEditor();
         });
     </script>
 @endscript

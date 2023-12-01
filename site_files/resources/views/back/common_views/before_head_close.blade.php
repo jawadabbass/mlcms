@@ -25,6 +25,7 @@
     var base_admin_image = '{{ asset_storage('') . 'back/images/' }}';
     var baseUrl = '{{ base_url() }}';
     var asset_uploads = '{{ asset_uploads('') }}';
+    var uploadCkeditorImage = '{{ route('uploadCkeditorImage') }}';
 </script>
 <style>
     .ck-editor__editable[role="textbox"] {

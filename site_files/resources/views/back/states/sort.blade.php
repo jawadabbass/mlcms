@@ -68,29 +68,6 @@
     </div>
     @include('back.common_views.spinner')
 @endsection
-@section('beforeHeadClose')
-<style>
-    #sortable {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        width: 100%;
-    }
-
-    #sortable li {
-        margin: 0 5px 5px 5px;
-        padding: 5px;
-        font-size: 1.2em;
-        height: 2.0em;
-        line-height: 1.0em;
-    }
-
-    .ui-state-highlight {
-        height: 2.0em;
-        line-height: 1.0em;
-    }
-</style>
-@endsection
 @section('beforeBodyClose')
 <script>
     $(document).ready(function () {

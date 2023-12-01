@@ -11,7 +11,6 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
-        "@ckeditor/ckeditor5-build-classic": "^40.1.0",
         "@ryangjchandler/alpine-clipboard": "^2.3.0"
     }
 }

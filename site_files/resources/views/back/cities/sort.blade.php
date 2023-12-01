@@ -91,37 +91,6 @@
     </div>
     @include('back.common_views.spinner')
 @endsection
-@section('beforeHeadClose')
-    <style>
-        #sortable {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            width: 100%;
-        }
-
-        #sortable li {
-            margin: 0 5px 5px 5px;
-            padding: 5px;
-            font-size: 1.2em;
-            height: 2.0em;
-            line-height: 1.0em;
-        }
-
-        .ui-city-highlight {
-            height: 2.0em;
-            line-height: 1.0em;
-        }
-
-        .ui-city-default {
-            border: 1px solid #0bb783;
-            background: #0bb783;
-            font-weight: bold;
-            color: #fff;
-        }
-
-    </style>
-@endsection
 @section('beforeBodyClose')
     <script>
         $(document).on('change', '#county_id', function() {
@@ -142,7 +111,7 @@
                     $("#citiesSortDataDiv").html(responseData);
                     /**************************/
                     $('#sortable').sortable({
-                        placeholder: "ui-city-highlight",
+                        placeholder: "ui-state-highlight",
                         update: function(event, ui) {
                             var citiesOrder = $(this).sortable('toArray').toString();
                             $.post("{{ route('cities.sort.update') }}", {
