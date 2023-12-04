@@ -1,0 +1,11 @@
+.imagebox {
+  height: 200px;
+  overflow: hidden;
+  background: #2e3e4e;
+}
+.error-bg {
+  background-color:#e6cfcf;
+}
+.error {
+  color:#FF0000;
+}

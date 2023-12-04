@@ -1,0 +1,41 @@
+.products{
+    margin-top: 30px;
+}
+.para_style
+{
+    min-height: 150px;
+}
+.cont{
+        border: 2px solid black;
+    background: #e35900;
+        margin-bottom: 32px;
+/*    max-height: 400px;*/
+}
+.imghead h4{
+    text-align: center;
+    padding: 10px;
+    font-size: 25px;
+}
+.clsty{
+        font-size: 14px;
+    padding: 20px;
+    color: #fff;
+/*    background: rgba(255,255,255,0.2);*/
+    min-height: 200px;
+        text-align: justify;
+}
+.btst{
+        padding: 10px 60px;
+    margin: 10px;
+}
+.spnset{
+    margin: 10px;
+     text-align: center;
+}
+.spnset span{
+    padding: 15px;
+       border-radius: 100%;
+     background-color: #e1f1d1;
+    color: black;
+    font-size: 20px;
+}

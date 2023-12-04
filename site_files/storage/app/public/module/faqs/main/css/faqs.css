@@ -1,0 +1,14 @@
+/*faqs*/
+.faqs{margin-top:20px;}
+.head{font-size:16px; font-weight:600;}
+.faq-question{font-size:16px; font-weight:bold; margin-top: 20px; margin-bottom:8px;}
+.faqs p{font-size:14px; line-height:24px;}
+.faqs p span{font-weight:bold;}
+.faqs-service{list-style:none; margin-top:10px; margin-bottom:30px; margin-top:20px;}
+.faqs-service li{margin-bottom:10px; border-bottom:1px solid #eee;}
+.faqs-service li h4{font-size:16px; font-weight:700; cursor: pointer; color:#333;}
+.faqs-service li h4:before{content: "\f0da"; font-family: 'FontAwesome'; background:#333; width:30px; padding:6px 0; color:#fff; margin-right:10px; font-size:18px; display:inline-block; text-align:center; transition:0.3s ease-in; -moz-transition:0.3s ease-in; -webkit-transition:0.3s ease-in; -ms-transition:0.3s ease-in;}
+.faqs-service li h4:hover, .faqs-service li h4.active{color:#E35900;}
+.faqs-service li h4:hover:before{background:#E35900;}
+.faqs-service li h4.active:before{content: "\f0d7"; background:#E35900;}
+.faqs-service li p{height: 0; overflow: hidden; position: relative;}
