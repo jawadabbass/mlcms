@@ -107,8 +107,10 @@
                                                     class="btn btn-success btn-sm">Edit</a>
                                                 <a href="{{ url(admin_url() . 'module/' . $module->type) }}"
                                                     class="btn btn-success btn-sm">View</a>
-                                                <a href="javascript:delete_cmsmodule({{ $module->id }});"
-                                                    class="btn btn-danger btn-sm">Delete</a>
+                                                @if ($module->id != 1)
+                                                    <a href="javascript:delete_cmsmodule({{ $module->id }});"
+                                                        class="btn btn-danger btn-sm">Delete</a>
+                                                @endif
                                             </td>
                                         </tr>
                                     @empty

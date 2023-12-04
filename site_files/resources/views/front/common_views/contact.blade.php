@@ -8,7 +8,6 @@
                          <div class="form-heading"><?php echo $Have_Any_Question[0]['heading']; ?></div>
                          <p> <?php echo $Have_Any_Question[0]['content']; ?></p>
                          <?php }?>
-
                          <form class="row" action="<?php echo base_url(); ?>home/send" method="post">
                              <?php if($this->session->flashdata('send_action') == TRUE){
                                 ?>
@@ -18,7 +17,6 @@
                              <?php
                             }
                             ?>
-
                              <div class="col-md-6">
                                  <div class="form-group">
                                      <input type="text" name="first_name" value="<?php echo set_value('first_name'); ?>"
@@ -64,7 +62,6 @@
                                          id="exampleInputEmail1" placeholder="Please type character">
                                      <?php echo form_error('cpt_code'); ?>
                                      <?php echo form_error('validate_code'); ?>
-
                                  </div>
                              </div>
                              <div class="contact-butn">
@@ -73,12 +70,9 @@
                          </form>
                          <?php if (validation_errors() != false) { ?>
                          <script type="text/javascript">
-                             function explode() {
-
+                             setTimeout(() => {
                                  document.getElementById("exampleInputEmail1ss").focus();
-
-                             }
-                             setTimeout(explode, 1000);
+                             }, 1000);
                          </script>
                          <?php } ?>
                      </div>

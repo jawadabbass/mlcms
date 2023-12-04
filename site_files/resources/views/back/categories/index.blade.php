@@ -1,31 +1,4 @@
 @extends('back.layouts.app', ['title' => $title])
-@section('beforeHeadClose')
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script type="text/javascript" src="{{ asset_storage('') . 'back/js/js/jquery-ui-1.7.1.custom.min.js' }}"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $(function() {
-                $(".sorta").sortable({
-                    opacity: 0.6,
-                    cursor: 'move',
-                    update: function() {
-                        var order = $(this).sortable("serialize") +
-                            '&action=updateRecordsListings';
-                        $.get("{{ admin_url() }}categories/create",
-                            order,
-                            function(data) {
-                                console.log(data);
-                            });
-                    }
-                });
-            });
-        });
-
-        function ChangeCat(cat) {
-            window.location.href = 'categories?cat=' + cat;
-        }
-    </script>
-@endsection
 @section('content')
     <div class="content-wrapper pl-3 pr-2">
         <section class="content-header">
@@ -86,8 +59,7 @@
                                                 aria-hidden="true"></i>
                                             @if ($row->img != '')
                                                 <img style="background-color: white;"
-                                                    src="{{ asset_uploads('categories/'.$row->img) }}"
-                                                    alt="">
+                                                    src="{{ asset_uploads('categories/' . $row->img) }}" alt="">
                                             @endif
                                             <span id="edit_{{ $row->$idDBF }}">{{ $row->title }}</span>
                                             <a class="btn btn-sm btn-danger" href="javascript:;"
@@ -209,6 +181,29 @@
     </div>
 @endsection
 @section('beforeBodyClose')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(function() {
+                $(".sorta").sortable({
+                    opacity: 0.6,
+                    cursor: 'move',
+                    update: function() {
+                        var order = $(this).sortable("serialize") +
+                            '&action=updateRecordsListings';
+                        $.get("{{ admin_url() }}categories/create",
+                            order,
+                            function(data) {
+                                console.log(data);
+                            });
+                    }
+                });
+            });
+        });
+
+        function ChangeCat(cat) {
+            window.location.href = 'categories?cat=' + cat;
+        }
+    </script>
     <script>
         function load_category_add_form() {
             $("#validatethis").trigger('reset');
@@ -234,6 +229,72 @@
                     console.log(errorThrown);
                 }
             });
+        }
+
+        function submitForm_cat(frm, contr) {
+            var pageName = base_url + "adminmedia/categories";
+            var parameters = $('#validatethis').serialize();
+            $.ajax({
+                type: "POST",
+                url: pageName,
+                data: parameters,
+                beforeSend: function() {},
+                success: function(msg) {
+                    console.log(msg);
+                    // $('#add_page_form').modal('close');
+                    location.reload();
+                }
+            });
+        }
+
+
+        function editForm_cat() {
+            var pageName = base_url + "adminmedia/categories/0";
+            var parameters = $('#validatethisedit').serialize();
+            $.ajax({
+                type: "POST",
+                url: pageName,
+                data: parameters,
+                beforeSend: function() {},
+                success: function(msg) {
+                    console.log(msg);
+                    // $('#add_page_form').modal('close');
+                    location.reload();
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    alert('Error get data from ajax');
+                    console.log(jqXHR);
+                    console.log(textStatus);
+                    console.log(errorThrown);
+                }
+            });
+        }
+
+        function delete_category_ajax(id) {
+            if (confirm('Are you sure delete this data?')) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: base_url + 'adminmedia/categories/' + id,
+                    type: "DELETE",
+                    success: function(data) {
+                        //if success reload ajax table
+                        $("#recordsArray_" + id).fadeOut(1000);
+                        var tolrec = $("#total_rec").html();
+                        var tolrec = $("#total_rec").html(parseInt(tolrec) - 1);
+                        // $('#modal_form').modal('hide');
+                        // $('#delete_action').show();
+                        // location.reload();
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        alert('Error Deleting data');
+                    }
+                });
+
+            }
         }
     </script>
 @endsection

@@ -414,12 +414,12 @@
             reset_model();
             save_method = 'add';
             $('#modal_form_title').text('Add {{ ucwords($module->term) }}');
-            ckeditors['editor1'].setData('');
+            tinyMCE.get('editor1').setContent('');
         }
 
         function save() {
             var url;
-            var content = ckeditors['editor1'].getData();
+            var content = tinyMCE.get('editor1').getContent();
             $('#module_description1').val(content);
             if (save_method == 'add') {
                 url = "{{ admin_url() . 'module/' . $module->type }}";

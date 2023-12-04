@@ -140,8 +140,6 @@
 @section('beforeBodyClose')
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
         crossorigin="anonymous"></script>
-    {{-- <script src="https://cdn.ckeditor.com/ckeditor5/23.1.0/classic/ckeditor.js"></script> --}}
-    <!--Widget JS functions available in back/js/admin_functions.js file-->
     <script type="text/javascript">
         $(document).ready(function() {
             var field_value = $("#additional_fields").val();

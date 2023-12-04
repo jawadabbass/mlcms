@@ -74,7 +74,6 @@
     </div>
 @endsection
 @section('page_scripts')
-    <script src="//cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
     <script>
         $(document).ready(function() {
             $(document).on('change', '#email_checkbox', function(e) {
@@ -92,7 +91,7 @@
         $('.emailvariables').click(function() {
             var myValue = $(this).text();
             myValue = myValue.trim();
-            ckeditors.email_body.insertText(myValue);
+            tinyMCE.get('email_body').execCommand('mceInsertContent', false, myValue);
         });
     </script>
 @endsection

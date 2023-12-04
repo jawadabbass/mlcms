@@ -25,15 +25,7 @@
     var base_admin_image = '{{ asset_storage('') . 'back/images/' }}';
     var baseUrl = '{{ base_url() }}';
     var asset_uploads = '{{ asset_uploads('') }}';
-    var uploadCkeditorImage = '{{ route('uploadCkeditorImage') }}';
+    var uploadTinyMceImage = '{{ route('uploadTinyMceImage') }}';
+    var csrf_token = '{{ csrf_token() }}';
+    var tinymce_front_css_file = ['{{ env('LIVEWIRE_UPDATE_ENDPOINT') }}storage/front/css/style.css', '{{ env('LIVEWIRE_UPDATE_ENDPOINT') }}storage/front/css/custom_style.css'];
 </script>
-<style>
-    .ck-editor__editable[role="textbox"] {
-        min-height: 200px;
-    }
-
-    .ck-content .image {
-        max-width: 80%;
-        margin: 20px auto;
-    }
-</style>

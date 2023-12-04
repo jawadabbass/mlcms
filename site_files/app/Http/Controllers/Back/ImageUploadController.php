@@ -94,7 +94,7 @@ class ImageUploadController extends Controller
         }
     }
 
-    public function uploadCkeditorImage(Request $request)
+    public function uploadTinyMceImage(Request $request)
     {
         $maxImageSize = getMaxUploadSize() * 1024;
         $validator = Validator::make($request->all(), [
@@ -106,7 +106,7 @@ class ImageUploadController extends Controller
                 $name = ImageUploader::UploadImage($folder . '/', $image, '', 500, 500, false);
             }
             return response()->json([
-                'url' => asset_uploads($folder .'/'. $name)
+                'location' => asset_uploads($folder . '/' . $name)
             ]);
         } else {
             return response()->json([

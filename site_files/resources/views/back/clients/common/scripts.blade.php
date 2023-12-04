@@ -1,20 +1,16 @@
 <script>
-
-
     $("#send_to_client_id").change(function() {
-        
-    var ischecked= $(this).is(':checked');
-    if(ischecked)
-    {
-    $("#client_packages_id").show();    
-        
-    }
-    else{
-        $("#client_packages_id").hide();
-        
-    }
-   
-    }); 
+
+        var ischecked = $(this).is(':checked');
+        if (ischecked) {
+            $("#client_packages_id").show();
+
+        } else {
+            $("#client_packages_id").hide();
+
+        }
+
+    });
 
 
 
@@ -24,8 +20,7 @@
         if (value == 'combine') {
 
             $("#combine_send").show();
-        }
-        else{
+        } else {
 
             $("#combine_send").hide();
         }
@@ -50,7 +45,7 @@
                 $("#value_send").val(value);
                 $("#sendEmailTemplate").modal('show');
                 $("#subject").val(result.Subject);
-                ckeditors['user_body'].setData(result.user_body);
+                tinyMCE.get('user_body').setContent(result.user_body);
 
             },
         });
@@ -60,7 +55,7 @@
     $("#template_id").on('change', function() {
         var tempalte_id = $("#template_id").val();
         $("#subject").val('');
-        ckeditors['user_body'].setData('');
+        tinyMCE.get('user_body').setContent('');
 
         $.ajaxSetup({
             headers: {
@@ -78,7 +73,7 @@
                 var result = JSON.parse(data);
 
                 $("#subject").val(result.Subject);
-                ckeditors['user_body'].setData(result.user_body);
+                tinyMCE.get('user_body').setContent(result.user_body);
 
             },
         });
@@ -87,7 +82,7 @@
     });
 
     function save_email_record_send() {
-        var content = ckeditors['user_body'].getData();
+        var content = tinyMCE.get('user_body').getContent();
         $('#user_body').val(content);
         $('#btnSave').css('display', 'none');
         $('#loader').css('display', 'block');
@@ -128,17 +123,15 @@
                     );
                     location.reload();
 
-                } 
-                else if(data.val_error)
-                {
-              swal(
+                } else if (data.val_error) {
+                    swal(
                         'Sorry!',
                         'Please Check Package For Clients',
                         'error'
-                    );        
-                    
-                    
-                }else {
+                    );
+
+
+                } else {
                     swal(
                         'Sorry!',
                         'Please Check Clients Or Leads Option',

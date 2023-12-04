@@ -29,13 +29,13 @@
                             </div>
                         </div>
                         <div class="col-sm-4 text-right">
-                           {{--  <button wire:click="showCreateBannerPopupModal" class="btn btn-success">Add Banner
+                            {{--  <button wire:click="showCreateBannerPopupModal" class="btn btn-success">Add Banner
                                 Popup</button> --}}
                         </div>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body table-responsive">
-                    {{-- <div class="row">
+                        {{-- <div class="row">
                             <div class="col-lg-6">
                                 <button type="button" class="btn btn-info" wire:click="showFilters"
                                     style="display: {{ $show_filter ? 'none' : 'block' }};">Show
@@ -159,8 +159,8 @@
                         <div class="mb-3">
                             <label for="banner_title" class="form-label">Banner Title</label>
                             <input type="text" wire:model.defer="form.banner_title"
-                                class="form-control @error('form.banner_title') is-invalid @enderror"
-                                id="banner_title" aria-describedby="banner_title_help">
+                                class="form-control @error('form.banner_title') is-invalid @enderror" id="banner_title"
+                                aria-describedby="banner_title_help">
                             @error('form.banner_title')
                                 <div id="banner_title_help" class="text-danger">{{ $message }}</div>
                             @enderror
@@ -199,24 +199,36 @@
 @script
     <script>
         $(document).ready(function() {
-
-            function makeCKEditor() {
-                CKEDITOR.ClassicEditor.create(document.querySelector('#banner_popup_content'),
-                        getCKEditorConfigArray())
-                    .then(editor => {
-                        editor.model.document.on('change:data', () => {
-                            @this.set('form.content', editor.getData());
+            function makeTinyMceEditor() {
+                tinymce.init({
+                    selector: '#banner_popup_content',
+                    force_br_newlines: true,
+                    images_upload_url: uploadTinyMceImage,
+                    images_upload_handler: tinymce_image_upload_handler,
+                    content_css: tinymce_front_css_file,
+                    relative_urls: false,
+                    remove_script_host: false,
+                    document_base_url: base_url,
+                    menubar: false,
+                    plugins: 'preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons accordion',
+                    toolbar: "undo redo | fontfamily fontsize | bold italic underline strikethrough | align numlist bullist | link image | table media | lineheight outdent indent| forecolor backcolor removeformat | charmap emoticons | code fullscreen preview | save print | pagebreak anchor codesample | ltr rtl | accordion accordionremove | blocks",
+                    image_advtab: true,
+                    importcss_append: true,
+                    height: 600,
+                    setup: (editor) => {
+                        editor.on('init change', function() {
+                            editor.save();
                         });
-                        window.banner_popup_editor = editor;
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });
+                        editor.on('change', function(e) {
+                            @this.set('form.content', editor.getContent());
+                        });
+                    }
+                });
             }
 
             function openModal() {
                 $("#banner_popup_modal").modal('show');
-                window.banner_popup_editor.setData(@this.get('form.content'));
+                tinyMCE.get('banner_popup_content').setContent(@this.get('form.content'));
             }
 
             function hideModal() {
@@ -237,7 +249,12 @@
             var banner_popup_modal = document.getElementById('banner_popup_modal');
             banner_popup_modal.addEventListener('hidden.bs.modal', (event) => resetForm());
 
-            makeCKEditor();
+            makeTinyMceEditor();
+        });
+        document.addEventListener('focusin', (e) => {
+            if (e.target.closest(".tox-tinymce-aux, .moxman-window, .tam-assetmanager-root") !== null) {
+                e.stopImmediatePropagation();
+            }
         });
     </script>
 @endscript

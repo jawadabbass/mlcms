@@ -20,7 +20,7 @@
     function insert_media_file_html() {
         var url = $("#file_c_url").val();
         var linktxt = $("#link_on_text").val();
-        ckeditors['editor1'].execute( 'htmlEmbed', '<a href="'+url+'">'+linktxt+'</a>.' );
+        tinyMCE.get(editor).execCommand('mceInsertContent', false, '<a href="'+url+'">'+linktxt+'</a>' );
         $("#modal_file_link_text").modal('hide');
     }
 

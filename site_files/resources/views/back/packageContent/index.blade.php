@@ -339,7 +339,7 @@
         }
 
         function store_content() {
-            var content = ckeditors['text_content'].getData();
+            var content = tinyMCE.get('text_content').getContent();
 
             $("#ck_editor").val(content);
             var get_url = "{{ route('package_content_store') }}";
@@ -448,7 +448,7 @@
 
             $("#edit_item").val($id);
 
-            ckeditors['edit_ck_editor'].setData($content);
+            tinyMCE.get('edit_ck_editor').setContent($content);
             $("#package_edit_Content").modal('show');
 
 
@@ -456,7 +456,7 @@
 
 
         function edit_store_content() {
-            var content = ckeditors['edit_ck_editor'].getData();
+            var content = tinyMCE.get('edit_ck_editor').getContent();
 
             $("#edit_ck_editor_id").val(content);
             var get_url = "{{ route('package_content_store_edit') }}";

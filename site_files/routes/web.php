@@ -52,7 +52,9 @@ use App\Http\Controllers\Back\SocialMediaController as BackSocialMediaController
 use App\Http\Controllers\Back\ContactPagesController as BackContactPagesController;
 use App\Http\Controllers\Back\ModuleManageController as BackModuleManageController;
 use App\Http\Controllers\Back\PaymentOptionController as BackPaymentOptionController;
+use App\Http\Controllers\Back\BlogCategoriesController as BackBlogCategoriesController;
 use App\Http\Controllers\Back\Email_templatesController as BackEmail_templatesController;
+use App\Http\Controllers\Back\PackageContentController as BackPackageContentController;
 use App\Http\Controllers\AdminAuth\VerificationController as AdminAuthVerificationController;
 use App\Http\Controllers\AdminAuth\ResetPasswordController as AdminAuthResetPasswordController;
 use App\Http\Controllers\AdminAuth\ForgotPasswordController as AdminAuthForgotPasswordController;
@@ -116,7 +118,7 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     Route::get('/modul/remove_image', [BackModuleManageController::class, 'removeFeaturedImage']);
     Route::post('/modul/crop_image', [BackModuleManageController::class, 'ajax_crop_img']);
     Route::post('/module_image/upload_image', [BackImageUploadController::class, 'store']);
-    Route::post('uploadCkeditorImage', [BackImageUploadController::class, 'uploadCkeditorImage'])->name('uploadCkeditorImage');
+    Route::post('uploadTinyMceImage', [BackImageUploadController::class, 'uploadTinyMceImage'])->name('uploadTinyMceImage');
     Route::post('/module_image/remove_image', [BackImageUploadController::class, 'removeUploadedImage']);
     Route::post('/module_image/upload_more_images', [BackImageUploadController::class, 'uploadMoreImages']);
     Route::post('/save_module_data_image_crop_image', [BackModuleManageController::class, 'ajax_crop_module_data_img']);
