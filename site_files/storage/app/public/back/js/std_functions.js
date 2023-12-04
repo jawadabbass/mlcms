@@ -12,29 +12,7 @@ function limit_text(idd, text_max, limitid) {
 		$('#' + limitid).html('0 characters remaining');
 	}
 }
-function PostTo(val) {
-	$("#userEN").html('<img src="' + asset_storage + 'images/common/ajax-loader.gif">');
-	var datastr = "email=" + val;
-	$.ajax({
-		type: "POST",
-		url: baseURL + "member/check_user_email/22",
-		data: datastr,
-		success: function (html2) {
-			if (html2 == 'yes') {
-				$("#userEN").html('Email Already Exist');
-				$("#Email").css('background-color', '#FFBFC1');
-			}
-			else if (html2 == 'invalid') {
-				$("#userEN").html('Invalid Email Address');
-				$("#Email").css('background-color', '#FFBFC1');
-			}
-			else {
-				$("#userEN").html('<span style="color:green">Email is available</span>');
-				$("#Email").css('background-color', '#FFF');
-			}
-		}
-	});
-}
+
 function OnlyNumber(evt, error_div) {
 	if (error_div != '') {
 		document.getElementById(error_div).innerHTML = "";
@@ -65,13 +43,6 @@ function next(Val, Field) {
 	if (Len > 2) {
 		document.getElementById(Field).focus();
 		document.getElementById(Field).focus()
-	}
-}
-function nextf(Val, Field, lenth) {
-	Len = Val.length;
-	if (Len == lenth) {
-		document.getElementById(Field).focus();
-		//document.getElementById(Field).focus()
 	}
 }
 function loadprocess(thisobj) {
@@ -117,9 +88,4 @@ function reset_model() {
 }
 function reload_table() {
 	table.ajax.reload(null, false); //reload datatable ajax
-}
-function updatePageContent() {
-	var content = ckeditors['editor1'].getData();
-	$('#module_description1').val(content);
-	alert("done");
 }

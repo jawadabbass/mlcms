@@ -19,7 +19,7 @@ function load_category_edit_form(id) {
     $.getJSON(url, function (data) {
         $('#edit_title').val(data.cate_title);
         $('#edit_cate_slug').val(data.cate_slug);
-        ckeditors['editor1'].setData(data.cate_description);
+        tinyMCE.get('editor1').setContent(data.cate_description);
         $('#category_id').val(data.ID);
         $('#edit_frm_blog_cat').modal('show');
     });
@@ -157,7 +157,7 @@ function load_blog_post_edit_form(id) {
     save_method = 'update';
     var my_editor_id = 'editor1';
     // set the content empty
-    ckeditors['editor1'].setData('');
+    tinyMCE.get('editor1').setContent('');
     $('#edit_footer_menu').prop('checked', false);
     $('#edit_top_menu').prop('checked', false);
     $.getJSON(base_url + 'adminmedia/blog/' + id, function (data) {
@@ -194,7 +194,7 @@ function load_blog_post_edit_form(id) {
             seoClass.className = 'seo-edit-modul-hide';
         }
 
-        ckeditors['editor1'].setData(data.description);
+        tinyMCE.get('editor1').setContent(data.description);
         $('#cms_id').val(data.ID);
         $('#blog_post_form').attr('action', base_url + 'adminmedia/blog/' + data.ID);
         if (!$('#methodPut').length) {
@@ -232,7 +232,7 @@ function remove_blog_post_featured_image(id) {
 function save_blog_post() {
     var url = $('#blog_post_form').attr('action');;
     console.log(url);
-    var content = ckeditors['editor1'].getData();
+    var content = tinyMCE.get('editor1').getContent();
     $('#editor1').val(content);
     $.ajaxSetup({
         headers: {

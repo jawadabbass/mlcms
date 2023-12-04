@@ -31,7 +31,7 @@ function load_sponsors_edit_form(id){
 //
 //        tinyMCE.get('edit_editor1').setContent(data.gallery_desc);
         //tinymce.activeEditor.execCommand('mceInsertContent', false, data.gallery_desc);
-        //ckeditors['edit_editor1'].setData(data.gallery_desc);
+        //tinyMCE.get('edit_editor1').setContent(data.gallery_desc);
         $('#sponsors_id').val(data.ID);
         $('#edit_page_form').modal('show');
     });
@@ -59,7 +59,7 @@ function validate_edit_gallery_form(the_form){
         alert("Please provide sponsors Alt Tag.");
         return false;
     }
-    if(ckeditors['edit_editor1'].getData()==''){
+    if(tinyMCE.get('edit_editor1').getContent()==''){
         alert("Please provide sponsors content.");
         return false;
     }
