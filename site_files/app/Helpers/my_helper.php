@@ -76,7 +76,7 @@ function getUserImage($user)
 {
     $profileImage = $user->profile_image;
 
-    return ImageUploader::print_image_src($profileImage, 'profile_images', 'storage/front/images/no-image.jpg');
+    return ImageUploader::print_image_src($profileImage, 'profile_images', 'storage/front/img/no-image.jpg');
 }
 
 function getImage($folder, $image, $defaultSize = 'main')
@@ -87,7 +87,7 @@ function getImage($folder, $image, $defaultSize = 'main')
         $defaultSize = '/' . $defaultSize;
     }
 
-    return ImageUploader::print_image_src($image, $folder . $defaultSize, 'storage/front/images/no-image-available.png');
+    return ImageUploader::print_image_src($image, $folder . $defaultSize, 'storage/front/img/no-image-available.png');
 }
 
 function storage_uploads($path)
@@ -351,7 +351,7 @@ function getCmsModuleDataImages($images)
         foreach ($images as $image) {
             $thumb = asset_uploads('module/' . $image->module_type . '/thumb/' . $image->image_name);
             $main = asset_uploads('module/' . $image->module_type . '/' . $image->image_name);
-            $imagesArray[] = (object)['thumb' => $thumb, 'main' => $main, 'image_alt' => $image->image_alt, 'image_title' => $image->image_title ];
+            $imagesArray[] = (object)['thumb' => $thumb, 'main' => $main, 'image_alt' => $image->image_alt, 'image_title' => $image->image_title];
         }
     }
     return $imagesArray;
