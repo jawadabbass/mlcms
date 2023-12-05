@@ -6,7 +6,7 @@
 </script>
 <script type="text/javascript" src="{{ asset_storage('back/js/plugins/datatables/jquery.dataTables.js') }}"></script>
 <script src="{{ asset_storage('module/module/admin/filer/js/jquery.filer.min.js') }}"></script>
-<script src="https://cdn.tiny.cloud/1/cmo97r7qu1l5p92xi1mvkphg6i1h3l0qjkkzi2ulmldc0h4t/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="{{ asset_storage('back/js/tinymce/tinymce.min.js') }}"></script>
 <script src="{{ asset_storage('back/js/tinymce_embed.js') }}"></script>
 <script src="{{ asset_storage('back/js/admin_functions.js?v=22') }}" type="text/javascript"></script>
 <script src="{{ asset_storage('select2/js/select2.full.min.js') }}" type="text/javascript"></script>
