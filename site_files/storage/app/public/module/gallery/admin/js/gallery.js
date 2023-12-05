@@ -15,7 +15,7 @@ function update_gallery_status(id){
 
 
 
-    var myurl = baseUrl+'gallery/status/'+id+'/'+current_status;
+    var myurl = base_url +'gallery/status/'+id+'/'+current_status;
 
 
 
@@ -59,7 +59,7 @@ function load_gallery_edit_form(id){
 
     $('#edit_top_menu').prop('checked', false);
 
-    $.getJSON(baseUrl+'gallery/get_gallery_by_id/'+id, function(data) {
+    $.getJSON(base_url +'gallery/get_gallery_by_id/'+id, function(data) {
 
        // $('#edit_gallery_title').val(data.gallery_title);
 
@@ -91,7 +91,7 @@ function load_gallery_edit_form(id){
 
 function delete_gallery(id){
 
-    var myurl = baseUrl+'gallery/delete/'+id;
+    var myurl = base_url +'gallery/delete/'+id;
 
     var is_confirm = confirm("Are you sure you want to delete this gallery Image?");
 

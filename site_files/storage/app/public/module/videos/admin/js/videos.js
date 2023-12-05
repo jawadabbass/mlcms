@@ -15,7 +15,7 @@ function load_videos_edit_form(id) {
     $('#edit_frm_block').trigger("reset");
     $('#edit_footer_menu').prop('checked', false);
     $('#edit_top_menu').prop('checked', false);
-    $.getJSON(baseUrl + 'adminmedia/videos/' + id, function (data) {
+    $.getJSON(base_url + 'adminmedia/videos/' + id, function (data) {
         $('#edit_heading').val(data.heading);
         $('#edit_content').val(data.content);
         $('#video_id').val(data.ID);
@@ -34,7 +34,7 @@ function update_videos_sts(id) {
 
 
 function delete_videos(id) {
-    var myurl = baseUrl + 'adminmedia/videos/' + id;
+    var myurl = base_url + 'adminmedia/videos/' + id;
     var is_confirm = confirm("Are you sure you want to delete this videos?");
     if (is_confirm) {
         $.ajaxSetup({

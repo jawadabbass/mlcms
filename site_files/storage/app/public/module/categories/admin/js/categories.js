@@ -14,7 +14,7 @@ function load_categories_edit_form(id){
 	$('#edit_top_menu').prop('checked', false);
         $("#edit_frm_product_cate").trigger('reset');
         
-	$.getJSON(baseUrl+'categories/get_catetory_by_id/'+id, function(data) {
+	$.getJSON(base_url +'categories/get_catetory_by_id/'+id, function(data) {
                 	$('#edit_title').val(data.title);
                 	$('#edit_cate_type').val(data.cate_type);
                 	$('.edit_clild select').val(data.parent);
@@ -30,7 +30,7 @@ function load_categories_edit_form(id){
 
 function update_category_status(id) {
     var current_status = 'notset';
-    var myurl = baseUrl+'categories/status/'+id+'/'+current_status;
+    var myurl = base_url +'categories/status/'+id+'/'+current_status;
     $.get(myurl, function(sts) {
         alertme('<i class="fas fa-check" aria-hidden="true"></i> Done Successfully ',
             'success', true, 1500);
@@ -38,7 +38,7 @@ function update_category_status(id) {
 }
 
 function delete_categories(id){
-	var myurl = baseUrl+'categories/delete/'+id;
+	var myurl = base_url +'categories/delete/'+id;
 	var is_confirm = confirm("Are you sure you want to delete this categories?");
 	if(is_confirm){
 		  $.get(myurl, function (sts) {

@@ -161,7 +161,6 @@
     <script>
         var uploadUrl = "{{ admin_url() }}module_image/upload_image";
         var deleteUrl = "{{ admin_url() }}module_image/remove_image";
-        var baseUrl = '{{ base_url() }}';
         var folder = "widgets";
         var maxSize = {{ getMaxUploadSize() }};
         var csrfToken = $('meta[name="csrf-token"]').attr('content');

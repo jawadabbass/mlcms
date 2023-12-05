@@ -26,7 +26,7 @@ function load_cmsmodule_edit_form(id) {
 
     $('#edit_top_menu').prop('checked', false);
     var my_editor_id = 'editor1';
-    $.getJSON(baseUrl + 'adminmedia/modules/' + id, function(data) {
+    $.getJSON(base_url + 'adminmedia/modules/' + id, function(data) {
 
         $('#edit_title').val(data.title);
         $('#edit_term').val(data.term);
@@ -114,7 +114,7 @@ function additional_fields_show_hide() {
 
 function update_cmsmodule_status_toggle(id) {
     var current_status = 'notset';
-    var myurl = baseUrl + 'adminmedia/modules/' + id + '/edit?status=' + current_status;
+    var myurl = base_url + 'adminmedia/modules/' + id + '/edit?status=' + current_status;
     $.get(myurl, function(sts) {
         console.log(sts);
         alertme('<i class="fas fa-check" aria-hidden="true"></i> Done Successfully ',
@@ -124,7 +124,7 @@ function update_cmsmodule_status_toggle(id) {
 
 
 function delete_cmsmodule(id, type) {
-    var myurl = baseUrl + 'adminmedia/modules/' + id;
+    var myurl = base_url + 'adminmedia/modules/' + id;
     var is_confirm = confirm("Are you sure you want to delete this cmsmodules?");
     if (is_confirm) {
         $.ajaxSetup({

@@ -1,6 +1,6 @@
 function update_my_status(id) {
     var current_status = $("#sts_" + id + " span").html();
-    var myurl = baseUrl + 'adminmedia/contact_form_settings/' + id + '/edit?status=' + current_status;
+    var myurl = base_url + 'adminmedia/contact_form_settings/' + id + '/edit?status=' + current_status;
     $.get(myurl, function (sts) {
         var class_label = 'success';
         if (sts != 'active')
@@ -16,7 +16,7 @@ function load_my_add_form() {
 
 function load_my_edit_form(id) {
     $('#edit_frm_faq').trigger("reset");
-    $.getJSON(baseUrl + 'adminmedia/contact_form_settings/' + id, function (data) {
+    $.getJSON(base_url + 'adminmedia/contact_form_settings/' + id, function (data) {
         $('#edit_question').val(data.ip_list);
         $('#faq_id').val(data.ID);
         $('#edit_page_form').modal('show');
@@ -25,14 +25,14 @@ function load_my_edit_form(id) {
 
 function load_spam_words() {
     $('#edit_frm_faq').trigger("reset");
-    $.getJSON(baseUrl + 'adminmedia/contact_form_settings/create', function (data) {
+    $.getJSON(base_url + 'adminmedia/contact_form_settings/create', function (data) {
         $('#spam_words').val(data);
         $('#edit_spam_area').modal('show');
     });
 }
 
 function delete_my(id) {
-    var myurl = baseUrl + 'contact_form_settings/delete/' + id;
+    var myurl = base_url + 'contact_form_settings/delete/' + id;
     var is_confirm = confirm("Are you sure you want to delete this IP?");
     if (is_confirm) {
 
@@ -43,7 +43,7 @@ function delete_my(id) {
         });
         $.ajax({
             type: "DELETE",
-            url: baseUrl + 'adminmedia/contact_form_settings/' + id,
+            url: base_url + 'adminmedia/contact_form_settings/' + id,
             data: {'_token': $('meta[name="csrf-token"]').attr('content')},
             success: function (data) {
                 data = JSON.parse(data);

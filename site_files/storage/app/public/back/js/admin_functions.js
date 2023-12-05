@@ -71,7 +71,7 @@ $(function () {
         else
             leftSideBar = 1;
         console.log(leftSideBar);
-        var myurl = baseUrl + 'adminmedia/leftsidebar/session?preference=' + leftSideBar;
+        var myurl = base_url + 'adminmedia/leftsidebar/session?preference=' + leftSideBar;
         $.get(myurl, function (sts) {
         });
     });
@@ -164,7 +164,7 @@ function load_social_media_add_form() {
 }
 function update_social_media_status(id) {
     var current_status = $("#sts_" + id + " i").html();
-    var myurl = baseUrl + 'adminmedia/social_media/' + id + '/edit?status=' + current_status;
+    var myurl = base_url + 'adminmedia/social_media/' + id + '/edit?status=' + current_status;
     $.get(myurl, function (sts) {
         var class_label = 'success';
         if (sts != 'active')
@@ -175,7 +175,7 @@ function update_social_media_status(id) {
 function load_social_media_edit_form(id) {
     $('#edit_footer_menu').prop('checked', false);
     $('#edit_top_menu').prop('checked', false);
-    $.getJSON(baseUrl + 'adminmedia/social_media/' + id, function (data) {
+    $.getJSON(base_url + 'adminmedia/social_media/' + id, function (data) {
         console.log(data);
         $('#edit_name').val(data.name);
         $('#edit_alt_tag').val(data.alt_tag);
@@ -194,7 +194,7 @@ function load_social_media_edit_form(id) {
     });
 }
 function remove_social_media_icon_image(id) {
-    var myurl = baseUrl + 'social_media/remove_social_media_image/' + id;
+    var myurl = base_url + 'social_media/remove_social_media_image/' + id;
     var is_confirm = confirm("Are you sure you want to delete this social icon?");
     if (is_confirm) {
         $.get(myurl, function (sts) {

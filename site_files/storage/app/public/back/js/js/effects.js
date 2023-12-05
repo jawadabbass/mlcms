@@ -586,7 +586,7 @@ function AjaxFunc(idd, objj, act, cval) {
                 }
                 else if (act == 'remove_img') {
                     $(objj).hide();
-                    $(objj).parent(objj).find("a img").attr('src', base_url_main + '/user-picture/home/no_image.jpg');
+                    $(objj).parent(objj).find("a img").attr('src', base_url + '/user-picture/home/no_image.jpg');
                 }
                 else {
                     alert('Function Performed successfully');

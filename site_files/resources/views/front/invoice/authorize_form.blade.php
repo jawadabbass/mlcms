@@ -148,26 +148,22 @@
     <script src="{{ asset_storage('lib/sweetalert/sweetalert2.js') }}"></script>
     <script src="https://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
     <script>
-        baseUrl = "{{ base_url() }}";
+        var base_url = "{{ base_url() }}";
 
         function refreshCaptcha() {
             console.log("Refresh");
-            var myurl = baseUrl + 'refresh';
+            var myurl = base_url + 'refresh';
             $.get(myurl, function(sts) {
                 console.log(sts);
-                $("#Imageid").attr("src", baseUrl + "captcha/images/" + sts.slice(1, -1));
+                $("#Imageid").attr("src", base_url + "captcha/images/" + sts.slice(1, -1));
             });
         }
-    </script>
-    <script>
-        var baseUrl = "{{ base_url() }}";
-
         function refreshCaptcha() {
             console.log("Refresh");
-            var myurl = baseUrl + 'refresh';
+            var myurl = base_url + 'refresh';
             $.get(myurl, function(sts) {
                 console.log(sts);
-                $("#Imageid").attr("src", baseUrl + "captcha/images/" + sts.slice(1, -1));
+                $("#Imageid").attr("src", base_url + "captcha/images/" + sts.slice(1, -1));
             });
         }
 

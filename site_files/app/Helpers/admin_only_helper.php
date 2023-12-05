@@ -229,7 +229,7 @@ function ChangeTemplateWithValues($templ, $Row)
         "{MARTIALSTATUS}" => 'maritalstatus', "{AGE}" => 'age'
     );
     $arrS = array(
-        "{SITEURL}" => base_url_main, "{SITENAME}" => 'GetRishta.com',
+        "{SITEURL}" => base_url(), "{SITENAME}" => 'GetRishta.com',
         '{DATE}' => StdDate(date('Y-m-d H:i:s')),
         "{SITENAMEURL}" => 'GetRishta.com',
         "{AVG RATING}" => 'rateing', "{Reg_DATE}" => date('M. d, Y', strtotime('cdate'))

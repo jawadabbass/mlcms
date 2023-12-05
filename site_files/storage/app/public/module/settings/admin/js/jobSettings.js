@@ -17,7 +17,7 @@ $('#add_bcc_email').click(function () {
 function emailAddRequest(email, type) {
 
     var bcc_id = $('#cc_id').val();
-    var myurl = baseUrl + 'adminmedia/manage_job/emails';
+    var myurl = base_url + 'adminmedia/manage_job/emails';
     if (email != '' && email_validation(email) == true) {
         $.ajaxSetup({
             headers: {
@@ -84,7 +84,7 @@ function remove_to_emails(dataPost, postField) {
        
     var bcc_id = $('#cc_id').val();
     var email_removed = $(dataPost).parent().text();
-    var myurl = baseUrl + 'adminmedia/manage_job/email_delete';
+    var myurl = base_url + 'adminmedia/manage_job/email_delete';
     var is_confirm = confirm("Are you sure you want to delete this Email?");
     if (is_confirm) {
         $.ajaxSetup({
@@ -105,7 +105,7 @@ function remove_cc_emails(dataPost, postField) {
     var bcc_id = $('#cc_id').val();
     
     var email_removed = $(dataPost).parent().text();
-    var myurl = baseUrl + 'adminmedia/manage_job/email_delete';
+    var myurl = base_url + 'adminmedia/manage_job/email_delete';
     var is_confirm = confirm("Are you sure you want to delete this Email?");
     if (is_confirm) {
         $.ajaxSetup({
@@ -124,7 +124,7 @@ function remove_cc_emails(dataPost, postField) {
 function remove_bcc_emails(dataPost, postField) {
     var bcc_id = $('#cc_id').val();
     var email_removed = $(dataPost).parent().text();
-    var myurl = baseUrl + 'adminmedia/manage_job/email_delete';
+    var myurl = base_url + 'adminmedia/manage_job/email_delete';
     var is_confirm = confirm("Are you sure you want to delete this Email?");
     if (is_confirm) {
         $.ajaxSetup({

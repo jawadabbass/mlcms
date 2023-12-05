@@ -203,8 +203,6 @@
         $('#phone').inputmask("999-999-9999");
     </script>
     <script>
-        baseUrl = "{{ base_url() }}";
-
         function submitContactFormAjax() {
             url = "{{ base_url() }}contact-us";
             method = 'POST';

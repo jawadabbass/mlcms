@@ -15,7 +15,7 @@ $(function() {
             var list_sortable = $(this).sortable('toArray').toString();
     		// change order in the database using Ajax
             $.ajax({
-                url: baseUrl+'products/update_orders',
+                url: base_url +'products/update_orders',
                 type: 'POST',
                 data: {list_order:list_sortable},
                 success: function(data) {
@@ -40,7 +40,7 @@ function load_products_add_form(){
 function load_products_edit_form(id){
 	//alert(id);
 $('#edit_frm_products').trigger("reset");
-	$.getJSON(baseUrl+'products/get_products_by_id/'+id, function(data) {
+	$.getJSON(base_url +'products/get_products_by_id/'+id, function(data) {
             if (data.product_img == null || data.product_img=='' || data.product_img==0){
                  //    alert('empty');
                         $("#product_img").fadeOut();
@@ -84,7 +84,7 @@ $('#edit_frm_products').trigger("reset");
 
 function delete_products(id){
 
-	var myurl = baseUrl+'products/delete/'+id;
+	var myurl = base_url +'products/delete/'+id;
 
 	var is_confirm = confirm("Are you sure you want to delete this products?");
 
@@ -107,7 +107,7 @@ function delete_products(id){
 }
 function remove_products_image(id){
   
-   var myurl = baseUrl+'products/remove_products_feature_image/'+id;
+   var myurl = base_url +'products/remove_products_feature_image/'+id;
 	var is_confirm = confirm("Are you sure you want to delete this Products image?");
         if(is_confirm){
 		  $.get(myurl, function (sts) {

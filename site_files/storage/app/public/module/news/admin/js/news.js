@@ -3,7 +3,7 @@ function update_news_status(id){
 
 	var current_status = $("#sts_"+id+" span").html();
 
-	var myurl = baseUrl+'news/status/'+id+'/'+current_status;
+	var myurl = base_url +'news/status/'+id+'/'+current_status;
 
 	$.get(myurl, function (sts) {
 
@@ -47,7 +47,7 @@ function load_news_edit_form(id){
 
        // tinymce.get(my_editor_id).setContent('');
 
-	$.getJSON(baseUrl+'news/get_news_by_id/'+id, function(data) {
+	$.getJSON(base_url +'news/get_news_by_id/'+id, function(data) {
 
                 $('#edit_news_title').val(data.news_title);
 
@@ -78,7 +78,7 @@ function load_news_edit_form(id){
 
 function delete_news(id){
 
-	var myurl = baseUrl+'news/delete/'+id;
+	var myurl = base_url +'news/delete/'+id;
 
 	var is_confirm = confirm("Are you sure you want to delete this news?");
 

@@ -658,7 +658,7 @@
         $(".EditPageOptions").click(function() {
             var pid = $(this).attr('data-id');
             $("#edit_page_module_id").val(pid);
-            $.getJSON(baseUrl + 'adminmedia/modules/' + pid, function(data) {
+            $.getJSON(base_url + 'adminmedia/modules/' + pid, function(data) {
                 $("#page_heading").val(data.page_heading);
                 $("#page_link").val(data.page_link);
                 $("#page_menu_option").val(data.page_menu_option);

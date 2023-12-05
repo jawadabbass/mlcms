@@ -9,7 +9,7 @@ function load_services_add_form (){
 }
 
 function delete_services(id){
-	var myurl = baseUrl+'services/delete/'+id;
+	var myurl = base_url +'services/delete/'+id;
 	var is_confirm = confirm("Are you sure you want to delete this Service?");
 	if(is_confirm){
             $.get(myurl, function (sts) {
@@ -23,7 +23,7 @@ function delete_services(id){
 
 function update_services_status(id){
 	var current_status = $("#sts_"+id+" span").html();
-	var myurl = baseUrl+'services/status/'+id+'/'+current_status;
+	var myurl = base_url +'services/status/'+id+'/'+current_status;
 	$.get(myurl, function (sts) {
 		var class_label = 'success';
 		if(sts!='active')
@@ -39,7 +39,7 @@ function load_services_edit_form(id){
         tinymce.get(my_editor_id).setContent('');
 	$('#edit_footer_menu').prop('checked', false);
 	$('#edit_top_menu').prop('checked', false);
-	$.getJSON(baseUrl+'services/get_cms_by_id/'+id, function(data) {
+	$.getJSON(base_url +'services/get_cms_by_id/'+id, function(data) {
                 $('#edi_name').val(data.name);
                 $('#edit_slug').val(data.slug);
                 //$('#edit_page_slug').val(data.page_slug);
@@ -62,7 +62,7 @@ function load_services_edit_form(id){
 }
 function remove_services_featured_image(id){
   
-   var myurl = baseUrl+'services/remove_services_feature_image/'+id;
+   var myurl = base_url +'services/remove_services_feature_image/'+id;
 	var is_confirm = confirm("Are you sure you want to delete this image featured image?");
         if(is_confirm){
 		  $.get(myurl, function (sts) {

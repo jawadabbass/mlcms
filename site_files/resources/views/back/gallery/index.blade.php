@@ -340,7 +340,7 @@
                     return false;
                 }
 
-                var myurl = baseUrl + 'adminmedia/gallery/delete_album/' + id;
+                var myurl = base_url + 'adminmedia/gallery/delete_album/' + id;
 
                 $.ajax({
                     type: "GET",

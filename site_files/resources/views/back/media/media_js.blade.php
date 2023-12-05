@@ -16,7 +16,7 @@
         }
 
         $(".spinner").show();
-        var myurl = baseUrl + 'adminmedia/media/add_album';
+        var myurl = base_url + 'adminmedia/media/add_album';
 
         $.ajaxSetup({
             headers: {
@@ -55,7 +55,7 @@
     }
     //Delete Album  Image
     function delete_image(imgpath, img_id) {
-        var myurl = baseUrl + 'adminmedia/media/0';
+        var myurl = base_url + 'adminmedia/media/0';
         var is_confirm = confirm("Are you sure you want to delete this Image?");
         if (is_confirm) {
             $.ajaxSetup({
@@ -98,7 +98,7 @@
         if (confirm("Are you sure you want to delete this folder and image(s) under this folder?") == false) {
             return false;
         }
-        var myurl = baseUrl + 'adminmedia/media/delete_album/0';
+        var myurl = base_url + 'adminmedia/media/delete_album/0';
 
         $.ajax({
             type: "POST",
@@ -130,7 +130,7 @@
             alert('Please Enter Album heading');
             return false;
         }
-        var myurl = baseUrl + 'adminmedia/media/update_album';
+        var myurl = base_url + 'adminmedia/media/update_album';
 
         $.ajax({
             type: "POST",

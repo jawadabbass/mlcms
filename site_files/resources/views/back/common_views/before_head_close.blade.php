@@ -20,10 +20,8 @@
 <link href="{{ asset_storage('back/css/admin_dev_style.css') }}" rel="stylesheet" type="text/css" />
 <script>
     var base_url = '{{ base_url() }}';
-    var base_url_main = '{{ base_url() }}';
     var base_url_admin = '{{ config('Constants.base_url_admin') }}';
     var base_admin_image = '{{ asset_storage('') . 'back/images/' }}';
-    var baseUrl = '{{ base_url() }}';
     var asset_uploads = '{{ asset_uploads('') }}';
     var uploadTinyMceImage = '{{ route('uploadTinyMceImage') }}';
     var csrf_token = '{{ csrf_token() }}';

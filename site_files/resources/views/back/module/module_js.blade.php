@@ -97,7 +97,7 @@
     function update_module_status(id) {
         var current_status = $("#sts_" + id + " span").html();
         current_status = current_status.trim();
-        var myurl = baseUrl + 'adminmedia/module/{{ $module->type }}/create?id=' + id + '&&current_status=' +
+        var myurl = base_url + 'adminmedia/module/{{ $module->type }}/create?id=' + id + '&&current_status=' +
             current_status;
         $.get(myurl, function(sts) {
             var class_label = 'success';
@@ -109,7 +109,7 @@
 
     function update_module_status_toggle(id) {
         var current_status = 'notset';
-        var myurl = baseUrl + 'adminmedia/module/{{ $module->type }}/create?id=' + id + '&&current_status=' +
+        var myurl = base_url + 'adminmedia/module/{{ $module->type }}/create?id=' + id + '&&current_status=' +
             current_status;
         $.get(myurl, function(sts) {
             alertme('<i class="fas fa-check" aria-hidden="true"></i> Done Successfully ',

@@ -9,7 +9,7 @@ function load_cms_add_form (){
 }
 
 function delete_cms(id){
-	var myurl = baseUrl+'cms/delete/'+id;
+	var myurl = base_url +'cms/delete/'+id;
 	var is_confirm = confirm("Are you sure you want to delete this page?");
 	if(is_confirm){
             $.get(myurl, function (sts) {
@@ -23,7 +23,7 @@ function delete_cms(id){
 
 function update_cms_status(id){
 	var current_status = $("#sts_"+id+" span").html();
-	var myurl = baseUrl+'cms/status/'+id+'/'+current_status;
+	var myurl = base_url +'cms/status/'+id+'/'+current_status;
 	$.get(myurl, function (sts) {
 		var class_label = 'success';
 		if(sts!='active')
@@ -39,7 +39,7 @@ function load_cms_edit_form(id){
         tinymce.get(my_editor_id).setContent('');
 	$('#edit_footer_menu').prop('checked', false);
 	$('#edit_top_menu').prop('checked', false);
-	$.getJSON(baseUrl+'cms/get_cms_by_id/'+id, function(data) {
+	$.getJSON(base_url +'cms/get_cms_by_id/'+id, function(data) {
            // alert(data.permanent_page);
             if(data.data_type=='module')
             {
@@ -100,7 +100,7 @@ function load_cms_edit_form(id){
 }
 function remove_cms_featured_image(id){
   
-   var myurl = baseUrl+'cms/remove_cms_feature_image/'+id;
+   var myurl = base_url +'cms/remove_cms_feature_image/'+id;
 	var is_confirm = confirm("Are you sure you want to delete this CMS featured image?");
         if(is_confirm){
 		  $.get(myurl, function (sts) {

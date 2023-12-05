@@ -354,7 +354,7 @@
                             icon: 'error',
                             title: 'ERROR!',
                             text: 'You are not logged in!',
-                            footer: '<a href="' + baseURL + 'login">Click here</a> to login'
+                            footer: '<a href="' + base_url + 'login">Click here</a> to login'
                         });
                         return false;
                     }

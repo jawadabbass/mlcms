@@ -71,7 +71,6 @@
           var val=$("#package-list").val();
           $.ajax({
                 type: "GET",
-                //url: baseURL +"/getState/"+val,
                 url: "{{ route('get_client_prequalified_questions', '') }}" + "/" + val,
                 success: function(data) {
                     $("#questions-list").html(data);
@@ -83,7 +82,6 @@
         function getQuestions(val) {
             $.ajax({
                 type: "GET",
-                //url: baseURL +"/getState/"+val,
                 url: "{{ route('get_client_prequalified_questions', '') }}" + "/" + val,
                 success: function(data) {
                     $("#questions-list").html(data);

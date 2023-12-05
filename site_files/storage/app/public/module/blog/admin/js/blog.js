@@ -36,7 +36,7 @@ function update_category_status(id) {
 
 function update_unrevised_comment_status(id) {
     var current_status = $("#sts_" + id + " span").html();
-    var myurl = baseUrl + 'adminmedia/blog/create?id=' + id + '&&status=' + current_status;
+    var myurl = base_url + 'adminmedia/blog/create?id=' + id + '&&status=' + current_status;
     console.log(myurl);
     $.get(myurl, function (sts) {
         var class_label = 'success';
@@ -47,7 +47,7 @@ function update_unrevised_comment_status(id) {
 }
 
 function delete_blog_comments(id) {
-    var myurl = baseUrl + 'adminmedia/blog_comments?id=' + id;
+    var myurl = base_url + 'adminmedia/blog_comments?id=' + id;
     var is_confirm = confirm("Are you sure you want to delete this Comment?");
     if (is_confirm) {
         $.ajaxSetup({
@@ -209,7 +209,7 @@ function load_blog_post_edit_form(id) {
 }
 
 function remove_blog_post_featured_image(id) {
-    var deleteUrl = baseUrl + 'adminmedia/blog/remove_img';
+    var deleteUrl = base_url + 'adminmedia/blog/remove_img';
     var is_confirm = confirm("Are you sure you want to delete this Post featured image?");
     if (is_confirm) {
         $.ajaxSetup({

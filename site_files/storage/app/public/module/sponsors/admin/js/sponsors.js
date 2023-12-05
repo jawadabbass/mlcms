@@ -6,7 +6,7 @@ Version: 1.0
 //=======Starts sponsors Module=======
 function update_sponsors_status(id){
     var current_status = $("#sts_"+id+" span").html();
-    var myurl = baseUrl+'sponsors/status/'+id+'/'+current_status;
+    var myurl = base_url +'sponsors/status/'+id+'/'+current_status;
     $.get(myurl, function (sts) {
         var class_label = 'success';
         if(sts!='active')
@@ -21,7 +21,7 @@ function load_sponsors_add_form (){
 function load_sponsors_edit_form(id){
     $('#edit_footer_menu').prop('checked', false);
     $('#edit_top_menu').prop('checked', false);
-    $.getJSON(baseUrl+'sponsors/get_sponsors_by_id/'+id, function(data) {
+    $.getJSON(base_url +'sponsors/get_sponsors_by_id/'+id, function(data) {
        // $('#edit_gallery_title').val(data.gallery_title);
         $('#edit_alt_tag').val(data.alt_tag);
         $("#sponsorimages").attr('src', asset_uploads+'sponsors/thumb/'+data.sponsor_logo);
@@ -38,7 +38,7 @@ function load_sponsors_edit_form(id){
 }
 
 function delete_sponsors(id){
-    var myurl = baseUrl+'sponsors/delete/'+id;
+    var myurl = base_url +'sponsors/delete/'+id;
     var is_confirm = confirm("Are you sure you want to delete this sponsors?");
     if(is_confirm){
         $.get(myurl, function (sts) {

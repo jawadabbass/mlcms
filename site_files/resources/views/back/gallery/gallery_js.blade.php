@@ -9,7 +9,7 @@
             //return false;
         }
         $(".spinner").show();
-        var myurl = baseUrl + 'adminmedia/gallery/add_album';
+        var myurl = base_url + 'adminmedia/gallery/add_album';
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -45,7 +45,7 @@
     }
     //Delete Album  Image
     function delete_image(img_id, album_id) {
-        var myurl = baseUrl + 'adminmedia/gallery/' + img_id;
+        var myurl = base_url + 'adminmedia/gallery/' + img_id;
         var is_confirm = confirm("Are you sure you want to delete this Image?");
         if (is_confirm) {
             $.ajaxSetup({
@@ -87,7 +87,7 @@
         if (confirm("Are you sure you want to delete this album and image(s) under this section?") == false) {
             return false;
         }
-        var myurl = baseUrl + 'adminmedia/gallery/delete_album/' + id;
+        var myurl = base_url + 'adminmedia/gallery/delete_album/' + id;
         $.ajax({
             type: "GET",
             url: myurl,
@@ -115,7 +115,7 @@
             alert('Please Enter Album heading');
             return false;
         }
-        var myurl = baseUrl + 'adminmedia/gallery/update_album';
+        var myurl = base_url + 'adminmedia/gallery/update_album';
         $.ajax({
             type: "POST",
             url: myurl,

@@ -14,7 +14,7 @@ $(function() {
             var list_sortable = $(this).sortable('toArray').toString();
     		// change order in the database using Ajax
             $.ajax({
-                url: baseUrl+'gallery/update_orders',
+                url: base_url +'gallery/update_orders',
                 type: 'POST',
                 data: {list_order:list_sortable},
                 success: function(data) {
@@ -34,7 +34,7 @@ $(function() {
             var list_sortable = $(this).sortable('toArray').toString();
     		// change order in the database using Ajax
             $.ajax({
-                url: baseUrl+'gallery/update_orders',
+                url: base_url +'gallery/update_orders',
                 type: 'POST',
                 data: {list_order:list_sortable},
                 success: function(data) {
