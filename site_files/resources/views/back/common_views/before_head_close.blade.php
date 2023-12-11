@@ -8,7 +8,7 @@
 <link href="{{ asset_storage('back/bootstrap/css/bootstrap-reboot.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset_storage('back/bootstrap/css/bootstrap-grid.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset_storage('back/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset_storage('back/fontawesome/css/all.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset_storage('fontawesome/css/all.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset_storage('back/css/ionicons.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset_storage('back/css/datatables/dataTables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset_storage('back/css/datatables/jquery.dataTables.css') }}" rel="stylesheet" type="text/css" />

@@ -15,7 +15,7 @@
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link href="{{ asset_storage('back/jquery-ui/jquery-ui.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- Font Awesome -->
-    <link href="{{ asset_storage('back/fontawesome/css/all.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset_storage('fontawesome/css/all.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- icheck bootstrap -->
     <link rel="stylesheet" href="{{ asset_storage('back/icheck-bootstrap/icheck-bootstrap.min.css') }}">
     <!-- Theme style -->
