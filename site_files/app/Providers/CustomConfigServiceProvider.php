@@ -34,7 +34,7 @@ class CustomConfigServiceProvider extends ServiceProvider
                 'mode' => $paypal_mode,
                 'http.ConnectionTimeOut' => 1000,
                 'log.LogEnabled' => true,
-                'log.FileName' => storage_path().'/logs/paypal.log',
+                'log.FileName' => storage_path() . '/logs/paypal.log',
                 'log.LogLevel' => 'FINE',
             ],
         ];
@@ -79,6 +79,8 @@ class CustomConfigServiceProvider extends ServiceProvider
         ];
 
         $this->app['config']['admin_logo_favicon'] = $adminLogoFaviconSettings;
+        $path = parse_url(config('app.url'), PHP_URL_PATH);
+        $this->app['config']['livewire_update_endpoint'] = $path;
     }
 
     /**

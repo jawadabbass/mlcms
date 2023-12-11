@@ -32,8 +32,8 @@ class AppServiceProvider extends ServiceProvider
         Validator::extend('recaptcha', 'App\\Validators\\ReCaptcha@validate');
 
         Livewire::setUpdateRoute(function ($handle) {
-            $url = env('LIVEWIRE_UPDATE_ENDPOINT');
-            return Route::post($url . 'livewire/update', $handle);
+            $path = parse_url(config('app.url'), PHP_URL_PATH);
+            return Route::post($path . 'livewire/update', $handle);
         });
     }
 }

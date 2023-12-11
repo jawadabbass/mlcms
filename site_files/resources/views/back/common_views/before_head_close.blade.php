@@ -26,5 +26,5 @@
     var asset_uploads = '{{ asset_uploads('') }}';
     var uploadTinyMceImage = '{{ route('uploadTinyMceImage') }}';
     var csrf_token = '{{ csrf_token() }}';
-    var tinymce_front_css_file = ['{{ env('LIVEWIRE_UPDATE_ENDPOINT') }}storage/front/css/style.css', '{{ env('LIVEWIRE_UPDATE_ENDPOINT') }}storage/front/css/custom_style.css'];
+    var tinymce_front_css_file = ['{{ config('livewire_update_endpoint') }}storage/front/css/style.css', '{{ config('livewire_update_endpoint') }}storage/front/css/custom_style.css'];
 </script>
