@@ -1,7 +1,4 @@
 @extends('front.layout.app')
-@section('beforeHeadClose')
-    <link href="{{ base_url() }}module/faqs/main/css/faqs.css" rel="stylesheet">
-@endsection
 @section('content')
     {!! cms_page_heading('Images Gallery') !!}
 
@@ -12,7 +9,7 @@
                     <div class="inner-wrap">
                         <div class="about-wrap">
                             <!-- Start Portfolio
-                ============================================= -->
+                                                                ============================================= -->
                             <div class="portfolio-area inc-colum default-padding-20">
                                 <div class="container">
                                     <div class="row">
@@ -41,29 +38,45 @@
                                                 <div class="row magnific-mix-gallery text-center masonary">
                                                     <div id="portfolio-grid" class="portfolio-items col-3">
                                                         @foreach ($images as $image)
-                                                            <!-- Single Item -->
-                                                            <div class="pf-item album_{{ $image->album_id }}">
-                                                                @php
-                                                                    $thumb_img_url = asset_uploads('') . 'gallery/' . $image->album_id . '/thumb/' . $image->imageUrl . '?' . time();
-                                                                    $img_url = asset_uploads('') . 'gallery/' . $image->album_id . '/' . $image->imageUrl . '?' . time();
-                                                                @endphp
-                                                                <div class="effect-left-swipe">
-                                                                    <div class="imagebox">
-                                                                        <img src="{{ $thumb_img_url }}" alt="{{ $image->image_alt }}"
-                                                                            title="{{ $image->image_title }}">
-                                                                    </div>
-                                                                    <a href="{{ $img_url }}" class="item popup-link" title="{{ $image->image_title }}"><i
-                                                                            class="fa fa-plus"></i></a>
-                                                                    <div class="icons">                                                                        
-                                                                        <div class="cat"> <span>{{ $album->title }}</span>
-                                                                            <span>{{ $image->image_title }}</span> </div>
+                                                            @php
+                                                                $thumb_img_url = asset_uploads('') . 'gallery/' . $image->album_id . '/thumb/' . $image->imageUrl . '?' . time();
+                                                                $img_url = asset_uploads('') . 'gallery/' . $image->album_id . '/' . $image->imageUrl . '?' . time();
+
+                                                                $thumb_img2_url = asset_uploads('') . 'gallery/' . $image->album_id . '/thumb/' . $image->imageUrl2 . '?' . time();
+                                                                $img2_url = asset_uploads('') . 'gallery/' . $image->album_id . '/' . $image->imageUrl2 . '?' . time();
+                                                            @endphp
+                                                            @if ($image->isBeforeAfterHaveTwoImages == 0)
+                                                                <!-- Single Item -->
+                                                                <div class="pf-item album_{{ $image->album_id }}">
+                                                                    <div class="effect-left-swipe">
+                                                                        <div class="imagebox">
+                                                                            <img src="{{ $thumb_img_url }}"
+                                                                                alt="{{ $image->image_alt }}"
+                                                                                title="{{ $image->image_title }}">
+                                                                        </div>
+                                                                        <a href="{{ $img_url }}"
+                                                                            class="item popup-link"
+                                                                            title="{{ $image->image_title }}"><i
+                                                                                class="fa fa-plus"></i></a>
+                                                                        <div class="icons">
+                                                                            <div class="cat">
+                                                                                <span>{{ $album->title }}</span>
+                                                                                <span>{{ $image->image_title }}</span>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <!-- End Single Item -->
+                                                                <!-- End Single Item -->
+                                                            @else
+                                                                <!-- Single Item -->
+                                                                <div class="pf-item album_{{ $image->album_id }}"
+                                                                    id="image_before_after_preview_{{ $image->id }}">
+                                                                </div>
+                                                                <!-- End Single Item -->
+                                                            @endif
                                                         @endforeach
                                                     </div>
-                                                </div>
+                                                </div>                                        
                                             </div>
                                         </div>
                                     </div>
@@ -77,4 +90,26 @@
             </div>
         </div>
     </div>
+@endsection
+@section('beforeBodyClose')
+    <script>
+        @if ($images->count())
+            @foreach ($images as $image)
+                @if ($image->isBeforeAfterHaveTwoImages == 1)
+                    beforeEffectslider({
+                        Selector: "#image_before_after_preview_{{ $image->id }}",
+                        BeforeImage: "{{ asset_uploads('') }}gallery/{{ $image->album_id }}/{{ $image->imageUrl . '?' . time() }}",
+                        BeforeAlt: "Before",
+                        AfterImage: "{{ asset_uploads('') }}gallery/{{ $image->album_id }}/{{ $image->imageUrl2 . '?' . time() }}",
+                        AftereAlt: "After",
+                        Buttons: true,
+                        ButtonsText: {
+                            after: 'After',
+                            before: 'Before'
+                        }
+                    });
+                @endif
+            @endforeach
+        @endif
+    </script>
 @endsection

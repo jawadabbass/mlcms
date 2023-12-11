@@ -12,5 +12,6 @@
 <script src="{{ asset_storage('select2/js/select2.full.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset_storage('back/datetimepicker/build/jquery.datetimepicker.full.min.js') }}"
     type="text/javascript"></script>
+<script src="{{ asset_storage('before-effect-slider/before-effect-slider.js') }}"></script>
 <script src="{{ asset_storage('back/js/AdminLTE/dist/js/adminlte.min.js') }}"></script>
 @include('back.common_views.common_state_county_city_functions')

@@ -1,7 +1,4 @@
 @extends('front.layout.app')
-@section('beforeHeadClose')
-    <link href="{{ base_url() }}module/faqs/main/css/faqs.css" rel="stylesheet">
-@endsection
 @section('content')
     @php echo cms_edit_page("module/testimonials");@endphp
     {!! cms_page_heading('TESTIMONIALS') !!}

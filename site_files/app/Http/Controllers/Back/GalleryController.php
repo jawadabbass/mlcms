@@ -25,10 +25,8 @@ class GalleryController extends Controller
         $msg = '';
         $albumsObj = [];
         $allAlbums = Album::orderBy('order_by', 'asc')->paginate(10);
-
         return view('back.gallery.index', compact('title', 'msg', 'albumsObj', 'allAlbums'));
     }
-
     public function imagesOrder()
     {
         $list_order = request()->list_order;
@@ -43,7 +41,6 @@ class GalleryController extends Controller
             echo $i . ' ' . $id;
         }
     }
-
     public function imageStatus()
     {
         $album = AlbumImage::where(['id' => request('id')])->first();
@@ -51,7 +48,6 @@ class GalleryController extends Controller
             $album->update([
                 'status' => 0,
             ]);
-
             return response([
                 'status' => true,
                 'message' => 'inactive',
@@ -60,7 +56,6 @@ class GalleryController extends Controller
             $album->update([
                 'status' => 1,
             ]);
-
             return response([
                 'status' => true,
                 'message' => 'active',
@@ -74,7 +69,6 @@ class GalleryController extends Controller
             $album->update([
                 'isFeatured' => 0,
             ]);
-
             return response([
                 'status' => true,
                 'message' => 'disabled',
@@ -83,14 +77,12 @@ class GalleryController extends Controller
             $album->update([
                 'isFeatured' => 1,
             ]);
-
             return response([
                 'status' => true,
                 'message' => 'enabled',
             ]);
         }
     }
-
     public function order(Request $request)
     {
         $list_order = $request->list_order;
@@ -105,7 +97,6 @@ class GalleryController extends Controller
             echo $i . ' ' . $id;
         }
     }
-
     public function activate()
     {
         $album = Album::where('id', request('id'))->first();
@@ -118,7 +109,6 @@ class GalleryController extends Controller
                     'isFeatured' => 0,
                 ]);
             }
-
             return response([
                 'message' => 'blocked',
             ]);
@@ -126,13 +116,11 @@ class GalleryController extends Controller
             $album->update([
                 'status' => 1,
             ]);
-
             return response([
                 'message' => 'active',
             ]);
         }
     }
-
     public function isFeatured()
     {
         $album = Album::where(['id' => request('id'), 'status' => 1])->first();
@@ -146,7 +134,6 @@ class GalleryController extends Controller
             $album->update([
                 'isFeatured' => 0,
             ]);
-
             return response([
                 'status' => true,
                 'message' => 'disabled',
@@ -162,14 +149,12 @@ class GalleryController extends Controller
             $album->update([
                 'isFeatured' => 1,
             ]);
-
             return response([
                 'status' => true,
                 'message' => 'enabled',
             ]);
         }
     }
-
     public function add_album(Request $request)
     {
         $validatord = Validator::make(
@@ -206,7 +191,6 @@ class GalleryController extends Controller
         $dataClient->save();
         echo json_encode(['done' => 'ok']);
     }
-
     public function update_album(Request $request)
     {
         $validationArr = [];
@@ -237,57 +221,94 @@ class GalleryController extends Controller
         $dataClient->save();
         echo json_encode(['done' => 'ok']);
     }
-
     public function upload_album_images(Request $request)
     {
         $maxImageSize = getMaxUploadSize() * 1024;
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'uploadFile.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:' . $maxImageSize,
-                'album' => 'required',
-            ],
-            [
-                'album.required' => 'Please select album.',
-            ]
-        );
-        if ($validator->fails()) {
-            return back()
-                ->withErrors($validator)
-                ->withInput();
-        }
-        request()->validate([
-            'uploadFile' => 'required',
-        ]);
-        $isBeforeAfter = (int) $request->input('isBeforeAfter', 0);
-        foreach ($request->file('uploadFile') as $key => $value) {
-            if ($isBeforeAfter == 1) {
-                $imageName = ImageUploader::UploadImageBeforAfter('gallery/' . $request->input('album') . '/', $value, '', 2500, 2500, true);
-            } else {
-                $imageName = ImageUploader::UploadImage('gallery/' . $request->input('album') . '/', $value, '', 2500, 2500, true);
-            }
-            $dataClient = new Image();
-            $dataClient->imageUrl = $imageName;
-            $dataClient->album_id = $request->input('album');
-            $dataClient->isBeforeAfter = $isBeforeAfter;
-            $dataClient->save();
-        }
 
+        $isBeforeAfter = (int) $request->input('isBeforeAfter', 0);
+        $isBeforeAfterHaveTwoImages = (int) $request->input('isBeforeAfterHaveTwoImages', 0);
+        if ($isBeforeAfter == 1) {
+            if ($isBeforeAfterHaveTwoImages == 1) {
+                $request->validate(
+                    [
+                        'before_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:' . $maxImageSize,
+                        'after_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:' . $maxImageSize,
+                        'album' => 'required',
+                    ],
+                    [
+                        'before_image.required' => 'Please select before image.',
+                        'after_image.required' => 'Please select after image.',
+                        'album.required' => 'Please select album.',
+                    ]
+                );
+                $imageName = ImageUploader::UploadImage('gallery/' . $request->input('album') . '/', $request->file('before_image'), '', 2500, 2500, true);
+                $imageName2 = ImageUploader::UploadImage('gallery/' . $request->input('album') . '/', $request->file('after_image'), '', 2500, 2500, true);
+                $imageObj = new Image();
+                $imageObj->imageUrl = $imageName;
+                $imageObj->imageUrl2 = $imageName2;
+                $imageObj->album_id = $request->input('album');
+                $imageObj->isBeforeAfter = $isBeforeAfter;
+                $imageObj->isBeforeAfterHaveTwoImages = $isBeforeAfterHaveTwoImages;
+                $imageObj->save();
+            } else {
+                $request->validate(
+                    [
+                        'uploadFile' => 'required',
+                        'uploadFile.*' => 'image|mimes:jpeg,png,jpg,gif|max:' . $maxImageSize,
+                        'album' => 'required',
+                    ],
+                    [
+                        'uploadFile.required' => 'Please select image(s).',
+                        'album.required' => 'Please select album.',
+                    ]
+                );
+                foreach ($request->file('uploadFile') as $key => $value) {
+                    $imageName = ImageUploader::UploadImageBeforAfter('gallery/' . $request->input('album') . '/', $value, '', 2500, 2500, true);
+                    $imageObj = new Image();
+                    $imageObj->imageUrl = $imageName;
+                    $imageObj->album_id = $request->input('album');
+                    $imageObj->isBeforeAfter = $isBeforeAfter;
+                    $imageObj->save();
+                }
+            }
+        } else {
+            $request->validate(
+                [
+                    'uploadFile' => 'required',
+                    'uploadFile.*' => 'image|mimes:jpeg,png,jpg,gif|max:' . $maxImageSize,
+                    'album' => 'required',
+                ],
+                [
+                    'uploadFile.required' => 'Please select image(s).',
+                    'album.required' => 'Please select album.',
+                ]
+            );
+            foreach ($request->file('uploadFile') as $key => $value) {
+                $imageName = ImageUploader::UploadImage('gallery/' . $request->input('album') . '/', $value, '', 2500, 2500, true);
+                $imageObj = new Image();
+                $imageObj->imageUrl = $imageName;
+                $imageObj->album_id = $request->input('album');
+                $imageObj->isBeforeAfter = $isBeforeAfter;
+                $imageObj->save();
+            }
+        }
         return back()->with('success', 'Images Uploaded Successfully.');
     }
-
     /**
      * Remove the specified images from album.
      */
     public function destroy($id, Request $request)
     {
         $galleryItem = Image::find($id);
-        ImageUploader::deleteImage('gallery/' . $request->album_id . '/', $galleryItem->imageUrl);
+        if (!empty($galleryItem->imageUrl)) {
+            ImageUploader::deleteImage('gallery/' . $request->album_id . '/', $galleryItem->imageUrl);
+        }
+        if (!empty($galleryItem->imageUrl2)) {
+            ImageUploader::deleteImage('gallery/' . $request->album_id . '/', $galleryItem->imageUrl2);
+        }
         $galleryItem->delete();
-
         return json_encode(['status' => true]);
     }
-
     /**
      * Remove the album.
      */
@@ -296,13 +317,11 @@ class GalleryController extends Controller
         $image = AlbumImage::where('id', request('id'))->first();
         ImageUploader::deleteImage('gallery/' . $image->album_id . '/', $image->imageUrl);
         $image->delete();
-
         return response([
             'status' => true,
             'message' => 'deleted',
         ]);
     }
-
     public function delete_album($id)
     {
         $allImage = DB::table('images')->where('album_id', $id)->get();
@@ -316,7 +335,6 @@ class GalleryController extends Controller
         echo json_encode(['status' => true]);
         exit;
     }
-
     public function create()
     {
         $album_id = request()->route('id');
@@ -324,10 +342,8 @@ class GalleryController extends Controller
         $title = FindInsettingArr('business_name') . ': Gallery Management';
         $album_name = Album::where(['id' => $album_id])->first();
         $data = ['title' => $title, 'images' => $images, 'album_name' => $album_name->title];
-
         return view('back.gallery.show', $data);
     }
-
     public function markBeforeAfter()
     {
         $image = AlbumImage::where(['id' => request('id')])->first();
@@ -335,14 +351,12 @@ class GalleryController extends Controller
         $image->update([
             'isBeforeAfter' => 1,
         ]);
-
         return response([
             'status' => true,
             'message' => 'marked',
             'src' => asset_uploads('gallery/' . $image->album_id . '/thumb/' . $image->imageUrl . '?' . time()),
         ]);
     }
-
     public function ajax_crop_gallery_img(Request $request)
     {
         $album_id = $request->album_id;
@@ -351,13 +365,11 @@ class GalleryController extends Controller
         $crop_height = (int) $request->crop_height;
         $crop_width = (int) $request->crop_width;
         $fileName = $request->source_image;
-
         ImageUploader::CropImageAndMakeThumb('gallery/' . $album_id . '/', $fileName, $crop_width, $crop_height, $crop_x, $crop_y);
         $data['cropped_image'] = $fileName;
         echo json_encode($data);
         exit;
     }
-
     public function getGalleryImageAltTitle(Request $request)
     {
         $imageObj = AlbumImage::where(['id' => $request->image_id])->first();
@@ -366,14 +378,12 @@ class GalleryController extends Controller
             'image_title' => $imageObj->image_title,
         ]);
     }
-
     public function saveGalleryImageAltTitle(Request $request)
     {
         $imageObj = AlbumImage::where(['id' => $request->image_id])->first();
         $imageObj->image_alt = $request->image_alt;
         $imageObj->image_title = $request->image_title;
         $imageObj->update();
-
         return response([
             'image_alt' => $imageObj->image_alt,
             'image_title' => $imageObj->image_title,

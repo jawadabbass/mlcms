@@ -651,10 +651,16 @@ function IsNullOrEmptyString($str)
 function getSeoArrayModule($id)
 {
     $moduleData = \App\Models\Back\CmsModuleData::find($id);
-    if (!isset($moduleData)) {
-        abort(500);
+    if (is_null($moduleData)) {
+        return [
+            'title' => '',
+            'keywords' => '',
+            'descp' => '',
+            'canonical_url' => '',
+            'index' => '',
+            'follow' => '',
+        ];
     }
-
     return SeoArray($moduleData);
 }
 
@@ -667,16 +673,15 @@ function getSeoArrayBlog($id)
 
 function SeoArray($moduleData)
 {
-    $title = (isset($moduleData->meta_title)) ? $moduleData->meta_title : '';
-    $title = (empty($title)) ? $moduleData->heading : '';
+    $title = (isset($moduleData->meta_title) && !empty($moduleData->meta_title)) ? $moduleData->meta_title : '';
+    $title = (empty($title) && !empty($moduleData->heading)) ? $moduleData->heading : $title;
 
     $keywords = (isset($moduleData->meta_keywords)) ? $moduleData->meta_keywords : '';
     $description = (isset($moduleData->meta_description)) ? $moduleData->meta_description : '';
     $canonical_url = (isset($moduleData->canonical_url)) ? $moduleData->canonical_url : '';
     $index = $moduleData->show_index;
     $follow = $moduleData->show_follow;
-
-    return [
+    $retArray = [
         'title' => $title,
         'keywords' => $keywords,
         'descp' => $description,
@@ -684,6 +689,7 @@ function SeoArray($moduleData)
         'index' => $index,
         'follow' => $follow,
     ];
+    return $retArray;
 }
 
 if (!function_exists('break_email')) {

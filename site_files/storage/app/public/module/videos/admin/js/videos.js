@@ -3,14 +3,11 @@ Author: sadiq noor
 Date: 28/01/16
 Version: 2.0
 */
-
 //=======Starts video Module=======
-
 function load_video_add_form() {
     $('#frm_block').trigger("reset");
     $('#add_page_form').modal('show');
 }
-
 function load_videos_edit_form(id) {
     $('#edit_frm_block').trigger("reset");
     $('#edit_footer_menu').prop('checked', false);
@@ -22,7 +19,6 @@ function load_videos_edit_form(id) {
         $('#edit_page_form').modal('show');
     });
 }
-
 function update_videos_sts(id) {
     var current_status = 'notset';
     var myurl = base_url + 'adminmedia/videos/' + id + '/edit?status=' + current_status;
@@ -31,8 +27,6 @@ function update_videos_sts(id) {
             'success', true, 1500);
     });
 }
-
-
 function delete_videos(id) {
     var myurl = base_url + 'adminmedia/videos/' + id;
     var is_confirm = confirm("Are you sure you want to delete this videos?");
@@ -42,7 +36,6 @@ function delete_videos(id) {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-
         $.ajax({
             type: "DELETE",
             url: myurl,
@@ -50,7 +43,7 @@ function delete_videos(id) {
             success: function (data) {
                 data = JSON.parse(data);
                 if (data.status) {
-                    $("#row_" + id).fadeOut();
+                    $(".row_" + id).fadeOut();
                 }
                 else {
                     alert('OOps! Something went wrong.');
@@ -60,7 +53,6 @@ function delete_videos(id) {
         });
     }
 }
-
 function validate_edit_videos_form(the_form) {
     if (the_form.edit_heading.value == '') {
         alert("Please provide videos heading.");
@@ -75,6 +67,4 @@ function validate_edit_videos_form(the_form) {
         return false;
     }
 }
-
-
 //=======Ends video Module=======

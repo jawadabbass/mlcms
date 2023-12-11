@@ -1,7 +1,4 @@
 @extends('front.layout.app')
-@section('beforeHeadClose')
-    <link href="{{ base_url() }}module/faqs/main/css/faqs.css" rel="stylesheet">
-@endsection
 @section('content')
     {!! cms_page_heading('VIDEO LIBRARY') !!}
     <div class="content-wrap">
@@ -14,7 +11,7 @@
                                 @foreach ($videos as $video)
                                     <div class="col-md-3 col-sm-6">
                                         <div class="video-pic">
-                                            {!! link2iframe($video['content'], $video['video_type'], '100%', '200', 'videos/video/') !!}
+                                            {!!link2iframe($video['content'],$video['video_type'],'100%','200', 'd-block','uploads/videos/video/')!!}
                                         </div>
                                     </div>
                                 @endforeach

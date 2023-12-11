@@ -3,13 +3,16 @@
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     <link href="{{ asset_storage('back/css/cropper.css') }}" rel="stylesheet">
     <style>
-        .sortable121 span i {
+        .sortable_div {
+            display: inline-block !important;
+        }
+
+        .sortable_div i {
             background-color: #b4b3b3;
             text-align: center;
             line-height: 24px;
             width: 30px;
             height: 26px;
-            display: inline-block;
             cursor: all-scroll;
             border-radius: 4px;
             padding-top: 0px;
@@ -51,11 +54,11 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="alert alert-danger" role="alert">
-                                    <ul>
+                                    <ol>
                                         @foreach ($errors->all() as $errmsg)
-                                            <li>* {{ $errmsg }}</li>
+                                            <li>{{ $errmsg }}</li>
                                         @endforeach
-                                    </ul>
+                                    </ol>
                                 </div>
                             </div>
                         </div>
@@ -68,21 +71,46 @@
                             {{ csrf_field() }}
                             <input type="hidden" name="album" value="{{ request()->route('id') }}">
                             <div class="row">
-                                <div class="col-md-12 mb-3">
+                                <div class="col-md-12 mb-3 before_after_not_have_two_images">
                                     <input class="form-control" id="uploadFile" multiple="" name="uploadFile[]"
                                         type="file" onchange="uploaded_files_show();" />
                                     <div class="text-danger"><em>Max :</em> {{ getMaxUploadSize() }} MB</div>
+                                    <div id="image_preview" class="row"></div>
                                 </div>
                                 <div class="col-md-12 mb-3">
-                                    <input type="checkbox" name="isBeforeAfter" value="1"
-                                        style="width: 15px; height:15px;" /> <b>Is Before After?</b>
+                                    <input type="checkbox" name="isBeforeAfter" id="isBeforeAfter" value="1"
+                                        style="width: 15px; height:15px;" onclick="toggle_before_after_have_two_images();"
+                                        {{ old('isBeforeAfter', 0) == 1 ? 'checked' : '' }} /> <b>Is Before After?</b>
+                                </div>
+                                <div class="col-md-12 mb-3" id="is_before_after_have_two_images" style="display: none;">
+                                    <label>Is Before After Have Two Images?</label>
+                                    <input type="radio" name="isBeforeAfterHaveTwoImages" value="1"
+                                        style="width: 15px; height:15px;" onclick="show_before_after_have_two_images();"
+                                        {{ old('isBeforeAfterHaveTwoImages', 0) == 1 ? 'checked' : '' }} />
+                                    <b>Yes</b>
+                                    <input type="radio" name="isBeforeAfterHaveTwoImages" value="0"
+                                        {{ old('isBeforeAfterHaveTwoImages', 0) == 0 ? 'checked' : '' }}
+                                        style="width: 15px; height:15px;" onclick="hide_before_after_have_two_images();" />
+                                    <b>No</b>
+                                </div>
+                                <div class="col-md-12 mb-3 before_after_have_two_images" style="display: none;">
+                                    <label>Before Image</label>
+                                    <input class="form-control" id="before_image" name="before_image"
+                                        type="file" />
+                                    <div class="text-danger"><em>Max :</em> {{ getMaxUploadSize() }} MB</div>
+                                    <div id="before_image_preview" class="row"></div>
+                                </div>
+                                <div class="col-md-12 mb-3 before_after_have_two_images" style="display: none;">
+                                    <label>After Image</label>
+                                    <input class="form-control" id="after_image" name="after_image"
+                                        type="file" />
+                                    <div class="text-danger"><em>Max :</em> {{ getMaxUploadSize() }} MB</div>
+                                    <div id="after_image_preview" class="row"></div>
                                 </div>
                                 <div class="col-md-12 mb-3">
                                     <input onclick="document.getElementById('spinner').style.display='block'"
                                         class="btn btn-success" name="submitImage" type="submit" value="Upload Image(s)" />
                                 </div>
-                            </div>
-                            <div id="image_preview" class="row">
                             </div>
                         </form>
                         </hr>
@@ -93,51 +121,141 @@
         </section>
         <section class="content p-3">
             <div class="myasection">
-                <div class="row sortable121">
+                <div class="row sortable_row">
                     @forelse($images as $image)
-                        <div class="col-md-4" id="{{ $image->id }}">
-                            <div class="mb-3 sort2">
-                                <div class="imagebox">
-                                    <a href="javascript:void(0);" title="{{ $image->image_title }}"
-                                        onclick="openGalleryImageZoomModal('{{ asset_uploads('') }}gallery/{{ $image->album_id }}/{{ $image->imageUrl . '?' . time() }}');">
-                                        <img id="image_{{ $image->id }}" data-imgname="{{ $image->imageUrl }}"
-                                            src="{{ asset_uploads('') }}gallery/{{ $image->album_id }}/thumb/{{ $image->imageUrl . '?' . time() }}"
-                                            style="width:100%" alt="{{ $image->image_alt }}"
-                                            title="{{ $image->image_title }}">
-                                    </a>
-                                </div>
-                                <div class="caption myadelbtn">
-                                </div>
-                                <div class="image_btn mt-2">
-                                    <span class="drag" title="Drag and Drop to sort"><i class="fas fa-arrows"
-                                            aria-hidden="true"></i></span>
-                                    <a title="Active/Inactive" onClick="update_status({{ $image->id }}, this)"
-                                        href="javascript:void(0)"
-                                        class="mb-1 btn btn-{{ $image->status == 1 ? 'success' : 'secondary' }}"
-                                        id="{{ 'status_' . $image->id }}"><i class="fas fa-eye" aria-hidden="true"></i></a>
-                                    <a title="Featured/Not Featured" onClick="update_featured({{ $image->id }}, this)"
-                                        href="javascript:void(0)"
-                                        class="mb-1 btn btn-{{ $image->isFeatured == 1 ? 'success' : 'secondary' }}"
-                                        id="{{ 'featured_' . $image->id }}"><i class="fas fa-star"
-                                            aria-hidden="true"></i></a>
-                                    <a title="Delete Image" onclick="deleteImage({{ $image->id }}, this);"
-                                        class="mb-1 btn btn-danger" data-bs-toggle="tooltip" data-placement="left"
-                                        title="Delete this image" href="javascript:;"> <i class="fas fa-trash"></i></a>
-                                    @if ((bool) $image->isBeforeAfter == false)
-                                        <a onClick="markBeforeAfter({{ $image->id }}, this)" href="javascript:void(0)"
-                                            class="mb-1 btn btn-warning">Mark Before After</a>
-                                    @endif
-                                    <a title="Crop Image"
-                                        onClick="bind_cropper_preview_gallery_image({{ $image->album_id }}, {{ $image->id }});"
-                                        href="javascript:void(0)" class="mb-1 btn btn-warning"><i class="fas fa-crop"
-                                            aria-hidden="true"></i></a>
-                                    <a title="Image Alt/Title"
-                                        onClick="openImageAltTitleModal({{ $image->album_id }}, {{ $image->id }});"
-                                        href="javascript:void(0)" class="mb-1 btn btn-success"><i class="fas fa-bars"
-                                            aria-hidden="true"></i></a>
+                        @if ($image->isBeforeAfterHaveTwoImages == 0)
+                            <div class="col-md-4" id="{{ $image->id }}">
+                                <div class="mb-3">
+                                    <div class="">
+                                        <a href="javascript:void(0);" title="{{ $image->image_title }}"
+                                            onclick="openGalleryImageZoomModal('{{ asset_uploads('') }}gallery/{{ $image->album_id }}/{{ $image->imageUrl . '?' . time() }}');">
+                                            <img id="image_1_{{ $image->id }}" data-imgname="{{ $image->imageUrl }}"
+                                                src="{{ asset_uploads('') }}gallery/{{ $image->album_id }}/thumb/{{ $image->imageUrl . '?' . time() }}"
+                                                style="width:100%" alt="{{ $image->image_alt }}"
+                                                title="{{ $image->image_title }}">
+                                        </a>
+                                    </div>
+                                    <div class="caption myadelbtn">
+                                    </div>
+                                    <div class="image_btn mt-2">
+                                        <div class="drag sortable_div" title="Drag and Drop to sort"><i
+                                                class="fas fa-arrows" aria-hidden="true"></i></div>
+                                        <a title="Active/Inactive" onClick="update_status({{ $image->id }}, this)"
+                                            href="javascript:void(0)"
+                                            class="mb-1 btn btn-{{ $image->status == 1 ? 'success' : 'secondary' }}"
+                                            id="{{ 'status_' . $image->id }}"><i class="fas fa-eye"
+                                                aria-hidden="true"></i></a>
+                                        <a title="Featured/Not Featured"
+                                            onClick="update_featured({{ $image->id }}, this)"
+                                            href="javascript:void(0)"
+                                            class="mb-1 btn btn-{{ $image->isFeatured == 1 ? 'success' : 'secondary' }}"
+                                            id="{{ 'featured_' . $image->id }}"><i class="fas fa-star"
+                                                aria-hidden="true"></i></a>
+                                        <a title="Delete Image" onclick="deleteImage({{ $image->id }}, this);"
+                                            class="mb-1 btn btn-danger" data-bs-toggle="tooltip" data-placement="left"
+                                            title="Delete this image" href="javascript:;"> <i
+                                                class="fas fa-trash"></i></a>
+                                        @if ((bool) $image->isBeforeAfter == false)
+                                            <a onClick="markBeforeAfter({{ $image->id }}, this)"
+                                                href="javascript:void(0)" class="mb-1 btn btn-warning">Mark Before
+                                                After</a>
+                                        @endif
+                                        <a title="Crop Image"
+                                            onClick="bind_cropper_preview_gallery_image({{ $image->album_id }}, {{ $image->id }}, 1);"
+                                            href="javascript:void(0)" class="mb-1 btn btn-warning"><i class="fas fa-crop"
+                                                aria-hidden="true"></i></a>
+                                        <a title="Image Alt/Title"
+                                            onClick="openImageAltTitleModal({{ $image->album_id }}, {{ $image->id }});"
+                                            href="javascript:void(0)" class="mb-1 btn btn-success"><i class="fas fa-bars"
+                                                aria-hidden="true"></i></a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @else
+                            <div class="col-md-12" id="{{ $image->id }}">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <div class="">
+                                                <a href="javascript:void(0);" title="{{ $image->image_title }}"
+                                                    onclick="openGalleryImageZoomModal('{{ asset_uploads('') }}gallery/{{ $image->album_id }}/{{ $image->imageUrl . '?' . time() }}');">
+                                                    <img id="image_1_{{ $image->id }}"
+                                                        data-imgname="{{ $image->imageUrl }}"
+                                                        src="{{ asset_uploads('') }}gallery/{{ $image->album_id }}/thumb/{{ $image->imageUrl . '?' . time() }}"
+                                                        style="width:100%" alt="{{ $image->image_alt }}"
+                                                        title="{{ $image->image_title }}">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <div class="">
+                                                <a href="javascript:void(0);" title="{{ $image->image_title }}"
+                                                    onclick="openGalleryImageZoomModal('{{ asset_uploads('') }}gallery/{{ $image->album_id }}/{{ $image->imageUrl2 . '?' . time() }}');">
+                                                    <img id="image_2_{{ $image->id }}"
+                                                        data-imgname="{{ $image->imageUrl2 }}"
+                                                        src="{{ asset_uploads('') }}gallery/{{ $image->album_id }}/thumb/{{ $image->imageUrl2 . '?' . time() }}"
+                                                        style="width:100%" alt="{{ $image->image_alt }}"
+                                                        title="{{ $image->image_title }}">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <div class="" id="image_before_after_preview_{{ $image->id }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        <div class="mb-3">
+                                            <div class="caption myadelbtn">
+                                            </div>
+                                            <div class="image_btn mt-2">
+                                                <div class="drag sortable_div" title="Drag and Drop to sort"><i
+                                                        class="fas fa-arrows" aria-hidden="true"></i></div>
+                                                <a title="Active/Inactive"
+                                                    onClick="update_status({{ $image->id }}, this)"
+                                                    href="javascript:void(0)"
+                                                    class="mb-1 btn btn-{{ $image->status == 1 ? 'success' : 'secondary' }}"
+                                                    id="{{ 'status_' . $image->id }}"><i class="fas fa-eye"
+                                                        aria-hidden="true"></i></a>
+                                                <a title="Featured/Not Featured"
+                                                    onClick="update_featured({{ $image->id }}, this)"
+                                                    href="javascript:void(0)"
+                                                    class="mb-1 btn btn-{{ $image->isFeatured == 1 ? 'success' : 'secondary' }}"
+                                                    id="{{ 'featured_' . $image->id }}"><i class="fas fa-star"
+                                                        aria-hidden="true"></i></a>
+                                                <a title="Delete Image" onclick="deleteImage({{ $image->id }}, this);"
+                                                    class="mb-1 btn btn-danger" data-bs-toggle="tooltip"
+                                                    data-placement="left" title="Delete this image" href="javascript:;">
+                                                    <i class="fas fa-trash"></i></a>
+                                                @if ((bool) $image->isBeforeAfter == false)
+                                                    <a onClick="markBeforeAfter({{ $image->id }}, this)"
+                                                        href="javascript:void(0)" class="mb-1 btn btn-warning">Mark Before
+                                                        After</a>
+                                                @endif
+                                                <a title="Crop Image"
+                                                    onClick="bind_cropper_preview_gallery_image({{ $image->album_id }}, {{ $image->id }}, 1);"
+                                                    href="javascript:void(0)" class="mb-1 btn btn-warning"><i
+                                                        class="fas fa-crop" aria-hidden="true"></i></a>
+                                                <a title="Crop Image"
+                                                    onClick="bind_cropper_preview_gallery_image({{ $image->album_id }}, {{ $image->id }}, 2);"
+                                                    href="javascript:void(0)" class="mb-1 btn btn-warning"><i
+                                                        class="fas fa-crop" aria-hidden="true"></i></a>
+                                                <a title="Image Alt/Title"
+                                                    onClick="openImageAltTitleModal({{ $image->album_id }}, {{ $image->id }});"
+                                                    href="javascript:void(0)" class="mb-1 btn btn-success"><i
+                                                        class="fas fa-bars" aria-hidden="true"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                     @empty
                         <div>There is no image found in the album.</div>
                     @endforelse
@@ -174,6 +292,7 @@
                             <input type="hidden" name="crop_rotate" id="crop_rotate" value="" />
                             <input type="hidden" name="album_id" id="album_id" value="">
                             <input type="hidden" name="image_id" id="image_id" value="">
+                            <input type="hidden" name="image_1_2" id="image_1_2" value="">
                             <button type="button" id="btnCrop" onclick="save_gallery_cropped_img();"
                                 class="btn btn-primary">Crop
                                 Image
@@ -242,9 +361,9 @@
         @include('back.gallery.gallery_js')
         <script>
             $(function() {
-                $('.sortable121').sortable({
+                $('.sortable_row').sortable({
                     opacity: 1,
-                    handle: 'span',
+                    handle: '.sortable_div',
                     update: function(event, ui) {
                         console.log(event);
                         var list_sortable = $(this).sortable('toArray').toString();
@@ -282,7 +401,7 @@
                             data: id,
                             success: function(response) {
                                 if (response.status) {
-                                    elem.parentElement.parentElement.parentElement.remove();
+                                    $('#' + id).remove();
                                     swal("Poof! Your image has been deleted!", {
                                         icon: "success",
                                     });
@@ -360,5 +479,51 @@
                 $('#galleryImageZoomImage').attr('src', url);
                 $('#galleryImageZoomModal').modal('show');
             }
+
+            function show_before_after_have_two_images() {
+                $('.before_after_have_two_images').show();
+                $('.before_after_not_have_two_images').hide();
+            }
+
+            function hide_before_after_have_two_images() {
+                $('.before_after_have_two_images').hide();
+                $('.before_after_not_have_two_images').show();
+            }
+
+            function toggle_before_after_have_two_images() {
+                if ($('#isBeforeAfter').is(':checked')) {
+                    $('#is_before_after_have_two_images').show();
+                    if ($("[name='isBeforeAfterHaveTwoImages']:checked").val() == 1) {
+                        show_before_after_have_two_images();
+                    }
+                } else {
+                    $('#is_before_after_have_two_images').hide();
+                    hide_before_after_have_two_images();
+                }
+            }
+            @if (old('isBeforeAfter', 0) == 1)
+                $('#is_before_after_have_two_images').show();
+            @endif
+            @if (old('isBeforeAfterHaveTwoImages', 0) == 1)
+                show_before_after_have_two_images();
+            @endif
+            @if ($images->count())
+                @foreach ($images as $image)
+                    @if ($image->isBeforeAfterHaveTwoImages == 1)
+                        beforeEffectslider({
+                            Selector: "#image_before_after_preview_{{ $image->id }}",
+                            BeforeImage: "{{ asset_uploads('') }}gallery/{{ $image->album_id }}/thumb/{{ $image->imageUrl . '?' . time() }}",
+                            BeforeAlt: "Before",
+                            AfterImage: "{{ asset_uploads('') }}gallery/{{ $image->album_id }}/thumb/{{ $image->imageUrl2 . '?' . time() }}",
+                            AftereAlt: "After",
+                            Buttons: true,
+                            ButtonsText: {
+                                after: 'After',
+                                before: 'Before'
+                            }
+                        });
+                    @endif
+                @endforeach
+            @endif
         </script>
     @endsection

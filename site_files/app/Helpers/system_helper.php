@@ -207,23 +207,21 @@ function is_admin()
     }
     return false;
 }
-function link2iframe($link, $type, $w = '100%', $h = '250', $videoURL = 'module/testimonials/video/')
+function link2iframe($link, $type, $w = '100%', $h = '250', $class = 'd-block', $videoURL = 'uploads/videos/video/')
 {
     if ($type == 'Text') {
         return $link;
     }
     if ($type == 'upload') {
-
-        return '<video width="' . $w . '" height="' . $h . '" controls> <source src="' . asset_uploads($videoURL . $link) . '" type="video/mp4"> <source src="movie.ogg" type="video/ogg"> Your browser does not support the video tag. </video> ';
+        return '<video width="' . $w . '" height="' . $h . '" class="' . $class . '" controls> <source src="' . base_url() . $videoURL . $link . '" type="video/mp4"> <source src="movie.ogg" type="video/ogg"> Your browser does not support the video tag. </video> ';
     }
     if ($type == 'Youtube') {
-
         $youtube_id = youtubelink2id($link);
-        return '<iframe width="' . $w . '" height="' . $h . '" src="https://www.youtube.com/embed/' . $youtube_id . '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+        return '<iframe width="' . $w . '" height="' . $h . '" src="https://www.youtube.com/embed/' . $youtube_id . '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" title="YouTube video player"></iframe>';
     }
     if ($type == 'Vimeo') {
         $id = vimeolink2id($link);
-        return '<iframe width="' . $w . '" height="' . $h . '" src="http://player.vimeo.com/video/' . $id . '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+        return '<iframe width="' . $w . '" height="' . $h . '" src="http://player.vimeo.com/video/' . $id . '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" title="Vimeo video player"></iframe>';
     }
 }
 function youtubelink2id($link)

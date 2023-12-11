@@ -1,7 +1,4 @@
 @extends('front.layout.app')
-@section('beforeHeadClose')
-    <link href="{{ base_url() }}module/faqs/main/css/faqs.css" rel="stylesheet">
-@endsection
 @section('content')
     {!! cms_page_heading($news->title) !!}
     <div class="about-wrap default-padding-20">

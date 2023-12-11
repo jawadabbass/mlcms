@@ -1,11 +1,14 @@
 <?php
+
 namespace App\Http\Controllers\Back;
+
 use App\Models\Back\Video;
 use Illuminate\Http\Request;
 use App\Helpers\ImageUploader;
 use App\Http\Controllers\Controller;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Session;
+
 class VideoController extends Controller
 {
     /**
@@ -17,7 +20,7 @@ class VideoController extends Controller
     {
         $title = FindInsettingArr('business_name') . ': Videos Management';
         $msg = '';
-        $result = Video::orderBy('ID', 'DESC')->paginate(10);
+        $result = Video::orderBy('item_order', 'ASC')->paginate(100);
         $file_upload_max_size = $this->file_upload_max_size();
         return view('back.video.index', compact('title', 'msg', 'result', 'file_upload_max_size'));
     }
@@ -188,9 +191,9 @@ class VideoController extends Controller
     public function destroy($id)
     {
         $video = Video::find($id);
-        @unlink(storage_uploads('videos/video/'.$video->content));
-        @unlink(storage_uploads('videos/'.$video->video_img));
-        @unlink(storage_uploads('videos/thumb/'.$video->video_img));
+        @unlink(storage_uploads('videos/video/' . $video->content));
+        @unlink(storage_uploads('videos/' . $video->video_img));
+        @unlink(storage_uploads('videos/thumb/' . $video->video_img));
         $video->delete();
         return json_encode(array("status" => true));
     }
@@ -323,7 +326,7 @@ class VideoController extends Controller
             ]);
             $file = $request->file('linkk');
             $video_name = ImageUploader::UploadDoc('videos/video/', $file);
-            
+
             $Video = new Video;
             $Video->video_type = $request->testimonial_type;
             $Video->short_detail = $request->descp;
@@ -439,6 +442,21 @@ class VideoController extends Controller
             return round($size * pow(1024, stripos('bkmgtpezy', $unit[0])));
         } else {
             return round($size);
+        }
+    }
+
+    public function saveOrdering(Request $request)
+    {
+        $list_order = $request->list_order;
+        $list = explode(',', $list_order);
+        $i = 1;
+        print_r($list);
+        foreach ($list as $id) {
+            $videoObj = Video::find($id);
+            $videoObj->item_order = $i;
+            $videoObj->save();
+            $i++;
+            echo $i . ' ' . $id;
         }
     }
 }

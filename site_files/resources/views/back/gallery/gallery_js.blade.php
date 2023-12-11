@@ -143,7 +143,11 @@
             url: "{{ admin_url() . 'getGalleryImageAltTitle' }}",
             type: "POST",
             dataType: "JSON",
-            data: {album_id:album_id,image_id:image_id, _token: '{{ csrf_token() }}'},
+            data: {
+                album_id: album_id,
+                image_id: image_id,
+                _token: '{{ csrf_token() }}'
+            },
             success: function(data) {
                 $('#galleryImageAltTitleForm').find('#album_id').val(album_id);
                 $('#galleryImageAltTitleForm').find('#image_id').val(image_id);
@@ -168,13 +172,14 @@
         });
     }
 
-    function bind_cropper_preview_gallery_image(album_id, image_id) {
+    function bind_cropper_preview_gallery_image(album_id, image_id, image_1_2) {
         $('#gallery_image_crop_form').find('#album_id').val(album_id);
         $('#gallery_image_crop_form').find('#image_id').val(image_id);
-        let image_name = $('#image_' + image_id).attr('data-imgname');
-        let path = '{{ asset_uploads("gallery/") }}';
+        let image_name = $('#image_' + image_1_2 + '_' + image_id).attr('data-imgname');
+        let path = '{{ asset_uploads('gallery/') }}';
         $('#gallery_image_crop_form').find('#image').attr('src', path + album_id + '/' + image_name);
         $('#gallery_image_crop_form').find('#source_image').val(image_name);
+        $('#gallery_image_crop_form').find('#image_1_2').val(image_1_2);
         $('#gallery_image_cropper_form').modal('show');
     }
     $('#gallery_image_cropper_form').on('hidden.bs.modal', function() {
@@ -217,6 +222,7 @@
     function save_gallery_cropped_img() {
         let album_id = $('#gallery_image_crop_form').find('#album_id').val();
         let image_id = $('#gallery_image_crop_form').find('#image_id').val();
+        let image_1_2 = $('#gallery_image_crop_form').find('#image_1_2').val();
         $.ajax({
             url: "{{ admin_url() . 'save_gallery_image_crop_image' }}",
             type: "POST",
@@ -224,8 +230,10 @@
             data: $('#gallery_image_crop_form').serialize(),
             success: function(data) {
                 console.log(data.cropped_image);
-                $('#image_' + image_id).attr('src', asset_uploads+'gallery/' + album_id + '/thumb/' + data.cropped_image);
-                $('#image_' + image_id).attr('data-imgname', data.cropped_image);
+                $('#image_' + image_1_2 + '_' + image_id).attr('src', asset_uploads + 'gallery/' +
+                    album_id + '/thumb/' + data
+                    .cropped_image);
+                $('#image_' + image_1_2 + '_' + image_id).attr('data-imgname', data.cropped_image);
                 $('#gallery_image_crop_form').find('#image').attr('src', '');
                 $('#gallery_image_crop_form').find('#source_image').val('');
                 $('#gallery_image_cropper_form').modal('hide');

@@ -1,6 +1,6 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('beforeHeadClose')
-@include('back.common_views.switch_css')
+    @include('back.common_views.switch_css')
 @endsection
 @section('content')
     <div class="content-wrapper pl-3 pr-2">
@@ -61,12 +61,12 @@
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="sortable">
                                     @if ($result)
                                         @foreach ($result as $row)
-                                            <tr id="row_{{ $row->ID }}">
+                                            <tr id="{{ $row->ID }}" class="row_{{ $row->ID }}">
                                                 <td>{{ format_date($row->dated, 'date') }}</td>
-                                                <td>{!! link2iframe($row->content, $row->video_type, '100%', 250, 'videos/video/') !!}</td>
+                                                <td>{!! link2iframe($row->content, $row->video_type, '100%', 300, 'd-block', 'uploads/videos/video/') !!}</td>
                                                 <td>
                                                     <label class="switch">
                                                         <input type="checkbox" name="{{ 'sts_' . $row->ID }}"
@@ -80,6 +80,7 @@
                                                     </label>
                                                 </td>
                                                 <td>
+                                                    <span></span>
                                                     <a href="{{ admin_url() }}videos/edit/{{ $row->ID }}"
                                                         class="btn btn-success btn-sm">Edit</a>
                                                     <a href="javascript:delete_videos({{ $row->ID }});"
@@ -121,8 +122,8 @@
                     <div class="modal-header">
                         <h4 class="modal-title">Add New Video</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-          
-        </button>
+
+                        </button>
                     </div>
                     <div class="modal-body">
                         <!-- /.box-header -->
@@ -159,7 +160,7 @@
                     </div>
                     <div class="modal-footer">
                         <div class="loader_div" id="loader_div" style="display: none;"><img
-                                src="{{ base_url() }}back/images/loader.gif" alt=""></div>
+                                src="{{ asset_storage('back/images/loader.gif') }}" alt=""></div>
                         <button type="button" id="close_btn" class="btn btn-default"
                             data-bs-dismiss="modal">Close</button>
                         <button type="submit" name="submitter" class="btn btn-primary"
@@ -188,8 +189,8 @@
                     <div class="modal-header">
                         <h4 class="modal-title">Edit Video</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-          
-        </button>
+
+                        </button>
                     </div>
                     <div class="modal-body">
                         <div class="box-body">
@@ -235,6 +236,35 @@
 @endsection
 @section('beforeBodyClose')
     <script type="text/javascript">
+        $(function() {
+            $('#sortable').sortable({
+                axis: 'y',
+                opacity: 0.7,
+                handle: 'span',
+                update: function(event, ui) {
+                    var list_sortable = $(this).sortable('toArray').toString();
+                    // change order in the database using Ajax
+                    console.log(list_sortable);
+                    $.ajax({
+                        url: base_url + 'adminmedia/videos/ordering-set/',
+                        type: 'GET',
+                        data: {
+                            list_order: list_sortable
+                        },
+                        success: function(data) {
+                            console.log(data);
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            alert('Error adding / update data');
+                            console.log(jqXHR);
+                            console.log(textStatus);
+                            console.log(errorThrown);
+                        }
+                    });
+                }
+            }); // fin sortable
+        });
+
         $(document).ready(function(e) {
             $("#heading").change(function() {
                 string_to_slug('heading', 'video_slug');

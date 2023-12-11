@@ -409,4 +409,12 @@ function uploaded_files_show() {
             .files[
             i]) + "'></div>");
     }
-} 
+}
+$('#before_image').on('change', function (event) {
+    $('#before_image_preview').append("<div class=\"col-md-1 card\"><img src='" + URL.createObjectURL(event.target
+        .files[0]) + "'></div>");
+});
+$('#after_image').on('change', function (event) {
+    $('#after_image_preview').append("<div class=\"col-md-1 card\"><img src='" + URL.createObjectURL(event.target
+        .files[0]) + "'></div>");
+});
