@@ -20,7 +20,7 @@ class ModuleController extends Controller
     {
         $modules = CmsModule::paginate(10);
 
-        $title = FindInsettingArr('business_name').': Module Management';
+        $title = FindInsettingArr('business_name') . ': Module Management';
 
         return view('back.modules.index', compact('modules', 'title'));
     }
@@ -83,11 +83,25 @@ class ModuleController extends Controller
         }
         $cmsModule->show_featured_image = $request->show_featured_image;
         $cmsModule->module_fontawesome_icon = $request->module_fontawesome_icon;
-        $cmsModule->access_level = implode(',', $request->input('access_level', ['super-admin','normal-admin']));
-        $cmsModule->show_icon_in = implode(',', $request->input('show_icon_in', ['show_icon_in_left','show_icon_in_dashboard']));
+        $cmsModule->access_level = implode(',', $request->input('access_level', ['super-admin', 'normal-admin']));
+        $cmsModule->show_icon_in = implode(',', $request->input('show_icon_in', ['show_icon_in_left', 'show_icon_in_dashboard']));
         $cmsModule->show_in_admin_menu = 0;
         $cmsModule->save();
-        // Session::flash('added_action', true);
+
+        /*********************************** */
+        $modData = new CmsModuleData();
+        $modData->heading = $cmsModule->title;
+        $modData->post_slug = $cmsModule->type;
+        $modData->dated = date('Y-m-d H:i:s');
+        $modData->is_pages = 1;
+        $modData->permanent_page = 1;
+        $modData->content_type = 'module';
+        $modData->cms_module_id = 1;
+        $modData->save();
+        $cmsModule->mod_menu_id = $modData->id;
+        $cmsModule->update();
+        /*********************************** */
+
         return redirect(route('modules.index'));
     }
 
@@ -115,28 +129,12 @@ class ModuleController extends Controller
     public function edit($id, Request $request)
     {
         $module = CmsModule::find($id);
-        $status = $module->show_in_admin_menu == 1? 'Yes':'No';
+        $status = $module->show_in_admin_menu == 1 ? 'Yes' : 'No';
         if ($status == 'Yes') {
             $module->show_in_admin_menu = 0;
             $stat = 'No';
-            $modMenu = CmsModuleData::find($module->mod_menu_id);
-            if ($modMenu) {
-                $modMenu->delete();
-            }
         } else {
             $module->show_in_admin_menu = 1;
-            if (CmsModuleData::where('id', $module->mod_menu_id)->exists() == false) {
-                $modMenu = new CmsModuleData();
-                $modMenu->heading = $module->title;
-                $modMenu->post_slug = $module->type;
-                $modMenu->dated = date('Y-m-d H:i:s');
-                $modMenu->is_pages = '0';
-                $modMenu->permanent_page = '1';
-                $modMenu->content_type = 'module';
-                $modMenu->cms_module_id = $id;
-                $modMenu->save();
-                $module->mod_menu_id = $modMenu->id;
-            }
             $stat = 'Yes';
         }
         $module->save();
@@ -188,7 +186,7 @@ class ModuleController extends Controller
         $cmsModule->feature_img_thmb_height = $request->feature_img_thmb_height;
         $cmsModule->show_featured_image = $request->show_featured_image;
         $cmsModule->module_fontawesome_icon = $request->module_fontawesome_icon;
-        $cmsModule->access_level = implode(',', $request->input('access_level', ['super-admin','normal-admin']));
+        $cmsModule->access_level = implode(',', $request->input('access_level', ['super-admin', 'normal-admin']));
         $cmsModule->show_icon_in = implode(',', $request->input('show_icon_in'));
         $cmsModule->show_descp = $request->show_descp;
         $cmsModule->save();

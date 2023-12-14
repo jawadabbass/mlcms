@@ -103,7 +103,7 @@ class ImageUploadController extends Controller
         if ($validator->passes()) {
             $folder = 'editor/images';
             if ($image = $request->file('image')) {
-                $name = ImageUploader::UploadImage($folder . '/', $image, '', 500, 500, false);
+                $name = ImageUploader::UploadImage($folder . '/', $image, '', 1500, 1500, false);
             }
             return response()->json([
                 'location' => asset_uploads($folder . '/' . $name)
