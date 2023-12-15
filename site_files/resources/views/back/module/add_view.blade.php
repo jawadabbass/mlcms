@@ -45,9 +45,9 @@
                                         Link
                                         @php helptooltip('page_link') @endphp </label>
                                     <div class="mb-2"> <span class="mb-2-addon"
-                                            id="basic-addon3">{{ base_url() }}@php echo ($module->term=='Page')?"":$module->term."/"; @endphp </span>
+                                            id="basic-addon3">{{ base_url() }}@php echo ($module->type=='cms')?"":$module->type."/"; @endphp </span>
                                         <input type="text" class="form-control slug-field" name="module_slug"
-                                            id="slug_field" placeholder="{{ ucwords($module->term) }} Link">
+                                            id="slug_field" placeholder="{{ ucwords($module->type) }} Link">
                                     </div>
                                     <span id="page_slug" style="padding-left:2px;" class="err"></span>
                                 </div>
@@ -70,8 +70,7 @@
                                     <label class="form-label">{{ ucwords($module->term) }} Description</label>
                                     <label for="">
                                         <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#media_image"
-                                            class="btn btn-info"> <i class="fas fa-cloud-download"
-                                                aria-hidden="true"></i>
+                                            class="btn btn-info"> <i class="fas fa-cloud-download" aria-hidden="true"></i>
                                             Insert Image from Media</a>
                                         <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#media_files"
                                             class="btn btn-warning"> <i class="fas fa-cloud-download"
@@ -402,7 +401,8 @@
                 success: function(data) {
                     console.log(data.cropped_image);
                     $('#featured_img').val(data.cropped_image);
-                    $('.jFiler-item-thumb-image').find('img').attr('src', asset_uploads + 'module/{{ $module->type }}/thumb/' + data.cropped_image);
+                    $('.jFiler-item-thumb-image').find('img').attr('src', asset_uploads +
+                        'module/{{ $module->type }}/thumb/' + data.cropped_image);
                     $('#cropper_form').modal('hide');
                 },
                 error: function(jqXHR, textStatus, errorThrown) {}
@@ -418,6 +418,7 @@
         }
 
         function save() {
+            $(window).off('beforeunload');
             var url;
             var content = tinyMCE.get('editor1').getContent();
             $('#module_description1').val(content);

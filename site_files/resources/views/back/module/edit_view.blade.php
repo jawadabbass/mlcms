@@ -48,14 +48,14 @@
                                         Link
                                         @php helptooltip('page_link') @endphp </label>
                                     <div class="mb-2"> <span class="mb-2-addon"
-                                            id="basic-addon3">{{ base_url() }}@php echo ($module->term=='Page')?"":$module->term."/"; @endphp </span>
+                                            id="basic-addon3">{{ base_url() }}@php echo ($module->type=='cms')?"":$module->type."/"; @endphp </span>
                                         @php
                                             $pslug = $moduleData->post_slug;
-                                            $pslug = str_replace($module->term . '/', '', $pslug);
+                                            $pslug = str_replace($module->type . '/', '', $pslug);
                                         @endphp
                                         <input type="text" class="form-control slug-field" name="module_slug"
                                             id="slug_field" value="{{ $pslug }}"
-                                            placeholder="{{ ucwords($module->term) }} Link">
+                                            placeholder="{{ ucwords($module->type) }} Link">
                                     </div>
                                     <span id="page_slug" style="padding-left:2px;" class="err"></span>
                                 </div>

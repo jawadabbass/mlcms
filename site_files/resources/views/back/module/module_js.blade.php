@@ -126,6 +126,7 @@
     }
 
     function save() {
+        $(window).off('beforeunload');
         var url;
         var content = tinyMCE.get('editor1').getContent();
         $('#module_description1').val(content);
