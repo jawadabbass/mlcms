@@ -12,4 +12,8 @@ class CmsModuleData extends Model
     {
         return $this->belongsTo('App\Models\Back\CmsModule', 'cms_module_id', 'id');
     }
+    public function belongsToModule()
+    {
+        return $this->belongsTo('App\Models\Back\CmsModule', 'belongs_to_module_id', 'id');
+    }
 }

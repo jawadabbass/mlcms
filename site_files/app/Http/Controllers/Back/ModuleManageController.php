@@ -194,7 +194,7 @@ class ModuleManageController extends Controller
     {
         $data = CmsModuleData::find($id);
         if ($data->content_type == 'module') {
-            $data['module_data'] = CmsModule::where('type', $data->post_slug)->first();
+            $data['module_data'] = CmsModule::find($data->belongs_to_module_id)->first();
         } else {
             $data['module_data'] = CmsModule::find($data->cms_module_id);
         }

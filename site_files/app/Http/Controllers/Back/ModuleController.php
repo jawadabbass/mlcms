@@ -96,6 +96,7 @@ class ModuleController extends Controller
         $modData->is_pages = 1;
         $modData->permanent_page = 1;
         $modData->content_type = 'module';
+        $modData->belongs_to_module_id = $cmsModule->id;
         $modData->cms_module_id = 1;
         $modData->save();
         $cmsModule->mod_menu_id = $modData->id;

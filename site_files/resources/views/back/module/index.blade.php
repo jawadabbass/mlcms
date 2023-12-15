@@ -133,7 +133,7 @@
                                                             href="{{ base_url() . 'adminmedia/module/' . $module->type . '/edit/' . $moduleMember->id }}"
                                                             title="Edit"><i class="fas fa-edit"></i> Edit</a>
                                                         <a target="_blank" class="btn btn-sm btn-primary"
-                                                            href="{{ base_url() . 'adminmedia/module/' . $moduleMember->post_slug }}"
+                                                            href="{{ base_url() . 'adminmedia/module/' . $moduleMember->belongsToModule->type }}"
                                                             title="Edit"><i class="fas fa-wrench"></i> Manage</a>
                                                     @else
                                                         <a class="btn btn-sm btn-primary"
