@@ -135,7 +135,7 @@ if (!function_exists('get_widget')) {
     function get_widget($widget = '62')
     {
         $widgetData = \App\Models\Back\Widget::find($widget);
-        return $widgetData->content;
+        return adjustUrl($widgetData->content);
     }
 }
 function get_permalink($id)

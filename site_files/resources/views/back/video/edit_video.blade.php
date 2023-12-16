@@ -38,7 +38,7 @@
                 <div class="row">
                     <div class="col-md-4 text-end"><span id="s_title">Youtube:</span> </div>
                     <div class="col-md-8" id="field_type_div">
-                        <textarea name="linkk" id="linkk" class="form-control" placeholder="Write Testimonial">{{ $rec->content }}</textarea>
+                        <textarea name="linkk" id="linkk" class="form-control" placeholder="Write Testimonial">{{ adjustUrl($rec->content) }}</textarea>
                     </div>
                 </div>
                 <br>
@@ -65,7 +65,7 @@
                     <div class="col-md-4 text-end"></div>
                     <div class="col-md-8">
                         <input type="hidden" name="idd" id="idd" value="{{ $rec->ID }}">
-                        <p id="old_content" style="display: none;">{{ $rec->content }}</p>
+                        <p id="old_content" style="display: none;">{{ adjustUrl($rec->content) }}</p>
                         <p id="old_type" style="display: none;">{{ $rec->additional_field_4 }}</p>
                         <button id="submit" type="submit" class="btn btn-info"
                             onClick="document.getElementsById('submit').display='none'"><i class="fas fa-pen-to-square"

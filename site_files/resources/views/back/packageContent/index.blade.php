@@ -170,7 +170,7 @@
                                                 onclick="edit_content_show('{{ $show_co->id }}','{{ $show_co->content }}')"
                                                 style="margin-left: 24px;font-size:14px;color:green;">
                                             </li>
-                                            <p>{!! $show_co->content !!}</p>
+                                            <p>{!! adjustUrl($show_co->content) !!}</p>
                                         </div>
                                     @endforeach
                                 @endif

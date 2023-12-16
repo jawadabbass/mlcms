@@ -8,7 +8,7 @@
                              src="{{ asset_uploads('') }}module/banner/{{ $get_all_ban->featured_img}}"  title="{{ $get_all_ban->featured_img_title }}" alt="{{ $get_all_ban->featured_img_alt }}"/>
                         <div class="sliderTxt">
                             <div class="container">
-                                @php echo $get_all_ban->content @endphp
+                                @php echo adjustUrl($get_all_ban->content) @endphp
                                 <div class="clearfix"></div>
                             </div>
                         </div>

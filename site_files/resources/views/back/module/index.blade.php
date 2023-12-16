@@ -1,6 +1,6 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('beforeHeadClose')
-    @include('back.common_views.switch_css')
+@include('back.common_views.switch_css')
 @endsection
 @section('content')
     <div class="content-wrapper pl-3 pr-2">
@@ -50,8 +50,8 @@
                                 @endif
                                 <div class="text-end" style="padding-bottom:2px; display: inline;">
                                     <!--<input type="button" class="sitebtn"
-                        value="Add New {{ ucwords($module->term) == 'CMS' ? 'Page' : ucwords($module->term) }}"
-                        onclick="add_content()"/>-->
+                value="Add New {{ ucwords($module->term) == 'CMS' ? 'Page' : ucwords($module->term) }}"
+                onclick="add_content()"/>-->
                                     <a class="sitebtn" href="{{ admin_url() . 'module/' . $module->type . '/add' }} "> Add
                                         New
                                         {{ ucwords($module->term) == 'CMS' ? 'Page' : ucwords($module->term) }}</a>
@@ -123,7 +123,7 @@
                                                 </td>
                                             @endif
                                             @if ($moduleMember->cms_module_id == 37)
-                                                <td>{!! substr_replace($moduleMember->content, '...', 195) !!}</td>
+                                                <td>{!! substr_replace(adjustUrl($moduleMember->content), '...', 195) !!}</td>
                                                 <td>@php echo package_use_member($moduleMember->id) @endphp </td>
                                             @endif
                                             <td>
@@ -155,7 +155,8 @@
                                                         href="{{ base_url() . 'adminmedia/module/' . $module->type . '/edit/' . $moduleMember->id }}"
                                                         title="Edit"><i class="fas fa-edit"></i> Edit</a>
                                                     <a class="btn btn-sm btn-danger" href="javascript:void(0)"
-                                                        title="Delete" onclick="delete_content({{ $moduleMember->id }})"><i
+                                                        title="Delete"
+                                                        onclick="delete_content({{ $moduleMember->id }})"><i
                                                             class="fas fa-trash"></i> Delete</a>
                                                 @endif
                                                 @if ($module->term == 'Classes')

@@ -21,7 +21,7 @@
                                         <div class="col-md-8">
                                             <div class="content">
                                                 <h3 data-animation="animated slideInRight">{{ $banner->heading }}</h3>
-                                                <h1 data-animation="animated slideInLeft">@php echo $banner->content @endphp</h1>
+                                                <h1 data-animation="animated slideInLeft">@php echo adjustUrl($banner->content) @endphp</h1>
                                                 <a data-animation="animated slideInUp" class="btn btn-light effect btn-md"
                                                     href="{{ $banner->additional_field_2 }}">{{ $banner->additional_field_1 }}</a>
                                                 <a data-animation="animated slideInUp" class="btn btn-theme effect btn-md"
@@ -55,7 +55,7 @@
                     <div class="col-md-6 info">
                         <h4>About Us</h4>
                         @php $about_us_page=get_page(104);@endphp
-                        @php echo get_excerpt($about_us_page->content,786); @endphp
+                        @php echo get_excerpt(adjustUrl($about_us_page->content),786); @endphp
                         @php
                             //echo $about_us_page->content;
                         @endphp
@@ -122,7 +122,7 @@
                                         </a> </div>
                                 </div>
                                 <div class="info">
-                                    <p> @php echo get_excerpt($service->content,100) @endphp </p>
+                                    <p> @php echo get_excerpt(adjustUrl($service->content),100) @endphp </p>
                                     <a href="{{ url($service->post_slug) }}">Read More <i
                                             class="fas fa-angle-double-right"></i></a>
                                 </div>
@@ -206,7 +206,7 @@
                         @foreach ($get_all_testimonials as $testimonial)
                             <!-- Single Item -->
                             <div class="item">
-                                <p> {{ $testimonial->content }} </p>
+                                <p> {{ adjustUrl($testimonial->content) }} </p>
                                 <div class="author">
                                     <div class="thumb"> <img
                                             src="{{ asset_uploads('module/testimonials/' . $testimonial->featured_img) }}"
@@ -242,7 +242,7 @@
                                     </div>
                                     <div id="ac{{ $faq_count }}" class="panel-collapse collapse {{ $classin }}">
                                         <div class="panel-body">
-                                            @php echo $faq->content @endphp
+                                            @php echo adjustUrl($faq->content) @endphp
                                         </div>
                                     </div>
                                 </div>
@@ -268,7 +268,7 @@
                 <div class="col-md-6 info">
                     @php $achh_page=get_page(181);@endphp
                     <h2>@php echo $achh_page->heading; @endphp </h2>
-                    @php echo $achh_page->content; @endphp
+                    @php echo adjustUrl($achh_page->content); @endphp
                     <a href="{{ url($achh_page->post_slug) }}" class="btn btn-theme effect btn-md">Start Now</a>
                 </div>
                 <div class="col-md-6 achivement-items">
@@ -285,7 +285,7 @@
                             <img class="card-img-top" src="{{ asset_uploads('widgets/' . $scwidget->featured_image) }}"
                                 alt="{{ $scwidget->featured_image_alt }}" title="{{ $scwidget->featured_image_title }}">
                             </a>
-                            {!! $scwidget->content !!}
+                            {!! adjustUrl($scwidget->content) !!}
                         </div>
                         <div class="panel-footer"><a href="{{ $af_data->additional_field_2 }}"
                                 class="btn btn-primary">{{ $af_data->additional_field_1 }}</a></div>

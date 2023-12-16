@@ -75,7 +75,7 @@
                         </div>
                         <div class="col-md-8 contact-form">
                             <h2>Send Us A Message</h2>
-                            @php  echo $data->content @endphp
+                            @php  echo adjustUrl($data->content) @endphp
                             <div id="errorMessages"></div>
                             <form action="#" method="POST" name="frm_process" id="contactForm" class="contact-form">
                                 @csrf

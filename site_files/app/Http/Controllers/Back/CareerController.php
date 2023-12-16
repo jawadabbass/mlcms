@@ -30,7 +30,7 @@ class CareerController extends Controller
         $data['city']  = $record->additional_field_5;
         $data['job_mode']  = $record->additional_field_8;
         $data['vacancies']  = $record->additional_field_9;
-        $data['job_description']  = $record->content;
+        $data['job_description']  = adjustUrl($record->content);
         $data['required_skills']  = $record->additional_field_4;
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "https://api.pakpositions.com/api/post_job");
@@ -82,7 +82,7 @@ class CareerController extends Controller
         $body->content->title = $jobData->heading;
         $body->owner = 'urn:li:person:' . $linkedin_id;
         // $body->text->text = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishingd software like Aldus PageMaker including versions of Lorem Ipsum.';
-        $body->text->text = $jobData->content;
+        $body->text->text = adjustUrl($jobData->content);
         $body_json = json_encode($body, true);
 
         try {

@@ -169,7 +169,7 @@
                             <label for="banner_popup_content" class="form-label">Banner Content</label>
                             <div wire:ignore>
                                 <textarea id="banner_popup_content" wire:model.defer="form.content"
-                                    class="form-control @error('form.content') is-invalid @enderror" aria-describedby="content_help">{!! $form->content !!}</textarea>
+                                    class="form-control @error('form.content') is-invalid @enderror" aria-describedby="content_help">{!! adjustUrl($form->content) !!}</textarea>
                             </div>
                             @error('form.content')
                                 <div id="content_help" class="text-danger">{{ $message }}</div>

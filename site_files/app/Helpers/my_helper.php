@@ -553,3 +553,9 @@ function generateModuleCodeFieldLabel($field_counter, $errors, $oldData, $hide_s
             </div>
         </div>';
 }
+function adjustUrl($text = '')
+{
+    $text = preg_replace('/http[A-Za-z0-9_:\/\.-]+\/mlstorage\//i', url('/') . '/mlstorage/', $text, -1, $count);
+    //echo $count;
+    return $text;
+}

@@ -46,7 +46,7 @@ class WidgetController extends Controller
         $widget->page_slug = $request->page_slug;
         $widget->heading = $request->heading;
         $widget->page_slug = $request->page_slug;
-        $widget->content = myform_admin_cms_filter($request->editor1);
+        $widget->content = myform_admin_cms_filter(adjustUrl($request->editor1));
         $widget->additional_field_1 = $request->additional_field_1;
         $widget->additional_field_2 = $request->additional_field_2;
         $widget->additional_field_3 = $request->additional_field_3;
@@ -138,7 +138,7 @@ class WidgetController extends Controller
     {
         $widget = Widget::find($id);
         $widget->heading = $request->heading;
-        $widget->content = myform_admin_cms_filter($request->editor1);
+        $widget->content = myform_admin_cms_filter(adjustUrl($request->editor1));
         $additional_field_data = [
             'additional_field_1' => $request->additional_field_1,
             'additional_field_2' => $request->additional_field_2,

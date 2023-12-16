@@ -58,7 +58,7 @@ class VideoController extends Controller
             $localIframe = '<video width="100%" height="446" controls> <source src="' . asset_uploads('videos/video/' . $video_name) . '" type="video/mp4"> <source src="movie.ogg" type="video/ogg"> Your browser does not support the video tag. </video>';
             $video = new Video;
             $video->heading    = $request->heading;
-            $video->content = $localIframe;
+            $video->content = adjustUrl($localIframe);
             $video->short_detail = $request->short_detail;
             $video->video_type = 'file';
             $video->video_img = $img_name;
@@ -73,7 +73,7 @@ class VideoController extends Controller
         }
         $width = "100";
         $height = "200";
-        $content = $request->contents;
+        $content = adjustUrl($request->contents);
         if (strpos($content, 'iframe') == false) {
             $content = $this->makeIframe($content);
         }
@@ -191,7 +191,7 @@ class VideoController extends Controller
     public function destroy($id)
     {
         $video = Video::find($id);
-        @unlink(storage_uploads('videos/video/' . $video->content));
+        @unlink(storage_uploads('videos/video/' . adjustUrl($video->content)));
         @unlink(storage_uploads('videos/' . $video->video_img));
         @unlink(storage_uploads('videos/thumb/' . $video->video_img));
         $video->delete();
@@ -339,7 +339,7 @@ class VideoController extends Controller
             $Video = new Video;
             $Video->video_type = $request->testimonial_type;
             $Video->short_detail = $request->descp;
-            $Video->content = $request->linkk;
+            $Video->content = adjustUrl($request->linkk);
             $Video->video_img = $img_name;
             $Video->dated = date('Y-m-d H:i:s');
             $Video->heading = $request->heading;
@@ -403,7 +403,7 @@ class VideoController extends Controller
         } else {
             $Video = Video::find($idd);
             $Video->video_type = $request->testimonial_type;
-            $Video->content = $request->linkk;
+            $Video->content = adjustUrl($request->linkk);
             $Video->short_detail = $request->descp;
             $Video->heading = $request->heading;
             if ($img_name != '') {

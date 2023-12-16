@@ -94,7 +94,7 @@
                                             Insert Document from Media</a>
                                     </label>
                                     <textarea name="editor1" id="editor1" placeholder="{{ ucwords($module->term) }} Description" class="form-control"
-                                        type="text">{{ $moduleData->content }}</textarea>
+                                        type="text">{{ adjustUrl($moduleData->content) }}</textarea>
                                     <textarea name="module_description" id="module_description1" style="display: none;"></textarea>
                                     <span id="module_description" style="padding-left:2px;" class="err"></span>
                                 </div>

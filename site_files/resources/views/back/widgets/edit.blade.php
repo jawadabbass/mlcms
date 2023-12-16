@@ -58,7 +58,7 @@
                                     <div class="col-md-12">
                                         <div class="mb-2">
                                             <label class="form-label">Widget Content</label>
-                                            <textarea id="editor1" name="editor1" rows="8" cols="80" placeholder="Widget Content...">{{ $widget->content }}</textarea>
+                                            <textarea id="editor1" name="editor1" rows="8" cols="80" placeholder="Widget Content...">{{ adjustUrl($widget->content) }}</textarea>
                                         </div>
                                     </div>
                                 </div>

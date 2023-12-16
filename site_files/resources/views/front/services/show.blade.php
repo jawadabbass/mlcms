@@ -13,7 +13,7 @@
                             <img src="{{ asset_uploads('module/services/' . $result->featured_img) }}" title="{{ $result->featured_img_title }}" alt="{{ $result->featured_img_alt }}">
                             <div class="info">
                                 <h2>{{ $result->heading }}</h2>
-                                <div class="content"> {{ $result->content }} </div>
+                                <div class="content"> {{ adjustUrl($result->content) }} </div>
                             </div>
                         </div>
                         <div class="sidebar col-md-4">

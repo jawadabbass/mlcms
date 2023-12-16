@@ -119,7 +119,7 @@ class ModuleManageController extends Controller
             $slugs = ((isset($module_type) && $module_type->type && $module_type->id != 1) ? $module_type->type . '/' : '') . $slugs;
             $slugs = $this->createUniqueURL($slugs);
             $moduleData->post_slug = $slugs;
-            $moduleData->content = myform_admin_cms_filter($request->module_description);
+            $moduleData->content = myform_admin_cms_filter(adjustUrl($request->module_description));
             $moduleData->additional_field_1 = $request->additional_field_1;
             $moduleData->additional_field_2 = $request->additional_field_2;
             $moduleData->additional_field_3 = $request->additional_field_3;
@@ -230,7 +230,7 @@ class ModuleManageController extends Controller
                 return response()->json(['error' => ['URL already assigned.']]);
             }
             $moduleData->post_slug = $slugs;
-            $moduleData->content = myform_admin_cms_filter($request->module_description);
+            $moduleData->content = myform_admin_cms_filter(adjustUrl($request->module_description));
             $moduleData->additional_field_1 = $request->additional_field_1;
             $moduleData->additional_field_2 = $request->additional_field_2;
             $moduleData->additional_field_3 = $request->additional_field_3;
@@ -667,7 +667,7 @@ class ModuleManageController extends Controller
     {
         $data = CmsModuleData::where('id', $request->content_id)->first();
         $data->heading = $request->heading;
-        $data->content = myform_admin_cms_filter($request->editor3);
+        $data->content = myform_admin_cms_filter(adjustUrl($request->editor3));
         $data->save();
         return redirect('adminmedia/module/careers/add');
     }

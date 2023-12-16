@@ -16,7 +16,7 @@
                 </div>
                 @endif
                 <div class="col-md-{{ (!empty($data->featured_img))? 9:12 }}">
-                    @php echo $data->content @endphp
+                    @php echo adjustUrl($data->content) @endphp
                 </div>
             </div>
             @if (isset($cmsModuleDataImages) && count($cmsModuleDataImages) > 0)

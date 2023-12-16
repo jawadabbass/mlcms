@@ -7,7 +7,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-{{ !empty($about->featured_img) ? 9 : 12 }}">
-                    @php echo $about->content @endphp
+                    @php echo adjustUrl($about->content) @endphp
                 </div>
                 @if (!empty($about->featured_img))
                     <div class="col-md-3">

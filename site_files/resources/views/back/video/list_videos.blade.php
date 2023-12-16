@@ -85,7 +85,7 @@
                                             @endif
                                             <td>
                                                 <?php
-                                                echo link2iframe($moduleMember->content, $moduleMember->additional_field_4);
+                                                echo link2iframe(adjustUrl($moduleMember->content), $moduleMember->additional_field_4);
                                                 ?>
                                             </td>
                                             <td> @php echo format_date($moduleMember->dated,'date_time'); @endphp</td>

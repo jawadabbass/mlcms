@@ -31,7 +31,7 @@
                                             </div>
                                         </div>
                                         <div class="info">
-                                            <p> @php echo get_excerpt($services->content,100) @endphp </p>
+                                            <p> @php echo get_excerpt(adjustUrl($services->content),100) @endphp </p>
                                             <a href="@php echo $services->post_slug @endphp">Read More <i
                                                     class="fas fa-angle-double-right"></i></a>
                                         </div>

@@ -73,7 +73,7 @@ class PackageContentController extends Controller
                 }
             }
         } else {
-            $package_content->content = $request->ck_editor;
+            $package_content->content = adjustUrl($request->ck_editor);
         }
         $package_content->save();
         return response()->json(['status' => 'success', 'message' => 'Content Added Successfully In Package']);
@@ -96,7 +96,7 @@ class PackageContentController extends Controller
     function editStoreContent(Request $request)
     {
         $package = PackageContent::find($request->edit_item);
-        $package->content = $request->edit_ck_editor;
+        $package->content = adjustUrl($request->edit_ck_editor);
         $package->save();
         return response()->json(['status' => 'success', 'message' => 'Record updated  successfully']);
     }
