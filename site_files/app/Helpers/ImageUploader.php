@@ -171,7 +171,7 @@ class ImageUploader
         /*         * **** End Resizing Images ******** */
         return $fileName;
     }
-    public static function print_image($image_name, $image_path, $width = 0, $height = 0, $alt_title_txt = '', $default_image = 'storage/images/no-image-available.png')
+    public static function print_image($image_name, $image_path, $width = 0, $height = 0, $alt_title_txt = '', $default_image = 'mlstorage/images/no-image-available.png')
     {
         echo self::get_image($image_name, $image_path, $width, $height, $alt_title_txt, $default_image);
     }
@@ -179,7 +179,7 @@ class ImageUploader
     {
         echo self::get_doc($doc_path, $doc_title, $alt_title_txt);
     }
-    public static function get_image($image_name, $image_path, $width = 0, $height = 0, $alt_title_txt = '', $default_image = 'storage/images/no-image-available.png')
+    public static function get_image($image_name, $image_path, $width = 0, $height = 0, $alt_title_txt = '', $default_image = 'mlstorage/images/no-image-available.png')
     {
         $dimensions = '';
         if ($width > 0 && $height > 0) {
@@ -249,7 +249,7 @@ class ImageUploader
     }
     public static function asset_storage()
     {
-        return asset('storage') . '/';
+        return asset('mlstorage') . '/';
     }
     public static function storage_uploads()
     {

@@ -76,7 +76,7 @@ function getUserImage($user)
 {
     $profileImage = $user->profile_image;
 
-    return ImageUploader::print_image_src($profileImage, 'profile_images', 'storage/front/img/no-image.jpg');
+    return ImageUploader::print_image_src($profileImage, 'profile_images', 'mlstorage/front/img/no-image.jpg');
 }
 
 function getImage($folder, $image, $defaultSize = 'main')
@@ -87,7 +87,7 @@ function getImage($folder, $image, $defaultSize = 'main')
         $defaultSize = '/' . $defaultSize;
     }
 
-    return ImageUploader::print_image_src($image, $folder . $defaultSize, 'storage/front/img/no-image-available.png');
+    return ImageUploader::print_image_src($image, $folder . $defaultSize, 'mlstorage/front/img/no-image-available.png');
 }
 
 function storage_uploads($path)
@@ -553,9 +553,9 @@ function generateModuleCodeFieldLabel($field_counter, $errors, $oldData, $hide_s
             </div>
         </div>';
 }
-function adjustUrl($text = '')
-{
-    $text = preg_replace('/http[A-Za-z0-9_:\/\.-]+\/mlstorage\//i', url('/') . '/mlstorage/', $text, -1, $count);
+function adjustUrl($text=''){
+    $text = preg_replace('/http[A-Za-z0-9_:\/\.-]+\/mlstorage\//i', url('/').'/mlstorage/',$text, -1, $count);
     //echo $count;
     return $text;
+
 }
