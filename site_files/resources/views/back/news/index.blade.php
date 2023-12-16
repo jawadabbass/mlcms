@@ -66,7 +66,7 @@
                                     </div>
                                     <div class="col-md-3 form-group">
                                         <label>Description</label>
-                                        <input id="description" name="description" type="text" placeholder="Description" value="{{ request('description', '') }}" class="form-control">
+                                        <input id="description_search" name="description" type="text" placeholder="Description" value="{{ request('description', '') }}" class="form-control">
                                     </div>
                                     <div class="col-md-3 form-group">
                                         <label for="status">Status:</label>
@@ -121,7 +121,7 @@
                     url: '{!! route('fetchNewsAjax') !!}',
                     data: function(d) {
                         d.title = $('#title').val();
-                        d.description = $('#description').val();
+                        d.description = $('#description_search').val();
                         d.status = $('#status').val();
                     }
                 },
@@ -163,7 +163,7 @@
                 oTable.draw();
                 e.preventDefault();
             });
-            $('#description').on('keyup', function(e) {
+            $('#description_search').on('keyup', function(e) {
                 oTable.draw();
                 e.preventDefault();
             });
