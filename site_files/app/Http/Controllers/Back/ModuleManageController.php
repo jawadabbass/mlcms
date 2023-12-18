@@ -35,9 +35,9 @@ class ModuleManageController extends Controller
                 abort(404);
             }
             if (!IsNullOrEmptyString($request->q)) {
-                $moduleMembers = CmsModuleData::where('id', $request->q)->paginate(100);
+                $moduleMembers = CmsModuleData::where('sts', 'active')->where('id', $request->q)->paginate(100);
             } else {
-                $moduleMembers = CmsModuleData::where('cms_module_id', $module->id)
+                $moduleMembers = CmsModuleData::where('sts', 'active')->where('cms_module_id', $module->id)
                     ->orderBy('content_type', 'DESC');
                 if ($module->id == 32) {
                     $moduleMembers->orderBy('id', 'DESC');

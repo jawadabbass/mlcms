@@ -18,7 +18,7 @@ class ModuleController extends Controller
      */
     public function index()
     {
-        $modules = CmsModule::paginate(10);
+        $modules = CmsModule::paginate(100);
 
         $title = FindInsettingArr('business_name') . ': Module Management';
 
@@ -130,13 +130,19 @@ class ModuleController extends Controller
     public function edit($id, Request $request)
     {
         $module = CmsModule::find($id);
+        $modData = CmsModuleData::find($module->belongs_to_module_id);
+        
         $status = $module->show_in_admin_menu == 1 ? 'Yes' : 'No';
         if ($status == 'Yes') {
             $module->show_in_admin_menu = 0;
             $stat = 'No';
+            $modData->sts = 'blocked';
+            $modData->update();
         } else {
             $module->show_in_admin_menu = 1;
             $stat = 'Yes';
+            $modData->sts = 'active';
+            $modData->update();
         }
         $module->save();
         return $stat;

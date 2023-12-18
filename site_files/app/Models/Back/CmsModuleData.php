@@ -12,8 +12,13 @@ class CmsModuleData extends Model
     {
         return $this->belongsTo('App\Models\Back\CmsModule', 'cms_module_id', 'id');
     }
-    public function belongsToModule()
+    public function belongsToModule($model, $field = 'type', $default='')
     {
-        return $this->belongsTo('App\Models\Back\CmsModule', 'belongs_to_module_id', 'id');
+        if((int)$model->belongs_to_module_id > 0){
+            $cmsModule = CmsModule::find($model->belongs_to_module_id);
+            return $cmsModule->{$field};
+        }else{
+            return $default;
+        }
     }
 }
