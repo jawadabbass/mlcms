@@ -408,6 +408,25 @@ Route::get('/clear-cache', function () {
     Artisan::call('config:clear');
     Artisan::call('view:clear');
     Artisan::call('optimize:clear');
+    Artisan::call('storage:link');
+    /*************************** */
+    $directory = config('session.files');
+    $ignoreFiles = ['.gitignore', '.', '..'];
+    $files = scandir($directory);
+    foreach ($files as $file) {
+        if (!in_array($file, $ignoreFiles)) {
+            unlink($directory . '/' . $file);
+        }
+    }
+    /*************************** */
+    $directory = config('logfile.files');
+    $ignoreFiles = ['.gitignore', '.', '..'];
+    $files = scandir($directory);
+    foreach ($files as $file) {
+        if (!in_array($file, $ignoreFiles)) {
+            unlink($directory . '/' . $file);
+        }
+    }
     /*************************** */
     return 'Cache is cleared';
 });
