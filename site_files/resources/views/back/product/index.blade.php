@@ -143,7 +143,7 @@
     </script>
     <script type="text/javascript" src="{{ asset_storage('') . 'back/js/fileUploader.js' }}"></script>
     <script type="text/javascript" src="{{ asset_storage('') . 'module/settings/admin/js/settings.js' }}"></script>
-    <script type="text/javascript" src="{{ base_url() }}back/mod/mod_js.js"></script>
+    <script type="text/javascript" src="{{ asset_storage('') }}back/mod/mod_js.js"></script>
     @include('back.product.product_js')
     @include('back.product.add_edit_view')
     <script type="text/javascript">

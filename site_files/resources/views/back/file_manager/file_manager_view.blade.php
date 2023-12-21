@@ -17,7 +17,7 @@
 </head>
 
 <body>
-    <script src="{{ base_url() }}back/js/plugins/editor/ckfinder/ckfinder.js"></script>
+    <script src="{{ asset_storage('') }}back/js/plugins/editor/ckfinder/ckfinder.js"></script>
     <script>
         CKFinder.start();
     </script>

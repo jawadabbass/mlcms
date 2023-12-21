@@ -173,7 +173,7 @@
     </div>
 @endsection
 @section('beforeBodyClose')
-    <script type="text/javascript" src="{{ base_url() }}back/mod/mod_js.js"></script>
+    <script type="text/javascript" src="{{ asset_storage('') }}back/mod/mod_js.js"></script>
     <script>
         $(document).ready(function() {
             $('[data-bs-toggle="popover"]').popover();

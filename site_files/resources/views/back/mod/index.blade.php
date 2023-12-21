@@ -197,8 +197,8 @@ else{?>
         var contr = '{{ $settingArr['contr_name'] }}';
     </script>
 
-    <link href="{{ base_url() }}back/mod/mod_css.css" rel="stylesheet">
-    <link href="{{ base_url() }}back/mod/bootstrap-toggle.min.css" rel="stylesheet">
-    <script src="{{ base_url() }}back/mod/bootstrap-toggle.min.js"></script>
-    <script src="{{ base_url() }}back/mod/mod_js.js"></script>
+    <link href="{{ asset_storage('') }}back/mod/mod_css.css" rel="stylesheet">
+    <link href="{{ asset_storage('') }}back/mod/bootstrap-toggle.min.css" rel="stylesheet">
+    <script src="{{ asset_storage('') }}back/mod/bootstrap-toggle.min.js"></script>
+    <script src="{{ asset_storage('') }}back/mod/mod_js.js"></script>
 @endsection

@@ -7,10 +7,10 @@
 
     <title>Editable Invoice</title>
 
-    <link rel='stylesheet' type='text/css' href='{{ base_url() }}back/invoice/css/style.css' />
-    <link rel='stylesheet' type='text/css' href='{{ base_url() }}back/invoice/css/print.css' media="print" />
-    <script type='text/javascript' src='{{ base_url() }}back/invoice/js/jquery-1.3.2.min.js'></script>
-    <script type='text/javascript' src='{{ base_url() }}back/invoice/js/example.js'></script>
+    <link rel='stylesheet' type='text/css' href='{{ asset_storage('') }}back/invoice/css/style.css' />
+    <link rel='stylesheet' type='text/css' href='{{ asset_storage('') }}back/invoice/css/print.css' media="print" />
+    <script type='text/javascript' src='{{ asset_storage('') }}back/invoice/js/jquery-1.3.2.min.js'></script>
+    <script type='text/javascript' src='{{ asset_storage('') }}back/invoice/js/example.js'></script>
 </head>
 
 <body>
@@ -35,7 +35,7 @@ Phone: (555) 555-5555</textarea>
                     <input id="imageloc" type="text" size="50" value="" /><br />
                     (max width: 540px, max height: 100px)
                 </div>
-                <img id="image" src="{{ base_url() }}back/images/images/ml-icon.png" alt="logo" />
+                <img id="image" src="{{ asset_storage('') }}back/images/images/ml-icon.png" alt="logo" />
             </div>
 
         </div>

@@ -1,6 +1,6 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('beforeHeadClose')
-    <script src="{{ base_url() }}back/js/plugins/mask/jquery.mask.min.js"></script>
+    <script src="{{ asset_storage('') }}back/js/plugins/mask/jquery.mask.min.js"></script>
 @endsection
 @section('content')
     <div class="content-wrapper pl-3 pr-2">

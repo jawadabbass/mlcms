@@ -443,7 +443,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <script src="{{ asset_storage('lib/sweetalert/sweetalert2.js') }}"></script>
-    <script type="text/javascript" src="{{ base_url() }}back/mod/mod_js.js"></script>
+    <script type="text/javascript" src="{{ asset_storage('') }}back/mod/mod_js.js"></script>
     @include('back.clients.common.scripts')
     @include('back.clients.common.sms_script')
     <script>
