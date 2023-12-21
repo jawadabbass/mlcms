@@ -378,7 +378,9 @@ class VideoController extends Controller
         $img_name = '';
         $file = $request->file('fimg');
         $file2 = $request->file('fimg');
+        $Video = Video::find($idd);
         if (isset($_FILES['fimg']) && $_FILES['fimg']['tmp_name'] != '') {
+            ImageUploader::deleteImage('videos/thumb', $Video->video_img, false);
             $img_name = ImageUploader::UploadDoc('videos/thumb/', $file);
             $image = Image::make(storage_uploads('videos/thumb/' . $img_name))->resize(80, 60)->save();
         }
@@ -387,21 +389,21 @@ class VideoController extends Controller
                 'linkk' => 'required|mimes:mp4'
             ]);
             $file = $request->file('linkk');
+            ImageUploader::deleteImage('videos/video', $Video->content, false);
             $video_name = ImageUploader::UploadDoc('videos/video/', $file);
-            $Video = Video::find($idd);
+            
             $Video->video_type = $request->testimonial_type;
             if ($video_name != '') {
                 $Video->content = $video_name;
             }
             if ($img_name != '') {
-                $Video->featured_img = $img_name;
+                $Video->video_img = $img_name;
             }
             $Video->dated = date('Y-m-d H:i:s');
             $Video->short_detail = $request->descp;
             $Video->heading = $request->heading;
             $Video->save();
         } else {
-            $Video = Video::find($idd);
             $Video->video_type = $request->testimonial_type;
             $Video->content = adjustUrl($request->linkk);
             $Video->short_detail = $request->descp;

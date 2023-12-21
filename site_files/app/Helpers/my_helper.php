@@ -441,18 +441,6 @@ function generateSafetiesStatusDropDown($defaultSelected = '', $empty = true)
     return $str;
 }
 
-function generateFleetCategoriesDropDown($defaultSelected = 0, $empty = true)
-{
-    $str = ($empty) ? '<option value="">Select...</option>' : '';
-    $categoryArray = FleetCategory::select('title', 'id')->active()->sorted()->pluck('title', 'id')->toArray();
-    foreach ($categoryArray as $key => $value) {
-        $selected = ($key == $defaultSelected) ? 'selected="selected"' : '';
-        $str .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
-    }
-
-    return $str;
-}
-
 function generateFleetPlaneStatusDropDown($defaultSelected = '', $empty = true)
 {
     $str = ($empty) ? '<option value="">Select...</option>' : '';

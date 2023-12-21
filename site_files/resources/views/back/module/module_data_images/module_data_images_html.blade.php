@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" style="display:{{ $module->show_feature_img_field == 1 ? 'block' : 'none' }}">
     <div class="col-md-12">
         <hr/>
         <input type="hidden" name="session_id" value="{{ session()->getId() }}" />
