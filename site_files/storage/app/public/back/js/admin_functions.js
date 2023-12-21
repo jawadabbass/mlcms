@@ -1,3 +1,20 @@
+function confirmDel() {
+    if (confirm("Are you sure you want to delete?")) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+function confirmMsg(msg) {
+    if (confirm(msg)) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
 //For admin panel left bar (hiding/showing)
 function seoModulToggle() {
     var seoClass = document.getElementById('seo-modul');

@@ -1,21 +1,3 @@
-function confirmDel() {
-	if (confirm("Are you sure you want to delete?")) {
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-function confirmMsg(msg) {
-	if (confirm(msg)) {
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
 function limit_text(idd, text_max, limitid) {
 	$('#' + limitid).html(text_max + ' characters remaining');
 	var strr = $('#' + idd).val();
