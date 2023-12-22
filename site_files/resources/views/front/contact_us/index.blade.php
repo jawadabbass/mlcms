@@ -183,11 +183,11 @@
                 },
                 errorPlacement: function(error, element) {
                     var key = element[0].id;
-                    $('#' + key + '-error').html(error);
-                    $('#' + key + '-error').addClass('formValidationErrors');
-                    $('#' + key + '-error').show();
+                    $('#contactForm').find('#' + key + '-error').html(error);
+                    $('#contactForm').find('#' + key + '-error').addClass('formValidationErrors');
+                    $('#contactForm').find('#' + key + '-error').show();
                     scrollToErrors('.formValidationErrors');
-                    $('#g-recaptcha-response').hide();
+                    $('#contactForm').find('#g-recaptcha-response').hide();
                 },
                 submitHandler: function() {
                     submitContactFormAjax();
@@ -196,11 +196,11 @@
         });
 
         function submitContactForm() {
-            $('#g-recaptcha-response').prop('style', 'width:1px;height:1px;');
-            $('#g-recaptcha-response').show();
+            $('#contactForm').find('#g-recaptcha-response').prop('style', 'width:1px;height:1px;');
+            $('#contactForm').find('#g-recaptcha-response').show();
             $('#contactForm').submit();
         }
-        $('#phone').inputmask("999-999-9999");
+        $('#contactForm').find('#phone').inputmask("999-999-9999");
     </script>
     <script>
         function submitContactFormAjax() {
@@ -246,9 +246,9 @@
                     if (data.status === 422) {
                         var responseText = $.parseJSON(data.responseText);
                         $.each(responseText.errors, function(key, value) {
-                            $('#' + key + '-error').html(value);
-                            $('#' + key + '-error').addClass('formValidationErrors');
-                            $('#' + key + '-error').show();
+                            $('#contactForm').find('#' + key + '-error').html(value);
+                            $('#contactForm').find('#' + key + '-error').addClass('formValidationErrors');
+                            $('#contactForm').find('#' + key + '-error').show();
                             scrollToErrors('.formValidationErrors');
                         });
                     }

@@ -259,42 +259,6 @@
         </div>
     </div>
     <!-- End Testimonial & Faq -->
-    <!-- Start Achivement
-                                            ============================================= -->
-    <div class="achivement-area bg-fixed shadow dark text-light default-padding"
-        style="background-image: url(img/banner/9.jpg')}});">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 info">
-                    @php $achh_page=get_page(181);@endphp
-                    <h2>@php echo $achh_page->heading; @endphp </h2>
-                    @php echo adjustUrl($achh_page->content); @endphp
-                    <a href="{{ url($achh_page->post_slug) }}" class="btn btn-theme effect btn-md">Start Now</a>
-                </div>
-                <div class="col-md-6 achivement-items">
-                    @php
-                        $scwidget = get_widgets(81);
-                        $af_data = json_decode($scwidget->additional_field_data);
-                    @endphp
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">{{ $scwidget->heading }}</h3>
-                        </div>
-                        <div class="panel-body">
-                            <a href="#" class="thumbnail">
-                            <img class="card-img-top" src="{{ asset_uploads('widgets/' . $scwidget->featured_image) }}"
-                                alt="{{ $scwidget->featured_image_alt }}" title="{{ $scwidget->featured_image_title }}">
-                            </a>
-                            {!! adjustUrl($scwidget->content) !!}
-                        </div>
-                        <div class="panel-footer"><a href="{{ $af_data->additional_field_2 }}"
-                                class="btn btn-primary">{{ $af_data->additional_field_1 }}</a></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End Achivement Area -->
     <!-- Start Blog Area
                                             ============================================= -->
     <div class="blog-area default-padding bottom-less">
