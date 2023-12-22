@@ -60,6 +60,7 @@ function getModuleData($moduleId, $limit = 0, $start = 0, $orderBy = 'item_order
         $data->where('sts', 'active');
     }
     $data->orderBy($orderBy, $ascDesc);
+    $data->orderBy('heading', 'asc');
     if ($limit > 0) {
         $data->limit($limit, $start);
     }
