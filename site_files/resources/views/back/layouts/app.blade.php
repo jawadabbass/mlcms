@@ -34,6 +34,11 @@
         }
     </style>
     @livewireScriptConfig
+    <script>
+        window.addEventListener('beforeunload', function(event) {
+            event.stopImmediatePropagation();
+        });
+    </script>
 </body>
 
 </html>
