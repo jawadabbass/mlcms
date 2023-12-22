@@ -121,8 +121,7 @@ class Email_templatesController extends Controller
         $dataArr = $this->arrFList;
         $idf = $this->settingArr['dbId'];
 
-        $status = CmsModuleData::where('cms_module_id', 52)->where('sts', 'active')->orderBy('item_order', 'ASC')->get();
-
+        $status = getModuleData(52);
         return view('back.email_templates.index', compact('title', 'msg', 'result', 'settingArr', 'arrSearch', 'dataArr', 'idf', 'status'));
     }
     public function set_order()
@@ -173,10 +172,7 @@ class Email_templatesController extends Controller
     {
 
         $bcArr = array();
-        $status = CmsModuleData::where('cms_module_id', 52)->where('sts', 'active')->orderBy('item_order', 'ASC')->get();
-
-
-
+        $status = getModuleData(52);
         $settingArr = $this->settingArr;
         $title = 'Edit | ' . $settingArr['mainTitle'];
 
@@ -246,8 +242,7 @@ class Email_templatesController extends Controller
         $bcArr = array();
 
         $bcArr = array('email_templates' => 'Templates');
-        $status = CmsModuleData::where('cms_module_id', 52)->where('sts', 'active')->orderBy('item_order', 'ASC')->get();
-
+        $status = getModuleData(52);
 
         return view('back.email_templates.edit', compact('title', 'settingArr', 'dataArr', 'row', 'idf', 'id', 'bcArr', 'status'));
     }

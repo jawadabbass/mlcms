@@ -24,7 +24,9 @@ class SearchController extends Controller
                 ->where('content_type', 'page')
                 ->with(['module' => function ($query) {
                     $query->select('id', 'type');
-                }])->get();
+                }])
+                ->orderBy('item_order', "ASC")
+                ->get();
             return json_encode(array('pages' => $pages, 'modules' => $modules, 'cms' => $cms));
         } else {
             return json_encode(array());

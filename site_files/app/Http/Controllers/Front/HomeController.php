@@ -39,35 +39,12 @@ class HomeController extends Controller
         $seoArr = getSeoArrayModule(151);
         $blogData =
             BlogPost::where('sts', 'active')->orderBy('dated', 'DESC')->limit(3)->get();
-        $get_all_banner =  CmsModuleData::where('sts', 'active')
-            ->where('cms_module_id', 2)
-            ->orderBy('ID', 'ASC')
-            ->get();
-        $get_all_features =  CmsModuleData::where('sts', 'active')
-            ->where('cms_module_id', 35)
-            ->orderBy('item_order', 'ASC')
-            ->limit(4)
-            ->get();
-        $get_all_services =  CmsModuleData::where('sts', 'active')
-            ->where('cms_module_id', 33)
-            ->orderBy('ID', 'ASC')
-            ->limit(10)
-            ->get();
-        $get_all_testimonials =  CmsModuleData::where('sts', 'active')
-            ->where('cms_module_id', 22)
-            ->orderBy('ID', 'ASC')
-            ->limit(10)
-            ->get();
-        $get_all_faqs =  CmsModuleData::where('sts', 'active')
-            ->where('cms_module_id', 19)
-            ->orderBy('ID', 'ASC')
-            ->limit(10)
-            ->get();
-        $get_all_partners =  CmsModuleData::where('sts', 'active')
-            ->where('cms_module_id', 34)
-            ->orderBy('ID', 'ASC')
-            ->limit(10)
-            ->get();
+        $get_all_banner = getModuleData(2);
+        $get_all_features = getModuleData(35, 4);
+        $get_all_services = getModuleData(33, 10);
+        $get_all_testimonials = getModuleData(22, 10);
+        $get_all_faqs = getModuleData(19, 10);
+        $get_all_partners = getModuleData(34, 10);
         $albums = Album::paginate(20);
         $images = Image::paginate(20);
         $html = view('front.home.index', compact('news_results', 'seoArr', 'tesimonialsArr', 'blogData', 'get_all_banner', 'get_all_features', 'get_all_services', 'albums', 'images', 'get_all_testimonials', 'get_all_faqs', 'get_all_partners'))->render();

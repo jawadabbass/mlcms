@@ -9,31 +9,13 @@ function exeTime()
 }
 function get_all($limit, $start, $module_id)
 {
-    $data = \App\Models\Back\CmsModuleData::where('sts', 'active')
-        ->where('cms_module_id', $module_id)
-        ->where('sts', 'active')
-        ->orderBy('ID', "DESC")
-        ->limit($limit, $start)
-        ->get();
+    $data = getModuleData($module_id, $limit, $start, 'item_order', 'asc');
     return $data;
 }
 function get_alls($limit, $start, $module_id, $dateFormat = 'M d, Y')
 {
-
     $moduleArr = \App\Models\Back\CmsModule::find($module_id)->toArray();
-    $getArr = \App\Models\Back\CmsModuleData::where('sts', 'active')
-        ->where('cms_module_id', $module_id)
-        ->where('sts', 'active');
-    if ($moduleArr['show_ordering_options'] == '1') {
-        $getArr->orderBy('item_order', 'ASC');
-    } else if ($module_id == '32') {
-        $getArr->orderBy('dated', 'DESC');
-    } else {
-        $getArr->orderBy('ID', "DESC");
-    }
-
-    $getArr->limit($limit, $start);
-    $getArr = $getArr->get();
+    $getArr = getModuleData($module_id, $limit, $start, 'item_order', 'asc');
     if (sizeof($getArr) > 0) {
         $getArr = $getArr->toArray();
     } else {
@@ -116,12 +98,7 @@ function format_record($subValsArr, $module_id, $moduleArr, $dateFormat)
 }
 function get_all_order($limit, $start, $module_id)
 {
-    $data = \App\Models\Back\CmsModuleData::where('sts', 'active')
-        ->where('cms_module_id', $module_id)
-        ->where('sts', 'active')
-        ->orderBy('item_order', "ASC")
-        ->limit($limit, $start)
-        ->get();
+    $data = getModuleData($module_id, $limit, $start, 'item_order', 'asc');
     return $data;
 }
 if (!function_exists('get_widgets')) {
@@ -330,7 +307,7 @@ if (!function_exists('get_latest_blog')) {
 if (!function_exists('get_services')) {
     function get_services($limit = 8)
     {
-        $services = \App\Models\Back\CmsModuleData::where('cms_module_id', 33)->paginate($limit);
+        $services = getModuleData(45);
         return $services;
     }
 }
@@ -345,12 +322,7 @@ if (!function_exists('get_excerpt')) {
 }
 function get_module_by_order($module_id, $limit)
 {
-    $data = \App\Models\Back\CmsModuleData::where('sts', 'active')
-        ->where('cms_module_id', $module_id)
-        ->where('sts', 'active')
-        ->orderBy('item_order', "ASC")
-        ->limit($limit)
-        ->get();
+    $data = getModuleData($module_id, $limit, 0, 'item_order', 'asc');
     return $data;
 }
 function addHttpLink($url, $scheme = 'http://')

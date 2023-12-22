@@ -87,10 +87,7 @@ class ContactUsController extends Controller
         $data['msg'] = '';
         $title = config("Constants.SITE_NAME") . ': Contact Us Page';
         $clientArr = array();
-        $get_all_packages =  CmsModuleData::where('sts', 'active')
-            ->where('cms_module_id', 33)
-            ->orderBy('item_order', 'ASC')
-            ->get();
+        $get_all_packages = getModuleData(33);
         $email_template = EmailTemplate::where('email_type', 'status')->orderBy('ID', 'ASC')->get();
         $sms_template = MessageTemplate::all();
         return view('back.contactus.index_view', compact('result', 'title', 'data', 'clientArr', 'contact', 'get_all_packages', 'email_template', 'sms_template'));

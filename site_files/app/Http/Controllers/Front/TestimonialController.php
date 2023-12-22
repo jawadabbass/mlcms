@@ -16,9 +16,7 @@ class TestimonialController extends Controller
         } else {
             $seoArr = array('title' => 'Welcome to ' . FindInsettingArr('business_name'));
         }
-        $testimonials  = CmsModuleData::where('cms_module_id', 22)
-            ->orderBy('item_order', 'ASC')
-            ->get();
+        $testimonials = getModuleData(22);
         return view('front.testimonials.index', compact('seoArr', 'testimonials'));
     }
 }

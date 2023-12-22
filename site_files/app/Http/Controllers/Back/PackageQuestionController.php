@@ -67,10 +67,7 @@ class PackageQuestionController extends Controller
         }
         $title = FindInsettingArr('business_name') . ': Package Question\'s Management';
         $msg = '';
-        $get_all_packages =  CmsModuleData::where('sts', 'active')
-            ->where('cms_module_id', 37)
-            ->orderBy('item_order', 'ASC')
-            ->get();
+        $get_all_packages = getModuleData(37);
         return view('back.package_questions.index', compact('products', 'title', 'msg', 'get_all_packages'));
     }
     /**
@@ -244,10 +241,7 @@ class PackageQuestionController extends Controller
      */
     public function edit($id)
     {
-        $packages =  CmsModuleData::where('sts', 'active')
-            ->where('cms_module_id', 37)
-            ->orderBy('item_order', 'ASC')
-            ->get();
+        $packages = getModuleData(37);
         $title = FindInsettingArr('business_name') . ':Edit Package Question';
         $msg = '';
         $result = \DB::table('package_questions')->where('id', $id)->first();
@@ -272,10 +266,7 @@ class PackageQuestionController extends Controller
     }
     public function addView()
     {
-        $get_all_packages =  CmsModuleData::where('sts', 'active')
-            ->where('cms_module_id', 37)
-            ->orderBy('item_order', 'ASC')
-            ->get();
+        $get_all_packages = getModuleData(37);
         $title = 'Add New Package Question';
         return view('back.package_questions.add', compact('get_all_packages', 'title'));
     }

@@ -90,10 +90,7 @@ class ClientController extends Controller
         $title = 'Clients | ' . config("Constants.SITE_NAME");
         $email_template = EmailTemplate::where('email_type', 'status')->orderBy('ID', 'ASC')->get();
         $sms_template = MessageTemplate::all();
-        $get_all_packages =  CmsModuleData::where('sts', 'active')
-            ->where('cms_module_id', 37)
-            ->orderBy('item_order', 'ASC')
-            ->get();
+        $get_all_packages = getModuleData(37);
         $content_condition = ContentCondition::select('id', 'title')->whereNotNull('title')->get();
         return view('back.clients.index_view', compact('result', 'title', 'data', 'email_template', 'sms_template', 'get_all_packages', 'content_condition'));
     }
@@ -108,10 +105,7 @@ class ClientController extends Controller
         $data['msg'] = '';
         $title = config("Constants.SITE_NAME") . ': Add | Client';
         $states = State::active()->sorted()->get();
-        $conditions =  CmsModuleData::where('sts', 'active')
-            ->where('cms_module_id', 38)
-            ->orderBy('item_order', 'ASC')
-            ->get();
+        $conditions = getModuleData(38);
         return view('back.clients.add', compact('title', 'data', 'states', 'conditions'));
     }
     /**
@@ -159,10 +153,7 @@ class ClientController extends Controller
         $next = Client::where('id', '>', $id)->orderBy('id', 'ASC')->first();
         
         $history = ClientsHistory::where('client_id', $id)->with(['user'])->paginate(10);
-        $conditions =  CmsModuleData::where('sts', 'active')
-            ->where('cms_module_id', 38)
-            ->orderBy('item_order', 'ASC')
-            ->get();
+        $conditions = getModuleData(38);
         return view('back.clients.show', compact('client', 'title', 'history', 'conditions','pre', 'next'));
     }
     public function status(Request $request)
@@ -205,10 +196,7 @@ class ClientController extends Controller
         $clientObj = Client::find($id);
         $title = config("Constants.SITE_NAME") . ': Edit | Client';
         $states = State::active()->sorted()->get();
-        $conditions =  CmsModuleData::where('sts', 'active')
-            ->where('cms_module_id', 38)
-            ->orderBy('item_order', 'ASC')
-            ->get();
+        $conditions = getModuleData(38);
         return view('back.clients.edit', compact('title', 'data', 'clientObj', 'states', 'conditions'));
     }
     /**
@@ -344,7 +332,7 @@ class ClientController extends Controller
         $client = Client::find($id);
         $previous_package_active = ClientPackages::where('client_id', $id)->pluck('package_id')->toarray();
         $title = config("Constants.SITE_NAME") . ': Package | Add Client New Package';
-        $get_all_packages =  CmsModuleData::where('sts', 'active')
+        $get_all_packages = CmsModuleData::where('sts', 'active')
             ->where('cms_module_id', 37)
             ->whereNotIn('id', $previous_package_active)
             ->orderBy('item_order', 'ASC')

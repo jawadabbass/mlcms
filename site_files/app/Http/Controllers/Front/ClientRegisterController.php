@@ -27,10 +27,7 @@ class ClientRegisterController extends Controller
         $states = State::active()->sorted()->get();
         $seoArr = getSeoArrayModule(104);
         $seoArr['title'] = 'Sign Up';
-        $conditions =  CmsModuleData::where('sts', 'active')
-            ->where('cms_module_id', 38)
-            ->orderBy('item_order', 'ASC')
-            ->get();
+        $conditions = getModuleData(38);
         return view('front.auth.clientregister', compact('states', 'seoArr', 'conditions'));
     }
     public function register(Request $request)

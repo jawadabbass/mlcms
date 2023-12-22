@@ -27,11 +27,7 @@ class ServicesController extends Controller
 	public
 	function show($slug)
 	{
-		$get_all_services =  CmsModuleData::where('sts', 'active')
-			->where('cms_module_id', 33)
-			->orderBy('ID', 'ASC')
-			->limit(100)
-			->get();
+		$get_all_services = getModuleData(33);
 		$result = CmsModuleData::where('cms_module_id', 33)
 			->where('sts', 'active')
 			->where('post_slug', 'services/' . $slug)->first();

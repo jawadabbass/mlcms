@@ -53,15 +53,16 @@ function getModuleDataByType($moduleType, $limit = 20, $start = 0, $orderBy = 'i
     return getModuleData($module->id, $limit, $start, $orderBy, $ascDesc);
 }
 
-function getModuleData($moduleId, $limit = 20, $start = 0, $orderBy = 'item_order', $ascDesc = 'asc')
+function getModuleData($moduleId, $limit = 0, $start = 0, $orderBy = 'item_order', $ascDesc = 'asc', $active = true)
 {
-    $data = \App\Models\Back\CmsModuleData::where('sts', 'active')
-        ->where('cms_module_id', $moduleId)
-        ->where('sts', 'active');
-
+    $data = \App\Models\Back\CmsModuleData::where('cms_module_id', $moduleId);
+    if ($active) {
+        $data->where('sts', 'active');
+    }
     $data->orderBy($orderBy, $ascDesc);
-    $data->limit($limit, $start);
-
+    if ($limit > 0) {
+        $data->limit($limit, $start);
+    }
     return $data->get();
 }
 
@@ -357,102 +358,6 @@ function getCmsModuleDataImages($images)
     return $imagesArray;
 }
 
-function generateFleetCategoriesStatusDropDown($defaultSelected = '', $empty = true)
-{
-    $str = ($empty) ? '<option value="">Select...</option>' : '';
-    $statusArray = ['Active' => 'Active', 'Inactive' => 'Inactive'];
-    foreach ($statusArray as $key => $value) {
-        $selected = ($key == $defaultSelected) ? 'selected="selected"' : '';
-        $str .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
-    }
-
-    return $str;
-}
-
-function generatePassengerCapacitiesStatusDropDown($defaultSelected = '', $empty = true)
-{
-    $str = ($empty) ? '<option value="">Select...</option>' : '';
-    $statusArray = ['Active' => 'Active', 'Inactive' => 'Inactive'];
-    foreach ($statusArray as $key => $value) {
-        $selected = ($key == $defaultSelected) ? 'selected="selected"' : '';
-        $str .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
-    }
-
-    return $str;
-}
-
-function generateCabinDimensionsStatusDropDown($defaultSelected = '', $empty = true)
-{
-    $str = ($empty) ? '<option value="">Select...</option>' : '';
-    $statusArray = ['Active' => 'Active', 'Inactive' => 'Inactive'];
-    foreach ($statusArray as $key => $value) {
-        $selected = ($key == $defaultSelected) ? 'selected="selected"' : '';
-        $str .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
-    }
-
-    return $str;
-}
-
-function generateBaggageCapacitiesStatusDropDown($defaultSelected = '', $empty = true)
-{
-    $str = ($empty) ? '<option value="">Select...</option>' : '';
-    $statusArray = ['Active' => 'Active', 'Inactive' => 'Inactive'];
-    foreach ($statusArray as $key => $value) {
-        $selected = ($key == $defaultSelected) ? 'selected="selected"' : '';
-        $str .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
-    }
-
-    return $str;
-}
-
-function generatePerformancesStatusDropDown($defaultSelected = '', $empty = true)
-{
-    $str = ($empty) ? '<option value="">Select...</option>' : '';
-    $statusArray = ['Active' => 'Active', 'Inactive' => 'Inactive'];
-    foreach ($statusArray as $key => $value) {
-        $selected = ($key == $defaultSelected) ? 'selected="selected"' : '';
-        $str .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
-    }
-
-    return $str;
-}
-
-function generateCabinAmenitiesStatusDropDown($defaultSelected = '', $empty = true)
-{
-    $str = ($empty) ? '<option value="">Select...</option>' : '';
-    $statusArray = ['Active' => 'Active', 'Inactive' => 'Inactive'];
-    foreach ($statusArray as $key => $value) {
-        $selected = ($key == $defaultSelected) ? 'selected="selected"' : '';
-        $str .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
-    }
-
-    return $str;
-}
-
-function generateSafetiesStatusDropDown($defaultSelected = '', $empty = true)
-{
-    $str = ($empty) ? '<option value="">Select...</option>' : '';
-    $statusArray = ['Active' => 'Active', 'Inactive' => 'Inactive'];
-    foreach ($statusArray as $key => $value) {
-        $selected = ($key == $defaultSelected) ? 'selected="selected"' : '';
-        $str .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
-    }
-
-    return $str;
-}
-
-function generateFleetPlaneStatusDropDown($defaultSelected = '', $empty = true)
-{
-    $str = ($empty) ? '<option value="">Select...</option>' : '';
-    $statusArray = ['Active' => 'Active', 'Inactive' => 'Inactive'];
-    foreach ($statusArray as $key => $value) {
-        $selected = ($key == $defaultSelected) ? 'selected="selected"' : '';
-        $str .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
-    }
-
-    return $str;
-}
-
 function generateNewsStatusDropDown($defaultSelected = '', $empty = true)
 {
     $str = ($empty) ? '<option value="">Select...</option>' : '';
@@ -541,9 +446,9 @@ function generateModuleCodeFieldLabel($field_counter, $errors, $oldData, $hide_s
             </div>
         </div>';
 }
-function adjustUrl($text=''){
-    $text = preg_replace('/http[A-Za-z0-9_:\/\.-]+\/mlstorage\//i', url('/').'/mlstorage/',$text, -1, $count);
+function adjustUrl($text = '')
+{
+    $text = preg_replace('/http[A-Za-z0-9_:\/\.-]+\/mlstorage\//i', url('/') . '/mlstorage/', $text, -1, $count);
     //echo $count;
     return $text;
-
 }

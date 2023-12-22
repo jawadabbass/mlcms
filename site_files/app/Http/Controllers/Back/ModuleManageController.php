@@ -35,17 +35,9 @@ class ModuleManageController extends Controller
                 abort(404);
             }
             if (!IsNullOrEmptyString($request->q)) {
-                $moduleMembers = CmsModuleData::where('sts', 'active')->where('id', $request->q)->paginate(100);
+                $moduleMembers = CmsModuleData::where('id', $request->q)->orderBy('item_order', "ASC")->paginate(100);
             } else {
-                $moduleMembers = CmsModuleData::where('sts', 'active')->where('cms_module_id', $module->id)
-                    ->orderBy('content_type', 'DESC');
-                if ($module->id == 32) {
-                    $moduleMembers->orderBy('id', 'DESC');
-                } else {
-                    $moduleMembers->orderBy('item_order', 'ASC');
-                }
-                $moduleMembers->orderBy('id', 'ASC');
-                $moduleMembers = $moduleMembers->paginate(100);
+                $moduleMembers = getModuleData($module->id, 0, 0, 'item_order', 'asc', false);
             }
             $menu_types = MenuType::orderBy('id', 'ASC')->get();
             $title = FindInsettingArr('business_name') . ': ' . strtoupper($module->type) . ' Management';
@@ -395,8 +387,7 @@ class ModuleManageController extends Controller
         $type = trim($type);
         if ($type != '') {
             $module = CmsModule::where('type', $type)->first();
-            $moduleMembers = CmsModuleData::where('cms_module_id', $module->id)
-                ->orderBy('item_order', 'ASC')->get();
+            $moduleMembers = getModuleData($module->id);
             $title = FindInsettingArr('business_name') . ': ' . strtoupper($module->type) . ' Management';
             $msg = '';
             return view('back.module.order', compact('module', 'moduleMembers', 'title', 'msg'));
