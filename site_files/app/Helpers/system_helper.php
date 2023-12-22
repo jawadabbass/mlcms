@@ -9,13 +9,13 @@ function exeTime()
 }
 function get_all($limit, $start, $module_id)
 {
-    $data = getModuleData($module_id, $limit, $start, 'item_order', 'asc');
+    $data = getModuleData($module_id, $limit, $start);
     return $data;
 }
 function get_alls($limit, $start, $module_id, $dateFormat = 'M d, Y')
 {
     $moduleArr = \App\Models\Back\CmsModule::find($module_id)->toArray();
-    $getArr = getModuleData($module_id, $limit, $start, 'item_order', 'asc');
+    $getArr = getModuleData($module_id, $limit, $start);
     if (sizeof($getArr) > 0) {
         $getArr = $getArr->toArray();
     } else {
@@ -25,7 +25,6 @@ function get_alls($limit, $start, $module_id, $dateFormat = 'M d, Y')
 }
 function get_one($parent, $slug, $dateFormat = 'M d, Y')
 {
-
     $moduleArr = \App\Models\Back\CmsModule::where('type', $parent)->first()->toArray();
     $getArr = \App\Models\Back\CmsModuleData::where('sts', 'active')
         ->where('cms_module_id', $moduleArr['id'])
@@ -41,8 +40,6 @@ function get_one($parent, $slug, $dateFormat = 'M d, Y')
 }
 function format_records($getArr, $module_id, $moduleArr, $dateFormat)
 {
-
-
     $dataArr = array();
     foreach ($getArr as $key => $subValsArr) {
         foreach ($subValsArr as $subKey => $subValue) {
@@ -76,7 +73,6 @@ function format_records($getArr, $module_id, $moduleArr, $dateFormat)
 }
 function format_record($subValsArr, $module_id, $moduleArr, $dateFormat)
 {
-
     $dataArr = array();
     foreach ($subValsArr as $kk => $vv) {
         if ($kk == 'post_slug') {
@@ -93,12 +89,11 @@ function format_record($subValsArr, $module_id, $moduleArr, $dateFormat)
             $dataArr[$kk] = $subValsArr[$kk];
         }
     }
-
     return $dataArr;
 }
 function get_all_order($limit, $start, $module_id)
 {
-    $data = getModuleData($module_id, $limit, $start, 'item_order', 'asc');
+    $data = getModuleData($module_id, $limit, $start);
     return $data;
 }
 if (!function_exists('get_widgets')) {
@@ -228,7 +223,6 @@ function vimeoid2img($link)
     $hash = curl_exec($ch);
     curl_close($ch);
     ///$hash=file_get_contents('http://vimeo.com/api/v2/video/'.$link.'.php');
-
     $hash = unserialize($hash);
     if (isset($hash[0]['thumbnail_medium'])) {
         return $hash[0]['thumbnail_medium'];
@@ -314,15 +308,16 @@ if (!function_exists('get_services')) {
 if (!function_exists('get_excerpt')) {
     function get_excerpt($text, $limit = 200)
     {
-        $ntext = wordwrap($text, $limit, "....", FALSE);
-        $excerpt = explode("....", $ntext);
+        $text = strip_tags($text);
+        $text = wordwrap($text, $limit, "....", FALSE);
+        $excerpt = explode("....", $text);
         $excerpt = $excerpt[0] . "....";
         return $excerpt;
     }
 }
 function get_module_by_order($module_id, $limit)
 {
-    $data = getModuleData($module_id, $limit, 0, 'item_order', 'asc');
+    $data = getModuleData($module_id, $limit, 0);
     return $data;
 }
 function addHttpLink($url, $scheme = 'http://')
@@ -334,7 +329,6 @@ function getFilesListInDir($mediaBasePath, $extArr)
 {
     $filesArr = array();
     $dirArr = glob($mediaBasePath . '*');
-
     foreach ($dirArr as $key => $value) {
         $path_info = pathinfo($value);
         if (isset($path_info['extension'])) {
@@ -353,7 +347,6 @@ function getImagesListInDir($mediaBasePath)
 {
     $filesArr = array();
     $dirArr = glob($mediaBasePath . '*');
-
     foreach ($dirArr as $key => $value) {
         $path_info = pathinfo($value);
         //cp($path_info['extension'], 'yes');
