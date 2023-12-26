@@ -449,7 +449,8 @@
                         $('#' + save_method + '_action').show();
 
                         if ($("#from_page_update").val() == "yess") {
-                            redirect_url = "{{ admin_url() . 'module/' . $module->type }}";
+                            redirect_url = "{{ admin_url() . 'module/' . $module->type . '/edit/' }}" + data
+                                .module_data_id;
                             window.location.href = redirect_url;
                         } else {
                             location.reload();

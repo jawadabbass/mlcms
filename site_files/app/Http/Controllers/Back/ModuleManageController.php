@@ -157,7 +157,8 @@ class ModuleManageController extends Controller
                     $menu->save();
                 }
             }
-            return response()->json(['success' => 'Added new records.' . $request->module_id]);
+            Session::flash('added_action', true);
+            return response()->json(['success' => 'Added new records.', 'module_id'=> $request->module_id, 'module_data_id'=> $moduleData->id]);
         }
         return response()->json(['error' => $validator->errors()->all()]);
     }
@@ -299,14 +300,15 @@ class ModuleManageController extends Controller
                 }
             }
             if (!empty($request->from_page_update)) {
-                return redirect('adminmedia/module/' . $module_type->type);
+                Session::flash('update_action', true);
+                return redirect('adminmedia/module/' . $module_type->type . '/edit/' . $moduleData->id);
             } else {
                 return response()->json(['success' => 'Added new records.' . $request->module_id]);
             }
         }
         if (!empty($request->from_page_update)) {
-            Session::flash('added_action', true);
-            return redirect('adminmedia/module/' . $module_type->type);
+            Session::flash('update_action', true);
+            return redirect('adminmedia/module/' . $module_type->type . '/edit/' . $moduleData->id);
         } else {
             return response()->json(['error' => $validator->errors()->all()]);
         }
