@@ -185,7 +185,7 @@ function link2iframe($link, $type, $w = '100%', $h = '250', $class = 'd-block', 
         return $link;
     }
     if ($type == 'upload') {
-        return '<video width="' . $w . '" height="' . $h . '" class="' . $class . '" controls> <source src="' . base_url() . $videoURL . $link . '" type="video/mp4"> <source src="movie.ogg" type="video/ogg"> Your browser does not support the video tag. </video> ';
+        return '<video width="' . $w . '" height="' . $h . '" class="' . $class . '" controls> <source src="' . asset_storage($videoURL . $link) . '" type="video/mp4"> <source src="movie.ogg" type="video/ogg"> Your browser does not support the video tag. </video> ';
     }
     if ($type == 'Youtube') {
         $youtube_id = youtubelink2id($link);
