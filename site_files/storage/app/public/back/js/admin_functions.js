@@ -322,6 +322,32 @@ $(document).ready(function () {
         });
     });
 });
+function delete_widget(id) {
+    var myurl = base_url + 'adminmedia/widgets/' + id;
+    var is_confirm = confirm("Are you sure you want to delete this Widgets?");
+    if (is_confirm) {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: "DELETE",
+            url: myurl,
+            data: { '_token': $('meta[name="csrf-token"]').attr('content') },
+            success: function (data) {
+                data = JSON.parse(data);
+                if (data.status) {
+                    $("#row_" + id).fadeOut();
+                }
+                else {
+                    alert('OOps! Something went wrong.');
+                    console.log(data.status);
+                }
+            },
+        });
+    }
+}
 $('#selected_image').on('change', function (event) {
     var selected_image_preview = document.getElementById('selected_image_preview');
     selected_image_preview.src = URL.createObjectURL(event.target.files[0]);

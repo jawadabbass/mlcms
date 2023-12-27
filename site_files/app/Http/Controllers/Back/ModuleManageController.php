@@ -157,7 +157,7 @@ class ModuleManageController extends Controller
                     $menu->save();
                 }
             }
-            Session::flash('added_action', true);
+            session(['message' => $module_type->term . ' added successfully', 'type' => 'success',]);
             return response()->json(['success' => 'Added new records.', 'module_id'=> $request->module_id, 'module_data_id'=> $moduleData->id]);
         }
         return response()->json(['error' => $validator->errors()->all()]);
@@ -300,14 +300,14 @@ class ModuleManageController extends Controller
                 }
             }
             if (!empty($request->from_page_update)) {
-                Session::flash('update_action', true);
+                session(['message' => $module_type->term . ' updated successfully', 'type' => 'success',]);
                 return redirect('adminmedia/module/' . $module_type->type . '/edit/' . $moduleData->id);
             } else {
                 return response()->json(['success' => 'Added new records.' . $request->module_id]);
             }
         }
         if (!empty($request->from_page_update)) {
-            Session::flash('update_action', true);
+            session(['message' => $module_type->term . ' updated successfully', 'type' => 'success',]);
             return redirect('adminmedia/module/' . $module_type->type . '/edit/' . $moduleData->id);
         } else {
             return response()->json(['error' => $validator->errors()->all()]);
@@ -334,6 +334,7 @@ class ModuleManageController extends Controller
         }
         $moduleData->delete();
         Menu::where('menu_id', $id)->delete();
+        session(['message' => $module->term . ' deleted successfully', 'type' => 'success',]);
         echo 'done';
     }
     /**

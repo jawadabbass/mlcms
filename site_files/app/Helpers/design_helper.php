@@ -1,9 +1,13 @@
 <?php
 
+use App\Models\Back\MenuType;
+use App\Models\Back\SocialMedia;
+use Illuminate\Support\Facades\DB;
+
 /** display parent chaild menu* */
 function getDropDown($type = 'top')
 {
-    $menu_type = \App\Models\Back\MenuType::where('menu_type', strtolower($type))->first();
+    $menu_type = MenuType::where('menu_type', strtolower($type))->first();
 
     $id = 0;
     $var = '';
@@ -12,7 +16,7 @@ function getDropDown($type = 'top')
     $orderby = 'ORDER BY menu_sort_order ASC';
 
     $where = "where parent_id = 0 and status= 'Y' and menu_types = " . $menu_type->id;
-    $query = \Illuminate\Support\Facades\DB::select('select id,menu_label, menu_id, menu_url,open_in_new_window,show_no_follow,is_external_link  from menus ' . $where . ' ' . $orderby);
+    $query = DB::select('select id,menu_label, menu_id, menu_url,open_in_new_window,show_no_follow,is_external_link  from menus ' . $where . ' ' . $orderby);
 
     if (count($query) > 0) {
         foreach ($query as $row) {
@@ -49,7 +53,7 @@ function getDropDown($type = 'top')
     return $select . '';
 }
 
-function getSubDropDown($childs, $dash = '--', $id = 0, $menu_type)
+function getSubDropDown($childs, $dash = '--', $id = 0, MenuType $menu_type)
 {
     $select = '';
     $open_in_new_window = 'target="_blank"';
@@ -57,7 +61,7 @@ function getSubDropDown($childs, $dash = '--', $id = 0, $menu_type)
 
     $var = '';
     $where = " where parent_id =  $childs and status = 'Y' and menu_types = " . $menu_type->id;
-    $query = \Illuminate\Support\Facades\DB::select('select id,menu_label, menu_id, menu_url,open_in_new_window,show_no_follow,is_external_link from menus' . $where . ' ' . $orderby);
+    $query = DB::select('select id,menu_label, menu_id, menu_url,open_in_new_window,show_no_follow,is_external_link from menus' . $where . ' ' . $orderby);
 
     if (count($query) > 0) {
         $select .= "<ul class='submenu'>";
@@ -94,7 +98,7 @@ function getSubDropDown($childs, $dash = '--', $id = 0, $menu_type)
 function is_child($parent_id, $menu_type_id)
 {
 	$where = " where parent_id = $parent_id and menu_types = " . $menu_type_id;
-	$query = \Illuminate\Support\Facades\DB::select("select * from menus " . $where);
+	$query = DB::select("select * from menus " . $where);
 	if (count($query) > 0) {
 		return TRUE;
 	} else {
@@ -103,7 +107,7 @@ function is_child($parent_id, $menu_type_id)
 }
 function social_media()
 {
-	$sm = \App\Models\Back\SocialMedia::where('sts', 'active')->orderBy('item_order', 'ASC')->get();
+	$sm = SocialMedia::where('sts', 'active')->orderBy('item_order', 'ASC')->get();
 	$html = '';
 	foreach ($sm as $key => $value) {
 		$newTab = ($value['open_in_new_tab'] == 'Yes') ? 'target="_blank"' : '';

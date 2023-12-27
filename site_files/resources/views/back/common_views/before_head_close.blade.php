@@ -18,6 +18,7 @@
 <link href="{{ asset_storage('back/fontawesome-iconpicker/dist/css/fontawesome-iconpicker.min.css') }}" rel="stylesheet"
     type="text/css" />
 <link href="{{ asset_storage('before-effect-slider/before-effect-slider.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset_storage('lib/sweetalert/sweetalert2.min.css') }}" rel="stylesheet" />
 <link href="{{ asset_storage('back/css/admin_dev_style.css') }}" rel="stylesheet" type="text/css" />
 <script>
     var base_url = '{{ base_url() }}';

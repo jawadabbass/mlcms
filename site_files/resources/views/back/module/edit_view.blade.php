@@ -19,21 +19,6 @@
             </div>
         </section>
         <section class="content p-0">
-             <div class="message-container" id="add_action" style="display: {{ (session()->get('added_action'))? 'block':'none' }}">
-                <div class="callout callout-success">
-                    <h4>New {{ ucwords($module->term) }} has been created successfully.</h4>
-                </div>
-            </div>
-            <div class="message-container" id="update_action" style="display: {{ (session()->get('update_action'))? 'block':'none' }}">
-                <div class="callout callout-success">
-                    <h4>{{ ucwords($module->term) }} has been updated successfully.</h4>
-                </div>
-            </div>
-            <div class="message-container" id="delete_action" style="display: {{ (session()->get('delete_action'))? 'block':'none' }}">
-                <div class="callout callout-danger">
-                    <h4>{{ ucwords($module->term) }} has been deleted successfully.</h4>
-                </div>
-            </div>
             <form action="{{ admin_url() . 'module/' . $module->id . '/' . $moduleData->id }}" id="form_edit_1"
                 method="post" class="form-horizontal" enctype="multipart/form-data">
                 @csrf
