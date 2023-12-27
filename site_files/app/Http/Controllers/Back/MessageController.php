@@ -45,7 +45,7 @@ class MessageController extends Controller
         $data->body = $request->body;
         $data->type = 'general';
         $data->save();
-        \Session::flash('success', 'Record Added Successfully!');
+        session(['message' => 'Added Successfully', 'type' => 'success']);
         return back();
     }
     public function custom_msg_store(Request $request)
@@ -55,7 +55,7 @@ class MessageController extends Controller
         $data->body = $request->body;
         $data->type = 'custom';
         $data->save();
-        \Session::flash('success', 'Record Added Successfully!');
+        session(['message' => 'Added Successfully', 'type' => 'success']);
         return back();
     }
     public function custom_msg_update(Request $request, $id)
@@ -65,7 +65,7 @@ class MessageController extends Controller
         $data->body = $request->editor1;
         $data->type = 'custom';
         $data->save();
-        \Session::flash('success', 'Record Updated Successfully!');
+        session(['message' => 'Updated Successfully', 'type' => 'success']);
         // return back();
         return redirect(url('adminmedia/message'));
     }
@@ -101,7 +101,7 @@ class MessageController extends Controller
         // $data->title = $request->title;
         $data->body = $request->body;
         $data->save();
-        \Session::flash('success', 'Record Updated Successfully!');
+        session(['message' => 'Updated Successfully', 'type' => 'success']);
         return back();
     }
 
@@ -115,7 +115,7 @@ class MessageController extends Controller
     public function destroy($id)
     {
         MessageTemplate::destroy($id);
-        \Session::flash('success', 'Record Deleted Successfully!');
+        session(['message' => 'Deleted Successfully', 'type' => 'success']);
         return response()->json(['status' => 'success', 'message' => 'Deleted']);
     }
 }

@@ -163,6 +163,7 @@ class CountyController extends Controller
     {
         City::where('county_id', $countyObj->id)->delete();
         $countyObj->delete();
+        session(['message' => 'Deleted Successfully', 'type' => 'success']);
         echo 'ok';
     }
 

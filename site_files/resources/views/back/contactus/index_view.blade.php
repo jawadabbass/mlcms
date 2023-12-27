@@ -37,17 +37,17 @@
                                 <a href="{{ route('email_templates.index') }}" class="btn btn-info">
                                     <i class="fas fa-envelope-square" aria-hidden="true"></i>&nbsp;Email Template
                                     Management</a>
-                                <a href="{{ route('message.index') }}" class="btn btn-info">
+                                {{-- <a href="{{ route('message.index') }}" class="btn btn-info">
                                     <i class="fas awesome_style fa-share" aria-hidden="true"></i>&nbsp;Message Template
-                                    Management</a>
+                                    Management</a> --}}
                                 <a href="javascript:;" onclick="send_template_email('','lead','combine')"
                                     class="btn btn-info">
                                     <i class="fas fa-envelope-square" aria-hidden="true"></i>&nbsp;Send Email
                                 </a>
-                                <a href="javascript:;" onclick="send_template_sms('','lead','combine')"
+                                {{-- <a href="javascript:;" onclick="send_template_sms('','lead','combine')"
                                     class="btn btn-info">
                                     <i class="fas awesome_style fa-share" aria-hidden="true"></i>&nbsp;Send SMS
-                                </a>
+                                </a> --}}
                             </div>
                             <br>
                             <form method="get" action="{{ route('contact_request.index') }}" id="search_form">
@@ -106,7 +106,8 @@
                                                 <th>Name</th>
                                                 <th>Email</th>
                                                 <th>Phone</th>
-                                                <th width="15%">Package</th>
+                                                <th>Service</th>
+                                                {{-- <th>Package</th> --}}
                                                 <th>Date</th>
                                                 <th>Comment</th>
                                             </tr>
@@ -145,7 +146,8 @@
                                                         </td>
                                                         <td><a href="tel:{{ $row->phone }}">{{ $row->phone }}</a>
                                                         </td>
-                                                        <td>
+                                                        <td>{{ $row->service }}</td>
+                                                        {{-- <td>
                                                             <select class="form-control"
                                                                 onchange="update_package('{{ $row->id }}',this.value)">
                                                                 <option value="">-Select-</option>
@@ -155,7 +157,7 @@
                                                                         {{ $package->heading }}</option>
                                                                 @endforeach
                                                             </select>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>{{ format_date($row->dated, 'date_time') }}</td>
                                                         <td>
                                                             <a href="javascript:;" data-bs-toggle="popover" data-bs-trigger="focus"
@@ -202,10 +204,10 @@
                                                                 href="javascript:"><i class="fas fa-envelope-square"></i>
                                                                 Send
                                                                 Email</a>
-                                                            <a onclick="send_template_sms('{{ $row->id }}','lead','single')"
+                                                            {{-- <a onclick="send_template_sms('{{ $row->id }}','lead','single')"
                                                                 class="btn btn-sm btn-info" href="javascript:"><i
                                                                     class="fas awesome_style fa-share"></i> Send
-                                                                Message</a>
+                                                                Message</a> --}}
                                                             @if ($row->assesment_status == 'sent')
                                                                 <a onclick="send_assessment_email('{{ $row->id }}','lead')"
                                                                     class="btn btn-sm btn-primary" href="javascript:"><i
@@ -219,11 +221,11 @@
                                                                     Answered
                                                                     Questions</a>
                                                             @else
-                                                                <a href="javascript:;"
+                                                                {{-- <a href="javascript:;"
                                                                     onclick="send_assessment_email('{{ $row->id }}','lead')"
                                                                     class="btn btn-sm btn-primary" href="javascript:"><i
                                                                         class="fas fa-envelope-square"></i> Send
-                                                                    Questionnaire</a>
+                                                                    Questionnaire</a> --}}
                                                             @endif
                                                             <a class="btn btn-sm btn-danger" href="javascript:"
                                                                 onclick="del_recrod('{{ $row->id }}');"

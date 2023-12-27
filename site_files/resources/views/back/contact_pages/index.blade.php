@@ -30,41 +30,6 @@
                     </div>
                 </div>
             @endif
-            @if (\Session::has('action') && \Session::get('action') == 'error')
-                <div class="message-container">
-                    <div class="callout callout-danger">
-                        <h4>Please select admin user to assign the tickets.</h4>
-                    </div>
-                </div>
-            @endif
-            @if (\Session::has('action') && \Session::get('action') == 'network_error')
-                <div class="message-container">
-                    <div class="callout callout-danger">
-                        <h4>Please Fill correctly.</h4>
-                    </div>
-                </div>
-            @endif
-            @if (\Session::has('updated_action'))
-                <div class="message-container">
-                    <div class="callout callout-success">
-                        <h4>Updated successfully.</h4>
-                    </div>
-                </div>
-            @endif
-            @if (\Session::has('del_action'))
-                <div class="message-container">
-                    <div class="callout callout-success">
-                        <h4>Deleted successfully.</h4>
-                    </div>
-                </div>
-            @endif
-            @if (\Session::has('create_action'))
-                <div class="message-container">
-                    <div class="callout callout-success">
-                        <h4>Created successfully.</h4>
-                    </div>
-                </div>
-            @endif
             <div class="box">
                 <div class="row">
                     <div class="col-md-8 col-sm-8">

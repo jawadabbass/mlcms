@@ -201,7 +201,8 @@ class Email_templatesController extends Controller
         $dbObj->icon_sign_email = $request->icon_sign_email;
         $dbObj->user_body = $request->user_body;
         $dbObj->save();
-        return redirect()->route('email_templates.index')->with('added_action', 'New Template Has Been Added Successfully');
+        session(['message' => 'Added Successfully', 'type' => 'success']);
+        return redirect()->route('email_templates.index');
     }
 
     /**
@@ -267,7 +268,8 @@ class Email_templatesController extends Controller
         $dbObj->icon_sign_email = $request->icon_sign_email;
         $dbObj->user_body = $request->user_body;
         $dbObj->save();
-        return redirect()->route('email_templates.index')->with('update_action', 'New Template Has Been Added Successfully');
+        session(['message' => 'Updated Successfully', 'type' => 'success']);
+        return redirect()->route('email_templates.index');
 
         $dbObj->save();
         echo json_encode(array('success' => 'done'));

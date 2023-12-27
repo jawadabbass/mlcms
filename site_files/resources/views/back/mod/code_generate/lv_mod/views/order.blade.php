@@ -1,5 +1,4 @@
 @extends('back.layouts.app', ['title' => $title])
-
 @section('bc')
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ admin_url() }}"><i class="fas fa-gauge"></i> Home</a></li>
@@ -8,71 +7,36 @@
         <li class="breadcrumb-item active">Set Order</li>
     </ol>
 @endsection
-
 @section('content')
     <div class="content-wrapper pl-3 pr-2">
-
         <section class="content">
-            @if (\Session::has('added_action'))
-                <div class="message-container">
-                    <div class="callout callout-success">
-                        <h4>New admin user has been created successfully.</h4>
-                    </div>
-                </div>
-            @endif
-            @if (\Session::has('update_action'))
-                <div class="message-container">
-                    <div class="callout callout-success">
-                        <h4>Record has been updated successfully.</h4>
-                    </div>
-                </div>
-            @endif
             <div class="row">
                 <div class="col-xs-12 col-md-12">
                     <div class="box">
                         <div class="row">
-
-
                             <div class="col-sm-6 text-start">
                                 <h3 class="box-title">Set Order</h3>
                             </div>
                             <div class="col-sm-6 text-end">
-
-
-
-
                             </div>
                         </div>
-
-
                         {{-- Search Area --}}
                         {{-- end Search Area --}}
-
-
-
                         <div>
                             <ul class="sorta ui-sortable">
-
-
-
                                 @if ($result)
                                     @foreach ($result as $row)
                                         <li id="recordsArray_<?php echo $row->$idf; ?>">
                                             @foreach ($dataArr as $key => $val)
                                                 {{-- Data DIV --}}
-
                                                 {!! ModTBuild($row->$key, $val[1], $settingArr['baseImg']) !!}
                                             @endforeach
-
                                         </li>
                                     @endforeach
                                 @else
                                     <div class="alert alert-danger">Sorry no record available.</div>
                                 @endif
-
                             </ul>
-
-
                         </div>
                     </div>
                 </div>

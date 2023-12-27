@@ -55,7 +55,7 @@ class EmailController extends Controller
 		$video->SenderName = $request->SenderName;
 		$video->Body = $request->Body;
 		$video->save();
-		Session::flash('added_action', 'Template Created Successfully');
+		session(['message' => 'Added Successfully', 'type' => 'success']);
 		return redirect(route('email_templates.index'));
 	}
 	/**
@@ -107,7 +107,7 @@ class EmailController extends Controller
 		$video->SenderName = $request->SenderName;
 		$video->Body = $request->Body;
 		$video->save();
-		Session::flash('update_action', 'Template Created Successfully');
+		session(['message' => 'Updated Successfully', 'type' => 'success']);
 		return redirect(route('email_templates.index'));
 	}
 	/**

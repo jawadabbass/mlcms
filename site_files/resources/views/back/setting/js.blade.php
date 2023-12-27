@@ -31,13 +31,6 @@
                 </div>
             </div>
         @endif
-        @if (\Session::has('updated_action'))
-            <div class="message-container">
-                <div class="callout callout-success">
-                    <h4>Updated successfully.</h4>
-                </div>
-            </div>
-        @endif
         <section class="content" id="google-analytics">
             <div class="box">
                 <h2 class="box-title">

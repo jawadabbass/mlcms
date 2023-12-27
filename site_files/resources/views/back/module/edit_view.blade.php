@@ -19,7 +19,7 @@
             </div>
         </section>
         <section class="content p-0">
-            <form action="{{ admin_url() . 'module/' . $module->id . '/' . $moduleData->id }}" id="form_edit_1"
+             <form action="{{ admin_url() . 'module/' . $module->id . '/' . $moduleData->id }}" id="form_edit_1"
                 method="post" class="form-horizontal" enctype="multipart/form-data">
                 @csrf
                 @php $style_hide="style='dispaly:none'"; @endphp
@@ -515,7 +515,6 @@
                     console.log(data);
                     if ($.isEmptyObject(data.error)) {
                         $('#modal_form').modal('hide');
-                        $('#' + save_method + '_action').show();
                         if ($("#from_page_update").val() == "yess") {
                             redirect_url = "{{ admin_url() . 'module/' . $module->type }}";
                             window.location.href = redirect_url;
@@ -560,7 +559,6 @@
                         //if success reload ajax table
                         $('#modal_form').modal('hide');
                         $('#item_' + id).hide();
-                        $('#delete_action').show();
                         location.reload();
                     },
                     error: function(jqXHR, textStatus, errorThrown) {

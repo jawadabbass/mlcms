@@ -52,7 +52,7 @@ class AdminUserController extends Controller
         $user->password = Hash::make($request->password);
         $user->type = $request->type;
         $user->save();
-        Session::flash('added_action', 'Added Successfully');
+        session(['message'=> 'Added Successfully', 'type'=>'success']);
         return redirect(route('admin.index'));
     }
 
@@ -139,7 +139,7 @@ class AdminUserController extends Controller
             $user->password = Hash::make($request->password);
         $user->type = $request->type;
         $user->save();
-        Session::flash('added_action', 'Added Successfully');
+        session(['message' => 'Updated Successfully', 'type' => 'success']);
         return redirect(route('admin.index'));
     }
 

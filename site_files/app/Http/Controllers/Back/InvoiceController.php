@@ -86,7 +86,7 @@ class InvoiceController extends Controller
         //     $contact->id,$contact->u_type,Auth::user()->id
         // );
 
-        Session::flash('msg', 'Added Successfully');
+        session(['message' => 'Added Successfully', 'type' => 'success']);
         return redirect(route('manage_clients.index'));
     }
     /**
@@ -178,13 +178,7 @@ class InvoiceController extends Controller
         $clientObj->country = '';
         $clientObj->dated = $request->dated;
         $clientObj->save();
-
-        // insertHistory(
-        //     'client_added_backend',['{NAME_OF_BUSSINESS}'=>$contact->name_of_buss],
-        //     $contact->id,$contact->u_type,Auth::user()->id
-        // );
-
-        Session::flash('msg', 'Updated Successfully');
+        session(['message' => 'Updated Successfully', 'type' => 'success']);
         return redirect(route('manage_clients.index'));
     }
     /**

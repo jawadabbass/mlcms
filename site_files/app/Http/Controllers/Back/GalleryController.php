@@ -332,6 +332,7 @@ class GalleryController extends Controller
         }
         $albumItem = Album::find($id);
         $albumItem->delete();
+        session(['message' => 'Deleted Successfully', 'type' => 'success']);
         echo json_encode(['status' => true]);
         exit;
     }

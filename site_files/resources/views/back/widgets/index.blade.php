@@ -17,20 +17,6 @@
             </div>
         </section>
         <section class="content">
-            @if (\Session::has('added_action'))
-                <div class="message-container">
-                    <div class="callout callout-success">
-                        <h4>New Widgets has been created successfully.</h4>
-                    </div>
-                </div>
-            @endif
-            @if (\Session::has('update_action'))
-                <div class="message-container">
-                    <div class="callout callout-success">
-                        <h4>Record has been updated successfully.</h4>
-                    </div>
-                </div>
-            @endif
             <div class="row">
                 <div class="col-xs-12 col-md-12">
                     <div class="box">

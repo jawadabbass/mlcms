@@ -14,13 +14,6 @@
             </div>
         </section>
         <section class="content">
-            @if (\Session::has('added_action'))
-                <div class="message-container">
-                    <div class="callout callout-success">
-                        <h4>New Widgets has been created successfully.</h4>
-                    </div>
-                </div>
-            @endif
             <div class="row">
                 <div class="col-sm-8">
                     <h3 class="box-title">Add Widget</h3>

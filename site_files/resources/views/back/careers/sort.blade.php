@@ -1,5 +1,4 @@
 @extends('back.layouts.app',['title'=>$title])
-
 @section('content')
     <div class="content-wrapper pl-3 pr-2">
         <!-- Content Header (Page header) -->
@@ -12,7 +11,11 @@
                                 <i class="fas fa-tachometer-alt"></i> Home
                             </a>
                         </li>
-                        <li class="active">States Management</li>
+                        <li class="active">
+                            <a href="{{ base_url() . 'adminmedia/careers' }}">
+                                Careers Management
+                            </a>
+                            </li>
                     </ol>
                 </div>
                 <div class="col-md-7 col-sm-12">
@@ -28,19 +31,19 @@
                         <div class="row">
                             <div class="col-sm-8">
                                 <div class="box-header">
-                                    <h3 class="box-title">Sort States</h3>
+                                    <h3 class="box-title">Sort Careers</h3>
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <div class="text-end" style="padding-bottom:2px;">
-                                    <a href="{{ route('states.index') }}" class="sitebtn">States</a>
+                                    <a href="{{ route('careers.index') }}" class="sitebtn">Careers</a>
                                 </div>
                             </div>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body table-responsive">
-                                <h3>Drag and Drop to Sort</h3>
-                                <div id="statesSortDataDiv"></div>
+                                <h3 class="mb-3">Drag and Drop to Sort</h3>
+                                <div id="careersSortDataDiv"></div>
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -56,22 +59,22 @@
 @section('beforeBodyClose')
 <script>
     $(document).ready(function () {
-        refreshStateSortData();
+        refreshCareersSortData();
     });
-    function refreshStateSortData() {
+    function refreshCareersSortData() {
         $.ajax({
             type: "GET",
-            url: "{{ route('states.sort.data') }}",
+            url: "{{ route('careers.sort.data') }}",
             data: {lang: 'en'},
             success: function (responseData) {
-                $("#statesSortDataDiv").html('');
-                $("#statesSortDataDiv").html(responseData);
+                $("#careersSortDataDiv").html('');
+                $("#careersSortDataDiv").html(responseData);
                 /**************************/
                 $('#sortable').sortable({
                     placeholder: "ui-state-highlight",
                     update: function (event, ui) {
-                        var statesOrder = $(this).sortable('toArray').toString();
-                        $.post("{{ route('states.sort.update') }}", {statesOrder: statesOrder, _method: 'PUT', _token: '{{ csrf_token() }}'})
+                        var careersOrder = $(this).sortable('toArray').toString();
+                        $.post("{{ route('careers.sort.update') }}", {careersOrder: careersOrder, _method: 'PUT', _token: '{{ csrf_token() }}'})
                     }
                 });
                 $("#sortable").disableSelection();

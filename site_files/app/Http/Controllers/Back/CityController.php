@@ -165,6 +165,7 @@ class CityController extends Controller
     public function destroy(City $cityObj)
     {
         $cityObj->delete();
+        session(['message' => 'Deleted Successfully', 'type' => 'success']);
         echo 'ok';
     }
 

@@ -121,7 +121,7 @@ class ContactUsController extends Controller
         $data = array();
         $data['msg'] = '';
         $title = config("Constants.SITE_NAME") . ': Add | Contact Lead';
-        return view('back.contactus.add', compact('title', 'data'));
+        return view('back.contactus.add', compact('title', 'data', 'services_for_dd'));
     }
     /**
      * Store a newly created resource in storage.
@@ -151,7 +151,8 @@ class ContactUsController extends Controller
         $contact->dated = $request->dated;
         $contact->added_by = Auth::user()->id;
         $contact->save();
-        Session::flash('msg', 'Added Successfully');
+        session(['message' => 'Added Successfully', 'type' => 'success']);
+        
         return redirect(route('contact_request.index'));
     }
     public function convert_client($id)
@@ -210,6 +211,7 @@ class ContactUsController extends Controller
                 }
             }
             $contact->delete();
+            session(['message' => 'Deleted Successfully', 'type' => 'success']);
             return json_encode(array("status" => 'done'));
         }
     }
@@ -351,11 +353,11 @@ class ContactUsController extends Controller
     {
         if ($request->bulk_action === 'delete') {
             ContactUs::whereIn('id', $request->contact_request_check)->delete();
-            Session::flash('msg', 'Deleted successfully');
+            session(['message' => 'Deleted Successfully', 'type' => 'success']);
         }
         if ($request->bulk_action === 'read') {
             ContactUs::whereIn('id', $request->contact_request_check)->update(['read_lead' => 1]);
-            Session::flash('msg', 'Marked read successfully');
+            session(['message' => 'Marked read successfully', 'type' => 'success']);
         }
         return redirect(route('contact_request.index'));
     }

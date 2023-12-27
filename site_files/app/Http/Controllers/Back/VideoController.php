@@ -64,11 +64,11 @@ class VideoController extends Controller
             $video->video_img = $img_name;
             $video->dated = date('Y-m-d H:i:s');
             $video->save();
-            Session::flash('added_action', 'Created Successfully');
+            session(['message' => 'Added Successfully', 'type' => 'success']);
             return redirect(route('videos.index'));
         }
         if (!($this->check_iframe($request->contents))) {
-            Session::flash('iframe_action', 'Error');
+            session(['message' => 'Error in Iframe code', 'type' => 'error']);
             return redirect(back());
         }
         $width = "100";
@@ -96,7 +96,7 @@ class VideoController extends Controller
         $video = Video::find($video->ID);
         $video->video_img = $video->ID . ".jpg";
         $video->Save();
-        Session::flash('added_action', 'Created Successfully');
+        session(['message' => 'Added Successfully', 'type' => 'success']);
         return redirect(route('videos.index'));
     }
     /**
@@ -152,7 +152,7 @@ class VideoController extends Controller
             'video_id' => 'required'
         ]);
         if (!($this->check_iframe($request->edit_content))) {
-            Session::flash('iframe_action', 'Error');
+            session(['message' => 'Error in Iframe code', 'type' => 'error']);
             echo "Error";
             return redirect()->back();
         }
@@ -179,7 +179,7 @@ class VideoController extends Controller
         $video->short_detail = $request->short_detail;
         $video->dated = date("Y-m-d H:i:s");
         $video->Save();
-        Session::flash('update_action', 'Created Successfully');
+        session(['message' => 'Updated Successfully', 'type' => 'success']);
         return redirect(route('videos.index'));
     }
     /**
@@ -195,6 +195,7 @@ class VideoController extends Controller
         @unlink(storage_uploads('videos/' . $video->video_img));
         @unlink(storage_uploads('videos/thumb/' . $video->video_img));
         $video->delete();
+        session(['message' => 'Deleted Successfully', 'type' => 'success']);
         return json_encode(array("status" => true));
     }
     /**

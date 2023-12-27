@@ -23,20 +23,6 @@
                 </div>
             </div>
         </section>
-        @if (\Session::has('updated_action'))
-            <div class="message-container">
-                <div class="callout callout-success">
-                    <h4>{{ \Session::get('updated_action') }}</h4>
-                </div>
-            </div>
-        @endif
-        @if (\Session::has('error'))
-            <div class="message-container">
-                <div class="callout callout-danger">
-                    <h4>{{ \Session::get('error') }}</h4>
-                </div>
-            </div>
-        @endif
         <section class="content" id="traffic-restriction">
             <form name="emp_network_detail" method="post" action="{{ base_url() . 'adminmedia/setting/ip-address' }}">
                 @csrf

@@ -72,7 +72,7 @@ class CategoriesController extends Controller
 		$category->cat = $request->catId;
 		$category->slug = $request->slug;
 		$category->save();
-		Session::flash('added_action', 'Added Successfully');
+		session(['message' => 'Added Successfully', 'type' => 'success']);
 		return json_encode(['msg' => 'done']);
 	}
 	/**
@@ -118,7 +118,7 @@ class CategoriesController extends Controller
 		}
 		$category->title = $request->edit_title;
 		$category->save();
-		Session::flash('update_action', 'Added Successfully');
+		session(['message' => 'Updated Successfully', 'type' => 'success']);
 		return back();
 		// return json_encode(['success' => 'done']);
 	}

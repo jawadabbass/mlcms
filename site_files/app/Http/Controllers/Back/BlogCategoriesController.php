@@ -47,7 +47,7 @@ class BlogCategoriesController extends Controller
         $blogCategory->cate_description = myform_admin_cms_filter($request->editor1);
         $blogCategory->dated = date("Y-m-d H:i:s");
         $blogCategory->save();
-        Session::flash('added_action', 'Added');
+        session(['message' => 'Added Successfully', 'type' => 'success']);
         return redirect(route('blog_categories.index'));
     }
     /**
@@ -107,7 +107,7 @@ class BlogCategoriesController extends Controller
         $blogCategory->cate_description = myform_admin_cms_filter($request->editor1);
         $blogCategory->save();
         //	    echo "Saved";
-        Session::flash('update_action', 'Added');
+        session(['message' => 'Updated Successfully', 'type' => 'success']);
         return redirect(route('blog_categories.index'));
     }
     /**

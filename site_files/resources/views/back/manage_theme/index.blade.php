@@ -13,14 +13,6 @@
             </div>
         </section>
         <section class="content">
-
-            @if (\Session::has('update_action'))
-                <div class="message-container">
-                    <div class="callout callout-success">
-                        <h4>Theme has been updated successfully.</h4>
-                    </div>
-                </div>
-            @endif
             <form method="post" action="{{ admin_url() }}manage-theme/update">
                 @csrf
                 <div class="row">

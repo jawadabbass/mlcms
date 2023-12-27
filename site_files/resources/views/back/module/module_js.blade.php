@@ -154,8 +154,6 @@
                 console.log(data);
                 if ($.isEmptyObject(data.error)) {
                     $('#modal_form').modal('hide');
-                    $('#' + save_method + '_action').show();
-
                     if ($("#from_page_update").val() == "yess") {
                         redirect_url = "{{ admin_url() . 'module/' . $module->type }}";
                         window.location.href = redirect_url;
@@ -202,7 +200,6 @@
                     //if success reload ajax table
                     $('#modal_form').modal('hide');
                     $('#item_' + id).hide();
-                    $('#delete_action').show();
                     location.reload();
                 },
                 error: function(jqXHR, textStatus, errorThrown) {

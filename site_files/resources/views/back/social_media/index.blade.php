@@ -13,20 +13,6 @@
             </div>
         </section>
         <section class="content">
-            @if (\Session::has('added_action'))
-                <div class="message-container">
-                    <div class="callout callout-success">
-                        <h4>New Social Media has been Created successfully.</h4>
-                    </div>
-                </div>
-            @endif
-            @if (\Session::has('update_action'))
-                <div class="message-container">
-                    <div class="callout callout-success">
-                        <h4>Social Media has been updated successfully.</h4>
-                    </div>
-                </div>
-            @endif
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -34,14 +20,6 @@
                             <h4>* {{ $error }}</h4>
                         @endforeach
                     </ul>
-                </div>
-            @endif
-
-            @if (\Session::has('delete_action'))
-                <div class="message-container">
-                    <div class="callout callout-success">
-                        <h4>Social Media has been Deleted successfully.</h4>
-                    </div>
                 </div>
             @endif
             <div class="message-container" id="sortedMessage" style="display: none;">

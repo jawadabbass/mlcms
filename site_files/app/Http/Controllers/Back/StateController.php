@@ -162,6 +162,7 @@ class StateController extends Controller
         County::where('state_id', $stateObj->id)->delete();
         City::where('state_id', $stateObj->id)->delete();
         $stateObj->delete();
+        session(['message' => 'Deleted Successfully', 'type' => 'success']);
         echo 'ok';
     }
 

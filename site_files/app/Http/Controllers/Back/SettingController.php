@@ -50,7 +50,7 @@ class SettingController extends Controller
         $setting = Setting::first();
         $setting->google_analytics = $request->google_analytics;
         $setting->save();
-        Session::flash('updated_action', 'Updated');
+        session(['message' => 'Updated Successfully', 'type' => 'success']);
         return redirect()->back();
     }
     /**
@@ -111,7 +111,7 @@ class SettingController extends Controller
         }
         $setting->web_down_msg = $request->web_down_msg;
         $setting->save();
-        Session::flash('updated_action', 'Updated');
+        session(['message' => 'Updated Successfully', 'type' => 'success']);
         return redirect()->back();
     }
     /**
@@ -128,7 +128,7 @@ class SettingController extends Controller
         $setting->google_adsense_left = $request->google_adsense_left;
         $setting->google_adsense_right = $request->google_adsense_right;
         $setting->save();
-        Session::flash('updated_action', 'Updated');
+        session(['message' => 'Updated Successfully', 'type' => 'success']);
         return redirect()->back();
     }
     /**
@@ -158,7 +158,7 @@ class SettingController extends Controller
             'time_zone' => $request->timeZone,
             'max_image_size' => $request->imageMaxSize,
         ]);
-        Session::flash('updated_action', 'Updated');
+        session(['message' => 'Updated Successfully', 'type' => 'success']);
         return redirect()->back();
     }
     public function saveCaptcha(Request $request)
@@ -169,7 +169,7 @@ class SettingController extends Controller
         $reCaptchaSecret = Metadata::where('data_key', 'recaptcha_secret_key')->first();
         $reCaptchaSecret->val1 = $request->secretKey;
         $reCaptchaSecret->save();
-        Session::flash('updated_action', 'Updated');
+        session(['message' => 'Updated Successfully', 'type' => 'success']);
         return redirect()->back();
     }
     public function ipAddress(Request $request)
@@ -180,7 +180,7 @@ class SettingController extends Controller
         $wholeBlock = strcmp($request->blocked_area, 'website') ? false : 'true';
         if (is_array($blockedIPs) && count($blockedIPs) > 0) {
             if ($wholeBlock && isSelfIpBlocked($ip, $blockedIPs)) {
-                Session::flash('error', 'You have denied access to the IP address you are logged in from. This will lock you out of website. The request to add IP was denied by system.');
+                session(['message' => 'You have denied access to the IP address you are logged in from. This will lock you out of website. The request to add IP was denied by system.', 'type' => 'error']);                
                 return redirect()->back();
             }
             $blockIPs->val1 = implode(',', $blockedIPs);
@@ -192,12 +192,13 @@ class SettingController extends Controller
         if (isset($request->restrict_traffic)) {
             if ($request->block_list_active == 1) {
                 if ($wholeBlock && isSelfCountryInBlockedList($ip, $request->blockedCounties)) {
-                    Session::flash('error', 'Request Denied. Your own IP is within the list of countries you tried blocking.');
+                    session(['message' => 'Request Denied. Your own IP is within the list of countries you tried blocking.', 'type' => 'error']);
+                    
                     return redirect()->back();
                 }
             } else {
                 if ($wholeBlock && !isSelfCountryInAllowedList($ip, $request->openedCounties)) {
-                    Session::flash('error', 'Request Denied. You have not included your own country in allowed list. You must include your own country and any other country where you want to allow access to your website.');
+                    session(['message' => 'Request Denied. You have not included your own country in allowed list. You must include your own country and any other country where you want to allow access to your website.', 'type' => 'error']);
                     return redirect()->back();
                 }
             }
@@ -229,7 +230,7 @@ class SettingController extends Controller
             $negativeKeywordsMetaData->val1 = '';
         }
         $negativeKeywordsMetaData->save();
-        Session::flash('updated_action', 'Setting has been updated');
+        session(['message' => 'Updated Successfully', 'type' => 'success']);
         return redirect()->back();
     }
     public function countries()
@@ -284,7 +285,7 @@ class SettingController extends Controller
         $setting->head_js = $request->head_js;
         $setting->body_js = $request->body_js;
         $setting->save();
-        Session::flash('updated_action', 'Updated');
+        session(['message' => 'Updated Successfully', 'type' => 'success']);
         return redirect()->back();
     }
     public function adminLogoFavicon(Request $request)
@@ -314,7 +315,7 @@ class SettingController extends Controller
             $setting->admin_favicon = $fileName;
         }
         $setting->save();
-        Session::flash('updated_action', 'Updated');
+        session(['message' => 'Updated Successfully', 'type' => 'success']);
         return redirect()->back();
     }
     public function savePaypal(Request $request)
@@ -339,7 +340,7 @@ class SettingController extends Controller
         $paypal_mode->val1 = $request->paypal_mode;
         $paypal_mode->save();
         /*************************************** */
-        Session::flash('updated_action', 'Updated');
+        session(['message' => 'Updated Successfully', 'type' => 'success']);
         return redirect()->back();
     }
 }

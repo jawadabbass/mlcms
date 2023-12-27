@@ -14,13 +14,6 @@
             </div>
         </section>
         <section class="content">
-            @if (\Session::has('update_action'))
-                <div class="message-container">
-                    <div class="callout callout-success">
-                        <h4>Record has been updated successfully.</h4>
-                    </div>
-                </div>
-            @endif
             <div class="row">
                 <div class="col-sm-8">
                     <h3 class="box-title">Edit Widget</h3>

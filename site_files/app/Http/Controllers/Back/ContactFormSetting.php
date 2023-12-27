@@ -46,7 +46,8 @@ class ContactFormSetting extends Controller
         $contactIp->ip_list = $request->question;
         $contactIp->dated = date("Y-m-d H:i:s");
         $contactIp->save();
-        return redirect()->back()->with(['added_action' => 'Added Successfully']);
+        session(['message' => 'Added Successfully', 'type' => 'success']);
+        return redirect()->back();
     }
     /**
      * Display the specified resource.
@@ -102,7 +103,8 @@ class ContactFormSetting extends Controller
         $contactIp->ip_list = $request->edit_question;
         $contactIp->dated = date("Y-m-d H:i:s");
         $contactIp->save();
-        return redirect()->back()->with(['update_action' => 'Added Successfully']);
+        session(['message' => 'Updated Successfully', 'type' => 'success']);
+        return redirect()->back();
     }
     /**
      * Remove the specified resource from storage.
@@ -129,6 +131,7 @@ class ContactFormSetting extends Controller
         $settings = Setting::find(1);
         $settings->contactus_spam_words = $wordtoUpdate;
         $settings->save();
-        return redirect()->back()->with(['update_action' => 'Spam Words Successfully']);
+        session(['message' => 'Updated Successfully', 'type' => 'success']);
+        return redirect()->back();
     }
 }

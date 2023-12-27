@@ -123,7 +123,6 @@
                 if (data.status) {
                     $('#modal_form').modal('hide');
                     location.reload();
-                    $('#' + save_method + '_action').show();
                 } else {
                     $('.error-div').html('');
                     $('.error-div').show();

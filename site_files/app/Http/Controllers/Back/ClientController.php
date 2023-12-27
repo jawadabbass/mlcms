@@ -231,7 +231,7 @@ class ClientController extends Controller
         }
         $client->zip = $request->zip;
         $client->save();
-        Session::flash('msg', 'Updated Successfully');
+        session(['message' => 'Updated Successfully', 'type' => 'success']);
         return redirect(route('manage_clients.index'));
     }
     protected function updatevalidator(array $data)
@@ -696,7 +696,7 @@ class ClientController extends Controller
     public function clientDelete(Request $request)
     {
         Client::whereIn('id', $request->client_check)->delete();
-        Session::flash('msg', 'Deleted Successfully');
+        session(['message' => 'Deleted Successfully', 'type' => 'success']);
         return redirect(route('manage_clients.index'));
     }
 }

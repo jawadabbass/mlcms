@@ -210,6 +210,7 @@ class NewsController extends Controller
     {
         ImageUploader::deleteImage('news', $newsObj->image, true);
         $newsObj->delete();
+        session(['message' => 'Deleted Successfully', 'type' => 'success']);
         echo 'ok';
     }
 }

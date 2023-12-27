@@ -12,13 +12,6 @@
                 <div class="col-md-7 col-sm-12"> @include('back.common_views.quicklinks') </div>
             </div>
         </section>
-        @if (\Session::has('update_action'))
-            <div class="message-container">
-                <div class="callout callout-success">
-                    <h4>Record has been updated successfully.</h4>
-                </div>
-            </div>
-        @endif
         <div class="content">
             <div class="box">
                 <div class="box-body table-responsive">
@@ -94,7 +87,6 @@
                     success: function(data) {
                         //if success reload ajax table
                         $('#modal_form').modal('hide');
-                        $('#delete_action').show();
                         location.reload();
                     },
                     error: function(jqXHR, textStatus, errorThrown) {

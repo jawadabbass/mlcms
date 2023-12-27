@@ -68,7 +68,7 @@ class SocialMediaController extends Controller
 			$socialMedia->open_in_new_tab = 'No';
 		}
 		$socialMedia->save();
-		Session::flash('added_action', 'Created');
+		session(['message' => 'Added Successfully', 'type' => 'success']);
 		return redirect(route('social_media.index'));
 	}
 	/**
@@ -135,7 +135,7 @@ class SocialMediaController extends Controller
 			$socialMedia->open_in_new_tab = 'No';
 		}
 		$socialMedia->save();
-		Session::flash('update_action', 'Created');
+		session(['message' => 'Updated Successfully', 'type' => 'success']);
 		return redirect(route('social_media.index'));
 	}
 	/**

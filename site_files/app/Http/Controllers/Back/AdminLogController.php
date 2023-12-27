@@ -82,6 +82,7 @@ class AdminLogController extends Controller
         if (Auth::user()->type == 'super-admin') {
             $top = DB::table('admin_log_histories')->max('ID');
             AdminLogHistory::where('ID', '<', $top - 4)->delete();
+            session(['message' => 'Deleted Successfully', 'type' => 'success']);
             echo "done";
             return;
         }

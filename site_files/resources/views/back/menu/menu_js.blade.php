@@ -145,7 +145,6 @@
                 if (data.status == true) {
                     //if success close modal and reload ajax table
                     $('#modal_form').modal('hide');
-                    $('#' + save_method + '_action').show();
                     location.reload();
                 } else // validation errors
                 {
@@ -185,7 +184,6 @@
                     //if success reload ajax table
                     $('#modal_form').modal('hide');
                     $('#item_' + id).hide();
-                    $('#delete_action').show();
                     location.reload();
                 },
                 error: function(jqXHR, textStatus, errorThrown) {

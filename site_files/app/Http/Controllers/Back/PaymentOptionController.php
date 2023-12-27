@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers\Back;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Back\Invoice;
@@ -11,7 +9,6 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-
 class PaymentOptionController extends Controller
 {
     /**
@@ -23,7 +20,6 @@ class PaymentOptionController extends Controller
     {
         $title = FindInsettingArr('business_name') . ': Payment Options';
         $msg = '';
-
         $result = PaymentOption::paginate(20);
         return view('back.payment_options.index_view', compact('title', 'msg', 'result'));
     }
@@ -48,28 +44,19 @@ class PaymentOptionController extends Controller
                 'title' => 'required',
                 'details' => 'required'
             ]
-
         );
-
-
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-
-
-
         $clientObj = new PaymentOption;
         $clientObj->title = $request->title;
         $clientObj->details = $request->details;
-
         $clientObj->save();
-
         // insertHistory(
         //     'client_added_backend',['{NAME_OF_BUSSINESS}'=>$contact->name_of_buss],
         //     $contact->id,$contact->u_type,Auth::user()->id
         // );
-
-        Session::flash('msg', 'Added Successfully');
+        session(['message' => 'Added Successfully', 'type' => 'success']);
         return redirect(route('payment_options.index'));
     }
     /**
@@ -80,13 +67,10 @@ class PaymentOptionController extends Controller
      */
     public function show($id)
     {
-
         $level = 1;
         $title = FindInsettingArr('business_name') . ': Payment Options | Details';
         $client = PaymentOption::find($id);
         $clientName = '';
-
-
         $historyArr = [];
         $bcArr = array('payment_options' => 'Payment Options');
         return view('back.payment_options.show', compact('client', 'title', 'bcArr', 'level', 'historyArr', 'clientName'));
@@ -99,7 +83,6 @@ class PaymentOptionController extends Controller
                 'email' => 'required',
             ]
         );
-
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
@@ -109,7 +92,7 @@ class PaymentOptionController extends Controller
         $clientObj = PaymentOption::find(2);
         $clientObj->sts = $request->sts ?? 'No';
         $clientObj->save();
-        Session::flash('msg', '<i class="fas fa-check" aria-hidden="true"></i> Email address has been update successfully');
+        session(['message' => 'Updated Successfully', 'type' => 'success']);
         return redirect()->back();
     }
     public function authorize_net(Request $request)
@@ -121,7 +104,6 @@ class PaymentOptionController extends Controller
                 'authorize_net_trans_id' => 'required',
             ]
         );
-
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
@@ -137,7 +119,7 @@ class PaymentOptionController extends Controller
         $clientObj = PaymentOption::find(5);
         $clientObj->sts = $request->sts ?? 'No';
         $clientObj->save();
-        Session::flash('msg', '<i class="fas fa-check" aria-hidden="true"></i> Email address has been update successfully');
+        session(['message' => 'Updated Successfully', 'type' => 'success']);
         return redirect()->back();
     }
     public function status(Request $request)
@@ -165,7 +147,6 @@ class PaymentOptionController extends Controller
             }
         }
         if ($clientObj) {
-
             $clientObj->sts = $request->sts;
             $clientObj->save();
             echo json_encode(array(
@@ -203,33 +184,20 @@ class PaymentOptionController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $validator = Validator::make(
             $request->all(),
             [
                 'title' => 'required',
-
             ]
         );
-
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-
-
-
         $clientObj = PaymentOption::find($id);
         $clientObj->title = $request->title;
         $clientObj->details = $request->details;
-
         $clientObj->save();
-
-        // insertHistory(
-        //     'client_added_backend',['{NAME_OF_BUSSINESS}'=>$contact->name_of_buss],
-        //     $contact->id,$contact->u_type,Auth::user()->id
-        // );
-
-        Session::flash('msg', 'Updated Successfully');
+        session(['message' => 'Updated Successfully', 'type' => 'success']);
         return redirect(route('payment_options.index'));
     }
     /**

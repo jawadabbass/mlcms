@@ -1,5 +1,4 @@
 @extends('back.layouts.app',['title'=>$title])
-
 @section('content')
     <div class="content-wrapper pl-3 pr-2">
         <!-- Content Header (Page header) -->
@@ -12,7 +11,11 @@
                                 <i class="fas fa-tachometer-alt"></i> Home
                             </a>
                         </li>
-                        <li class="active">Cities Management</li>
+                        <li class="active">
+                            <a href="{{ base_url() . 'adminmedia/careers' }}">
+                                Careers Management
+                            </a>
+                        </li>
                     </ol>
                 </div>
                 <div class="col-md-7 col-sm-12">
@@ -26,22 +29,17 @@
                 <div class="col-xs-12 col-md-12">
                     <div class="box">
                         <div class="row">
-                            <div class="col-sm-8">
+                            <div class="col-sm-12">
                                 <div class="box-header">
-                                    <h3 class="box-title">All Cities</h3>
+                                    <h3 class="box-title">All Careers</h3>
                                 </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="text-end" style="padding-bottom:2px;">
-                                    <a href="{{ route('cities.create') }}" class="sitebtn">Add City</a>
-                                </div>
-                            </div>
+                            </div>                            
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body table-responsive">
-                            <form method="post" id="city-search-form">
+                            <form method="post" id="career-search-form">
                                 <div class="row mb-3">
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
 
                                         <button type="button" class="btn btn-info" onclick="showFilters();"
                                             id="showFilterBtn">Show
@@ -50,47 +48,42 @@
                                             id="hideFilterBtn" style="display: none;">Hide Filters</button><br><br>
                                     </div>
 
-                                    <div class="col-lg-6 text-end">
-                                        <a href="{{ route('cities.sort') }}" class="btn btn-warning">
-                                            <i class="la la-bars"></i>Sort Cities
+                                    <div class="col-sm-8 text-end">
+                                        <div class="text-end" style="padding-bottom:2px;">
+                                            <a href="{{ route('career.create') }}" class="sitebtn">Add Career</a>
+                                        </div>
+                                        <a href="{{ route('careers.sort') }}" class="btn btn-warning">
+                                            <i class="la la-bars"></i>Sort Careers
                                         </a>
                                     </div>
 
                                 </div>
 
-                                <div class="row" id="filterForm" style="display: none;">
+                                <div class="row mb-3" id="filterForm" style="display: none;">
                                     <div class="col-md-3 form-group">
-                                        <label>State</label>
-                                        <select class="form-control select2" name="state_id" id="state_id">
-                                            {!! generateStatesDropDown(request('state_id', 0), true) !!}
-                                        </select>
-                                    </div>
-                                    <div class="col-md-3 form-group" id="counties_dd_div">
-                                        <label>County</label>
-                                        <select class="form-control select2" name="county_id" id="county_id">
-                                            {!! generateCountiesDropDown(request('county_id', 0), request('state_id', 0), true) !!}
-                                        </select>
+                                        <label>Title</label>
+                                        <input id="title" name="title" type="text" placeholder="Title" value="{{ request('title', '') }}" class="form-control">
                                     </div>
                                     <div class="col-md-3 form-group">
-                                        <label>City Name</label>
-                                        <input id="city_name" name="city_name" type="text" placeholder="City Name"
-                                            value="{{ request('city_name', '') }}" class="form-control">
+                                        <label>Description</label>
+                                        <input id="description_search" name="description" type="text" placeholder="Description" value="{{ request('description', '') }}" class="form-control">
                                     </div>
                                     <div class="col-md-3 form-group">
                                         <label for="status">Status:</label>
                                         <select class="form-control" name="status" id="status">
-                                            {!! generateStatusDropDown(request('status', '')) !!}
+                                            {!! generateCareerStatusDropDown(request('status', '')) !!}
                                         </select>
                                     </div>
                                 </div>
-
                                 <table class="table table-striped table-bordered" style="width: 100%"
-                                    id="cityDatatableAjax">
+                                    id="careersDatatableAjax">
                                     <thead>
                                         <tr>
-                                            <th>City Name</th>
-                                            <th>State</th>
-                                            <th>County</th>
+                                            <th>Created<br/>Date</th>
+                                            <th>Title</th>
+                                            <th>Apply by<br/>date</th>
+                                            <th>Location</th>
+                                            <th>Type</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
@@ -114,11 +107,11 @@
 @section('beforeBodyClose')
     <script>
         $(function() {
-            var oTable = $('#cityDatatableAjax').DataTable({
+            var oTable = $('#careersDatatableAjax').DataTable({
                 "autoWidth": true,
                 processing: true,
                 serverSide: true,
-                citySave: true,
+                stateSave: true,
                 searching: false,
                 "order": [
                     [0, "asc"]
@@ -126,25 +119,33 @@
                 paging: true,
                 info: true,
                 ajax: {
-                    url: '{!! route('fetchCitiesAjax') !!}',
+                    url: '{!! route('fetchCareersAjax') !!}',
                     data: function(d) {
-                        d.state_id = $('#state_id').val();
-                        d.county_id = $('#county_id').val();
-                        d.city_name = $('#city_name').val();
+                        d.title = $('#title').val();
+                        d.description = $('#description_search').val();
                         d.status = $('#status').val();
                     }
                 },
-                columns: [{
-                        data: 'city_name',
-                        name: 'city_name'
+                columns: [                    
+                    {
+                        data: 'created_at',
+                        name: 'created_at'
+                    },                    
+                    {
+                        data: 'title',
+                        name: 'title'
                     },
                     {
-                        data: 'state_id',
-                        name: 'state_id'
+                        data: 'apply_by_date_time',
+                        name: 'apply_by_date_time'
                     },
                     {
-                        data: 'county_id',
-                        name: 'county_id'
+                        data: 'location',
+                        name: 'location'
+                    },
+                    {
+                        data: 'type',
+                        name: 'type'
                     },
                     {
                         data: 'status',
@@ -159,20 +160,15 @@
                 ]
             });
 
-            $('#city-search-form').on('submit', function(e) {
+            $('#career-search-form').on('submit', function(e) {
                 oTable.draw();
                 e.preventDefault();
             });
-            $('#state_id').on('change', function(e) {
-                oTable.draw();
-                e.preventDefault();
-                filterCountiesAjax();
-            });
-            $(document).on('change', '#county_id', function(e) {
+            $('#title').on('keyup', function(e) {
                 oTable.draw();
                 e.preventDefault();
             });
-            $('#city_name').on('keyup', function(e) {
+            $('#description_search').on('keyup', function(e) {
                 oTable.draw();
                 e.preventDefault();
             });
@@ -194,9 +190,9 @@
             $('#hideFilterBtn').hide('slow');
         }
 
-        function deleteCity(id) {
+        function deleteCareer(id) {
             var msg = 'Are you sure?';
-            var url = '{{ url('adminmedia/cities/') }}/' + id;
+            var url = '{{ url('adminmedia/career/') }}/' + id;
             if (confirm(msg)) {
                 $.post(url, {
                         id: id,
@@ -205,8 +201,8 @@
                     })
                     .done(function(response) {
                         if (response.includes('ok')) {
-                            var table = $('#cityDatatableAjax').DataTable();
-                            table.row('cityDtRow' + id).remove().draw(false);
+                            var table = $('#careersDatatableAjax').DataTable();
+                            table.row('careerDtRow' + id).remove().draw(false);
                         } else {
                             alert('Request Failed!');
                         }
@@ -214,8 +210,8 @@
             }
         }
 
-        function updateCityStatus(id, prev_status, status) {
-            var url = '{{ url('adminmedia/updateCityStatus/') }}';
+        function updateCareerStatus(id, prev_status, status) {
+            var url = '{{ url('adminmedia/updateCareerStatus/') }}';
             var msg = 'Are you sure?';
             if (confirm(msg)) {
                 $.post(url, {
@@ -227,9 +223,10 @@
                         //
                     });
             } else {
-                $('status_' + id).val(prev_status);
+                $('#status_' + id).val(prev_status);
             }
         }
+
     </script>
     <!-- Filer -->
 @endsection

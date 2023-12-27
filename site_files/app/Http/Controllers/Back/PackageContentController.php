@@ -91,6 +91,7 @@ class PackageContentController extends Controller
             }
         }
         $package->delete();
+        session(['message' => 'Deleted Successfully', 'type' => 'success']);
         return response()->json(['status' => 'success', 'message' => 'Record deleted successfully']);
     }
     function editStoreContent(Request $request)

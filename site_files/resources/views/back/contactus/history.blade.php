@@ -46,7 +46,7 @@
                                             <td>Phone Number</td>
                                             <td>{{ $result->phone }}</td>
                                         </tr>
-                                        <tr>
+                                        {{-- <tr>
                                             <td>Address</td>
                                             <td>{{ $result->address }}</td>
                                         </tr>
@@ -57,7 +57,7 @@
                                         <tr>
                                             <td>Subject</td>
                                             <td>{{ $result->subject }}</td>
-                                        </tr>
+                                        </tr> --}}
                                         <tr>
                                             <td>Comments</td>
                                             <td>{{ $result->comments }}</td>

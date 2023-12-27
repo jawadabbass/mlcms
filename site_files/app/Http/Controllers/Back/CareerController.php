@@ -2,145 +2,230 @@
 
 namespace App\Http\Controllers\Back;
 
-use stdClass;
-use GuzzleHttp\Client;
+use App\Models\Back\Career;
+use App\Traits\CareerTrait;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Models\Back\CareersApply;
-use App\Models\Back\CmsModuleData;
+use App\Helpers\ImageUploader;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Yajra\DataTables\Facades\DataTables;
+use App\Http\Requests\Back\CareerBackFormRequest;
+use App\Models\Back\CareerBenefit;
 
 class CareerController extends Controller
 {
-    private $pp_client_id = '78c1bz8h08q7uj';
-    private $pp_secret_id = 'iaDdJyWmJrY8HtBN';
-    public function shareOnPakPosition($id)
-    {
+    use CareerTrait;
 
-        $record = CmsModuleData::find($id);
-        $data = array();
-        $data['client_id']  = $this->pp_client_id;
-        $data['secret_key']  = $this->pp_secret_id;
-        $data['job_title']  = $record->heading;
-        $data['industry_ID']  = $record->additional_field_6;
-        $data['pay']  = $record->additional_field_1;
-        $data['last_date']  = $record->additional_field_7;
-        $data['qualification']  = $record->additional_field_2;
-        $data['experience']  = $record->additional_field_3;
-        $data['city']  = $record->additional_field_5;
-        $data['job_mode']  = $record->additional_field_8;
-        $data['vacancies']  = $record->additional_field_9;
-        $data['job_description']  = adjustUrl($record->content);
-        $data['required_skills']  = $record->additional_field_4;
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "https://api.pakpositions.com/api/post_job");
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt(
-            $ch,
-            CURLOPT_POSTFIELDS,
-            http_build_query($data)
-        );
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $response = curl_exec($ch);
-        curl_close($ch);
-        $response2 = json_decode($response);
-        if ($response2->success == true) {
-            $record->pp_job_id = $response2->data->job_id;
-            $record->is_shared_on_pp = 'Yes';
-            $record->job_sts_on_pp = 'active';
-            $record->save();
-            return response()->json(['status' => 'success', 'message' => 'Job Posted on Pak Position Successfully!']);
-        } elseif ($response2->success == false) {
-            return response()->json(['status' => 'error', 'message' => 'Something Went Wrong !']);
-        }
-        return response()->json(['status' => 'error', 'message' => 'Something Went Wrong !']);
-    }
-    public function updateJobOnPakPosition($id)
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
-    }
-    public function changeStsOnPakPos($id)
-    {
-        $record = CmsModuleData::find($id);
-        $newSts = ($record->job_sts_on_pp == 'active') ? 'inactive' : 'active';
-        $data = array();
-        return change_job_sts_on_pp($id, $record->pp_job_id, $newSts);
-    }
-    public function shareJobOnLinkedIn($id)
-    {
-        $jobData = CmsModuleData::find($id);
-        $link = base_url() . $jobData->post_slug;
-        $access_token = 'AQWKdphqxShlnZnsd8ck6EATlnx5YsHWqFyM7LcoRsMdAZjPHYJpHG4_D7TzxsTczEXID413ME-uECCgzNg1TnqQ5qAGkP8HUD-ZX3WW3aoiCJ6EjOtv86RaXA9tPjCTHdDNwRZFPqeSfxKtkk8EhQLdWuG_ramVdktQt8a3wqQs6k0Vk0bw04uoY-h81Nj5ne9yrd2Sxq_LxwL0CdrJSR05BUsTQtFoIEVQxXfAQa4CNmTtq-40pKTuVmqmYBGFz5EQU2UrRzv9EAW580HkxRoko1kjAiWf3lNERfxjr0T_RRJRa_Hb4G6E4_aH3ZjckCRJdwaP8ed0NGRh6r50VHOovrcaLg';
-        $linkedin_id = 'xp-95jdK4t';
-        $body = new \stdClass();
-        $body->content = new \stdClass();
-        $body->content->contentEntities[0] = new \stdClass();
-        $body->text = new \stdClass();
-        $body->content->contentEntities[0]->thumbnails[0] = new \stdClass();
-        $body->content->contentEntities[0]->entityLocation = $link;
-        $body->content->contentEntities[0]->thumbnails[0]->resolvedUrl = "THUMBNAIL_URL_TO_POST";
-        // $body->content->title = 'Admin Accounts Manager';
-        $body->content->title = $jobData->heading;
-        $body->owner = 'urn:li:person:' . $linkedin_id;
-        // $body->text->text = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishingd software like Aldus PageMaker including versions of Lorem Ipsum.';
-        $body->text->text = adjustUrl($jobData->content);
-        $body_json = json_encode($body, true);
+        $title = FindInsettingArr('business_name') . ': Careers Management';
+        $msg = '';
 
-        try {
-            $client = new Client(['base_uri' => 'https://api.linkedin.com']);
-            $response = $client->request('POST', '/v2/shares', [
-                'headers' => [
-                    "Authorization" => "Bearer " . $access_token,
-                    "Content-Type"  => "application/json",
-                    "x-li-format"   => "json"
-                ],
-                'body' => $body_json,
-            ]);
+        return view('back.careers.index', compact('title', 'msg'));
+    }
 
-            if ($response->getStatusCode() !== 201) {
-                echo 'Error: ' . $response->getLastBody()->errors[0]->message;
+    public function fetchCareersAjax(Request $request)
+    {
+        $career = Career::select('*');
+
+        return Datatables::of($career)
+            ->filter(function ($query) use ($request) {
+                if ($request->has('title') && !empty($request->title)) {
+                    $query->where('careers.title', 'like', "%{$request->get('title')}%");
+                }
+                if ($request->has('description') && !empty($request->description)) {
+                    $query->where('careers.description', 'like', "%{$request->get('description')}%");
+                }
+                if ($request->has('status') && !empty($request->status)) {
+                    $query->where('careers.status', 'like', "{$request->get('status')}");
+                }
+            })
+            ->addColumn('created_at', function ($career) {
+                return date('m-d-Y', strtotime($career->created_at));
+            })
+            ->addColumn('apply_by_date_time', function ($career) {
+                return date('m-d-Y', strtotime($career->apply_by_date_time));
+            })
+            ->addColumn('status', function ($career) {
+                $str = '<select class="form-control" name="status" id="status_' . $career->id . '" onchange="updateCareerStatus(' . $career->id . ', \'' . $career->status . '\', this.value);">';
+                $str .= generateCareerStatusDropDown($career->status, false);
+                $str .= '</select>';
+
+                return $str;
+            })
+            ->addColumn('description', function ($career) {
+                $str = Str::limit(strip_tags($career->description), 200, '...');
+                return $str;
+            })
+            ->addColumn('action', function ($career) {
+                return '
+                		<a href="' . route('career.edit', ['careerObj' => $career->id]) . '" class="btn btn-warning m-2"><i class="fas fa-edit" aria-hidden="true"></i></a>
+						<a href="javascript:void(0);" onclick="deleteCareer(' . $career->id . ');"  class="btn btn-danger m-2"><i class="fas fa-trash" aria-hidden="true"></i></a>';
+            })
+            ->rawColumns(['created_at', 'apply_by_date_time', 'status', 'action'])
+            ->orderColumns(['created_at', 'apply_by_date_time', 'title', 'description', 'status'], ':column $1')
+            ->setRowId(function ($career) {
+                return 'careerDtRow' . $career->id;
+            })
+            ->make(true);
+        //$query = $dataTable->getQuery()->get();
+        //return $query;
+    }
+
+    /**
+     * Show the form for creating a career resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $title = FindInsettingArr('business_name') . ': Careers Management';
+        $msg = '';
+        $careerObj = new Career();
+
+        return view('back.careers.create')
+            ->with('careerObj', $careerObj)
+            ->with('title', $title)
+            ->with('msg', $msg);
+    }
+
+    /**
+     * Store a careerly created resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store(CareerBackFormRequest $request)
+    {
+        $careerObj = new Career();
+        $careerObj = $this->setCareerValues($request, $careerObj);
+        $careerObj->save();
+
+        if (count($request->input('benefits', [])) > 0) {
+            foreach ($request->input('benefits') as $benefit) {
+                $careerBenefitObj = new CareerBenefit();
+                $careerBenefitObj->title = $benefit;
+                $careerBenefitObj->career_id = $careerObj->id;
+                $careerBenefitObj->save();
             }
-            $jobData->is_shared_on_linkedin = 'Yes';
-            $jobData->linkedin_job_id = $response->getHeaders()['X-LinkedIn-Id'][0];
-            $jobData->save();
-            return response()->json(['status' => 'success', 'message' => 'Job Posted on LinkedIn Successfully !']);
+        }
 
-            echo 'Post is shared on LinkedIn successfully.';
-        } catch (Exception $e) {
-            echo $e->getMessage() . ' for link ' . $link;
+        flash('Career has been added!', 'success');
+
+        return Redirect::route('careers.index');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param int $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param int $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Career $careerObj)
+    {
+        $title = FindInsettingArr('business_name') . ': Careers Management';
+        $msg = '';
+        return view('back.careers.edit')
+            ->with('careerObj', $careerObj)
+            ->with('title', $title)
+            ->with('msg', $msg);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param int                      $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function update(CareerBackFormRequest $request, Career $careerObj)
+    {
+        $careerObj = $this->setCareerValues($request, $careerObj);
+        $careerObj->save();
+        if (count($request->input('benefits', [])) > 0) {
+            CareerBenefit::where('career_id', $careerObj->id)->delete();
+            foreach ($request->input('benefits') as $benefit) {
+                $careerBenefitObj = new CareerBenefit();
+                $careerBenefitObj->title = $benefit;
+                $careerBenefitObj->career_id = $careerObj->id;
+                $careerBenefitObj->save();
+            }
+        }
+        session(['message' => 'Updated Successfully', 'type' => 'success']);
+
+        return Redirect::route('careers.index');
+    }
+
+    public function sortCareers()
+    {
+        $title = FindInsettingArr('business_name') . ': Careers Management';
+        $msg = '';
+
+        return view('back.careers.sort')->with('title', $title)
+            ->with('msg', $msg);
+    }
+
+    public function careersSortData(Request $request)
+    {
+        $careers = Career::select('careers.id', 'careers.title', 'careers.sort_order')
+            ->orderBy('sort_order', 'ASC')->get();
+        $str = '<ul id="sortable">';
+        if ($careers != null) {
+            foreach ($careers as $careerObj) {
+                $str .= '<li class="ui-state-default" id="' . $careerObj->id . '"><i class="fas fa-sort"></i> ' . $careerObj->title . '</li>';
+            }
+        }
+        echo $str . '</ul>';
+    }
+
+    public function careersSortUpdate(Request $request)
+    {
+        $careersOrder = $request->input('careersOrder');
+        $careersOrderArray = explode(',', $careersOrder);
+        $count = 1;
+        foreach ($careersOrderArray as $careerId) {
+            $careerObj = Career::find($careerId);
+            $careerObj->sort_order = $count;
+            $careerObj->update();
+            ++$count;
         }
     }
-    public function deletePostOnLinkedin($id)
+
+    public function updateCareerStatus(Request $request)
     {
-        $jobData = CmsModuleData::find($id);
-        $id = $jobData->linkedin_job_id;
-        $access_token = 'AQWKdphqxShlnZnsd8ck6EATlnx5YsHWqFyM7LcoRsMdAZjPHYJpHG4_D7TzxsTczEXID413ME-uECCgzNg1TnqQ5qAGkP8HUD-ZX3WW3aoiCJ6EjOtv86RaXA9tPjCTHdDNwRZFPqeSfxKtkk8EhQLdWuG_ramVdktQt8a3wqQs6k0Vk0bw04uoY-h81Nj5ne9yrd2Sxq_LxwL0CdrJSR05BUsTQtFoIEVQxXfAQa4CNmTtq-40pKTuVmqmYBGFz5EQU2UrRzv9EAW580HkxRoko1kjAiWf3lNERfxjr0T_RRJRa_Hb4G6E4_aH3ZjckCRJdwaP8ed0NGRh6r50VHOovrcaLg';
-        $token1 = 'Bearer ' . $access_token;
-        $ch = curl_init();
-        $url = 'https://api.linkedin.com/v2/shares/' . $id;
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt(
-            $ch,
-            CURLOPT_HTTPHEADER,
-            array(
-                'Authorization:' . $token1
-            )
-        );
-        $response = curl_exec($ch);
-        curl_close($ch);
-        return TRUE;
+        $careerObj = Career::find($request->id);
+        $careerObj = $this->setCareerStatus($request, $careerObj);
+        $careerObj->save();
+
+        return response()->json(['status' => 'success', 'message' => $careerObj->status]);
     }
-    public function jobs_applicants()
+
+    public function destroy(Career $careerObj)
     {
-        $title = FindInsettingArr('business_name') . ': | Jobs Applicants';
-        $data = CareersApply::orderBy('id', 'desc')->with('careers_details')->get();
-        return view('back.careers.applicants', compact('title', 'data'));
-    }
-    public function jobs_applicants_details($id)
-    {
-        $title = FindInsettingArr('business_name') . ': | Jobs Applicants';
-        $data = CareersApply::where('id', $id)->with('careers_details')->firstOrFail();
-        // return $data;
-        return view('back.careers.show', compact('title', 'data'));
+        CareerBenefit::where('career_id', $careerObj->id)->delete();
+        ImageUploader::deleteImage('careers', $careerObj->image, true);
+        $careerObj->delete();
+        session(['message' => 'Deleted Successfully', 'type' => 'success']);
+        echo 'ok';
     }
 }

@@ -224,6 +224,7 @@ class BlogController extends Controller
     {
         BlogComment::where('post_id', $id)->delete();
         BlogPost::destroy($id);
+        session(['message' => 'Deleted Successfully', 'type' => 'success']);
         echo 'done';
         return;
     }

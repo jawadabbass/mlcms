@@ -79,6 +79,7 @@ class MenuController extends Controller
 			echo json_encode(array("status" => FALSE, 'errors' => $validator->errors()));
 			return;
 		}
+		session(['message' => 'Added Successfully', 'type' => 'success']);
 		echo json_encode(array("status" => TRUE));
 	}
 	/**
@@ -101,6 +102,7 @@ class MenuController extends Controller
 			$menu->save();
 			$order_menu++;
 		}
+		session(['message' => 'Sorted Successfully', 'type' => 'success']);
 		echo 'done';
 		exit;
 	}
@@ -141,6 +143,7 @@ class MenuController extends Controller
 			echo json_encode(array("status" => FALSE, 'errors' => $validator->errors()));
 			return;
 		}
+		session(['message' => 'Updated Successfully', 'type' => 'success']);
 		echo json_encode(array("status" => TRUE));
 	}
 	/**
@@ -152,6 +155,7 @@ class MenuController extends Controller
 	public function destroy($id)
 	{
 		Menu::destroy($id);
+		session(['message'=>'Deleted Successfully', 'type'=>'success']);
 		return json_encode(array("status" => TRUE));
 	}
 }

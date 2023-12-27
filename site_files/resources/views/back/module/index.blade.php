@@ -16,21 +16,6 @@
             </div>
         </section>
         <section class="content">
-            <div class="message-container" id="add_action" style="display: none">
-                <div class="callout callout-success">
-                    <h4>New {{ ucwords($module->term) }} has been created successfully.</h4>
-                </div>
-            </div>
-            <div class="message-container" id="update_action" style="display:none;">
-                <div class="callout callout-success">
-                    <h4>{{ ucwords($module->term) }} has been updated successfully.</h4>
-                </div>
-            </div>
-            <div class="message-container" id="delete_action" style="display: none">
-                <div class="callout callout-danger">
-                    <h4>{{ ucwords($module->term) }} has been deleted successfully.</h4>
-                </div>
-            </div>
             <div class="row">
                 <div class="col-xs-12 col-md-12">
                     <div class="box">

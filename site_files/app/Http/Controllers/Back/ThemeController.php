@@ -64,7 +64,7 @@ class ThemeController extends Controller
             fwrite($file, html_entity_decode($content));
             fclose($file);
         }
-        Session::flash('update_action', 'Created Successfully');
+        session(['message' => 'Added Successfully', 'type' => 'success']);
         return redirect('adminmedia/manage-theme')->with(['success' => 'Updated records.']);
     }
     public function replace_public_urls($content)

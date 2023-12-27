@@ -56,7 +56,7 @@ class ContactPagesController extends Controller
 		$setting->working_days = $request->working_days;
 		$setting->working_hours = $request->working_hours;
 		$setting->save();
-		Session::put('create_action', 'created');
+		session(['message' => 'Created Successfully', 'type' => 'success']);
 		return redirect('adminmedia/manage_contact');
 	}
 
@@ -82,7 +82,7 @@ class ContactPagesController extends Controller
 		$setting = Setting::find($id);
 		$setting->google_map_status = $request->google_map_status;
 		$setting->save();
-		Session::flash('updated_action','Value');
+		session(['message' => 'Updated Successfully', 'type' => 'success']);
 		return redirect(route('manage_contact.index'));
 	}
 
@@ -109,7 +109,7 @@ class ContactPagesController extends Controller
 		$setting->working_days = $request->working_days;
 		$setting->working_hours = $request->working_hours;
 		$setting->update();
-		Session::flash('updated_action', 'updated');
+		session(['message' => 'Updated Successfully', 'type' => 'success']);
 		return redirect('adminmedia/manage_contact');
 	}
 

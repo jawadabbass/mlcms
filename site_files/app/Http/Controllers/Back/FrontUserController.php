@@ -76,7 +76,7 @@ class FrontUserController extends Controller
 		else
 			$user->password = Hash::make($request->password);
 		$user->save();
-		Session::flash('added_action', 'Added Successfully');
+		session(['message' => 'Added Successfully', 'type' => 'success']);
 		return redirect(route('front.index'));
 	}
 	/**

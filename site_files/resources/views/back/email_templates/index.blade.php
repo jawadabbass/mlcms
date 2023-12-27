@@ -20,18 +20,6 @@
             </div>
         </section>
         <section class="content">
-            @if (\Session::has('added_action'))
-                <div class="alert alert-success alert-dismissible">
-                    <button type="button" class="btn close" data-bs-dismiss="alert">x</button>
-                    <h4>Email Template has been created successfully.</h4>
-                </div>
-            @endif
-            @if (\Session::has('update_action'))
-                <div class="alert alert-success alert-dismissible">
-                    <button type="button" class="btn close" data-bs-dismiss="alert">x</button>
-                    <h4>Email Template has been Updated successfully.</h4>
-                </div>
-            @endif
             <div class="row">
                 <div class="col-xs-12 col-md-12">
                     <div class="box">

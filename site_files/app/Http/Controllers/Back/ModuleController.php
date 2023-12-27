@@ -198,7 +198,7 @@ class ModuleController extends Controller
         $cmsModule->show_icon_in = implode(',', $request->input('show_icon_in'));
         $cmsModule->show_descp = $request->show_descp;
         $cmsModule->save();
-        Session::flash('update_action', true);
+        session(['message' => 'Updated Successfully', 'type' => 'success']);
 
         return redirect(route('modules.index'));
     }
@@ -217,6 +217,7 @@ class ModuleController extends Controller
         $cmsModule = CmsModule::find($id);
         $cmsModule->delete();
         CmsModuleData::where('id', $cmsModule->mod_menu_id)->delete();
+        session(['message' => 'Deleted Successfully', 'type' => 'success']);
         echo 'done';
 
         return;
@@ -235,7 +236,7 @@ class ModuleController extends Controller
         $cmsModule->page_seo_option = $request->page_seo_option;
 
         $cmsModule->save();
-        Session::flash('update_action', true);
+        session(['message' => 'Updated Successfully', 'type' => 'success']);
 
         return redirect(route('modules.index'));
         cp('Here updatePageOptions');

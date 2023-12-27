@@ -17,27 +17,6 @@
         </section>
         <!-- Main content -->
         <section class="content">
-            @if (\Session::has('added_action'))
-                <div class="message-container">
-                    <div class="callout callout-success">
-                        <h4>New Videos has been created successfully.</h4>
-                    </div>
-                </div>
-            @endif
-            @if (\Session::has('update_action'))
-                <div class="message-container">
-                    <div class="callout callout-success">
-                        <h4>Videos has been updated successfully.</h4>
-                    </div>
-                </div>
-            @endif
-            @if (\Session::has('iframe_action'))
-                <div class="message-container">
-                    <div class="callout callout-success">
-                        <h4>Error with your Video ifram.</h4>
-                    </div>
-                </div>
-            @endif
             <div class="row">
                 <div class="col-xs-12 col-md-12">
                     <div class="box">
@@ -68,23 +47,23 @@
                                                 <td>{{ format_date($row->dated, 'date') }}</td>
                                                 <td>{!! link2iframe(adjustUrl($row->content), $row->video_type, '100%', 300, 'd-block', 'uploads/videos/video/') !!}</td>
                                                 <td>
-                                                    <label class="switch">
-                                                        <input type="checkbox" name="{{ 'sts_' . $row->ID }}"
-                                                            id="{{ 'sts_' . $row->ID }}" <?php echo $row->sts == 'active' ? ' checked' : ''; ?>
-                                                            value="<?php echo $row->sts; ?>"
-                                                            onClick="update_videos_sts({{ $row->ID }})">
-                                                        <div class="slider round">
-                                                            <strong class="on">Active</strong>
-                                                            <strong class="off">Inactive</strong>
-                                                        </div>
-                                                    </label>
-                                                </td>
+                                                        <label class="switch">
+                                                            <input type="checkbox" name="{{ 'sts_' . $row->ID }}"
+                                                                id="{{ 'sts_' . $row->ID }}" <?php echo $row->sts == 'active' ? ' checked' : ''; ?>
+                                                                value="<?php echo $row->sts; ?>"
+                                                                onClick="update_videos_sts({{ $row->ID }})">
+                                                            <div class="slider round">
+                                                                <strong class="on">Active</strong>
+                                                                <strong class="off">Inactive</strong>
+                                                            </div>
+                                                        </label>
+                                                    </td>
                                                 <td>
-                                                    <span></span>
+<span></span>
                                                     <a href="{{ admin_url() }}videos/edit/{{ $row->ID }}"
                                                         class="btn btn-success btn-sm">Edit</a>
-                                                    <a href="javascript:delete_videos({{ $row->ID }});"
-                                                        class="btn btn-danger btn-sm">Delete</a>
+                                                        <a href="javascript:delete_videos({{ $row->ID }});"
+                                                            class="btn btn-danger btn-sm">Delete</a>                                                        
                                                 </td>
                                             </tr>
                                         @endforeach

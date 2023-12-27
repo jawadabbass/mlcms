@@ -80,7 +80,7 @@ class WidgetController extends Controller
         $widget->featured_image_title = $request->featured_image_title;
         $widget->featured_image_alt = $request->featured_image_alt;
         $widget->save();
-        Session::flash('added_action', 'Created');
+        session(['message' => 'Added Successfully', 'type' => 'success']);
         return redirect(route('widgets.index'));
     }
     /**
@@ -156,7 +156,7 @@ class WidgetController extends Controller
         $widget->featured_image_title = $request->featured_image_title;
         $widget->featured_image_alt = $request->featured_image_alt;
         $widget->update();
-        Session::flash('update_action', 'Created');
+        session(['message' => 'Updated Successfully', 'type' => 'success']);
         return back();
     }
     public function removeFeaturedImage($id)
@@ -206,7 +206,7 @@ class WidgetController extends Controller
         $widget->admin_data = json_encode($admin_data);
         $widget->pages_id = $request->pages_id;
         $widget->update();
-        Session::flash('update_action', 'Created');
+        session(['message' => 'Updated Successfully', 'type' => 'success']);
         return back();
     }
     public function WidgetNullfields()

@@ -31,27 +31,6 @@
                 </div>
             </div>
         @endif
-        @if (\Session::has('action') && \Session::get('action') == 'error')
-            <div class="message-container">
-                <div class="callout callout-danger">
-                    <h4>Please select admin user to assign the tickets.</h4>
-                </div>
-            </div>
-        @endif
-        @if (\Session::has('action') && \Session::get('action') == 'network_error')
-            <div class="message-container">
-                <div class="callout callout-danger">
-                    <h4>Please Fill correctly.</h4>
-                </div>
-            </div>
-        @endif
-        @if (\Session::has('updated_action'))
-            <div class="message-container">
-                <div class="callout callout-success">
-                    <h4>Updated successfully.</h4>
-                </div>
-            </div>
-        @endif
         <section class="content" id="google-analytics">
             <div class="box">
                 <h2 class="box-title">

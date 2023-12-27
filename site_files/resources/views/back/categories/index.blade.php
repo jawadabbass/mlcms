@@ -285,9 +285,6 @@
                         $("#recordsArray_" + id).fadeOut(1000);
                         var tolrec = $("#total_rec").html();
                         var tolrec = $("#total_rec").html(parseInt(tolrec) - 1);
-                        // $('#modal_form').modal('hide');
-                        // $('#delete_action').show();
-                        // location.reload();
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         alert('Error Deleting data');

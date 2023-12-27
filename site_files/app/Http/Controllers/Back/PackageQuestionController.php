@@ -263,6 +263,7 @@ class PackageQuestionController extends Controller
     public function destroy($id)
     {
         $update = \DB::table('package_questions')->where('id', $id)->delete();
+        session(['message' => 'Deleted Successfully', 'type' => 'success']);
     }
     public function addView()
     {
