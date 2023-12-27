@@ -106,8 +106,7 @@ class CityController extends Controller
         $cityObj = new City();
         $cityObj = $this->setCityValues($request, $cityObj);
         $cityObj->save();
-
-        flash('City has been added!', 'success');
+        session(['message' => 'City has been added!', 'type' => 'success']);
         return Redirect::route('cities.index');
     }
 
@@ -151,8 +150,7 @@ class CityController extends Controller
         $cityObj->save();
 
         /*         * ************************************ */
-
-        flash('City has been updated!', 'success');
+        session(['message' => 'City has been updated!', 'type' => 'success']);
         return Redirect::route('cities.index');
     }
 

@@ -103,8 +103,7 @@ class CountyController extends Controller
         $countyObj = new County();
         $countyObj = $this->setCountyValues($request, $countyObj);
         $countyObj->save();
-
-        flash('County has been added!', 'success');
+        session(['message' => 'County has been added!', 'type' => 'success']);
         return Redirect::route('counties.index');
     }
 
@@ -148,8 +147,7 @@ class CountyController extends Controller
         $countyObj->save();
 
         /*         * ************************************ */
-
-        flash('County has been updated!', 'success');
+        session(['message' => 'County has been Updated!', 'type' => 'success']);
         return Redirect::route('counties.index');
     }
 

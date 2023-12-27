@@ -22,13 +22,6 @@
         </section>
         <!-- Main content -->
         <section class="content">
-            @if(\Session::has('message'))
-                <div class="message-container">
-                    <div class="callout callout-success">
-                        <h4>{{ session('message') }}</h4>
-                    </div>
-                </div>
-            @endif
             <div class="row">
                 <div class="col-xs-12 col-md-12">
                     <div class="box">

@@ -109,8 +109,7 @@ class NewsController extends Controller
         $newsObj = new News();
         $newsObj = $this->setNewsValues($request, $newsObj);
         $newsObj->save();
-
-        flash('News has been added!', 'success');
+        session(['message' => 'News has been added!', 'type' => 'success']);
 
         return Redirect::route('news.index');
     }
@@ -156,9 +155,7 @@ class NewsController extends Controller
     {
         $newsObj = $this->setNewsValues($request, $newsObj);
         $newsObj->save();
-
-        flash('News has been updated!', 'success');
-
+        session(['message' => 'News has been updated!', 'type' => 'success']);
         return Redirect::route('news.index');
     }
 

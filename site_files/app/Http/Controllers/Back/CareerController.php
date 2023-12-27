@@ -116,8 +116,7 @@ class CareerController extends Controller
                 $careerBenefitObj->save();
             }
         }
-
-        flash('Career has been added!', 'success');
+        session(['message' => 'Career has been added!', 'type' => 'success']);
 
         return Redirect::route('careers.index');
     }

@@ -102,7 +102,7 @@ class StateController extends Controller
         $stateObj = $this->setStateValues($request, $stateObj);
         $stateObj->save();
 
-        flash('State has been added!', 'success');
+        session(['message'=>'State has been added!', 'type'=>'success']);
         return Redirect::route('states.index');
     }
 
@@ -146,8 +146,7 @@ class StateController extends Controller
         $stateObj->save();
 
         /*         * ************************************ */
-
-        flash('State has been updated!', 'success');
+        session(['message' => 'State has been updated!', 'type' => 'success']);
         return Redirect::route('states.index');
     }
 
