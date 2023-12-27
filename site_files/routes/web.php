@@ -56,6 +56,7 @@ use App\Http\Controllers\Back\ContactPagesController as BackContactPagesControll
 use App\Http\Controllers\Back\ModuleManageController as BackModuleManageController;
 use App\Http\Controllers\Back\PaymentOptionController as BackPaymentOptionController;
 use App\Http\Controllers\Back\BlogCategoriesController as BackBlogCategoriesController;
+use App\Http\Controllers\Back\JobApplicationController as BackJobApplicationController;
 use App\Http\Controllers\Back\PackageContentController as BackPackageContentController;
 use App\Http\Controllers\Back\Email_templatesController as BackEmail_templatesController;
 use App\Http\Controllers\Back\PackageQuestionController as BackPackageQuestionController;
@@ -101,14 +102,6 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
         return view('back.common_views.script');
     });
     Route::get('/run_script', [BackModuleManageController::class, 'run_script']);
-    //Career
-    Route::get('job_share_on_pp/{slug}', [BackCareerController::class, 'shareOnPakPosition'])->name('job_share_on_pp');
-    Route::get('job_change_sts_on_pp/{slug}', [BackCareerController::class, 'changeStsOnPakPos'])->name('job_change_sts_on_pp');
-    Route::get('updateJobOnPakPosition/{slug}', [BackCareerController::class, 'updateJobOnPakPosition'])->name('updateJobOnPakPosition');
-    Route::get('shareJobOnLinkedIn/{slug}', [BackCareerController::class, 'shareJobOnLinkedIn'])->name('shareJobOnLinkedIn');
-    Route::get('deletePostOnLinkedin/{slug}', [BackCareerController::class, 'deletePostOnLinkedin'])->name('deletePostOnLinkedin');
-    Route::get('jobs_applicants', [BackCareerController::class, 'jobs_applicants']);
-    Route::get('jobs_applicants_details/{slug}', [BackCareerController::class, 'jobs_applicants_details']);
     Route::get('/jobCommonContact', [BackModuleManageController::class, 'contact_single_job']);
     Route::post('/jobCommonContactSave', [BackModuleManageController::class, 'commonContactSave'])->name('job.common.contact.save');
     Route::resource('/modules', BackModuleController::class);
@@ -341,6 +334,24 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     Route::get('cities-sort-data', [BackCityController::class, 'citiesSortData'])->name('cities.sort.data');
     Route::put('cities-sort-update', [BackCityController::class, 'citiesSortUpdate'])->name('cities.sort.update');
     Route::post('citiesSortUpdateAjax', [BackCityController::class, 'citiesSortUpdateAjax'])->name('citiesSortUpdateAjax');
+    //Career
+    Route::get('/careers', [BackCareerController::class, 'index'])->name('careers.index');
+    Route::get('/career/create', [BackCareerController::class, 'create'])->name('career.create');
+    Route::post('/career', [BackCareerController::class, 'store'])->name('career.store');
+    Route::get('/career/{careerObj}/edit', [BackCareerController::class, 'edit'])->name('career.edit');
+    Route::put('/career/{careerObj}', [BackCareerController::class, 'update'])->name('career.update');
+    Route::get('/career/{careerObj}', [BackCareerController::class, 'show'])->name('career.show');
+    Route::delete('/career/{careerObj}', [BackCareerController::class, 'destroy'])->name('career.destroy');
+    Route::get('fetchCareersAjax', [BackCareerController::class, 'fetchCareersAjax'])->name('fetchCareersAjax');
+    Route::post('updateCareerStatus', [BackCareerController::class, 'updateCareerStatus'])->name('updateCareerStatus');
+    Route::get('careers-sort', [BackCareerController::class, 'sortCareers'])->name('careers.sort');
+    Route::get('careers-sort-data', [BackCareerController::class, 'careersSortData'])->name('careers.sort.data');
+    Route::put('careers-sort-update', [BackCareerController::class, 'careersSortUpdate'])->name('careers.sort.update');
+    //Job Applications
+    Route::get('/job-applications', [BackJobApplicationController::class, 'index'])->name('job.applications.index');
+    Route::get('/job-application/{jobApplicationObj}', [BackJobApplicationController::class, 'show'])->name('job.application.show');
+    Route::delete('/job-application/{jobApplicationObj}', [BackJobApplicationController::class, 'destroy'])->name('job.application.destroy');
+    Route::get('fetchJobApplicationsAjax', [BackJobApplicationController::class, 'fetchJobApplicationsAjax'])->name('fetchJobApplicationsAjax');
 });
 Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddleware']], function () {
     /* Banner Popups Routes */
