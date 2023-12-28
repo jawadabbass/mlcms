@@ -453,3 +453,13 @@ function adjustUrl($text = '')
     //echo $count;
     return $text;
 }
+function generateCareerStatusDropDown($defaultSelected = '', $empty = true)
+{
+    $str = ($empty) ? '<option value="">Select...</option>' : '';
+    $statusArray = ['Active' => 'Active', 'Inactive' => 'Inactive'];
+    foreach ($statusArray as $key => $value) {
+        $selected = ($key == $defaultSelected) ? 'selected="selected"' : '';
+        $str .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
+    }
+    return $str;
+}
