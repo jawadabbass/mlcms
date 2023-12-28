@@ -45,7 +45,10 @@
                                         @foreach ($result as $row)
                                             <tr id="{{ $row->ID }}" class="row_{{ $row->ID }}">
                                                 <td>{{ format_date($row->dated, 'date') }}</td>
-                                                <td>{!! link2iframe(adjustUrl($row->content), $row->video_type, '100%', 300, 'd-block', 'uploads/videos/video/') !!}</td>
+                                                <td>
+                                                    {{ $row->heading }}<br/><br/>
+                                                    {!! link2iframe(adjustUrl($row->content), $row->video_type, '100%', 300, 'd-block', 'uploads/videos/video/') !!}
+                                                </td>
                                                 <td>
                                                         <label class="switch">
                                                             <input type="checkbox" name="{{ 'sts_' . $row->ID }}"
