@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Back;
 
 use App\Models\Back\Video;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Helpers\ImageUploader;
 use App\Http\Controllers\Controller;
-use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Session;
 
 class VideoController extends Controller
@@ -18,87 +17,13 @@ class VideoController extends Controller
      */
     public function index()
     {
-        $title = FindInsettingArr('business_name') . ': Videos Management';
+        $title = config('Constants.SITE_NAME') . ': Videos Management';
         $msg = '';
         $result = Video::orderBy('item_order', 'ASC')->paginate(100);
         $file_upload_max_size = $this->file_upload_max_size();
         return view('back.video.index', compact('title', 'msg', 'result', 'file_upload_max_size'));
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-    }
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $request->validate([
-            'heading' => 'required',
-        ]);
-        if ($_POST['add_video_type'] == 'upload') {
-            $request->validate([
-                'add_uplad_video' => 'required|mimes:mp4'
-            ]);
-            $file = $request->file('add_uplad_video');
-            $video_name = ImageUploader::UploadDoc('videos/video/', $file);
-            $request->validate([
-                'video_img' => 'required|mimes:jpg,png,jpeg'
-            ]);
-            $file = $request->file('video_img');
-            $img_name = ImageUploader::UploadDoc('videos/thumb/', $file);
-            $image = Image::make(storage_uploads('videos/thumb/' . $img_name))->resize(80, 60)->save();
-            $localIframe = '<video width="100%" height="446" controls> <source src="' . asset_uploads('videos/video/' . $video_name) . '" type="video/mp4"> <source src="movie.ogg" type="video/ogg"> Your browser does not support the video tag. </video>';
-            $video = new Video;
-            $video->heading    = $request->heading;
-            $video->content = adjustUrl($localIframe);
-            $video->short_detail = $request->short_detail;
-            $video->video_type = 'file';
-            $video->video_img = $img_name;
-            $video->dated = date('Y-m-d H:i:s');
-            $video->save();
-            session(['message' => 'Added Successfully', 'type' => 'success']);
-            return redirect(route('videos.index'));
-        }
-        if (!($this->check_iframe($request->contents))) {
-            session(['message' => 'Error in Iframe code', 'type' => 'error']);
-            return redirect(back());
-        }
-        $width = "100";
-        $height = "200";
-        $content = adjustUrl($request->contents);
-        if (strpos($content, 'iframe') == false) {
-            $content = $this->makeIframe($content);
-        }
-        $youtube = $this->resizeMarkup($content, array(
-            'width' => $width,
-            'height' => $height
-        ));
-        $thumbnail_url = get_video_thumbnail($content);
-        $image = @file_get_contents($thumbnail_url);
-        $video = new Video();
-        $video->heading = $request->heading;
-        $video->content = $content;
-        $video->short_detail = $request->short_detail;
-        $video->dated = date("Y-m-d H:i:s");
-        $video->Save();
-        $image_source = storage_uploads('videos/' . $video->ID . ".jpg");
-        file_put_contents($image_source, $image);
-        $output_file = storage_uploads('videos/thumb/' . $video->ID . ".jpg");
-        copyImage1($image_source, 101, 60, $output_file);
-        $video = Video::find($video->ID);
-        $video->video_img = $video->ID . ".jpg";
-        $video->Save();
-        session(['message' => 'Added Successfully', 'type' => 'success']);
-        return redirect(route('videos.index'));
-    }
+
     /**
      * Display the specified resource.
      *
@@ -122,8 +47,7 @@ class VideoController extends Controller
             echo 'error';
             return;
         }
-        $video = Video::find($id);
-        $status = $video->sts;
+        $status = $request->status;
         if ($status == '') {
             echo 'invalid current status provided.';
             return;
@@ -132,55 +56,11 @@ class VideoController extends Controller
             $new_status = 'blocked';
         else
             $new_status = 'active';
+        $video = Video::find($id);
         $video->sts = $new_status;
-        $video->update();
+        $video->save();
         echo $new_status;
         return;
-    }
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'edit_heading' => 'required',
-            'edit_content' => 'required',
-            'video_id' => 'required'
-        ]);
-        if (!($this->check_iframe($request->edit_content))) {
-            session(['message' => 'Error in Iframe code', 'type' => 'error']);
-            echo "Error";
-            return redirect()->back();
-        }
-        $width = "100";
-        $height = "200";
-        $content = $request->edit_content;
-        if (strpos($content, 'iframe') == false) {
-            $content = $this->makeIframe($content);
-        }
-        $youtube = $this->resizeMarkup($content, array(
-            'width' => $width,
-            'height' => $height
-        ));
-        $thumbnail_url = get_video_thumbnail($content);
-        $image = @file_get_contents($thumbnail_url);
-        $image_source = storage_uploads('videos/' . $request->video_id . ".jpg");
-        file_put_contents($image_source, $image);
-        $output_file = storage_uploads('videos/thumb/' . $request->video_id . ".jpg");
-        copyImage1($image_source, 101, 60, $output_file);
-        $video = Video::find($request->video_id);
-        $video->video_img = $request->video_id . ".jpg";
-        $video->heading = $request->edit_heading;
-        $video->content = $content;
-        $video->short_detail = $request->short_detail;
-        $video->dated = date("Y-m-d H:i:s");
-        $video->Save();
-        session(['message' => 'Updated Successfully', 'type' => 'success']);
-        return redirect(route('videos.index'));
     }
     /**
      * Remove the specified resource from storage.
@@ -190,112 +70,8 @@ class VideoController extends Controller
      */
     public function destroy($id)
     {
-        $video = Video::find($id);
-        @unlink(storage_uploads('videos/video/' . adjustUrl($video->content)));
-        @unlink(storage_uploads('videos/' . $video->video_img));
-        @unlink(storage_uploads('videos/thumb/' . $video->video_img));
-        $video->delete();
-        session(['message' => 'Deleted Successfully', 'type' => 'success']);
+        Video::destroy($id);
         return json_encode(array("status" => true));
-    }
-    /**
-     * Custom Function inside Controller for Ifram Validation
-     * and Creation for youtube and
-     *
-     */
-    public function makeIframe($content)
-    {
-        $url = $content;
-        if (!preg_match("~^(?:f|ht)tps?://~i", $url)) {
-            $url = "http://" . $url;
-        }
-        if (stristr($url, 'youtube.com') == true) {
-            $tmpArr = explode('watch?v=', $url);
-            $id = '';
-            if (isset($tmpArr[1])) {
-                $id = $tmpArr[1];
-                $width = '640';
-                $height = '360'; //echo the embed code. You can even wrap it in a class
-                $iframe_embed = '<iframe  width="' . $width . '" height="' . $height . '" src="https://www.youtube.com/embed/' . $id . '" frameborder="0" allowfullscreen></iframe>';
-                return $iframe_embed;
-            }
-        }
-        if (stristr($url, 'vimeo.com') == true) {
-            $tmpArr = explode('/', $url);
-            if (isset($tmpArr[sizeof($tmpArr) - 1])) {
-                $id = (int)$tmpArr[sizeof($tmpArr) - 1];
-                $width = '640';
-                $height = '360';
-                $iframe_embed = '<iframe src="https://player.vimeo.com/video/' . $id . '?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;color=ffffff" width="' . $width . '" height="' . $height . '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
-                return $iframe_embed;
-            }
-        }
-        return "";
-    }
-    public function resizeMarkup($markup, $dimensions)
-    {
-        $w = $dimensions['width'];
-        $h = $dimensions['height'];
-        $patterns = array();
-        $replacements = array();
-        if (!empty($w)) {
-            $patterns[] = '/width="([0-9]+)"/';
-            $patterns[] = '/width:([0-9]+)/';
-            $replacements[] = 'width="' . $w . '%"';
-            $replacements[] = 'width:' . $w . '%';
-        }
-        if (!empty($h)) {
-            $patterns[] = '/height="([0-9]+)"/';
-            $patterns[] = '/height:([0-9]+)/';
-            $replacements[] = 'height="' . $h . '"';
-            $replacements[] = 'height:' . $h;
-        }
-        return preg_replace($patterns, $replacements, $markup);
-    }
-    public function check_iframe($str)
-    {
-        if (strpos($str, 'iframe') == false) {
-            echo "if";
-            $url = $str;
-            if (!preg_match("~^(?:f|ht)tps?://~i", $url)) {
-                $url = "http://" . $url;
-            }
-            if (stristr($url, 'youtube.com') == true) {
-                $tmpArr = explode('watch?v=', $url);
-                $id = '';
-                if (isset($tmpArr[1]) && (!empty($tmpArr[1]))) {
-                    return TRUE;
-                } else {
-                    return FALSE;
-                }
-            } else if (stristr($url, 'vimeo.com') == true) {
-                $tmpArr = explode('/', $url);
-                if (isset($tmpArr[sizeof($tmpArr) - 1])) {
-                    $id = (int)$tmpArr[sizeof($tmpArr) - 1];
-                    if ($id == 0) {
-                        return FALSE;
-                    } else {
-                        return TRUE;
-                    }
-                } else {
-                    return FALSE;
-                }
-            } else {
-                return FALSE;
-            }
-        } else {
-            echo "else";
-            $videoEmbed = $str;
-            $doc = new \DOMDocument();
-            $doc->loadHTML($videoEmbed);
-            $src = $doc->getElementsByTagName('iframe')->item(0)->getAttribute('src');
-            $parse = parse_url($src);
-            if ((stristr($src, 'youtube.com') == true || stristr($src, 'vimeo.com') == true)) {
-                return TRUE;
-            } else {
-                return FALSE;
-            }
-        }
     }
     public function add_video()
     {
@@ -318,33 +94,27 @@ class VideoController extends Controller
         $img_name = '';
         $file = $request->file('fimg');
         if (isset($_FILES['fimg']) && $_FILES['fimg']['tmp_name'] != '') {
-            $img_name = ImageUploader::UploadDoc('videos/thumb/', $file);
-            $image = Image::make(storage_uploads('videos/thumb/' . $img_name))->resize(80, 60)->save();
+            $name = $file->getClientOriginalName();
+            $fileExtension = $file->getClientOriginalExtension();
+            $name = str_replace('.' . $fileExtension, '', $name) . '-' . time() . rand(1111, 4444) . '.' . $fileExtension;
+            $img_name = strtolower(str_replace(' ', '-', $name));
+            $file->move(public_path() . '/uploads/videos/thumb/', $img_name);
         }
+        $Video = new Video;
         if ($request->testimonial_type == 'upload') {
             $request->validate([
                 'linkk' => 'required|mimes:mp4'
             ]);
             $file = $request->file('linkk');
-            $video_name = ImageUploader::UploadDoc('videos/video/', $file);
+            $name = $file->getClientOriginalName();
+            $fileExtension = $file->getClientOriginalExtension();
+            $name = str_replace('.' . $fileExtension, '', $name) . '-' . time() . rand(1111, 4444) . '.' . $fileExtension;
+            $video_name = strtolower(str_replace(' ', '-', $name));
+            $file->move(public_path() . '/uploads/videos/video/', $video_name);
 
-            $Video = new Video;
-            $Video->video_type = $request->testimonial_type;
-            $Video->short_detail = $request->descp;
             $Video->content = $video_name;
-            $Video->video_img = $img_name;
-            $Video->heading = $request->heading;
-            $Video->dated = date('Y-m-d H:i:s');
-            $Video->save();
         } else {
-            $Video = new Video;
-            $Video->video_type = $request->testimonial_type;
-            $Video->short_detail = $request->descp;
-            $Video->content = adjustUrl($request->linkk);
-            $Video->video_img = $img_name;
-            $Video->dated = date('Y-m-d H:i:s');
-            $Video->heading = $request->heading;
-            $Video->save();
+            $Video->content = $request->linkk;
             if ($request->testimonial_type == 'Youtube' || $request->testimonial_type == 'Vimeo') {
                 if ($request->testimonial_type == 'Youtube') {
                     $youtubeID = youtubelink2id($request->linkk);
@@ -355,16 +125,20 @@ class VideoController extends Controller
                     $imgLink = vimeoid2img($vimeoID);
                     $image = @file_get_contents($imgLink);
                 }
-                $image_source = storage_uploads('videos/' . $Video->ID . ".jpg");
+                $time = time();
+                $image_source = public_path() . '/uploads/videos/' . $time . ".jpg";
                 file_put_contents($image_source, $image);
-                $output_file = storage_uploads('videos/thumb/' . $Video->ID . ".jpg");
-                copyImage1($image_source, 101, 60, $output_file);
-                $video = Video::find($Video->ID);
-                $video->video_img = $video->ID . ".jpg";
-                $Video->heading = $request->heading;
-                $video->save();
+                $output_file = public_path() . '/uploads/videos/thumb/' . $time . ".jpg";
+                $img_name = $time . ".jpg";
             }
         }
+        $Video->video_type = $request->testimonial_type;
+        $Video->short_detail = $request->descp;
+        $Video->video_img = $img_name;
+        $Video->heading = $request->heading;
+        $Video->slug = Str::slug($request->heading);
+        $Video->dated = date('Y-m-d H:i:s');
+        $Video->save();
         return redirect('adminmedia/videos')->with(['success' => 'Added new records.']);
     }
     public function post_edit_video(Request $request)
@@ -378,44 +152,44 @@ class VideoController extends Controller
         ]);
         $img_name = '';
         $file = $request->file('fimg');
-        $file2 = $request->file('fimg');
-        $Video = Video::find($idd);
         if (isset($_FILES['fimg']) && $_FILES['fimg']['tmp_name'] != '') {
-            ImageUploader::deleteImage('videos/thumb', $Video->video_img, false);
-            $img_name = ImageUploader::UploadDoc('videos/thumb/', $file);
-            $image = Image::make(storage_uploads('videos/thumb/' . $img_name))->resize(80, 60)->save();
+            $name = $file->getClientOriginalName();
+            $fileExtension = $file->getClientOriginalExtension();
+            $name = str_replace('.' . $fileExtension, '', $name) . '-' . time() . rand(1111, 4444) . '.' . $fileExtension;
+            $img_name = strtolower(str_replace(' ', '-', $name));
+            $file->move(public_path() . '/uploads/videos/thumb/', $img_name);
         }
+        $Video = Video::find($idd);
         if ($request->testimonial_type == 'upload') {
-            $request->validate([
-                'linkk' => 'required|mimes:mp4'
-            ]);
-            $file = $request->file('linkk');
-            ImageUploader::deleteImage('videos/video', $Video->content, false);
-            $video_name = ImageUploader::UploadDoc('videos/video/', $file);
-            
-            $Video->video_type = $request->testimonial_type;
-            if ($video_name != '') {
+            if (isset($_FILES['linkk']) && $_FILES['linkk']['tmp_name'] != '') {
+                $request->validate([
+                    'linkk' => 'required|mimes:mp4'
+                ]);
+
+                $file = $request->file('linkk');
+                $name = $file->getClientOriginalName();
+                $fileExtension = $file->getClientOriginalExtension();
+                $name = str_replace('.' . $fileExtension, '', $name) . '-' . time() . rand(1111, 4444) . '.' . $fileExtension;
+                $video_name = strtolower(str_replace(' ', '-', $name));
+                $file->move(public_path() . '/uploads/videos/video/', $video_name);
                 $Video->content = $video_name;
             }
-            if ($img_name != '') {
-                $Video->video_img = $img_name;
-            }
-            $Video->dated = date('Y-m-d H:i:s');
-            $Video->short_detail = $request->descp;
-            $Video->heading = $request->heading;
-            $Video->save();
         } else {
-            $Video->video_type = $request->testimonial_type;
-            $Video->content = adjustUrl($request->linkk);
-            $Video->short_detail = $request->descp;
-            $Video->heading = $request->heading;
-            if ($img_name != '') {
-                $Video->video_img = $img_name;
+            if (!empty($request->linkk)) {
+                $Video->content = $request->linkk;
             }
-            $Video->dated = date('Y-m-d H:i:s');
-            $Video->save();
         }
-        return redirect('adminmedia/videos')->with(['success' => 'Added new records.']);
+        if (!empty($img_name)) {
+            $Video->video_img = $img_name;
+        }
+        $Video->video_type = $request->testimonial_type;
+        $Video->dated = date('Y-m-d H:i:s');
+        $Video->short_detail = $request->descp;
+        $Video->heading = $request->heading;
+        $Video->slug = Str::slug($request->heading);
+        $Video->update();
+
+        return redirect('adminmedia/videos')->with(['success' => 'Updated records.']);
     }
     function file_upload_max_size()
     {
@@ -453,13 +227,13 @@ class VideoController extends Controller
         $list_order = $request->list_order;
         $list = explode(',', $list_order);
         $i = 1;
-        print_r($list);
+        //print_r($list);
         foreach ($list as $id) {
             $videoObj = Video::find($id);
             $videoObj->item_order = $i;
             $videoObj->save();
             $i++;
-            echo $i . ' ' . $id;
+            //echo $i . ' ' . $id;
         }
     }
 }

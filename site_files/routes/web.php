@@ -380,6 +380,7 @@ Route::group(['middleware' => ['siteStatus', 'clearCache', 'ipmiddleware']], fun
     Route::resource('/blog', BlogController::class);
     Route::get('/testimonials', [TestimonialController::class, 'index']);
     Route::get('/videos', [VideoController::class, 'index']);
+    Route::get('/videos/{slug}', VideoController::class,'show');
     Route::get('/gallery', [GalleryController::class, 'index']);
     Route::post('/addSubscriber', [HomeController::class, 'addSubscriber']);
     Route::get('/services/{slug}', [ServicesController::class, 'show']);

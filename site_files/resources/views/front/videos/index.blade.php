@@ -1,25 +1,25 @@
 @extends('front.layout.app')
 @section('content')
-    {!! cms_page_heading('VIDEO LIBRARY') !!}
-    <div class="content-wrap">
+    @php $settingArr = settingArr(); @endphp
+    {!! cms_page_heading('Videos') !!}
+    <!-- Page Title End -->
+    <!-- Page Content Start -->
+    <div class="innercontent">
         <div class="container">
-            <div class="content-bg">
-                <div class="content-inner">
-                    <div class="inner-wrap">
-                        <div class="about-wrap">
-                            <div class="row">
-                                @foreach ($videos as $video)
-                                    <div class="col-md-3 col-sm-6">
-                                        <div class="video-pic">
-                                            {!!link2iframe($video['content'],$video['video_type'],'100%','200', 'd-block','uploads/videos/video/')!!}
-                                        </div>
-                                    </div>
-                                @endforeach
+            <div class="row">
+                @foreach ($videos as $video)
+                    <div class="col-md-6">
+                        <div class="videoImg">
+                            <img src="{{ url('/uploads/videos/thumb/' . $video->video_img) }}" alt="{{ $video->heading }}"
+                                title="{{ $video->heading }}">
+                            <div class="playbtn">
+                                <a class="popup-link123" href="{{ url('videos/' . $video->ID) }}">
+                                    <span><i class="fas fa-play"></i></span>
+                                </a>
                             </div>
                         </div>
-                        <div class="clearfix"></div>
                     </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>

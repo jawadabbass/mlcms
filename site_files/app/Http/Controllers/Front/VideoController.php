@@ -3,14 +3,22 @@
 namespace App\Http\Controllers\Front;
 
 use App\Models\Back\Video;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class VideoController extends Controller
 {
     public function index()
     {
-        $seoArr = getSeoArrayModule(249);
-        $videos =  Video::orderBy('item_order', 'ASC')->paginate(100);
-        return view('front.videos.index', compact('seoArr', 'videos'));
+        $seoArr = getSeoArrayModule(728);
+        $videos = Video::where('sts', 'active')->get();
+        return view('front.videos.index',compact( 'seoArr','videos'));
+    }
+
+    public function show(Request $request, $slug)
+    {
+        $videoObj = Video::where('slug', 'like', $slug)->first();
+        $seoArr = getSeoArrayModule(728);
+        return view('front.videos.show', compact('seoArr', 'videoObj'));
     }
 }
