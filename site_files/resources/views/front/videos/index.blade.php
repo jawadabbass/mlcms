@@ -13,7 +13,7 @@
                             <img src="{{ url('/uploads/videos/thumb/' . $video->video_img) }}" alt="{{ $video->heading }}"
                                 title="{{ $video->heading }}">
                             <div class="playbtn">
-                                <a class="popup-link123" href="{{ url('videos/' . $video->ID) }}">
+                                <a class="popup-link123" href="{{ url('videos/' . $video->slug) }}">
                                     <span><i class="fas fa-play"></i></span>
                                 </a>
                             </div>
@@ -23,4 +23,5 @@
             </div>
         </div>
     </div>
+    @include('front.common_views.get_started_form_html')
 @endsection
