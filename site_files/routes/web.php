@@ -98,6 +98,7 @@ Route::prefix('adminmedia')->name('admin.')->group(function () {
 /*********************************** */
 Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddleware']], function () {
     Route::get('/', [BackDashboardController::class, 'index']);
+    Route::get('/google-analytics', [BackDashboardController::class, 'googleAnalytics']);
     Route::get('/aaa', function () {
         return view('back.common_views.script');
     });

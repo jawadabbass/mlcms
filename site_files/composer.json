@@ -23,6 +23,7 @@
         "mailchimp/marketing": "^3.0",
         "masterro/laravel-xss-filter": "^1.5",
         "orangehill/iseed": "^3.0",
+        "spatie/laravel-analytics": "^5.2",
         "spatie/laravel-sitemap": "^6.2",
         "stripe/stripe-php": "^9.8",
         "vonage/client": "^3.0",
