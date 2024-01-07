@@ -98,7 +98,6 @@ Route::prefix('adminmedia')->name('admin.')->group(function () {
 /*********************************** */
 Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddleware']], function () {
     Route::get('/', [BackDashboardController::class, 'index']);
-    Route::get('/google-analytics', [BackDashboardController::class, 'googleAnalytics']);
     Route::get('/aaa', function () {
         return view('back.common_views.script');
     });
@@ -215,6 +214,7 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     Route::post('/setting/ip-address', [BackSettingController::class, 'ipAddress']);
     Route::post('/setting/js', [BackSettingController::class, 'js']);
     Route::post('/setting/admin_logo_favicon', [BackSettingController::class, 'adminLogoFavicon']);
+    Route::post('/setting/savePropertyIdAndJsonFile', [BackSettingController::class, 'savePropertyIdAndJsonFile']);
     Route::get('/setting/countries', [BackSettingController::class, 'countries']);
     Route::resource('/file_manager', BackFileManagerController::class);
     Route::get('/news_update', [BackDashboardController::class, 'updateNewsStatus']);

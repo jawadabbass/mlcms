@@ -37,7 +37,6 @@
             </div><!-- /.container-fluid -->
         </div>
         <!-- /.content-header -->
-        <!-- Main content -->
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
@@ -62,6 +61,13 @@
                         @endif
                     </div>
                 </div>
+                <!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        @include('back.dashboard.google_analytics')
+        <!-- Main content -->
+        <div class="content">
+            <div class="container-fluid">
                 <div class="row">
                     @php
                         $currentURL = url()->current();

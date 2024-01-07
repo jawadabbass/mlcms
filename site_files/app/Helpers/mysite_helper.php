@@ -232,6 +232,7 @@ if (!function_exists('helptooltip')) {
             'news_link' => 'This will be NEWs entry link, like http://www.yourdomain.com/news/{link}',
             'cms_link' => 'This will be page link, like http://www.yourdomain.com/{link}',
             'admin_logo_favicon' => 'Manage Admin Logo and Favicon',
+            'analytics_property_id_and_json_file' => 'Manage Analytics Property ID and json file',
             'setting_email' => 'This is the default email address used on website. Contact us email will also be sent on this email address.',
             'setting_cc' => 'If you would like to copy your Contact Us email to another email, please enter that email here.',
             'setting_bcc' => 'If you would like to Blind Copy your contact form, please enter it here. A blind copy means the original recipient will not be able to see this email address as one of the recipients.',

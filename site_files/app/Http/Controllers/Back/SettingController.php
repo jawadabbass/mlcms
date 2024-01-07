@@ -8,6 +8,7 @@ use App\Models\Back\Country;
 use App\Models\Back\Metadata;
 use App\Models\Back\Setting;
 use App\Rules\CheckIfFavicon;
+use App\Rules\CheckIfJson;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -49,6 +50,7 @@ class SettingController extends Controller
     {
         $setting = Setting::first();
         $setting->google_analytics = $request->google_analytics;
+        $setting->google_analytics = $request->google_analytics;
         $setting->save();
         session(['message' => 'Updated Successfully', 'type' => 'success']);
         return redirect()->back();
@@ -88,8 +90,10 @@ class SettingController extends Controller
             return view('back.setting.restriction', compact('title', 'msg', 'setting_result', 'metaArray', 'countries', 'maxSizeAllowed'));
         } elseif ($id == 'js') {
             return view('back.setting.js', compact('title', 'msg', 'setting_result', 'metaArray', 'countries', 'maxSizeAllowed'));
-        }elseif ($id == 'paypal') {
+        } elseif ($id == 'paypal') {
             return view('back.setting.paypal', compact('title', 'msg', 'setting_result', 'metaArray', 'countries', 'maxSizeAllowed'));
+        } elseif ($id == 'analytics_property_id_and_json_file') {
+            return view('back.setting.analytics_property_id_and_json_file', compact('title', 'msg', 'setting_result', 'metaArray', 'countries', 'maxSizeAllowed'));
         } else {
             return view('back.setting.index', compact('title', 'msg', 'setting_result', 'metaArray', 'countries', 'maxSizeAllowed'));
         }
@@ -180,7 +184,7 @@ class SettingController extends Controller
         $wholeBlock = strcmp($request->blocked_area, 'website') ? false : 'true';
         if (is_array($blockedIPs) && count($blockedIPs) > 0) {
             if ($wholeBlock && isSelfIpBlocked($ip, $blockedIPs)) {
-                session(['message' => 'You have denied access to the IP address you are logged in from. This will lock you out of website. The request to add IP was denied by system.', 'type' => 'error']);                
+                session(['message' => 'You have denied access to the IP address you are logged in from. This will lock you out of website. The request to add IP was denied by system.', 'type' => 'error']);
                 return redirect()->back();
             }
             $blockIPs->val1 = implode(',', $blockedIPs);
@@ -193,7 +197,7 @@ class SettingController extends Controller
             if ($request->block_list_active == 1) {
                 if ($wholeBlock && isSelfCountryInBlockedList($ip, $request->blockedCounties)) {
                     session(['message' => 'Request Denied. Your own IP is within the list of countries you tried blocking.', 'type' => 'error']);
-                    
+
                     return redirect()->back();
                 }
             } else {
@@ -340,6 +344,31 @@ class SettingController extends Controller
         $paypal_mode->val1 = $request->paypal_mode;
         $paypal_mode->save();
         /*************************************** */
+        session(['message' => 'Updated Successfully', 'type' => 'success']);
+        return redirect()->back();
+    }
+
+    public function savePropertyIdAndJsonFile(Request $request)
+    {
+        $validated = $request->validate([
+            'service_account_credentials_json' => [new CheckIfJson()],
+        ]);
+        $is_show_analytics = Metadata::where('data_key', 'is_show_analytics')->first();
+        $is_show_analytics->val1 = $request->input('is_show_analytics', 0);
+        $is_show_analytics->save();
+
+        $analytics_property_id = Metadata::where('data_key', 'analytics_property_id')->first();
+        $analytics_property_id->val1 = $request->input('analytics_property_id', '');
+        $analytics_property_id->save();
+
+        if ($request->hasFile('service_account_credentials_json')) {
+            $service_account_credentials_json = Metadata::where('data_key', 'service_account_credentials_json')->first();
+            ImageUploader::deleteFile('analytics', $service_account_credentials_json->val1);
+            $service_account_credentials_json_file = $request->file('service_account_credentials_json');
+            $fileName = ImageUploader::UploadFile('analytics', $service_account_credentials_json_file);
+            $service_account_credentials_json->val1 = $fileName;
+            $service_account_credentials_json->save();
+        }
         session(['message' => 'Updated Successfully', 'type' => 'success']);
         return redirect()->back();
     }

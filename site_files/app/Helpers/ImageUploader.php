@@ -171,6 +171,21 @@ class ImageUploader
         /*         * **** End Resizing Images ******** */
         return $fileName;
     }
+    public static function UploadFile($destinationPath = '', $field, $newName = '')
+    {
+        $destinationPath = storage_path('app' . '/' . $destinationPath);
+        $fileName = self::getNewFileName($destinationPath, $field, $newName);
+        $field->move($destinationPath, $fileName);
+        return $fileName;
+    }
+    public static function deleteFile($path = '', $file = '')
+    {
+        if (!empty($path) && !empty($file) && !is_null($file)) {
+            if (file_exists(storage_path('app' . '/' . $path) . '/' . $file)) {
+                File::delete(storage_path('app' . '/' . $path) . '/' . $file);
+            }
+        }
+    }
     public static function print_image($image_name, $image_path, $width = 0, $height = 0, $alt_title_txt = '', $default_image = 'mlstorage/images/no-image-available.png')
     {
         echo self::get_image($image_name, $image_path, $width, $height, $alt_title_txt, $default_image);

@@ -89,6 +89,7 @@ class DashboardLinks
             'admin_logo_favicon' => ['Admin Logo/Favicon', 'fas  fa-cog', 'settings/admin_logo_favicon', 'user_type' => ['super-admin'], ''],
             'general_settings' => ['Basic Settings', 'fas  fa-cog', 'settings/basic', 'user_type' => ['super-admin'], ''],
             'google_analytics' => ['Google Analytics', 'fas fa-chart-bar', 'settings/analytics', 'user_type' => ['super-admin'], ''],
+            'analytics_property_id_and_json_file' => ['Google Analytics Prop Id/json', 'fas fa-chart-bar', 'settings/analytics_property_id_and_json_file', 'user_type' => ['super-admin'], ''],
             'google_adsense' => ['Google Adsense', 'fas  fa-chart-bar', 'settings/adsense', 'user_type' => ['super-admin'], ''],
             'captcha' => ['Google Captcha', 'fas  fa-exclamation-circle', 'settings/captcha', 'user_type' => ['super-admin'], ''],
             'paypal' => ['Paypal', 'fab fa-paypal', 'settings/paypal', 'user_type' => ['super-admin'], ''],

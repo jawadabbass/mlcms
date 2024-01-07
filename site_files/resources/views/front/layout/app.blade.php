@@ -14,6 +14,7 @@
     @include('front.common_views.before_head_close')
     @yield('beforeHeadClose')
     @yield('page_css')
+    {!! config('google_analytics_front.google_analytics_front') !!}
 </head>
 
 <body>

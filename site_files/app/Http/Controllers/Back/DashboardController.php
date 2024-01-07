@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Back;
 use App\Models\Back\CmsNews;
 use Illuminate\Http\Request;
 use Spatie\Analytics\Period;
+use App\Models\Back\Metadata;
 use Illuminate\Support\Carbon;
 use App\Models\Back\AdminAlert;
 use Illuminate\Support\Collection;
@@ -58,7 +59,63 @@ class DashboardController extends Controller
         foreach ($adminAlertsData as $data) {
             $adminAlerts[$data->keyy] = $data->total;
         }
-        return view('back.dashboard.index', compact('adminAlerts', 'news'));
+        $data['adminAlerts'] = $adminAlerts;
+        $data['news'] = $news;
+
+        $analytics_property_id = config('analytics.property_id');
+        $service_account_credentials_json = config('analytics.service_account_credentials_json');
+        $is_show_analytics = config('analytics.is_show_analytics');
+
+        if ($is_show_analytics) {
+            $is_show_analytics = false;
+            if (!empty($analytics_property_id) && !empty($service_account_credentials_json)) {
+                $is_show_analytics = true;
+                $startDate = Carbon::now()->subYear();
+                $endDate = Carbon::now();
+                $period = Period::create($startDate, $endDate);
+
+                $visitorsAndPageViews = Analytics::fetchVisitorsAndPageViews($period);
+                $visitorsAndPageViewsByDate = Analytics::fetchVisitorsAndPageViewsByDate($period);
+                $totalVisitorsAndPageViews = Analytics::fetchTotalVisitorsAndPageViews($period);
+                $mostVisitedPages = Analytics::fetchMostVisitedPages($period, 20);
+                $topReferrers = Analytics::fetchTopReferrers($period, 20);
+                $userTypes = Analytics::fetchUserTypes($period);
+                $topBrowsers = Analytics::fetchTopBrowsers($period, 20);
+                $topCountries = Analytics::fetchTopCountries($period, 20);
+                $topOperatingSystems = Analytics::fetchTopOperatingSystems($period, 20);
+
+                $visitorsAndPageViewsJson = json_encode($visitorsAndPageViews);
+                $visitorsAndPageViewsByDateJson = json_encode($visitorsAndPageViewsByDate);
+                $totalVisitorsAndPageViewsJson = json_encode($totalVisitorsAndPageViews);
+                $mostVisitedPagesJson = json_encode($mostVisitedPages);
+                $topReferrersJson = json_encode($topReferrers);
+                $userTypesJson = json_encode($userTypes);
+                $topBrowsersJson = json_encode($topBrowsers);
+                $topCountriesJson = json_encode($topCountries);
+                $topOperatingSystemsJson = json_encode($topOperatingSystems);
+
+                $data['visitorsAndPageViews'] = $visitorsAndPageViews;
+                $data['visitorsAndPageViewsByDate'] = $visitorsAndPageViewsByDate;
+                $data['totalVisitorsAndPageViews'] = $totalVisitorsAndPageViews;
+                $data['mostVisitedPages'] = $mostVisitedPages;
+                $data['topReferrers'] = $topReferrers;
+                $data['userTypes'] = $userTypes;
+                $data['topBrowsers'] = $topBrowsers;
+                $data['topCountries'] = $topCountries;
+                $data['topOperatingSystems'] = $topOperatingSystems;
+                $data['visitorsAndPageViewsJson'] = $visitorsAndPageViewsJson;
+                $data['visitorsAndPageViewsByDateJson'] = $visitorsAndPageViewsByDateJson;
+                $data['totalVisitorsAndPageViewsJson'] = $totalVisitorsAndPageViewsJson;
+                $data['mostVisitedPagesJson'] = $mostVisitedPagesJson;
+                $data['topReferrersJson'] = $topReferrersJson;
+                $data['userTypesJson'] = $userTypesJson;
+                $data['topBrowsersJson'] = $topBrowsersJson;
+                $data['topCountriesJson'] = $topCountriesJson;
+                $data['topOperatingSystemsJson'] = $topOperatingSystemsJson;
+            }
+        }
+        $data['is_show_analytics'] = $is_show_analytics;
+        return view('back.dashboard.index', $data);
     }
     function updateAdminAlerts()
     {
@@ -104,46 +161,5 @@ class DashboardController extends Controller
     {
         Log::error("Preference Value = " . $request->preference);
         session(['leftSideBar' => $request->preference]);
-    }
-
-    public function googleAnalytics(Request $request)
-    {
-        $startDate = Carbon::now()->subYear();
-        $endDate = Carbon::now();
-        $period = Period::create($startDate, $endDate);
-
-        $visitorsAndPageViews = Analytics::fetchVisitorsAndPageViews($period);
-        $visitorsAndPageViewsByDate = Analytics::fetchVisitorsAndPageViewsByDate($period);
-        $totalVisitorsAndPageViews = Analytics::fetchTotalVisitorsAndPageViews($period);
-        $mostVisitedPages = Analytics::fetchMostVisitedPages($period, 20);
-        $topReferrers = Analytics::fetchTopReferrers($period, 20);
-        $userTypes = Analytics::fetchUserTypes($period);
-        $topBrowsers = Analytics::fetchTopBrowsers($period, 20);
-        $topCountries = Analytics::fetchTopCountries($period, 20);
-        $topOperatingSystems = Analytics::fetchTopOperatingSystems($period, 20);
-
-        //$visitorsAndPageViews = json_encode($visitorsAndPageViews);
-        $visitorsAndPageViewsByDate = json_encode($visitorsAndPageViewsByDate);
-        $totalVisitorsAndPageViews = json_encode($totalVisitorsAndPageViews);
-        $mostVisitedPages = json_encode($mostVisitedPages);
-        $topReferrers = json_encode($topReferrers);
-        $userTypes = json_encode($userTypes);
-        $topBrowsers = json_encode($topBrowsers);
-        $topCountries = json_encode($topCountries);
-        $topOperatingSystems = json_encode($topOperatingSystems);
-
-        $data = compact(
-            'visitorsAndPageViews',
-            'visitorsAndPageViewsByDate',
-            'totalVisitorsAndPageViews',
-            'mostVisitedPages',
-            'topReferrers',
-            'userTypes',
-            'topBrowsers',
-            'topCountries',
-            'topOperatingSystems'
-        );
-
-        return view('back.dashboard.google_analytics', $data);
     }
 }
