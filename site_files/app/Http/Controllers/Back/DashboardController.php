@@ -112,30 +112,17 @@ class DashboardController extends Controller
         $endDate = Carbon::now();
         $period = Period::create($startDate, $endDate);
 
-        $visitorsAndPageViews = []; //Analytics::fetchVisitorsAndPageViews($period);
-        $visitorsAndPageViewsByDate = []; //Analytics::fetchVisitorsAndPageViewsByDate($period);
-        $totalVisitorsAndPageViews = []; //Analytics::fetchTotalVisitorsAndPageViews($period);
-        $mostVisitedPages = []; //Analytics::fetchMostVisitedPages($period, 20);
-        $topReferrers = []; //Analytics::fetchTopReferrers($period, 20);
-        $userTypes = []; //Analytics::fetchUserTypes($period);
-        $topBrowsers = []; //Analytics::fetchTopBrowsers($period, 20);
-        $topCountries = []; //Analytics::fetchTopCountries($period, 20);
-        $topOperatingSystems = []; //Analytics::fetchTopOperatingSystems($period, 20);
+        $visitorsAndPageViews = Analytics::fetchVisitorsAndPageViews($period);
+        $visitorsAndPageViewsByDate = Analytics::fetchVisitorsAndPageViewsByDate($period);
+        $totalVisitorsAndPageViews = Analytics::fetchTotalVisitorsAndPageViews($period);
+        $mostVisitedPages = Analytics::fetchMostVisitedPages($period, 20);
+        $topReferrers = Analytics::fetchTopReferrers($period, 20);
+        $userTypes = Analytics::fetchUserTypes($period);
+        $topBrowsers = Analytics::fetchTopBrowsers($period, 20);
+        $topCountries = Analytics::fetchTopCountries($period, 20);
+        $topOperatingSystems = Analytics::fetchTopOperatingSystems($period, 20);
 
-
-        $visitorsAndPageViews = json_decode('[
-            {"date":{"date":"2016-08-22 15:38:36.000000","timezone_type":3,"timezone":"UTC"},"visitors":"0","pageViews":"0"},
-            {"date":{"date":"2016-08-23 15:38:36.000000","timezone_type":3,"timezone":"UTC"},"visitors":"0","pageViews":"0"},
-            {"date":{"date":"2016-08-24 15:38:36.000000","timezone_type":3,"timezone":"UTC"},"visitors":"0","pageViews":"0"},
-            {"date":{"date":"2016-08-25 15:38:36.000000","timezone_type":3,"timezone":"UTC"},"visitors":"0","pageViews":"0"},
-            {"date":{"date":"2016-08-26 15:38:36.000000","timezone_type":3,"timezone":"UTC"},"visitors":"0","pageViews":"0"}, 
-            {"date":{"date":"2016-08-27 15:38:36.000000","timezone_type":3,"timezone":"UTC"},"visitors":"0","pageViews":"0"},
-            {"date":{"date":"2016-08-28 15:38:36.000000","timezone_type":3,"timezone":"UTC"},"visitors":"0","pageViews":"0"}, 
-            {"date":{"date":"2016-08-29 15:38:36.000000","timezone_type":3,"timezone":"UTC"},"visitors":"1","pageViews":"5"}
-        ]');
-
-
-        $visitorsAndPageViews = json_encode($visitorsAndPageViews);
+        //$visitorsAndPageViews = json_encode($visitorsAndPageViews);
         $visitorsAndPageViewsByDate = json_encode($visitorsAndPageViewsByDate);
         $totalVisitorsAndPageViews = json_encode($totalVisitorsAndPageViews);
         $mostVisitedPages = json_encode($mostVisitedPages);
