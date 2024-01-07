@@ -529,30 +529,30 @@ class ModController extends Controller
         ); //Social Media
         $step3Arr = array('timing' => array('Timing', '', 'trim'));
         $step4Arr = array(
-            'seo_title' => array('Page Title', '', ''),
-            'seo_descp' => array('Page Description', 'textarea', ''),
-            'seo_keywords' => array('Keywords', 'textarea', '')
+            'meta_title' => array('Page Title', '', ''),
+            'meta_description' => array('Page Description', 'textarea', ''),
+            'meta_keywords' => array('Keywords', 'textarea', '')
         ); //Seo
         $step5Arr = array(); //Seo
         $step6Arr = array(); //Seo
         $step7Arr = array(); //Seo
         $step111Arr = array(
             '_sec3_' => array('Main Location Page SEO', '', ''),
-            'seo_title' => array('Page Title', '', ''),
-            'seo_descp' => array('Page Description', 'textarea', 'trim'),
-            'seo_keywords' => array('Keywords', 'textarea', 'trim'),
+            'meta_title' => array('Page Title', '', ''),
+            'meta_description' => array('Page Description', 'textarea', 'trim'),
+            'meta_keywords' => array('Keywords', 'textarea', 'trim'),
             '_sec_' => array('Service Page SEO', '', ''),
-            'service_seo_title' => array('Page Title', '', ''),
-            'service_seo_descp' => array('Page Description', 'textarea', 'trim'),
-            'service_seo_keywords' => array('Keywords', 'textarea', 'trim'),
+            'service_meta_title' => array('Page Title', '', ''),
+            'service_meta_description' => array('Page Description', 'textarea', 'trim'),
+            'service_meta_keywords' => array('Keywords', 'textarea', 'trim'),
             '_sec2_' => array('Article page SEO', '', ''),
-            'article_seo_title' => array('Page Title', '', ''),
-            'article_seo_descp' => array('Page Description', 'textarea', 'trim'),
-            'article_seo_keywords' => array('Keywords', 'textarea', 'trim'),
+            'article_meta_title' => array('Page Title', '', ''),
+            'article_meta_description' => array('Page Description', 'textarea', 'trim'),
+            'article_meta_keywords' => array('Keywords', 'textarea', 'trim'),
             '_sec5_' => array('Contact page SEO', '', ''),
-            'contact_seo_title' => array('Page Title', '', 'trim'),
-            'contact_seo_descp' => array('Page Description', 'textarea', 'trim'),
-            'contact_seo_keywords' => array('Keywords', 'textarea', 'trim'),
+            'contact_meta_title' => array('Page Title', '', 'trim'),
+            'contact_meta_description' => array('Page Description', 'textarea', 'trim'),
+            'contact_meta_keywords' => array('Keywords', 'textarea', 'trim'),
             '_sec6_' => array('Contact Us Email Recipients', '', ''),
             'contact_to' => array('To', '', 'trim|required|valid_emails'),
             'contact_cc' => array('CC', '', 'trim|valid_emails'),
@@ -567,24 +567,24 @@ class ModController extends Controller
         ); //Seo
         $step112Arr = array(
             '_sec3_' => array(
-                'seo_title' => array('Page Title', '', ''),
-                'seo_descp' => array('Page Description', 'textarea', 'trim'),
-                'seo_keywords' => array('Keywords', 'textarea', 'trim')
+                'meta_title' => array('Page Title', '', ''),
+                'meta_description' => array('Page Description', 'textarea', 'trim'),
+                'meta_keywords' => array('Keywords', 'textarea', 'trim')
             ),
             '_sec_' => array(
-                'service_seo_title' => array('Page Title', '', ''),
-                'service_seo_descp' => array('Page Description', 'textarea', 'trim'),
-                'service_seo_keywords' => array('Keywords', 'textarea', 'trim')
+                'service_meta_title' => array('Page Title', '', ''),
+                'service_meta_description' => array('Page Description', 'textarea', 'trim'),
+                'service_meta_keywords' => array('Keywords', 'textarea', 'trim')
             ),
             '_sec2_' => array(
-                'article_seo_title' => array('Page Title', '', ''),
-                'article_seo_descp' => array('Page Description', 'textarea', 'trim'),
-                'article_seo_keywords' => array('Keywords', 'textarea', 'trim')
+                'article_meta_title' => array('Page Title', '', ''),
+                'article_meta_description' => array('Page Description', 'textarea', 'trim'),
+                'article_meta_keywords' => array('Keywords', 'textarea', 'trim')
             ),
             '_sec5_' => array(
-                'contact_seo_title' => array('Page Title', '', 'trim'),
-                'contact_seo_descp' => array('Page Description', 'textarea', 'trim'),
-                'contact_seo_keywords' => array('Keywords', 'textarea', 'trim')
+                'contact_meta_title' => array('Page Title', '', 'trim'),
+                'contact_meta_description' => array('Page Description', 'textarea', 'trim'),
+                'contact_meta_keywords' => array('Keywords', 'textarea', 'trim')
             ),
             '_sec6_' => array(
                 'contact_to' => array('To', '', 'trim|required|valid_emails'),

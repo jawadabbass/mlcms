@@ -35,6 +35,7 @@
         save_method = 'add';
         $('#modal_form').modal('show'); // show bootstrap modal
         $('.modal-title').text('Add Product'); // Set Title to Bootstrap modal title
+        set_seo_limit_suggestions();
     }
     function edit_product(id) {
         $('.spinner').show();
@@ -50,9 +51,7 @@
                 $('[name="product_slug"]').val(data.product_slug);
                 $('[name="product_description"]').val(data.product_description);
                 $('[name="price"]').val(data.price);
-                $('[name="meta_title"]').val(data.meta_title);
-                $('[name="meta_keywords"]').val(data.meta_keywords);
-                $('[name="meta_description"]').val(data.meta_description);
+                fillSeoFields(data);
                 if (data.product_img != '') {
                     $('#product_img_div').show();
                     $('#product_img_div').html('<img style="width:100px" src="'+asset_uploads + '/products/' + data.product_img+'"><i onclick="remove_products_image(0);" class="deleteIcon"></i>');

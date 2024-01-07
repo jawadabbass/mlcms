@@ -102,6 +102,7 @@ function reset_model() {
     $('#blog_post_form').trigger("reset");
     $('.err').html('');
     $('#blog_post_form_modal').modal('show');
+    set_seo_limit_suggestions();
 }
 
 function add_blog_post() {
@@ -183,16 +184,7 @@ function load_blog_post_edit_form(id) {
             $('#featured_img').append(img);
 
         }
-        var seoClass = document.getElementById('seo-modul');
-        if (data.meta_title.length > 0 || data.meta_keywords.length > 0 || data.meta_description.length > 0 || data.canonical_url.length > 0) {
-            $('#meta_title').val(data.meta_title);
-            $('#meta_keywords').val(data.meta_keywords);
-            $('#meta_description').val(data.meta_description);
-            $('#canonical_url').val(data.canonical_url);
-            seoClass.className = 'seo-edit-modul-sow';
-        } else {
-            seoClass.className = 'seo-edit-modul-hide';
-        }
+        fillSeoFields(data);
 
         tinyMCE.get('editor1').setContent(data.description);
         $('#cms_id').val(data.ID);

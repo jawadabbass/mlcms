@@ -195,9 +195,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div style="clear:both"></div>
-                            @include('back.common_views.seo_add')
-                            <div style="clear:both"></div>
+                            @include('back.common_views.seo_fields', ['meta_title'=>'','meta_keywords'=>'','meta_description'=>'','canonical_url'=>''])
                         </div>
                     </div>
                     <div class="modal-footer">

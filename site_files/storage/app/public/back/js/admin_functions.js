@@ -1,3 +1,45 @@
+function seo_limit_suggestion(field_id, limit, notice_id) {
+    var text_length = $('#' + field_id).val().length;
+    $('#' + notice_id).html(text_length + ' characters');
+    if (text_length > limit) {
+        $('#' + notice_id).removeClass('text-success');
+        $('#' + notice_id).addClass('text-danger');
+    }
+    else {
+        $('#' + notice_id).removeClass('text-danger');
+        $('#' + notice_id).addClass('text-success');
+    }
+}
+
+function fillSeoFields(data) {
+    if (data.meta_title && data.meta_title.length > 0) {
+        $('#meta_title').val(data.meta_title);
+    }
+    if (data.meta_keywords && data.meta_keywords.length > 0) {
+        $('#meta_keywords').val(data.meta_keywords);
+    }
+    if (data.meta_description && data.meta_description.length > 0) {
+        $('#meta_description').val(data.meta_description);
+    }
+    if (data.canonical_url && data.canonical_url.length > 0) {
+        $('#canonical_url').val(data.canonical_url);
+    }
+    set_seo_limit_suggestions();
+}
+function set_seo_limit_suggestions() {
+    if ($('#meta_title').val().length > 0 ||
+        $('#meta_keywords').val().length > 0 ||
+        $('#meta_description').val().length > 0 ||
+        $('#canonical_url').val().length > 0) {
+        $('#seo_fields_div').show();
+    } else {
+        $('#seo_fields_div').hide();
+    }
+    seo_limit_suggestion('meta_title', 60, 'meta_title_char_countdown');
+    seo_limit_suggestion('meta_keywords', 160, 'meta_keywords_char_countdown');
+    seo_limit_suggestion('meta_description', 160, 'meta_description_char_countdown');
+}
+
 function confirmDel() {
     if (confirm("Are you sure you want to delete?")) {
         return true;
@@ -16,22 +58,6 @@ function confirmMsg(msg) {
     }
 }
 //For admin panel left bar (hiding/showing)
-function seoModulToggle() {
-    var seoClass = document.getElementById('seo-modul');
-    if (seoClass.className == 'seo-modul-hide') {
-        seoClass.className = 'seo-modul-sow';
-    } else {
-        seoClass.className = 'seo-modul-hide';
-    }
-}
-function seoEditModulToggle() {
-    var seoClass = document.getElementById('seo-edit-modul');
-    if (seoClass.className == 'seo-edit-modul-hide') {
-        seoClass.className = 'seo-edit-modul-sow';
-    } else {
-        seoClass.className = 'seo-edit-modul-hide';
-    }
-}
 function showme_page(val, arrowObj) {
     if ($(val + ':visible').length == 0) {
         $(val).slideDown(100);
@@ -44,16 +70,16 @@ function showme_page(val, arrowObj) {
         $(arrowObj).attr('data-original-title', 'Show more');
     }
 }
-function showme_seo(val, arrowObj) {
+function show_hide_seo_fields(val, arrowObj) {
     if ($(val + ':visible').length == 0) {
         $(val).slideDown(1000);
         $(arrowObj).html('Manage SEO <i class="fa fa-angle-double-up" aria-hidden="true"></i>');
-        $(arrowObj).attr('data-original-title', 'Show less');
+        $(arrowObj).attr('data-original-title', 'Show SEO Fields');
     }
     else {
         $(val).slideUp(700);
         $(arrowObj).html('Manage SEO <i class="fa fa-angle-double-down" aria-hidden="true"></i>');
-        $(arrowObj).attr('data-original-title', 'Show more');
+        $(arrowObj).attr('data-original-title', 'Show SEO Fields');
     }
 }
 function string_to_slug(titleId, slugId) {

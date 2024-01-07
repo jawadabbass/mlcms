@@ -243,7 +243,7 @@
 
                                 <div id="page_seo_option"
                                     style="display: {{ $module->show_seo_field == 1 ? 'block' : 'none' }}">
-                                    @include('back.module.seo_add_edit') </div>
+                                    @include('back.common_views.seo_fields', ['meta_title'=>'','meta_keywords'=>'','meta_description'=>'','canonical_url'=>''])
                             </div>
                         </div>
                     </div>

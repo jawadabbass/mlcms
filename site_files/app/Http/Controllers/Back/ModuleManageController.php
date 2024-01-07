@@ -568,7 +568,7 @@ class ModuleManageController extends Controller
         $old_postmeta = \DB::table('wp_postmeta')->where('post_id', $ID)->get();
         $act_url = '';
         $act_url = \DB::table('wp_postmeta')->where('meta_key', 'custom_permalink')->where('post_id', $ID)->value('meta_value');
-        $meta_title = \DB::table('wp_postmeta')->where('meta_key', '_yoast_wpseo_title')->where('post_id', $ID)->value('meta_value');
+        $meta_title = \DB::table('wp_postmeta')->where('meta_key', '_yoast_wpmeta_title')->where('post_id', $ID)->value('meta_value');
         $meta_description = \DB::table('wp_postmeta')->where('meta_key', '_yoast_wpseo_metadesc')->where('post_id', $ID)->value('meta_value');
         $meta_keywords = \DB::table('wp_postmeta')->where('meta_key', '_yoast_wpseo_metakeywords')->where('post_id', $ID)->value('meta_value');
         if (DB::table('cms_module_datas')->where('post_slug', $act_url)->exists()) {
@@ -603,7 +603,7 @@ class ModuleManageController extends Controller
             $old_postmeta = \DB::table('wp_postmeta')->where('post_id', $ID)->get();
             $act_url = '';
             $act_url = \DB::table('wp_postmeta')->where('meta_key', 'custom_permalink')->where('post_id', $ID)->value('meta_value');
-            $meta_title = \DB::table('wp_postmeta')->where('meta_key', '_yoast_wpseo_title')->where('post_id', $ID)->value('meta_value');
+            $meta_title = \DB::table('wp_postmeta')->where('meta_key', '_yoast_wpmeta_title')->where('post_id', $ID)->value('meta_value');
             $meta_description = \DB::table('wp_postmeta')->where('meta_key', '_yoast_wpseo_metadesc')->where('post_id', $ID)->value('meta_value');
             $meta_keywords = \DB::table('wp_postmeta')->where('meta_key', '_yoast_wpseo_metakeywords')->where('post_id', $ID)->value('meta_value');
             $arr = [];

@@ -62,7 +62,7 @@
 
                             <div id="product_img_div" style="display: none">
                             </div>
-                            @include('back.product.seo_add_edit')
+                            @include('back.common_views.seo_fields', ['meta_title'=>'','meta_keywords'=>'','meta_description'=>'','canonical_url'=>''])
                         </div>
                     </div>
                 </div>
