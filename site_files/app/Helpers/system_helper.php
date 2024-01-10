@@ -306,12 +306,20 @@ if (!function_exists('get_services')) {
     }
 }
 if (!function_exists('get_excerpt')) {
-    function get_excerpt($text, $limit = 200)
+    function get_excerpt($text, $limit = 200, $readMore = '')
     {
         $text = strip_tags($text);
         $text = wordwrap($text, $limit, "....", FALSE);
-        $excerpt = explode("....", $text);
-        $excerpt = $excerpt[0] . "....";
+        $text_arr = explode("....", $text);
+        $excerpt = '';
+        if (isset($text_arr[1])) {
+            $excerpt = $text_arr[0] . "....";
+            if (!empty($readMore)) {
+                $excerpt = $excerpt . $readMore;
+            }
+        } else {
+            $excerpt = $text_arr[0];
+        }
         return $excerpt;
     }
 }
