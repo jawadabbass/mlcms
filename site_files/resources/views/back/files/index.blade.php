@@ -81,7 +81,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <input
-                                        class="btn btn-success" name="submitImage" type="submit" onclick="showLoader();" value="Upload File(s)" />
+                                        class="btn btn-success" name="submitImage" type="submit"  value="Upload File(s)" />
                                 </div>
                             </div>
                             <div id="image_preview" class="row">

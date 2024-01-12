@@ -526,7 +526,7 @@
                                                 aria-hidden="true"></i> Back</a></div>
                                     <div class="col-md-5 text-end">
                                         <input type="hidden" name="idd" value="0" />
-                                        <button type="submit" onclick="showLoader();" class="btn btn-success subm">Submit</button>
+                                        <button type="submit"  class="btn btn-success subm">Submit</button>
                                     </div>
                                 </div>
                             </div>

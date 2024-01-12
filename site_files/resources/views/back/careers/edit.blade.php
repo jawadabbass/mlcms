@@ -44,7 +44,7 @@
                                 <div class="row">
                                     @include('back.careers.form')
                                     <div class="col-12 mb-4">
-                                        <button type="submit" onclick="showLoader();" class="btn btn-success">Update</button>
+                                        <button type="submit"  class="btn btn-success">Update</button>
                                     </div>
                                 </div>
                             </div>

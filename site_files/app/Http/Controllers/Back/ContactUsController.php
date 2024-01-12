@@ -121,7 +121,7 @@ class ContactUsController extends Controller
         $data = array();
         $data['msg'] = '';
         $title = config("Constants.SITE_NAME") . ': Add | Contact Lead';
-        return view('back.contactus.add', compact('title', 'data', 'services_for_dd'));
+        return view('back.contactus.add', compact('title', 'data'));
     }
     /**
      * Store a newly created resource in storage.

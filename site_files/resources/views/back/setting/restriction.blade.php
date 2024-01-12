@@ -149,7 +149,7 @@
                             </div>
                         </div>
                         <div class="col-md-12">
-                            <input type="submit" onclick="showLoader();" name="change_network_details" value="update" id="ipAddressFormSubmit"
+                            <input type="submit"  name="change_network_details" value="update" id="ipAddressFormSubmit"
                                 class="sitebtn" />
                         </div>
                     </div>

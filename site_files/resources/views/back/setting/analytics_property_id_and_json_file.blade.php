@@ -71,7 +71,7 @@
                             </div>
                         </div>
                         <br><br>
-                        <input type="submit" onclick="showLoader();" name="service_account_credentials_json_btn" value="Update" class="sitebtn" />
+                        <input type="submit"  name="service_account_credentials_json_btn" value="Update" class="sitebtn" />
                     </div>
                 </form>
             </div>

@@ -80,7 +80,7 @@
                                         </select>
                                     </div>
                                     <div class="col-md-2 text-start">
-                                        <button type="submit" onclick="showLoader();" class="btn btn-info"><i class="fas fa-search"
+                                        <button type="submit"  class="btn btn-info"><i class="fas fa-search"
                                                 aria-hidden="true"></i> Search</button>
                                         <a class="btn btn-warning" href="{{ route('manage_clients.index') }}"><i
                                                 class="fas fa-sync" aria-hidden="true"></i>Reset</a>
@@ -95,7 +95,7 @@
                                         <tr>
                                             <th>
                                                 <input type="checkbox" id="client_check_all" />
-                                                <button type="submit" onclick="showLoader();" class="btn btn-small btn-danger"
+                                                <button type="submit"  class="btn btn-small btn-danger"
                                                     id="client_delete_all" style="display:none;">Delete</button>
                                             </th>
                                             <th>
@@ -376,7 +376,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                {{-- <input type="submit" onclick="showLoader();" value="Send Request Review Email" class="btn btn-primary"> --}}
+                                {{-- <input type="submit"  value="Send Request Review Email" class="btn btn-primary"> --}}
                                 <button type="button" class="btn btn-primary" onclick="comment_save()">Save
                                     Comment</button>
                             </div>

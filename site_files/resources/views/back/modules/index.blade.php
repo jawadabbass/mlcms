@@ -326,7 +326,7 @@
                     <div style="clear:both"></div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" onclick="showLoader();" name="submitter" class="btn btn-primary">Submit</button>
+                        <button type="submit"  name="submitter" class="btn btn-primary">Submit</button>
                     </div>
                 </div>
             </form>
@@ -391,7 +391,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" onclick="showLoader();" class="btn btn-success">Submit</button>
+                        <button type="submit"  class="btn btn-success">Submit</button>
                     </div>
                 </form>
             </div>
@@ -618,7 +618,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" onclick="showLoader();" name="submitter" class="btn btn-primary">Update</button>
+                        <button type="submit"  name="submitter" class="btn btn-primary">Update</button>
                     </div>
                 </div>
             </form>

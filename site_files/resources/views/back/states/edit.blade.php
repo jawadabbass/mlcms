@@ -43,7 +43,7 @@
                                 <div class="row">
                                     @include('back.states.form')
                                     <div class="col-12 mb-4">
-                                        <button type="submit" onclick="showLoader();" class="btn btn-success">Update</button>
+                                        <button type="submit"  class="btn btn-success">Update</button>
                                     </div>
                                 </div>
                             </div>

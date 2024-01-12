@@ -117,7 +117,7 @@
                                     <span class="checkmark"></span>
                                 </label>
                                 <br>
-                                <button type="submit" onclick="showLoader();" class="btn btn-warning"><i class="fas fa-sync"
+                                <button type="submit"  class="btn btn-warning"><i class="fas fa-sync"
                                         aria-hidden="true"></i> Clear Cache</button>
                             </form>
                         </div>

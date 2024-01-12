@@ -60,7 +60,7 @@
 
                                 <div class="col-sm-1 form-group">
 
-                                    <button type="submit" onclick="showLoader();" class="btn">
+                                    <button type="submit"  class="btn">
                                         <li class="fas fa-search"></li>
                                     </button>
                                 </div>

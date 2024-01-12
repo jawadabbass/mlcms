@@ -167,7 +167,7 @@
                         Option
                         <div class="row">
                             <div class="col-lg-6"></div>
-                            <div class="col-lg-6 text-end"><button type="submit" onclick="showLoader();" class="btn btn-info">Submit</button>
+                            <div class="col-lg-6 text-end"><button type="submit"  class="btn btn-info">Submit</button>
                             </div>
                         </div>
                     </form>
@@ -221,7 +221,7 @@
                         Payment Option
                         <div class="row">
                             <div class="col-lg-6"></div>
-                            <div class="col-lg-6 text-end"><button type="submit" onclick="showLoader();" class="btn btn-info">Submit</button>
+                            <div class="col-lg-6 text-end"><button type="submit"  class="btn btn-info">Submit</button>
                             </div>
                         </div>
                     </form>

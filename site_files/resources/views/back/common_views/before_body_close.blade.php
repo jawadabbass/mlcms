@@ -36,7 +36,7 @@
     @php
         $message = session('message', '');
         $type = session('type', 'success');
-        session(['message'=>'', 'type'=>'']);
+        session(['message' => '', 'type' => '']);
     @endphp
     @if (!empty($message))
         Toast.fire({

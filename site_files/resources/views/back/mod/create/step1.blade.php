@@ -123,7 +123,7 @@
                                     </div>
                                     <div class="col-sm-5 text-start">
                                         <input name="idd" type="hidden" value="0">
-                                        <button class="btn btn-success" type="submit" onclick="showLoader();">
+                                        <button class="btn btn-success" type="submit" >
                                             Next
                                             <i aria-hidden="true" class="fas fa-angle-double-right">
                                             </i>

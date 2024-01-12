@@ -53,20 +53,6 @@
                                     <div class="col-lg-3 text-start"></div>
                                 </div>
                                 <div class="row" style="margin-bottom: 10px;">
-                                    <div class="col-lg-3 text-end">Service</div>
-                                    <div class="col-lg-6">
-                                        <select id="service" name="service" class="form-select">
-                                            <option selected disabled>Choose Service</option>
-                                            @if (count($services_for_dd) > 0)
-                                                @foreach ($services_for_dd as $services)
-                                                <option value="{{ $services->heading }}" {{ ($services->heading == old('service'))? 'selected':'' }}>{{ $services->heading }}</option>
-                                                @endforeach
-                                            @endif
-                                        </select>
-                                    </div>
-                                    <div class="col-lg-3 text-start"></div>
-                                </div>
-                                <div class="row" style="margin-bottom: 10px;">
                                     <div class="col-lg-3 text-end">Comments</div>
                                     <div class="col-lg-6">
                                         <textarea name="comments" id="comments" class="form-control">{{ old('comments') }}</textarea>
@@ -84,7 +70,7 @@
                                 <div class="row" style="margin-bottom: 10px;">
                                     <div class="col-lg-3 text-end"></div>
                                     <div class="col-lg-6 text-end">
-                                        <button type="submit" onclick="showLoader();" class="btn btn-success">Add</button>
+                                        <button type="submit"  class="btn btn-success">Add</button>
                                     </div>
                                     <div class="col-lg-3 text-start"></div>
                                 </div>

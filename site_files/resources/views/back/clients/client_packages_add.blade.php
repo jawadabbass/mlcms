@@ -50,7 +50,7 @@
                                     <div class="col-lg-12">
                                         <div class="form-group">
 
-                                            <button type="submit" onclick="showLoader();" id="btnSave" class="btn btn-primary">Submit
+                                            <button type="submit"  id="btnSave" class="btn btn-primary">Submit
                                             </button>
                                         </div>
                                     </div>

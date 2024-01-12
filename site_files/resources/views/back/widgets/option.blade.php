@@ -133,7 +133,7 @@
 
                     </div>
                     <div class="col-sm-6 text-end">
-                        <button type="submit" onclick="showLoader();" name="submitter" class="btn btn-info"
+                        <button type="submit"  name="submitter" class="btn btn-info"
                             style="text-align: right;">Update</button>
                     </div>
                 </div>

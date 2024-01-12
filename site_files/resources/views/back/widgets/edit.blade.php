@@ -180,7 +180,7 @@
                             class="fas fa-angle-double-left">Go Back</i></a>
                 </div>
                 <div class="col-sm-6 text-end">
-                    <button type="submit" onclick="showLoader();" name="submitter" class="btn btn-info">Update</button>
+                    <button type="submit"  name="submitter" class="btn btn-info">Update</button>
                 </div>
 
             </div>

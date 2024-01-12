@@ -42,7 +42,7 @@
                                 <div class="row">
                                     @include('back.cities.form')
                                     <div class="col-12 mb-4">
-                                        <button type="submit" onclick="showLoader();" class="btn btn-success">Save</button>
+                                        <button type="submit"  class="btn btn-success">Save</button>
                                     </div>
                                 </div>
                             </div>

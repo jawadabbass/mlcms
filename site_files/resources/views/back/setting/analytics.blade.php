@@ -47,7 +47,7 @@
                                 <p><a href="https://www.google.com/analytics" target="_blank">Sign Up or Manage
                                         Analytics </a> by clicking this link</p>
                             </div>
-                            <input type="submit" onclick="showLoader();" name="change_network_details" value="update" class="sitebtn" />
+                            <input type="submit"  name="change_network_details" value="update" class="sitebtn" />
                         </div>
                     </div>
                 </form>

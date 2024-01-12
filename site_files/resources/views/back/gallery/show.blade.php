@@ -108,7 +108,7 @@
                                     <div id="after_image_preview" class="row"></div>
                                 </div>
                                 <div class="col-md-12 mb-3">
-                                    <input class="btn btn-success" name="submitImage" type="submit" onclick="showLoader();" value="Upload Image(s)" />
+                                    <input class="btn btn-success" name="submitImage" type="submit"  value="Upload Image(s)" />
                                 </div>
                             </div>
                         </form>

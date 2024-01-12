@@ -68,7 +68,7 @@
                                             class="form-control">
                                     </div>
                                     <div class="col-md-2 text-start">
-                                        <button type="submit" onclick="showLoader();" class="btn btn-info"><i class="fas fa-search"
+                                        <button type="submit"  class="btn btn-info"><i class="fas fa-search"
                                                 aria-hidden="true"></i> Search</button>
                                         <a class="btn btn-warning" href="{{ route('contact_request.index') }}"><i
                                                 class="fas fa-sync" aria-hidden="true"></i>Reset</a>
@@ -81,9 +81,9 @@
                                 <input type="hidden" name="bulk_action" id="bulk_action" value="delete" />
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <button type="submit" onclick="showLoader();" class="btn btn-small btn-primary m-1 bulk_actions"
+                                        <button type="submit"  class="btn btn-small btn-primary m-1 bulk_actions"
                                             onclick="setBulkAction('read');" style="display:none;">Mark All Read</button>
-                                        <button type="submit" onclick="showLoader();" class="btn btn-small btn-danger m-1 bulk_actions"
+                                        <button type="submit"  class="btn btn-small btn-danger m-1 bulk_actions"
                                             onclick="setBulkAction('delete');" style="display:none;">Delete</button>
                                         @if (request()->input('read_lead', 2) == 1 || request()->input('read_lead', 2) == 2)
                                             <button type="button" class="btn btn-small btn-warning m-1"
@@ -318,7 +318,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                {{-- <input type="submit" onclick="showLoader();" value="Send Request Review Email" class="btn btn-primary"> --}}
+                                {{-- <input type="submit"  value="Send Request Review Email" class="btn btn-primary"> --}}
                                 <button type="button" class="btn btn-primary" onclick="comment_save()">Save
                                     Comment</button>
                             </div>
@@ -350,7 +350,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                {{-- <input type="submit" onclick="showLoader();" value="Send Request Review Email" class="btn btn-primary"> --}}
+                                {{-- <input type="submit"  value="Send Request Review Email" class="btn btn-primary"> --}}
                                 {{-- @if ($row->price == 0) --}}
                                 <button type="button" class="btn btn-primary" onclick="Price_save()">Save Price</button>
                                 {{-- @endif --}}

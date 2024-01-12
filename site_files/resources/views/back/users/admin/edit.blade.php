@@ -61,7 +61,7 @@
                                 </div>
                             </div>
                             <div class="box-footer">
-                                <input type="submit" onclick="showLoader();" name="save" value="Add User" class="btn btn-primary">
+                                <input type="submit"  name="save" value="Add User" class="btn btn-primary">
                             </div>
                         </form>
                     </div>

@@ -55,7 +55,7 @@
                                 <?php }?>
                                 <div class="col-sm-2">
                                     <a href="<?php echo base_url(); ?><?php echo $settingArr['contr_name']; ?>/unset_search"><i class="fas fa-sync"
-                                            aria-hidden="true"></i> Reset search</a> <input type="submit" onclick="showLoader();"
+                                            aria-hidden="true"></i> Reset search</a> <input type="submit" 
                                         class="btn btn-success" value="Search">
                                 </div>
                             </div>
@@ -178,7 +178,7 @@
                         <br />
                         <div class="row">
                             <div class="col-md-4"></div>
-                            <div class="col-md-8"><button type="submit" onclick="showLoader();" class="btn btn-success">Submit</button></div>
+                            <div class="col-md-8"><button type="submit"  class="btn btn-success">Submit</button></div>
                         </div>
                     </form>
                 </div>

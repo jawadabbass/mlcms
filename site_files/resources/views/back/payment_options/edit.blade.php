@@ -52,7 +52,7 @@
                                 <div class="row" style="margin-bottom: 10px;">
                                     <div class="col-lg-3 text-end"></div>
                                     <div class="col-lg-6 text-end">
-                                        <button type="submit" onclick="showLoader();" class="btn btn-success">Update</button>
+                                        <button type="submit"  class="btn btn-success">Update</button>
                                     </div>
                                     <div class="col-lg-3 text-start"></div>
                                 </div>

@@ -89,6 +89,3 @@ function reset_model() {
 function reload_table() {
 	table.ajax.reload(null, false); //reload datatable ajax
 }
-function showLoader() {
-	document.getElementById('spinner').style.display = 'block';
-}

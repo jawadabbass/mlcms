@@ -115,7 +115,7 @@
                 </div>
                 <div class="modal-footer">
                     {{-- <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button> --}}
-                    <button type="submit" onclick="showLoader();" name="submitter" class="btn btn-primary">Submit Question</button>
+                    <button type="submit"  name="submitter" class="btn btn-primary">Submit Question</button>
                 </div>
             </form>
         </section>

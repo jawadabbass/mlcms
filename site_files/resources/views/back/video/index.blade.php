@@ -145,7 +145,7 @@
                                 src="{{ asset_storage('back/images/loader.gif') }}" alt=""></div>
                         <button type="button" id="close_btn" class="btn btn-default"
                             data-bs-dismiss="modal">Close</button>
-                        <button type="submit" onclick="showLoader();" name="submitter" class="btn btn-primary"
+                        <button type="submit"  name="submitter" class="btn btn-primary"
                             onclick="this.style.display = 'none';document.getElementById('close_btn').style.display='none';document.getElementById('loader_div').style.display='block'">Submit</button>
                     </div>
                 </div>
@@ -208,7 +208,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" onclick="showLoader();" name="submitter" class="btn btn-primary">Update</button>
+                            <button type="submit"  name="submitter" class="btn btn-primary">Update</button>
                         </div>
                     </div>
                 </div>

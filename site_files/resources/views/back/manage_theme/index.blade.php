@@ -54,7 +54,7 @@
                 <div class="row">
                     <div class="col-md-2 text-end"></div>
                     <div class="col-md-8">
-                        <button id="submit" type="submit" onclick="showLoader();" class="btn btn-info"
+                        <button id="submit" type="submit"  class="btn btn-info"
                             onClick="document.getElementsById('submit').display='none'"> Update</button>
                     </div>
                 </div>
