@@ -158,7 +158,7 @@
                                                 </div>
 
                                                 <br>
-                                                <input type="submit" name="change_network_details" value="Update"
+                                                <input type="submit" onclick="showLoader();" name="change_network_details" value="Update"
                                                     class="sitebtn" />
                                                 <input type="hidden" id="office_id" name="office_id"
                                                     value=" {{ $val->ID }}">
@@ -272,7 +272,7 @@
                                 </div>
                             </div>
                             <br>
-                            <input type="submit" name="change_network_details" value="update" class="updatebtn" />
+                            <input type="submit" onclick="showLoader();" name="change_network_details" value="update" class="updatebtn" />
                         </form>
                     </div>
                 </div>
@@ -346,7 +346,7 @@
                                     @endif
                                 </div>
                                 <br>
-                                <input type="submit" name="change_network_details" value="update" class="updatebtn" />
+                                <input type="submit" onclick="showLoader();" name="change_network_details" value="update" class="updatebtn" />
                             </form>
                         </span></div>
                 </div>

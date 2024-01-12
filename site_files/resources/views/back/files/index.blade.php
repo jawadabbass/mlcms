@@ -80,8 +80,8 @@
                                     <div class="text-danger"><em>Max :</em> {{ getMaxUploadSize() }} MB</div>
                                 </div>
                                 <div class="col-md-3">
-                                    <input onclick="document.getElementById('spinner').style.display='block'"
-                                        class="btn btn-success" name="submitImage" type="submit" value="Upload File(s)" />
+                                    <input
+                                        class="btn btn-success" name="submitImage" type="submit" onclick="showLoader();" value="Upload File(s)" />
                                 </div>
                             </div>
                             <div id="image_preview" class="row">

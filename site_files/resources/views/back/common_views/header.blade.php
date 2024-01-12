@@ -22,7 +22,7 @@
                             aria-label="Search" aria-describedby="searchKeyword" onkeyup="searchResult()"
                             id="searchText">
                         <div class="input-group-append">
-                            <button class="btn btn-navbar" type="submit">
+                            <button class="btn btn-navbar" type="submit" onclick="showLoader();">
                                 <i class="fas fa-search"></i>
                             </button>
                             <button class="btn btn-navbar" type="button" data-widget="navbar-search">

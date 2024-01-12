@@ -146,7 +146,7 @@ $city_id = old('city_id', 0);
                                     <div class="col-lg-12 mb-3">
                                         <div class="form-group">
 
-                                            <button type="submit" id="btnSave" class="btn btn-primary">Submit
+                                            <button type="submit" onclick="showLoader();" id="btnSave" class="btn btn-primary">Submit
                                             </button>
                                         </div>
                                     </div>

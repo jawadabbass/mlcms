@@ -149,7 +149,7 @@
                             </div>
                         </div>
                         <br><br>
-                        <input type="submit" name="change_network_details" value="update" class="sitebtn" />
+                        <input type="submit" onclick="showLoader();" name="change_network_details" value="update" class="sitebtn" />
                     </div>
                 </form>
             </div>

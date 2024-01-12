@@ -141,7 +141,7 @@
                             </div>
                         </div>
                         <br><br>
-                        <input type="submit" name="change_network_details" value="update" class="sitebtn" />
+                        <input type="submit" onclick="showLoader();" name="change_network_details" value="update" class="sitebtn" />
                     </div>
                 </form>
             </div>
@@ -163,7 +163,7 @@
                                 <p><a href="https://www.google.com/analytics" target="_blank">Sign Up or Manage
                                         Analytics </a> by clicking this link</p>
                             </div>
-                            <input type="submit" name="change_network_details" value="update" class="sitebtn" />
+                            <input type="submit" onclick="showLoader();" name="change_network_details" value="update" class="sitebtn" />
                         </div>
                     </div>
                 </form>
@@ -206,7 +206,7 @@
                             </div>
                             <div class="col-md-12">
                                 <br />
-                                <input type="submit" name="change_network_details" value="update" class="sitebtn" />
+                                <input type="submit" onclick="showLoader();" name="change_network_details" value="update" class="sitebtn" />
                             </div>
                         </div>
                     </div>
@@ -257,7 +257,7 @@
                                 </div>
                             </div>
                         </div>
-                        <input type="submit" name="change_network_details" value="update" class="sitebtn" />
+                        <input type="submit" onclick="showLoader();" name="change_network_details" value="update" class="sitebtn" />
                     </div>
                 </form>
             </div>
@@ -369,7 +369,7 @@
                             </div>
                         </div>
                         <div class="col-md-12">
-                            <input type="submit" name="change_network_details" value="update" id="ipAddressFormSubmit"
+                            <input type="submit" onclick="showLoader();" name="change_network_details" value="update" id="ipAddressFormSubmit"
                                 class="sitebtn" />
                         </div>
                     </div>
@@ -412,7 +412,7 @@
                                 @php echo helptooltip('web_down_status') @endphp
                             </div>
                             <br>
-                            <input type="submit" name="change_network_details" value="update" class="sitebtn" />
+                            <input type="submit" onclick="showLoader();" name="change_network_details" value="update" class="sitebtn" />
                         </div>
                     </div>
                 </form>

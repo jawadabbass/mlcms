@@ -16,7 +16,7 @@
 <script src="{{ asset_storage('lib/jquery-validation/dist/additional-methods.min.js') }}"></script>
 <script src="{{ asset_storage('lib/inputmask/dist/jquery.inputmask.js') }}"></script>
 <script src="{{ asset_storage('lib/sweetalert/sweetalert2.all.min.js') }}"></script>
-<script src="{{ asset_storage('before-effect-slider/before-effect-slider.js') }}"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/img-comparison-slider@8/dist/index.js"></script>
 <script src="{{ asset_storage('lib/chartjs/dist/chart.umd.js') }}"></script>
 <script src="{{ asset_storage('back/js/AdminLTE/dist/js/adminlte.min.js') }}"></script>
 

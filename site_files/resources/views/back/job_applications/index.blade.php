@@ -71,7 +71,7 @@
         </section>
         <!-- /.content -->
     </div>
-    @include('back.common_views.spinner')
+    
 @endsection
 @section('beforeBodyClose')
     <div class="modal" tabindex="-1" role="dialog" id="jobApplicationSHowModel">

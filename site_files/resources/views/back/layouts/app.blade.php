@@ -16,6 +16,7 @@
 
 <body
     class="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed text-sm {{ session('leftSideBar') == 1 ? 'sidebar-collapse' : '' }}">
+    @include('back.common_views.spinner')
     <div class="wrapper">
         <div class="lContainer" style="display: none;" id="lContainer">
             <div class="loader"></div>

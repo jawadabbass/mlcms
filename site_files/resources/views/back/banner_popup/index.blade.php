@@ -188,7 +188,7 @@
                                 <div id="status_help" class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <button type="submit"
+                        <button type="submit" onclick="showLoader();"
                             class="btn btn-primary">{{ $form->add_or_edit == 'add' ? 'Save' : 'Update' }}</button>
                     </form>
                 </div>

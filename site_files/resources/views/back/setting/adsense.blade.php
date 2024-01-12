@@ -66,7 +66,7 @@
                             </div>
                             <div class="col-md-12">
                                 <br />
-                                <input type="submit" name="change_network_details" value="update" class="sitebtn" />
+                                <input type="submit" onclick="showLoader();" name="change_network_details" value="update" class="sitebtn" />
                             </div>
                         </div>
                     </div>

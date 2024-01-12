@@ -145,7 +145,7 @@
                                         {!! showErrors($errors, 'MAIN_FIELD_TITLE_OR_NAME_STUB') !!}
                                     </div>
                                     <div class="col-12 mb-4">
-                                        <button type="submit" class="btn btn-success">Generate Code</button>
+                                        <button type="submit" onclick="showLoader();" class="btn btn-success">Generate Code</button>
                                     </div>
                                 </div>
                             </div>
@@ -158,7 +158,7 @@
         </section>
         <!-- /.content -->
     </div>
-    @include('back.common_views.spinner')
+    
 @endsection
 @section('beforeBodyClose')
     <script>

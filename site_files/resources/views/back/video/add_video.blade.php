@@ -60,7 +60,7 @@
                 <div class="row">
                     <div class="col-md-4 text-end"></div>
                     <div class="col-md-8">
-                        <button id="submit" type="submit" class="btn btn-info"
+                        <button id="submit" type="submit" onclick="showLoader();" class="btn btn-info"
                             onClick="document.getElementsById('submit').display='none'"><i class="fas fa-plus-circle"
                                 aria-hidden="true"></i> Submit</button>
                     </div>

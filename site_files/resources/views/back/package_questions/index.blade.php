@@ -60,7 +60,7 @@
 
                                 <div class="col-sm-1 form-group">
 
-                                    <button type="submit" class="btn">
+                                    <button type="submit" onclick="showLoader();" class="btn">
                                         <li class="fas fa-search"></li>
                                     </button>
                                 </div>
@@ -126,7 +126,7 @@
         </section>
         <!-- /.content -->
     </div>
-    @include('back.common_views.spinner')
+    
 @endsection
 @section('beforeBodyClose')
     <script src="{{ asset_storage('') . 'module/products/admin/js/products.js' }}" type="text/javascript"></script>

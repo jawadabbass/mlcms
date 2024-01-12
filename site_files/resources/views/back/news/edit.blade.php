@@ -44,7 +44,7 @@
                                 <div class="row">
                                     @include('back.news.form')
                                     <div class="col-12 mb-4">
-                                        <button type="submit" class="btn btn-success">Update</button>
+                                        <button type="submit" onclick="showLoader();" class="btn btn-success">Update</button>
                                     </div>
                                 </div>
                             </div>
@@ -57,5 +57,5 @@
         </section>
         <!-- /.content -->
     </div>
-    @include('back.common_views.spinner')
+    
 @endsection

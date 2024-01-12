@@ -89,7 +89,7 @@ $cnt++;
                                                 class="fas fa-angle-double-left" aria-hidden="true"></i> Back</a></div>
                                     <div class="col-sm-5 text-start">
                                         <input type="hidden" name="idd" value="0" />
-                                        <button type="submit" class="btn btn-success">Next <i
+                                        <button type="submit" onclick="showLoader();" class="btn btn-success">Next <i
                                                 class="fas fa-angle-double-right" aria-hidden="true"></i></button>
                                     </div>
                                 </div>

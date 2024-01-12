@@ -13,7 +13,7 @@
 <link href="{{ asset_storage('front/css/custom_style.css') }}" rel="stylesheet">
 <link href="{{ asset_storage('front/css/responsive.css') }}" rel="stylesheet" />
 <link href="{{ asset_storage('lib/sweetalert/sweetalert2.min.css') }}" rel="stylesheet" />
-<link href="{{ asset_storage('before-effect-slider/before-effect-slider.css') }}" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/img-comparison-slider@8/dist/styles.css" />
 <!-- ========== End Stylesheet ========== -->
 <!-- HTML5 shim and Respond.js')}} for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js')}} doesn't work if you view the page via file:// -->
@@ -24,6 +24,31 @@
 <!-- ========== Google Fonts ========== -->
 <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800" rel="stylesheet">
+<style>
+    .before,
+    .after {
+        margin: 0;
+    }
+    .before figcaption,
+    .after figcaption {
+        background: #fff;
+        border: 1px solid #c0c0c0;
+        border-radius: 12px;
+        color: #2e3452;
+        opacity: 0.8;
+        padding: 12px;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        line-height: 100%;
+    }
+    .before figcaption {
+        left: 12px;
+    }
+    .after figcaption {
+        right: 12px;
+    }
+</style>
 <script>
 var base_url = "{{ base_url() }}";
 </script>

@@ -315,7 +315,12 @@ class GalleryController extends Controller
     public function deleteImage()
     {
         $image = AlbumImage::where('id', request('id'))->first();
-        ImageUploader::deleteImage('gallery/' . $image->album_id . '/', $image->imageUrl);
+        if (!empty($image->imageUrl)) {
+            ImageUploader::deleteImage('gallery/' . $image->album_id . '/', $image->imageUrl);
+        }
+        if (!empty($image->imageUrl2)) {
+            ImageUploader::deleteImage('gallery/' . $image->album_id . '/', $image->imageUrl2);
+        }
         $image->delete();
         return response([
             'status' => true,
@@ -327,7 +332,12 @@ class GalleryController extends Controller
         $allImage = DB::table('images')->where('album_id', $id)->get();
         foreach ($allImage as $key => $value) {
             $galleryItem = Image::find($value->id);
-            ImageUploader::deleteImage('gallery/' . $id . '/', $galleryItem->imageUrl);
+            if (!empty($galleryItem->imageUrl)) {
+                ImageUploader::deleteImage('gallery/' . $galleryItem->album_id . '/', $galleryItem->imageUrl);
+            }
+            if (!empty($galleryItem->imageUrl2)) {
+                ImageUploader::deleteImage('gallery/' . $galleryItem->album_id . '/', $galleryItem->imageUrl2);
+            }
             $galleryItem->delete();
         }
         $albumItem = Album::find($id);

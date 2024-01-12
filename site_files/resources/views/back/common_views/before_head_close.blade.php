@@ -17,9 +17,34 @@
 <link href="{{ asset_storage('back/js/AdminLTE/dist/css/adminlte.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset_storage('back/fontawesome-iconpicker/dist/css/fontawesome-iconpicker.min.css') }}" rel="stylesheet"
     type="text/css" />
-<link href="{{ asset_storage('before-effect-slider/before-effect-slider.css') }}" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/img-comparison-slider@8/dist/styles.css" />
 <link href="{{ asset_storage('lib/sweetalert/sweetalert2.min.css') }}" rel="stylesheet" />
 <link href="{{ asset_storage('back/css/admin_dev_style.css') }}" rel="stylesheet" type="text/css" />
+<style>
+    .before,
+    .after {
+        margin: 0;
+    }
+    .before figcaption,
+    .after figcaption {
+        background: #fff;
+        border: 1px solid #c0c0c0;
+        border-radius: 12px;
+        color: #2e3452;
+        opacity: 0.8;
+        padding: 12px;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        line-height: 100%;
+    }
+    .before figcaption {
+        left: 12px;
+    }
+    .after figcaption {
+        right: 12px;
+    }
+</style>
 <script>
     var base_url = '{{ base_url() }}';
     var base_url_admin = '{{ config('Constants.base_url_admin') }}';

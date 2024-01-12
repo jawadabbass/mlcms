@@ -102,7 +102,7 @@
         </section>
         <!-- /.content -->
     </div>
-    @include('back.common_views.spinner')
+    
 @endsection
 @section('beforeBodyClose')
     <script>

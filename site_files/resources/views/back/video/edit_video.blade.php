@@ -67,7 +67,7 @@
                         <input type="hidden" name="idd" id="idd" value="{{ $rec->ID }}">
                         <p id="old_content" style="display: none;">{{ adjustUrl($rec->content) }}</p>
                         <p id="old_type" style="display: none;">{{ $rec->additional_field_4 }}</p>
-                        <button id="submit" type="submit" class="btn btn-info"
+                        <button id="submit" type="submit" onclick="showLoader();" class="btn btn-info"
                             onClick="document.getElementsById('submit').display='none'"><i class="fas fa-pen-to-square"
                                 aria-hidden="true"></i> Update</button>
                     </div>

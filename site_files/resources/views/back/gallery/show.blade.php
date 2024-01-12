@@ -108,8 +108,7 @@
                                     <div id="after_image_preview" class="row"></div>
                                 </div>
                                 <div class="col-md-12 mb-3">
-                                    <input onclick="document.getElementById('spinner').style.display='block'"
-                                        class="btn btn-success" name="submitImage" type="submit" value="Upload Image(s)" />
+                                    <input class="btn btn-success" name="submitImage" type="submit" onclick="showLoader();" value="Upload Image(s)" />
                                 </div>
                             </div>
                         </form>
@@ -204,8 +203,18 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="mb-3">
-                                            <div class="" id="image_before_after_preview_{{ $image->id }}">
-                                            </div>
+                                            <img-comparison-slider>
+                                                <figure slot="first" class="before">
+                                                    <img width="100%"
+                                                        src="{{ asset_uploads('') }}gallery/{{ $image->album_id }}/thumb/{{ $image->imageUrl . '?' . time() }}">
+                                                    <figcaption>Before</figcaption>
+                                                </figure>
+                                                <figure slot="second" class="after">
+                                                    <img width="100%"
+                                                        src="{{ asset_uploads('') }}gallery/{{ $image->album_id }}/thumb/{{ $image->imageUrl2 . '?' . time() }}">
+                                                    <figcaption>After</figcaption>
+                                                </figure>
+                                            </img-comparison-slider>
                                         </div>
                                     </div>
                                 </div>
@@ -506,24 +515,6 @@
             @endif
             @if (old('isBeforeAfterHaveTwoImages', 0) == 1)
                 show_before_after_have_two_images();
-            @endif
-            @if ($images->count())
-                @foreach ($images as $image)
-                    @if ($image->isBeforeAfterHaveTwoImages == 1)
-                        beforeEffectslider({
-                            Selector: "#image_before_after_preview_{{ $image->id }}",
-                            BeforeImage: "{{ asset_uploads('') }}gallery/{{ $image->album_id }}/thumb/{{ $image->imageUrl . '?' . time() }}",
-                            BeforeAlt: "Before",
-                            AfterImage: "{{ asset_uploads('') }}gallery/{{ $image->album_id }}/thumb/{{ $image->imageUrl2 . '?' . time() }}",
-                            AftereAlt: "After",
-                            Buttons: true,
-                            ButtonsText: {
-                                after: 'After',
-                                before: 'Before'
-                            }
-                        });
-                    @endif
-                @endforeach
             @endif
         </script>
     @endsection

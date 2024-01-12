@@ -73,7 +73,7 @@
                             </div>
                         </div>
                         <br><br>
-                        <input type="submit" name="logo_favicon_btn" value="Update" class="sitebtn" />
+                        <input type="submit" onclick="showLoader();" name="logo_favicon_btn" value="Update" class="sitebtn" />
                     </div>
                 </form>
             </div>

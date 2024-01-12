@@ -123,7 +123,7 @@
                 </div>
                 {{-- <div class="col-sm-12"> --}}
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Update Question</button>
+                    <button type="submit" onclick="showLoader();" class="btn btn-primary">Update Question</button>
                 </div>
                 {{-- </div> --}}
             </form>

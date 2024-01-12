@@ -56,7 +56,7 @@ foreach($arrSearch as $key=>$val){?>
                                     <a href="<?php echo admin_url(); ?><?php echo $settingArr['contr_name']; ?>"><i class="fas fa-sync"
                                             aria-hidden="true"></i> Reset search</a>
                                     <input type="hidden" name="sr" value="y">
-                                    <button type="submit" class="btn btn-sm btn-success">{!! the_icon('search') !!}
+                                    <button type="submit" onclick="showLoader();" class="btn btn-sm btn-success">{!! the_icon('search') !!}
                                         Search</button>
                                 </div>
                             </div>

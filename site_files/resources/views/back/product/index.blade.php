@@ -114,7 +114,7 @@
         </section>
         <!-- /.content -->
     </div>
-    @include('back.common_views.spinner')
+    
 @endsection
 @section('beforeBodyClose')
     <script src="{{ asset_storage('') . 'module/products/admin/js/products.js' }}" type="text/javascript"></script>
