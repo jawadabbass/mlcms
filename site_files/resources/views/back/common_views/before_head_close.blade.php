@@ -25,6 +25,7 @@
     .after {
         margin: 0;
     }
+
     .before figcaption,
     .after figcaption {
         background: #fff;
@@ -38,11 +39,21 @@
         transform: translateY(-50%);
         line-height: 100%;
     }
+
     .before figcaption {
         left: 12px;
     }
+
     .after figcaption {
         right: 12px;
+    }
+
+    img-comparison-slider {
+        --divider-width: 4px;
+        --divider-color: #ffffff;
+        --default-handle-opacity: 1;
+        --default-handle-width: 150px;
+        --default-handle-shadow: 2px 4px 6px #000;
     }
 </style>
 <script>
