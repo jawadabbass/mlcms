@@ -17,6 +17,7 @@ use App\Http\Controllers\Front\ContactUsController;
 use App\Http\Controllers\Front\MailChimpController;
 use App\Http\Controllers\Front\TestimonialController;
 use App\Http\Controllers\Front\ClientRegisterController;
+use App\Http\Controllers\Front\GoogleCalendarController;
 use App\Http\Controllers\Back\BlogController as BackBlogController;
 use App\Http\Controllers\Back\CityController as BackCityController;
 use App\Http\Controllers\Back\MenuController as BackMenuController;
@@ -405,6 +406,11 @@ Route::group(['middleware' => ['siteStatus', 'clearCache', 'ipmiddleware']], fun
     Route::get('unsubscribe-newsletter', [MailChimpController::class, 'unsubscribeNewsletterForm'])->name('unsubscribeNewsletterForm');
     Route::post('unsubscribe-newsletter', [MailChimpController::class, 'unsubscribeNewsletter'])->name('unsubscribeNewsletter');
     Route::get('unsubscribe-newsletter-thanks', [MailChimpController::class, 'unsubscribeNewsletterThanks'])->name('unsubscribeNewsletterThanks');
+
+    Route::get('/show-google-calendar', [GoogleCalendarController::class, 'show'])->name('show-google-calendar');
+    Route::get('/google-calendar', [GoogleCalendarController::class, 'index'])->name('google-calendar');
+    Route::post('/google-calendar', [GoogleCalendarController::class, 'save']);
+    
 });
 /******************************* */
 /******************************* */
