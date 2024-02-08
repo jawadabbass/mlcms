@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Back;
 
+use Carbon\Carbon;
 use App\Models\Back\Client;
 use Illuminate\Http\Request;
 use App\Mail\AssessmentEmail;
 use App\Models\Back\ContactUs;
 use App\Models\Back\AdminAlert;
+use Spatie\GoogleCalendar\Event;
 use App\Models\Back\CmsModuleData;
 use App\Models\Back\EmailTemplate;
 use App\Exports\ContactLeadsExport;
@@ -68,7 +70,6 @@ class ContactUsController extends Controller
                     ->where('dated', '<=', $to);
             }
             $specialistQuery->orderBy('dated', 'desc');
-
             $result = $specialistQuery->paginate(15);
             $serachLink = rtrim($serachLink, '&');
             $result->setPath('?' . $serachLink);
@@ -152,7 +153,6 @@ class ContactUsController extends Controller
         $contact->added_by = Auth::user()->id;
         $contact->save();
         session(['message' => 'Added Successfully', 'type' => 'success']);
-        
         return redirect(route('contact_request.index'));
     }
     public function convert_client($id)
@@ -215,6 +215,33 @@ class ContactUsController extends Controller
             return json_encode(array("status" => 'done'));
         }
     }
+    public function add_to_google_calendar($id)
+    {
+        $contact = ContactUs::find($id);
+        $dated = Carbon::createFromFormat('Y-m-d', $contact->dated, "America/New_York");
+        $description = '<table>
+  <tr><td>Dated</td><td>' . $dated . '</td></tr>
+  <tr><td>Address</td><td>' . $contact->address . '</td></tr>
+  <tr><td>Price</td><td>' . $contact->price . '</td></tr>
+  <tr><td>Subject</td><td>' . $contact->subject . '</td></tr>
+  <tr><td>Assesment status</td><td>' . $contact->assesment_status . '</td></tr>
+  <tr><td>Assesment code</td><td>' . $contact->assesment_code . '</td></tr>
+  </table>';
+        $event = new Event();
+        $event->name = $contact->name;
+        $event->startDate = $dated;
+        $event->endDate = $dated;
+        $event->setLocation($contact->address . ' ' . $contact->city . ' ' . $contact->country);
+        $event->setDescription($description);
+        $event->colorId = 11;
+        $event->status = 'confirmed';
+        $event->transparency = 'transparent';
+        $event->save();
+        $contact->added_to_google_calendar = 1;
+        $contact->save();
+        session(['message' => 'Added Successfully', 'type' => 'success']);
+        return json_encode(array("status" => 'done'));
+    }
     /**
      * Display the specified resource.
      *
@@ -225,10 +252,8 @@ class ContactUsController extends Controller
     {
         $title = config("Constants.SITE_NAME") . ': Contact Us Page';
         $result = ContactUs::find($id);
-
         $pre = ContactUs::where('id', '<', $id)->orderBy('id', 'DESC')->first();
         $next = ContactUs::where('id', '>', $id)->orderBy('id', 'ASC')->first();
-
         $history = ContactLeadHistory::where('contact_id', $id)->with(['admin'])->paginate(10);
         return view('back.contactus.history', compact('result', 'title', 'history', 'pre', 'next'));
     }
@@ -361,7 +386,6 @@ class ContactUsController extends Controller
         }
         return redirect(route('contact_request.index'));
     }
-
     public function exportLeads(Request $request, $exportType)
     {
         if ('excel' === $exportType) {

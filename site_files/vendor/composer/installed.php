@@ -3,7 +3,7 @@
         'name' => 'laravel/laravel',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'd472c1043f8ba64f4fc434fa3e6e4c5a5d01f91a',
+        'reference' => '1f821ba365f08fa417e7fe7f0bf809c238470030',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -571,7 +571,7 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'd472c1043f8ba64f4fc434fa3e6e4c5a5d01f91a',
+            'reference' => '1f821ba365f08fa417e7fe7f0bf809c238470030',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -1463,7 +1463,7 @@
         'spatie/laravel-google-calendar' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '019e5b37edd1b8e11e51053dc47a1bd3dca3ecc7',
+            'reference' => '50afe332788b23f49526af8e80b35108d9e8155f',
             'type' => 'library',
             'install_path' => __DIR__ . '/../spatie/laravel-google-calendar',
             'aliases' => array(

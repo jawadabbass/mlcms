@@ -53,11 +53,18 @@ function getModuleDataByType($moduleType, $limit = 20, $start = 0, $orderBy = 'i
     return getModuleData($module->id, $limit, $start, $orderBy, $ascDesc);
 }
 
-function getModuleData($moduleId, $limit = 0, $start = 0, $orderBy = 'item_order', $ascDesc = 'asc', $active = true)
+function getModuleData($moduleId, $limit = 0, $start = 0, $orderBy = 'item_order', $ascDesc = 'asc', $active = true, $additionalFieldsFilter = [])
 {
     $data = \App\Models\Back\CmsModuleData::where('cms_module_id', $moduleId);
     if ($active) {
         $data->where('sts', 'active');
+    }
+    if (count($additionalFieldsFilter) > 0) {
+        for ($counter = 1; $counter < 9; $counter++) {
+            if (isset($additionalFieldsFilter['additional_field_' . $counter])) {
+                $data->where('additional_field_' . $counter, 'like', $additionalFieldsFilter['additional_field_' . $counter]);
+            }
+        }
     }
     $data->orderBy($orderBy, $ascDesc);
     $data->orderBy('heading', 'asc');

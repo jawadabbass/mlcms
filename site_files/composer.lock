@@ -6324,12 +6324,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jawadabbass/laravel-google-calendar.git",
-                "reference": "019e5b37edd1b8e11e51053dc47a1bd3dca3ecc7"
+                "reference": "50afe332788b23f49526af8e80b35108d9e8155f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jawadabbass/laravel-google-calendar/zipball/019e5b37edd1b8e11e51053dc47a1bd3dca3ecc7",
-                "reference": "019e5b37edd1b8e11e51053dc47a1bd3dca3ecc7",
+                "url": "https://api.github.com/repos/jawadabbass/laravel-google-calendar/zipball/50afe332788b23f49526af8e80b35108d9e8155f",
+                "reference": "50afe332788b23f49526af8e80b35108d9e8155f",
                 "shasum": ""
             },
             "require": {
@@ -6400,7 +6400,7 @@
                     "url": "https://spatie.be/open-source/support-us"
                 }
             ],
-            "time": "2024-02-08T13:08:03+00:00"
+            "time": "2024-02-08T14:57:15+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",

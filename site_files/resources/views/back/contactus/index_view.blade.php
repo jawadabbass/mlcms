@@ -68,7 +68,7 @@
                                             class="form-control">
                                     </div>
                                     <div class="col-md-2 text-start">
-                                        <button type="submit"  class="btn btn-info"><i class="fas fa-search"
+                                        <button type="submit" class="btn btn-info"><i class="fas fa-search"
                                                 aria-hidden="true"></i> Search</button>
                                         <a class="btn btn-warning" href="{{ route('contact_request.index') }}"><i
                                                 class="fas fa-sync" aria-hidden="true"></i>Reset</a>
@@ -81,9 +81,9 @@
                                 <input type="hidden" name="bulk_action" id="bulk_action" value="delete" />
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <button type="submit"  class="btn btn-small btn-primary m-1 bulk_actions"
+                                        <button type="submit" class="btn btn-small btn-primary m-1 bulk_actions"
                                             onclick="setBulkAction('read');" style="display:none;">Mark All Read</button>
-                                        <button type="submit"  class="btn btn-small btn-danger m-1 bulk_actions"
+                                        <button type="submit" class="btn btn-small btn-danger m-1 bulk_actions"
                                             onclick="setBulkAction('delete');" style="display:none;">Delete</button>
                                         @if (request()->input('read_lead', 2) == 1 || request()->input('read_lead', 2) == 2)
                                             <button type="button" class="btn btn-small btn-warning m-1"
@@ -160,9 +160,9 @@
                                                         </td> --}}
                                                         <td>{{ format_date($row->dated, 'date_time') }}</td>
                                                         <td>
-                                                            <a href="javascript:;" data-bs-toggle="popover" data-bs-trigger="focus"
-                                                                class="btn btn-sm btn-success" data-bs-placement="bottom"
-                                                                data-bs-title="User Comment"
+                                                            <a href="javascript:;" data-bs-toggle="popover"
+                                                                data-bs-trigger="focus" class="btn btn-sm btn-success"
+                                                                data-bs-placement="bottom" data-bs-title="User Comment"
                                                                 data-bs-content="{{ $row->comments }}">
                                                                 <i class="fas fa-comment" aria-hidden="true"></i>
                                                             </a>
@@ -199,6 +199,11 @@
                                                                         class="fas fa-user" aria-hidden="true"></i>
                                                                     Convert to Client</a>
                                                             @endif
+                                                            <a class="btn btn-sm btn-primary" href="javascript:;"
+                                                                onclick="add_to_google_calendar('{{ $row->id }}')"><i
+                                                                    class="fas fa-calendar" aria-hidden="true"></i>
+                                                                Add{{ ($row->added_to_google_calendar == 1)? ' again':'' }} to Google Calendar</a>
+
                                                             <a class="btn btn-sm btn-info"
                                                                 onclick="send_template_email('{{ $row->id }}','lead','single')"
                                                                 href="javascript:"><i class="fas fa-envelope-square"></i>
@@ -518,6 +523,33 @@
                         $("#subtr" + id).fadeOut(1000);
                         var tolrec = $("#total_rec").html();
                         var tolrec = $("#total_rec").html(parseInt(tolrec) - 1);
+                    }
+                }
+            });
+        }
+
+        function add_to_google_calendar(id) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: "GET",
+                url: "{{ route('lead_add_to_google_calendar', '') }}" + "/" + id,
+                data: {
+                    '_token': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    var data = JSON.parse(response);
+                    if (data.status == 'error') {
+                        alertme('<i class="fas fa-xmark" aria-hidden="true"></i> Some thing went wrong',
+                            'danger', true, 1500);
+                    } else {
+                        // location.reload();
+                        alertme('<i class="fas fa-check" aria-hidden="true"></i> Done Successfully ',
+                            'success',
+                            true, 1500);
                     }
                 }
             });

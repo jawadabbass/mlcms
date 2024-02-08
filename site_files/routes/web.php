@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
@@ -76,7 +75,6 @@ use App\Http\Controllers\AdminAuth\ConfirmPasswordController as AdminAuthConfirm
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 /************************************* */
 /************************************* */
 /***********  ADMINMEDIA ************* */
@@ -135,24 +133,7 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     Route::post('/invoice/re_send_invoice', [BackInvoiceController::class, 're_send_invoice']);
     Route::resource('/invoice', BackInvoiceController::class);
     Route::resource('/menus', BackMenuController::class);
-    Route::resource('/contact_request', BackContactUsController::class);
-    Route::get('/contact_request/convert_client/{id}', [BackContactUsController::class, 'convert_client'])->name('lead_convert_client');
-    //Contact us leads
-    Route::get('/contact_request/export/{exportType}', [BackContactUsController::class, 'exportLeads'])->name('export.leads');
-    Route::post('/contact_request/lead_comment', [BackContactUsController::class, 'CommentContactLeads'])->name('lead_comments');
-    Route::get('/read_data_contact_lead/{id}', [BackContactUsController::class, 'contactUsReadData'])->name('contact_lead_read');
-    Route::post('/contact-request-bulk-actions', [BackContactUsController::class, 'contactUsBulkActions'])->name('contact_request.bulk.actions');
-    Route::post('/contact_request/price', [BackContactUsController::class, 'PriceContactLeads'])->name('lead_price');
-    Route::get('/get_contact_request_to_edit/{id}', [BackContactUsController::class, 'getContactRequestToEdit'])->name('get_contact_request_to_edit');
-    Route::post('/update_contact_request', [BackContactUsController::class, 'updateContactRequest'])->name('update_contact_request');
-    Route::post('/manage_clients/status', [BackClientController::class, 'status']);
-    Route::resource('/manage_clients', BackClientController::class);
-    Route::post('/client_comments/request_comment', [BackClientController::class, 'CommentContactClients'])->name('client_comments');
-    Route::resource('/manage_contact', BackContactPagesController::class);
-    Route::resource('/contact_form_settings', BackContactFormSetting::class);
-    Route::post('/contact_form_settings/spam', [BackContactFormSetting::class, 'update_spam_words']);
-    Route::post('/manage_contacts/emails', [BackContactPagesController::class, 'emailUpdate']);
-    Route::post('/manage_contacts/email_delete', [BackContactPagesController::class, 'emailDelete']);
+    //Blog
     Route::resource('/blog', BackBlogController::class);
     Route::post('/blog/remove_img', [BackBlogController::class, 'removeFeaturedImage']);
     Route::get('/blog_comments', [BackBlogController::class, 'comments']);
@@ -243,10 +224,18 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     Route::post('/package-content-store', [BackPackageContentController::class, 'store'])->name('package_content_store');
     Route::get('/package-content-delete/{id}', [BackPackageContentController::class, 'delete'])->name('package_content_delete');
     Route::post('/package-content-edit-store', [BackPackageContentController::class, 'editStoreContent'])->name('package_content_store_edit');
-    Route::get('/contact_request/convert_client/{id}', [BackContactUsController::class, 'convert_client'])->name('lead_convert_client');
     Route::get('/send-assesment-email', [BackContactUsController::class, 'send_assesments_email'])->name('send_assesment_email');
     //Contact us leads
     Route::resource('/contact_request', BackContactUsController::class);
+    Route::get('/contact_request/convert_client/{id}', [BackContactUsController::class, 'convert_client'])->name('lead_convert_client');
+    Route::get('/contact_request/add_to_google_calendar/{id}', [BackContactUsController::class, 'add_to_google_calendar'])->name('lead_add_to_google_calendar');
+    Route::get('/contact_request/export/{exportType}', [BackContactUsController::class, 'exportLeads'])->name('export.leads');
+    Route::post('/contact-request-bulk-actions', [BackContactUsController::class, 'contactUsBulkActions'])->name('contact_request.bulk.actions');
+    Route::resource('/manage_contact', BackContactPagesController::class);
+    Route::resource('/contact_form_settings', BackContactFormSetting::class);
+    Route::post('/contact_form_settings/spam', [BackContactFormSetting::class, 'update_spam_words']);
+    Route::post('/manage_contacts/emails', [BackContactPagesController::class, 'emailUpdate']);
+    Route::post('/manage_contacts/email_delete', [BackContactPagesController::class, 'emailDelete']);
     Route::get('/get_contact_request_to_edit/{id}', [BackContactUsController::class, 'getContactRequestToEdit'])->name('get_contact_request_to_edit');
     Route::post('/update_contact_request', [BackContactUsController::class, 'updateContactRequest'])->name('update_contact_request');
     Route::post('/contact_request/lead_comment', [BackContactUsController::class, 'CommentContactLeads'])->name('lead_comments');
@@ -382,7 +371,7 @@ Route::group(['middleware' => ['siteStatus', 'clearCache', 'ipmiddleware']], fun
     Route::resource('/blog', BlogController::class);
     Route::get('/testimonials', [TestimonialController::class, 'index']);
     Route::get('/videos', [VideoController::class, 'index']);
-    Route::get('/videos/{slug}', [VideoController::class,'show']);
+    Route::get('/videos/{slug}', [VideoController::class, 'show']);
     Route::get('/gallery', [GalleryController::class, 'index']);
     Route::post('/addSubscriber', [HomeController::class, 'addSubscriber']);
     Route::get('/services/{slug}', [ServicesController::class, 'show']);
@@ -406,11 +395,9 @@ Route::group(['middleware' => ['siteStatus', 'clearCache', 'ipmiddleware']], fun
     Route::get('unsubscribe-newsletter', [MailChimpController::class, 'unsubscribeNewsletterForm'])->name('unsubscribeNewsletterForm');
     Route::post('unsubscribe-newsletter', [MailChimpController::class, 'unsubscribeNewsletter'])->name('unsubscribeNewsletter');
     Route::get('unsubscribe-newsletter-thanks', [MailChimpController::class, 'unsubscribeNewsletterThanks'])->name('unsubscribeNewsletterThanks');
-
     Route::get('/show-google-calendar', [GoogleCalendarController::class, 'show'])->name('show-google-calendar');
     Route::get('/google-calendar', [GoogleCalendarController::class, 'index'])->name('google-calendar');
     Route::post('/google-calendar', [GoogleCalendarController::class, 'save']);
-    
 });
 /******************************* */
 /******************************* */
