@@ -5,9 +5,10 @@ namespace Livewire\Mechanisms\FrontendAssets;
 use Livewire\Drawer\Utils;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Blade;
+use Livewire\Mechanisms\Mechanism;
 use function Livewire\on;
 
-class FrontendAssets
+class FrontendAssets extends Mechanism
 {
     public $hasRenderedScripts = false;
     public $hasRenderedStyles = false;
@@ -15,11 +16,6 @@ class FrontendAssets
     public $javaScriptRoute;
 
     public $scriptTagAttributes = [];
-
-    public function register()
-    {
-        app()->singleton($this::class);
-    }
 
     public function boot()
     {
@@ -80,7 +76,7 @@ class FrontendAssets
     {
         app(static::class)->hasRenderedStyles = true;
 
-        $nonce = isset($options['nonce']) ? "nonce=\"{$options['nonce']}\"" : '';
+        $nonce = isset($options['nonce']) ? "nonce=\"{$options['nonce']}\" data-livewire-style" : '';
 
         $progressBarColor = config('livewire.navigate.progress_bar_color', '#2299dd');
 
@@ -150,7 +146,7 @@ class FrontendAssets
 
         $url = rtrim($url, '/');
 
-        $url = (string) str($url)->start('/');
+        $url = (string) str($url)->when(! str($url)->isUrl(), fn($url) => $url->start('/'));
 
         // Add the build manifest hash to it...
         $manifest = json_decode(file_get_contents(__DIR__.'/../../../dist/manifest.json'), true);
@@ -186,6 +182,7 @@ class FrontendAssets
             'csrf' => app()->has('session.store') ? csrf_token() : '',
             'uri' => app('livewire')->getUpdateUri(),
             'progressBar' => $progressBar,
+            'nonce' => isset($options['nonce']) ? $options['nonce'] : '',
         ]);
 
         return <<<HTML

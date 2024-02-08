@@ -854,6 +854,23 @@ class QueryDataTable extends DataTableAbstract
     }
 
     /**
+     * Perform multi-term search by splitting keyword into
+     * individual words and searches for each of them.
+     *
+     * @param  string  $keyword
+     * @return void
+     */
+    protected function smartGlobalSearch($keyword): void
+    {
+        // Try scout search first & fall back to default search if disabled/failed
+        if ($this->applyScoutSearch($keyword)) {
+            return;
+        }
+
+        parent::smartGlobalSearch($keyword);
+    }
+
+    /**
      * Append debug parameters on output.
      *
      * @param  array  $output
@@ -863,7 +880,7 @@ class QueryDataTable extends DataTableAbstract
     {
         $query_log = $this->getConnection()->getQueryLog();
         array_walk_recursive($query_log, function (&$item) {
-            if (is_string($item)) {
+            if (is_string($item) && extension_loaded('iconv')) {
                 $item = iconv('iso-8859-1', 'utf-8', $item);
             }
         });
@@ -943,6 +960,7 @@ class QueryDataTable extends DataTableAbstract
      * @param  string  $model
      * @param  int  $max_hits
      * @return $this
+     *
      * @throws \Exception
      */
     public function enableScoutSearch(string $model, int $max_hits = 1000): static
@@ -1083,6 +1101,7 @@ class QueryDataTable extends DataTableAbstract
      * @param  string  $searchKeyword
      * @param  mixed  $searchFilters
      * @return array
+     *
      * @throws \Exception
      */
     protected function performScoutSearch(string $searchKeyword, mixed $searchFilters = []): array

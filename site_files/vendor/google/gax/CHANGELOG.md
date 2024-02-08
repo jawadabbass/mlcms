@@ -1,5 +1,33 @@
 # Changelog
 
+## [1.27.0](https://github.com/googleapis/gax-php/compare/v1.26.3...v1.27.0) (2024-02-07)
+
+
+### Features
+
+* Create ClientOptionsTrait ([#527](https://github.com/googleapis/gax-php/issues/527)) ([cfe2c60](https://github.com/googleapis/gax-php/commit/cfe2c60a36233f74259c96a6799d8492ed7c45d0))
+* Implement ProjectIdProviderInterface in CredentialsWrapper ([#523](https://github.com/googleapis/gax-php/issues/523)) ([b56a463](https://github.com/googleapis/gax-php/commit/b56a4635abfeeec08895202da8218e9ba915413e))
+* Update ArrayTrait to be consistent with Core ([#526](https://github.com/googleapis/gax-php/issues/526)) ([8e44185](https://github.com/googleapis/gax-php/commit/8e44185dd6f8f8f9ef5b136776cba61ec7a8b8f6))
+
+
+### Bug Fixes
+
+* Correct exception type for Guzzle promise ([#521](https://github.com/googleapis/gax-php/issues/521)) ([7129373](https://github.com/googleapis/gax-php/commit/712937339c134e1d92cab5fa736cfe1bbcd7f343))
+
+## [1.26.3](https://github.com/googleapis/gax-php/compare/v1.26.2...v1.26.3) (2024-01-18)
+
+
+### Bug Fixes
+
+* CallOptions should use transportOptions ([#513](https://github.com/googleapis/gax-php/issues/513)) ([2d45ee1](https://github.com/googleapis/gax-php/commit/2d45ee187cdc3619b30c51b653b508718baf3af4))
+
+## [1.26.2](https://github.com/googleapis/gax-php/compare/v1.26.1...v1.26.2) (2024-01-09)
+
+
+### Bug Fixes
+
+* Ensure modifyClientOptions is called for new surface clients ([#515](https://github.com/googleapis/gax-php/issues/515)) ([68231b8](https://github.com/googleapis/gax-php/commit/68231b896dec8efb86f8986aefba3d247d2a2d1c))
+
 ## [1.26.1](https://github.com/googleapis/gax-php/compare/v1.26.0...v1.26.1) (2024-01-04)
 
 

@@ -5,21 +5,11 @@ namespace Livewire\Mechanisms;
 use Livewire\Exceptions\ComponentNotFoundException;
 use Livewire\Component;
 
-class ComponentRegistry
+class ComponentRegistry extends Mechanism
 {
     protected $missingComponentResolvers = [];
     protected $nonAliasedClasses = [];
     protected $aliases = [];
-
-    function register()
-    {
-        app()->singleton($this::class);
-    }
-
-    function boot()
-    {
-        //
-    }
 
     function component($name, $class = null)
     {
@@ -99,16 +89,16 @@ class ComponentRegistry
         // If a component class was passed in, use that...
         if (class_exists($nameOrClass)) {
             $class = $nameOrClass;
-            // Otherwise, assume it was a simple name...
+        // Otherwise, assume it was a simple name...
         } else {
             $class = $this->nameToClass($nameOrClass);
 
             // If class can't be found, see if there is an index component in a subfolder...
-            if (!class_exists($class)) {
+            if(! class_exists($class)) {
                 $class = $class . '\\Index';
             }
 
-            if (!class_exists($class)) {
+            if(! class_exists($class)) {
                 foreach ($this->missingComponentResolvers as $resolve) {
                     if ($resolved = $resolve($nameOrClass)) {
                         $this->component($nameOrClass, $resolved);
@@ -122,7 +112,7 @@ class ComponentRegistry
         }
 
         // Now that we have a class, we can check that it's actually a Livewire component...
-        if (!is_subclass_of($class, Component::class)) {
+        if (! is_subclass_of($class, Component::class)) {
             throw new ComponentNotFoundException(
                 "Unable to find component: [{$nameOrClass}]"
             );
@@ -179,6 +169,10 @@ class ComponentRegistry
         $class = collect(str($name)->explode('.'))
             ->map(fn ($segment) => (string) str($segment)->studly())
             ->join('\\');
+
+        if (empty($rootNamespace)) {
+            return $class;
+        }
 
         return '\\' . $rootNamespace . '\\' . $class;
     }
