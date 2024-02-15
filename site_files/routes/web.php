@@ -228,7 +228,13 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     //Contact us leads
     Route::resource('/contact_request', BackContactUsController::class);
     Route::get('/contact_request/convert_client/{id}', [BackContactUsController::class, 'convert_client'])->name('lead_convert_client');
-    Route::get('/contact_request/add_to_google_calendar/{id}', [BackContactUsController::class, 'add_to_google_calendar'])->name('lead_add_to_google_calendar');
+    
+    
+    Route::get('/contact_request/loadDataToGoogleCalendarModal/{id}', [BackContactUsController::class, 'loadDataToGoogleCalendarModal'])->name('loadDataToGoogleCalendarModal');
+    Route::post('/contact_request/save_to_google_calendar', [BackContactUsController::class, 'save_to_google_calendar'])->name('save_to_google_calendar');
+    
+    
+    
     Route::get('/contact_request/export/{exportType}', [BackContactUsController::class, 'exportLeads'])->name('export.leads');
     Route::post('/contact-request-bulk-actions', [BackContactUsController::class, 'contactUsBulkActions'])->name('contact_request.bulk.actions');
     Route::resource('/manage_contact', BackContactPagesController::class);

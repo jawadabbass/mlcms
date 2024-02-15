@@ -215,23 +215,66 @@ class ContactUsController extends Controller
             return json_encode(array("status" => 'done'));
         }
     }
-    public function add_to_google_calendar($id)
+
+    public function loadDataToGoogleCalendarModal($id)
     {
         $contact = ContactUs::find($id);
-        $dated = Carbon::createFromFormat('Y-m-d', $contact->dated, "America/New_York");
+        echo '
+        <form name="frm_process" id="addLeadToGoogleCalendarForm" class="contact-form">
+            <input type="hidden" name="_token" value="' . csrf_token() . '">
+            <input type="hidden" name="lead_id" id="lead_id" value="' . $id . '">
+            <div class="col-sm-12">
+                <label>Name</label>
+                <input type="text" name="name" id="name" class="form-control" value="' . $contact->name . '"/>
+            </div>
+            <div class="col-sm-12">
+                <label>Date</label>
+                <input type="date" name="dated" id="dated" class="form-control" value="' . $contact->dated . '"/>
+            </div>
+            <div class="col-sm-12">
+                <label>Address</label>
+                <input type="text" name="address" id="address" class="form-control" value="' . $contact->address . '"/>
+            </div>
+            <div class="col-sm-12">
+                <label>City</label>
+                <input type="text" name="city" id="city" class="form-control" value="' . $contact->city . '"/>
+            </div>
+            <div class="col-sm-12">
+                <label>Country</label>
+                <input type="text" name="country" id="country" class="form-control" value="' . $contact->country . '"/>
+            </div>
+            <div class="col-sm-12">
+                <label>Subject</label>
+                <input type="text" name="subject" id="subject" class="form-control" value="' . $contact->subject . '"/>
+            </div>
+            <div class="col-sm-12">
+                <label>Assesment Status</label>
+                <input type="text" name="assesment_status" id="assesment_status" class="form-control" value="' . $contact->assesment_status . '"/>
+            </div>
+            <div class="col-sm-12">
+                <label>Assesment Code</label>
+                <input type="text" name="assesment_code" id="assesment_code" class="form-control" value="' . $contact->assesment_code . '"/>
+            </div>
+        </form>';
+    }
+
+    public function save_to_google_calendar(Request $request)
+    {
+        $contact = ContactUs::find($request->lead_id);
+        $dated = Carbon::createFromFormat('Y-m-d', $request->dated, "America/New_York");
         $description = '<table>
   <tr><td>Dated</td><td>' . $dated . '</td></tr>
-  <tr><td>Address</td><td>' . $contact->address . '</td></tr>
-  <tr><td>Price</td><td>' . $contact->price . '</td></tr>
-  <tr><td>Subject</td><td>' . $contact->subject . '</td></tr>
-  <tr><td>Assesment status</td><td>' . $contact->assesment_status . '</td></tr>
-  <tr><td>Assesment code</td><td>' . $contact->assesment_code . '</td></tr>
+  <tr><td>Address</td><td>' . $request->address . '</td></tr>
+  <tr><td>Price</td><td>' . $request->price . '</td></tr>
+  <tr><td>Subject</td><td>' . $request->subject . '</td></tr>
+  <tr><td>Assesment status</td><td>' . $request->assesment_status . '</td></tr>
+  <tr><td>Assesment code</td><td>' . $request->assesment_code . '</td></tr>
   </table>';
         $event = new Event();
-        $event->name = $contact->name;
+        $event->name = $request->name;
         $event->startDate = $dated;
         $event->endDate = $dated;
-        $event->setLocation($contact->address . ' ' . $contact->city . ' ' . $contact->country);
+        $event->setLocation($request->address . ' ' . $request->city . ' ' . $request->country);
         $event->setDescription($description);
         $event->colorId = 11;
         $event->status = 'confirmed';

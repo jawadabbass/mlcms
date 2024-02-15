@@ -200,9 +200,10 @@
                                                                     Convert to Client</a>
                                                             @endif
                                                             <a class="btn btn-sm btn-primary" href="javascript:;"
-                                                                onclick="add_to_google_calendar('{{ $row->id }}')"><i
+                                                                onclick="loadDataToGoogleCalendarModal('{{ $row->id }}')"><i
                                                                     class="fas fa-calendar" aria-hidden="true"></i>
-                                                                Add{{ ($row->added_to_google_calendar == 1)? ' again':'' }} to Google Calendar</a>
+                                                                Add{{ $row->added_to_google_calendar == 1 ? ' again' : '' }}
+                                                                to Google Calendar</a>
 
                                                             <a class="btn btn-sm btn-info"
                                                                 onclick="send_template_email('{{ $row->id }}','lead','single')"
@@ -446,6 +447,7 @@
     @include('back.clients.common.modal')
 @endsection
 @section('beforeBodyClose')
+    @include('back.contactus.google_calendar_modal')
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
@@ -528,31 +530,47 @@
             });
         }
 
-        function add_to_google_calendar(id) {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
+        function loadDataToGoogleCalendarModal(id) {
+            $('#addLeadToGoogleCalendarBody').html('wait...');
             $.ajax({
                 type: "GET",
-                url: "{{ route('lead_add_to_google_calendar', '') }}" + "/" + id,
-                data: {
-                    '_token': $('meta[name="csrf-token"]').attr('content')
-                },
+                url: "{{ admin_url() }}" + 'contact_request/loadDataToGoogleCalendarModal/' + id,
                 success: function(response) {
-                    var data = JSON.parse(response);
-                    if (data.status == 'error') {
-                        alertme('<i class="fas fa-xmark" aria-hidden="true"></i> Some thing went wrong',
-                            'danger', true, 1500);
-                    } else {
-                        // location.reload();
-                        alertme('<i class="fas fa-check" aria-hidden="true"></i> Done Successfully ',
-                            'success',
-                            true, 1500);
-                    }
+                    $('#addLeadToGoogleCalendarBody').html(response);
+                    $('#googleCalendarModal').modal('show');
                 }
             });
+        }
+
+        async function save_to_google_calendar() {
+            $('#googleCalendarModal').modal('hide');
+            $('#spinner').show();
+            let form = $("#addLeadToGoogleCalendarForm");
+            let formData = new FormData(form[0]);
+            /* for (const [key, value] of formData) {
+                console.log(`${key}: ${value}`);
+            } */
+
+            try {
+                const response = await fetch("{{ route('save_to_google_calendar') }}", {
+                    method: "POST",
+                    body: formData,
+                });
+                const result = await response.json();
+                $('#spinner').hide();
+
+                if (result.status == 'error') {
+                    alertme('<i class="fas fa-xmark" aria-hidden="true"></i> Some thing went wrong',
+                        'danger', true, 1500);
+                } else {
+                    alertme('<i class="fas fa-check" aria-hidden="true"></i> Done Successfully ',
+                        'success',
+                        true, 1500);
+                }
+                console.log("Success:", result);
+            } catch (error) {
+                console.error("Error:", error);
+            }
         }
 
         function read_data(id) {
