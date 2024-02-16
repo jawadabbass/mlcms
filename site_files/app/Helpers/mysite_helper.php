@@ -309,6 +309,8 @@ if (!function_exists('seo_print')) {
 
         if (isset($seoArr['canonical_url']) && $seoArr['canonical_url'] != '') {
             $metaTags .= '<link rel="canonical" href="' . $seoArr['canonical_url'] . '" />' . "\r\n";
+        } else {
+            $metaTags .= '<link rel="canonical" href="' . $url_current . '" />' . "\r\n";
         }
         if (isset($seoArr['index']) && $seoArr['index'] == '1') {
             $noFollowNoIndex[] = 'INDEX';

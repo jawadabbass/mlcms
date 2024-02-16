@@ -54,6 +54,7 @@
         <label class="form-label mt-2">Canonical URL @php echo helptooltip('canonical_url')@endphp</label>
         <textarea name="canonical_url" id="canonical_url" class="form-control" rows="3" cols="70">{{ $canonical_url }}</textarea>
         <span id="canonical_url_err" style="padding-left:2px;" class="err"></span>
+        <code>If Canonical URL is same as Page URL then Leave this field empty, in this case Canonical URL will be handled programmatically</code>
     </div>
 </div>
 <div style="clear:both"></div>
