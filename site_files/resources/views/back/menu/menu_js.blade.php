@@ -13,24 +13,6 @@
         });
     });
 
-    function string_to_product_slug(titleId, slugId) {
-        var str = $('[name="' + titleId + '"]').val();
-        var eventSlug = $('[name="' + slugId + '"]').val();
-        if (eventSlug.length == "") {
-            str = str.replace(/^\s+|\s+$/g, '');
-            str = str.toLowerCase();
-            var from = "àáäâèéëêìíïîòóöôùúüûñç·/_,:;";
-            var to = "aaaaeeeeiiiioooouuuunc------";
-            for (var i = 0, l = from.length; i < l; i++) {
-                str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
-            }
-            str = str.replace(/[^a-z0-9 -]/g, '')
-                .replace(/\s+/g, '-')
-                .replace(/-+/g, '-');
-            $('[name="' + slugId + '"]').val(str);
-        }
-    }
-
     function reset_model(save_method) {
         // alert('fdsfs');
         $('#form')[0].reset(); // reset form on modals

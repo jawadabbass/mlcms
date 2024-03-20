@@ -156,18 +156,6 @@ function isJson_page(str) {
     }
     return true;
 }
-function alertme(text, type, autoClose, closeAfterSec) {
-    var type = type || 'success';
-    var autoClose = autoClose || true;
-    var closeAfterSec = closeAfterSec || 3000;
-    $(".alertme").hide();
-    var mhtml = '<div class="alertme" id="div_alert" style="margin:5px;top:3%;position:fixed;z-index:9999;width:100%">' +
-        '<div style="max-width: 700px;margin: 0 auto;" class="alert alert-' + type + ' alert-dismissible"> <button type="button" class="btn-close" data-bs-dismiss="alert"></button> ' + text + '</div></div>';
-    $("body").append(mhtml);
-    if (autoClose) {
-        setTimeout(function () { $(".alertme").hide(); }, closeAfterSec);
-    }
-}
 function updatePageStatus(checkval, idd, fld) {
     var sts = '';
     if (checkval == true) {
@@ -210,51 +198,6 @@ $(document).ready(function () {
     });
 });
 //Form POST
-function submitMyForm_v2(postURL, cbfunc) {
-    var pageName = postURL;
-    $("#loader_div").show();
-
-    $(".subm").attr('disabled', true);
-    var btnText = $(".subm").html();
-    $(".subm").html('<i class="fa fa-refresh fa-spin" aria-hidden="true"></i> Processing');
-    $.ajax({
-        type: "POST",
-        timeout: 200000,
-        url: pageName,
-        //data: parameters,
-        data: new FormData($("#frm")[0]),
-        contentType: false,
-        cache: false,             // To unable request pages to be cached
-        processData: false,
-        beforeSend: function () { },
-        success: function (msg) {
-            $(".subm").attr('disabled', false);
-            $(".subm").html(btnText);
-            if (isJson(msg) == false) { alert('ERROR::' + msg); $("#loader_div").hide(); return false; }
-            obj = JSON.parse(msg);
-            if (obj.success == 'done') {
-                cbfunc();
-            }
-            else {
-                $("#loader_div").hide();
-                $(".subm").attr('disabled', false);
-                alert(obj.errormsg);
-
-            }
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            $(".subm").html(btnText);
-            $("#loader_div").hide();
-            $(".subm").attr('disabled', false);
-            if (textStatus === "timeout") {
-                alert("ERROR: Connection problem"); //Handle the timeout
-            } else {
-                alert("ERROR: There is something wrong.");
-            }
-        }
-    });
-
-}
 //Form Post With Data
 function postMyForm(postURL, dataObj, cbfunc, errCbFunc) {
     var pageName = postURL;

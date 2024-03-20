@@ -1,18 +1,3 @@
-function limit_text(idd, text_max, limitid) {
-	$('#' + limitid).html(text_max + ' characters remaining');
-	var strr = $('#' + idd).val();
-	var text_length = $('#' + idd).val().length;
-	var text_remaining = text_max - text_length;
-	if (text_remaining > 0) {
-		$('#' + limitid).html(text_remaining + ' characters remaining');
-	}
-	else {
-		var res = strr.substring(0, text_max);
-		$('#' + idd).val(res);
-		$('#' + limitid).html('0 characters remaining');
-	}
-}
-
 function OnlyNumber(evt, error_div) {
 	if (error_div != '') {
 		document.getElementById(error_div).innerHTML = "";
@@ -33,17 +18,6 @@ function OnlyNumber(evt, error_div) {
 		document.getElementById(error_div).innerHTML = "Only Interger Allowed";
 	}
 	return false;
-}
-function next(Val, Field) {
-	Len = Val.length;
-	if (Len > 1 && Field == 'ssn3') {
-		document.getElementById(Field).focus();
-		document.getElementById(Field).focus()
-	}
-	if (Len > 2) {
-		document.getElementById(Field).focus();
-		document.getElementById(Field).focus()
-	}
 }
 function loadprocess(thisobj) {
 	$(thisobj).hide();

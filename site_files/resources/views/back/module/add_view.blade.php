@@ -314,7 +314,7 @@
         }
     </style>
     <script src="{{ asset_storage('') . 'module/module/admin/crop-avatar/cropper.js' }}"></script>
-    <script type="text/javascript" src="{{ asset_storage('') . 'back/js/std_functions.js' }}"></script>
+    
     <!------------ Module JS Functions ---------------------->
     @include('back.module.module_data_images.module_data_images_js')
     <script type="text/javascript">

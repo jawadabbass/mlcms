@@ -48,15 +48,6 @@ function confirmDel() {
         return false;
     }
 }
-
-function confirmMsg(msg) {
-    if (confirm(msg)) {
-        return true;
-    }
-    else {
-        return false;
-    }
-}
 //For admin panel left bar (hiding/showing)
 function showme_page(val, arrowObj) {
     if ($(val + ':visible').length == 0) {
@@ -101,107 +92,6 @@ function string_to_slug(titleId, slugId) {
         $("#" + slugId).val(str);
     }
 }
-//For admin panel left bar (hiding/showing)
-$(function () {
-    "use strict";
-    //Enable sidebar toggle
-    $("[data-widget='pushmenu']").click(function (e) {
-        e.preventDefault();
-        //If window is small enough, enable sidebar push menu
-        var leftSideBar;
-        if ($('.sidebar-collapse').length)
-            leftSideBar = 0;
-        else
-            leftSideBar = 1;
-        console.log(leftSideBar);
-        var myurl = base_url + 'adminmedia/leftsidebar/session?preference=' + leftSideBar;
-        $.get(myurl, function (sts) {
-        });
-    });
-    //Add hover support for touch devices
-    $('.btn').bind('touchstart', function () {
-        $(this).addClass('hover');
-    }).bind('touchend', function () {
-        $(this).removeClass('hover');
-    });
-    //Activate tooltips
-    $("[data-toggle='tooltip']").tooltip();
-    /*
-     * Add collapse and remove events to boxes
-     */
-    $("[data-widget='collapse']").click(function () {
-        //Find the box parent
-        var box = $(this).parents(".box").first();
-        //Find the body and the footer
-        var bf = box.find(".box-body, .box-footer");
-        if (!box.hasClass("collapsed-box")) {
-            box.addClass("collapsed-box");
-            bf.slideUp();
-        } else {
-            box.removeClass("collapsed-box");
-            bf.slideDown();
-        }
-    });
-    /*
-     * ADD SLIMSCROLL TO THE TOP NAV DROPDOWNS
-     * ---------------------------------------
-     */
-    /*$(".navbar .menu").slimscroll({
-        height: "200px",
-        alwaysVisible: false,
-        size: "3px"
-    }).css("width", "100%");*/
-    /*
-     * INITIALIZE BUTTON TOGGLE
-     * ------------------------
-     */
-    $('.btn-group[data-bs-toggle="btn-toggle"]').each(function () {
-        var group = $(this);
-        $(this).find(".btn").click(function (e) {
-            group.find(".btn.active").removeClass("active");
-            $(this).addClass("active");
-            e.preventDefault();
-        });
-    });
-    $("[data-widget='remove']").click(function () {
-        //Find the box parent
-        var box = $(this).parents(".box").first();
-        box.slideUp();
-    });
-    /* Sidebar tree view */
-    /* $(".sidebar .treeview").tree();*/
-    /*
-     * Make sure that the sidebar is streched full height
-     * ---------------------------------------------
-     * We are gonna assign a min-height value every time the
-     * wrapper gets resized and upon page load. We will use
-     * Ben Alman's method for detecting the resize event.
-     *
-     **/
-    function _fix() {
-        //Get window height and the wrapper height
-        var height = $(window).height() - $("body > .header").height();
-        $(".wrapper").css("min-height", height + "px");
-        var content = $(".wrapper").height();
-        //If the wrapper height is greater than the window
-        if (content > height)
-            //then set sidebar height to the wrapper
-            $(".left-side, html, body").css("min-height", content + "px");
-        else {
-            //Otherwise, set the sidebar to the height of the window
-            $(".left-side, html, body").css("min-height", height + "px");
-        }
-    }
-    //Fire upon load
-    _fix();
-    //Fire when wrapper is resized
-    /*
-     * We are gonna initialize all checkbox and radio inputs to
-     * iCheck plugin in.
-     * You can find the documentation at http://fronteed.com/iCheck/
-     */
-    /* For demo purposes */
-});
 function load_social_media_add_form() {
     $('#add_page_form').modal('show');
 }
@@ -235,18 +125,6 @@ function load_social_media_edit_form(id) {
         $('#socail_media_id').val(data.ID);
         $('#edit_page_form').modal('show');
     });
-}
-function remove_social_media_icon_image(id) {
-    var myurl = base_url + 'social_media/remove_social_media_image/' + id;
-    var is_confirm = confirm("Are you sure you want to delete this social icon?");
-    if (is_confirm) {
-        $.get(myurl, function (sts) {
-            if (sts == 'done')
-                $('#featured_img').fadeOut("slow");
-            else
-                alert('OOps! Something went wrong.');
-        });
-    }
 }
 function delete_social_media(id) {
     var myurl = base_url + 'adminmedia/social_media/' + id;
@@ -391,14 +269,6 @@ $('#selected_images').on('change', function (event) {
             '" /></div>');
     }
 });
-function loadStorage() {
-    console.log("Load Getting Executed");
-    var preference = localStorage.getItem('collapsed');
-    if (1 == preference) {
-        $('.left-side').toggleClass("collapse-left");
-        $(".right-side").toggleClass("strech");
-    }
-}
 $(function () {
     $('.icp-auto').on('click', function () {
         $('.icp-auto').iconpicker();
@@ -436,39 +306,6 @@ function alertme(text, type, autoClose, closeAfterSec) {
             $(".alertme").hide();
         }, closeAfterSec);
     }
-}
-function insertIntoTextArea(str) {
-    insertAtCaret('Body', str);
-}
-function insertAtCaret(areaId, text) {
-    var txtarea = document.getElementById(areaId);
-    var scrollPos = txtarea.scrollTop;
-    var strPos = 0;
-    var br = ((txtarea.selectionStart || txtarea.selectionStart == '0') ?
-        "ff" : (document.selection ? "ie" : false));
-    if (br == "ie") {
-        txtarea.focus();
-        var range = document.selection.createRange();
-        range.moveStart('character', -txtarea.value.length);
-        strPos = range.text.length;
-    } else if (br == "ff") strPos = txtarea.selectionStart;
-    var front = (txtarea.value).substring(0, strPos);
-    var back = (txtarea.value).substring(strPos, txtarea.value.length);
-    txtarea.value = front + text + back;
-    strPos = strPos + text.length;
-    if (br == "ie") {
-        txtarea.focus();
-        var range = document.selection.createRange();
-        range.moveStart('character', -txtarea.value.length);
-        range.moveStart('character', strPos);
-        range.moveEnd('character', 0);
-        range.select();
-    } else if (br == "ff") {
-        txtarea.selectionStart = strPos;
-        txtarea.selectionEnd = strPos;
-        txtarea.focus();
-    }
-    txtarea.scrollTop = scrollPos;
 }
 function uploaded_files_show() {
     $('#image_preview').html("");

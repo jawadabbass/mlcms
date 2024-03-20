@@ -1,13 +1,4 @@
 <script type="text/javascript">
-    function uploaded_files_show() {
-
-        $('#image_preview').html("");
-        var total_file = document.getElementById("uploadFile").files.length;
-        for (var i = 0; i < total_file; i++) {
-            $('#image_preview').append("<div class=\"col-md-1 card\"><img src='" + URL.createObjectURL(event.target.files[
-                i]) + "'></div>");
-        }
-    }
 
     function add_album() {
         if ($("#title").val() == '') {

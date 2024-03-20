@@ -187,7 +187,6 @@
     </style>
     <script src="{{ asset_storage('') . 'module/module/admin/crop-avatar/cropper.js' }}"></script>
     @include('back.module.module_js')
-    <script type="text/javascript" src="{{ asset_storage('') . 'back/js/std_functions.js' }}"></script>
     <script>
         var uploadUrl = "{{ admin_url() }}module_image/upload_image";
         var deleteUrl = "{{ admin_url() }}module_image/remove_image";

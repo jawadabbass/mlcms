@@ -90,10 +90,6 @@
         });
     }
 
-    function bind_filer() {}
-
-
-
     function update_module_status(id) {
         var current_status = $("#sts_" + id + " span").html();
         current_status = current_status.trim();

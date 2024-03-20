@@ -92,6 +92,7 @@
     </div>
 @endsection
 @section('beforeBodyClose')
+<script type="text/javascript" src="{{ asset_storage('') }}back/mod/mod_js.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script>
         function submitMyForm() {
@@ -150,15 +151,6 @@
                 }
             });
 
-        }
-
-        function isJson_page(str) {
-            try {
-                JSON.parse(str);
-            } catch (e) {
-                return false;
-            }
-            return true;
         }
     </script>
 @endsection

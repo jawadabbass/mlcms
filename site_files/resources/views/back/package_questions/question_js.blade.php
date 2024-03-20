@@ -2,26 +2,6 @@
     var save_method; //for save method string
     var table;
 
-    function string_to_product_slug(titleId, slugId) {
-        var str = $('[name="' + titleId + '"]').val();
-        var eventSlug = $('[name="' + slugId + '"]').val();
-        if (eventSlug.length == "") {
-            str = str.replace(/^\s+|\s+$/g, ''); // trim
-            str = str.toLowerCase();
-            // remove accents, swap ñ for n, etc
-            var from = "àáäâèéëêìíïîòóöôùúüûñç·/_,:;";
-            var to = "aaaaeeeeiiiioooouuuunc------";
-            for (var i = 0, l = from.length; i < l; i++) {
-                str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
-            }
-            str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
-                .replace(/\s+/g, '-') // collapse whitespace and replace by -
-                .replace(/-+/g, '-'); // collapse dashes
-            //return str;
-            $('[name="' + slugId + '"]').val(str);
-        }
-    }
-
     function reset_model() {
         $('#form')[0].reset(); // reset form on modals
         $('.err').html('');
@@ -70,9 +50,6 @@
                 console.log(errorThrown);
             }
         });
-    }
-    function reload_table() {
-        table.ajax.reload(null, false); //reload datatable ajax
     }
     function save() {
         let url;
