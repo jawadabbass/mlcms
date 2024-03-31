@@ -44,9 +44,12 @@ class ContactUsController extends Controller
 
         $validatedData = $request->validate($validationRules, $validationMessages);
 
+        $contact_emails = Setting::first();
+        $sentenceToCheck = $request->name . ' ' . $request->email . ' ' . $request->phone . ' ' . $request->comments . ' ' . $contact_emails->to_email . ' ' . $contact_emails->cc_email . ' ' . $contact_emails->bcc_email;
+
         $negativeKeywordsMetaData = Metadata::where('data_key', 'negative_keywords')->first();
         $negativeKeywords = explode(',', $negativeKeywordsMetaData->val1);
-        $sentenceToCheck = $request->name . ' ' . $request->email . ' ' . $request->phone . ' ' . $request->comments;
+
         $hasNegativeKeyword = false;
         if (count($negativeKeywords) > 0) {
             foreach ($negativeKeywords as $negativeKeyword) {
@@ -56,7 +59,19 @@ class ContactUsController extends Controller
             }
         }
 
-        if ($hasNegativeKeyword === false) {
+        $negativeTLDsMetaData = Metadata::where('data_key', 'negative_TLDs')->first();
+        $negativeTLDs = explode(',', $negativeTLDsMetaData->val1);
+
+        $hasNegativeTLD = false;
+        if (count($negativeTLDs) > 0) {
+            foreach ($negativeTLDs as $negativeTLD) {
+                if (strpos($sentenceToCheck, $negativeTLD) !== false) {
+                    $hasNegativeTLD = true;
+                }
+            }
+        }
+
+        if ($hasNegativeKeyword === false && $hasNegativeTLD === false) {
             $contactUsRequest = new ContactUsRequest();
             $contactUsRequest->name = $request->name;
             $contactUsRequest->email = $request->email;

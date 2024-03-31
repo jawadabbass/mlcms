@@ -116,6 +116,20 @@
                                 <input type="text" id="negativeKeywords" class="form-control" name="negativeKeywords[]"
                                     placeholder="Type to add negative keyword" />
                             </div>
+                            <div class="formrow bdrbtm">
+                                <strong>
+                                    <span class="">
+                                        Add Negative TLDs
+                                    </span>
+                                </strong>
+                                <div class="how_this_work"><a href="javascript:;"
+                                        onClick="$('#mod_negative_TLDs_info').slideToggle();">How does it work?</a>
+                                </div>
+                                <div id="mod_negative_TLDs_info" style="display:none;" role="alert"
+                                    class=" description alert alert-warning alert-dismissible ">Example: Add those TLDs from where you would not want to recieve emails. </div>
+                                <input type="text" id="negativeTLDs" class="form-control" name="negativeTLDs[]"
+                                    placeholder="Type to add negative TLD" />
+                            </div>
                         </div>
                         <div class="col-md-4 col-sm-5">
                             <div class="blockarea">
@@ -149,7 +163,7 @@
                             </div>
                         </div>
                         <div class="col-md-12">
-                            <input type="submit"  name="change_network_details" value="update" id="ipAddressFormSubmit"
+                            <input type="submit" name="change_network_details" value="update" id="ipAddressFormSubmit"
                                 class="sitebtn" />
                         </div>
                     </div>
@@ -175,6 +189,7 @@
             $blocked = $metaArray['blocked_countries'];
             $blockedIPA = $metaArray['blocked_ips'];
             $negativeKeywords = explode(',', $metaArray['negative_keywords']);
+            $negativeTLDs = explode(',', $metaArray['negative_TLDs']);
             if (isset($allowed) && trim($allowed) != '') {
                 $openCountries = explode(',', $metaArray['allowed_countries']);
             } else {
@@ -207,6 +222,11 @@
         var negativeKeywords = new Array();
         @foreach ($negativeKeywords as $negativeKeyword)
             negativeKeywords.push('{{ $negativeKeyword }}');
+        @endforeach
+
+        var negativeTLDs = new Array();
+        @foreach ($negativeTLDs as $negativeTLD)
+            negativeTLDs.push('{{ $negativeTLD }}');
         @endforeach
 
         $(document).ready(function(e) {
@@ -278,6 +298,20 @@
                 valueField: 'negativeKeywords[]'
             });
             $(negativeKeywordsMS).on(
+                'selectionchange',
+                function(e, cb, s) {
+                    $("#ipAddressFormSubmit").attr("disabled", false);
+                }
+            );
+
+            var negativeTLDsMS = $('#negativeTLDs').magicSuggest({
+                data: negativeTLDs,
+                value: negativeTLDs,
+                selectionPosition: 'bottom',
+                maxSelection: 5000,
+                valueField: 'negativeTLDs[]'
+            });
+            $(negativeTLDsMS).on(
                 'selectionchange',
                 function(e, cb, s) {
                     $("#ipAddressFormSubmit").attr("disabled", false);

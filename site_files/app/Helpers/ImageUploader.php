@@ -1,11 +1,8 @@
 <?php
-
 namespace App\Helpers;
-
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
-
 class ImageUploader
 {
     private static $mainImgWidth = 1200;
@@ -15,16 +12,16 @@ class ImageUploader
     private static $tinyMCEImgWidth = 500;
     private static $tinyMCEImgHeight = 500;
     private static $thumbFolder = '/thumb';
-    public static function UploadImage($destinationPath, $field, $newName = '', $width = 0, $height = 0, $makeOtherSizesImages = true)
+    public static function UploadImage($originalDestinationPath, $field, $newName = '', $width = 0, $height = 0, $makeOtherSizesImages = true)
     {
         if ($width > 0 && $height > 0) {
             self::$mainImgWidth = $width;
             self::$mainImgHeight = $height;
         }
-        $destinationPath = ImageUploader::storage_uploads() . $destinationPath;
+        $destinationPath = ImageUploader::storage_uploads() . $originalDestinationPath;
         $thumbImagePath = $destinationPath . self::$thumbFolder;
         $fileName = self::getNewFileName($destinationPath, $field, $newName);
-        $field->move($destinationPath, $fileName);
+        $field->storeAs('/public/uploads/' . $originalDestinationPath, $fileName);
         /*         * **** Resizing Images ******** */
         $imageToResize = Image::make($destinationPath . '/' . $fileName);
         $imageToResize->resize(self::$mainImgWidth, self::$mainImgHeight, function ($constraint) {
@@ -170,21 +167,6 @@ class ImageUploader
         })->save($destinationPath . '/' . $fileName);
         /*         * **** End Resizing Images ******** */
         return $fileName;
-    }
-    public static function UploadFile($destinationPath = '', $field, $newName = '')
-    {
-        $destinationPath = storage_path('app' . '/' . $destinationPath);
-        $fileName = self::getNewFileName($destinationPath, $field, $newName);
-        $field->move($destinationPath, $fileName);
-        return $fileName;
-    }
-    public static function deleteFile($path = '', $file = '')
-    {
-        if (!empty($path) && !empty($file) && !is_null($file)) {
-            if (file_exists(storage_path('app' . '/' . $path) . '/' . $file)) {
-                File::delete(storage_path('app' . '/' . $path) . '/' . $file);
-            }
-        }
     }
     public static function print_image($image_name, $image_path, $width = 0, $height = 0, $alt_title_txt = '', $default_image = 'mlstorage/images/no-image-available.png')
     {

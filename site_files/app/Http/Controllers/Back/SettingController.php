@@ -234,6 +234,14 @@ class SettingController extends Controller
             $negativeKeywordsMetaData->val1 = '';
         }
         $negativeKeywordsMetaData->save();
+        $negativeTLDsMetaData = Metadata::where('data_key', 'negative_TLDs')->first();
+        $negativeTLDs = $request->negativeTLDs;
+        if (is_array($negativeTLDs) && count($negativeTLDs) > 0) {
+            $negativeTLDsMetaData->val1 = implode(',', $negativeTLDs);
+        } else {
+            $negativeTLDsMetaData->val1 = '';
+        }
+        $negativeTLDsMetaData->save();
         session(['message' => 'Updated Successfully', 'type' => 'success']);
         return redirect()->back();
     }
