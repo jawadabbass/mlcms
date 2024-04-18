@@ -27,7 +27,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Artisan::call('storage:link');
+        if (!app()->runningInConsole()) {
+            Artisan::call('storage:link');
+        }
         Paginator::useBootstrap();
         Validator::extend('recaptcha', 'App\\Validators\\ReCaptcha@validate');
 
