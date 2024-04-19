@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers\Front;
-
 use App\Mail\ContactUs;
 use App\Models\Back\Setting;
 use Illuminate\Http\Request;
@@ -10,7 +8,6 @@ use App\Models\Back\CmsModuleData;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Back\ContactUsRequest;
-
 class ContactUsController extends Controller
 {
     public function index(Request $request)
@@ -23,7 +20,6 @@ class ContactUsController extends Controller
         $data = CmsModuleData::find(118);
         return view('front.contact_us.index', compact('seoArr', 'data', 'editPageID'));
     }
-
     public function save(Request $request)
     {
         $validationRules = [
@@ -32,7 +28,6 @@ class ContactUsController extends Controller
             'phone' => ['required'],
             'g-recaptcha-response' => 'required|recaptcha',
         ];
-
         $validationMessages = [
             'name.required' => 'First Name is required',
             'email.required' => 'Email is required',
@@ -41,15 +36,11 @@ class ContactUsController extends Controller
             'g-recaptcha-response.required' => 'Please prove you are not robot',
             'g-recaptcha-response.recaptcha' => 'Failed to prove you are not robot',
         ];
-
         $validatedData = $request->validate($validationRules, $validationMessages);
-
         $contact_emails = Setting::first();
         $sentenceToCheck = $request->name . ' ' . $request->email . ' ' . $request->phone . ' ' . $request->comments . ' ' . $contact_emails->to_email . ' ' . $contact_emails->cc_email . ' ' . $contact_emails->bcc_email;
-
         $negativeKeywordsMetaData = Metadata::where('data_key', 'negative_keywords')->first();
         $negativeKeywords = explode(',', $negativeKeywordsMetaData->val1);
-
         $hasNegativeKeyword = false;
         if (count($negativeKeywords) > 0) {
             foreach ($negativeKeywords as $negativeKeyword) {
@@ -58,10 +49,8 @@ class ContactUsController extends Controller
                 }
             }
         }
-
         $negativeTLDsMetaData = Metadata::where('data_key', 'negative_TLDs')->first();
         $negativeTLDs = explode(',', $negativeTLDsMetaData->val1);
-
         $hasNegativeTLD = false;
         if (count($negativeTLDs) > 0) {
             foreach ($negativeTLDs as $negativeTLD) {
@@ -70,7 +59,6 @@ class ContactUsController extends Controller
                 }
             }
         }
-
         if ($hasNegativeKeyword === false && $hasNegativeTLD === false) {
             $contactUsRequest = new ContactUsRequest();
             $contactUsRequest->name = $request->name;
@@ -80,29 +68,40 @@ class ContactUsController extends Controller
             $contactUsRequest->ip = $request->ip();
             $contactUsRequest->dated = date('Y-m-d H:i:s');
             $contactUsRequest->save();
-
             $contact_emails = Setting::first();
             $toArray = explode(',', $contact_emails->to_email);
             $ccArray = explode(',', $contact_emails->cc_email);
             $bccArray = explode(',', $contact_emails->bcc_email);
-            $mail = Mail::to($toArray);
-
-            if (substr_count($contact_emails->cc_email, ',') > 0) {
-                $mail->cc($ccArray);
+            foreach ($toArray as $key => $value) {
+                if (empty($value) || is_null($value)) {
+                    unset($toArray[$key]);
+                }
             }
-
-            if (substr_count($contact_emails->bcc_email, ',') > 0) {
-                $mail->bcc($bccArray);
+            foreach ($ccArray as $key => $value) {
+                if (empty($value) || is_null($value)) {
+                    unset($ccArray[$key]);
+                }
             }
-
-            $mail->send(new ContactUs($request->all(), $request->ip()));
+            foreach ($bccArray as $key => $value) {
+                if (empty($value) || is_null($value)) {
+                    unset($bccArray[$key]);
+                }
+            }
+            if (!empty($toArray)) {
+                $mail = Mail::to($toArray);
+                if (!empty($ccArray)) {
+                    $mail->cc($ccArray);
+                }
+                if (!empty($bccArray)) {
+                    $mail->bcc($bccArray);
+                }
+                $mail->send(new ContactUs($request->all(), $request->ip()));
+            }
             echo json_encode(['status' => true, 'error' => 'Thank you, your message has been sent']);
-
             return;
         } else {
             /* echo json_encode(['status' => false, 'error' => 'Email can not be sent; Unwanted Keyword detected']); */
             echo json_encode(['status' => true, 'error' => 'Thank you, your message has been sent!']);
-
             return;
         }
     }
