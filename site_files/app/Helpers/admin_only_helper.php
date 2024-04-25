@@ -139,6 +139,7 @@ function crop_image($src, $dst, $data)
                 $src_img = imagecreatefromgif($src);
                 break;
             case 'jpg':
+            case 'jpeg':
                 $src_img = imagecreatefromjpeg($src);
                 break;
             case 'png':

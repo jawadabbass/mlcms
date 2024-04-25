@@ -312,14 +312,12 @@ if (!function_exists('seo_print')) {
         } else {
             $metaTags .= '<link rel="canonical" href="' . $url_current . '" />' . "\r\n";
         }
-        if (isset($seoArr['index']) && $seoArr['index'] == '1') {
-            $noFollowNoIndex[] = 'INDEX';
-        } else {
+        $noFollowNoIndex[] = 'INDEX';
+        if (isset($seoArr['index']) && $seoArr['index'] != '1') {
             $noFollowNoIndex[] = 'NOINDEX';
         }
-        if (isset($seoArr['follow']) && $seoArr['follow'] == '1') {
-            $noFollowNoIndex[] = 'FOLLOW';
-        } else {
+        $noFollowNoIndex[] = 'FOLLOW';
+        if (isset($seoArr['follow']) && $seoArr['follow'] != '1') {
             $noFollowNoIndex[] = 'NOFOLLOW';
         }
         $metaTags .= '<meta name="robots" content="' . implode(',', $noFollowNoIndex) . '">' . "\r\n";
