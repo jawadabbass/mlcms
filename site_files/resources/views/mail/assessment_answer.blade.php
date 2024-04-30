@@ -22,7 +22,7 @@
                                         <tbody>
                                             <tr>
                                                 <td height="110" align="center"><img
-                                                        src="{{ assets('front/img/logo.png') }}"
+                                                        src="{{ asset_storage('front/img/logo.png') }}"
                                                         alt=""></td>
                                             </tr>
                                             <tr>

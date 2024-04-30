@@ -49,7 +49,7 @@
                                             echo '<code style="cursor: pointer;"  data-toggle="tooltip" title="Click to insert ' . $vv . '" onclick="insertIntoCkeditor(\'user_body\', \'' . $vv . '\')">' . $vv . '</code>, ';
                                         }
                                     @endphp
-                                    <textarea name="user_body" id="user_body" class="form-control" required="">
+                                    <textarea name="user_body" id="user_body" class="form-control">
                                 </textarea>
                                 </div>
                             </div>

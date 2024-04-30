@@ -28,9 +28,8 @@
                                 <div class="text-end" style="padding-bottom:2px;">
                                     {{-- <input type="button" class="sitebtn" value="Add New Widgets"
                                            onClick="load_widgets_add_form();"/> --}}
-                                    @if (dev_ips())
                                         <a href="{{ route('widgets.create') }}" class="sitebtn">Add New Widgets</a>
-                                    @endif
+                                    
                                 </div>
                             </div>
                         </div>
@@ -72,14 +71,11 @@
                                                 <td>
                                                     <a href="{{ route('widgets.show', $row->ID) }}"
                                                         class="btn btn-success btn-sm">Edit</a>
-                                                    @if (dev_ips())
+                                                    
                                                         <a href="{{ route('widget.option', $row->ID) }}"
                                                             class="btn btn-warning btn-sm">option</a>
-                                                    @endif
-                                                    @if (dev_ips())
                                                         <a href="javascript:;"
-                                                            onClick="delete_widget({{ $row->ID }});"class="btn btn-danger btn-sm">Delete</a>
-                                                    @endif
+                                                            onClick="delete_widget({{ $row->ID }});"class="btn btn-danger btn-sm">Delete</a>                                                    
                                                 </td>
                                             </tr>
                                         @endforeach

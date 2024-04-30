@@ -18,7 +18,7 @@
                                     <table border="0"  cellpadding="0" cellspacing="0" style="font-family:Arial, Helvetica, sans-serif;" width="100%">
                                         <tbody>
                                             <tr>
-                                                <td height="110" align="center"><img src="{{ assets('front/img/logo.png') }}" alt=""></td>
+                                                <td height="110" align="center"><img src="{{ asset_storage('front/img/logo.png') }}" alt=""></td>
                                             </tr>
                                             <tr>
                                                 <td height="40" bgcolor="#f4f4f4" valign="middle" style="font-size:16px; color:#211e1e; font-weight:bold; font-family:Arial, Helvetica, sans-serif;" align="center">{{$data['subject']}}</td>
