@@ -158,7 +158,7 @@
                                                                 @endforeach
                                                             </select>
                                                         </td> --}}
-                                                        <td>{{ format_date($row->dated, 'date_time') }}</td>
+                                                        <td>{{ fmtDate($row->dated, 'd M, Y') }}</td>
                                                         <td>
                                                             <a href="javascript:;" data-bs-toggle="popover"
                                                                 data-bs-trigger="focus" class="btn btn-sm btn-success"

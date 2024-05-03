@@ -128,7 +128,7 @@
         var cropBoxData;
         var canvasData;
         $image.cropper({
-            autoCropArea: 0.75,
+            autoCropArea: 0.5,
             viewMode: 1,
             dragMode: 'crop',
             guides: true,
@@ -137,10 +137,10 @@
             movable: false,
             zoomable: false,
             cropBoxMovable: true,
-            cropBoxResizable: true,
-            /* aspectRatio: 1, */
-            minCropBoxWidth: 10,
-            minCropBoxHeight: 10,
+            cropBoxResizable: false,
+            aspectRatio: 1,
+            minCropBoxWidth: 400,
+            minCropBoxHeight: 300,
             ready: function() {
                 $image.cropper('setCanvasData', canvasData);
                 $image.cropper('setCropBoxData', cropBoxData);

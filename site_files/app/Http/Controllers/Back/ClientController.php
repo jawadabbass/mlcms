@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Back;
 
 use App\Models\Back\City;
+use App\Mail\TemplateMail;
 use App\Models\Back\State;
 use App\Models\Back\Client;
 use Illuminate\Support\Str;
@@ -147,14 +148,14 @@ class ClientController extends Controller
     {
         $client = Client::with(['user', 'state'])->find($id);
         $title = config('Constants.SITE_NAME') . ': Clients | Edit';
-        $all_leads =Client::orderBy('id')->get();
-        
+        $all_leads = Client::orderBy('id')->get();
+
         $pre = Client::where('id', '<', $id)->orderBy('id', 'DESC')->first();
         $next = Client::where('id', '>', $id)->orderBy('id', 'ASC')->first();
-        
+
         $history = ClientsHistory::where('client_id', $id)->with(['user'])->paginate(10);
         $conditions = getModuleData(38);
-        return view('back.clients.show', compact('client', 'title', 'history', 'conditions','pre', 'next'));
+        return view('back.clients.show', compact('client', 'title', 'history', 'conditions', 'pre', 'next'));
     }
     public function status(Request $request)
     {
@@ -416,15 +417,8 @@ class ClientController extends Controller
                                         $subject = $request->subject;
                                         $title = $request->subject;
                                         $from = $com_email;
-                                        $text = view('mail.template', compact('data', 'name', 'admin', 'com_email', 'title'))->render();
-                                        //$headers = "From: $from";
-                                        $headers = 'From:' . $from . "\r\n" .
-                                            'Reply-To:' . $from . "\r\n" .
-                                            'Bcc:' . $from . "\r\n" .
-                                            'X-Mailer: PHP/' . phpversion();
-                                        $headers .= "MIME-Version: 1.0\r\n";
-                                        $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
-                                        mail($to, $subject, $text, $headers);
+                                        $mail = Mail::to($to, $name);
+                                        $mail->send(new TemplateMail($subject, $data, $name, $admin, $com_email, $title));
                                     }
                                 }
                             }
@@ -451,15 +445,8 @@ class ClientController extends Controller
                             $subject = $request->subject;
                             $title = $request->subject;
                             $from = $com_email;
-                            $text = view('mail.template', compact('data', 'name', 'admin', 'com_email', 'title'))->render();
-                            //$headers = "From: $from";
-                            $headers = 'From:' . $from . "\r\n" .
-                                'Reply-To:' . $from . "\r\n" .
-                                'Bcc:' . $from . "\r\n" .
-                                'X-Mailer: PHP/' . phpversion();
-                            $headers .= "MIME-Version: 1.0\r\n";
-                            $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
-                            mail($to, $subject, $text, $headers);
+                            $mail = Mail::to($to, $name);
+                            $mail->send(new TemplateMail($subject, $data, $name, $admin, $com_email, $title));
                         }
                     }
                 }
@@ -489,15 +476,8 @@ class ClientController extends Controller
                 $subject = $request->subject;
                 $title = $request->subject;
                 $from = $com_email;
-                $text = view('mail.template', compact('data', 'name', 'admin', 'com_email', 'title'))->render();
-                //$headers = "From: $from";
-                $headers = 'From:' . $from . "\r\n" .
-                    'Reply-To:' . $from . "\r\n" .
-                    'Bcc:' . $from . "\r\n" .
-                    'X-Mailer: PHP/' . phpversion();
-                $headers .= "MIME-Version: 1.0\r\n";
-                $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
-                mail($to, $subject, $text, $headers);
+                $mail = Mail::to($to, $name);
+                $mail->send(new TemplateMail($subject, $data, $name, $admin, $com_email, $title));
                 return json_encode(array("status" => true));
             } else {
                 $lead = ContactUs::find($request->receiver_user_id);
@@ -516,15 +496,8 @@ class ClientController extends Controller
                 $subject = $request->subject;
                 $title = $request->subject;
                 $from = $com_email;
-                $text = view('mail.template', compact('data', 'name', 'admin', 'com_email', 'title'))->render();
-                //$headers = "From: $from";
-                $headers = 'From:' . $from . "\r\n" .
-                    'Reply-To:' . $from . "\r\n" .
-                    'Bcc:' . $from . "\r\n" .
-                    'X-Mailer: PHP/' . phpversion();
-                $headers .= "MIME-Version: 1.0\r\n";
-                $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
-                mail($to, $subject, $text, $headers);
+                $mail = Mail::to($to, $name);
+                $mail->send(new TemplateMail($subject, $data, $name, $admin, $com_email, $title));
                 return json_encode(array("status" => true));
             }
         }

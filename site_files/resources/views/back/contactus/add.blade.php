@@ -86,6 +86,7 @@
     <script>
         $(document).ready(function() {
             $('[data-bs-toggle="popover"]').popover();
+            $('#phone').inputmask("999-999-9999");
         });
         $('html').on('mouseup', function(e) {
             if (!$(e.target).closest('.popover').length) {
