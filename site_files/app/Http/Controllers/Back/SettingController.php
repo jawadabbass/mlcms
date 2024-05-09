@@ -305,6 +305,7 @@ class SettingController extends Controller
         $validated = $request->validate([
             'admin_login_page_logo' => 'image',
             'admin_header_logo' => 'image',
+            'og_image' => 'image',
             'admin_favicon' => [new CheckIfFavicon()],
         ]);
         $setting = Setting::first();
@@ -325,6 +326,12 @@ class SettingController extends Controller
             $image = $request->file('admin_favicon');
             $fileName = ImageUploader::UploadDoc('admin_logo_favicon', $image);
             $setting->admin_favicon = $fileName;
+        }
+        if ($request->hasFile('og_image')) {
+            ImageUploader::deleteImage('admin_logo_favicon', $setting->og_image, true);
+            $image = $request->file('og_image');
+            $fileName = ImageUploader::UploadImage('admin_logo_favicon', $image, '', 1200, 627, false);
+            $setting->og_image = $fileName;
         }
         $setting->save();
         session(['message' => 'Updated Successfully', 'type' => 'success']);

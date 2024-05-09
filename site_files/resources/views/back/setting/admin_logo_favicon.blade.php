@@ -71,6 +71,16 @@
                                     <input type="file" name="admin_favicon" class="form-control basic_setting_height">
                                 </div>
                             </div>
+                            <div class="col-md-12">
+                                <img src="{!! getImage('admin_logo_favicon', $setting_result->og_image, 'main') !!}" />
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <div class="mb-2">
+                                    <label class="form-label">Open Graph Image</label>
+                                    <input type="file" name="og_image" class="form-control basic_setting_height">
+                                    <code>Just make sure that the image size does not exceed 5MB and 1200 x 627 pixels should be the limit as these are Facebook limitations for image tags</code>
+                                </div>
+                            </div>
                         </div>
                         <br><br>
                         <input type="submit"  name="logo_favicon_btn" value="Update" class="sitebtn" />

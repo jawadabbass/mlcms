@@ -16,4 +16,8 @@ class BlogPost extends Model
     {
         return $this->belongsTo('App\Models\User', 'author_id', 'id');
     }
+    public function category()
+    {
+        return $this->belongsTo('App\Models\Back\BlogCategory', 'cate_ids', 'ID');
+    }
 }

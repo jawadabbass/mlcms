@@ -39,6 +39,23 @@ if (!function_exists('format_date')) {
         if ($dated == '' || $dated == '0000-00-00') {
             return '';
         }
+        if ($type == 'date_time') {
+            $format = 'M d, Y H:i A';
+        } elseif ($type == 'time_only') {
+            $format = 'H:i A';
+        } else {
+            $format = 'M d, Y';
+        }
+
+        return date($format, strtotime($dated));
+    }
+}
+if (!function_exists('format_date123')) {
+    function format_date123($dated, $type = 'date')
+    {
+        if ($dated == '' || $dated == '0000-00-00') {
+            return '';
+        }
         $date = new DateTime($dated, new DateTimeZone('UTC'));
         $sess = 'America/New_York';
         if (session()->has('time_zone')) {
@@ -263,10 +280,14 @@ if (!function_exists('helptooltip')) {
             'no_indexing' => 'If you select this, it means you do not want Google to index this page. In other words, it will never appear in Google search engine. We recommend this option should be unchecked.',
             'max_image_size' => 'Maximum allowed image size: ' . getMaxUploadSize() . 'MB',
             'sub_cat_link' => 'This would be the link of your sub category ',
+            'seo_title' => '',
         ];
-        $msg = $arr[$key];
-        if ($msg != '') {
-            return '<i class="fas fa-info help_icon" data-bs-toggle="tooltip" title="' . $msg . '" style="font-size: 15px;"></i>';
+
+        if (isset($arr[$key])) {
+            $msg = $arr[$key];
+            if (!empty($msg)) {
+                return '<i class="fas fa-info help_icon" data-bs-toggle="tooltip" title="' . $msg . '" style="font-size: 15px;"></i>';
+            }
         } else {
             return '';
         }
@@ -275,15 +296,23 @@ if (!function_exists('helptooltip')) {
 if (!function_exists('seo_print')) {
     function seo_print($seoArr = [])
     {
+        $url_full = url($_SERVER['REQUEST_URI']);
         $url_current = url()->current();
         $urlArray = explode('/', $url_current);
         $current_page_name = end($urlArray);
         $metaTags = '';
         $noFollowNoIndex = ['max-image-preview:large'];
 
+        $og_image = FindInsettingArr('og_image');
+        $og_image_str = '';
+        if (!empty($og_image)) {
+            $og_image_str = '<meta property="og:image" content="' . getImage('admin_logo_favicon', $og_image, 'main') . '" />' . "\r\n";
+        }
+
         $metaTags .= '<meta property="og:locale" content="en_US" />' . "\r\n";
         $metaTags .= '<meta property="og:type" content="website" />' . "\r\n";
         $metaTags .= '<meta property="og:url" content="' . $url_current . '" />' . "\r\n";
+        $metaTags .= $og_image_str;
         $metaTags .= '<meta name="twitter:card" content="summary" />' . "\r\n";
         if (isset($seoArr['title']) && $seoArr['title'] != '') {
             $title = $seoArr['title'];
@@ -310,7 +339,7 @@ if (!function_exists('seo_print')) {
         if (isset($seoArr['canonical_url']) && $seoArr['canonical_url'] != '') {
             $metaTags .= '<link rel="canonical" href="' . $seoArr['canonical_url'] . '" />' . "\r\n";
         } else {
-            $metaTags .= '<link rel="canonical" href="' . $url_current . '" />' . "\r\n";
+            $metaTags .= '<link rel="canonical" href="' . $url_full . '" />' . "\r\n";
         }
         $noFollowNoIndex[] = 'INDEX';
         if (isset($seoArr['index']) && $seoArr['index'] != '1') {
