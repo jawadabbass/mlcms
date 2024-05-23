@@ -94,6 +94,8 @@ class SettingController extends Controller
             return view('back.setting.paypal', compact('title', 'msg', 'setting_result', 'metaArray', 'countries', 'maxSizeAllowed'));
         } elseif ($id == 'analytics_property_id_and_json_file') {
             return view('back.setting.analytics_property_id_and_json_file', compact('title', 'msg', 'setting_result', 'metaArray', 'countries', 'maxSizeAllowed'));
+        } elseif ($id == 'banner_popup') {
+            return view('back.setting.banner_popup', compact('title', 'msg', 'setting_result', 'metaArray', 'countries', 'maxSizeAllowed'));
         } else {
             return view('back.setting.index', compact('title', 'msg', 'setting_result', 'metaArray', 'countries', 'maxSizeAllowed'));
         }
@@ -385,6 +387,27 @@ class SettingController extends Controller
             $service_account_credentials_json->save();
         }
         session(['message' => 'Updated Successfully', 'type' => 'success']);
+        return redirect()->back();
+    }
+
+    public function banner_popup(Request $request)
+    {
+        $validated = $request->validate([
+            'banner_popup_image' => 'image',
+            'banner_popup_status' => 'required'
+        ]);
+        $banner_popup_image_obj = Metadata::where('data_key', 'banner_popup_image')->first();
+        $banner_popup_status_obj = Metadata::where('data_key', 'banner_popup_status')->first();
+        if ($request->hasFile('banner_popup_image')) {
+            ImageUploader::deleteImage('banner_popup', $banner_popup_image_obj->val1, false);
+            $image = $request->file('banner_popup_image');
+            $fileName = ImageUploader::UploadImage('banner_popup', $image, '', 2200, 2200, false);
+            $banner_popup_image_obj->val1 = $fileName;
+            $banner_popup_image_obj->save();
+        }
+        $banner_popup_status_obj->val1 = $request->banner_popup_status;
+        $banner_popup_status_obj->save();
+        Session::flash('updated_action', 'Updated');
         return redirect()->back();
     }
 }

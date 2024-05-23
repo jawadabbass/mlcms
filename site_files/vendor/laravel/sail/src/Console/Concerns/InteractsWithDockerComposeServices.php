@@ -65,6 +65,11 @@ trait InteractsWithDockerComposeServices
             ? Yaml::parseFile($composePath)
             : Yaml::parse(file_get_contents(__DIR__ . '/../../../stubs/docker-compose.stub'));
 
+        // Prepare the installation of the "mariadb-client" package if the MariaDB service is used...
+        if (in_array('mariadb', $services)) {
+            $compose['services']['laravel.test']['build']['args']['MYSQL_CLIENT'] = 'mariadb-client';
+        }
+
         // Adds the new services as dependencies of the laravel.test service...
         if (! array_key_exists('laravel.test', $compose['services'])) {
             $this->warn('Couldn\'t find the laravel.test service. Make sure you add ['.implode(',', $services).'] to the depends_on config.');
@@ -141,6 +146,10 @@ trait InteractsWithDockerComposeServices
             $environment = str_replace('DB_HOST=127.0.0.1', "DB_HOST=pgsql", $environment);
             $environment = str_replace('DB_PORT=3306', "DB_PORT=5432", $environment);
         } elseif (in_array('mariadb', $services)) {
+            if ($this->laravel->config->has('database.connections.mariadb')) {
+                $environment = preg_replace('/DB_CONNECTION=.*/', 'DB_CONNECTION=mariadb', $environment);
+            }
+
             $environment = str_replace('DB_HOST=127.0.0.1', "DB_HOST=mariadb", $environment);
         }
 
@@ -181,7 +190,9 @@ trait InteractsWithDockerComposeServices
         }
 
         if (in_array('mailpit', $services)) {
+            $environment = preg_replace("/^MAIL_MAILER=(.*)/m", "MAIL_MAILER=smtp", $environment);
             $environment = preg_replace("/^MAIL_HOST=(.*)/m", "MAIL_HOST=mailpit", $environment);
+            $environment = preg_replace("/^MAIL_PORT=(.*)/m", "MAIL_PORT=1025", $environment);
         }
 
         file_put_contents($this->laravel->basePath('.env'), $environment);

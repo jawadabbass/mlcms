@@ -74,10 +74,6 @@ class CustomConfigServiceProvider extends ServiceProvider
         $this->app['config']['admin_logo_favicon'] = $adminLogoFaviconSettings;
         /*********************** */
         /*********************** */
-        $path = parse_url(config('app.url'), PHP_URL_PATH);
-        $this->app['config']['livewire_update_endpoint'] = $path;
-        /*********************** */
-        /*********************** */
         $is_show_analytics = Metadata::where('data_key', 'is_show_analytics')->first()->val1;
         $analytics_property_id = Metadata::where('data_key', 'analytics_property_id')->first()->val1;
         $service_account_credentials_json = Metadata::where('data_key', 'service_account_credentials_json')->first()->val1;

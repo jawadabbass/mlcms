@@ -89,7 +89,9 @@ class ProjectsLocationsConversations extends \Google\Service\Resource
     return $this->call('calculateStats', [$params], GoogleCloudContactcenterinsightsV1CalculateStatsResponse::class);
   }
   /**
-   * Creates a conversation. (conversations.create)
+   * Creates a conversation. DEPRECATED: Use UploadConversation instead.
+   * CreateConversation does not support audio transcription or DLP redaction.
+   * (conversations.create)
    *
    * @param string $parent Required. The parent resource of the conversation.
    * @param GoogleCloudContactcenterinsightsV1Conversation $postBody
@@ -168,6 +170,13 @@ class ProjectsLocationsConversations extends \Google\Service\Resource
    *
    * @opt_param string filter A filter to reduce results to a specific subset.
    * Useful for querying conversations with specific properties.
+   * @opt_param string orderBy Optional. The attribute by which to order
+   * conversations in the response. If empty, conversations will be ordered by
+   * descending creation time. Supported values are one of the following: *
+   * create_time * customer_satisfaction_rating * duration * latest_analysis *
+   * start_time * turn_count The default sort order is ascending. To specify
+   * order, append `asc` or `desc`, i.e. `create_time desc`. See
+   * https://google.aip.dev/132#ordering for more details.
    * @opt_param int pageSize The maximum number of conversations to return in the
    * response. A valid page size ranges from 0 to 1,000 inclusive. If the page
    * size is zero or unspecified, a default page size of 100 will be chosen. Note

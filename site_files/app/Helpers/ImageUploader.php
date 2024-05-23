@@ -1,8 +1,11 @@
 <?php
+
 namespace App\Helpers;
+
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
+
 class ImageUploader
 {
     private static $mainImgWidth = 1200;
@@ -18,25 +21,32 @@ class ImageUploader
             self::$mainImgWidth = $width;
             self::$mainImgHeight = $height;
         }
+        $originalDestinationPath = str_replace(['//'], ['/'], $originalDestinationPath);
         $destinationPath = ImageUploader::storage_uploads() . $originalDestinationPath;
         $thumbImagePath = $destinationPath . self::$thumbFolder;
         $fileName = self::getNewFileName($destinationPath, $field, $newName);
+        $webpFileName = self::getFileNameWebp($fileName);
         $field->storeAs('/public/uploads/' . $originalDestinationPath, $fileName);
         /*         * **** Resizing Images ******** */
-        $imageToResize = Image::make($destinationPath . '/' . $fileName);
+        $imageToResize = Image::make($destinationPath . '/' . $fileName)->encode('webp', 100);
         $imageToResize->resize(self::$mainImgWidth, self::$mainImgHeight, function ($constraint) {
             $constraint->aspectRatio();
             $constraint->upsize();
-        })->save($destinationPath . '/' . $fileName);
+        })->save($destinationPath . '/' . $webpFileName);
+        /**************************** */
+        /**************************** */
+        File::delete($destinationPath . '/' . $fileName);
+        /**************************** */
+        /**************************** */
         if ($makeOtherSizesImages === true) {
             self::createDirectory($thumbImagePath);
             $imageToResize->resize(self::$thumbImgWidth, self::$thumbImgHeight, function ($constraint) {
                 $constraint->aspectRatio();
                 $constraint->upsize();
-            })->save($thumbImagePath . '/' . $fileName);
+            })->save($thumbImagePath . '/' . $webpFileName);
             /*             * **** End Resizing Images ******** */
         }
-        return $fileName;
+        return $webpFileName;
     }
     public static function UploadImageBeforAfter($destinationPath, $field, $newName = '', $width = 0, $height = 0, $makeOtherSizesImages = true)
     {
@@ -99,6 +109,7 @@ class ImageUploader
     }
     public static function UploadDoc($originalDestinationPath, $field, $newName = '')
     {
+        $originalDestinationPath = str_replace(['//'], ['/'], $originalDestinationPath);
         $destinationPath = ImageUploader::storage_uploads() . $originalDestinationPath;
         $fileName = self::getNewFileName($destinationPath, $field, $newName);
         $field->storeAs('/public/uploads/' . $originalDestinationPath, $fileName);
@@ -115,6 +126,13 @@ class ImageUploader
         if (file_exists($destinationPath . '/' . $fileName)) {
             $fileName = time() . '-' . $fileName;
         }
+        return $fileName;
+    }
+    public static function getFileNameWebp($fileName)
+    {
+        $fileNameArr = explode('.', $fileName);
+        $extension = end($fileNameArr);
+        $fileName = str_ireplace('.'.$extension, '.webp', $fileName);
         return $fileName;
     }
     public static function getFileName($fileName)
@@ -156,17 +174,24 @@ class ImageUploader
     }
     public static function UploadImageTinyMce($originalDestinationPath, $field, $newName = '')
     {
+        $originalDestinationPath = str_replace(['//'], ['/'], $originalDestinationPath);
         $destinationPath = ImageUploader::storage_uploads() . $originalDestinationPath;
         $fileName = self::getNewFileName($destinationPath, $field, $newName);
+        $webpFileName = self::getFileNameWebp($fileName);
         $field->storeAs('/public/uploads/' . $originalDestinationPath, $fileName);
         /*         * **** Resizing Images ******** */
-        $imageToResize = Image::make($destinationPath . '/' . $fileName);
+        $imageToResize = Image::make($destinationPath . '/' . $fileName)->encode('webp', 100);
         $imageToResize->resize(self::$tinyMCEImgWidth, self::$tinyMCEImgHeight, function ($constraint) {
             $constraint->aspectRatio();
             $constraint->upsize();
-        })->save($destinationPath . '/' . $fileName);
+        })->save($destinationPath . '/' . $webpFileName);
         /*         * **** End Resizing Images ******** */
-        return $fileName;
+        /**************************** */
+        /**************************** */
+        File::delete($destinationPath . '/' . $fileName);
+        /**************************** */
+        /**************************** */
+        return $webpFileName;
     }
     public static function print_image($image_name, $image_path, $width = 0, $height = 0, $alt_title_txt = '', $default_image = 'mlstorage/images/no-image-available.png')
     {

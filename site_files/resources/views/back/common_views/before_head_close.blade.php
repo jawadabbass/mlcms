@@ -63,5 +63,5 @@
     var asset_uploads = '{{ asset_uploads('') }}';
     var uploadTinyMceImage = '{{ route('uploadTinyMceImage') }}';
     var csrf_token = '{{ csrf_token() }}';
-    var tinymce_front_css_file = ['{{ config('livewire_update_endpoint') }}mlstorage/front/css/style.css', '{{ config('livewire_update_endpoint') }}mlstorage/front/css/custom_style.css'];
+    var tinymce_front_css_file = ["{{ asset_storage('front/css/style.css') }}", "{{ asset_storage('front/css/custom_style.css') }}"];
 </script>

@@ -1,5 +1,82 @@
 # Changelog
 
+## [1.33.0](https://github.com/googleapis/gax-php/compare/v1.32.0...v1.33.0) (2024-05-10)
+
+
+### Features
+
+* Support V2 OperationsClient in OperationResponse ([#564](https://github.com/googleapis/gax-php/issues/564)) ([7f8bb13](https://github.com/googleapis/gax-php/commit/7f8bb13f78463b1e7f2289ce5514763992806e5e))
+
+## [1.32.0](https://github.com/googleapis/gax-php/compare/v1.31.0...v1.32.0) (2024-04-24)
+
+
+### Features
+
+* Add a custom encoder in Serializer ([#554](https://github.com/googleapis/gax-php/issues/554)) ([be28b5a](https://github.com/googleapis/gax-php/commit/be28b5a859b674a3d398bdaab7ed86b93dd7a593))
+
+## [1.31.0](https://github.com/googleapis/gax-php/compare/v1.30.1...v1.31.0) (2024-04-22)
+
+
+### Features
+
+* Add the api header to the GapicClientTrait ([#553](https://github.com/googleapis/gax-php/issues/553)) ([cc102eb](https://github.com/googleapis/gax-php/commit/cc102ebdfd63019b1e6bcd51515be2a2cb13534d))
+
+
+### Bug Fixes
+
+* Add caching and micro optimizations in Serializer ([5a5d8a7](https://github.com/googleapis/gax-php/commit/5a5d8a763d8e2d470a6d960b788e7d2a938cd64f))
+* Pass auth http handler to update metadata call ([#557](https://github.com/googleapis/gax-php/issues/557)) ([6e04a50](https://github.com/googleapis/gax-php/commit/6e04a50d013f5686ec5e66c457b9b440b9bcde9e))
+
+## [1.30.0](https://github.com/googleapis/gax-php/compare/v1.29.1...v1.30.0) (2024-02-28)
+
+
+### Features
+
+* Auto Populate fields configured for auto population in Rpc Request Message ([#543](https://github.com/googleapis/gax-php/issues/543)) ([99d6b89](https://github.com/googleapis/gax-php/commit/99d6b899ddf55d51fab976844c1e0f8fe9918a52))
+* Make the default authHttpHandler in CredentialsWrapper null ([#544](https://github.com/googleapis/gax-php/issues/544)) ([2a25eea](https://github.com/googleapis/gax-php/commit/2a25eeacadf2f783f64b4eca4f94e067ddef3eaa))
+
+## [1.29.1](https://github.com/googleapis/gax-php/compare/v1.29.0...v1.29.1) (2024-02-26)
+
+
+### Bug Fixes
+
+* Allow InsecureCredentialsWrapper::getAuthorizationHeaderCallback to return null ([#541](https://github.com/googleapis/gax-php/issues/541)) ([676f4f7](https://github.com/googleapis/gax-php/commit/676f4f7e3d8925d8aba00285616fdf89440b45f9))
+
+## [1.29.0](https://github.com/googleapis/gax-php/compare/v1.28.1...v1.29.0) (2024-02-26)
+
+
+### Features
+
+* Add InsecureCredentialsWrapper for Emulator connection ([#538](https://github.com/googleapis/gax-php/issues/538)) ([b5dbeaf](https://github.com/googleapis/gax-php/commit/b5dbeaf33594b300a0c678ffc6a6946b09fce7dd))
+
+## [1.28.1](https://github.com/googleapis/gax-php/compare/v1.28.0...v1.28.1) (2024-02-20)
+
+
+### Bug Fixes
+
+* Universe domain check for grpc transport ([#534](https://github.com/googleapis/gax-php/issues/534)) ([1026d8a](https://github.com/googleapis/gax-php/commit/1026d8aec73e0aad8949a86ee7575e3edb3d56be))
+
+## [1.28.0](https://github.com/googleapis/gax-php/compare/v1.27.2...v1.28.0) (2024-02-15)
+
+
+### Features
+
+* Allow setting of universe domain in environment variable ([#520](https://github.com/googleapis/gax-php/issues/520)) ([6e6603b](https://github.com/googleapis/gax-php/commit/6e6603b03285f3f8d1072776cd206720e3990f50))
+
+## [1.27.2](https://github.com/googleapis/gax-php/compare/v1.27.1...v1.27.2) (2024-02-14)
+
+
+### Bug Fixes
+
+* Typo in TransportOptions option name ([#530](https://github.com/googleapis/gax-php/issues/530)) ([6914fe0](https://github.com/googleapis/gax-php/commit/6914fe04554867bd827be6596fafc751a3d7621a))
+
+## [1.27.1](https://github.com/googleapis/gax-php/compare/v1.27.0...v1.27.1) (2024-02-14)
+
+
+### Bug Fixes
+
+* Issues in Options classes ([#528](https://github.com/googleapis/gax-php/issues/528)) ([aa9ba3a](https://github.com/googleapis/gax-php/commit/aa9ba3a6bac9324ad894d9677da0e897497ebab2))
+
 ## [1.27.0](https://github.com/googleapis/gax-php/compare/v1.26.3...v1.27.0) (2024-02-07)
 
 

@@ -260,6 +260,22 @@ trait RedisTrait
                     $extra = [
                         'stream' => $params['ssl'] ?? null,
                     ];
+                    $booleanStreamOptions = [
+                        'allow_self_signed',
+                        'capture_peer_cert',
+                        'capture_peer_cert_chain',
+                        'disable_compression',
+                        'SNI_enabled',
+                        'verify_peer',
+                        'verify_peer_name',
+                    ];
+
+                    foreach ($extra['stream'] ?? [] as $streamOption => $value) {
+                        if (\in_array($streamOption, $booleanStreamOptions, true) && \is_string($value)) {
+                            $extra['stream'][$streamOption] = filter_var($value, \FILTER_VALIDATE_BOOL);
+                        }
+                    }
+
                     if (isset($params['auth'])) {
                         $extra['auth'] = $params['auth'];
                     }
@@ -277,7 +293,10 @@ trait RedisTrait
                     }
 
                     if ((null !== $auth && !$redis->auth($auth))
-                        || ($params['dbindex'] && !$redis->select($params['dbindex']))
+                        // Due to a bug in phpredis we must always select the dbindex if persistent pooling is enabled
+                        // @see https://github.com/phpredis/phpredis/issues/1920
+                        // @see https://github.com/symfony/symfony/issues/51578
+                        || (($params['dbindex'] || ('pconnect' === $connect && '0' !== \ini_get('redis.pconnect.pooling_enabled'))) && !$redis->select($params['dbindex']))
                     ) {
                         $e = preg_replace('/^ERR /', '', $redis->getLastError());
                         throw new InvalidArgumentException('Redis connection failed: '.$e.'.');

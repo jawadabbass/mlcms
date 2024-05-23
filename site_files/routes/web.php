@@ -42,12 +42,6 @@ use App\Http\Controllers\Back\SettingController as BackSettingController;
 use App\Http\Controllers\Back\SiteMapController as BackSiteMapController;
 use App\Http\Controllers\Back\AdminLogController as BackAdminLogController;
 use App\Http\Controllers\Back\ContactFormSetting as BackContactFormSetting;
-use App\Livewire\Back\BannerPopups\BannerPopupsList as BackBannerPopupsList;
-use App\Livewire\Back\BannerPopups\SortBannerPopups as BackSortBannerPopups;
-use App\Livewire\Back\Tasks\TasksList as BackTasksList;
-use App\Livewire\Back\Tasks\CreateTask as BackCreateTask;
-use App\Livewire\Back\Tasks\EditTask as BackEditTask;
-use App\Livewire\Back\Tasks\SortTasks as BackSortTasks;
 use App\Http\Controllers\Back\AdminUserController as BackAdminUserController;
 use App\Http\Controllers\Back\ContactUsController as BackContactUsController;
 use App\Http\Controllers\Back\DashboardController as BackDashboardController;
@@ -202,6 +196,7 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     Route::post('/setting/admin_logo_favicon', [BackSettingController::class, 'adminLogoFavicon']);
     Route::post('/setting/savePropertyIdAndJsonFile', [BackSettingController::class, 'savePropertyIdAndJsonFile']);
     Route::get('/setting/countries', [BackSettingController::class, 'countries']);
+    Route::post('/setting/banner_popup', [BackSettingController::class, 'banner_popup']);
     Route::resource('/file_manager', BackFileManagerController::class);
     Route::get('/news_update', [BackDashboardController::class, 'updateNewsStatus']);
     Route::get('/news_page', [BackDashboardController::class, 'newsPage']);
@@ -353,17 +348,6 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     Route::get('/job-application/{jobApplicationObj}', [BackJobApplicationController::class, 'show'])->name('job.application.show');
     Route::delete('/job-application/{jobApplicationObj}', [BackJobApplicationController::class, 'destroy'])->name('job.application.destroy');
     Route::get('fetchJobApplicationsAjax', [BackJobApplicationController::class, 'fetchJobApplicationsAjax'])->name('fetchJobApplicationsAjax');
-});
-Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddleware']], function () {
-    /* Banner Popups Routes */
-    Route::get('/banner-popups', BackBannerPopupsList::class)->name('banner-popups-list');
-    Route::get('/sort-banner-popups', BackSortBannerPopups::class)->name('sort-banner-popups');
-
-    Route::get('/tasks', BackTasksList::class)->name('tasks.list');
-    Route::get('/create-task', BackCreateTask::class)->name('create.task');
-    Route::get('/edit-task/{taskObj}', BackEditTask::class)->name('edit.task');
-    Route::get('/sort-tasks', BackSortTasks::class)->name('sort.tasks');
-
 });
 /************************************* */
 /************************************* */

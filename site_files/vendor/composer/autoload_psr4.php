@@ -101,7 +101,6 @@ return array(
     'MasterRO\\LaravelXSSFilter\\' => array($vendorDir . '/masterro/laravel-xss-filter/src'),
     'MailchimpMarketing\\' => array($vendorDir . '/mailchimp/marketing/lib'),
     'Maatwebsite\\Excel\\' => array($vendorDir . '/maatwebsite/excel/src'),
-    'Livewire\\' => array($vendorDir . '/livewire/livewire/src'),
     'League\\MimeTypeDetection\\' => array($vendorDir . '/league/mime-type-detection/src'),
     'League\\Glide\\' => array($vendorDir . '/league/glide/src'),
     'League\\Flysystem\\Local\\' => array($vendorDir . '/league/flysystem-local'),

@@ -62,10 +62,20 @@ class PipelineRun extends \Google\Collection
   public $pipelineRunStatus;
   protected $pipelineSpecType = PipelineSpec::class;
   protected $pipelineSpecDataType = '';
+  /**
+   * @var string
+   */
+  public $pipelineSpecYaml;
   protected $provenanceType = Provenance::class;
   protected $provenanceDataType = '';
+  /**
+   * @var string
+   */
+  public $record;
   protected $resolvedPipelineSpecType = PipelineSpec::class;
   protected $resolvedPipelineSpecDataType = '';
+  protected $resultsType = PipelineRunResult::class;
+  protected $resultsDataType = 'array';
   protected $securityType = Security::class;
   protected $securityDataType = '';
   /**
@@ -284,6 +294,20 @@ class PipelineRun extends \Google\Collection
     return $this->pipelineSpec;
   }
   /**
+   * @param string
+   */
+  public function setPipelineSpecYaml($pipelineSpecYaml)
+  {
+    $this->pipelineSpecYaml = $pipelineSpecYaml;
+  }
+  /**
+   * @return string
+   */
+  public function getPipelineSpecYaml()
+  {
+    return $this->pipelineSpecYaml;
+  }
+  /**
    * @param Provenance
    */
   public function setProvenance(Provenance $provenance)
@@ -298,6 +322,20 @@ class PipelineRun extends \Google\Collection
     return $this->provenance;
   }
   /**
+   * @param string
+   */
+  public function setRecord($record)
+  {
+    $this->record = $record;
+  }
+  /**
+   * @return string
+   */
+  public function getRecord()
+  {
+    return $this->record;
+  }
+  /**
    * @param PipelineSpec
    */
   public function setResolvedPipelineSpec(PipelineSpec $resolvedPipelineSpec)
@@ -310,6 +348,20 @@ class PipelineRun extends \Google\Collection
   public function getResolvedPipelineSpec()
   {
     return $this->resolvedPipelineSpec;
+  }
+  /**
+   * @param PipelineRunResult[]
+   */
+  public function setResults($results)
+  {
+    $this->results = $results;
+  }
+  /**
+   * @return PipelineRunResult[]
+   */
+  public function getResults()
+  {
+    return $this->results;
   }
   /**
    * @param Security

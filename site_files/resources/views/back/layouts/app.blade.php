@@ -10,8 +10,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @include('back.common_views.before_head_close')
     @yield('beforeHeadClose')
-    @livewireStyles
-    @vite(['resources/js/app.js'])
 </head>
 
 <body
@@ -34,7 +32,6 @@
             width: 100%;
         }
     </style>
-    @livewireScriptConfig
     <script>
         window.addEventListener('beforeunload', function(event) {
             event.stopImmediatePropagation();

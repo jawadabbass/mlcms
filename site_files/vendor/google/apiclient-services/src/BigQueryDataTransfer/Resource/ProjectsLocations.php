@@ -43,7 +43,7 @@ class ProjectsLocations extends \Google\Service\Resource
    * Service](https://cloud.google.com/bigquery/docs/working-with-transfers).
    * (locations.enrollDataSources)
    *
-   * @param string $name The name of the project resource in the form:
+   * @param string $name Required. The name of the project resource in the form:
    * `projects/{project_id}`
    * @param EnrollDataSourcesRequest $postBody
    * @param array $optParams Optional parameters.
@@ -98,10 +98,11 @@ class ProjectsLocations extends \Google\Service\Resource
    * Unenroll data sources in a user project. This allows users to remove transfer
    * configurations for these data sources. They will no longer appear in the
    * ListDataSources RPC and will also no longer appear in the [BigQuery
-   * UI](https://console.cloud.google.com/bigquery).
+   * UI](https://console.cloud.google.com/bigquery). Data transfers configurations
+   * of unenrolled data sources will not be scheduled.
    * (locations.unenrollDataSources)
    *
-   * @param string $name The name of the project resource in the form:
+   * @param string $name Required. The name of the project resource in the form:
    * `projects/{project_id}`
    * @param UnenrollDataSourcesRequest $postBody
    * @param array $optParams Optional parameters.

@@ -24,7 +24,6 @@
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
         "laravel/ui": "^4.0",
-        "livewire/livewire": "^3.2",
         "maatwebsite/excel": "^3.1",
         "mailchimp/marketing": "^3.0",
         "masterro/laravel-xss-filter": "^1.5",

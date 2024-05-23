@@ -20,12 +20,16 @@ namespace Google\Service\Container;
 class UpdateNodePoolRequest extends \Google\Collection
 {
   protected $collection_key = 'locations';
+  protected $acceleratorsType = AcceleratorConfig::class;
+  protected $acceleratorsDataType = 'array';
   /**
    * @var string
    */
   public $clusterId;
   protected $confidentialNodesType = ConfidentialNodes::class;
   protected $confidentialNodesDataType = '';
+  protected $containerdConfigType = ContainerdConfig::class;
+  protected $containerdConfigDataType = '';
   /**
    * @var string
    */
@@ -82,6 +86,8 @@ class UpdateNodePoolRequest extends \Google\Collection
    * @var string
    */
   public $projectId;
+  protected $queuedProvisioningType = QueuedProvisioning::class;
+  protected $queuedProvisioningDataType = '';
   protected $resourceLabelsType = ResourceLabels::class;
   protected $resourceLabelsDataType = '';
   protected $resourceManagerTagsType = ResourceManagerTags::class;
@@ -101,6 +107,20 @@ class UpdateNodePoolRequest extends \Google\Collection
    */
   public $zone;
 
+  /**
+   * @param AcceleratorConfig[]
+   */
+  public function setAccelerators($accelerators)
+  {
+    $this->accelerators = $accelerators;
+  }
+  /**
+   * @return AcceleratorConfig[]
+   */
+  public function getAccelerators()
+  {
+    return $this->accelerators;
+  }
   /**
    * @param string
    */
@@ -128,6 +148,20 @@ class UpdateNodePoolRequest extends \Google\Collection
   public function getConfidentialNodes()
   {
     return $this->confidentialNodes;
+  }
+  /**
+   * @param ContainerdConfig
+   */
+  public function setContainerdConfig(ContainerdConfig $containerdConfig)
+  {
+    $this->containerdConfig = $containerdConfig;
+  }
+  /**
+   * @return ContainerdConfig
+   */
+  public function getContainerdConfig()
+  {
+    return $this->containerdConfig;
   }
   /**
    * @param string
@@ -380,6 +414,20 @@ class UpdateNodePoolRequest extends \Google\Collection
   public function getProjectId()
   {
     return $this->projectId;
+  }
+  /**
+   * @param QueuedProvisioning
+   */
+  public function setQueuedProvisioning(QueuedProvisioning $queuedProvisioning)
+  {
+    $this->queuedProvisioning = $queuedProvisioning;
+  }
+  /**
+   * @return QueuedProvisioning
+   */
+  public function getQueuedProvisioning()
+  {
+    return $this->queuedProvisioning;
   }
   /**
    * @param ResourceLabels
