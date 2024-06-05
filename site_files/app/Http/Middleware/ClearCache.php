@@ -19,12 +19,7 @@ class ClearCache
     public function handle($request, Closure $next)
     {
         if (Auth::check()) {
-            Cache::flush();
-            Artisan::call('cache:clear');
-            Artisan::call('route:clear');
-            Artisan::call('config:clear');
-            Artisan::call('view:clear');
-            Artisan::call('optimize:clear');
+            clearCache();
         }
         return $next($request);
     }

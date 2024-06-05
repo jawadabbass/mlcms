@@ -148,13 +148,7 @@ class DashboardController extends Controller
     }
     public function clearCache()
     {
-        Cache::flush();
-        Artisan::call('cache:clear');
-        Artisan::call('route:clear');
-        Artisan::call('config:clear');
-        Artisan::call('view:clear');
-        Artisan::call('optimize:clear');
-
+        clearCache();
         return redirect()->back();
     }
     public function sideBarLeft(Request $request)

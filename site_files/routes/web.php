@@ -408,31 +408,7 @@ Route::post('searchZipCodeAjax', [AjaxController::class, 'searchZipCodeAjax'])->
 Route::post('filterCountiesAjax', [AjaxController::class, 'filterCountiesAjax'])->name('filterCountiesAjax');
 Route::post('filterCitiesAjax', [AjaxController::class, 'filterCitiesAjax'])->name('filterCitiesAjax');
 Route::get('/clear-cache', function () {
-    Cache::flush();
-    Artisan::call('cache:clear');
-    Artisan::call('route:clear');
-    Artisan::call('config:clear');
-    Artisan::call('view:clear');
-    Artisan::call('optimize:clear');
-    Artisan::call('storage:link');
-    /*************************** */
-    $directory = config('session.files');
-    $ignoreFiles = ['.gitignore', '.', '..'];
-    $files = scandir($directory);
-    foreach ($files as $file) {
-        if (!in_array($file, $ignoreFiles)) {
-            unlink($directory . '/' . $file);
-        }
-    }
-    /*************************** */
-    $directory = config('logfile.files');
-    $ignoreFiles = ['.gitignore', '.', '..'];
-    $files = scandir($directory);
-    foreach ($files as $file) {
-        if (!in_array($file, $ignoreFiles)) {
-            unlink($directory . '/' . $file);
-        }
-    }
+    clearCache();
     /*************************** */
     return 'Cache is cleared';
 });

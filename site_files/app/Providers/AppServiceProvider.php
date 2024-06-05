@@ -3,8 +3,6 @@
 namespace App\Providers;
 
 use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
 
@@ -27,7 +25,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         if (!app()->runningInConsole()) {
-            Artisan::call('storage:link');
+            foreach (config('filesystems.links') as $link => $target) {
+                if (is_link($link) === false) {
+                    symlink($target, $link);
+                }
+            }
         }
         Paginator::useBootstrap();
         Validator::extend('recaptcha', 'App\\Validators\\ReCaptcha@validate');
