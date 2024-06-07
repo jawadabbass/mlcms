@@ -10,6 +10,7 @@ use App\Models\Back\BlogPost;
 use App\Models\Back\MenuType;
 use App\Models\Back\Metadata;
 use App\Models\Back\CmsModule;
+use Illuminate\Support\Carbon;
 use App\Models\Back\Subscribers;
 use App\Models\Back\BlogCategory;
 use App\Models\Back\CmsModuleData;
@@ -29,7 +30,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-
         if (Cache::has('web_index_page') && Auth::check() == false) {
             return Cache::get('web_index_page');
         }
