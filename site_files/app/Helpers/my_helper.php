@@ -254,6 +254,13 @@ function getMetaKeyValue($key)
     return $metaDataObj->val1;
 }
 
+function updateMetaKeyValue($key, $value)
+{
+    $metaDataObj = Metadata::where('data_key', 'like', $key)->first();
+    $metaDataObj->val1 = $value;
+    $metaDataObj->update();
+}
+
 function printSqlQuery($builder, $dd = true)
 {
     $query = vsprintf(str_replace(['?'], ['\'%s\''], $builder->toSql()), $builder->getBindings());

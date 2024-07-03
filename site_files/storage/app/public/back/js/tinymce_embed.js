@@ -33,9 +33,9 @@ const tinymce_image_upload_handler = (blobInfo, progress) => new Promise((resolv
     xhr.send(formData);
 });
 
-function bindCKeditor(id) {
+function initCKeditor(selector){
     tinymce.init({
-        selector: '#' + id,
+        selector: selector,
         force_br_newlines: true,
         images_upload_url: uploadTinyMceImage,
         images_upload_handler: tinymce_image_upload_handler,
@@ -44,12 +44,20 @@ function bindCKeditor(id) {
         remove_script_host: false,
         document_base_url: base_url,
         menubar: false,
-        plugins: 'preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons accordion',
+        plugins: 'preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons accordion autoresize',
         toolbar: "undo redo | fontfamily fontsize | bold italic underline strikethrough | align numlist bullist | link image | table media | lineheight outdent indent| forecolor backcolor removeformat | charmap emoticons | code fullscreen preview | save print | pagebreak anchor codesample | ltr rtl | accordion accordionremove | blocks",
         image_advtab: true,
         importcss_append: true,
         height: 600
     });
+}
+function bindCKeditorByClass(cls) {
+    var selector = '.'+cls;
+    initCKeditor(selector);
+}
+function bindCKeditor(id) {
+    var selector = '#'+id;
+    initCKeditor(selector);
 }
 function insertIntoCkeditor(editor, str) {
     tinyMCE.get(editor).execCommand('mceInsertContent', false, str);
