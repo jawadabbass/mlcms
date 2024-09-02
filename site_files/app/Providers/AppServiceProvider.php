@@ -27,7 +27,12 @@ class AppServiceProvider extends ServiceProvider
         if (!app()->runningInConsole()) {
             foreach (config('filesystems.links') as $link => $target) {
                 if (is_link($link) === false) {
-                    symlink($target, $link);
+                    if (! windows_os()) {
+                        symlink($target, $link);
+                    } else {
+                        $mode = is_dir($target) ? 'J' : 'H';
+                        exec("mklink /{$mode} " . escapeshellarg($link) . ' ' . escapeshellarg($target));
+                    }
                 }
             }
         }
