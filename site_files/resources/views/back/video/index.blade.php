@@ -47,7 +47,7 @@
                                                 <td>{{ format_date($row->dated, 'date') }}</td>
                                                 <td>
                                                     {{ $row->heading }}<br/><br/>
-                                                    {!! link2iframe(adjustUrl($row->content), $row->video_type, '100%', 300, 'd-block', 'uploads/videos/video/') !!}
+                                                    {!! showUploadedVideo(adjustUrl($row->content), $row->video_type, '100%', 300, 'd-block', 'uploads/videos/video/') !!}
                                                 </td>
                                                 <td>
                                                         <label class="switch">

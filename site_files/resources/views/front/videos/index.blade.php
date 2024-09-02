@@ -8,17 +8,12 @@
         <div class="container">
             <div class="row">
                 @foreach ($videos as $video)
-                    <div class="col-md-6">
-                        <div class="videoImg">                            
-                            <img src="{{ asset_storage('/uploads/videos/thumb/' . $video->video_img) }}" alt="{{ $video->heading }}"
-                                title="{{ $video->heading }}">
-                            <div class="playbtn">
-                                <a class="popup-link123" href="{{ url('videos/' . $video->slug) }}">
-                                    {{ $video->heading }}
-                                    <span><i class="fas fa-play"></i></span>
-                                </a>
-                            </div>
-                        </div>
+                    <div class="col-md-3">
+                        <a href="{{ url('videos/' . $video->slug) }}">
+                            <img class="card-img-top" src="{{ asset_storage('uploads/videos/thumb/' . $video->video_img) }}"
+                                alt="{{ $video->heading }}" title="{{ $video->heading }}">
+                            {{ $video->heading }}
+                        </a>
                     </div>
                 @endforeach
             </div>

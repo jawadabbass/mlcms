@@ -179,26 +179,21 @@ function is_admin()
     }
     return false;
 }
-function link2iframe($link, $type, $w = '100%', $h = '250', $class = 'd-block', $videoURL = 'uploads/videos/video/')
+function showUploadedVideo($link, $type, $w = '100%', $h = '400', $class = 'd-block', $videoURL = 'uploads/videos/video/')
 {
-    if ($type == 'Text') {
-        return $link;
-    }
     if ($type == 'upload') {
-        return '<video width="' . $w . '" height="' . $h . '" class="' . $class . '" autoplay playsinline controls> <source src="' . asset_storage($videoURL . $link) . '" type="video/mp4"> <source src="movie.ogg" type="video/ogg"> Your browser does not support the video tag. </video> ';
+        return '
+        <video width="' . $w . '" height="' . $h . '" class="' . $class . '" autoplay playsinline controls>
+            <source src="' . asset_storage($videoURL . $link) . '" type="video/mp4">
+        </video> ';
     }
-    if ($type == 'Youtube') {
-        $youtube_id = youtubelink2id($link);
-        return '<iframe width="' . $w . '" height="' . $h . '" src="https://www.youtube.com/embed/' . $youtube_id . '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" title="YouTube video player"></iframe>';
-    }
-    if ($type == 'Vimeo') {
-        $id = vimeolink2id($link);
-        return '<iframe width="' . $w . '" height="' . $h . '" src="http://player.vimeo.com/video/' . $id . '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" title="Vimeo video player"></iframe>';
+    else {
+        return $link;
     }
 }
 function youtubelink2id($link)
 {
-    preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $link, $match);
+    preg_match('/embed\/([\w+\-+]+)[\"\?]/', $link, $match);
     if (isset($match[1])) {
         $youtube_id = $match[1];
         return $youtube_id;
@@ -207,13 +202,12 @@ function youtubelink2id($link)
 }
 function vimeolink2id($link)
 {
-    if (preg_match(
-        '/\/\/(www\.)?vimeo.com\/(\d+)($|\/)/',
-        $link,
-        $matches
-    )) {
-        return  $matches[2];
+    preg_match('/video\/([\w+\-+]+)[\"\?]/', $link, $match);
+    if (isset($match[1])) {
+        $vimeo_id = $match[1];
+        return $vimeo_id;
     }
+    return '';
 }
 function vimeoid2img($link)
 {
@@ -224,8 +218,8 @@ function vimeoid2img($link)
     curl_close($ch);
     ///$hash=file_get_contents('http://vimeo.com/api/v2/video/'.$link.'.php');
     $hash = unserialize($hash);
-    if (isset($hash[0]['thumbnail_medium'])) {
-        return $hash[0]['thumbnail_medium'];
+    if (isset($hash[0]['thumbnail_large'])) {
+        return $hash[0]['thumbnail_large'];
     }
     return '';
 }

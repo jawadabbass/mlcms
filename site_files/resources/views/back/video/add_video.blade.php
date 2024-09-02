@@ -27,7 +27,7 @@
                 <div class="row">
                     <div class="col-md-4 text-end">Video Type:</div>
                     <div class="col-md-8">
-                        <select class="form-control" name="testimonial_type" id="testimonial_type">
+                        <select class="form-control" name="video_type" id="video_type">
                             <option value="Youtube" selected="">YouTube Video</option>
                             <option value="Vimeo">Vimeo Video</option>
                             <option value="upload">Video Upload</option>
@@ -38,8 +38,7 @@
                 <div class="row">
                     <div class="col-md-4 text-end"><span id="s_title">Youtube Video:</span> </div>
                     <div class="col-md-8" id="field_type_div">
-                        <input type="text" name="linkk" id="linkk" class="form-control" value=""
-                            placeholder="https://www.youtube.com/watch?v=C0DPdy98e4c">
+                        <textarea name="linkk" id="linkk" class="form-control" placeholder="Embed Code Here!"></textarea>
                     </div>
                 </div>
                 <br>
@@ -74,36 +73,17 @@
 @section('beforeBodyClose')
     <script type="text/javascript">
         
-        $("#testimonial_type").change(function(event) {
+        $("#video_type").change(function(event) {
             console.clear();
             if ($(this).val() != 'upload') {
                 $("#thumbnail_div").hide();
-                if ($(this).val() == 'Youtube') {
+                if ($(this).val() == 'Youtube' || $(this).val() == 'Vimeo') {
                     $("#linkk").remove();
                     $("#field_type_div").html(
-                        '<input type="text" name="linkk" id="linkk" class="form-control" value="" placeholder="">'
+                        '<textarea name="linkk" id="linkk" class="form-control" placeholder="Embed Code Here!"></textarea>'
                         );
-                    $("#linkk").prop('type', 'text');
-                    $("#s_title").html($(this).val() + " Link:");
-                    $("#linkk").attr('placeholder', 'https://www.youtube.com/watch?v=C0DPdy98e4c');
+                    $("#s_title").html($(this).val() + " Embed Code:");
                 }
-                if ($(this).val() == 'Vimeo') {
-                    $("#linkk").remove();
-                    $("#field_type_div").html(
-                        '<input type="text" name="linkk" id="linkk" class="form-control" value="" placeholder="">'
-                        );
-                    $("#linkk").prop('type', 'text');
-                    $("#s_title").html($(this).val() + " Link:");
-                    $("#linkk").attr('placeholder', 'https://vimeo.com/167566292');
-                }
-                if ($(this).val() == 'Text') {
-                    $("#linkk").remove();
-                    $("#field_type_div").html('<textarea name="linkk" id="linkk" class="form-control"></textarea>');
-                    $("#linkk").prop('type', 'text');
-                    $("#s_title").html("Write Video");
-                    $("#linkk").attr('placeholder', 'Write Video');
-                }
-
             } else {
                 $("#s_title").html(
                     "Please select (<code>.mp4</code>) file: <br/><p class=\"text-red\">Maximum allowed size on server: {{ $file_upload_max_size }}MB</p>"

@@ -27,7 +27,7 @@
                 <div class="row">
                     <div class="col-md-4 text-end">Video Type:</div>
                     <div class="col-md-8">
-                        <select class="form-control" name="testimonial_type" id="testimonial_type">
+                        <select class="form-control" name="video_type" id="video_type">
                             <option value="Youtube">YouTube Video</option>
                             <option value="Vimeo">Vimeo Video</option>
                             <option value="upload">Video Upload</option>
@@ -38,7 +38,7 @@
                 <div class="row">
                     <div class="col-md-4 text-end"><span id="s_title">Youtube:</span> </div>
                     <div class="col-md-8" id="field_type_div">
-                        <textarea name="linkk" id="linkk" class="form-control" placeholder="Write Testimonial">{{ adjustUrl($rec->content) }}</textarea>
+                        <textarea name="linkk" id="linkk" class="form-control" placeholder="Embed Code Here!">{!! adjustUrl($rec->content) !!}</textarea>
                     </div>
                 </div>
                 <br>
@@ -49,13 +49,15 @@
                     </div>
                 </div>
                 <br>
-                <div class="row" id="thumbnail_div">
+                <div class="row">
                     <div class="col-md-4 text-end">Featured Image:</div>
-                    <div class="col-md-6"><input type="file" name="fimg" id="fimg" class="form-control"
+                    <div class="col-md-8"><input type="file" name="fimg" id="fimg" class="form-control"
                             value="" placeholder=""></div>
-                    <div class="col-md-2">
+                </div>
+                <div class="row mt-3" id="thumbnail_div">
+                    <div class="offset-md-4 col-md-8">
                         @if ($rec->video_img != '')
-                            <img class="img-circle" src="{{ asset_uploads('') }}videos/thumb/{{ $rec->video_img }}"
+                            <img class="img" width="" src="{{ asset_uploads('') }}videos/thumb/{{ $rec->video_img }}"
                                 alt="">
                         @endif
                     </div>
@@ -65,9 +67,9 @@
                     <div class="col-md-4 text-end"></div>
                     <div class="col-md-8">
                         <input type="hidden" name="idd" id="idd" value="{{ $rec->ID }}">
-                        <p id="old_content" style="display: none;">{{ adjustUrl($rec->content) }}</p>
+                        <div id="old_content" style="display: none;">{!! adjustUrl($rec->content) !!}</div>
                         <p id="old_type" style="display: none;">{{ $rec->additional_field_4 }}</p>
-                        <button id="submit" type="submit"  class="btn btn-info"
+                        <button id="submit" type="submit" class="btn btn-info"
                             onClick="document.getElementsById('submit').display='none'"><i class="fas fa-pen-to-square"
                                 aria-hidden="true"></i> Update</button>
                     </div>
@@ -81,43 +83,22 @@
 @section('beforeBodyClose')
     <script type="text/javascript">
         $(document).ready(function() {
-            $("#testimonial_type").val('{{ $rec->video_type }}');
+            $("#video_type").val('{{ $rec->video_type }}');
             var cval = '{{ $rec->video_type }}';
             if (cval != 'upload') {
 
-                if (cval == 'Youtube') {
+                if (cval == 'Youtube' || cval == 'Vimeo') {
                     $("#linkk").remove();
                     $("#field_type_div").html(
-                        '<input type="text" name="linkk" id="linkk" class="form-control" value="" placeholder="">'
-                        );
-                    $("#linkk").prop('type', 'text');
-                    $("#s_title").html(cval + " Link:");
-                    $("#linkk").attr('placeholder', 'https://www.youtube.com/watch?v=C0DPdy98e4c');
+                        '<textarea name="linkk" id="linkk" class="form-control" placeholder="Embed Code Here!"></textarea>'
+                    );
+                    $("#s_title").html(cval + " Embed Code:");
                     $("#linkk").val($("#old_content").html());
                 }
-                if (cval == 'Vimeo') {
-                    $("#linkk").remove();
-                    $("#field_type_div").html(
-                        '<input type="text" name="linkk" id="linkk" class="form-control" value="" placeholder="">'
-                        );
-                    $("#linkk").prop('type', 'text');
-                    $("#s_title").html(cval + " Link:");
-                    $("#linkk").attr('placeholder', 'https://vimeo.com/167566292');
-                    $("#linkk").val($("#old_content").html());
-                }
-                if (cval == 'Text') {
-                    $("#linkk").remove();
-                    $("#field_type_div").html('<textarea name="linkk" id="linkk" class="form-control"></textarea>');
-                    $("#linkk").prop('type', 'text');
-                    $("#s_title").html("Write Testimonial");
-                    $("#linkk").attr('placeholder', 'Write Testimonial');
-                    $("#linkk").val($("#old_content").html());
-                }
-
             } else {
                 $("#s_title").html(
                     "Please select (<code>.mp4</code>) file: <br/><p class=\"text-red\">Maximum allowed size on server: {{ $file_upload_max_size }}MB</p>"
-                    );
+                );
                 $("#linkk").attr('placeholder', '');
                 $("#linkk").remove();
                 $("#field_type_div").html(
@@ -126,50 +107,25 @@
             }
 
         });
-        
-        $("#testimonial_type").change(function(event) {
+
+        $("#video_type").change(function(event) {
             if ($(this).val() != 'upload') {
                 $("#thumbnail_div").hide();
 
-                if ($(this).val() == 'Youtube') {
+                if ($(this).val() == 'Youtube' || $(this).val() == 'Vimeo') {
                     $("#linkk").remove();
                     $("#field_type_div").html(
-                        '<input type="text" name="linkk" id="linkk" class="form-control" value="" placeholder="">'
-                        );
-                    $("#linkk").prop('type', 'text');
-                    $("#s_title").html($(this).val() + " Link:");
-                    $("#linkk").attr('placeholder', 'https://www.youtube.com/watch?v=C0DPdy98e4c');
+                        '<textarea name="linkk" id="linkk" class="form-control" placeholder="Embed Code Here!"></textarea>'
+                    );
+                    $("#s_title").html($(this).val() + " Embed Code:");
                     if ($(this).val() == $("#old_type").html()) {
                         $("#linkk").val($("#old_content").html());
                     }
                 }
-                if ($(this).val() == 'Vimeo') {
-                    $("#linkk").remove();
-                    $("#field_type_div").html(
-                        '<input type="text" name="linkk" id="linkk" class="form-control" value="" placeholder="">'
-                        );
-                    $("#linkk").prop('type', 'text');
-                    $("#s_title").html($(this).val() + " Link:");
-                    $("#linkk").attr('placeholder', 'https://vimeo.com/167566292');
-                    if ($(this).val() == $("#old_type").html()) {
-                        $("#linkk").val($("#old_content").html());
-                    }
-                }
-                if ($(this).val() == 'Text') {
-                    $("#linkk").remove();
-                    $("#field_type_div").html('<textarea name="linkk" id="linkk" class="form-control"></textarea>');
-                    $("#linkk").prop('type', 'text');
-                    $("#s_title").html("Write Testimonial");
-                    $("#linkk").attr('placeholder', 'Write Testimonial');
-                    if ($(this).val() == $("#old_type").html()) {
-                        $("#linkk").val($("#old_content").html());
-                    }
-                }
-
             } else {
                 $("#s_title").html(
                     "Please select (<code>.mp4</code>) file: <br/><p class=\"text-red\">Maximum allowed size on server: {{ $file_upload_max_size }}MB</p>"
-                    );
+                );
                 $("#linkk").attr('placeholder', '');
                 $("#linkk").remove();
                 $("#field_type_div").html(

@@ -92,47 +92,42 @@ class VideoController extends Controller
             'fimg' => 'mimes:jpg,png,jpeg'
         ]);
         $img_name = '';
-        $file = $request->file('fimg');
         if (isset($_FILES['fimg']) && $_FILES['fimg']['tmp_name'] != '') {
-            $name = $file->getClientOriginalName();
+            $file = $request->file('fimg');
             $fileExtension = $file->getClientOriginalExtension();
-            $name = str_replace('.' . $fileExtension, '', $name) . '-' . time() . rand(1111, 4444) . '.' . $fileExtension;
-            $img_name = strtolower(str_replace(' ', '-', $name));
-            $file->move(public_path() . '/uploads/videos/thumb/', $img_name);
+            $img_name = Str::slug($request->heading) . '.' . $fileExtension;
+            $file->move(storage_public('/uploads/videos/thumb/'), $img_name);
         }
         $Video = new Video;
-        if ($request->testimonial_type == 'upload') {
+        if ($request->video_type == 'upload') {
             $request->validate([
                 'linkk' => 'required|mimes:mp4'
             ]);
             $file = $request->file('linkk');
-            $name = $file->getClientOriginalName();
             $fileExtension = $file->getClientOriginalExtension();
-            $name = str_replace('.' . $fileExtension, '', $name) . '-' . time() . rand(1111, 4444) . '.' . $fileExtension;
-            $video_name = strtolower(str_replace(' ', '-', $name));
-            $file->move(public_path() . '/uploads/videos/video/', $video_name);
+            $video_name = Str::slug($request->heading) . '.' . $fileExtension;
+            $file->move(storage_public('/uploads/videos/video/'), $video_name);
 
             $Video->content = $video_name;
         } else {
             $Video->content = $request->linkk;
-            if ($request->testimonial_type == 'Youtube' || $request->testimonial_type == 'Vimeo') {
-                if ($request->testimonial_type == 'Youtube') {
+            $time = time();
+            $img_name = Str::slug($request->heading) . '-' . $time . ".jpg";
+            if ($request->video_type == 'Youtube' || $request->video_type == 'Vimeo') {
+                if ($request->video_type == 'Youtube') {
                     $youtubeID = youtubelink2id($request->linkk);
                     $image = @file_get_contents('https://img.youtube.com/vi/' . $youtubeID . '/0.jpg');
                 }
-                if ($request->testimonial_type == 'Vimeo') {
+                if ($request->video_type == 'Vimeo') {
                     $vimeoID = vimeolink2id($request->linkk);
                     $imgLink = vimeoid2img($vimeoID);
                     $image = @file_get_contents($imgLink);
                 }
-                $time = time();
-                $image_source = public_path() . '/uploads/videos/' . $time . ".jpg";
+                $image_source = storage_public('/uploads/videos/thumb/' . $img_name);
                 file_put_contents($image_source, $image);
-                $output_file = public_path() . '/uploads/videos/thumb/' . $time . ".jpg";
-                $img_name = $time . ".jpg";
             }
         }
-        $Video->video_type = $request->testimonial_type;
+        $Video->video_type = $request->video_type;
         $Video->short_detail = $request->descp;
         $Video->video_img = $img_name;
         $Video->heading = $request->heading;
@@ -150,39 +145,53 @@ class VideoController extends Controller
         $request->validate([
             'fimg' => 'mimes:jpg,png,jpeg'
         ]);
+
+        $Video = Video::find($idd);
         $img_name = '';
         $file = $request->file('fimg');
         if (isset($_FILES['fimg']) && $_FILES['fimg']['tmp_name'] != '') {
-            $name = $file->getClientOriginalName();
             $fileExtension = $file->getClientOriginalExtension();
-            $name = str_replace('.' . $fileExtension, '', $name) . '-' . time() . rand(1111, 4444) . '.' . $fileExtension;
-            $img_name = strtolower(str_replace(' ', '-', $name));
-            $file->move(public_path() . '/uploads/videos/thumb/', $img_name);
+            $img_name = Str::slug($request->heading) . '.' . $fileExtension;
+            @unlink(storage_public('/uploads/videos/thumb/' . $Video->video_img));
+            $file->move(storage_public('/uploads/videos/thumb/'), $img_name);
         }
-        $Video = Video::find($idd);
-        if ($request->testimonial_type == 'upload') {
+        if ($request->video_type == 'upload') {
             if (isset($_FILES['linkk']) && $_FILES['linkk']['tmp_name'] != '') {
                 $request->validate([
                     'linkk' => 'required|mimes:mp4'
                 ]);
-
                 $file = $request->file('linkk');
-                $name = $file->getClientOriginalName();
                 $fileExtension = $file->getClientOriginalExtension();
-                $name = str_replace('.' . $fileExtension, '', $name) . '-' . time() . rand(1111, 4444) . '.' . $fileExtension;
-                $video_name = strtolower(str_replace(' ', '-', $name));
-                $file->move(public_path() . '/uploads/videos/video/', $video_name);
+                $video_name = Str::slug($request->heading) . '.' . $fileExtension;
+                @unlink(storage_public('/uploads/videos/video/' . $Video->content));
+                $file->move(storage_public('/uploads/videos/video/'), $video_name);
                 $Video->content = $video_name;
             }
         } else {
             if (!empty($request->linkk)) {
                 $Video->content = $request->linkk;
+                $time = time();
+                $img_name = Str::slug($request->heading) . '-' . $time . ".jpg";
+                if ($request->video_type == 'Youtube' || $request->video_type == 'Vimeo') {
+                    if ($request->video_type == 'Youtube') {
+                        $youtubeID = youtubelink2id($request->linkk);
+                        $image = @file_get_contents('https://img.youtube.com/vi/' . $youtubeID . '/0.jpg');
+                    }
+                    if ($request->video_type == 'Vimeo') {
+                        $vimeoID = vimeolink2id($request->linkk);
+                        $imgLink = vimeoid2img($vimeoID);
+                        $image = @file_get_contents($imgLink);
+                    }
+                    $image_source = storage_public('/uploads/videos/thumb/' . $img_name);
+                    @unlink(storage_public('/uploads/videos/thumb/' . $Video->video_img));
+                    file_put_contents($image_source, $image);
+                }
             }
         }
         if (!empty($img_name)) {
             $Video->video_img = $img_name;
         }
-        $Video->video_type = $request->testimonial_type;
+        $Video->video_type = $request->video_type;
         $Video->dated = date('Y-m-d H:i:s');
         $Video->short_detail = $request->descp;
         $Video->heading = $request->heading;
