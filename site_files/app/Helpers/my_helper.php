@@ -1,15 +1,16 @@
 <?php
 
-use App\Helpers\ImageUploader;
 use App\Models\Back\City;
+use App\Models\Back\State;
+use App\Models\Back\County;
+use App\Models\Back\Country;
+use App\Models\Back\Metadata;
+use App\Helpers\ImageUploader;
 use App\Models\Back\CmsModule;
 use App\Models\Back\CmsModuleData;
-use App\Models\Back\Country;
-use App\Models\Back\County;
 use App\Models\Back\FleetCategory;
-use App\Models\Back\Metadata;
 use App\Models\Back\ModuleDataImage;
-use App\Models\Back\State;
+use App\Models\Back\GeneralEmailTemplate;
 
 function getMetaData()
 {
@@ -474,6 +475,16 @@ function generateCareerStatusDropDown($defaultSelected = '', $empty = true)
     foreach ($statusArray as $key => $value) {
         $selected = ($key == $defaultSelected) ? 'selected="selected"' : '';
         $str .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
+    }
+    return $str;
+}
+function generateMailTemplatesDropDown($defaultSelected = '', $empty = true)
+{
+    $generalEmailTemplates = GeneralEmailTemplate::where('is_temporary', 0)->orderBy('template_name')->get();
+    $str = ($empty) ? '<option value="">Select...</option>' : '';
+    foreach ($generalEmailTemplates as $generalEmailTemplateObj) {
+        $selected = ($generalEmailTemplateObj->id == $defaultSelected) ? 'selected="selected"' : '';
+        $str .= '<option value="' . $generalEmailTemplateObj->id . '" ' . $selected . '>' . $generalEmailTemplateObj->template_name . '</option>';
     }
     return $str;
 }

@@ -17,6 +17,8 @@ use App\Http\Controllers\Front\MailChimpController;
 use App\Http\Controllers\Front\TestimonialController;
 use App\Http\Controllers\Front\ClientRegisterController;
 use App\Http\Controllers\Front\GoogleCalendarController;
+use App\Http\Controllers\Back\GeneralEmailTemplateController;
+use App\Http\Controllers\Back\MassMailController;
 use App\Http\Controllers\Back\BlogController as BackBlogController;
 use App\Http\Controllers\Back\CityController as BackCityController;
 use App\Http\Controllers\Back\MenuController as BackMenuController;
@@ -348,6 +350,20 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     Route::get('/job-application/{jobApplicationObj}', [BackJobApplicationController::class, 'show'])->name('job.application.show');
     Route::delete('/job-application/{jobApplicationObj}', [BackJobApplicationController::class, 'destroy'])->name('job.application.destroy');
     Route::get('fetchJobApplicationsAjax', [BackJobApplicationController::class, 'fetchJobApplicationsAjax'])->name('fetchJobApplicationsAjax');
+
+    Route::get('/generalEmailTemplates', [GeneralEmailTemplateController::class, 'index'])->name('generalEmailTemplates.index');
+    Route::get('/generalEmailTemplates/create', [GeneralEmailTemplateController::class, 'create'])->name('generalEmailTemplates.create');
+    Route::post('/generalEmailTemplates', [GeneralEmailTemplateController::class, 'store'])->name('generalEmailTemplates.store');
+    Route::get('/generalEmailTemplates/{generalEmailTemplateObj}', [GeneralEmailTemplateController::class, 'destroy'])->name('generalEmailTemplates.destroy');
+    Route::get('/generalEmailTemplates/{generalEmailTemplateObj}/edit', [GeneralEmailTemplateController::class, 'edit'])->name('generalEmailTemplates.edit');
+    Route::put('/generalEmailTemplates/{generalEmailTemplateObj}', [GeneralEmailTemplateController::class, 'update'])->name('generalEmailTemplates.update');
+    Route::get('fetchGeneralEmailTemplatesAjax', [GeneralEmailTemplateController::class, 'fetchGeneralEmailTemplatesAjax'])->name('fetchGeneralEmailTemplatesAjax');
+
+    Route::get('/mass-mail', [MassMailController::class, 'index'])->name('mass.mail.index');
+    Route::get('/mass-mail-queued', [MassMailController::class, 'massMailQueued'])->name('mass.mail.queued');
+    Route::post('/mass-mail', [MassMailController::class, 'sendMassMail'])->name('submit.mass.mail');
+    Route::post('/get-mail-template-view', [MassMailController::class, 'getMailTemplateView'])->name('get.mail.template.view');
+
 });
 /************************************* */
 /************************************* */

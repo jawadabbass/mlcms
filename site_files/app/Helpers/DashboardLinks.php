@@ -10,6 +10,7 @@ class DashboardLinks
     public static $beforeModuleLinks = [
         'cmsmodules' => ['CMS Modules', 'fas fa-file', 'modules', 'user_type' => ['super-admin', 'normal-admin'], ''],
         'menu' => ['Positioning Navigations', 'fas fa-tasks', 'menus?position=top', 'user_type' => ['super-admin', 'normal-admin'], ''],
+        'mass-mail' => ['Mass Mail', 'fa fa-envelope', 'mass-mail', 'user_type' => ['super-admin', 'normal-admin'], ''],
         'contact_request' => ['Manage Leads', 'fas fa-share', 'contact_request', 'user_type' => ['super-admin', 'normal-admin', 'reps'], ''],
         'manage_clients' => ['Manage Clients', 'fas fa-share', 'manage_clients', 'user_type' => ['super-admin', 'normal-admin', 'reps'], ''],
     ];
@@ -52,6 +53,7 @@ class DashboardLinks
         'cmsmodules' => ['CMS Modules', 'fas fa-file', 'modules', 'user_type' => ['super-admin', 'normal-admin'], ''],
         'CRM' => [
             'icon' => ['fas fa-user'],
+            'mass-mail' => ['Mass Mail', 'fa fa-envelope', 'mass-mail', 'user_type' => ['super-admin', 'normal-admin'], ''],
             'contact_request' => ['Manage Leads', 'fas fa-share', 'contact_request', 'user_type' => ['super-admin', 'normal-admin', 'reps'], ''],
             'manage_clients' => ['Manage Clients', 'fas fa-share', 'manage_clients', 'user_type' => ['super-admin', 'normal-admin', 'reps'], ''],
             'email_templates' => ['Manage Email Templates', 'fas fa-envelope', 'email_templates', 'user_type' => ['super-admin', 'normal-admin', 'reps'], ''],
