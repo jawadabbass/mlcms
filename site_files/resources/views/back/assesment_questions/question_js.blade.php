@@ -15,7 +15,7 @@ function delete_product(id) {
                     location.reload();
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    alert('Error adding / update data');
+                    alert('Error adding / update data ' + ' ' + textStatus + ' ' + errorThrown);
                 }
             });
         }
@@ -40,7 +40,7 @@ function delete_product(id) {
                         console.log(data);
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        alert('Error adding / update data');
+                        alert('Error adding / update data ' + ' ' + textStatus + ' ' + errorThrown);
                         console.log(jqXHR);
                         console.log(textStatus);
                         console.log(errorThrown);

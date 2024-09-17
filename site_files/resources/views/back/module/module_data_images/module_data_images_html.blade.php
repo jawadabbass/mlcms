@@ -16,7 +16,7 @@
                 </div>
             </div>
         </div>
-        <div class="row more_images m-2" id="moreImages" style="display:none;">
+        <div class="row sortable_row more_images m-2" id="moreImages" style="display:none;">
             @if(isset($moduleDataImages))
             @foreach ($moduleDataImages as $image)
                 {!! generateModuleDataImageHtml('module/'.$module->type, $image) !!}

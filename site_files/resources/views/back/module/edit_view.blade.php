@@ -345,7 +345,27 @@
     @include('back.module.files_popup')
     @include('back.module.module_data_images.module_data_images_popups')
 @endsection
+@section('beforeHeadClose')
+    <style>
+        .sortable_div {
+            display: inline-block !important;
+        }
+
+        .sortable_div i {
+            background-color: #b4b3b3;
+            text-align: center;
+            line-height: 24px;
+            width: 30px;
+            height: 26px;
+            cursor: all-scroll;
+            border-radius: 4px;
+            padding-top: 0px;
+        }
+    </style>
+@endsection
+
 @section('beforeBodyClose')
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
     <script type="text/javascript" src="{{ asset_storage('') . 'module/module/admin/js/module.js' }}"></script>
     <!-- Filer -->
     <link rel="stylesheet" href="{{ asset_storage('') . 'module/module/admin/crop-avatar/cropper.css' }}">
@@ -504,7 +524,7 @@
                     console.log(jqXHR);
                     console.log(textStatus);
                     console.log(errorThrown);
-                    alert('Error adding / update data');
+                    alert('Error adding / update data ' + ' ' + textStatus + ' ' + errorThrown);
                 }
             });
         }
@@ -533,7 +553,7 @@
                         console.log(jqXHR);
                         console.log(textStatus);
                         console.log(errorThrown);
-                        alert('Error adding / update data');
+                        alert('Error adding / update data ' + ' ' + textStatus + ' ' + errorThrown);
                     }
                 });
             }
@@ -552,7 +572,7 @@
                         console.log(jqXHR);
                         console.log(textStatus);
                         console.log(errorThrown);
-                        alert('Error adding / update data');
+                        alert('Error adding / update data ' + ' ' + textStatus + ' ' + errorThrown);
                     }
                 });
             }

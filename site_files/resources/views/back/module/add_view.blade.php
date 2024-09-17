@@ -243,20 +243,25 @@
 
                                 <div id="page_seo_option"
                                     style="display: {{ $module->show_seo_field == 1 ? 'block' : 'none' }}">
-                                    @include('back.common_views.seo_fields', ['meta_title'=>'','meta_keywords'=>'','meta_description'=>'','canonical_url'=>''])
+                                    @include('back.common_views.seo_fields', [
+                                        'meta_title' => '',
+                                        'meta_keywords' => '',
+                                        'meta_description' => '',
+                                        'canonical_url' => '',
+                                    ])
+                                </div>
                             </div>
                         </div>
+                        <div class="bottom-btns">
+                            <input type="hidden" name="module_id" id="module_id" value="{{ ucwords($module->id) }}">
+                            <input type="hidden" name="from_page_update" id="from_page_update" value="yess">
+                            <button type="button" id="btnSave" onclick="save()"
+                                class="btn btn-primary pull-right">Save</button>
+                            <a href="{{ admin_url() . 'module/' . $module->type }}" class="go-back"><button
+                                    type="button" class="btn btn-danger" data-bs-dismiss="modal"><i
+                                        class="fas fa-angle-double-left" aria-hidden="true"></i> Back </button></a>
+                        </div>
                     </div>
-                    <div class="bottom-btns">
-                        <input type="hidden" name="module_id" id="module_id" value="{{ ucwords($module->id) }}">
-                        <input type="hidden" name="from_page_update" id="from_page_update" value="yess">
-                        <button type="button" id="btnSave" onclick="save()"
-                            class="btn btn-primary pull-right">Save</button>
-                        <a href="{{ admin_url() . 'module/' . $module->type }}" class="go-back"><button type="button"
-                                class="btn btn-danger" data-bs-dismiss="modal"><i class="fas fa-angle-double-left"
-                                    aria-hidden="true"></i> Back </button></a>
-                    </div>
-                </div>
             </form>
         </section>
     </div>
@@ -303,7 +308,27 @@
     @include('back.module.files_popup')
     @include('back.module.module_data_images.module_data_images_popups')
 @endsection
+@section('beforeHeadClose')
+    <style>
+        .sortable_div {
+            display: inline-block !important;
+        }
+
+        .sortable_div i {
+            background-color: #b4b3b3;
+            text-align: center;
+            line-height: 24px;
+            width: 30px;
+            height: 26px;
+            cursor: all-scroll;
+            border-radius: 4px;
+            padding-top: 0px;
+        }
+    </style>
+@endsection
+
 @section('beforeBodyClose')
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
     <script type="text/javascript" src="{{ asset_storage('') . 'module/module/admin/js/module.js' }}"></script>
 
     <!-- Filer -->
@@ -314,7 +339,7 @@
         }
     </style>
     <script src="{{ asset_storage('') . 'module/module/admin/crop-avatar/cropper.js' }}"></script>
-    
+
     <!------------ Module JS Functions ---------------------->
     @include('back.module.module_data_images.module_data_images_js')
     <script type="text/javascript">
@@ -323,6 +348,8 @@
         $(document).ready(function() {
             additional_fields({{ ucwords($module->additional_fields) }});
         });
+
+
 
         function bind_cropper_preview() {
             var $previews = $('.preview');
@@ -447,7 +474,8 @@
                     if ($.isEmptyObject(data.error)) {
                         $('#modal_form').modal('hide');
                         if ($("#from_page_update").val() == "yess") {
-                            redirect_url = "{{ admin_url() . 'module/' . $module->type . '/edit/' }}" + data.module_data_id;
+                            redirect_url = "{{ admin_url() . 'module/' . $module->type . '/edit/' }}" + data
+                                .module_data_id;
                             window.location.href = redirect_url;
                         } else {
                             location.reload();
@@ -468,7 +496,7 @@
                     console.log(jqXHR);
                     console.log(textStatus);
                     console.log(errorThrown);
-                    alert('Error adding / update data');
+                    alert('Error adding / update data ' + ' ' + textStatus + ' ' + errorThrown);
                 }
             });
         }
@@ -498,7 +526,7 @@
                         console.log(jqXHR);
                         console.log(textStatus);
                         console.log(errorThrown);
-                        alert('Error adding / update data');
+                        alert('Error adding / update data ' + ' ' + textStatus + ' ' + errorThrown);
                     }
                 });
             }
@@ -518,7 +546,7 @@
                         console.log(jqXHR);
                         console.log(textStatus);
                         console.log(errorThrown);
-                        alert('Error adding / update data');
+                        alert('Error adding / update data ' + ' ' + textStatus + ' ' + errorThrown);
                     }
                 });
             }

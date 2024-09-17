@@ -114,4 +114,18 @@ class ImageUploadController extends Controller
             ]);
         }
     }
+
+    public function saveImagesSortOrder()
+    {
+        $list_order = request()->list_order;
+        $list = explode(',', $list_order);
+        $i = 1;
+        foreach ($list as $id) {
+            $id = str_replace('more_image_', '', $id);
+            $image = ModuleDataImage::find($id);
+            $image->sort_order = $i;
+            $image->save();
+            ++$i;
+        }
+    }
 }

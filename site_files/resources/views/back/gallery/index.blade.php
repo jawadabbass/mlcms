@@ -261,7 +261,7 @@
             'success', true, 1500);
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
-                        alert('Error adding / update data');
+                        alert('Error adding / update data ' + ' ' + textStatus + ' ' + errorThrown);
                         console.log(jqXHR);
                         console.log(textStatus);
                         console.log(errorThrown);
@@ -294,7 +294,7 @@
                         }
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
-                        alert('Error adding / update data');
+                        alert('Error adding / update data ' + ' ' + textStatus + ' ' + errorThrown);
                         console.log(jqXHR);
                         console.log(textStatus);
                         console.log(errorThrown);
@@ -322,7 +322,7 @@
                                 console.log(data);
                             },
                             error: function(jqXHR, textStatus, errorThrown) {
-                                alert('Error adding / update data');
+                                alert('Error adding / update data ' + ' ' + textStatus + ' ' + errorThrown);
                                 console.log(jqXHR);
                                 console.log(textStatus);
                                 console.log(errorThrown);

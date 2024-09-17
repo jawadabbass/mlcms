@@ -324,7 +324,7 @@ class ModuleManageController extends Controller
     {
         $moduleData = CmsModuleData::find($id);
         $module = CmsModule::find($moduleData->cms_module_id);
-        $moduleDataImages = ModuleDataImage::where('module_data_id', $id)->get();
+        $moduleDataImages = ModuleDataImage::where('module_data_id', $id)->sorted()->get();
         foreach ($moduleDataImages as $image) {
             ImageUploader::deleteImage('module/' . $image->module_type, $image->image_name, true);
             $image->delete();
@@ -433,7 +433,7 @@ class ModuleManageController extends Controller
         // get template
         $templates = Template::all();
         $job_content = CmsModuleData::where('id', 226)->first();
-        $moduleDataImages = ModuleDataImage::where('session_id', session()->getId())->get();
+        $moduleDataImages = ModuleDataImage::where('session_id', session()->getId())->sorted()->get();
         return view('back.module.add_view', compact('module', 'menu_types', 'title', 'msg', 'allParentCategory', 'albumsObj', 'filesObj', 'filesExts', 'templates', 'job_content', 'moduleDataImages'));
         // return view('back.module.add_edit_view', compact('module'));
     }
@@ -543,7 +543,7 @@ class ModuleManageController extends Controller
             ->whereRaw("find_in_set('" . $id . "',pages_id)")
             ->get();
         $templates = Template::all();
-        $moduleDataImages = ModuleDataImage::where('module_data_id', $id)->get();
+        $moduleDataImages = ModuleDataImage::where('module_data_id', $id)->sorted()->get();
         return view('back.module.edit_view', compact('module', 'moduleData', 'menu_types', 'title', 'msg', 'allParentCategory', 'menu', 'albumsObj', 'filesObj', 'filesExts', 'widget', 'templates', 'moduleDataImages'));
     }
     public function createUniqueURL($slugs)

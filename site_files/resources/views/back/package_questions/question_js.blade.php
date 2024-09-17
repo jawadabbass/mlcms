@@ -97,7 +97,7 @@
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                alert('Error adding / update data');
+                alert('Error adding / update data ' + ' ' + textStatus + ' ' + errorThrown);
                 console.log(jqXHR);
                 console.log(textStatus);
                 console.log(errorThrown);
@@ -120,7 +120,7 @@
                     location.reload();
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    alert('Error adding / update data');
+                    alert('Error adding / update data ' + ' ' + textStatus + ' ' + errorThrown);
                 }
             });
         }
@@ -136,7 +136,7 @@
                     $('#product_img_div').hide();
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    alert('Error adding / update data');
+                    alert('Error adding / update data ' + ' ' + textStatus + ' ' + errorThrown);
                 }
             });
         }
@@ -159,7 +159,7 @@
                         console.log(data);
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        alert('Error adding / update data');
+                        alert('Error adding / update data ' + ' ' + textStatus + ' ' + errorThrown);
                         console.log(jqXHR);
                         console.log(textStatus);
                         console.log(errorThrown);

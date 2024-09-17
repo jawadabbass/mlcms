@@ -16,7 +16,7 @@ function delete_this_record(id, contr) {
                 alertme('Your record has been deleted successfully.', 'success')
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                alert('Error adding / update data');
+                alert('Error adding / update data ' + ' ' + textStatus + ' ' + errorThrown);
             }
         });
     }

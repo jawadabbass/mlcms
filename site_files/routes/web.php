@@ -115,6 +115,7 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     Route::post('uploadTinyMceImage', [BackImageUploadController::class, 'uploadTinyMceImage'])->name('uploadTinyMceImage');
     Route::post('/module_image/remove_image', [BackImageUploadController::class, 'removeUploadedImage']);
     Route::post('/module_image/upload_more_images', [BackImageUploadController::class, 'uploadMoreImages']);
+    Route::post('/module_image/order', [BackImageUploadController::class, 'saveImagesSortOrder']);
     Route::post('/save_module_data_image_crop_image', [BackModuleManageController::class, 'ajax_crop_module_data_img']);
     Route::post('/getModuleDataImageAltTitle', [BackModuleManageController::class, 'getModuleDataImageAltTitle']);
     Route::post('/saveModuleDataImageAltTitle', [BackModuleManageController::class, 'saveModuleDataImageAltTitle']);

@@ -73,7 +73,7 @@
                     console.log(jqXHR);
                     console.log(textStatus);
                     console.log(errorThrown);
-                    alert('Error adding / update data');
+                    alert('Error adding / update data ' + ' ' + textStatus + ' ' + errorThrown);
                 }
             });
         }

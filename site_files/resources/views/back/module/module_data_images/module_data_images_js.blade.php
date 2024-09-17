@@ -2,11 +2,37 @@
     /****************************************************/
     var cms_module_type = "{{ $module->type }}";
     var cms_module_id = {{ $module->id }};
-    var cms_module_data_id = {{ isset($moduleData)? $moduleData->id:0 }};
+    var cms_module_data_id = {{ isset($moduleData) ? $moduleData->id : 0 }};
     var session_id = "{{ session()->getId() }}";
     var uploadMoreUrl = "{{ admin_url() }}module_image/upload_more_images";
 
 
+    $(document).ready(function() {
+        $('.sortable_row').sortable({
+            opacity: 1,
+            handle: '.sortable_div',
+            update: function(event, ui) {
+                console.log(event);
+                var list_sortable = $(this).sortable('toArray').toString();
+                $.ajax({
+                    url: "{{ url('/adminmedia/module_image/order') }}",
+                    type: 'POST',
+                    data: {
+                        list_order: list_sortable,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(data) {},
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        alert('Error adding / update data ' + ' ' + textStatus + ' ' +
+                            errorThrown);
+                        console.log(jqXHR);
+                        console.log(textStatus);
+                        console.log(errorThrown);
+                    }
+                });
+            }
+        });
+    });
 
     $('.more_images_label').on('click', function() {
         $('.more_images').toggle();
@@ -32,7 +58,7 @@
                     console.log(jqXHR);
                     console.log(textStatus);
                     console.log(errorThrown);
-                    alert('Error adding / update data');
+                    alert('Error adding / update data ' + ' ' + textStatus + ' ' + errorThrown);
                 }
             });
         }
@@ -69,7 +95,7 @@
                     console.log(jqXHR);
                     console.log(textStatus);
                     console.log(errorThrown);
-                    alert('Error adding / update data');
+                    alert('Error adding / update data ' + ' ' + textStatus + ' ' + errorThrown);
                 }
             });
         } else {
@@ -87,7 +113,10 @@
             url: "{{ admin_url() . 'getModuleDataImageAltTitle' }}",
             type: "POST",
             dataType: "JSON",
-            data: {image_id:image_id, _token: '{{ csrf_token() }}'},
+            data: {
+                image_id: image_id,
+                _token: '{{ csrf_token() }}'
+            },
             success: function(data) {
                 $('#moduleDataImageAltTitleForm').find('#image_id').val(image_id);
                 $('#moduleDataImageAltTitleForm').find('#image_alt').val(data.image_alt);
@@ -114,7 +143,7 @@
     function bind_cropper_preview_module_data_image(image_id) {
         $('#module_data_image_crop_form').find('#image_id').val(image_id);
         let image_name = $('#image_' + image_id).attr('data-imgname');
-        let path = '{{ asset_uploads('') }}'+folder+'/';
+        let path = '{{ asset_uploads('') }}' + folder + '/';
         $('#module_data_image_crop_form').find('#image').attr('src', path + '/' + image_name);
         $('#module_data_image_crop_form').find('#source_image').val(image_name);
         $('#module_data_image_cropper_form').modal('show');

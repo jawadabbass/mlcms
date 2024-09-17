@@ -328,6 +328,9 @@ function generateModuleDataImageHtml($folder, $image)
                             </a>
                         </div>
                         <div class="image_btn mt-2">
+                            <div class="drag sortable_div" title="Drag and Drop to sort">
+                                <i class="fas fa-arrows" aria-hidden="true"></i>
+                            </div>
                             <a title="Delete Image"
                                 onclick="deleteModuleDataImage(' . $image->id . ', \'' . $image->image_name . '\');"
                                 class="mb-1 btn btn-danger" data-bs-toggle="tooltip"
@@ -350,14 +353,14 @@ function generateModuleDataImageHtml($folder, $image)
 
 function getCmsModuleDataImagesById($module_data_id)
 {
-    $images = ModuleDataImage::where('module_data_id', $module_data_id)->get();
+    $images = ModuleDataImage::where('module_data_id', $module_data_id)->sorted()->get();
     return getCmsModuleDataImages($images);
 }
 
 function getCmsModuleDataImagesBySlug($post_slug)
 {
     $moduleData = CmsModuleData::where('post_slug', 'like', $post_slug)->first();
-    $images = ModuleDataImage::where('module_data_id', $moduleData->id)->get();
+    $images = ModuleDataImage::where('module_data_id', $moduleData->id)->sorted()->get();
     return getCmsModuleDataImages($images);
 }
 
