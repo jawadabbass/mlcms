@@ -2,6 +2,9 @@
 
 namespace App\Traits;
 
+use App\Models\Back\Client;
+use App\Models\Back\ContactUs;
+use App\Models\Back\Subscribers;
 use App\Models\Back\MassMailQueue;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -22,21 +25,21 @@ trait MassEmailsTrait
             foreach ($massMailQueue as $mailObj) {
                 $mailTemplateObj = GeneralEmailTemplate::find($mailObj->template_id);
                 $data = [];
-                if ($mailObj->professional_id > 0) {
-                    $professionalObj = DB::table('wp_specialist')->where('id', $mailObj->professional_id)->first();
+                if ($mailObj->client_id > 0) {
+                    $clientObj = Client::find($mailObj->client_id);
                     /**************************** */
-                    $to_name = $professionalObj->name_of_specialists;
-                    $to_email = $professionalObj->email;
+                    $to_name = $clientObj->name . ' ' . $clientObj->last_name;
+                    $to_email = $clientObj->email;
                     /**************************** */
-                    $subject = str_replace('{EMAIL}', $professionalObj->email, $mailTemplateObj->subject);
-                    $subject = str_replace('{PHONE}', $professionalObj->phone, $subject);
-                    $subject = str_replace('{NAME}', $professionalObj->name_of_specialists, $subject);
+                    $subject = str_replace('{EMAIL}', $clientObj->email, $mailTemplateObj->subject);
+                    $subject = str_replace('{PHONE}', $clientObj->phone, $subject);
+                    $subject = str_replace('{NAME}', $clientObj->name . ' ' . $clientObj->last_name, $subject);
                     /**************************** */
-                    $body = str_replace('{EMAIL}', $professionalObj->email, $mailTemplateObj->email_template);
-                    $body = str_replace('{PHONE}', $professionalObj->phone, $body);
-                    $body = str_replace('{NAME}', $professionalObj->name_of_specialists, $body);
+                    $body = str_replace('{EMAIL}', $clientObj->email, $mailTemplateObj->email_template);
+                    $body = str_replace('{PHONE}', $clientObj->phone, $body);
+                    $body = str_replace('{NAME}', $clientObj->name . ' ' . $clientObj->last_name, $body);
                 } elseif ($mailObj->contact_id > 0) {
-                    $contactObj = DB::table('contact_us_requests')->where('id', $mailObj->contact_id)->first();
+                    $contactObj = ContactUs::find($mailObj->contact_id);
                     /**************************** */
                     $to_name = $contactObj->name;
                     $to_email = $contactObj->email;
@@ -48,6 +51,19 @@ trait MassEmailsTrait
                     $body = str_replace('{EMAIL}', $contactObj->email, $mailTemplateObj->email_template);
                     $body = str_replace('{PHONE}', $contactObj->phone, $body);
                     $body = str_replace('{NAME}', $contactObj->name, $body);
+                } elseif ($mailObj->subscriber_id > 0) {
+                    $subscriberObj = Subscribers::find($mailObj->subscriber_id);
+                    /**************************** */
+                    $to_name = '';
+                    $to_email = $subscriberObj->email;
+                    /**************************** */
+                    $subject = str_replace('{EMAIL}', $subscriberObj->email, $mailTemplateObj->subject);
+                    $subject = str_replace('{PHONE}', '', $subject);
+                    $subject = str_replace('{NAME}', '', $subject);
+                    /**************************** */
+                    $body = str_replace('{EMAIL}', $subscriberObj->email, $mailTemplateObj->email_template);
+                    $body = str_replace('{PHONE}', '', $body);
+                    $body = str_replace('{NAME}', '', $body);
                 }
 
                 $data['body'] =  $body;

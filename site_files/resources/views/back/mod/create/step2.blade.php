@@ -6,8 +6,8 @@
     <section class="content">
         <div class="row">
             <div class="col-sm-12 col-md-12">
-                <div class="box">
-                    <div class="box-body table-responsive">
+                <div class="card p-2">
+                    <div class=" card-body table-responsive">
                         <div class="text-end"></div>
 
                         <div class="col-sm-12">

@@ -29,10 +29,10 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 col-md-12">
-                    <div class="box">
+                    <div class="card p-2">
                         <div class="row">
                             <div class="col-sm-8">
-                                <h3 class="box-title">Social Media</h3>
+                                <h3 class=" card-title">Social Media</h3>
                             </div>
                             <div class="col-sm-4">
                                 <div class="text-end" style="padding-bottom:2px;">
@@ -41,7 +41,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="box-body table-responsive">
+                        <div class=" card-body table-responsive">
                             <table id="example2" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
@@ -105,7 +105,7 @@
         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="box-body">
+                        <div class=" card-body">
                             <div class="mb-2">
                                 <label class="form-label">Name </label>
                                 <input type="text" class="form-control" id="name" name="name"
@@ -155,7 +155,7 @@
         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="box-body">
+                        <div class=" card-body">
                             <div class="mb-2">
                                 <label class="form-label">Name </label>
                                 <input type="text" class="form-control" id="edit_name" name="edit_name"

@@ -29,10 +29,10 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 col-md-12">
-                    <div class="box">
+                    <div class="card p-2">
                         <div class="row">
                             <div class="col-sm-8">
-                                <h3 class="box-title">All Blog Posts</h3>
+                                <h3 class=" card-title">All Blog Posts</h3>
                                 <a href="{{ admin_url() . 'blog' }}" class="btn btn-primary">Blog</a>
                                 <a href="{{ admin_url() . 'blog_categories' }}" class="btn btn-default">Categories</a>
                             </div>
@@ -42,7 +42,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="box-body table-responsive" style="padding: 15px 0;">
+                        <div class=" card-body table-responsive" style="padding: 15px 0;">
                             <table id="populate-cms-data" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
@@ -134,7 +134,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="box-body">
+                        <div class=" card-body">
                             <div class="mb-3">
                                 <div class="row">
                                     <label>Categories</label><br />

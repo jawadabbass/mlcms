@@ -22,9 +22,9 @@
         <section class="content">
             <div class="row">
                 <div class="col-xs-12 col-md-12">
-                    <div class="box">
+                    <div class="card p-2">
                         <div class="box-header">
-                            <h3 class="box-title">All Blocked IP addresses</h3>
+                            <h3 class=" card-title">All Blocked IP addresses</h3>
                         </div>
                         <div class="how_this_work"><a href="javascript:;" onClick="$('#mod_info').slideToggle();">How
 
@@ -53,7 +53,7 @@
 
                         <!-- /.box-header -->
 
-                        <div class="box-body table-responsive">
+                        <div class=" card-body table-responsive">
                             <div class="text-end" style="padding-bottom:2px;">
                                 <input type="button" class="btn btn-primary btn-sm" value="Add IP"
                                        onClick="load_my_add_form();"/>
@@ -127,7 +127,7 @@
         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="box-body">
+                        <div class=" card-body">
                             <div class="mb-2">
                                 <label class="form-label">IP @php echo helptooltip('add_ip'); @endphp</label>
                                 <input type="text" class="form-control" id="question" name="question"
@@ -169,7 +169,7 @@
         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="box-body">
+                        <div class=" card-body">
                             <div class="mb-2">
                                 <label class="form-label">Edit IP</label>
                                 <input type="text" class="form-control" id="edit_question" name="edit_question"
@@ -217,7 +217,7 @@
 
                         <!-- form start -->
 
-                        <div class="box-body">
+                        <div class=" card-body">
                             <div class="mb-2">
                                 <label class="form-label">Add Blocked Keywords <em>Comma(,) separated</em></label>
                                 <textarea name="spam_words" id="spam_words"
@@ -236,7 +236,7 @@
                         </div>
                     </div>
 
-                    <!-- /.box-body -->
+                    <!-- /. card-body -->
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>

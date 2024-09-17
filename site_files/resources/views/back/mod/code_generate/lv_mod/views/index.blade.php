@@ -12,7 +12,7 @@
         <section class="content">
             <div class="row">
                 <div class="col-xs-12 col-md-12">
-                    <div class="box">
+                    <div class="card p-2">
                         <div class="row">
 
 
@@ -88,7 +88,7 @@ foreach($arrSearch as $key=>$val){?>
 
 
 
-                        <div class="box-body table-responsive">
+                        <div class=" card-body table-responsive">
                             <table id="example2" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>

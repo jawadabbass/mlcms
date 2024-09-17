@@ -30,8 +30,8 @@
             </div>
         @endif
         <section class="content" id="basic-setting">
-            <div class="box">
-                <h2 class="box-title">
+            <div class="card p-2">
+                <h2 class=" card-title">
                     <i class="fas fa-arrow-circle-o-down" aria-hidden="true"></i> Logo and Favicon Settings
                     @php echo helptooltip('admin_logo_favicon') @endphp
                 </h2>

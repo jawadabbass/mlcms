@@ -1,7 +1,4 @@
-/* Author: Muhammad Wasim Akram
-   CMS Version: 3.1.0
-   Date: 17-12-2020
-*/
+
 $(document).ready(function () {
     bind_filer();
     var success = true;

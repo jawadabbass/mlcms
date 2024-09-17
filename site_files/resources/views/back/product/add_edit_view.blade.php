@@ -8,7 +8,7 @@
                 </div>
                 <!-- <span id="product_name" style="padding-left:2px;" class="err"></span> -->
                 <div class="modal-body form">
-                    <div class="box-body">
+                    <div class=" card-body">
                         <div class="alert alert-danger error-div" style="display:none"></div>
                         <input type="hidden" value="" name="id" />
                         <div class="form-body">

@@ -32,8 +32,8 @@
             </div>
         @endif
         <section class="content" id="google-analytics">
-            <div class="box">
-                <h2 class="box-title">
+            <div class="card p-2">
+                <h2 class=" card-title">
                     <i class="fas fa-arrow-circle-o-down" aria-hidden="true"></i> Javascript Code to include in your site
                     {{-- @php echo helptooltip('js_code') @endphp --}}
                 </h2>

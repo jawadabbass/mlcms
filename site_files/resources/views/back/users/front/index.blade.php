@@ -13,8 +13,8 @@
             </div>
         </section>
         <div class="content">
-            <div class="box">
-                <div class="box-body table-responsive">
+            <div class="card p-2">
+                <div class=" card-body table-responsive">
                     <table id="example2" class="table table-bordered table-hover">
                         <thead>
                             <tr>

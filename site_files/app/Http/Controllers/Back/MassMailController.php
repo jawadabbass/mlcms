@@ -1,20 +1,40 @@
 <?php
+
 namespace App\Http\Controllers\Back;
-use App\Mail\Notification;
+
+use App\Models\Back\Client;
 use Illuminate\Http\Request;
-use App\Models\Back\Location;
-use Illuminate\Support\Facades\DB;
+use App\Models\Back\ContactUs;
+use App\Models\Back\Subscribers;
+use App\Models\Back\MassMailQueue;
 use App\Http\Controllers\Controller;
 use App\Models\Back\GeneralEmailTemplate;
-use App\Models\Back\MassMailQueue;
-use Illuminate\Support\Facades\Mail;
 use App\Traits\GeneralEmailTemplateTrait;
+
 class MassMailController extends Controller
 {
     use GeneralEmailTemplateTrait;
     public function index(Request $request)
     {
-        return view('back.mass_email.index');
+        $packages = getModuleData(37);
+        $clients = $request->input('clients', 'No');
+        $leads = $request->input('leads', 'No');
+        $subscribers = $request->input('subscribers', 'No');
+        $client_id = $request->input('client_id', 0);
+        $lead_id = $request->input('lead_id', 0);
+        $clientObj = Client::find($client_id);
+        $leadObj = ContactUs::find($lead_id);
+
+        return view('back.mass_email.index', compact(
+            'packages',
+            'clients',
+            'leads',
+            'subscribers',
+            'client_id',
+            'lead_id',
+            'clientObj',
+            'leadObj',
+        ));
     }
     public function massMailQueued(Request $request)
     {
@@ -67,57 +87,82 @@ class MassMailController extends Controller
         $lead_date_to = $dateArray[2] . '-' . $dateArray[0] . '-' . $dateArray[1];
         /************************* */
         /************************* */
-        $search_locations = $request->input('locations[]', []);
-        $is_professionals_check = $request->input('professionals', 'No');
-        $is_contacts_check = $request->input('contact', 'No');
+        $packages = $request->input('packages[]', []);
+        $is_clients_check = $request->input('clients', 'No');
+        $is_leads_check = $request->input('leads', 'No');
+        $is_subscribers_check = $request->input('subscribers', 'No');
+        $client_id = $request->input('client_id', 0);
+        $lead_id = $request->input('lead_id', 0);
+        $clientObj = Client::find($client_id);
+        $leadObj = ContactUs::find($lead_id);
         /************************* */
         /************************* */
-        $special = DB::table('wp_specialist')->where('id', '0')->get();
-        $contact = DB::table('contact_us_requests')->where('id', '0')->get();
-        if ($is_professionals_check == 'Yes') {
-            $specialQuery = DB::table('wp_specialist');
-            $specialQuery->where(function ($q) use ($search_locations) {
-                if (count($search_locations) > 0) {
-                    foreach ($search_locations as $location) {
-                        $q->orWhere('select_location', 'like', '%' . $location . '%');
+        $clients = Client::where('id', '0')->get();
+        $leads = ContactUs::where('id', '0')->get();
+        $subscribers = Subscribers::where('id', '0')->get();
+        /************************* */
+        if ($is_clients_check == 'Yes') {
+            $clientQuery = Client::select('*');
+            $clientQuery->where(function ($q) use ($packages) {
+                if (count($packages) > 0) {
+                    foreach ($packages as $key => $package_id) {
+                        $q->orWhere('package_id', $package_id);
                     }
                 }
             });
-            $special = $specialQuery->get();
+            $clients = $clientQuery->get();
+        }
+        if(null !== $clientObj){
+            $clients->push($clientObj);
         }
         /************************* */
         /************************* */
-        if ($is_contacts_check == 'Yes') {
-            $contactQuery = DB::table('contact_us_requests')
+        if ($is_leads_check == 'Yes') {
+            $leadQuery = ContactUs::select('*')
                 ->where('dated', '>=', $lead_date_from)
                 ->where('dated', '<=', $lead_date_to);
-            $contactQuery->where(function ($q) use ($search_locations) {
-                if (count($search_locations) > 0) {
-                    foreach ($search_locations as $location) {
-                        $q->orWhere('location', 'like', '%' . $location . '%');
-                    }
-                }
-            });
-            $contact = $contactQuery->get();
+            $leads = $leadQuery->get();
+        }
+        if(null !== $leadObj){
+            $leads->push($leadObj);
         }
         /************************* */
         /************************* */
-        foreach ($special as $professionalObj) {
+        if ($is_subscribers_check == 'Yes') {
+            $subscribers = Subscribers::select('*')->get();
+        }
+        /************************* */
+        /************************* */
+        foreach ($clients as $clientObj) {
             $massMailQueueObj = new MassMailQueue();
             $massMailQueueObj->template_id = $template_id;
-            $massMailQueueObj->professional_id = $professionalObj->id;
+            $massMailQueueObj->client_id = $clientObj->id;
             $massMailQueueObj->contact_id = 0;
+            $massMailQueueObj->subscriber_id = 0;
             $massMailQueueObj->date = $date;
             $massMailQueueObj->time = $time;
             $massMailQueueObj->save();
         }
         /************************* */
         /************************* */
-        foreach ($contact as $leadObj) {
+        foreach ($leads as $leadObj) {
             $massMailQueueObj = new MassMailQueue();
             $massMailQueueObj->template_id = $template_id;
-            $massMailQueueObj->professional_id = 0;
+            $massMailQueueObj->client_id = 0;
             $massMailQueueObj->contact_id = $leadObj->id;
+            $massMailQueueObj->subscriber_id = 0;
+            $massMailQueueObj->date = $date;
+            $massMailQueueObj->time = $time;
+            $massMailQueueObj->save();
+        }
+        /************************* */
+        /************************* */
+        foreach ($subscribers as $subscriberObj) {
+            $massMailQueueObj = new MassMailQueue();
+            $massMailQueueObj->template_id = $template_id;
+            $massMailQueueObj->client_id = 0;
+            $massMailQueueObj->contact_id = 0;
+            $massMailQueueObj->subscriber_id = $subscriberObj->id;
             $massMailQueueObj->date = $date;
             $massMailQueueObj->time = $time;
             $massMailQueueObj->save();

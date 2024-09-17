@@ -1,8 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\Front\AjaxController;
 use App\Http\Controllers\Front\BlogController;
 use App\Http\Controllers\Front\HomeController;
@@ -58,7 +56,6 @@ use App\Http\Controllers\Back\PaymentOptionController as BackPaymentOptionContro
 use App\Http\Controllers\Back\BlogCategoriesController as BackBlogCategoriesController;
 use App\Http\Controllers\Back\JobApplicationController as BackJobApplicationController;
 use App\Http\Controllers\Back\PackageContentController as BackPackageContentController;
-use App\Http\Controllers\Back\Email_templatesController as BackEmail_templatesController;
 use App\Http\Controllers\Back\PackageQuestionController as BackPackageQuestionController;
 use App\Http\Controllers\AdminAuth\VerificationController as AdminAuthVerificationController;
 use App\Http\Controllers\Back\AssesmentQuestionController as BackAssesmentQuestionController;
@@ -254,7 +251,6 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     Route::resource('/manage_clients', BackClientController::class);
     Route::post('/client_comments/request_comment', [BackClientController::class, 'CommentContactClients'])->name('client_comments');
     Route::post('/clients-update-record/{id}', [BackClientController::class, 'update'])->name('client_update_record_store');
-    Route::get('/client_email_template/{id}', [BackClientController::class, 'ClientEmailTemplate'])->name('client_email_templates');
     Route::post('/client-delete', [BackClientController::class, 'clientDelete'])->name('client.delete');
     //sms send start
     Route::get('/client_sms_template/{id}', [BackClientController::class, 'ClientSMSTemplate'])->name('client_sms_templates');
@@ -267,16 +263,6 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     Route::get('/get-package-prequalified-questions/{package_id}', [BackClientController::class, 'getPackagePrequalifiedQuestions'])->name('get_client_prequalified_questions');
     Route::post('/client-package-store', [BackClientController::class, 'clientPackageStore'])->name('client-package-store');
     //Email Templates
-    Route::post('/email_templates/update_email_r', [BackEmail_templatesController::class, 'update_email_r']);
-    Route::post('/email_templates/add_status', [BackEmail_templatesController::class, 'add_status']);
-    Route::get('/email_templates/set_order', [BackEmail_templatesController::class, 'set_order']);
-    Route::get('/email_templates/pop', [BackEmail_templatesController::class, 'pop']);
-    Route::get('/email_templates/unset_search', [BackEmail_templatesController::class, 'unset_search']);
-    Route::post('/email_templates/update_status_tempaltes', [BackEmail_templatesController::class, 'update_status'])->name('email_template_update_status_templates');
-    Route::post('/email_templates/update_order', [BackEmail_templatesController::class, 'update_order']);
-    Route::resource('/email_templates', BackEmail_templatesController::class);
-    Route::post('/email_templates/delete_record', [BackEmail_templatesController::class, 'destroy'])->name('email_template_delete_record');
-    Route::post('/email_templates/update/{id}', [BackEmail_templatesController::class, 'update'])->name('email_template_update_save');
     Route::resource('/message', BackMessageController::class);
     Route::post('custom_msg_store', [BackMessageController::class, 'custom_msg_store'])->name('custom_msg_store');
     Route::post('custom_msg_update/{id}', [BackMessageController::class, 'custom_msg_update'])->name('custom_msg_update');

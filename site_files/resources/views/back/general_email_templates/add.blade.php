@@ -7,7 +7,7 @@
                 <div class="col-md-5 col-sm-12">
                     <ol class="breadcrumb">
                         <li><a href="{{ admin_url() }}"><i class="fas fa-tachometer-alt"></i> Home</a></li>
-                        <li class="active">Manage Admin Users</li>
+                        <li class="active">Manage Email Templates</li>
                     </ol>
                 </div>
                 <div class="col-md-7 col-sm-12">
@@ -17,16 +17,9 @@
         </section>
         <!-- Main content -->
         <section class="content">
-            @if (\Session::has('message'))
-                <div class="message-container">
-                    <div class="callout callout-success">
-                        <h4>{{ session('message') }}</h4>
-                    </div>
-                </div>
-            @endif
             <div class="row">
                 <div class="col-xs-12 col-md-12">
-                    <div class="box">
+                    <div class="card p-2">
                         @include('flash::message')
                         @if ($errors->any())
                             <div class="alert alert-danger">
@@ -50,8 +43,8 @@
                             </div>
                         </form>
                     </div>
-                    <!-- /.box -->
-                    <!-- /.box -->
+                    <!-- /.card -->
+                    <!-- /.card -->
                 </div>
             </div>
         </section>

@@ -30,7 +30,7 @@
                     </div>
                 </div>
             @endif
-            <div class="box">
+            <div class="card p-2">
                 <div class="row">
                     <div class="col-md-8 col-sm-8">
                         <h2>Office
@@ -65,7 +65,7 @@
                             </div>
                             <div id="{{ 'collapse' . $cnt }}" class="panel-collapse collapse">
                                 <div class="panel-body">
-                                    <div class="box-body box box-solid"><span style="padding-right:20px;">
+                                    <div class=" card-body box box-solid"><span style="padding-right:20px;">
                                             <form name="emp_network_detail_ {{ $val->ID }}" method="post"
                                                 id="frm_ {{ $val->ID }}"
                                                 action=" {{ route('manage_contact.update', $val->ID) }}">
@@ -172,7 +172,7 @@
             </div>
         </section>
         <section class="content">
-            <h3 class="box-title">Contact email recipients </h2>
+            <h3 class=" card-title">Contact email recipients </h2>
                 <div class="row">
                     <div class="col-md-4">
                         <div class="myfromrow">
@@ -250,10 +250,10 @@
                 </div>
         </section>
         <section class="content">
-            <h3 class="box-title">Show following Google Map on your contact us
+            <h3 class=" card-title">Show following Google Map on your contact us
                 Form @php echo  helptooltip('google_map') @endphp</h2>
                 <div class="gmapbox">
-                    <div class="box-body box box-solid">
+                    <div class=" card-body box box-solid">
                         <form name="emp_network_detail" method="get"
                             action=" {{ route('manage_contact.edit', $contact_email_result->ID) }}">
                             <div class="mb-2">
@@ -286,7 +286,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="box-body table-responsive box box-solid"><span style="padding-right:20px;">
+                    <div class=" card-body table-responsive box box-solid"><span style="padding-right:20px;">
                             <form name="emp_network_detail" method="post" action=" {{ route('manage_contact.store') }}">
                                 @csrf
                                 <div class="mb-2">

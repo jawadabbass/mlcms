@@ -27,11 +27,11 @@
         <section class="content">
             <div class="row">
                 <div class="col-xs-12 col-md-12">
-                    <div class="box">
+                    <div class="card p-2">
                         <div class="row">
                             <div class="col-sm-8">
                                 <div class="box-header">
-                                    <h3 class="box-title">Sort News</h3>
+                                    <h3 class=" card-title">Sort News</h3>
                                 </div>
                             </div>
                             <div class="col-sm-4">
@@ -41,11 +41,11 @@
                             </div>
                         </div>
                         <!-- /.box-header -->
-                        <div class="box-body table-responsive">
+                        <div class=" card-body table-responsive">
                                 <h3 class="mb-3">Drag and Drop to Sort</h3>
                                 <div id="newsSortDataDiv"></div>
                         </div>
-                        <!-- /.box-body -->
+                        <!-- /. card-body -->
                     </div>
                     <!-- /.box -->
                     <!-- /.box -->

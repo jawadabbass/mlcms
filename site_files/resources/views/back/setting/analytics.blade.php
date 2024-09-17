@@ -32,8 +32,8 @@
             </div>
         @endif
         <section class="content" id="google-analytics">
-            <div class="box">
-                <h2 class="box-title">
+            <div class="card p-2">
+                <h2 class=" card-title">
                     <i class="fas fa-arrow-circle-o-down" aria-hidden="true"></i> Google Analytics Code
                     @php echo helptooltip('google_analytics_content') @endphp
                 </h2>

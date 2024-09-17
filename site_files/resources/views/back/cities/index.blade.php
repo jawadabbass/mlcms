@@ -24,11 +24,11 @@
         <section class="content">
             <div class="row">
                 <div class="col-xs-12 col-md-12">
-                    <div class="box">
+                    <div class="card p-2">
                         <div class="row">
                             <div class="col-sm-8">
                                 <div class="box-header">
-                                    <h3 class="box-title">All Cities</h3>
+                                    <h3 class=" card-title">All Cities</h3>
                                 </div>
                             </div>
                             <div class="col-sm-4">
@@ -38,7 +38,7 @@
                             </div>
                         </div>
                         <!-- /.box-header -->
-                        <div class="box-body table-responsive">
+                        <div class=" card-body table-responsive">
                             <form method="post" id="city-search-form">
                                 <div class="row mb-3">
                                     <div class="col-lg-6">
@@ -100,7 +100,7 @@
                                 </table>
                             </form>
                         </div>
-                        <!-- /.box-body -->
+                        <!-- /. card-body -->
                     </div>
                     <!-- /.box -->
                     <!-- /.box -->

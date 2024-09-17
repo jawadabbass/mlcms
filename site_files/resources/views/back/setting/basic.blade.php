@@ -34,8 +34,8 @@
             </div>
         @endif
         <section class="content" id="basic-setting">
-            <div class="box">
-                <h2 class="box-title">
+            <div class="card p-2">
+                <h2 class=" card-title">
                     <i class="fas fa-arrow-circle-o-down" aria-hidden="true"></i> Basic Settings
                     @php echo helptooltip('meta_data_content') @endphp
                 </h2>

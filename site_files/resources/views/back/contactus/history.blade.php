@@ -22,7 +22,7 @@
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">
+                            <h3 class=" card-title">
                                 Details of Mr /Mr's <code> {!! $result->name !!}</code>
                                 <button onclick="editContactRequest({{ $result->id }});"
                                     class="btn btn-warning">Edit</button>

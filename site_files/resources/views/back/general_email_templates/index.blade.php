@@ -7,7 +7,7 @@
             <div class="col-md-5 col-sm-12">
                 <ol class="breadcrumb">
                     <li><a href="{{ admin_url() }}"><i class="fas fa-tachometer-alt"></i> Home</a></li>
-                    <li class="active">Manage Admin Users</li>
+                    <li class="active">Manage Email Templates</li>
                 </ol>
             </div>
             <div class="col-md-7 col-sm-12">
@@ -20,16 +20,16 @@
             @include('flash::message')
             <div class="row">
                 <div class="col-xs-12 col-md-12">
-                    <div class="box">
+                    <div class="card">
                         <div class="row">
                             <div class="col-sm-12">
-                                <div class="box-header">
-                                    <h3 class="box-title">All Email Templates</h3>
+                                <div class="card-header">
+                                    <h3 class="card-title">All Email Templates</h3>
                                 </div>
                             </div>
                         </div>
-                        <!-- /.box-header -->
-                        <div class="box-body table-responsive">
+                        <!-- /.card-header -->
+                        <div class="card-body table-responsive">
                             <form method="post" id="generalEmailTemplate-search-form">
                                 <div class="row">
                                     <div class="col-md-3 form-group">
@@ -64,10 +64,10 @@
                                 </table>
                             </form>
                         </div>
-                        <!-- /.box-body -->
+                        <!-- /.card-body -->
                     </div>
-                    <!-- /.box -->
-                    <!-- /.box -->
+                    <!-- /.card -->
+                    <!-- /.card -->
                 </div>
             </div>
         </section>

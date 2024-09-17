@@ -19,7 +19,7 @@
         <section class="content">
             <div class="row">
                 <div class="col-xs-12 col-md-12">
-                    <div class="box">
+                    <div class="card p-2">
                         <div class="box-header text-end" style="margin:2px 2px 0px 0px;">
                             <select name="cat" id="cat" onchange="ChangeCat(this.value)" class="form-control">
                                 <option {!! selectVal(0, $catId) !!}> Main Categories</option>
@@ -95,7 +95,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="box-body">
+                        <div class=" card-body">
                             <div class="row">
                                 <div class="col-sm-4 text-end">Title:</div>
                                 <div class="col-sm-8">
@@ -142,7 +142,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="box-body">
+                        <div class=" card-body">
                             <div class="row">
                                 <div class="col-sm-4 text-end">Title:</div>
                                 <div class="col-sm-8">

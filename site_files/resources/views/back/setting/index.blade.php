@@ -34,8 +34,8 @@
             </div>
         @endif
         <section class="content" id="basic-setting">
-            <div class="box">
-                <h2 class="box-title">
+            <div class="card p-2">
+                <h2 class=" card-title">
                     <i class="fas fa-arrow-circle-o-down" aria-hidden="true"></i> Basic Settings
                     @php echo helptooltip('meta_data_content') @endphp
                 </h2>
@@ -148,8 +148,8 @@
         </section>
         <section><hr/></section>
         <section class="content" id="google-analytics">
-            <div class="box">
-                <h2 class="box-title">
+            <div class="card p-2">
+                <h2 class=" card-title">
                     <i class="fas fa-arrow-circle-o-down" aria-hidden="true"></i> Google Analytics Code
                     @php echo helptooltip('google_analytics_content') @endphp
                 </h2>
@@ -171,8 +171,8 @@
         </section>
         <section><hr/></section>
         <section class="content" id="google-adsense">
-            <div class="box">
-                <h2 class="box-title">
+            <div class="card p-2">
+                <h2 class=" card-title">
                     <i class="fas fa-arrow-circle-o-down" aria-hidden="true"></i> Google adsense code
                     @php echo helptooltip('google_adsense_content') @endphp
                 </h2>
@@ -215,8 +215,8 @@
         </section>
         <section><hr/></section>
         <section class="content" id="google-captcha">
-            <div class="box">
-                <h2 class="box-title"><i class="fas fa-arrow-circle-o-down" aria-hidden="true"></i> ContactUs
+            <div class="card p-2">
+                <h2 class=" card-title"><i class="fas fa-arrow-circle-o-down" aria-hidden="true"></i> ContactUs
                     Captcha
                 </h2>
                 <form name="emp_network_detail" method="post" action="{{ admin_url() . 'setting/captcha' }}">
@@ -378,8 +378,8 @@
         </section>
         <section><hr/></section>
         <section class="content" id="disable-website">
-            <div class="box">
-                <h2 class="box-title"><i class="fas fa-arrow-circle-o-down" aria-hidden="true"></i> Disable Website
+            <div class="card p-2">
+                <h2 class=" card-title"><i class="fas fa-arrow-circle-o-down" aria-hidden="true"></i> Disable Website
                 </h2>
                 <form name="emp_network_detail" action="{{ route('settings.edit', 0) }}">
                     <div class="mb-2">

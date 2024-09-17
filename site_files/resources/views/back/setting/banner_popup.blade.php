@@ -37,8 +37,8 @@
             </div>
         @endif
         <section class="content" id="basic-setting">
-            <div class="box">
-                <h2 class="box-title">
+            <div class="card p-2">
+                <h2 class=" card-title">
                     <i class="fas fa-arrow-circle-o-down" aria-hidden="true"></i> Banner Popup Settings
                     @php echo helptooltip('banner_popup') @endphp
                 </h2>

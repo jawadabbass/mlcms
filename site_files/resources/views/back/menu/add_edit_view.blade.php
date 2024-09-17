@@ -9,7 +9,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body form">
-                    <div class="box-body">
+                    <div class=" card-body">
                         <input type="hidden" value="" name="id" />
                         <input type="hidden" value="" name="menu_actual_id" />
                         <div class="form-body">

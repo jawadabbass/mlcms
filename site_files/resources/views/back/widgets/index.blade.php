@@ -19,10 +19,10 @@
         <section class="content">
             <div class="row">
                 <div class="col-xs-12 col-md-12">
-                    <div class="box">
+                    <div class="card p-2">
                         <div class="row">
                             <div class="col-sm-8">
-                                <h3 class="box-title">All Widgets</h3>
+                                <h3 class=" card-title">All Widgets</h3>
                             </div>
                             <div class="col-sm-4">
                                 <div class="text-end" style="padding-bottom:2px;">
@@ -33,7 +33,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="box-body table-responsive">
+                        <div class=" card-body table-responsive">
                             <table id="example2" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>

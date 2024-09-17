@@ -21,8 +21,8 @@
         <section class="content">
             <div class="row">
                 <div class="col-xs-12 col-md-12">
-                    <div class="box">
-                        <div class="box-body">
+                    <div class="card p-2">
+                        <div class=" card-body">
                             @if (Session::has('msg'))
                                 <p class="alert alert-success">{{ Session::get('msg') }}</p>
                             @endif
@@ -34,16 +34,11 @@
                                 <a href="{{ admin_url() }}contact_request/create" class="btn btn-info">
                                     <i class="fas fa-plus-circle" aria-hidden="true"></i> Add New
                                     Lead</a>
-                                <a href="{{ route('email_templates.index') }}" class="btn btn-info">
-                                    <i class="fas fa-envelope-square" aria-hidden="true"></i>&nbsp;Email Template
-                                    Management</a>
+                                <a href="{{ admin_url() }}mass-mail?leads=yes" class="btn btn-info">
+                                    <i class="fas fa-envelope-square" aria-hidden="true"></i>&nbsp;Send Mass Email</a>
                                 {{-- <a href="{{ route('message.index') }}" class="btn btn-info">
                                     <i class="fas awesome_style fa-share" aria-hidden="true"></i>&nbsp;Message Template
                                     Management</a> --}}
-                                <a href="javascript:;" onclick="send_template_email('','lead','combine')"
-                                    class="btn btn-info">
-                                    <i class="fas fa-envelope-square" aria-hidden="true"></i>&nbsp;Send Email
-                                </a>
                                 {{-- <a href="javascript:;" onclick="send_template_sms('','lead','combine')"
                                     class="btn btn-info">
                                     <i class="fas awesome_style fa-share" aria-hidden="true"></i>&nbsp;Send SMS
@@ -120,7 +115,10 @@
                                             @if (count($result) > 0)
                                                 @foreach ($result as $row)
                                                     @php
-                                                        $bgColor = isset($bgColor) && $bgColor == '#f9f9f9' ? '#FFFFFF' : '#f9f9f9';
+                                                        $bgColor =
+                                                            isset($bgColor) && $bgColor == '#f9f9f9'
+                                                                ? '#FFFFFF'
+                                                                : '#f9f9f9';
                                                     @endphp
                                                     <tr id="trr{{ $row->id }}"
                                                         onclick="read_data(<?php echo $row->id; ?>)">
@@ -205,11 +203,10 @@
                                                                 Add{{ $row->added_to_google_calendar == 1 ? ' again' : '' }}
                                                                 to Google Calendar</a>
 
-                                                            <a class="btn btn-sm btn-info"
-                                                                onclick="send_template_email('{{ $row->id }}','lead','single')"
-                                                                href="javascript:"><i class="fas fa-envelope-square"></i>
-                                                                Send
-                                                                Email</a>
+                                                            <a href="{{ admin_url() }}mass-mail?lead_id={{ $row->id }}"
+                                                                class="btn btn-info">
+                                                                <i class="fas fa-envelope-square"
+                                                                    aria-hidden="true"></i>&nbsp;Send Email</a>
                                                             {{-- <a onclick="send_template_sms('{{ $row->id }}','lead','single')"
                                                                 class="btn btn-sm btn-info" href="javascript:"><i
                                                                     class="fas awesome_style fa-share"></i> Send

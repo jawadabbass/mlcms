@@ -30,8 +30,8 @@
             </div>
         @endif
         <section class="content" id="basic-setting">
-            <div class="box">
-                <h2 class="box-title">
+            <div class="card p-2">
+                <h2 class=" card-title">
                     <i class="fas fa-arrow-circle-o-down" aria-hidden="true"></i> Analytics Property ID and Settings
                     @php echo helptooltip('analytics_property_id_and_json_file') @endphp
                 </h2>

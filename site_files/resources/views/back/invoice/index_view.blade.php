@@ -17,8 +17,8 @@
         <section class="content">
             <div class="row">
                 <div class="col-xs-12 col-md-12">
-                    <div class="box">
-                        <div class="box-body">
+                    <div class="card p-2">
+                        <div class=" card-body">
                             @if (Session::has('msg'))
                                 <p class="alert alert-success">{{ Session::get('msg') }}</p>
                             @endif

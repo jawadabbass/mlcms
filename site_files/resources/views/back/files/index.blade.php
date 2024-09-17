@@ -21,7 +21,7 @@
                 <div class="col-xs-12 col-md-12">
                     <div class="row">
                         <div class="col-sm-8">
-                            <h3 class="box-title">Manage Files</h3>
+                            <h3 class=" card-title">Manage Files</h3>
                         </div>
                         <div class="col-sm-4">
                             <div class="text-end" style="padding-bottom:2px;">

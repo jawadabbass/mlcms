@@ -17,7 +17,7 @@
                 </div>
             </section>
             <section class="content">
-                <div class="box">
+                <div class="card p-2">
                     <div class="alert alert-success" role="alert">
                         <h4 class="alert-heading">Email queued successfully!</h4>
                         <p>All emails were queued successfully, and will be dispatched accordingly.</p>

@@ -17,11 +17,11 @@
         <section class="content">
             <div class="row">
                 <div class="col-xs-12 col-md-12">
-                    <div class="box">
+                    <div class="card p-2">
                         <div class="row">
                             <div class="col-sm-8">
                                 <div class="box-header">
-                                    <h3 class="box-title">Admin Users</h3>
+                                    <h3 class=" card-title">Admin Users</h3>
                                     <div class="clearfix"></div>
                                     <br>
                                     <a class="btn btn-primary" href="{{ route('admin.show', 0) }}">User Access Controle List</a>
@@ -36,7 +36,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="box-body table-responsive">
+                        <div class=" card-body table-responsive">
                             <table id="example2" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>

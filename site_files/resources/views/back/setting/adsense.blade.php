@@ -31,8 +31,8 @@
             </div>
         @endif
         <section class="content" id="google-adsense">
-            <div class="box">
-                <h2 class="box-title">
+            <div class="card p-2">
+                <h2 class=" card-title">
                     <i class="fas fa-arrow-circle-o-down" aria-hidden="true"></i> Google adsense code
                     @php echo helptooltip('google_adsense_content') @endphp
                 </h2>

@@ -42,7 +42,7 @@
                 <div class="col-xs-12 col-md-12">
                     <div class="row">
                         <div class="col-sm-12">
-                            <h3 class="box-title">{{ $album_name }} Gallery</h3>
+                            <h3 class=" card-title">{{ $album_name }} Gallery</h3>
                         </div>
                     </div>
                     @if (session('success'))
@@ -282,7 +282,7 @@
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body form">
-                            <div class="box-body">
+                            <div class=" card-body">
                                 <div class="row">
                                     <div class="col-md-12" id="large_image"><img id="image" src=""
                                             alt="Crop Picture"></div>
@@ -326,7 +326,7 @@
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body form">
-                            <div class="box-body">
+                            <div class=" card-body">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="mb-3">

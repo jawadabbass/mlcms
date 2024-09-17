@@ -25,7 +25,7 @@
                 <div class="col-xs-12 col-md-12">
                     <div class="row">
                         <div class="col-sm-8">
-                            <h3 class="box-title">Manage Album</h3>
+                            <h3 class=" card-title">Manage Album</h3>
                         </div>
                         <div class="col-sm-4">
                             <div class="text-end" style="padding-bottom:2px;">
@@ -61,7 +61,7 @@
             </div>
         </section>
         <section class="content p-3">
-            <div class="box-body table-responsive">
+            <div class=" card-body table-responsive">
                 <table id="table" class="table table-bordered table-hover">
                     <thead>
                         <tr>

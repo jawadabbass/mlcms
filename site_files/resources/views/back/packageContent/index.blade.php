@@ -25,16 +25,16 @@
 
             <div class="row">
                 <div class="col-xs-12 col-md-12">
-                    <div class="box">
+                    <div class="card p-2">
 
 
 
-                        <div class="box-body">
+                        <div class=" card-body">
                             <!-- image section start-->
                             <div class="row">
                                 <div class="col-sm-8">
                                     <div class="box-header">
-                                        <h3 class="box-title">Manage Images Of {{ $main_package->heading }} Package
+                                        <h3 class=" card-title">Manage Images Of {{ $main_package->heading }} Package
 
                                         </h3>
                                     </div>
@@ -70,7 +70,7 @@
                             <div class="row">
                                 <div class="col-sm-8">
                                     <div class="box-header">
-                                        <h3 class="box-title">Manage Video Of {{ $main_package->heading }} Package
+                                        <h3 class=" card-title">Manage Video Of {{ $main_package->heading }} Package
 
                                         </h3>
                                     </div>
@@ -108,7 +108,7 @@
                             <div class="row">
                                 <div class="col-sm-8">
                                     <div class="box-header">
-                                        <h3 class="box-title">Manage Document Of {{ $main_package->heading }} Package
+                                        <h3 class=" card-title">Manage Document Of {{ $main_package->heading }} Package
 
                                         </h3>
                                     </div>
@@ -144,7 +144,7 @@
                             <div class="row">
                                 <div class="col-sm-8">
                                     <div class="box-header">
-                                        <h3 class="box-title">Manage Content Of {{ $main_package->heading }} Package
+                                        <h3 class=" card-title">Manage Content Of {{ $main_package->heading }} Package
 
                                         </h3>
                                     </div>
@@ -180,7 +180,7 @@
 
                         </div>
 
-                        <!-- /.box-body -->
+                        <!-- /. card-body -->
                     </div>
 
                     <!-- /.box -->

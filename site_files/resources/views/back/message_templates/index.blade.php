@@ -51,7 +51,7 @@
 
 
             </div>
-            <div class="box-body table-responsive">
+            <div class=" card-body table-responsive">
                 <table id="table_id" class="table table-bordered table-hover">
                     <thead class="thead-dark">
                         <tr>

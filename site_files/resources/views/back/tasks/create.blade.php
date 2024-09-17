@@ -72,7 +72,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- /.box-body -->
+                    <!-- /. card-body -->
                 </div>
                 <!-- /.box -->
                 <!-- /.box -->

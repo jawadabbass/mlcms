@@ -9,7 +9,7 @@
                         aria-label="Close"></button>
                 </div>
                 <div class="modal-body form">
-                    <div class="box-body">
+                    <div class=" card-body">
                         <div class="row">
                             <div class="col-md-12" id="large_image"><img id="image" src=""
                                     alt="Crop Picture"></div>
@@ -50,7 +50,7 @@
                         aria-label="Close"></button>
                 </div>
                 <div class="modal-body form">
-                    <div class="box-body">
+                    <div class=" card-body">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="mb-3">

@@ -26,7 +26,7 @@
         <section class="content">
             <div class="row">
                 <div class="col-xs-12 col-md-12">
-                    <div class="box">
+                    <div class="card p-2">
                         <div class="row">
                             <div class="col-sm-4">
                             </div>
@@ -46,7 +46,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="box-body table-responsive">
+                        <div class="card-body table-responsive">
                             <table id="table" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
@@ -91,7 +91,7 @@
                                 <tfoot></tfoot>
                             </table>
                         </div>
-                        <!-- /.box-body -->
+                        <!-- /. card-body -->
                     </div>
                     {!! $products->links() !!}
                     <!-- /.box -->

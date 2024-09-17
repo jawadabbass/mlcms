@@ -17,8 +17,8 @@
         <section class="content">
             <div class="row">
                 <div class="col-xs-12 col-md-12">
-                    <div class="box">
-                        <div class="box-body">
+                    <div class="card p-2">
+                        <div class=" card-body">
                             @if (session('success'))
                                 <div style="padding-top:5px;" class="alert alert-success">{{ session('success') }}
                                 </div>
@@ -34,16 +34,12 @@
                                 <a href="{{ admin_url() }}manage_clients/create" class="btn btn-info">
                                     <i class="fas fa-plus-circle" aria-hidden="true"></i> Add New
                                     Client</a>
-                                <a href="{{ route('email_templates.index') }}" class="btn btn-info">
-                                    <i class="fas fa-envelope-square" aria-hidden="true"></i>&nbsp;Email Template
-                                    Management</a>
+                                <a href="{{ admin_url() }}mass-mail?clients=yes" class="btn btn-info">
+                                    <i class="fas fa-envelope-square" aria-hidden="true"></i>&nbsp;Send Mass Email</a>
+
                                 <a href="{{ route('message.index') }}" class="btn btn-info">
                                     <i class="fas awesome_style fa-share" aria-hidden="true"></i>&nbsp;Message Template
                                     Management</a>
-                                <a href="javascript:;" onclick="send_template_email('','client','combine')"
-                                    class="btn btn-info">
-                                    <i class="fas fa-envelope-square" aria-hidden="true"></i>&nbsp;Send Email
-                                </a>
                                 <a href="javascript:;" onclick="send_template_sms('','client','combine')"
                                     class="btn btn-info">
                                     <i class="fas awesome_style fa-share" aria-hidden="true"></i>&nbsp;Send SMS
@@ -80,7 +76,7 @@
                                         </select>
                                     </div>
                                     <div class="col-md-2 text-start">
-                                        <button type="submit"  class="btn btn-info"><i class="fas fa-search"
+                                        <button type="submit" class="btn btn-info"><i class="fas fa-search"
                                                 aria-hidden="true"></i> Search</button>
                                         <a class="btn btn-warning" href="{{ route('manage_clients.index') }}"><i
                                                 class="fas fa-sync" aria-hidden="true"></i>Reset</a>
@@ -95,7 +91,7 @@
                                         <tr>
                                             <th>
                                                 <input type="checkbox" id="client_check_all" />
-                                                <button type="submit"  class="btn btn-small btn-danger"
+                                                <button type="submit" class="btn btn-small btn-danger"
                                                     id="client_delete_all" style="display:none;">Delete</button>
                                             </th>
                                             <th>
@@ -119,7 +115,10 @@
                                         @if (count($result) > 0)
                                             @foreach ($result as $row)
                                                 @php
-                                                    $bgColor = isset($bgColor) && $bgColor == '#f9f9f9' ? '#FFFFFF' : '#f9f9f9';
+                                                    $bgColor =
+                                                        isset($bgColor) && $bgColor == '#f9f9f9'
+                                                            ? '#FFFFFF'
+                                                            : '#f9f9f9';
                                                     if (isset($_GET['package']) && !empty($_GET['package'])) {
                                                         $response = $_GET['package'];
                                                     } else {
@@ -130,8 +129,8 @@
                                                     <tr id="trr{{ $row->id }}">
                                                         <td><input type="checkbox" class="client_check"
                                                                 name="client_check[]" value="<?php echo $row->id; ?>" /></td>
-                                                        <td><a style="font-size: 24px;" data-toggle="tooltip"
-                                                                title="" href="javascript:;"
+                                                        <td><a style="font-size: 24px;" data-toggle="tooltip" title=""
+                                                                href="javascript:;"
                                                                 onclick="showme_page('#subtrr{{ $row->id }}',this)"
                                                                 data-original-title="Show more"><i
                                                                     class="fas fa-angle-double-down"
@@ -186,11 +185,10 @@
                                                                 class="btn btn-info  btn-sm"><i class="fas fa-edit"
                                                                     aria-hidden="true"></i>
                                                                 Edit</a>
-                                                            <a class="btn btn-sm btn-info"
-                                                                onclick="send_template_email('{{ $row->id }}','client','single')"
-                                                                href="javascript:"><i class="fas fa-envelope-square"></i>
-                                                                Send
-                                                                Email</a>
+                                                            <a href="{{ admin_url() }}mass-mail?client_id={{ $row->id }}"
+                                                                class="btn btn-info">
+                                                                <i class="fas fa-envelope-square"
+                                                                    aria-hidden="true"></i>&nbsp;Send Email</a>
                                                             <a href="javascript:;"
                                                                 onclick="send_template_sms('{{ $row->id }}','client','single')"
                                                                 class="btn btn-sm btn-info" href="javascript:"><i
@@ -484,6 +482,7 @@
                 });
             }
         });
+
         function del_recrod(id) {
             if (confirmDel()) {
                 $.ajaxSetup({
@@ -513,6 +512,7 @@
                 });
             }
         }
+
         function update_status(cid, sts) {
             console.log(sts);
             postMyForm(
@@ -527,6 +527,7 @@
                 }
             );
         }
+
         function update_conditions(id, val) {
             $.ajaxSetup({
                 headers: {
@@ -567,6 +568,7 @@
                 var start = moment().subtract(Difference_In_Days, 'days');
                 var end = moment();
             }
+
             function cb(start, end) {
                 $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
             }
@@ -594,6 +596,7 @@
             $("#contact_id").val(id);
             $("#exampleModal-comment").modal('show');
         }
+
         function comment_save() {
             var id = $('#contact_id').val();
             $('#btnSave').css('display', 'none');
@@ -650,6 +653,7 @@
                 }
             });
         }
+
         function validateForm1() {
             $("#comment").css('background-color', '');
             var valid = true;
@@ -670,6 +674,7 @@
             }
             return true;
         }
+
         function isEmail(email) {
             var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
             return regex.test(email);
@@ -682,6 +687,7 @@
                 $("#search_form").submit();
             }
         }
+
         function send_assessment_email(id, sts) {
             $.ajax({
                 type: "GET",
@@ -699,11 +705,13 @@
                 },
             });
         }
+
         function show_hides(id) {
             $('.' + id).css("display", "table-row");
             $('.down_' + id).css("display", "none");
             $('.up_' + id).css("display", "block");
         }
+
         function hide_show(id) {
             $('.' + id).css("display", "none");
             $('.down_' + id).css("display", "block");
@@ -720,6 +728,7 @@
         $('.client_check').on('change', function() {
             checkUncheckDelCheckBoxes();
         })
+
         function checkUncheckDelCheckBoxes() {
             if ($('.client_check:checked').length == $('.client_check').length) {
                 $('#client_check_all').prop('checked', true);

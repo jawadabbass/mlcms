@@ -18,8 +18,8 @@
         <section class="content">
             <div class="row">
                 <div class="col-xs-12 col-md-12">
-                    <div class="box">
-                        <div class="box-body">
+                    <div class="card p-2">
+                        <div class=" card-body">
 
                             <h2> <i class="fas fa-plus-circle" aria-hidden="true"></i> Add New Client Package</h2>
                             <br>

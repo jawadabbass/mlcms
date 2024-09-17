@@ -32,8 +32,8 @@
             </div>
         @endif
         <section class="content" id="google-captcha">
-            <div class="box">
-                <h2 class="box-title"><i class="fas fa-arrow-circle-o-down" aria-hidden="true"></i> ContactUs Captcha
+            <div class="card p-2">
+                <h2 class=" card-title"><i class="fas fa-arrow-circle-o-down" aria-hidden="true"></i> ContactUs Captcha
                 </h2>
                 <form name="emp_network_detail" method="post" action="{{ admin_url() . 'setting/captcha' }}">
                     @csrf

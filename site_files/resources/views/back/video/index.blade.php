@@ -19,10 +19,10 @@
         <section class="content">
             <div class="row">
                 <div class="col-xs-12 col-md-12">
-                    <div class="box">
+                    <div class="card p-2">
                         <div class="row">
                             <div class="col-sm-8">
-                                <h3 class="box-title">All Videos</h3>
+                                <h3 class=" card-title">All Videos</h3>
                             </div>
                             <div class="col-sm-4">
                                 <div class="text-end" style="padding-bottom:2px;">
@@ -30,7 +30,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="box-body table-responsive">
+                        <div class=" card-body table-responsive">
                             <table id="example2" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
@@ -109,7 +109,7 @@
                     </div>
                     <div class="modal-body">
                         <!-- /.box-header -->
-                        <div class="box-body">
+                        <div class=" card-body">
                             <div class="mb-2">
                                 <label class="form-label">Video Heading</label>
                                 <textarea class="form-control" id="heading" name="heading" placeholder="Video Heading">{{ old('heading') }}</textarea>
@@ -175,7 +175,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="box-body">
+                        <div class=" card-body">
                             <div class="mb-2">
                                 <label class="form-label">Video Heading</label>
                                 <textarea class="form-control" id="edit_heading" name="edit_heading" placeholder="Video Heading">{{ old('heading') }}</textarea>

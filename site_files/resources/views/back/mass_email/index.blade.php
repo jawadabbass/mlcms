@@ -6,7 +6,7 @@
                 <div class="col-md-5 col-sm-12">
                     <ol class="breadcrumb">
                         <li><a href="{{ admin_url() }}"><i class="fas fa-tachometer-alt"></i> Home</a></li>
-                        <li class="active">Manage Admin Users</li>
+                        <li class="active">Manage Mass Mails</li>
                     </ol>
                 </div>
                 <div class="col-md-7 col-sm-12">
@@ -25,40 +25,75 @@
                                 id="save_update_template_or_just_send_mail" value="">
                             <input type="hidden" name="date" id="date" value="{{ date('m-d-Y') }}">
                             <input type="hidden" name="time" id="time" value="{{ date('h:i A') }}">
+                            <input type="hidden" name="client_id" id="client_id" value="{{ $client_id }}">
+                            <input type="hidden" name="lead_id" id="lead_id" value="{{ $lead_id }}">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="row">
-                                        <div class="col-md-2">
+                                        <div class="col-md-12">
                                             <label>
-                                                <h4>Send Email To:</h4>
+                                                <h4>Send Email To:
+                                                    <span class="text-success">
+                                                        @if (null !== $clientObj)
+                                                            {{ $clientObj->name . ' ' . $clientObj->last_name }}
+                                                        @endif
+                                                        @if (null !== $leadObj)
+                                                            {{ $leadObj->name }}
+                                                        @endif
+                                                    </span>
+                                                </h4>
                                             </label>
                                         </div>
-                                        <div class="col-md-2">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="Yes"
-                                                    name="professionals" id="professionals" checked="checked">
-                                                <label class="form-check-label mt-2 ml-2" for="professionals">
-                                                    Professionals
-                                                </label>
-                                                <div class="invalid-feedback">
-                                                    Please select send mail to option.
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-8">
+                                        <div class="col-md-4" {!! $clients == 'No' ? 'style="display: none;"' : '' !!}>
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value="Yes"
-                                                            name="contact" id="contact" checked="checked">
-                                                        <label class="form-check-label  mt-2 ml-2" for="contact">
+                                                        <input class="form-check-input" type="checkbox"
+                                                            value="{{ $clients }}" name="clients" id="clients"
+                                                            checked="checked">
+                                                        <label class="form-check-label mt-1 ml-1" for="clients">
+                                                            Clients
+                                                        </label>
+                                                        <div class="invalid-feedback">
+                                                            Please select send mail to option.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row pl-4 pt-1" id="client_packages_div" {!! $clients == 'No' ? 'style="display: none;"' : '' !!}>
+                                                @foreach ($packages as $package)
+                                                    <div class="col-md-12">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                value="{{ $package->id }}" name="packages[]"
+                                                                id="package_{{ $package->id }}" checked="checked">
+                                                            <label class="form-check-label mt-1 ml-1"
+                                                                for="package_{{ $package->id }}">
+                                                                {{ $package->heading }}
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                                <div class="invalid-feedback" id="packages_error">
+                                                    Please select some package(s).
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4" {!! $leads == 'No' ? 'style="display: none;"' : '' !!}>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox"
+                                                            value="{{ $leads }}" name="leads" id="leads"
+                                                            checked="checked">
+                                                        <label class="form-check-label mt-1 ml-1" for="leads">
                                                             Leads
                                                         </label>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row" id="lead_date_from_to_div">
-                                                <div class="col-md-3">
+                                            <div class="row" id="lead_date_from_to_div" {!! $leads == 'No' ? 'style="display: none;"' : '' !!}>
+                                                <div class="col-md-6">
                                                     <label>
                                                         From:
                                                     </label>
@@ -76,7 +111,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3">
+                                                <div class="col-md-6">
                                                     <label>
                                                         To:
                                                     </label>
@@ -86,7 +121,8 @@
                                                             required="required">
                                                         <div class="input-group-append" id="lead_date_to_calendar">
                                                             <span class="input-group-text"><i class="fa fa-calendar"
-                                                                    aria-hidden="true" style="font-size: 22px;"></i></span>
+                                                                    aria-hidden="true"
+                                                                    style="font-size: 22px;"></i></span>
                                                         </div>
                                                         <div class="invalid-feedback">
                                                             Please select Date To.
@@ -95,6 +131,17 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-md-4" {!! $subscribers == 'No' ? 'style="display: none;"' : '' !!}>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox"
+                                                    value="{{ $subscribers }}" name="subscribers" id="subscribers"
+                                                    checked="checked">
+                                                <label class="form-check-label mt-1 ml-1" for="subscribers">
+                                                    Subscribers
+                                                </label>
+                                            </div>
+                                        </div>
+
                                         <hr />
                                     </div>
                                     {{--
@@ -203,7 +250,6 @@
     @include('back.common_views.spinner')
 @endsection
 @section('beforeBodyClose')
-    <script src="{{ asset('lib/sweetalert2.js') }}"></script>
     <script type="text/javascript">
         function initDateTimePicker() {
             var date = [{
@@ -265,77 +311,119 @@
         }
         $(document).ready(function() {
             getMailTemplateView(0);
-            initDateTimePicker();
-        });
-        $('#date_calendar').on('click', function() {
-            $("#date").trigger("focus");
-        });
-        $('#lead_date_from_calendar').on('click', function() {
-            $("#lead_date_from").trigger("focus");
-        });
-        $('#lead_date_to_calendar').on('click', function() {
-            $("#lead_date_to").trigger("focus");
-        });
 
-        $('#contact').on('change', function() {
-            $('#lead_date_from').attr('required', false);
-            $('#lead_date_to').attr('required', false);
-            $('#lead_date_from_to_div').hide();
-            if ($('#contact').is(":checked")) {
-                $('#lead_date_from').attr('required', true);
-                $('#lead_date_to').attr('required', true);
-                $('#lead_date_from_to_div').show();
-            }
+            @if ($leads == 'Yes')
+                initDateTimePicker();
+            @endif
         });
+        @if ($leads == 'Yes')
+            $('#date_calendar').on('click', function() {
+                $("#date").trigger("focus");
+            });
+            $('#lead_date_from_calendar').on('click', function() {
+                $("#lead_date_from").trigger("focus");
+            });
+            $('#lead_date_to_calendar').on('click', function() {
+                $("#lead_date_to").trigger("focus");
+            });
+
+            $('#leads').on('change', function() {
+                validateSendMailToCheckBoxes();
+            });
+        @endif
+
+        @if ($subscribers == 'Yes')
+            $('#subscribers').on('change', function() {
+                validateSendMailToCheckBoxes();
+            });
+        @endif
+
+
+
+        @if ($clients == 'Yes')
+            $('#clients').on('change', function() {
+                validateSendMailToCheckBoxes();
+            });
+            $('[name="packages[]"]').on('change', function() {
+                validateSendMailToCheckBoxes();
+            });
+        @endif
+
+
+        function validateSendMailToCheckBoxes() {
+            @if ($clients == 'Yes')
+                $('#clients').attr('required', false);
+                if (!$('#clients').is(":checked")) {
+                    $('#clients').attr('required', true);
+                }
+                $('[name="packages[]"]').attr('required', false);
+                $('#client_packages_div').hide();
+                if ($('#clients').is(":checked")) {
+                    $('[name="packages[]"]').attr('required', true);
+                    $('#client_packages_div').show();
+
+                }
+
+                $('#packages_error').hide();
+                $('input[name="packages[]"]').attr('required', false);
+                if ($('#clients').is(":checked") && $('input[name="packages[]"]:checked').length == 0) {
+                    $('input[name="packages[]"]').attr('required', true);
+                    $('#packages_error').show();
+                }
+            @endif
+            /*********************************/
+            @if ($leads == 'Yes')
+                $('#leads').attr('required', false);
+                if (!$('#leads').is(":checked")) {
+                    $('#leads').attr('required', true);
+                }
+                $('#lead_date_from').attr('required', false);
+                $('#lead_date_to').attr('required', false);
+                $('#lead_date_from_to_div').hide();
+                if ($('#leads').is(":checked")) {
+                    $('#lead_date_from').attr('required', true);
+                    $('#lead_date_to').attr('required', true);
+                    $('#lead_date_from_to_div').show();
+                }
+            @endif
+            /*********************************/
+            @if ($subscribers == 'Yes')
+                $('#subscribers').attr('required', false);
+                if (!$('#subscribers').is(":checked")) {
+                    $('#subscribers').attr('required', true);
+                }
+            @endif
+            /*********************************/
+        }
 
         function sendMassMail(val) {
 
             $('#save_update_template_or_just_send_mail').val(val);
 
-            $('#professionals').attr('required', false);
-            $('#contact').attr('required', false);
-            if (!$('#professionals').is(":checked") && !$('#contact').is(":checked")) {
-                $('#professionals').attr('required', true);
-                $('#contact').attr('required', true);
-            }
+            @if ($clients == 'Yes' || $leads == 'Yes' || $subscribers == 'Yes')
+                validateSendMailToCheckBoxes();
+            @endif
 
             $('#template_id').attr('required', false);
             if ($('#template_select').is(":checked")) {
                 $('#template_id').attr('required', true);
             }
 
-            $('#locations_error').hide();
-            $('input[name="locations[]"]').attr('required', false);
-            if ($('input[name="locations[]"]:checked').length == 0) {
-                $('input[name="locations[]"]').attr('required', true);
-                $('#locations_error').show();
-            }
-
             //$('#email_template').css('visibility', 'visible');
             $('#email_template').css('display', 'block');
             $('#email_template').css('height', '1px');
             $('#email_template').css('width', '1px');
+            $('#email_template').css('position', 'fixed');
             $('#email_template').attr('required', true);
 
             var form = $('#mass_mail_frm')[0];
             form.classList.add('was-validated');
             if (form.checkValidity()) {
                 $('#mass_mail_frm').submit();
-                $('.spinner').show();
-
+                $('#spinner').show();
             }
 
         }
-
-        $('input[name="locations[]"]').on('change', function() {
-            if ($('input[name="locations[]"]:checked').length == 0) {
-                $('input[name="locations[]"]').attr('required', true);
-                $('#locations_error').show();
-            } else {
-                $('input[name="locations[]"]').attr('required', false);
-                $('#locations_error').hide();
-            }
-        });
 
         function toggleSaveNewTemplateButton(show_hide) {
             if (show_hide == 'show') {
@@ -386,7 +474,7 @@
                 },
                 success: function(response) {
                     $('#template_div').html(response);
-                    initCKEDITOR('email_template');
+                    bindTinyMCE('email_template');
                     if (id > 0) {
                         toggleSaveNewTemplateButton('hide');
                     } else {
@@ -396,12 +484,13 @@
             });
         }
 
-        function initCKEDITOR(id) {
-            var editor = CKEDITOR.replace(id);
-            CKEDITOR.config.allowedContent = true;
-            CKEDITOR.config.autoParagraph = false;
+        function bindTinyMCE(id) {
+            tinymce.remove('#' + id);
+            initCKeditor('#' + id);
+            var editor = window.parent.tinymce.get(id);
+            var editorContent = editor.getContent();
             editor.on('change', function(evt) {
-                $('#email_template').val(evt.editor.getData());
+                $('#' + id).val(editorContent);
             });
         }
     </script>

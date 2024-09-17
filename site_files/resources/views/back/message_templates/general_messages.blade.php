@@ -3,7 +3,7 @@
     <div class="content-wrapper pl-3 pr-2">
         <section>
           <div class="breadcrumb">
-            <h1 class="box-title">General Message Templates</h1>
+            <h1 class=" card-title">General Message Templates</h1>
             <ul>
               <li><a href="{{ admin_url() }}"><i class="fas fa-tachometer-alt"></i> Home</a></li>
               <li><a href="{{ route('message.index') }}"> Message Templates</a></li>
@@ -35,7 +35,7 @@
         @endif
         <div class="row">
           <div class="col-xs-12 col-md-12">
-            <div class="box">
+            <div class="card p-2">
               <div class="row">
                 <div class="col-sm-8">
                   <div class="box-header">
@@ -53,7 +53,7 @@
 
               </div>
             </div>
-            <div class="box-body table-responsive">
+            <div class=" card-body table-responsive">
               <table id="table_id" class="table table-bordered table-hover">
                 <thead class="thead-dark">
                   <tr>

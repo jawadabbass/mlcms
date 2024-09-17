@@ -86,7 +86,7 @@
             @endphp
             @foreach ($dynamicValuesArray as $dynamicValue)
                 <button type="button" class="btn btn-primary m-3" title="Click to insert in template field"
-                    onclick="putTextInCursorPlaceEditor('{!! $dynamicValue !!}');">
+                    onclick="insertIntoCkeditor('email_template', '{!! $dynamicValue !!}');">
                     {!! $dynamicValue !!}
                 </button>
             @endforeach
@@ -102,12 +102,10 @@
         Please provide Template.
     </div>
 </div>
-@push('beforeBodyClose')
+@section('beforeBodyClose')
     <script>
         $(document).ready(function() {
-            CKEDITOR.replace('email_template');
-            CKEDITOR.config.allowedContent = true;
-            CKEDITOR.config.autoParagraph = false;
+            bindCKeditor('email_template');
         });
     </script>
-@endpush
+@endsection

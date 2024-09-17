@@ -32,8 +32,8 @@
             </div>
         @endif
         <section class="content" id="disable-website">
-            <div class="box">
-                <h2 class="box-title"><i class="fas fa-arrow-circle-o-down" aria-hidden="true"></i> Disable Website </h2>
+            <div class="card p-2">
+                <h2 class=" card-title"><i class="fas fa-arrow-circle-o-down" aria-hidden="true"></i> Disable Website </h2>
                 <form name="emp_network_detail" action="{{ route('settings.edit', 0) }}">
                     <div class="mb-2">
                         <span style="color:red; font-size:12px">

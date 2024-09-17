@@ -22,8 +22,8 @@ $city_id = old('city_id', 0);
         <section class="content">
             <div class="row">
                 <div class="col-xs-12 col-md-12">
-                    <div class="box">
-                        <div class="box-body">
+                    <div class="card p-2">
+                        <div class=" card-body">
 
                             <h2> <i class="fas fa-plus-circle" aria-hidden="true"></i> Add Client</h2>
                             <br>
@@ -52,7 +52,7 @@ $city_id = old('city_id', 0);
                                     </div>
                                     <div class="col-lg-6 mb-3">
                                         <div class="form-group">
-                                            <input type="text" name="phone" class="form-control" placeholder="Phone"
+                                            <input type="text" name="phone" class="form-control phone_mask" placeholder="Phone"
                                                 value="{{ old('phone') }}" id="phone_number">
                                         </div>
                                         @if ($errors->has('phone'))
@@ -163,30 +163,6 @@ $city_id = old('city_id', 0);
 
 @section('beforeBodyClose')
     <script>
-        $('#phone_number').on('keydown', function(e) {
-            var ssnval = $(this).val();
-            var Len = ssnval.length;
-            if (e.keyCode > 47 && e.keyCode < 58) {} else if (e.keyCode > 95 && e.keyCode < 106) {} else if (e
-                .keyCode == 9) {
-                return true;
-            } else if (e.keyCode == 8 || e.keyCode == 13 || e.keyCode == 173) {} else {
-                return false;
-            }
-
-            if (e.keyCode != 8) {
-                if (e.keyCode != 173) {
-                    if (Len == 3 || Len == 7) {
-
-                        $(this).val($(this).val() + '-');
-                    }
-                    if (Len >= 12) {
-                        return false;
-                    }
-                }
-            }
-
-        });
-
         $(document).ready(function() {
             filterCitiesAjax();
         });

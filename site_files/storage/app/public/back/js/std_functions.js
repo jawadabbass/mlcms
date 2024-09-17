@@ -63,3 +63,12 @@ function reset_model() {
 function reload_table() {
 	table.ajax.reload(null, false); //reload datatable ajax
 }
+function putTextInCursorPlace(class_or_id, text_data) {
+    var element = $(class_or_id);
+    var cursorPos = element.prop('selectionStart');
+    var v = element.val();
+    var textBefore = v.substring(0, cursorPos);
+    var textAfter = v.substring(cursorPos, v.length);
+
+    element.val(textBefore + text_data + textAfter);
+}

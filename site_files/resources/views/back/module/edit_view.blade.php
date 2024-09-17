@@ -31,7 +31,7 @@
                                 class="fas fa-angle-double-left" aria-hidden="true"></i> Back </a>
                     </div>
                     <div class="modal-body form">
-                        <div class="box-body">
+                        <div class=" card-body">
                             <input type="hidden" value="" name="id" />
                             <div class="form-body">
                                 <div id="form-errors"></div>
@@ -313,7 +313,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body form">
-                        <div class="box-body">
+                        <div class=" card-body">
                             <div class="row">
                                 <div class="col-md-8" id="large_image"><img id="image" src=""
                                         alt="Crop Picture"></div>

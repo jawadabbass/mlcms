@@ -10,7 +10,7 @@ class DashboardLinks
     public static $beforeModuleLinks = [
         'cmsmodules' => ['CMS Modules', 'fas fa-file', 'modules', 'user_type' => ['super-admin', 'normal-admin'], ''],
         'menu' => ['Positioning Navigations', 'fas fa-tasks', 'menus?position=top', 'user_type' => ['super-admin', 'normal-admin'], ''],
-        'mass-mail' => ['Mass Mail', 'fa fa-envelope', 'mass-mail', 'user_type' => ['super-admin', 'normal-admin'], ''],
+        'mass-mail' => ['Mass Mail', 'fa fa-envelope', 'mass-mail?clients=yes&leads=yes&subscribers=yes&lead_id=0&client_id=0', 'user_type' => ['super-admin', 'normal-admin'], ''],
         'contact_request' => ['Manage Leads', 'fas fa-share', 'contact_request', 'user_type' => ['super-admin', 'normal-admin', 'reps'], ''],
         'manage_clients' => ['Manage Clients', 'fas fa-share', 'manage_clients', 'user_type' => ['super-admin', 'normal-admin', 'reps'], ''],
     ];
@@ -18,7 +18,7 @@ class DashboardLinks
     public static $afterModuleLinks = [
         'careers' => ['Careers', 'fas fa-tasks', 'careers', 'user_type' => ['super-admin', 'normal-admin', 'reps'], ''],
         'job_applications' => ['Job Applications', 'fas fa-tasks', 'job-applications', 'user_type' => ['super-admin', 'normal-admin', 'reps'], ''],
-        'email_templates' => ['Manage Email Templates', 'fas fa-envelope', 'email_templates', 'user_type' => ['super-admin', 'normal-admin', 'reps'], ''],
+        'email_templates' => ['Manage Email Templates', 'fas fa-envelope', 'generalEmailTemplates', 'user_type' => ['super-admin', 'normal-admin', 'reps'], ''],
         'message' => ['Manage Message Templates', 'fas fa-comment', 'message', 'user_type' => ['super-admin', 'normal-admin', 'reps'], ''],
         'gallery' => ['Manage Gallery', 'fas fa-file-image', 'gallery', 'user_type' => ['super-admin', 'normal-admin'], ''],
         'news' => ['Manage News', 'fas fa-newspaper', 'news', 'user_type' => ['super-admin', 'normal-admin'], ''],
@@ -53,10 +53,10 @@ class DashboardLinks
         'cmsmodules' => ['CMS Modules', 'fas fa-file', 'modules', 'user_type' => ['super-admin', 'normal-admin'], ''],
         'CRM' => [
             'icon' => ['fas fa-user'],
-            'mass-mail' => ['Mass Mail', 'fa fa-envelope', 'mass-mail', 'user_type' => ['super-admin', 'normal-admin'], ''],
+            'mass-mail' => ['Mass Mail', 'fa fa-envelope', 'mass-mail?clients=yes&leads=yes&subscribers=yes&lead_id=0&client_id=0', 'user_type' => ['super-admin', 'normal-admin'], ''],
             'contact_request' => ['Manage Leads', 'fas fa-share', 'contact_request', 'user_type' => ['super-admin', 'normal-admin', 'reps'], ''],
             'manage_clients' => ['Manage Clients', 'fas fa-share', 'manage_clients', 'user_type' => ['super-admin', 'normal-admin', 'reps'], ''],
-            'email_templates' => ['Manage Email Templates', 'fas fa-envelope', 'email_templates', 'user_type' => ['super-admin', 'normal-admin', 'reps'], ''],
+            'email_templates' => ['Manage Email Templates', 'fas fa-envelope', 'generalEmailTemplates', 'user_type' => ['super-admin', 'normal-admin', 'reps'], ''],
             'message' => ['Manage Message Templates', 'fas fa-comment', 'message', 'user_type' => ['super-admin', 'normal-admin', 'reps'], ''],
             'user_type' => ['super-admin', 'normal-admin', 'reps'],
         ],

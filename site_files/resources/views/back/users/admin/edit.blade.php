@@ -28,13 +28,13 @@
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Edit Admin User</h3>
+                            <h3 class=" card-title">Edit Admin User</h3>
                         </div>
                         <form role="form" method="post" action="{{ route('admin.update',$user->id) }}">
                             @csrf
                             <input type="hidden" name="_method" value="PUT">
                             <input type="hidden" name="id" value="{{ $user->id }}">
-                            <div class="box-body">
+                            <div class=" card-body">
                                 <div class="form-group">
                                     <label for="admin_name">Name</label>
                                     <input type="text" class="form-control" id="admin_name" name="admin_name" required
