@@ -414,6 +414,9 @@ Route::get('/clear-cache', function () {
     /*************************** */
     return 'Cache is cleared';
 });
+Route::get('/refresh-session', function () {
+    echo refreshSession();
+});
 Route::group(['middleware' => ['siteStatus', 'clearCache', 'ipmiddleware']], function () {
     Route::get('/{slug}', [HomeController::class, 'page']);
 });

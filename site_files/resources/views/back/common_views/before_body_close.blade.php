@@ -49,4 +49,22 @@
     $(document).ready(function() {
         $('.phone_mask').inputmask("999-999-9999");
     });
+    var refreshSession = function() {
+        var time = 60000; // 1 mins
+        setTimeout(
+            function() {
+                $.ajax({
+                    url: "{{ url('refresh-session') }}",
+                    cache: false,
+                    complete: function() {
+                        refreshSession();
+                    }
+                });
+            },
+            time
+        );
+    };
+
+    // Call in page
+    refreshSession();
 </script>
