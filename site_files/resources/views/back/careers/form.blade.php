@@ -36,6 +36,19 @@
     {!! showErrors($errors, 'type') !!}
 </div>
 <div class="col-md-12 mb-3">
+    <label class="form-label">Uplaod Pdf:</label>
+    <input class="form-control {{ hasError($errors, 'pdf_doc') }}" type="file"
+        value="" id="pdf_doc" name="pdf_doc" accept=".pdf">
+    @if (!empty($careerObj->pdf_doc))
+        <div class="upload-input">
+            <i class="fa-regular fa-circle-xmark" onclick="delete_document(this, {{ $careerObj->id }})"></i>
+            <i class="fa-solid fa-file-pdf"></i>
+            {{ $careerObj->pdf_doc }}
+        </div>
+    @endif
+    {!! showErrors($errors, 'document') !!}
+</div>
+<div class="col-md-12 mb-3">
     <label class="form-label">Benefits:*</label>
     <div class="row" id="benefits_div">
         @php
@@ -55,7 +68,6 @@
                 $counter++;
             @endphp
         @endforeach
-
     </div>
     <div class="row">
         <div class="col-md-12">
@@ -71,15 +83,13 @@
         {!! generateCareerStatusDropDown($careerObj->status, false) !!}
     </select>
 </div>
-
 @section('beforeBodyClose')
     <script>
         $(document).ready(function() {
             $("#apply_by_date_time").datepicker({
-                format: 'Y-m-d'
+                dateFormat: 'mm-dd-yy'
             });
         });
-
         function addBenefitRow() {
             let id = $('#benefit_id').val();
             id = Number(id) + 1;
@@ -92,9 +102,26 @@
                 <button type="button" class="btn btn-danger" onclick="removeBenefitRow(${id});">Remove</button>
             </div>`);
         }
-
         function removeBenefitRow(cls) {
             $('.cls_' + cls).remove();
+        }
+        function delete_document(me, id) {
+            $.ajax({
+                type: "post",
+                url: "{{ route('careers.delete_document') }}",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    id,
+                },
+                dataType: "json",
+                success: function(response) {
+                    console.log('res: ', response);
+                    if (response.status) {
+                        console.log(response.message);
+                        $(me).parent('div').hide();
+                    }
+                }
+            });
         }
     </script>
 @endsection

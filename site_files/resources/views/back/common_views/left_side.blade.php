@@ -11,8 +11,8 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="info">
-                <a href="{{ admin_url() . '' }}" class="d-block">{{ __('Welcome') }}
-                    {{ __('Admin') }}</a>
+                {{-- <a href="{{ admin_url() . '' }}" class="d-block">{{ __('Welcome') }}
+                    {{ __('Admin') }}</a> --}}
             </div>
         </div>
 

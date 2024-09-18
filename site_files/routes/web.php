@@ -332,6 +332,7 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     Route::get('careers-sort', [BackCareerController::class, 'sortCareers'])->name('careers.sort');
     Route::get('careers-sort-data', [BackCareerController::class, 'careersSortData'])->name('careers.sort.data');
     Route::put('careers-sort-update', [BackCareerController::class, 'careersSortUpdate'])->name('careers.sort.update');
+    Route::post('careers/delete_document', [BackCareerController::class, 'delete_document'])->name('careers.delete_document');
     //Job Applications
     Route::get('/job-applications', [BackJobApplicationController::class, 'index'])->name('job.applications.index');
     Route::get('/job-application/{jobApplicationObj}', [BackJobApplicationController::class, 'show'])->name('job.application.show');

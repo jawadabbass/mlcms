@@ -34,6 +34,7 @@ class CareerBackFormRequest extends Request
             'type' => 'required',
             'benefits' => 'required',
             'status' => 'required',
+            'pdf_doc' => 'nullable|mimes:pdf',
         ];
     }
 
@@ -47,6 +48,7 @@ class CareerBackFormRequest extends Request
             'type.required' => __('Type is required'),
             'benefits.required' => __('Benefits required'),
             'status.required' => __('Status is required'),
+            'pdf_doc.mimes' => __('Only PDF can be uploaded'),
         ];
     }
 }

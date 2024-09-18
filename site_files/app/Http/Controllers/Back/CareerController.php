@@ -16,7 +16,6 @@ use App\Models\Back\CareerBenefit;
 class CareerController extends Controller
 {
     use CareerTrait;
-
     /**
      * Display a listing of the resource.
      *
@@ -26,14 +25,11 @@ class CareerController extends Controller
     {
         $title = FindInsettingArr('business_name') . ': Careers Management';
         $msg = '';
-
         return view('back.careers.index', compact('title', 'msg'));
     }
-
     public function fetchCareersAjax(Request $request)
     {
         $career = Career::select('*');
-
         return Datatables::of($career)
             ->filter(function ($query) use ($request) {
                 if ($request->has('title') && !empty($request->title)) {
@@ -50,13 +46,16 @@ class CareerController extends Controller
                 return date('m-d-Y', strtotime($career->created_at));
             })
             ->addColumn('apply_by_date_time', function ($career) {
-                return date('m-d-Y', strtotime($career->apply_by_date_time));
+                return $career->apply_by_date_time;
             })
             ->addColumn('status', function ($career) {
-                $str = '<select class="form-control" name="status" id="status_' . $career->id . '" onchange="updateCareerStatus(' . $career->id . ', \'' . $career->status . '\', this.value);">';
-                $str .= generateCareerStatusDropDown($career->status, false);
-                $str .= '</select>';
-
+                $str = '<label class="switch">';
+                $str .= '<input type="checkbox" name="status" id="sts_' . $career->id . '" ' . ($career->status == 'active' ? 'checked' : '') . ' value="' . $career->status . '" onClick="updateCareerStatus(' . $career->id . ', \'' . $career->status . '\', this.checked ? \'active\' : \'inactive\')">';
+                $str .= '<div class="slider round">';
+                $str .= '<strong class="on">Active</strong>';
+                $str .= '<strong class="off">Inactive</strong>';
+                $str .= '</div>';
+                $str .= '</label>';
                 return $str;
             })
             ->addColumn('description', function ($career) {
@@ -64,9 +63,14 @@ class CareerController extends Controller
                 return $str;
             })
             ->addColumn('action', function ($career) {
+                $pdf_doc = '';
+                if (!empty($career->pdf_doc)) {
+                    $pdf_doc = '<a href=" ' . asset_uploads("careers/") . $career->pdf_doc . '"  class="btn btn-success"  target="_blank"><i class="fa-solid fa-file-pdf"></i></i></a>';
+                }
                 return '
                 		<a href="' . route('career.edit', ['careerObj' => $career->id]) . '" class="btn btn-warning m-2"><i class="fas fa-edit" aria-hidden="true"></i></a>
-						<a href="javascript:void(0);" onclick="deleteCareer(' . $career->id . ');"  class="btn btn-danger m-2"><i class="fas fa-trash" aria-hidden="true"></i></a>';
+						' . $pdf_doc . '
+                        <a href="javascript:void(0);" onclick="deleteCareer(' . $career->id . ');"  class="btn btn-danger m-2"><i class="fas fa-trash" aria-hidden="true"></i></a>';
             })
             ->rawColumns(['created_at', 'apply_by_date_time', 'status', 'action'])
             ->orderColumns(['created_at', 'apply_by_date_time', 'title', 'description', 'status'], ':column $1')
@@ -77,7 +81,6 @@ class CareerController extends Controller
         //$query = $dataTable->getQuery()->get();
         //return $query;
     }
-
     /**
      * Show the form for creating a career resource.
      *
@@ -88,13 +91,11 @@ class CareerController extends Controller
         $title = FindInsettingArr('business_name') . ': Careers Management';
         $msg = '';
         $careerObj = new Career();
-
         return view('back.careers.create')
             ->with('careerObj', $careerObj)
             ->with('title', $title)
             ->with('msg', $msg);
     }
-
     /**
      * Store a careerly created resource in storage.
      *
@@ -107,7 +108,6 @@ class CareerController extends Controller
         $careerObj = new Career();
         $careerObj = $this->setCareerValues($request, $careerObj);
         $careerObj->save();
-
         if (count($request->input('benefits', [])) > 0) {
             foreach ($request->input('benefits') as $benefit) {
                 $careerBenefitObj = new CareerBenefit();
@@ -117,10 +117,8 @@ class CareerController extends Controller
             }
         }
         session(['message' => 'Career has been added!', 'type' => 'success']);
-
         return Redirect::route('careers.index');
     }
-
     /**
      * Display the specified resource.
      *
@@ -128,10 +126,7 @@ class CareerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-    }
-
+    public function show($id) {}
     /**
      * Show the form for editing the specified resource.
      *
@@ -148,7 +143,6 @@ class CareerController extends Controller
             ->with('title', $title)
             ->with('msg', $msg);
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -171,19 +165,15 @@ class CareerController extends Controller
             }
         }
         session(['message' => 'Updated Successfully', 'type' => 'success']);
-
         return Redirect::route('careers.index');
     }
-
     public function sortCareers()
     {
         $title = FindInsettingArr('business_name') . ': Careers Management';
         $msg = '';
-
         return view('back.careers.sort')->with('title', $title)
             ->with('msg', $msg);
     }
-
     public function careersSortData(Request $request)
     {
         $careers = Career::select('careers.id', 'careers.title', 'careers.sort_order')
@@ -196,7 +186,6 @@ class CareerController extends Controller
         }
         echo $str . '</ul>';
     }
-
     public function careersSortUpdate(Request $request)
     {
         $careersOrder = $request->input('careersOrder');
@@ -209,22 +198,31 @@ class CareerController extends Controller
             ++$count;
         }
     }
-
     public function updateCareerStatus(Request $request)
     {
         $careerObj = Career::find($request->id);
         $careerObj = $this->setCareerStatus($request, $careerObj);
         $careerObj->save();
-
         return response()->json(['status' => 'success', 'message' => $careerObj->status]);
     }
-
     public function destroy(Career $careerObj)
     {
         CareerBenefit::where('career_id', $careerObj->id)->delete();
-        ImageUploader::deleteImage('careers', $careerObj->image, true);
+        ImageUploader::deleteFile('careers', $careerObj->pdf_doc);
         $careerObj->delete();
         session(['message' => 'Deleted Successfully', 'type' => 'success']);
         echo 'ok';
+    }
+    public function delete_document()
+    {
+        $id = request('id');
+        $careerObj = Career::find($id);
+        ImageUploader::deleteFile('careers', $careerObj->pdf_doc);
+        $careerObj->pdf_doc = '';
+        $careerObj->save();
+        return response([
+            'status' => true,
+            'message' => 'File deleted successfully!'
+        ]);
     }
 }
