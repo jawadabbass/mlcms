@@ -53,7 +53,7 @@ function getDropDown($type = 'top')
     return $select . '';
 }
 
-function getSubDropDown($childs, $dash = '--', $id = 0, MenuType $menu_type)
+function getSubDropDown($childs, $dash = '--', $id = 0, MenuType $menu_type = null)
 {
     $select = '';
     $open_in_new_window = 'target="_blank"';

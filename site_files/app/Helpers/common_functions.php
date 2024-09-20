@@ -3,15 +3,6 @@
 use App\Models\Back\Setting;
 use Illuminate\Support\Facades\Cache;
 
-if (!function_exists('refreshSession')) {
-	function refreshSession()
-	{
-		session_start();
-		$time = time();
-		$_SESSION['refresh_time'] = $time;
-		echo $time;
-	}
-}
 if (!function_exists('clearCache')) {
 	function clearCache()
 	{

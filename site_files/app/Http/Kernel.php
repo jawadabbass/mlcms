@@ -65,7 +65,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \App\Http\Middleware\EnsureEmailIsVerified::class,
         'siteStatus' => \App\Http\Middleware\WebsiteStatus::class,
-        'clearCache' => \App\Http\Middleware\ClearCache::class,
         'ipmiddleware' => \App\Http\Middleware\IPMiddleware::class,
     ];
 }
