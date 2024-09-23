@@ -6,6 +6,13 @@ use Illuminate\Support\Facades\Cache;
 if (!function_exists('clearCache')) {
 	function clearCache()
 	{
+		Cache::flush();
+		/*************************** */
+	}
+}
+if (!function_exists('clearTempFiles')) {
+	function clearTempFiles()
+	{
 		$ignoreFiles = ['.gitignore', '.', '..'];
 		Cache::flush();
 		/*************************** */

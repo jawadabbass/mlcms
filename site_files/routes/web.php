@@ -413,10 +413,11 @@ Route::post('filterCountiesAjax', [AjaxController::class, 'filterCountiesAjax'])
 Route::post('filterCitiesAjax', [AjaxController::class, 'filterCitiesAjax'])->name('filterCitiesAjax');
 Route::get('/clear-cache', function () {
     clearCache();
+    clearTempFiles();
     /*************************** */
     return 'Cache is cleared';
 });
-Route::group(['middleware' => ['siteStatus', 'ipmiddleware']], function () {
+Route::group(['middleware' => ['siteStatus', 'clearCache', 'ipmiddleware']], function () {
     Route::get('/{slug}', [HomeController::class, 'page']);
 });
 /************************************* */

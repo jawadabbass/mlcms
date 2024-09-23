@@ -149,6 +149,7 @@ class DashboardController extends Controller
     public function clearCache()
     {
         clearCache();
+        clearTempFiles();
         return redirect()->back();
     }
     public function sideBarLeft(Request $request)
