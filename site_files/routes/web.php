@@ -359,7 +359,7 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
 /************************************* */
 /************************************* */
 Auth::routes();
-Route::group(['middleware' => ['siteStatus', 'ipmiddleware']], function () {
+Route::group(['middleware' => ['siteStatus', 'clearCache', 'ipmiddleware']], function () {
     Route::get('/', [HomeController::class, 'index'])->name('web.index');
     Route::get('/about-us', [HomeController::class, 'aboutUs']);
     Route::get('/atlanta_webdesign_portfolio.html', [HomeController::class, 'Portfolio'])->name('portfolio');
