@@ -19,7 +19,8 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                    <iframe src="https://calendar.google.com/calendar/embed?height=500&wkst=1&ctz=America%2FNew_York&bgcolor=%23ffffff&title=ML-CMS&src=ZThhNjI1NDg4NWY2MWQ3MjZhNmRhODcxODE2Zjc5YmQxY2UyMmJhZWE0MGRhYmMyYjhmNmM2YmEzNTBkNTFlZUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%23D50000" style="border-width:0" width="1000" height="500" frameborder="0" scrolling="no"></iframe>
+                    
+                        <iframe src="https://calendar.google.com/calendar/embed?src={{ env('GOOGLE_CALENDAR_ID') }}&ctz=Asia%2FKarachi" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
                     </div>
                 </div>
             </div>

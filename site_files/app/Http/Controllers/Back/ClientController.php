@@ -89,11 +89,10 @@ class ClientController extends Controller
         $data = array();
         $data['msg'] = '';
         $title = 'Clients | ' . config("Constants.SITE_NAME");
-        $email_template = EmailTemplate::where('email_type', 'status')->orderBy('ID', 'ASC')->get();
         $sms_template = MessageTemplate::all();
         $get_all_packages = getModuleData(37);
         $content_condition = ContentCondition::select('id', 'title')->whereNotNull('title')->get();
-        return view('back.clients.index_view', compact('result', 'title', 'data', 'email_template', 'sms_template', 'get_all_packages', 'content_condition'));
+        return view('back.clients.index_view', compact('result', 'title', 'data', 'sms_template', 'get_all_packages', 'content_condition'));
     }
     /**
      * Show the form for creating a new resource.

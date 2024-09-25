@@ -89,9 +89,8 @@ class ContactUsController extends Controller
         $title = config("Constants.SITE_NAME") . ': Contact Us Page';
         $clientArr = array();
         $get_all_packages = getModuleData(33);
-        $email_template = EmailTemplate::where('email_type', 'status')->orderBy('ID', 'ASC')->get();
         $sms_template = MessageTemplate::all();
-        return view('back.contactus.index_view', compact('result', 'title', 'data', 'clientArr', 'contact', 'get_all_packages', 'email_template', 'sms_template'));
+        return view('back.contactus.index_view', compact('result', 'title', 'data', 'clientArr', 'contact', 'get_all_packages', 'sms_template'));
     }
     public function index1()
     {

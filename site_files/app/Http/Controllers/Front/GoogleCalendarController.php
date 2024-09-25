@@ -23,6 +23,27 @@ class GoogleCalendarController extends Controller
   }
   public function show(Request $request)
   {
+    $events = Event::get();
+    foreach ($events as $event) {
+      $event->delete();
+    }
+    $month = date('m');
+    $day = date('d');
+    $year = date('Y');
+
+    for ($counter = $day; $counter < 28; $counter++) {
+      $event = new Event();
+      $event->name = 'John Doe ' . $counter;
+      $event->startDate = Carbon::createFromFormat('Y-m-d', $year . '-' . $month . '-' . $counter, "America/New_York");
+      $event->endDate = Carbon::createFromFormat('Y-m-d', $year . '-' . $month . '-' . $counter, "America/New_York");
+      $event->location = '52 x Model Town Dera Ghazi Khan Punjab Pakistan';
+      $event->description = 'This is description';
+      $event->colorId = 11;
+      $event->status = 'confirmed';
+      $event->transparency = 'transparent';
+      $event->save();
+    }
+    
     if (isIpBlocked($request->ip())) {
       return redirect('/block');
     }
@@ -30,25 +51,7 @@ class GoogleCalendarController extends Controller
     $editPageID = 261;
     $data = CmsModuleData::find(261);
     return view('front.google_calendar.show', compact('seoArr', 'data', 'editPageID'));
-    exit;
-    /* 
-    $events = Event::get();
-    foreach ($events as $event) {
-      $event->delete();
-    }
-    exit;
-    for ($counter = 1; $counter < 15; $counter++) {
-      $event = new Event();
-      $event->name = 'John Doe ' . $counter;
-      $event->startDate = Carbon::createFromFormat('Y-m-d', '2024-02-' . $counter+10, "America/New_York");
-      $event->endDate = Carbon::createFromFormat('Y-m-d', '2024-02-' . $counter+10, "America/New_York");
-      $event->location = '52 x Model Town Dera Ghazi Khan Punjab Pakistan';
-      $event->description = 'This is description';
-      $event->colorId = 11;
-      $event->status = 'confirmed';
-      $event->transparency = 'transparent';
-      $event->save();
-    } */
+    
   }
   public function save(Request $request)
   {
