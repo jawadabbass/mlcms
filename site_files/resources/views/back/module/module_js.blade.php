@@ -113,6 +113,30 @@
         });
     }
 
+    function update_module_is_featured_toggle(id) {
+        var old_is_featured = 1;
+        var new_is_featured = 0;
+        if ($('#is_featured_' + id).val() == 0) {
+            old_is_featured = 0;
+            new_is_featured = 1;
+        }
+        var myurl = base_url + 'adminmedia/module/set_is_featured/' + id + '/' + new_is_featured;
+        $.get(myurl, function(sts) {
+            if (sts == 'Done Successfully!') {
+                $('#is_featured_' + id).val(new_is_featured);
+                alertme('<i class="fas fa-check" aria-hidden="true"></i> ' + sts, 'success', true, 1500);
+            } else {
+                $('#is_featured_' + id).val(old_is_featured);
+                if (old_is_featured == 0) {
+                    $('#is_featured_' + id).bootstrapToggle('off', true)                    
+                } else {
+                    $('#is_featured_' + id).bootstrapToggle('on', true)
+                }
+                alertme('<i class="fas fa-check" aria-hidden="true"></i> ' + sts, 'danger', true, 1500);
+            }
+        });
+    }
+
 
     function add_content() {
         reset_model();

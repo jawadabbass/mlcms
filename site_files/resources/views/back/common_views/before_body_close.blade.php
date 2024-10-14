@@ -19,7 +19,9 @@
 <script src="{{ asset_storage('lib/sweetalert/sweetalert2.all.min.js') }}"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/img-comparison-slider@8/dist/index.js"></script>
 <script src="{{ asset_storage('lib/chartjs/dist/chart.umd.js') }}"></script>
+<script src="{{ asset_storage('back/toggle_switch/bootstrap5-toggle.jquery.min.js') }}"></script>
 <script src="{{ asset_storage('back/js/AdminLTE/dist/js/adminlte.min.js') }}"></script>
+
 
 @include('back.common_views.common_state_county_city_functions')
 <script>

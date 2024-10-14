@@ -61,6 +61,8 @@ function load_cmsmodule_edit_form(id) {
         $('#edit_show_descp').val(data.show_descp);
         $('#edit_show_featured_image').val(data.show_featured_image);
         $('#edit_module_fontawesome_icon').val(data.module_fontawesome_icon);
+        $('#edit_show_is_featured').val(data.show_is_featured);
+        $('#edit_how_many_featured').val(data.how_many_featured);
 
         let access_level = data.access_level;
         const accessLevelArray = access_level.split(",");

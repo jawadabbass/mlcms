@@ -1,6 +1,6 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('beforeHeadClose')
-@include('back.common_views.switch_css')
+    @include('back.common_views.switch_css')
 @endsection
 @section('content')
     <div class="content-wrapper pl-3 pr-2">
@@ -35,8 +35,8 @@
                                 @endif
                                 <div class="text-end" style="padding-bottom:2px; display: inline;">
                                     <!--<input type="button" class="sitebtn"
-                value="Add New {{ ucwords($module->term) == 'CMS' ? 'Page' : ucwords($module->term) }}"
-                onclick="add_content()"/>-->
+                                value="Add New {{ ucwords($module->term) == 'CMS' ? 'Page' : ucwords($module->term) }}"
+                                onclick="add_content()"/>-->
                                     <a class="sitebtn" href="{{ admin_url() . 'module/' . $module->type . '/add' }} "> Add
                                         New
                                         {{ ucwords($module->term) == 'CMS' ? 'Page' : ucwords($module->term) }}</a>
@@ -57,6 +57,9 @@
                                         @endif
                                         @if (strcmp($module->type, 'cms'))
                                             <th>{{ ucwords($module->type) }} Status</th>
+                                        @endif
+                                        @if ($module->show_is_featured == 1)
+                                            <th>Is Featured?</th>
                                         @endif
                                         @if ($module->id == 37)
                                             <th> Package Detail </th>
@@ -107,6 +110,18 @@
                                                     </label>
                                                 </td>
                                             @endif
+                                            @if ($module->show_is_featured == 1)
+                                                <td>
+                                                    <input type="checkbox" data-toggle="toggle" data-onlabel="Featured"
+                                                        data-offlabel="Not Featured" data-onstyle="success"
+                                                        data-offstyle="danger"
+                                                        data-id="{{ $moduleMember->id }}"
+                                                        name="{{ 'is_featured_' . $moduleMember->id }}"
+                                                        id="{{ 'is_featured_' . $moduleMember->id }}" <?php echo $moduleMember->is_featured == 1 ? ' checked' : ''; ?>
+                                                        value="<?php echo $moduleMember->is_featured; ?>">
+                                                </td>
+                                            @endif
+
                                             @if ($moduleMember->cms_module_id == 37)
                                                 <td>{!! substr_replace(adjustUrl($moduleMember->content), '...', 195) !!}</td>
                                                 <td>@php echo package_use_member($moduleMember->id) @endphp </td>
@@ -140,8 +155,7 @@
                                                         href="{{ base_url() . 'adminmedia/module/' . $module->type . '/edit/' . $moduleMember->id }}"
                                                         title="Edit"><i class="fas fa-edit"></i> Edit</a>
                                                     <a class="btn btn-sm btn-danger" href="javascript:void(0)"
-                                                        title="Delete"
-                                                        onclick="delete_content({{ $moduleMember->id }})"><i
+                                                        title="Delete" onclick="delete_content({{ $moduleMember->id }})"><i
                                                             class="fas fa-trash"></i> Delete</a>
                                                 @endif
                                                 @if ($module->term == 'Classes')
@@ -195,6 +209,14 @@
         var csrfToken = $('meta[name="csrf-token"]').attr('content');
         var show_cropper = {{ $module->crop_image == 'Yes' ? 1 : 0 }};
         var module_id = "{{ $module->type }}";
+
+        $(document).ready(function() {
+            $('input[data-toggle="toggle"]').bootstrapToggle();
+        });
+        $('input[data-toggle="toggle"]').change(function() {
+            let id = $(this).attr('data-id');
+            update_module_is_featured_toggle(id);
+        })
     </script>
     <script type="text/javascript" src="{{ asset_storage('') . 'back/js/fileUploader.js' }}"></script>
     <div id="loading" class="loadinggif" style="display: none;"></div>

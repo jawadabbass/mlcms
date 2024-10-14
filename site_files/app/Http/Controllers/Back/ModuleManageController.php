@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers\Back;
+
 use App\Models\Back\Menu;
 use Illuminate\Http\Request;
 use App\Models\Back\Category;
@@ -14,6 +16,7 @@ use App\Models\Back\ModuleDataImage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Laminas\Diactoros\Module;
+
 class ModuleManageController extends Controller
 {
     /**
@@ -89,6 +92,26 @@ class ModuleManageController extends Controller
         echo $new_status;
         exit;
     }
+
+    public function setIsFeatured($id, $new_is_featured)
+    {
+        $moduleData = CmsModuleData::find($id);
+        
+        if ($new_is_featured == 1) {
+            $module = CmsModule::where('id', $moduleData->cms_module_id)->first();
+            $totalFeatured = CmsModuleData::where('cms_module_id', $moduleData->cms_module_id)
+                ->where('is_featured', 1)
+                ->count();
+            if ($totalFeatured == $module->how_many_featured) {
+                echo 'Can not make featured; Already ' . $totalFeatured . ' are featured.';
+                exit;
+            }
+        }
+        $moduleData->is_featured = $new_is_featured;
+        $moduleData->save();
+        echo 'Done Successfully!';
+        exit;
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -157,8 +180,8 @@ class ModuleManageController extends Controller
                     $menu->save();
                 }
             }
-            session(['message'=>$module_type->term.' added successfully', 'type' => 'success',]);
-            return response()->json(['success' => 'Added new records.', 'module_id'=> $request->module_id, 'module_data_id'=> $moduleData->id]);
+            session(['message' => $module_type->term . ' added successfully', 'type' => 'success',]);
+            return response()->json(['success' => 'Added new records.', 'module_id' => $request->module_id, 'module_data_id' => $moduleData->id]);
         }
         return response()->json(['error' => $validator->errors()->all()]);
     }
@@ -173,9 +196,7 @@ class ModuleManageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-    }
+    public function show($id) {}
     /**
      * Show the form for editing the specified resource.
      *
@@ -300,14 +321,14 @@ class ModuleManageController extends Controller
                 }
             }
             if (!empty($request->from_page_update)) {
-                session(['message'=>$module_type->term.' updated successfully', 'type' => 'success',]);
+                session(['message' => $module_type->term . ' updated successfully', 'type' => 'success',]);
                 return redirect('adminmedia/module/' . $module_type->type . '/edit/' . $moduleData->id);
             } else {
                 return response()->json(['success' => 'Added new records.' . $request->module_id]);
             }
         }
         if (!empty($request->from_page_update)) {
-            session(['message'=>$module_type->term.' updated successfully', 'type' => 'success',]);
+            session(['message' => $module_type->term . ' updated successfully', 'type' => 'success',]);
             return redirect('adminmedia/module/' . $module_type->type . '/edit/' . $moduleData->id);
         } else {
             return response()->json(['error' => $validator->errors()->all()]);

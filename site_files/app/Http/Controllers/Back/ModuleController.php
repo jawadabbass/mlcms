@@ -47,6 +47,8 @@ class ModuleController extends Controller
             'module_fontawesome_icon' => 'required',
             'access_level' => 'required',
             'show_icon_in' => 'required',
+            'show_is_featured' => 'required',
+            'how_many_featured' => 'required',
         ]);
         $cmsModule = new CmsModule();
         $cmsModule->title = $request->title;
@@ -86,6 +88,8 @@ class ModuleController extends Controller
         $cmsModule->access_level = implode(',', $request->input('access_level', ['super-admin', 'normal-admin']));
         $cmsModule->show_icon_in = implode(',', $request->input('show_icon_in', ['show_icon_in_left', 'show_icon_in_dashboard']));
         $cmsModule->show_in_admin_menu = 0;
+        $cmsModule->show_is_featured = $request->show_is_featured;
+        $cmsModule->how_many_featured = $request->how_many_featured;
         $cmsModule->save();
 
         /*********************************** */
@@ -164,6 +168,8 @@ class ModuleController extends Controller
             'module_fontawesome_icon' => 'required',
             'access_level' => 'required',
             'show_icon_in' => 'required',
+            'show_is_featured' => 'required',
+            'how_many_featured' => 'required',
         ]);
         $cmsModule = CmsModule::find($id);
         $cmsModule->title = $request->title;
@@ -197,6 +203,10 @@ class ModuleController extends Controller
         $cmsModule->access_level = implode(',', $request->input('access_level', ['super-admin', 'normal-admin']));
         $cmsModule->show_icon_in = implode(',', $request->input('show_icon_in'));
         $cmsModule->show_descp = $request->show_descp;
+
+        $cmsModule->show_is_featured = $request->show_is_featured;
+        $cmsModule->how_many_featured = $request->how_many_featured;
+
         $cmsModule->save();
         session(['message' => 'Updated Successfully', 'type' => 'success']);
 

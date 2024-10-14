@@ -298,6 +298,19 @@
                                 </select>
                             </div>
                             <div class="mb-2">
+                                <label class="form-label">Show Is Featured </label>
+                                <select class="form-control" id="show_is_featured" name="show_is_featured">
+                                    <option value="">Select Option</option>
+                                    <option value="0">No</option>
+                                    <option value="1">Yes</option>
+                                </select>
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">How Many Featured?</label>
+                                <input type="text" class="form-control" id="how_many_featured"
+                                    name="how_many_featured" placeholder="How many featured?">
+                            </div>
+                            <div class="mb-2">
                                 <label class="form-label">Fontawesome Icon:</label>
                                 <input class="form-control icp icp-auto" name="module_fontawesome_icon"
                                     id="module_fontawesome_icon" value="" type="text" autocomplete="off"
@@ -587,6 +600,19 @@
                                     <option value="0">No</option>
                                     <option value="1">Yes</option>
                                 </select>
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">Show Is Featured </label>
+                                <select class="form-control" id="edit_show_is_featured" name="show_is_featured">
+                                    <option value="">Select Option</option>
+                                    <option value="0">No</option>
+                                    <option value="1">Yes</option>
+                                </select>
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">How Many Featured?</label>
+                                <input type="text" class="form-control" id="edit_how_many_featured"
+                                    name="how_many_featured" placeholder="How many featured?">
                             </div>
                             <div class="mb-2">
                                 <label class="form-label">Fontawesome Icon:</label>

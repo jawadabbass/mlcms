@@ -109,6 +109,7 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     Route::get('/module/{type}/{id}/edit', [BackModuleManageController::class, 'edit']);
     Route::post('/module/{type}/{id}/', [BackModuleManageController::class, 'update']);
     Route::delete('/module/delete/{id}/', [BackModuleManageController::class, 'destroy']);
+    Route::get('/module/set_is_featured/{id}/{new_is_featured}', [BackModuleManageController::class, 'setIsFeatured']);
     Route::get('/modul/remove_image', [BackModuleManageController::class, 'removeFeaturedImage']);
     Route::post('/modul/crop_image', [BackModuleManageController::class, 'ajax_crop_img']);
     Route::post('/module_image/upload_image', [BackImageUploadController::class, 'store']);

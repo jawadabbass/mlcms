@@ -19,6 +19,7 @@
     type="text/css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/img-comparison-slider@8/dist/styles.css" />
 <link href="{{ asset_storage('lib/sweetalert/sweetalert2.min.css') }}" rel="stylesheet" />
+<link href="{{ asset_storage('back/toggle_switch/bootstrap5-toggle.min.css') }}" rel="stylesheet" />
 <link href="{{ asset_storage('back/css/admin_dev_style.css') }}" rel="stylesheet" type="text/css" />
 <style>
     .before,
