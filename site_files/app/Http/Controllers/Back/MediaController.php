@@ -85,7 +85,7 @@ class MediaController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                'uploadFile.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:' . $maxImageSize,
+                'uploadFile.*' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:' . $maxImageSize,
                 'album' => 'required'
             ],
             [

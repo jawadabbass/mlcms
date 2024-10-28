@@ -379,30 +379,14 @@ class ModuleManageController extends Controller
         $module_id = $request->module_id;
         $module = CmsModule::find($module_id);
         $module_type = $module->type;
-        $upload_dir = storage_uploads('module/' . $module_type . '/');
-        $upload_dir_thumb = storage_uploads('module/' . $module_type . '/thumb');
-        $crop_x = $request->crop_x;
-        $crop_y = $request->crop_y;
-        $crop_height = $request->crop_height;
-        $crop_width = $request->crop_width;
-        $crop_rotate = $request->crop_rotate;
+        $upload_dir = 'module/' . $module_type;
+        $crop_x = (int)$request->crop_x;
+        $crop_y = (int)$request->crop_y;
+        $crop_height = (int)$request->crop_height;
+        $crop_width = (int)$request->crop_width;
         $source_img = $request->source_image;
-        $dest_img = $request->source_image;
-        $crop_data = [
-            'rotate' => $crop_rotate,
-            'width' => $crop_width,
-            'height' => $crop_height,
-            'x' => $crop_x,
-            'y' => $crop_y,
-            'module_width' => $module->feature_img_thmb_width,
-            'module_height' => $module->feature_img_thmb_height,
-        ];
-        crop_image($upload_dir . '/' . $source_img, $upload_dir_thumb . '/' . $dest_img, $crop_data);
-        if ($source_img != 'no-image.jpg') {
-            // @unlink($upload_dir . "/" . $source_img);
-            // @unlink($upload_dir_thumb ."/" . $source_img);
-        }
-        $data['cropped_image'] = $dest_img;
+        ImageUploader::CropImageAndMakeThumb($upload_dir, $source_img, $crop_width, $crop_height, $crop_x, $crop_y);
+        $data['cropped_image'] = $source_img;
         echo json_encode($data);
         exit;
     }
@@ -718,6 +702,20 @@ class ModuleManageController extends Controller
         return response([
             'image_alt' => $imageObj->image_alt,
             'image_title' => $imageObj->image_title,
+        ]);
+    }
+    public function saveModuleDataImagesMarkBeforeAfter(Request $request)
+    {
+        $image = ModuleDataImage::find($request->id);
+        $folder = 'module/' . $image->module_type;
+        ImageUploader::MarkImageBeforAfter($folder . '/', $image->imageUrl, true);
+        $image->update([
+            'isBeforeAfter' => 1,
+        ]);
+        return response([
+            'status' => true,
+            'message' => 'marked',
+            'src' => asset_uploads($folder . '/thumb/', $image->imageUrl . '?' . time()),
         ]);
     }
 }

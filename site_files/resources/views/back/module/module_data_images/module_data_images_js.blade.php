@@ -66,7 +66,34 @@
 
     function uploadModuleDataImages() {
         var total_files = document.getElementById("uploadFile").files.length;
-        if (total_files > 0) {
+        var image_name = '';
+        var image_name2 = '';
+
+        if ($('#image_name').length > 0) {
+            var image_name = $('#image_name').prop('files')[0];
+        }
+        if ($('#image_name2').length > 0) {
+            var image_name2 = $('#image_name2').prop('files')[0];
+        }
+        var isBeforeAfter = 0;
+        if ($('#isBeforeAfter').is(":checked")) {
+            isBeforeAfter = 1;
+        }
+        var isBeforeAfterHaveTwoImages = $('input[name="isBeforeAfterHaveTwoImages"]:checked').val();
+
+        console.log(total_files);
+        console.log(image_name);
+        console.log(image_name2);
+        console.log(isBeforeAfter);
+        console.log(isBeforeAfterHaveTwoImages);
+
+        if (
+            (total_files > 0) ||
+            (
+                (($('#image_name').length > 0) && ($('#image_name').val() != '')) &&
+                (($('#image_name2').length > 0) && ($('#image_name2').val() != ''))
+            )
+        ) {
             $('#moreImageLoader').show();
             $('#btnSave').attr('disabled', true);
             let formData = new FormData();
@@ -76,6 +103,10 @@
             formData.append("module_id", cms_module_id);
             formData.append("module_data_id", cms_module_data_id);
             formData.append("session_id", session_id);
+            formData.append("isBeforeAfter", isBeforeAfter);
+            formData.append("isBeforeAfterHaveTwoImages", isBeforeAfterHaveTwoImages);
+            formData.append("image_name", image_name);
+            formData.append("image_name2", image_name2);
             $.each($("#uploadFile")[0].files, function(i, file) {
                 formData.append('uploadFile[]', file);
             });
@@ -98,8 +129,6 @@
                     alert('Error adding / update data ' + ' ' + textStatus + ' ' + errorThrown);
                 }
             });
-        } else {
-            alert('Please select images');
         }
     }
 
@@ -140,12 +169,13 @@
         });
     }
 
-    function bind_cropper_preview_module_data_image(image_id) {
+    function bind_cropper_preview_module_data_image(image_id, image_1_2) {
         $('#module_data_image_crop_form').find('#image_id').val(image_id);
-        let image_name = $('#image_' + image_id).attr('data-imgname');
+        let image_name = $('#image_' + image_1_2 + '_' + image_id).attr('data-imgname');
         let path = '{{ asset_uploads('') }}' + folder + '/';
         $('#module_data_image_crop_form').find('#image').attr('src', path + '/' + image_name);
         $('#module_data_image_crop_form').find('#source_image').val(image_name);
+        $('#module_data_image_crop_form').find('#image_1_2').val(image_1_2);
         $('#module_data_image_cropper_form').modal('show');
     }
     $('#module_data_image_cropper_form').on('hidden.bs.modal', function() {
@@ -187,6 +217,7 @@
 
     function save_module_data_cropped_img() {
         let image_id = $('#module_data_image_crop_form').find('#image_id').val();
+        let image_1_2 = $('#module_data_image_crop_form').find('#image_1_2').val();
         $.ajax({
             url: "{{ admin_url() . 'save_module_data_image_crop_image' }}",
             type: "POST",
@@ -194,9 +225,9 @@
             data: $('#module_data_image_crop_form').serialize(),
             success: function(data) {
                 console.log(data.cropped_image);
-                $('#image_' + image_id).attr('src', asset_uploads + folder +
-                    '/thumb/' + data.cropped_image);
-                $('#image_' + image_id).attr('data-imgname', data.cropped_image);
+                $('#image_' + image_1_2 + '_' + image_id).attr('src', asset_uploads + folder + '/thumb/' +
+                    data.cropped_image);
+                $('#image_' + image_1_2 + '_' + image_id).attr('data-imgname', data.cropped_image);
                 $('#module_data_image_crop_form').find('#image').attr('src', '');
                 $('#module_data_image_crop_form').find('#source_image').val('');
                 $('#module_data_image_cropper_form').modal('hide');
@@ -204,4 +235,50 @@
             error: function(jqXHR, textStatus, errorThrown) {}
         });
     }
+
+    function markBeforeAfter(id, elem) {
+        $.ajax({
+            url: "{{ url('/adminmedia/saveModuleDataImagesMarkBeforeAfter') }}",
+            method: 'post',
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "id": id,
+            },
+            success: function(response) {
+                if (response.message == 'marked') {
+                    $(elem).remove();
+                    $('#image_' + id).attr('src', response.src);
+                }
+                console.log(response);
+            }
+        });
+    }
+
+    function show_before_after_have_two_images() {
+        $('.before_after_have_two_images').show();
+        $('.before_after_not_have_two_images').hide();
+    }
+
+    function hide_before_after_have_two_images() {
+        $('.before_after_have_two_images').hide();
+        $('.before_after_not_have_two_images').show();
+    }
+
+    function toggle_before_after_have_two_images() {
+        if ($('#isBeforeAfter').is(':checked')) {
+            $('#is_before_after_have_two_images').show();
+            if ($("[name='isBeforeAfterHaveTwoImages']:checked").val() == 1) {
+                show_before_after_have_two_images();
+            }
+        } else {
+            $('#is_before_after_have_two_images').hide();
+            hide_before_after_have_two_images();
+        }
+    }
+    @if (old('isBeforeAfter', 0) == 1)
+        $('#is_before_after_have_two_images').show();
+    @endif
+    @if (old('isBeforeAfterHaveTwoImages', 0) == 1)
+        show_before_after_have_two_images();
+    @endif
 </script>

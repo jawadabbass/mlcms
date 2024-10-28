@@ -134,6 +134,7 @@ function crop_image($src, $dst, $data)
     if (!empty($src) && !empty($dst) && !empty($data)) {
         $file = new SplFileInfo($src);
         $type = strtolower($file->getExtension());
+        $src_img = null;
         switch ($type) {
             case 'gif':
                 $src_img = imagecreatefromgif($src);
@@ -146,8 +147,8 @@ function crop_image($src, $dst, $data)
                 $src_img = imagecreatefrompng($src);
                 break;
         }
-        if (!$src_img) {
-            $this->msg = "Failed to read the image file";
+        if (null === $src_img) {
+            echo "Failed to read the image file";            
             return;
         }
         $size = getimagesize($src);
@@ -211,10 +212,12 @@ function crop_image($src, $dst, $data)
         $result = imagecopyresampled($dst_img, $src_img, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h);
         if ($result) {
             if (!imagepng($dst_img, $dst)) {
-                $this->msg = "Failed to save the cropped image file";
+                echo "Failed to save the cropped image file";
+                return;
             }
         } else {
-            $this->msg = "Failed to crop the image file";
+            echo "Failed to crop the image file";
+            return;
         }
         imagedestroy($src_img);
         imagedestroy($dst_img);

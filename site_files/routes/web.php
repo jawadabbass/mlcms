@@ -120,6 +120,7 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     Route::post('/save_module_data_image_crop_image', [BackModuleManageController::class, 'ajax_crop_module_data_img']);
     Route::post('/getModuleDataImageAltTitle', [BackModuleManageController::class, 'getModuleDataImageAltTitle']);
     Route::post('/saveModuleDataImageAltTitle', [BackModuleManageController::class, 'saveModuleDataImageAltTitle']);
+    Route::post('/saveModuleDataImagesMarkBeforeAfter', [BackModuleManageController::class, 'saveModuleDataImagesMarkBeforeAfter']);
     Route::post('/modules/updatePageOptions', [BackModuleController::class, 'updatePageOptions']);
     Route::post('/payment_options/paypal_email', [BackPaymentOptionController::class, 'paypal_email']);
     Route::post('/payment_options/authorize_net', [BackPaymentOptionController::class, 'authorize_net']);

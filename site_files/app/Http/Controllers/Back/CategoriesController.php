@@ -106,7 +106,7 @@ class CategoriesController extends Controller
 	public function update(Request $request, $id)
 	{
 		$this->validate($request, [
-			// 'cimg' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+			// 'cimg' => 'required|image|mimes:jpeg,png,jpg,gif,webp,svg|max:2048',
 		]);
 		$category = Category::find($request->edit_id);
 		if ($request->hasFile('cimg')) {

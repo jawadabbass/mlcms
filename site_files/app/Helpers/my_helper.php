@@ -371,7 +371,21 @@ function getCmsModuleDataImages($images)
         foreach ($images as $image) {
             $thumb = asset_uploads('module/' . $image->module_type . '/thumb/' . $image->image_name);
             $main = asset_uploads('module/' . $image->module_type . '/' . $image->image_name);
-            $imagesArray[] = (object)['thumb' => $thumb, 'main' => $main, 'image_alt' => $image->image_alt, 'image_title' => $image->image_title];
+            $thumb2 = asset_uploads('module/' . $image->module_type . '/thumb/' . $image->image_name2);
+            $main2 = asset_uploads('module/' . $image->module_type . '/' . $image->image_name2);
+            $isBeforeAfter = $image->isBeforeAfter;
+            $isBeforeAfterHaveTwoImages = $image->isBeforeAfterHaveTwoImages;
+            $imagesArray[] = (object)[
+                'id' => $image->id,
+                'thumb' => $thumb,
+                'main' => $main,
+                'thumb2' => $thumb2,
+                'main2' => $main2,
+                'image_alt' => $image->image_alt,
+                'image_title' => $image->image_title,
+                'isBeforeAfter' => $isBeforeAfter,
+                'isBeforeAfterHaveTwoImages' => $isBeforeAfterHaveTwoImages,
+        ];
         }
     }
     return $imagesArray;

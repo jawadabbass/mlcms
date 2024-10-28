@@ -198,7 +198,7 @@ class GalleryController extends Controller
         $imageUploaded = false;
         if (isset($_FILES['f_mg']['name']) && $_FILES['f_mg']['name'] != '') {
             $imageUploaded = true;
-            $validationArr['f_mg'] = 'required|image|mimes:jpeg,png,jpg,gif|max:' . $maxImageSize;
+            $validationArr['f_mg'] = 'required|image|mimes:jpeg,png,jpg,gif,webp|max:' . $maxImageSize;
         }
         $validatord = Validator::make(
             $request->all(),
@@ -231,8 +231,8 @@ class GalleryController extends Controller
             if ($isBeforeAfterHaveTwoImages == 1) {
                 $request->validate(
                     [
-                        'before_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:' . $maxImageSize,
-                        'after_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:' . $maxImageSize,
+                        'before_image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:' . $maxImageSize,
+                        'after_image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:' . $maxImageSize,
                         'album' => 'required',
                     ],
                     [
@@ -254,7 +254,7 @@ class GalleryController extends Controller
                 $request->validate(
                     [
                         'uploadFile' => 'required',
-                        'uploadFile.*' => 'image|mimes:jpeg,png,jpg,gif|max:' . $maxImageSize,
+                        'uploadFile.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:' . $maxImageSize,
                         'album' => 'required',
                     ],
                     [
@@ -275,7 +275,7 @@ class GalleryController extends Controller
             $request->validate(
                 [
                     'uploadFile' => 'required',
-                    'uploadFile.*' => 'image|mimes:jpeg,png,jpg,gif|max:' . $maxImageSize,
+                    'uploadFile.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:' . $maxImageSize,
                     'album' => 'required',
                 ],
                 [

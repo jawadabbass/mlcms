@@ -463,8 +463,9 @@
                         console.log(response);
                     }
                 });
-            }
-
+            }            
+        </script>
+        <script>
             function markBeforeAfter(id, elem) {
                 $.ajax({
                     url: "{{ url('/adminmedia/albums/gallery/markBeforeAfter') }}",
@@ -482,8 +483,6 @@
                     }
                 });
             }
-        </script>
-        <script>
             function openGalleryImageZoomModal(url) {
                 $('#galleryImageZoomImage').attr('src', url);
                 $('#galleryImageZoomModal').modal('show');

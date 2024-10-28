@@ -35,7 +35,9 @@ class ImageUploader
         })->save($destinationPath . '/' . $webpFileName);
         /**************************** */
         /**************************** */
-        File::delete($destinationPath . '/' . $fileName);
+        if($destinationPath . '/' . $webpFileName !== $destinationPath . '/' . $fileName){
+            File::delete($destinationPath . '/' . $fileName);
+        }
         /**************************** */
         /**************************** */
         if ($makeOtherSizesImages === true) {

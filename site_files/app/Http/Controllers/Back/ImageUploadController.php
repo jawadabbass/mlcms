@@ -4,10 +4,8 @@ namespace App\Http\Controllers\Back;
 
 use Illuminate\Http\Request;
 use App\Helpers\ImageUploader;
-// use Illuminate\Support\Facades\Input;
 use App\Http\Controllers\Controller;
 use App\Models\Back\ModuleDataImage;
-use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 
 class ImageUploadController extends Controller
@@ -16,7 +14,7 @@ class ImageUploadController extends Controller
     {
         $maxImageSize = getMaxUploadSize() * 1024;
         $validator = Validator::make($request->all(), [
-            'module_img' => 'image|mimes:jpeg,png,jpg,gif,svg|max:' . $maxImageSize,
+            'module_img' => 'image|mimes:jpeg,png,jpg,gif,webp,svg|max:' . $maxImageSize,
             'folder' => 'required'
         ]);
         if ($validator->passes()) {
@@ -33,18 +31,96 @@ class ImageUploadController extends Controller
     public function uploadMoreImages(Request $request)
     {
         $maxImageSize = getMaxUploadSize() * 1024;
-        $validator = Validator::make($request->all(), [
-            'uploadFile.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:' . $maxImageSize,
-            'module_type' => 'required',
-            'module_id' => 'required',
-            'module_data_id' => 'required',
-            'folder' => 'required',
-        ]);
+        $folder = $request->folder;
         $html = '';
-        if ($validator->passes()) {
-            $folder = $request->folder;
+        $isBeforeAfter = (int) $request->input('isBeforeAfter', 0);
+        $isBeforeAfterHaveTwoImages = (int) $request->input('isBeforeAfterHaveTwoImages', 0);
+        if ($isBeforeAfter == 1) {
+            if ($isBeforeAfterHaveTwoImages == 1) {
+                $request->validate(
+                    [
+                        'image_name' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:' . $maxImageSize,
+                        'image_name2' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:' . $maxImageSize,
+                        'module_type' => 'required',
+                        'module_id' => 'required',
+                        'module_data_id' => 'required',
+                        'folder' => 'required',
+                    ],
+                    [
+                        'image_name.required' => 'Please select before image.',
+                        'image_name.image' => 'Before image must be an image.',
+                        'image_name.mimes' => 'Before image must be of type jpeg,png,jpg,gif,webp.',
+                        'image_name2.required' => 'Please select after image.',
+                        'image_name2.image' => 'After image must be an image.',
+                        'image_name2.mimes' => 'After image must be of type jpeg,png,jpg,gif,webp.',
+                    ]
+                );
+                $imageName = ImageUploader::UploadImage($folder, $request->file('image_name'), '', 2500, 2500, true);
+                $imageName2 = ImageUploader::UploadImage($folder, $request->file('image_name2'), '', 2500, 2500, true);
+
+                $image = new ModuleDataImage();
+                $image->image_name = $imageName;
+                $image->image_name2 = $imageName2;
+                $image->module_type = $request->input('module_type');
+                $image->module_id = $request->input('module_id');
+                $image->module_data_id = $request->input('module_data_id');
+                $image->session_id = ($request->input('module_data_id', 0) == 0) ? $request->input('session_id') : NULL;
+                $image->image_alt = $request->input('image_alt');
+                $image->image_title = $request->input('image_title');
+                $image->isBeforeAfter = $isBeforeAfter;
+                $image->isBeforeAfterHaveTwoImages = $isBeforeAfterHaveTwoImages;
+                $image->save();
+                $html .= view('back.module.module_data_images.module_data_images_html_sub', compact('folder', 'image'));
+            } else {
+                $request->validate(
+                    [
+                        'uploadFile' => 'required',
+                        'uploadFile.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:' . $maxImageSize,
+                        'module_type' => 'required',
+                        'module_id' => 'required',
+                        'module_data_id' => 'required',
+                        'folder' => 'required',
+                    ],
+                    [
+                        'uploadFile.required' => 'Please select image(s).',
+                        'uploadFile.*.image' => 'Image must be an image.',
+                        'uploadFile.*.mimes' => 'Image must be of type jpeg,png,jpg,gif,webp.',
+                    ]
+                );
+                foreach ($request->file('uploadFile') as $key => $value) {
+                    $imageName = ImageUploader::UploadImageBeforAfter($folder, $value, '', 2500, 2500, true);
+                    $image = new ModuleDataImage();
+                    $image->image_name = $imageName;
+                    $image->module_type = $request->input('module_type');
+                    $image->module_id = $request->input('module_id');
+                    $image->module_data_id = $request->input('module_data_id');
+                    $image->session_id = ($request->input('module_data_id', 0) == 0) ? $request->input('session_id') : NULL;
+                    $image->image_alt = $request->input('image_alt');
+                    $image->image_title = $request->input('image_title');
+                    $image->isBeforeAfter = $isBeforeAfter;
+                    $image->isBeforeAfterHaveTwoImages = $isBeforeAfterHaveTwoImages;
+                    $image->save();
+                    $html .= view('back.module.module_data_images.module_data_images_html_sub', compact('folder', 'image'));
+                }
+            }
+        } else {
+            $request->validate(
+                [
+                    'uploadFile' => 'required',
+                    'uploadFile.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:' . $maxImageSize,
+                    'module_type' => 'required',
+                    'module_id' => 'required',
+                    'module_data_id' => 'required',
+                    'folder' => 'required',
+                ],
+                [
+                    'uploadFile.required' => 'Please select image(s).',
+                    'uploadFile.*.image' => 'Image must be an image.',
+                    'uploadFile.*.mimes' => 'Image must be of type jpeg,png,jpg,gif,webp.',
+                ]
+            );
             foreach ($request->file('uploadFile') as $key => $value) {
-                $imageName = ImageUploader::UploadImage($folder . '/', $value, '', 2500, 2500, true);
+                $imageName = ImageUploader::UploadImage($folder, $value, '', 2500, 2500, true);
                 $image = new ModuleDataImage();
                 $image->image_name = $imageName;
                 $image->module_type = $request->input('module_type');
@@ -53,9 +129,10 @@ class ImageUploadController extends Controller
                 $image->session_id = ($request->input('module_data_id', 0) == 0) ? $request->input('session_id') : NULL;
                 $image->image_alt = $request->input('image_alt');
                 $image->image_title = $request->input('image_title');
+                $image->isBeforeAfter = $isBeforeAfter;
+                $image->isBeforeAfterHaveTwoImages = $isBeforeAfterHaveTwoImages;
                 $image->save();
-
-                $html .= generateModuleDataImageHtml($folder, $image);
+                $html .= view('back.module.module_data_images.module_data_images_html_sub', compact('folder', 'image'));
             }
         }
         $this->removeModuleDataUnusedImages();
@@ -71,8 +148,10 @@ class ImageUploadController extends Controller
         if ($validator->passes()) {
             $module_data_image_id = $request->input('module_data_image_id', 0);
             if ($module_data_image_id > 0) {
-                ModuleDataImage::where('id', $module_data_image_id)->delete();
-                ImageUploader::deleteImage($request->folder, $request->file_name, true);
+                $imageObj = ModuleDataImage::find($module_data_image_id);
+                ImageUploader::deleteImage($request->folder, $imageObj->image_name, true);
+                ImageUploader::deleteImage($request->folder, $imageObj->image_name2, true);
+                $imageObj->delete();
             } else {
                 ImageUploader::deleteImage($request->folder, $request->file_name);
             }
@@ -98,7 +177,7 @@ class ImageUploadController extends Controller
     {
         $maxImageSize = getMaxUploadSize() * 1024;
         $validator = Validator::make($request->all(), [
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:' . $maxImageSize
+            'image' => 'image|mimes:jpeg,png,jpg,gif,webp,svg|max:' . $maxImageSize
         ]);
         if ($validator->passes()) {
             $folder = 'editor/images';
