@@ -6,17 +6,17 @@ use App\Http\Controllers\Front\BlogController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\NewsController;
 use App\Http\Controllers\Front\VideoController;
+use App\Http\Controllers\Back\MassMailController;
 use App\Http\Controllers\Front\GalleryController;
 use App\Http\Controllers\Front\InvoiceController;
 use App\Http\Controllers\Back\FrontUserController;
-use App\Http\Controllers\Front\ServicesController;
+use App\Http\Controllers\Front\ServiceController;
 use App\Http\Controllers\Front\ContactUsController;
 use App\Http\Controllers\Front\MailChimpController;
 use App\Http\Controllers\Front\TestimonialController;
 use App\Http\Controllers\Front\ClientRegisterController;
 use App\Http\Controllers\Front\GoogleCalendarController;
 use App\Http\Controllers\Back\GeneralEmailTemplateController;
-use App\Http\Controllers\Back\MassMailController;
 use App\Http\Controllers\Back\BlogController as BackBlogController;
 use App\Http\Controllers\Back\CityController as BackCityController;
 use App\Http\Controllers\Back\MenuController as BackMenuController;
@@ -38,6 +38,7 @@ use App\Http\Controllers\Back\GalleryController as BackGalleryController;
 use App\Http\Controllers\Back\InvoiceController as BackInvoiceController;
 use App\Http\Controllers\Back\MessageController as BackMessageController;
 use App\Http\Controllers\Back\ProductController as BackProductController;
+use App\Http\Controllers\Back\ServiceController as BackServiceController;
 use App\Http\Controllers\Back\SettingController as BackSettingController;
 use App\Http\Controllers\Back\SiteMapController as BackSiteMapController;
 use App\Http\Controllers\Back\AdminLogController as BackAdminLogController;
@@ -354,6 +355,19 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     Route::post('/mass-mail', [MassMailController::class, 'sendMassMail'])->name('submit.mass.mail');
     Route::post('/get-mail-template-view', [MassMailController::class, 'getMailTemplateView'])->name('get.mail.template.view');
 
+    Route::get('/services', [BackServiceController::class, 'index'])->name('services.index');
+    Route::get('/services/create', [BackServiceController::class, 'create'])->name('services.create');
+    Route::post('/services', [BackServiceController::class, 'store'])->name('services.store');
+    Route::get('/services/{serviceObj}', [BackServiceController::class, 'show'])->name('services.show');
+    Route::get('/services/{serviceObj}/edit', [BackServiceController::class, 'edit'])->name('services.edit');
+    Route::put('/services/{serviceObj}', [BackServiceController::class, 'update'])->name('services.update');
+    Route::delete('/services/{serviceObj}', [BackServiceController::class, 'destroy'])->name('services.destroy');
+    Route::get('fetchServicesAjax', [BackServiceController::class, 'fetchServicesAjax'])->name('fetchServicesAjax');
+    Route::post('updateServiceStatus', [BackServiceController::class, 'updateServiceStatus'])->name('updateServiceStatus');
+    Route::get('services-sort', [BackServiceController::class, 'sortServices'])->name('services.sort');
+    Route::get('services-sort-data', [BackServiceController::class, 'servicesSortData'])->name('services.sort.data');
+    Route::put('services-sort-update', [BackServiceController::class, 'servicesSortUpdate'])->name('services.sort.update');
+
 });
 /************************************* */
 /************************************* */
@@ -380,8 +394,8 @@ Route::group(['middleware' => ['siteStatus', 'clearCache', 'ipmiddleware']], fun
     Route::get('/videos/{slug}', [VideoController::class, 'show']);
     Route::get('/gallery', [GalleryController::class, 'index']);
     Route::post('/addSubscriber', [HomeController::class, 'addSubscriber']);
-    Route::get('/services/{slug}', [ServicesController::class, 'show']);
-    Route::get('/services', [ServicesController::class, 'index']);
+    Route::get('/services/{slug}', [ServiceController::class, 'show']);
+    Route::get('/services', [ServiceController::class, 'index']);
     Route::get('/invoice/{slug}', [InvoiceController::class, 'paypal']);
     Route::get('/invoice/cancel/{slug}', [InvoiceController::class, 'payment_cancel']);
     Route::get('/invoice/success/{slug}', [InvoiceController::class, 'payment_success']);

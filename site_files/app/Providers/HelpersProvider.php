@@ -31,5 +31,6 @@ class HelpersProvider extends ServiceProvider
         require_once app_path() . '/Helpers/mod_builder_helper.php';
         require_once app_path() . '/Helpers/common_functions.php';
         require_once app_path() . '/Helpers/my_helper.php';
+        require_once app_path() . '/Helpers/service_helper.php';
     }
 }
