@@ -890,7 +890,7 @@ function seo_img_tags($imgName = '', $default = '', $is_dynamic = false)
     if (isset($seoImageArr[0])) {
         $imgName = $seoImageArr[0];
     }
-    $imageSeoArr =  CmsModuleData::where('sts', 'active')
+    $imageSeoArr =  CmsModuleData::where('sts', 1)
         ->where('cms_module_id', 48)
         ->where('heading', 'like', $imgName)
         ->select('additional_field_1', 'additional_field_2', 'heading')
@@ -898,7 +898,7 @@ function seo_img_tags($imgName = '', $default = '', $is_dynamic = false)
     if (null === $imageSeoArr) {
         $imageSeoArr = new CmsModuleData();
         $imageSeoArr->cms_module_id = 48;
-        $imageSeoArr->sts = 'active';
+        $imageSeoArr->sts = 1;
         $imageSeoArr->heading = $imgName;
         $imageSeoArr->additional_field_1 = $default;
         $imageSeoArr->additional_field_2 = $default;
@@ -919,7 +919,7 @@ function dev_ips()
 
 function package_use_member($id)
 {
-    $sm = ClientPackages::where('sts', 'active')->where('package_id', $id)->get();
+    $sm = ClientPackages::where('sts', 1)->where('package_id', $id)->get();
     $total = count($sm);
 
     return $total;

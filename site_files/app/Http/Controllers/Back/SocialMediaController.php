@@ -60,7 +60,7 @@ class SocialMediaController extends Controller
 		$socialMedia->link = addHttpLink($request->link);
 		$socialMedia->i_class = $request->i_class;
 		$socialMedia->dated = date("Y-m-d H:i:s");
-		$socialMedia->sts = 'active';
+		$socialMedia->sts = 1;
 
 		if (isset($_POST['open_in_new_tab'])) {
 			$socialMedia->open_in_new_tab = 'Yes';
@@ -90,22 +90,18 @@ class SocialMediaController extends Controller
 	 */
 	public function edit($id, Request $request)
 	{
-		if ($id == '') {
-			echo 'error';
-			return;
+		$new_status = 0;
+		if ((int)$id > 0) {
+			$widget = SocialMedia::find((int)$id);
+			$status = (int)$widget->sts;
+			if ($status == 1) {
+				$new_status = 0;
+			} else {
+				$new_status = 1;
+			}
+			$widget->sts = $new_status;
+			$widget->save();
 		}
-		$status = $request->status;
-		if ($status == '') {
-			echo 'invalid current status provided.';
-			return;
-		}
-		if ($status == 'active')
-			$new_status = 'blocked';
-		else
-			$new_status = 'active';
-		$widget = SocialMedia::find($id);
-		$widget->sts = $new_status;
-		$widget->save();
 		echo $new_status;
 		return;
 	}
@@ -128,7 +124,7 @@ class SocialMediaController extends Controller
 		$socialMedia->alt_tag = $request->edit_alt_tag;
 		$socialMedia->link = $request->edit_link;
 		$socialMedia->i_class = $request->edit_i_class;
-		$socialMedia->sts = 'active';
+		$socialMedia->sts = 1;
 		if (isset($_POST['edit_open_in_new_tab'])) {
 			$socialMedia->open_in_new_tab = 'Yes';
 		} else {

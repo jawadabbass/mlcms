@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front\AjaxController;
@@ -73,6 +74,7 @@ use App\Http\Controllers\AdminAuth\ConfirmPasswordController as AdminAuthConfirm
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 /************************************* */
 /************************************* */
 /***********  ADMINMEDIA ************* */
@@ -230,13 +232,13 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     //Contact us leads
     Route::resource('/contact_request', BackContactUsController::class);
     Route::get('/contact_request/convert_client/{id}', [BackContactUsController::class, 'convert_client'])->name('lead_convert_client');
-    
-    
+
+
     Route::get('/contact_request/loadDataToGoogleCalendarModal/{id}', [BackContactUsController::class, 'loadDataToGoogleCalendarModal'])->name('loadDataToGoogleCalendarModal');
     Route::post('/contact_request/save_to_google_calendar', [BackContactUsController::class, 'save_to_google_calendar'])->name('save_to_google_calendar');
-    
-    
-    
+
+
+
     Route::get('/contact_request/export/{exportType}', [BackContactUsController::class, 'exportLeads'])->name('export.leads');
     Route::post('/contact-request-bulk-actions', [BackContactUsController::class, 'contactUsBulkActions'])->name('contact_request.bulk.actions');
     Route::resource('/manage_contact', BackContactPagesController::class);
@@ -363,11 +365,19 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     Route::put('/services/{serviceObj}', [BackServiceController::class, 'update'])->name('services.update');
     Route::delete('/services/{serviceObj}', [BackServiceController::class, 'destroy'])->name('services.destroy');
     Route::get('fetchServicesAjax', [BackServiceController::class, 'fetchServicesAjax'])->name('fetchServicesAjax');
+    Route::post('updateServiceIsFeatured', [BackServiceController::class, 'updateServiceIsFeatured'])->name('updateServiceIsFeatured');
     Route::post('updateServiceStatus', [BackServiceController::class, 'updateServiceStatus'])->name('updateServiceStatus');
     Route::get('services-sort', [BackServiceController::class, 'sortServices'])->name('services.sort');
     Route::get('services-sort-data', [BackServiceController::class, 'servicesSortData'])->name('services.sort.data');
     Route::put('services-sort-update', [BackServiceController::class, 'servicesSortUpdate'])->name('services.sort.update');
-
+    Route::get('sortServicesByTitle', [BackServiceController::class, 'sortServicesByTitle'])->name('sortServicesByTitle');
+    Route::post('/removeServiceExtraImage', [BackServiceController::class, 'removeServiceExtraImage']);
+    Route::post('/uploadServicesExtraImages', [BackServiceController::class, 'uploadServiceExtraImages']);
+    Route::post('/saveServiceExtraImagesSortOrder', [BackServiceController::class, 'saveServiceExtraImagesSortOrder']);
+    Route::post('/saveServiceExtraImageCropImage', [BackServiceController::class, 'saveServiceExtraImageCropImage']);
+    Route::post('/getServiceExtraImageAltTitle', [BackServiceController::class, 'getServiceExtraImageAltTitle']);
+    Route::post('/saveServiceExtraImageAltTitle', [BackServiceController::class, 'saveServiceExtraImageAltTitle']);
+    Route::post('/saveServiceExtraImagesMarkBeforeAfter', [BackServiceController::class, 'saveServiceExtraImagesMarkBeforeAfter']);
 });
 /************************************* */
 /************************************* */

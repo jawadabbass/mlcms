@@ -107,7 +107,7 @@ function is_child($parent_id, $menu_type_id)
 }
 function social_media()
 {
-	$sm = SocialMedia::where('sts', 'active')->orderBy('item_order', 'ASC')->get();
+	$sm = SocialMedia::where('sts', 1)->orderBy('item_order', 'ASC')->get();
 	$html = '';
 	foreach ($sm as $key => $value) {
 		$newTab = ($value['open_in_new_tab'] == 'Yes') ? 'target="_blank"' : '';

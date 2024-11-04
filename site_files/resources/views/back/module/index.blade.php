@@ -35,8 +35,8 @@
                                 @endif
                                 <div class="text-end" style="padding-bottom:2px; display: inline;">
                                     <!--<input type="button" class="sitebtn"
-                                value="Add New {{ ucwords($module->term) == 'CMS' ? 'Page' : ucwords($module->term) }}"
-                                onclick="add_content()"/>-->
+                                    value="Add New {{ ucwords($module->term) == 'CMS' ? 'Page' : ucwords($module->term) }}"
+                                    onclick="add_content()"/>-->
                                     <a class="sitebtn" href="{{ admin_url() . 'module/' . $module->type . '/add' }} "> Add
                                         New
                                         {{ ucwords($module->term) == 'CMS' ? 'Page' : ucwords($module->term) }}</a>
@@ -100,7 +100,7 @@
                                                 <td>
                                                     <label class="switch">
                                                         <input type="checkbox" name="{{ 'sts_' . $moduleMember->id }}"
-                                                            id="{{ 'sts_' . $moduleMember->id }}" <?php echo $moduleMember->sts == 'active' ? ' checked' : ''; ?>
+                                                            id="{{ 'sts_' . $moduleMember->id }}" <?php echo $moduleMember->sts == 1 ? ' checked' : ''; ?>
                                                             value="<?php echo $moduleMember->sts; ?>"
                                                             onClick="update_module_status_toggle({{ $moduleMember->id }})">
                                                         <div class="slider round">
@@ -114,8 +114,7 @@
                                                 <td>
                                                     <input type="checkbox" data-toggle="toggle" data-onlabel="Featured"
                                                         data-offlabel="Not Featured" data-onstyle="success"
-                                                        data-offstyle="danger"
-                                                        data-id="{{ $moduleMember->id }}"
+                                                        data-offstyle="danger" data-id="{{ $moduleMember->id }}"
                                                         name="{{ 'is_featured_' . $moduleMember->id }}"
                                                         id="{{ 'is_featured_' . $moduleMember->id }}" <?php echo $moduleMember->is_featured == 1 ? ' checked' : ''; ?>
                                                         value="<?php echo $moduleMember->is_featured; ?>">

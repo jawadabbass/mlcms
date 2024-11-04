@@ -3,7 +3,6 @@
     <link href="{{ asset_storage('') . 'module/blog/front/css/blog.css' }}" rel="stylesheet" type="text/css" />
 @endsection
 @section('content')
-    @php echo cms_edit_page("module/services");@endphp
     {!! cms_page_heading('Services') !!}
     <div class="about-wrap">
         <!-- Start Blog
@@ -13,26 +12,23 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="services-items row">
-                            @if (count($get_all_services) > 0)
-                                @foreach ($get_all_services as $services)  
-                                @php
-                                    $services = (object) $services;
-                                @endphp                              
+                            @if (count($allServices) > 0)
+                                @foreach ($allServices as $serviceObj)  
                                     <!-- Single Item -->
                                     <div class="col-md-4 item">
                                         <div class="thumb">
-                                            <img src="{{ $services->featured_img }}"
-                                            title="{{ $services->featured_img_title }}" alt="{{ $services->featured_img_alt }}">
+                                            <img src="{{ asset_uploads('services/' . $serviceObj->featured_image) }}"
+                                            title="{{ $serviceObj->featured_image_title }}" alt="{{ $serviceObj->featured_image_alt }}">
                                             <div class="overlay">
-                                                <a href="@php echo base_url().$services->post_slug @endphp">
+                                                <a href="{{ url('services/'.$serviceObj->slug) }}">
                                                     <i class="flaticon-report"></i>
-                                                    <h4>{{ $services->heading }}</h4>
+                                                    <h4>{{ $serviceObj->title }}</h4>
                                                 </a>
                                             </div>
                                         </div>
                                         <div class="info">
-                                            <p> @php echo get_excerpt(adjustUrl($services->content),100) @endphp </p>
-                                            <a href="@php echo $services->post_slug @endphp">Read More <i
+                                            <p>{{ Str::limit($serviceObj->excerpt, 100, '...') }}</p>
+                                            <a href="{{ url('services/'.$serviceObj->slug) }}">Read More <i
                                                     class="fas fa-angle-double-right"></i></a>
                                         </div>
                                     </div>

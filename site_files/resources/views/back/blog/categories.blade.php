@@ -59,7 +59,7 @@
                                                 <td>
                                                     <label class="switch">
                                                         <input type="checkbox" name="{{ 'sts_' . $row->ID }}"
-                                                            id="{{ 'cat_sts_' . $row->ID }}" <?php echo $row->sts == 'active' ? ' checked' : ''; ?>
+                                                            id="{{ 'cat_sts_' . $row->ID }}" <?php echo $row->sts == 1 ? ' checked' : ''; ?>
                                                             value="<?php echo $row->sts; ?>"
                                                             onClick="update_category_status({{ $row->ID }})">
                                                         <div class="slider round">

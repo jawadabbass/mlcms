@@ -26,9 +26,9 @@ function get_alls($limit, $start, $module_id, $dateFormat = 'M d, Y')
 function get_one($parent, $slug, $dateFormat = 'M d, Y')
 {
     $moduleArr = \App\Models\Back\CmsModule::where('type', $parent)->first()->toArray();
-    $getArr = \App\Models\Back\CmsModuleData::where('sts', 'active')
+    $getArr = \App\Models\Back\CmsModuleData::where('sts', 1)
         ->where('cms_module_id', $moduleArr['id'])
-        ->where('sts', 'active')
+        ->where('sts', 1)
         ->where('post_slug', $parent . '/' . $slug);
     $getArr = $getArr->first();
     if (isset($getArr)) {

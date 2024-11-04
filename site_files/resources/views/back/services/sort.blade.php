@@ -40,14 +40,22 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body table-responsive">
-                            <h3>Drag and Drop to Sort</h3>
                             <div class="row">
                                 <div class="col-md-12 mt-3 mb-3">
+                                    <h3>Drag and Drop to Sort</h3>
                                     <label>Parent Category</label>
                                     <select class="form-control" name="parent_id" id="parent_id"
                                         onchange="refreshServiceSortData();">
-                                        {!! generateParentServicesDropDown(request('parent_id', 0)) !!}                                        
+                                        {!! generateParentServicesDropDown(request('parent_id', 0)) !!}
                                     </select>
+                                </div>
+                                <div class="col-md-12 mt-1">
+                                    <div class="row">
+                                        <div class="col-md-12 text-center">
+                                            <button type="button" class="btn btn-success m-3"
+                                                onclick="sortServicesByTitle();">Sort Services By Title</button>                                            
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-md-12 mt-1">
                                     <div id="servicesSortDataDiv"></div>
@@ -98,6 +106,20 @@
                     });
                     $("#sortable").disableSelection();
                     /***************************/
+                }
+            });
+        }
+
+        function sortServicesByTitle() {
+            let parent_id = $('#parent_id').val();
+            $.ajax({
+                type: "GET",
+                url: "{{ route('sortServicesByTitle') }}",
+                data: {
+                    parent_id: parent_id
+                },
+                success: function(responseData) {
+                    refreshServiceSortData();
                 }
             });
         }

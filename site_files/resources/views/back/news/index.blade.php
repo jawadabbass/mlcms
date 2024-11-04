@@ -1,4 +1,4 @@
-@extends('back.layouts.app',['title'=>$title])
+@extends('back.layouts.app', ['title' => $title])
 @section('content')
     <div class="content-wrapper pl-3 pr-2">
         <!-- Content Header (Page header) -->
@@ -33,7 +33,7 @@
                                 <div class="box-header">
                                     <h3 class=" card-title">All News</h3>
                                 </div>
-                            </div>                            
+                            </div>
                         </div>
                         <!-- /.box-header -->
                         <div class=" card-body table-responsive">
@@ -62,11 +62,14 @@
                                 <div class="row mb-3" id="filterForm" style="display: none;">
                                     <div class="col-md-3 form-group">
                                         <label>Title</label>
-                                        <input id="title" name="title" type="text" placeholder="Title" value="{{ request('title', '') }}" class="form-control">
+                                        <input id="title" name="title" type="text" placeholder="Title"
+                                            value="{{ request('title', '') }}" class="form-control">
                                     </div>
                                     <div class="col-md-3 form-group">
                                         <label>Description</label>
-                                        <input id="description_search" name="description" type="text" placeholder="Description" value="{{ request('description', '') }}" class="form-control">
+                                        <input id="description_search" name="description" type="text"
+                                            placeholder="Description" value="{{ request('description', '') }}"
+                                            class="form-control">
                                     </div>
                                     <div class="col-md-3 form-group">
                                         <label for="status">Status:</label>
@@ -79,7 +82,7 @@
                                     id="newsDatatableAjax">
                                     <thead>
                                         <tr>
-                                            <th>News<br/>Date</th>
+                                            <th>News<br />Date</th>
                                             <th>Image</th>
                                             <th>Title</th>
                                             <th>Description</th>
@@ -101,7 +104,6 @@
         </section>
         <!-- /.content -->
     </div>
-    
 @endsection
 @section('beforeBodyClose')
     <script>
@@ -125,8 +127,10 @@
                         d.status = $('#status').val();
                     }
                 },
-                columns: [
-                    {
+                "drawCallback": function(settings) {
+                    setToggles();
+                },
+                columns: [{
                         data: 'news_date_time',
                         name: 'news_date_time'
                     },
@@ -205,23 +209,43 @@
             }
         }
 
-        function updateNewsStatus(id, prev_status, status) {
-            var url = '{{ url('adminmedia/updateNewsStatus/') }}';
-            var msg = 'Are you sure?';
-            if (confirm(msg)) {
-                $.post(url, {
-                        id: id,
-                        status: status,
-                        _token: '{{ csrf_token() }}'
-                    })
-                    .done(function(response) {
-                        //
-                    });
-            } else {
-                $('#status_' + id).val(prev_status);
+        function updateNewsStatus(id) {
+            var old_status = 1;
+            var new_status = 0;
+            if ($('#status_' + id).val() == 0) {
+                old_status = 0;
+                new_status = 1;
             }
+            var url = base_url + 'adminmedia/updateNewsStatus';
+            $.post(url, {
+                    id: id,
+                    status: new_status,
+                    _token: '{{ csrf_token() }}'
+                })
+                .done(function(sts) {
+                    if (sts == 'Done Successfully!') {
+                        $('#status_' + id).val(new_status);
+                        alertme('<i class="fas fa-check" aria-hidden="true"></i> ' + sts, 'success', true, 1500);
+                    } else {
+                        $('#status_' + id).val(old_status);
+                        if (old_status == 0) {
+                            $('#status_' + id).bootstrapToggle('off', true)
+                        } else {
+                            $('#status_' + id).bootstrapToggle('on', true)
+                        }
+                        alertme('<i class="fas fa-check" aria-hidden="true"></i> ' + sts, 'danger', true, 1500);
+                    }
+                });
+
         }
 
+        function setToggles() {
+            $('input[data-toggle="toggle_status"]').bootstrapToggle();
+        }
+        $(document).on('change', 'input[data-toggle="toggle_status"]', function() {
+            let id = $(this).attr('data-id');
+            updateNewsStatus(id);
+        });
     </script>
     <!-- Filer -->
 @endsection

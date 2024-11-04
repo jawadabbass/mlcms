@@ -44,8 +44,8 @@ class NewsController extends Controller
                 if ($request->has('is_featured') && !empty($request->is_featured)) {
                     $query->where('news.is_featured', 'like', "{$request->get('is_featured')}");
                 }
-                if ($request->has('status') && !empty($request->status)) {
-                    $query->where('news.status', 'like', "{$request->get('status')}");
+                if ($request->has('status') && $request->status != '') {
+                    $query->where('news.status', $request->get('status'));
                 }
             })
             ->addColumn('news_date_time', function ($news) {
@@ -54,11 +54,16 @@ class NewsController extends Controller
             ->addColumn('image', function ($news) {
                 return '<img src="' . ImageUploader::print_image_src($news->image, 'news/thumb') . '" style="max-width:165px !important; max-height:165px !important;"/>';
             })
-            ->addColumn('status', function ($news) {
-                $str = '<select class="form-control" name="status" id="status_' . $news->id . '" onchange="updateNewsStatus(' . $news->id . ', \'' . $news->status . '\', this.value);">';
-                $str .= generateNewsStatusDropDown($news->status, false);
-                $str .= '</select>';
+            ->addColumn('status', function ($services) {
+                $checked = ($services->status) == 1 ? ' checked' : '';
 
+                $str = '<input type="checkbox" data-toggle="toggle_status" data-onlabel="Active"
+                data-offlabel="Not Active" data-onstyle="success"
+                data-offstyle="danger"
+                data-id="' . $services->id . '"
+                name="status_' . $services->id . '"
+                id="status_' . $services->id . '" ' . $checked . '
+                value="' . $services->status . '">';
                 return $str;
             })
             ->addColumn('description', function ($news) {
@@ -199,8 +204,8 @@ class NewsController extends Controller
         $newsObj = News::find($request->id);
         $newsObj = $this->setNewsStatus($request, $newsObj);
         $newsObj->save();
-
-        return response()->json(['status' => 'success', 'message' => $newsObj->status]);
+        echo 'Done Successfully!';
+        exit;
     }
 
     public function destroy(News $newsObj)

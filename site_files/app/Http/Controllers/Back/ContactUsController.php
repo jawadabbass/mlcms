@@ -173,7 +173,7 @@ class ContactUsController extends Controller
             $clientObj->address = $contact->address;
             $clientObj->price = $contact->price;
             $clientObj->subject = $contact->subject;
-            $clientObj->status = 'Active';
+            $clientObj->status = 1;
             $clientObj->lead_id = $id;
             $clientObj->assesment_status = $contact->assesment_status;
             $clientObj->assesment_code = $contact->assesment_code;

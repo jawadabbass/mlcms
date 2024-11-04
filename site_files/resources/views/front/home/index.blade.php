@@ -111,19 +111,20 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="services-items services-carousel owl-carousel owl-theme">
-                        @foreach ($get_all_services as $service)
+                        @foreach ($get_all_services as $serviceObj)
                             <!-- Single Item -->
                             <div class="item">
                                 <div class="thumb"> <img
-                                        src="{{ asset_uploads('module/services/' . $service->featured_img) }}"
-                                        title="{{ $service->featured_img_title }}" alt="{{ $service->featured_img_alt }}">
-                                    <div class="overlay"> <a href="#"> <i class="flaticon-report"></i>
-                                            <h4>{{ $service->heading }}</h4>
+                                        src="{{ asset_uploads('services/' . $serviceObj->featured_image) }}"
+                                        title="{{ $serviceObj->featured_image_title }}" alt="{{ $serviceObj->featured_image_alt }}">
+                                    <div class="overlay"> 
+                                        <a href="{{ url('services/'.$serviceObj->slug) }}"> <i class="flaticon-report"></i>
+                                            <h4>{{ $serviceObj->title }}</h4>
                                         </a> </div>
                                 </div>
                                 <div class="info">
-                                    <p> @php echo get_excerpt(adjustUrl($service->content),100) @endphp </p>
-                                    <a href="{{ url($service->post_slug) }}">Read More <i
+                                    <p>{{ Str::limit($serviceObj->excerpt, 100, '...') }}</p>
+                                    <a href="{{ url('services/'.$serviceObj->slug) }}">Read More <i
                                             class="fas fa-angle-double-right"></i></a>
                                 </div>
                             </div>

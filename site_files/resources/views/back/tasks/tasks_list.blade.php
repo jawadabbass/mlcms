@@ -97,7 +97,7 @@
                                             <td>{{ $taskObj->title }}</td>
                                             <td>{{ Str::limit(strip_tags($taskObj->description), 100, '...') }}</td>
                                             <td>
-                                                @if ($taskObj->status == 'active')
+                                                @if ($taskObj->status == 1')
                                                     <button class="btn btn-small btn-success"
                                                         wire:click="setInActive({{ $taskObj->id }})">Active</button>
                                                 @else

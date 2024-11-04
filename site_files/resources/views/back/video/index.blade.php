@@ -52,7 +52,7 @@
                                                 <td>
                                                         <label class="switch">
                                                             <input type="checkbox" name="{{ 'sts_' . $row->ID }}"
-                                                                id="{{ 'sts_' . $row->ID }}" <?php echo $row->sts == 'active' ? ' checked' : ''; ?>
+                                                                id="{{ 'sts_' . $row->ID }}" <?php echo $row->sts == 1 ? ' checked' : ''; ?>
                                                                 value="<?php echo $row->sts; ?>"
                                                                 onClick="update_videos_sts({{ $row->ID }})">
                                                             <div class="slider round">

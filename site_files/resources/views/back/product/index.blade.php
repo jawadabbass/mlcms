@@ -76,7 +76,7 @@
                                             <td>
                                                 <label class="switch">
                                                     <input type="checkbox" name="{{ 'pro_sts_' . $product->ID }}"
-                                                        id="{{ 'pro_sts_' . $product->ID }}" <?php echo $product->sts == 'active' ? ' checked' : ''; ?>
+                                                        id="{{ 'pro_sts_' . $product->ID }}" <?php echo $product->sts == 1 ? ' checked' : ''; ?>
                                                         value="<?php echo !empty($product->sts)? $product->sts:'blocked' ; ?>"
                                                         onClick="update_product_sts_toggle({{ $product->ID }})">
                                                     <div class="slider round">

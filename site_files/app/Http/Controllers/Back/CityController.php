@@ -187,7 +187,7 @@ class CityController extends Controller
     {
         $cities = City::select('cities.id', 'cities.city_name', 'cities.sort_order')
             ->where('county_id', $request->county_id)
-            ->where('status', 'like', 'active')
+            ->where('status', 1)
             ->orderBy('sort_order', 'ASC')->get();
         $str = '<ul id="sortable">';
         if ($cities != null) {

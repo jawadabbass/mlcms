@@ -28,8 +28,8 @@
                                 <div class="text-end" style="padding-bottom:2px;">
                                     {{-- <input type="button" class="sitebtn" value="Add New Widgets"
                                            onClick="load_widgets_add_form();"/> --}}
-                                        <a href="{{ route('widgets.create') }}" class="sitebtn">Add New Widgets</a>
-                                    
+                                    <a href="{{ route('widgets.create') }}" class="sitebtn">Add New Widgets</a>
+
                                 </div>
                             </div>
                         </div>
@@ -59,7 +59,7 @@
                                                 <td>
                                                     <label class="switch">
                                                         <input type="checkbox" name="{{ 'sts_' . $row->ID }}"
-                                                            id="{{ 'sts_' . $row->ID }}" <?php echo $row->sts == 'active' ? ' checked' : ''; ?>
+                                                            id="{{ 'sts_' . $row->ID }}" <?php echo $row->sts == 1 ? ' checked' : ''; ?>
                                                             value="<?php echo $row->sts; ?>"
                                                             onClick="update_widgets_status({{ $row->ID }})">
                                                         <div class="slider round">
@@ -71,11 +71,11 @@
                                                 <td>
                                                     <a href="{{ route('widgets.show', $row->ID) }}"
                                                         class="btn btn-success btn-sm">Edit</a>
-                                                    
-                                                        <a href="{{ route('widget.option', $row->ID) }}"
-                                                            class="btn btn-warning btn-sm">option</a>
-                                                        <a href="javascript:;"
-                                                            onClick="delete_widget({{ $row->ID }});"class="btn btn-danger btn-sm">Delete</a>                                                    
+
+                                                    <a href="{{ route('widget.option', $row->ID) }}"
+                                                        class="btn btn-warning btn-sm">option</a>
+                                                    <a href="javascript:;"
+                                                        onClick="delete_widget({{ $row->ID }});"class="btn btn-danger btn-sm">Delete</a>
                                                 </td>
                                             </tr>
                                         @endforeach

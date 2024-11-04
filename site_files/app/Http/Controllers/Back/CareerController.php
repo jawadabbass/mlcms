@@ -38,8 +38,8 @@ class CareerController extends Controller
                 if ($request->has('description') && !empty($request->description)) {
                     $query->where('careers.description', 'like', "%{$request->get('description')}%");
                 }
-                if ($request->has('status') && !empty($request->status)) {
-                    $query->where('careers.status', 'like', "{$request->get('status')}");
+                if ($request->has('status') && $request->status != '') {
+                    $query->where('careers.status', $request->get('status'));
                 }
             })
             ->addColumn('created_at', function ($career) {
@@ -50,7 +50,7 @@ class CareerController extends Controller
             })
             ->addColumn('status', function ($career) {
                 $str = '<label class="switch">';
-                $str .= '<input type="checkbox" name="status" id="sts_' . $career->id . '" ' . ($career->status == 'active' ? 'checked' : '') . ' value="' . $career->status . '" onClick="updateCareerStatus(' . $career->id . ', \'' . $career->status . '\', this.checked ? \'active\' : \'inactive\')">';
+                $str .= '<input type="checkbox" name="status" id="sts_' . $career->id . '" ' . ($career->status == 1 ? 'checked' : '') . ' value="' . $career->status . '" onClick="updateCareerStatus(' . $career->id . ', \'' . $career->status . '\', this.checked ? 1 : 0)">';
                 $str .= '<div class="slider round">';
                 $str .= '<strong class="on">Active</strong>';
                 $str .= '<strong class="off">Inactive</strong>';

@@ -11,7 +11,7 @@ class VideoController extends Controller
     public function index()
     {
         $seoArr = getSeoArrayModule(728);
-        $videos = Video::where('sts', 'active')->get();
+        $videos = Video::where('sts', 1)->get();
         return view('front.videos.index',compact( 'seoArr','videos'));
     }
 

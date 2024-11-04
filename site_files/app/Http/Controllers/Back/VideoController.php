@@ -43,22 +43,18 @@ class VideoController extends Controller
      */
     public function edit($id, Request $request)
     {
-        if ($id == '') {
-            echo 'error';
-            return;
+        $new_status = 0;
+        if ((int)$id > 0) {
+            $video = Video::find($id);
+            $status = (int)$video->sts;
+            if ($status == 1) {
+                $new_status = 0;
+            } else {
+                $new_status = 1;
+            }
+            $video->sts = $new_status;
+            $video->save();
         }
-        $status = $request->status;
-        if ($status == '') {
-            echo 'invalid current status provided.';
-            return;
-        }
-        if ($status == 'active')
-            $new_status = 'blocked';
-        else
-            $new_status = 'active';
-        $video = Video::find($id);
-        $video->sts = $new_status;
-        $video->save();
         echo $new_status;
         return;
     }

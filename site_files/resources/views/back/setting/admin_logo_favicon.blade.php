@@ -39,7 +39,7 @@
                 <form name="logo_favicon_frm" id="logo_favicon_frm" method="post"
                     action="{{ base_url() . 'adminmedia/setting/admin_logo_favicon' }}" enctype="multipart/form-data">
                     @csrf
-                    <div id="g_analy" style="margin-left: -15px;">
+                    <div id="g_analy">
                         <div class="row">
                             <div class="col-md-12">
                                 <img src="{!! getImage('admin_logo_favicon', $setting_result->admin_login_page_logo, 'main') !!}" />

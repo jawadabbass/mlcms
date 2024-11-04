@@ -332,7 +332,7 @@ class ClientController extends Controller
         $client = Client::find($id);
         $previous_package_active = ClientPackages::where('client_id', $id)->pluck('package_id')->toarray();
         $title = config("Constants.SITE_NAME") . ': Package | Add Client New Package';
-        $get_all_packages = CmsModuleData::where('sts', 'active')
+        $get_all_packages = CmsModuleData::where('sts', 1)
             ->where('cms_module_id', 37)
             ->whereNotIn('id', $previous_package_active)
             ->orderBy('item_order', 'ASC')

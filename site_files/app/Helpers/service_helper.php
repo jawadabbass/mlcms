@@ -2,11 +2,24 @@
 
 use App\Models\Back\Service;
 use App\Helpers\ImageUploader;
+use App\Models\Back\ServiceExtraImage;
 
-function generateServiceStatusDropDown($defaultSelected = '', $empty = true)
+function generateServiceIsFeaturedDropDown($defaultSelected = 2, $empty = true)
 {
     $str = ($empty) ? '<option value="">Select...</option>' : '';
-    $statusArray = ['Active' => 'Active', 'Inactive' => 'Inactive'];
+    $statusArray = [1 => 'Featured', 0 => 'Not Featured'];
+    foreach ($statusArray as $key => $value) {
+        $selected = ($key == $defaultSelected) ? 'selected="selected"' : '';
+        $str .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
+    }
+
+    return $str;
+}
+
+function generateServiceStatusDropDown($defaultSelected = 2, $empty = true)
+{
+    $str = ($empty) ? '<option value="">Select...</option>' : '';
+    $statusArray = [1 => 'Active', 0 => 'Inactive'];
     foreach ($statusArray as $key => $value) {
         $selected = ($key == $defaultSelected) ? 'selected="selected"' : '';
         $str .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
@@ -23,8 +36,18 @@ function deleteService($id)
             deleteService($subCatId);
         }
     }
+    /********************* */
     $serviceObj = Service::find($id);
     ImageUploader::deleteImage('services', $serviceObj->featured_image, true);
+    ImageUploader::deleteImage('services', $serviceObj->featured_image, true);
+    /********************* */
+    $extraImages = ServiceExtraImage::where('service_id', $id)->get();
+    foreach ($extraImages as $extraImageObj) {
+        ImageUploader::deleteImage('services', $extraImageObj->image_name, true);
+        ImageUploader::deleteImage('services', $extraImageObj->image_name2, true);
+        $extraImageObj->delete();
+    }
+
     $serviceObj->delete();
 }
 
@@ -51,7 +74,7 @@ function getServiceOptions(&$html, &$parentHtml, $parent_id = 0, $defaultSelecte
     $services = Service::select('id', 'title', 'parent_id')->where('parent_id', $parent_id)->active()->sorted()->get();
     if (count($services) > 0) {
         if ($parent_id != 0) {
-            $parentHtml .= ' - ';
+            $parentHtml .= ' -> ';
         }
         foreach ($services as $service) {
             if ($service->parent_id == 0) {
@@ -66,9 +89,9 @@ function getServiceOptions(&$html, &$parentHtml, $parent_id = 0, $defaultSelecte
             getServiceOptions($html, $parentHtml, $service->id, $defaultSelected);
         }
     } else {
-        $parentHtmlArray = explode(' - ', $parentHtml);
+        $parentHtmlArray = explode(' -> ', $parentHtml);
         array_pop($parentHtmlArray);
-        $parentHtml = implode(' - ', $parentHtmlArray) . ' - ';
+        $parentHtml = implode(' -> ', $parentHtmlArray) . ' -> ';
     }
 }
 
@@ -77,7 +100,7 @@ function getServiceli(&$html, &$parentHtml, $parent_id = 0)
     $services = Service::select('id', 'title', 'parent_id')->where('parent_id', $parent_id)->active()->sorted()->get();
     if (count($services) > 0) {
         if ($parent_id != 0) {
-            $parentHtml .= ' - ';
+            $parentHtml .= ' -> ';
         }
         foreach ($services as $service) {
             if ($service->parent_id == 0) {
@@ -89,13 +112,13 @@ function getServiceli(&$html, &$parentHtml, $parent_id = 0)
             getServiceli($html, $parentHtml, $service->id);
         }
     } else {
-        $parentHtmlArray = explode(' - ', $parentHtml);
+        $parentHtmlArray = explode(' -> ', $parentHtml);
         array_pop($parentHtmlArray);
-        $parentHtml = implode(' - ', $parentHtmlArray) . ' - ';
+        $parentHtml = implode(' -> ', $parentHtmlArray) . ' -> ';
     }
 }
 
-function getParentServicesList(&$html, $parent_id = 0, $indent = ' - ')
+function getParentServicesList(&$html, $parent_id = 0, $indent = ' -> ')
 {
     $parentServiceObj = Service::where('id', $parent_id)->first();
     if (null != $parentServiceObj) {
@@ -223,7 +246,7 @@ function getFoundInServicesListLink($serviceIds, $indent = ' / ')
 
 */
 
-/*
+
 function getIdsOfThoseServicesWhichHaveSubServices($parent_id = 0)
 {
     $serviceIdsArray = [];
@@ -231,9 +254,7 @@ function getIdsOfThoseServicesWhichHaveSubServices($parent_id = 0)
 
     return $serviceIdsArray;
 }
-*/
 
-/*
 function getIdsOfServices(&$serviceIdsArray, $parent_id)
 {
     $services = Service::select('id', 'title', 'parent_id')->where('parent_id', $parent_id)->active()->sorted()->get();
@@ -247,7 +268,6 @@ function getIdsOfServices(&$serviceIdsArray, $parent_id)
         }
     }
 }
-*/
 
 /*
 function generateParentOnlyServicesDropDown($defaultSelected = '', $empty = true)
@@ -265,13 +285,40 @@ function generateParentOnlyServicesDropDown($defaultSelected = '', $empty = true
 }
 */
 
-function getServiceliForSort(&$html, &$parentHtml, $parent_id = 0)
+function getServiceliForSort(&$html, $parent_id = 0)
 {
     $services = Service::select('id', 'title', 'parent_id')->where('parent_id', $parent_id)->active()->sorted()->get();
     if (count($services) > 0) {
         foreach ($services as $service) {
-            $parentHtml .= $service->title;
-            $html .= '<li class="ui-state-default" id="' . $service->id . '"><i class="fa fa-sort"></i> ' . $parentHtml . '</li>';
+            $html .= '<li class="ui-state-default" id="' . $service->id . '"><i class="fa fa-sort"></i> ' . $service->title . '</li>';
         }
     }
+}
+
+function getServicesExtraImages($serviceId)
+{
+    $serviceExtraImages = ServiceExtraImage::where('service_id', $serviceId)->sorted()->get();
+    $imagesArray = [];
+    if (count($serviceExtraImages) > 0) {
+        foreach ($serviceExtraImages as $imageObj) {
+            $thumb = asset_uploads('services/thumb/' . $imageObj->image_name);
+            $main = asset_uploads('services/' . $imageObj->image_name);
+            $thumb2 = asset_uploads('services/thumb/' . $imageObj->image_name2);
+            $main2 = asset_uploads('services/' . $imageObj->image_name2);
+            $isBeforeAfter = $imageObj->isBeforeAfter;
+            $isBeforeAfterHaveTwoImages = $imageObj->isBeforeAfterHaveTwoImages;
+            $imagesArray[] = (object)[
+                'id' => $imageObj->id,
+                'thumb' => $thumb,
+                'main' => $main,
+                'thumb2' => $thumb2,
+                'main2' => $main2,
+                'image_alt' => $imageObj->image_alt,
+                'image_title' => $imageObj->image_title,
+                'isBeforeAfter' => $isBeforeAfter,
+                'isBeforeAfterHaveTwoImages' => $isBeforeAfterHaveTwoImages,
+            ];
+        }
+    }
+    return $imagesArray;
 }

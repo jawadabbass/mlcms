@@ -19,10 +19,7 @@ class ServiceBackFormRequest extends Request
         return true;
     }
 
-    public function __construct()
-    {
-        
-    }
+    public function __construct() {}
 
     /**
      * Get the validation rules that apply to the request.
@@ -31,8 +28,10 @@ class ServiceBackFormRequest extends Request
      */
     public function rules()
     {
+        $maxImageSize = getMaxUploadSize() * 1024;
         return [
-            'title' => ['required'],                        
+            'title' => ['required'],
+            'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:' . $maxImageSize,
         ];
     }
 
@@ -40,6 +39,9 @@ class ServiceBackFormRequest extends Request
     {
         return [
             'title.required' => __('Please provide Service title'),
+            'featured_image.image' => 'Featured image must be an image.',
+            'featured_image.mimes' => 'Featured image must be of type jpeg,png,jpg,gif,webp.',
+
         ];
     }
 }

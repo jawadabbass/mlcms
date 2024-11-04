@@ -77,7 +77,7 @@
                                             <td> {{ $row->ip_list }} </td>
                                             <td> @php
 
-                                                    if ($row->sts == 'active')
+                                                    if ($row->sts == 1)
 
                                                     $class_label = 'success';
 

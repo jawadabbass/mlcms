@@ -138,11 +138,11 @@ class ModuleController extends Controller
         if ($status == 'Yes') {
             $module->show_in_admin_menu = 0;
             $stat = 'No';
-            $sts = 'blocked';
+            $sts = 0;
         } else {
             $module->show_in_admin_menu = 1;
             $stat = 'Yes';
-            $sts = 'active';
+            $sts = 1;
         }
         if ((int)$module->belongs_to_module_id > 0) {
             $modData = CmsModuleData::find($module->belongs_to_module_id);

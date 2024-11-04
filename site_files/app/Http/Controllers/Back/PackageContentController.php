@@ -19,7 +19,7 @@ class PackageContentController extends Controller
     public function index($id)
     {
         $title = FindInsettingArr('business_name') . 'Manage Package Content';
-        $main_package = CmsModuleData::where('sts', 'active')
+        $main_package = CmsModuleData::where('sts', 1)
             ->where('cms_module_id', 37)
             ->where('id', $id)
             ->first();
@@ -31,7 +31,7 @@ class PackageContentController extends Controller
     }
     public function store(Request $request)
     {
-        $main_package =  CmsModuleData::where('sts', 'active')
+        $main_package =  CmsModuleData::where('sts', 1)
             ->where('cms_module_id', 37)
             ->where('id', $request->package_id)
             ->first();

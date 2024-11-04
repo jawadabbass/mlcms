@@ -59,17 +59,18 @@
                                                 <td style="font-size:36px;"><i class="fas {{ $row->i_class }}"></i></td>
                                                 <td>{{ $row->name }}</td>
                                                 <td>{{ $row->link }}</td>
-                                                <td> @php
-                                                    if ($row->sts == 'active') {
-                                                        $class_label = 'success';
-                                                    } else {
-                                                        $class_label = 'danger';
-                                                    }
-                                                @endphp <a
-                                                        onClick="update_social_media_status({{ $row->ID }});"
-                                                        href="javascript:;" id="sts_{{ $row->ID }}"> <i
-                                                            class="label label-{{ $class_label }}">{{ $row->sts }}</i>
-                                                    </a></td>
+                                                <td> 
+                                                    <label class="switch">
+                                                        <input type="checkbox" name="{{ 'sts_' . $row->ID }}"
+                                                            id="{{ 'sts_' . $row->ID }}" <?php echo $row->sts == 1 ? ' checked' : ''; ?>
+                                                            value="<?php echo $row->sts; ?>"
+                                                            onClick="update_social_media_status({{ $row->ID }})">
+                                                        <div class="slider round">
+                                                            <strong class="on">Active</strong>
+                                                            <strong class="off">Inactive</strong>
+                                                        </div>
+                                                    </label>
+                                                </td>
                                                 <td><a href="javascript:;"
                                                         onClick="load_social_media_edit_form({{ $row->ID }});"
                                                         class="btn btn-success btn-sm">Edit</a> <a

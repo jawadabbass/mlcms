@@ -56,6 +56,12 @@
                                         </select>
                                     </div>
                                     <div class="col-md-3 form-group">
+                                        <label for="is_featured">IsFeatured:</label>
+                                        <select class="form-control" name="is_featured" id="is_featured">
+                                            {!! generateServiceIsFeaturedDropDown(request('is_featured', '')) !!}
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3 form-group">
                                         <label for="status">Status:</label>
                                         <select class="form-control" name="status" id="status">
                                             {!! generateServiceStatusDropDown(request('status', '')) !!}
@@ -67,8 +73,10 @@
                                     id="serviceDatatableAjax">
                                     <thead>
                                         <tr>
+                                            <th>Sort Order</th>
                                             <th>Title</th>
                                             <th>Parent Category</th>
+                                            <th>Is Featured?</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
@@ -111,13 +119,24 @@
                         d.status = $('#status').val();
                     }
                 },
+                "drawCallback": function(settings) {
+                    setToggles();
+                },
                 columns: [{
+                        data: 'sort_order',
+                        name: 'sort_order'
+                    },
+                    {
                         data: 'title',
                         name: 'title'
                     },
                     {
                         data: 'parent_id',
                         name: 'parent_id'
+                    },
+                    {
+                        data: 'is_featured',
+                        name: 'is_featured'
                     },
                     {
                         data: 'status',
@@ -144,6 +163,10 @@
                 oTable.draw();
                 e.preventDefault();
             });
+            $('#is_featured').on('change', function(e) {
+                oTable.draw();
+                e.preventDefault();
+            });
             $('#status').on('change', function(e) {
                 oTable.draw();
                 e.preventDefault();
@@ -163,29 +186,92 @@
                         if (response == 'ok') {
                             var table = $('#serviceDatatableAjax').DataTable();
                             table.row('serviceDtRow' + id).remove().draw(false);
+                            Toast.fire({
+                                icon: "success",
+                                title: "Service Deleted Successfully"
+                            });
                         } else {
-                            alert('Request Failed!');
+                            Toast.fire({
+                                icon: "danger",
+                                title: "Service Deletion Failed"
+                            });
                         }
                     });
             }
         }
 
-        function updateServiceStatus(id, prev_status, status) {
-            var url = '{{ url('adminmedia/updateServiceStatus/') }}';
-            var msg = 'Are you sure?';
-            if (confirm(msg)) {
-                $.post(url, {
-                        id: id,
-                        status: status,
-                        _token: '{{ csrf_token() }}'
-                    })
-                    .done(function(response) {
-                        //
-                    });
-            } else {
-                $('status_' + id).val(prev_status);
+        function updateServiceIsFeatured(id) {
+            var old_is_featured = 1;
+            var new_is_featured = 0;
+            if ($('#is_featured_' + id).val() == 0) {
+                old_is_featured = 0;
+                new_is_featured = 1;
             }
+            var url = base_url + 'adminmedia/updateServiceIsFeatured';
+            $.post(url, {
+                    id: id,
+                    is_featured: new_is_featured,
+                    _token: '{{ csrf_token() }}'
+                })
+                .done(function(sts) {
+                    if (sts == 'Done Successfully!') {
+                        $('#is_featured_' + id).val(new_is_featured);
+                        alertme('<i class="fas fa-check" aria-hidden="true"></i> ' + sts, 'success', true, 1500);
+                    } else {
+                        $('#is_featured_' + id).val(old_is_featured);
+                        if (old_is_featured == 0) {
+                            $('#is_featured_' + id).bootstrapToggle('off', true)
+                        } else {
+                            $('#is_featured_' + id).bootstrapToggle('on', true)
+                        }
+                        alertme('<i class="fas fa-check" aria-hidden="true"></i> ' + sts, 'danger', true, 1500);
+                    }
+                });
+
         }
+
+        function updateServiceStatus(id) {
+            var old_status = 1;
+            var new_status = 0;
+            if ($('#status_' + id).val() == 0) {
+                old_status = 0;
+                new_status = 1;
+            }
+            var url = base_url + 'adminmedia/updateServiceStatus';
+            $.post(url, {
+                    id: id,
+                    status: new_status,
+                    _token: '{{ csrf_token() }}'
+                })
+                .done(function(sts) {
+                    if (sts == 'Done Successfully!') {
+                        $('#status_' + id).val(new_status);
+                        alertme('<i class="fas fa-check" aria-hidden="true"></i> ' + sts, 'success', true, 1500);
+                    } else {
+                        $('#status_' + id).val(old_status);
+                        if (old_status == 0) {
+                            $('#status_' + id).bootstrapToggle('off', true)
+                        } else {
+                            $('#status_' + id).bootstrapToggle('on', true)
+                        }
+                        alertme('<i class="fas fa-check" aria-hidden="true"></i> ' + sts, 'danger', true, 1500);
+                    }
+                });
+
+        }
+
+        function setToggles() {
+            $('input[data-toggle="toggle_is_featured"]').bootstrapToggle();
+            $('input[data-toggle="toggle_status"]').bootstrapToggle();
+        }
+        $(document).on('change', 'input[data-toggle="toggle_is_featured"]', function() {
+            let id = $(this).attr('data-id');
+            updateServiceIsFeatured(id);
+        });
+        $(document).on('change', 'input[data-toggle="toggle_status"]', function() {
+            let id = $(this).attr('data-id');
+            updateServiceStatus(id);
+        });
     </script>
     <!-- Filer -->
 @endsection

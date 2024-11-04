@@ -144,10 +144,10 @@ class BlogController extends Controller
             echo 'invalid current status provided.';
             return;
         }
-        if ($status == 'active') {
-            $new_status = 'blocked';
+        if ($status == 1) {
+            $new_status = 0;
         } else {
-            $new_status = 'active';
+            $new_status = 1;
         }
         $blogCattegory->sts = $new_status;
         $blogCattegory->update();

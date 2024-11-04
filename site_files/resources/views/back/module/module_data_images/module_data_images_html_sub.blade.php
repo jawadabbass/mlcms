@@ -39,7 +39,7 @@
                 <div class="mb-3">
                     <div class="">
                         <a href="javascript:void(0);" title="{{ $image->image_title }}"
-                            onclick="openGalleryImageZoomModal('{{ asset_uploads($folder . '/' . $image->image_name . '?' . time()) }}');">
+                            onclick="openModuleDataImageZoomModal('{{ asset_uploads($folder . '/' . $image->image_name . '?' . time()) }}');">
                             <img id="image_1_{{ $image->id }}" data-imgname="{{ $image->image_name }}"
                                 src="{{ asset_uploads($folder . '/thumb/' . $image->image_name . '?' . time()) }}"
                                 style="width:100%" alt="{{ $image->image_alt }}" title="{{ $image->image_title }}">
@@ -51,7 +51,7 @@
                 <div class="mb-3">
                     <div class="">
                         <a href="javascript:void(0);" title="{{ $image->image_title }}"
-                            onclick="openGalleryImageZoomModal('{{ asset_uploads($folder . '/' . $image->image_name2 . '?' . time()) }}');">
+                            onclick="openModuleDataImageZoomModal('{{ asset_uploads($folder . '/' . $image->image_name2 . '?' . time()) }}');">
                             <img id="image_2_{{ $image->id }}" data-imgname="{{ $image->image_name2 }}"
                                 src="{{ asset_uploads($folder . '/thumb/' . $image->image_name2 . '?' . time()) }}"
                                 style="width:100%" alt="{{ $image->image_alt }}" title="{{ $image->image_title }}">

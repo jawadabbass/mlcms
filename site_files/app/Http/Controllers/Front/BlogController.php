@@ -17,18 +17,18 @@ class BlogController extends Controller
 	 */
 	public function index()
 	{
-		$postData = CmsModuleData::where('sts', 'active')->where('post_slug', 'blog')->first();
+		$postData = CmsModuleData::where('sts', 1)->where('post_slug', 'blog')->first();
 		$seoArr = array('title' => 'Blog | ' . FindInsettingArr('business_name'));
 		if (!empty($postData)) {
 			$seoArr = getSeoArrayModule($postData->id);
 		}
-		$blogData = BlogPost::where('sts', 'active')->orderBy('dated', 'DESC')->paginate(10);
+		$blogData = BlogPost::where('sts', 1)->orderBy('dated', 'DESC')->paginate(10);
 		$blog_categories = BlogCategory::all();
 		return view('front.blog.index', compact('seoArr', 'blogData', 'blog_categories'));
 	}
 	public function search()
 	{
-		$postData = CmsModuleData::where('sts', 'active')->where('post_slug', 'blog')->first();
+		$postData = CmsModuleData::where('sts', 1)->where('post_slug', 'blog')->first();
 		$search = trim($_GET['s']) ?? '';
 		if (isset($_GET['s'])) {
 			$search = $_GET['s'];
@@ -45,23 +45,23 @@ class BlogController extends Controller
 			$query->where('title', 'like', '%' . $search . '%')
 				->orWhere('description', 'like', '%' . $search . '%');
 		})
-			->where('sts', 'active')->paginate(10);
+			->where('sts', 1)->paginate(10);
 		$blog_categories = BlogCategory::all();
 		return view('front.blog.index', compact('seoArr', 'blogData', 'blog_categories'));
 	}
 	public function category($category)
 	{
 		$blogCategory = BlogCategory::where('cate_slug', $category)
-			->where('sts', 'active')
+			->where('sts', 1)
 			->first();
 		if (!$blogCategory) {
 			return redirect('blog');
 		}
-		$postData = CmsModuleData::where('sts', 'active')->where('post_slug', 'blog')->first();
+		$postData = CmsModuleData::where('sts', 1)->where('post_slug', 'blog')->first();
 
 		$seoArr = array('title' => $blogCategory->cate_title . ' Category | ' . FindInsettingArr('business_name'));
 
-		$blogData = BlogPost::where('sts', 'active')
+		$blogData = BlogPost::where('sts', 1)
 			->whereRaw("FIND_IN_SET(" . $blogCategory->ID . ",cate_ids)")
 			->paginate(10);
 		$blog_categories = BlogCategory::all();

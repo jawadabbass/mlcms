@@ -46,7 +46,7 @@
                 <form name="banner_popup_frm" id="banner_popup_frm" method="post"
                     action="{{ base_url() . 'adminmedia/setting/banner_popup' }}" enctype="multipart/form-data">
                     @csrf
-                    <div id="g_analy" style="margin-left: -15px;">
+                    <div id="g_analy" >
                         <div class="row">
                             <div class="col-md-12">
                                 <img src="{!! getImage('banner_popup', $metaArray['banner_popup_image'], 'main') !!}" />

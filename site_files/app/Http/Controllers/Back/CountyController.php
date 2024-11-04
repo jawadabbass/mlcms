@@ -38,8 +38,8 @@ class CountyController extends Controller
                 if ($request->has('county_name') && !empty($request->county_name)) {
                     $query->where('counties.county_name', 'like', "%{$request->get('county_name')}%");
                 }
-                if ($request->has('status') && !empty($request->status)) {
-                    $query->where('counties.status', 'like', "%{$request->get('status')}%");
+                if ($request->has('status') && $request->status != '') {
+                    $query->where('counties.status', $request->get('status'));
                 }
             })
             ->addColumn('state_id', function ($counties) {
@@ -185,7 +185,7 @@ class CountyController extends Controller
     {
         $counties = County::select('counties.id', 'counties.state_id', 'counties.county_name', 'counties.sort_order')
             ->where('state_id', $request->state_id)
-            ->where('status', 'like', 'active')
+            ->where('status', 1)
             ->orderBy('sort_order', 'ASC')->get();
         $str = '<ul id="sortable">';
         if ($counties != null) {

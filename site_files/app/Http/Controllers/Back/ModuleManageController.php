@@ -63,22 +63,18 @@ class ModuleManageController extends Controller
             exit;
         }
         $moduleData = CmsModuleData::find($id);
-        $current_status = $moduleData->sts;
-        if ($current_status == '') {
-            echo 'invalid current status provided.';
-            exit;
-        }
+        $current_status = (int)$moduleData->sts;
         $menuTableStatus = 'Y';
-        if ($current_status == 'active') {
-            $new_status = 'blocked';
+        if ($current_status == 1) {
+            $new_status = 0;
             $menuTableStatus = 'N';
         } else {
-            $new_status = 'active';
+            $new_status = 1;
             $menuTableStatus = 'Y';
         }
         if ($moduleData->cms_module_id == 48) {
             if ($moduleData->is_shared_on_pp == 'Yes') {
-                $newJobSts = ($new_status == 'blocked') ? 'inactive' : 'active';
+                $newJobSts = ($new_status == 0) ? 0 : 1;
                 change_job_sts_on_pp($moduleData->id, $moduleData->pp_job_id, $newJobSts);
             }
         }
@@ -582,7 +578,7 @@ class ModuleManageController extends Controller
         $arr = [];
         $arr['heading'] = $old_posts->post_title;
         // $arr['news_date_time']=$old_posts->news_date_time;
-        $arr['sts'] = 'active';
+        $arr['sts'] = 1;
         $arr['dated'] = $old_posts->post_date;
         $arr['content'] = $old_posts->post_content;
         $arr['cms_module_id'] = (int) $_GET['mod_id'];
@@ -614,7 +610,7 @@ class ModuleManageController extends Controller
             $arr = [];
             $arr['title'] = $old_posts->post_title;
             // $arr['news_date_time']=$old_posts->news_date_time;
-            $arr['sts'] = 'active';
+            $arr['sts'] = 1;
             $arr['dated'] = $old_posts->post_date;
             $arr['description'] = $old_posts->post_content;
             // $arr['cms_module_id']=(int)$_GET['mod_id'];
@@ -708,14 +704,14 @@ class ModuleManageController extends Controller
     {
         $image = ModuleDataImage::find($request->id);
         $folder = 'module/' . $image->module_type;
-        ImageUploader::MarkImageBeforAfter($folder . '/', $image->imageUrl, true);
+        ImageUploader::MarkImageBeforAfter($folder . '/', $image->image_name, true);
         $image->update([
             'isBeforeAfter' => 1,
         ]);
         return response([
             'status' => true,
             'message' => 'marked',
-            'src' => asset_uploads($folder . '/thumb/', $image->imageUrl . '?' . time()),
+            'src' => asset_uploads($folder . '/thumb/', $image->image_name . '?' . time()),
         ]);
     }
 }

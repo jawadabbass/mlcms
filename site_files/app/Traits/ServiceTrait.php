@@ -18,7 +18,7 @@ trait ServiceTrait
 
     private function setServiceStatus($request, $serviceObj)
     {
-        $serviceObj->status = $request->input('status', 'Inactive');
+        $serviceObj->status = $request->input('status', 0);
         return $serviceObj;
     }
 
@@ -34,6 +34,7 @@ trait ServiceTrait
         $serviceObj->parent_id = $request->input('parent_id', 0);
         $serviceObj->title = $request->input('title', '');
         $serviceObj->slug = $request->input('slug', Str::slug($request->input('title', '')));
+        $serviceObj->excerpt = $request->input('excerpt', '');
         $serviceObj->description = $request->input('description', '');
         $serviceObj->featured_image_title = $request->input('featured_image_title', '');
         $serviceObj->featured_image_alt = $request->input('featured_image_alt', '');

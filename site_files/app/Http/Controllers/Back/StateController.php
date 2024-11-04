@@ -39,8 +39,8 @@ class StateController extends Controller
                 if ($request->has('state_name') && !empty($request->state_name)) {
                     $query->where('states.state_name', 'like', "%{$request->get('state_name')}%");
                 }
-                if ($request->has('status') && !empty($request->status)) {
-                    $query->where('states.status', 'like', "{$request->get('status')}");
+                if ($request->has('status') && $request->status != '') {
+                    $query->where('states.status', $request->get('status'));
                 }
             })
             ->addColumn('status', function ($states) {
@@ -184,7 +184,7 @@ class StateController extends Controller
     public function statesSortData(Request $request)
     {
         $states = State::select('states.id', 'states.state_name', 'states.sort_order')
-            ->where('status', 'like', 'active')
+            ->where('status', 1)
             ->orderBy('sort_order', 'ASC')->get();
         $str = '<ul id="sortable">';
         if ($states != null) {

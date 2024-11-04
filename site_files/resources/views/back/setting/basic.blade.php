@@ -42,7 +42,7 @@
                 <br>
                 <form name="emp_network_detail" method="post" action="{{ base_url() . 'adminmedia/setting/meta_data' }}">
                     @csrf
-                    <div id="g_analy" style="margin-left: -15px;">
+                    <div id="g_analy" >
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-2">

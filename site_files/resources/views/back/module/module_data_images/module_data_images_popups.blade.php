@@ -27,6 +27,7 @@
                     <input type="hidden" name="crop_width" id="crop_width" value="" />
                     <input type="hidden" name="crop_rotate" id="crop_rotate" value="" />
                     <input type="hidden" name="image_id" id="image_id" value="">
+                    <input type="hidden" name="image_1_2" id="image_1_2" value="">
                     <button type="button" id="btnCrop" onclick="save_module_data_cropped_img();"
                         class="btn btn-primary">Crop
                         Image

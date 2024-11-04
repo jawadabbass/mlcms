@@ -112,15 +112,11 @@ class WidgetController extends Controller
             return;
         }
         $widget = Widget::find($id);
-        $status = $widget->sts;
-        if ($status == '') {
-            echo 'invalid current status provided.';
-            return;
-        }
-        if ($status == 'active') {
-            $new_status = 'blocked';
+        $status = (int)$widget->sts;
+        if ($status == 1) {
+            $new_status = 0;
         } else {
-            $new_status = 'active';
+            $new_status = 1;
         }
         $widget->sts = $new_status;
         $widget->update();

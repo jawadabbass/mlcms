@@ -100,9 +100,12 @@ function update_social_media_status(id) {
     var myurl = base_url + 'adminmedia/social_media/' + id + '/edit?status=' + current_status;
     $.get(myurl, function (sts) {
         var class_label = 'success';
-        if (sts != 'active')
+        var sts_label = 'Active';
+        if (sts == 0){
             var class_label = 'danger';
-        $("#sts_" + id).html('<i class="label label-' + class_label + '">' + sts + '</i>');
+            sts_label = 'Inactive';
+        }
+        $("#sts_" + id).html('<i class="label label-' + class_label + '">' + sts_label + '</i>');
     });
 }
 function load_social_media_edit_form(id) {
@@ -251,6 +254,14 @@ function delete_widget(id) {
             },
         });
     }
+}
+function update_widgets_status(id) {
+    var current_status = 'notset';
+    var myurl = base_url + 'adminmedia/widgets/' + id + '/edit?status=' + current_status;
+    $.get(myurl, function(sts) {
+        alertme('<i class="fas fa-check" aria-hidden="true"></i> Done Successfully ',
+            'success', true, 1500);
+    });
 }
 $('#selected_image').on('change', function (event) {
     var selected_image_preview = document.getElementById('selected_image_preview');

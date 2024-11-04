@@ -84,9 +84,6 @@ $(function () {
     if ($('#description').length) {
         bindCKeditor('description');
     }
-    if ($('#fleet_plane_details').length) {
-        bindCKeditor('fleet_plane_details');
-    }
     if ($('#body').length) {
         bindCKeditor('body');
     }

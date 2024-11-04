@@ -58,7 +58,7 @@ function getModuleData($moduleId, $limit = 0, $start = 0, $orderBy = 'item_order
 {
     $data = \App\Models\Back\CmsModuleData::where('cms_module_id', $moduleId);
     if ($active) {
-        $data->where('sts', 'active');
+        $data->where('sts', 1);
     }
     if (count($additionalFieldsFilter) > 0) {
         for ($counter = 1; $counter < 9; $counter++) {
@@ -161,10 +161,10 @@ function generateGenderDropDown($defaultSelected = '', $empty = true)
     return $str;
 }
 
-function generateStatusDropDown($defaultSelected = '', $empty = true)
+function generateStatusDropDown($defaultSelected = 2, $empty = true)
 {
     $str = ($empty) ? '<option value="">Select...</option>' : '';
-    $genderArray = ['active' => 'Active', 'blocked' => 'Blocked'];
+    $genderArray = [1 => 'Active', 0 => 'Inactive'];
     foreach ($genderArray as $key => $value) {
         $selected = ($key == $defaultSelected) ? 'selected="selected"' : '';
         $str .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
@@ -391,10 +391,10 @@ function getCmsModuleDataImages($images)
     return $imagesArray;
 }
 
-function generateNewsStatusDropDown($defaultSelected = '', $empty = true)
+function generateNewsStatusDropDown($defaultSelected = 0, $empty = true)
 {
     $str = ($empty) ? '<option value="">Select...</option>' : '';
-    $statusArray = ['Active' => 'Active', 'Inactive' => 'Inactive'];
+    $statusArray = [1 => 'Active', 0 => 'Inactive'];
     foreach ($statusArray as $key => $value) {
         $selected = ($key == $defaultSelected) ? 'selected="selected"' : '';
         $str .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
@@ -403,19 +403,7 @@ function generateNewsStatusDropDown($defaultSelected = '', $empty = true)
     return $str;
 }
 
-function generateNewsHasRegistrationLinkDropDown($defaultSelected = '', $empty = true)
-{
-    $str = ($empty) ? '<option value="">Select...</option>' : '';
-    $statusArray = ['1' => 'Yes', '0' => 'No'];
-    foreach ($statusArray as $key => $value) {
-        $selected = ($key == $defaultSelected) ? 'selected="selected"' : '';
-        $str .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
-    }
-
-    return $str;
-}
-
-function generateNewsIsThirdPartyLinkDropDown($defaultSelected = '', $empty = true)
+function generateNewsHasRegistrationLinkDropDown($defaultSelected = 2, $empty = true)
 {
     $str = ($empty) ? '<option value="">Select...</option>' : '';
     $statusArray = ['1' => 'Yes', '0' => 'No'];
@@ -427,7 +415,7 @@ function generateNewsIsThirdPartyLinkDropDown($defaultSelected = '', $empty = tr
     return $str;
 }
 
-function generateNewsIsFeaturedDropDown($defaultSelected = '', $empty = true)
+function generateNewsIsThirdPartyLinkDropDown($defaultSelected = 2, $empty = true)
 {
     $str = ($empty) ? '<option value="">Select...</option>' : '';
     $statusArray = ['1' => 'Yes', '0' => 'No'];
@@ -438,7 +426,19 @@ function generateNewsIsFeaturedDropDown($defaultSelected = '', $empty = true)
 
     return $str;
 }
-function generateIsHideEventAfterDateDropDown($defaultSelected = '', $empty = true)
+
+function generateNewsIsFeaturedDropDown($defaultSelected = 2, $empty = true)
+{
+    $str = ($empty) ? '<option value="">Select...</option>' : '';
+    $statusArray = ['1' => 'Yes', '0' => 'No'];
+    foreach ($statusArray as $key => $value) {
+        $selected = ($key == $defaultSelected) ? 'selected="selected"' : '';
+        $str .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
+    }
+
+    return $str;
+}
+function generateIsHideEventAfterDateDropDown($defaultSelected = 2, $empty = true)
 {
     $str = ($empty) ? '<option value="">Select...</option>' : '';
     $statusArray = ['1' => 'Yes', '0' => 'No'];
@@ -485,17 +485,17 @@ function adjustUrl($text = '')
     //echo $count;
     return $text;
 }
-function generateCareerStatusDropDown($defaultSelected = '', $empty = true)
+function generateCareerStatusDropDown($defaultSelected = 2, $empty = true)
 {
     $str = ($empty) ? '<option value="">Select...</option>' : '';
-    $statusArray = ['Active' => 'Active', 'Inactive' => 'Inactive'];
+    $statusArray = [1 => 'Active', 0 => 'Inactive'];
     foreach ($statusArray as $key => $value) {
         $selected = ($key == $defaultSelected) ? 'selected="selected"' : '';
         $str .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
     }
     return $str;
 }
-function generateMailTemplatesDropDown($defaultSelected = '', $empty = true)
+function generateMailTemplatesDropDown($defaultSelected = 0, $empty = true)
 {
     $generalEmailTemplates = GeneralEmailTemplate::where('is_temporary', 0)->orderBy('template_name')->get();
     $str = ($empty) ? '<option value="">Select...</option>' : '';
