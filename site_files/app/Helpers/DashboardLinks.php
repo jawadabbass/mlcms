@@ -16,7 +16,7 @@ class DashboardLinks
     ];
 
     public static $afterModuleLinks = [
-        'services' => ['Manage Services', 'fas fa-align-justify', 'services', 'user_type' => ['super-admin', 'normal-admin'], ''],
+        'services' => ['Services', 'fas fa-align-justify', 'services', 'user_type' => ['super-admin', 'normal-admin'], ''],
         'careers' => ['Careers', 'fas fa-tasks', 'careers', 'user_type' => ['super-admin', 'normal-admin', 'reps'], ''],
         'job_applications' => ['Job Applications', 'fas fa-tasks', 'job-applications', 'user_type' => ['super-admin', 'normal-admin', 'reps'], ''],
         'email_templates' => ['Manage Email Templates', 'fas fa-envelope', 'generalEmailTemplates', 'user_type' => ['super-admin', 'normal-admin', 'reps'], ''],
@@ -70,7 +70,7 @@ class DashboardLinks
     ];
 
     public static $afterLeftModuleLinks = [
-        'services' => ['Manage Services', 'fas fa-align-justify', 'services', 'user_type' => ['super-admin', 'normal-admin'], ''],
+        'services' => ['Services', 'fas fa-align-justify', 'services', 'user_type' => ['super-admin', 'normal-admin'], ''],
         'careers' => ['Careers', 'fas fa-tasks', 'careers', 'user_type' => ['super-admin', 'normal-admin', 'reps'], ''],
         'job_applications' => ['Job Applications', 'fas fa-tasks', 'job-applications', 'user_type' => ['super-admin', 'normal-admin', 'reps'], ''],
         'videos' => ['Videos', 'fas fa-film', 'videos', 'user_type' => ['super-admin', 'normal-admin'], ''],
