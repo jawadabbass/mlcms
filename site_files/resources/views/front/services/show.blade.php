@@ -18,18 +18,11 @@
                         </div>
                         <div class="sidebar col-md-4">
                             <!-- Single Item -->
-                            <div class="sidebar-item link">
+                            <div class="sidebar-item link" id="services_side_bar">
                                 <div class="title">
                                     <h4>Other Services</h4>
                                 </div>
-                                <ul>
-                                    @if (count($allServices) > 0)
-                                        @foreach ($allServices as $services)
-                                            <li><a href="{{ url('services/' . $services->slug) }}">{{ $services->title }}</a>
-                                            </li>
-                                        @endforeach
-                                    @endif
-                                </ul>
+                                {!! $servicesHtml !!}
                             </div>
                             <!-- End Single Item -->
 

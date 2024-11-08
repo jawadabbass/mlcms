@@ -41,7 +41,7 @@ class HomeController extends Controller
         $blogData = BlogPost::where('sts', 1)->orderBy('dated', 'DESC')->limit(3)->get();
         $get_all_banner = getModuleData(2);
         $get_all_features = getModuleData(35, 4);
-        $get_all_services = Service::where('parent_id', 0)->where('is_featured', 1)->active()->sorted()->limit(10)->get();
+        $get_all_services = Service::where('is_featured', 1)->active()->sorted()->get();
         $get_all_testimonials = getModuleData(22, 10);
         $get_all_faqs = getModuleData(19, 10);
         $get_all_partners = getModuleData(34, 10);

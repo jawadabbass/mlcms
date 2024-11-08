@@ -21,17 +21,17 @@
 <script src="{{ asset_storage('lib/sweetalert/sweetalert2.all.min.js') }}"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/img-comparison-slider@8/dist/index.js"></script>
 <script>
-function scrollToErrors(idCls = '#formValidationErrors') {
-    if ($(idCls).length > 0) {
-        setTimeout(
-            function() {
-                $('html, body').animate({
-                    scrollTop: $(idCls).offset().top
-                }, 1000);
-            }, 800);
+    function scrollToErrors(idCls = '#formValidationErrors') {
+        if ($(idCls).length > 0) {
+            setTimeout(
+                function() {
+                    $('html, body').animate({
+                        scrollTop: $(idCls).offset().top
+                    }, 1000);
+                }, 800);
+        }
     }
-}
-$(document).ready(function() {
-    scrollToErrors();
-});
+    $(document).ready(function() {
+        scrollToErrors();
+    });
 </script>

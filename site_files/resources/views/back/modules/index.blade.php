@@ -28,7 +28,7 @@
                     <div class="card p-2">
                         <div class="row">
                             <div class="col-sm-8">
-                                <h3 class=" card-title">All CMS Modules</h3>                                
+                                <h3 class=" card-title">All CMS Modules</h3>
                             </div>
                             <div class="col-sm-4">
                                 <div class="text-end" style="padding-bottom:10px;">
@@ -68,20 +68,16 @@
                                             <td> {{ $module->term }} </td>
                                             <td> {{ $module->type }} </td>
                                             <td>
-                                                @if ($module->id == 1)
-                                                    Yes
-                                                @else
-                                                    <label class="switch">
-                                                        <input type="checkbox" name="{{ 'sts_' . $module->id }}"
-                                                            id="{{ 'sts_' . $module->id }}" <?php echo $module->show_in_admin_menu == 1 ? ' checked' : ''; ?>
-                                                            value="<?php echo $module->show_in_admin_menu; ?>"
-                                                            onClick="update_cmsmodule_status_toggle({{ $module->id }})">
-                                                        <div class="slider round">
-                                                            <strong class="on">Yes</strong>
-                                                            <strong class="off">No</strong>
-                                                        </div>
-                                                    </label>
-                                                @endif
+                                                <label class="switch">
+                                                    <input type="checkbox" name="{{ 'sts_' . $module->id }}"
+                                                        id="{{ 'sts_' . $module->id }}" <?php echo $module->show_in_admin_menu == 1 ? ' checked' : ''; ?>
+                                                        value="<?php echo $module->show_in_admin_menu; ?>"
+                                                        onClick="update_cmsmodule_status_toggle({{ $module->id }})">
+                                                    <div class="slider round">
+                                                        <strong class="on">Yes</strong>
+                                                        <strong class="off">No</strong>
+                                                    </div>
+                                                </label>
                                             </td>
                                             <td>
                                                 <a href="#" data-bs-toggle="modal" data-bs-target="#PageOptionsModal"
@@ -139,8 +135,7 @@
                             </div>
                             <div class="mb-2">
                                 <label class="form-label">Type</label>
-                                <input type="text" class="form-control" id="type" name="type"
-                                    placeholder="Type">
+                                <input type="text" class="form-control" id="type" name="type" placeholder="Type">
                             </div>
                             <div class="mb-2" style="display:none;">
                                 <label class="form-label">Description</label>
@@ -338,7 +333,7 @@
                     <div style="clear:both"></div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
-                        <button type="submit"  name="submitter" class="btn btn-primary">Submit</button>
+                        <button type="submit" name="submitter" class="btn btn-primary">Submit</button>
                     </div>
                 </div>
             </form>
@@ -403,7 +398,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
-                        <button type="submit"  class="btn btn-success">Submit</button>
+                        <button type="submit" class="btn btn-success">Submit</button>
                     </div>
                 </form>
             </div>
@@ -643,7 +638,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
-                        <button type="submit"  name="submitter" class="btn btn-primary">Update</button>
+                        <button type="submit" name="submitter" class="btn btn-primary">Update</button>
                     </div>
                 </div>
             </form>

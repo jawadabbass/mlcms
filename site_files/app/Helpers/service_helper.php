@@ -71,7 +71,7 @@ function generateParentServicesDropDown($defaultSelected = '', $empty = true)
 
 function getServiceOptions(&$html, &$parentHtml, $parent_id = 0, $defaultSelected = '')
 {
-    $services = Service::select('id', 'title', 'parent_id')->where('parent_id', $parent_id)->active()->sorted()->get();
+    $services = Service::select('id', 'title', 'slug', 'parent_id')->where('parent_id', $parent_id)->active()->sorted()->get();
     if (count($services) > 0) {
         if ($parent_id != 0) {
             $parentHtml .= ' -> ';
@@ -97,7 +97,7 @@ function getServiceOptions(&$html, &$parentHtml, $parent_id = 0, $defaultSelecte
 
 function getServiceli(&$html, &$parentHtml, $parent_id = 0)
 {
-    $services = Service::select('id', 'title', 'parent_id')->where('parent_id', $parent_id)->active()->sorted()->get();
+    $services = Service::select('id', 'title', 'slug', 'parent_id')->where('parent_id', $parent_id)->active()->sorted()->get();
     if (count($services) > 0) {
         if ($parent_id != 0) {
             $parentHtml .= ' -> ';
@@ -129,54 +129,54 @@ function getParentServicesList(&$html, $parent_id = 0, $indent = ' -> ')
     }
 }
 
-/*
 function getServiceliFront(&$html, $parent_id = 0)
 {
-    $services = Service::select('id', 'title', 'parent_id')->where('parent_id', $parent_id)->active()->sorted()->get();
+    $services = Service::select('id', 'title', 'slug', 'parent_id')->where('parent_id', $parent_id)->active()->sorted()->get();
     if (count($services) > 0) {
         foreach ($services as $service) {
-            $childClass = 'child-li child-li-of-'.$service->parent_id;
+            $childClass = 'child-li child-li-of-' . $service->parent_id;
             if ($service->parent_id == 0) {
                 //$html .= '</ul><ul class="listing row">';
                 $childClass = 'parent-li';
             }
 
             $serviceTitle = $service->title;
-            $html .= '<li class="col-lg-4 col-md-6 ' . $childClass . '" id="'.$service->id.'" data-parent-id="'.$service->parent_id.'"><a href="' . route('list.businesses', ['serviceId' => $service->id, 'serviceSlug' => Str::slug($serviceTitle)]) . '"
+            $serviceSlug = $service->slug;
+            $html .= '<li class="col-lg-4 col-md-6 box' . $childClass . '" id="' . $service->id . '" data-parent-id="' . $service->parent_id . '"><a href="' . url('services/' . $serviceSlug) . '"
                 title="' . $serviceTitle . '">' . $serviceTitle . '</a>
             </li>';
             getServiceliFront($html, $service->id);
         }
     }
 }
-*/
 
-/*
-function getServiceliFrontSide(&$html, $parent_id = 0)
+function getServiceliFrontSide(&$html, $parent_id = 0, $levelCounter = -1)
 {
-    $services = Service::select('id', 'title', 'parent_id')->where('parent_id', $parent_id)->active()->sorted()->get();
+    $services = Service::select('id', 'title', 'slug', 'parent_id')->where('parent_id', $parent_id)->active()->sorted()->get();
     if (count($services) > 0) {
+        $levelCounter = $levelCounter + 1;
+        $paraClass = 'pad-left-' . $levelCounter;
         foreach ($services as $service) {
-            $childClass = 'child-li child-li-of-'.$service->parent_id;
-            if ($service->parent_id == 0) {
-                $html .= '</ul><ul>';
-                $childClass = 'parent-li';
-            }
-
             $serviceTitle = $service->title;
-            $html .= '<li class="' . $childClass . '" id="'.$service->id.'" data-parent-id="'.$service->parent_id.'"><a href="' . route('list.businesses', ['serviceId' => $service->id, 'serviceSlug' => Str::slug($serviceTitle)]) . '"
-                title="' . $serviceTitle . '">' . $serviceTitle . '<i class="fas fa-angle-double-right"></i></a>
-            </li>';
-            getServiceliFrontSide($html, $service->id);
+            $serviceSlug = $service->slug;
+            $anchorClass = ' ';
+            if (url('services/' . $serviceSlug) === url()->current()) {
+                $anchorClass .= 'underline ';
+            }
+            $html .= '
+            <p class="' . $paraClass . '" id="' . $service->id . '" data-parent-id="' . $service->parent_id . '">
+            <a class="' . $anchorClass . '" href="' . url('services/' . $serviceSlug) . '" title="' . $serviceTitle . '">' . $serviceTitle . '</a>
+            </p>';
+            getServiceliFrontSide($html, $service->id, $levelCounter);
         }
+        $levelCounter = $levelCounter - 1;
     }
 }
-*/
 
 /*
 function getServiceForSeo(&$html, $parent_id = 0)
 {
-    $services = Service::select('id', 'title', 'parent_id')->where('parent_id', $parent_id)->active()->sorted()->get();
+    $services = Service::select('id', 'title', 'slug', 'parent_id')->where('parent_id', $parent_id)->active()->sorted()->get();
     if (count($services) > 0) {
         foreach ($services as $service) {
             $serviceTitle = $service->title;
@@ -222,7 +222,7 @@ function getParentServicesListLink(&$html, $parent_id = 0, $indent = ' - ')
 {
     $parentServiceObj = Service::where('id', $parent_id)->first();
     if (null != $parentServiceObj) {
-        $html = '<a href="' . url('/list-businesses/' . $parentServiceObj->id . '/' . Str::slug($parentServiceObj->title)) . '" >' . $parentServiceObj->title . '</a>' . $indent . $html;
+        $html = '<a href="' . url('/services/' . $parentServiceObj->slug) . '" >' . $parentServiceObj->title . '</a>' . $indent . $html;
         if ($parentServiceObj->parent_id > 0) {
             getParentServicesListLink($html, $parentServiceObj->parent_id, $indent);
         }
@@ -237,7 +237,7 @@ function getFoundInServicesListLink($serviceIds, $indent = ' / ')
     foreach ($serviceIds as $serviceId) {
         $serviceObj = Service::where('id', $serviceId)->first();
         if (null != $serviceObj) {
-            $html .= '<a href="' . url('/list-businesses/' . $serviceObj->id . '/' . Str::slug($serviceObj->title)) . '" >' . $serviceObj->title . '</a>' . $indent;
+            $html .= '<a href="' . url('/services/' . $serviceObj->slug) . '" >' . $serviceObj->title . '</a>' . $indent;
         }
     }
 
@@ -257,10 +257,10 @@ function getIdsOfThoseServicesWhichHaveSubServices($parent_id = 0)
 
 function getIdsOfServices(&$serviceIdsArray, $parent_id)
 {
-    $services = Service::select('id', 'title', 'parent_id')->where('parent_id', $parent_id)->active()->sorted()->get();
+    $services = Service::select('id', 'title', 'slug', 'parent_id')->where('parent_id', $parent_id)->active()->sorted()->get();
     if (count($services) > 0) {
         foreach ($services as $service) {
-            $hasSubServices = Service::select('id', 'title', 'parent_id')->where('parent_id', $service->id)->active()->count();
+            $hasSubServices = Service::select('id', 'title', 'slug', 'parent_id')->where('parent_id', $service->id)->active()->count();
             if ($hasSubServices > 0) {
                 $serviceIdsArray[] = $service->id;
                 getIdsOfServices($serviceIdsArray, $service->id);
@@ -287,7 +287,7 @@ function generateParentOnlyServicesDropDown($defaultSelected = '', $empty = true
 
 function getServiceliForSort(&$html, $parent_id = 0)
 {
-    $services = Service::select('id', 'title', 'parent_id')->where('parent_id', $parent_id)->active()->sorted()->get();
+    $services = Service::select('id', 'title', 'slug', 'parent_id')->where('parent_id', $parent_id)->active()->sorted()->get();
     if (count($services) > 0) {
         foreach ($services as $service) {
             $html .= '<li class="ui-state-default" id="' . $service->id . '"><i class="fa fa-sort"></i> ' . $service->title . '</li>';

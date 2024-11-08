@@ -1,6 +1,7 @@
 <link rel="shortcut icon" href="{{ asset_storage('front/img/favicon.ico') }}" type="image/x-icon">
 <!-- ========== Start Stylesheet ========== -->
 <link href="{{ asset_storage('front/css/bootstrap.min.css') }}" rel="stylesheet" />
+<link href="{{ asset_storage('front/css/bootstrap-theme.min.css') }}" rel="stylesheet" />
 <link href="{{ asset_storage('fontawesome/css/all.min.css') }}" rel="stylesheet" />
 <link href="{{ asset_storage('front/css/flaticon-set.css') }}" rel="stylesheet" />
 <link href="{{ asset_storage('front/css/magnific-popup.css') }}" rel="stylesheet" />
