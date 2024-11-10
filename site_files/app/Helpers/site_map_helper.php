@@ -85,10 +85,10 @@ function getParentSiteMapsList(&$html, $parent_id = 0, $indent = ' -> ')
 
 function getSiteMapliFront(&$html, $parent_id = 0, $levelCounter = -1)
 {
-    $htmlStr = '';
     $siteMapCollection = SiteMap::select('id', 'title', 'link', 'parent_id', 'sort_order')->where('parent_id', $parent_id)->active()->sorted()->get();
     if (count($siteMapCollection) > 0) {
         $levelCounter = $levelCounter + 1;
+        $html.='<ul class="site-map-ul">';
         foreach ($siteMapCollection as $siteMap) {
             $siteMapTitle = $siteMap->title;
             $siteMapLink = $siteMap->link;
@@ -99,16 +99,15 @@ function getSiteMapliFront(&$html, $parent_id = 0, $levelCounter = -1)
             } else {
                 $siteMapLink = 'javascript:void(0);';
             }
-            $arrowHtml = '';
-            if ($levelCounter > 0) {
-                $arrowHtml = '<i class="color-' . $levelCounter . ' fa-solid fa-angles-right"></i>&nbsp;';
-            }
+            $arrowHtml = '&nbsp;&nbsp;<i class="fa-solid fa-angles-right"></i>&nbsp;&nbsp;';
             $html .= '
-            <p class="" data-parent-id="' . $siteMap->parent_id . '" data-level="' . $levelCounter . '">
-            <a class="site-map-border site-map-level-' . $levelCounter . '" href="' . $siteMapLink . '" title="' . $siteMapTitle . '">' . $arrowHtml . $siteMapTitle . '</a>
-            </p>';
+            <li class="" data-parent-id="' . $siteMap->parent_id . '" data-level="' . $levelCounter . '">
+            <a class="site-map-border" href="' . $siteMapLink . '" title="' . $siteMapTitle . '">' . $arrowHtml . $siteMapTitle . '&nbsp;&nbsp;</a>
+            ';
             getSiteMapliFront($html, $siteMap->id, $levelCounter);
+            $html.='</li>';
         }
+        $html.='</ul>';
         $levelCounter = $levelCounter - 1;
     }
 }
