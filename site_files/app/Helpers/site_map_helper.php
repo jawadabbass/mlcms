@@ -101,7 +101,7 @@ function getSiteMapliFront(&$html, $parent_id = 0, $levelCounter = -1)
             }
             $arrowHtml = '&nbsp;&nbsp;<i class="fa-solid fa-angles-right"></i>&nbsp;&nbsp;';
             $html .= '
-            <li class="" data-parent-id="' . $siteMap->parent_id . '" data-level="' . $levelCounter . '">
+            <li class="site-map-level-'.$levelCounter.'" data-parent-id="' . $siteMap->parent_id . '" data-level="' . $levelCounter . '">
             <a class="site-map-border" href="' . $siteMapLink . '" title="' . $siteMapTitle . '">' . $arrowHtml . $siteMapTitle . '&nbsp;&nbsp;</a>
             ';
             getSiteMapliFront($html, $siteMap->id, $levelCounter);
