@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Front\SiteMapController;
+use App\Http\Controllers\Back\SiteMapController as BackSiteMapController;
 use App\Http\Controllers\Front\AjaxController;
 use App\Http\Controllers\Front\BlogController;
 use App\Http\Controllers\Front\HomeController;
@@ -41,7 +43,7 @@ use App\Http\Controllers\Back\MessageController as BackMessageController;
 use App\Http\Controllers\Back\ProductController as BackProductController;
 use App\Http\Controllers\Back\ServiceController as BackServiceController;
 use App\Http\Controllers\Back\SettingController as BackSettingController;
-use App\Http\Controllers\Back\SiteMapController as BackSiteMapController;
+use App\Http\Controllers\Back\GenerateSiteMapController as BackGenerateSiteMapController;
 use App\Http\Controllers\Back\AdminLogController as BackAdminLogController;
 use App\Http\Controllers\Back\ContactFormSetting as BackContactFormSetting;
 use App\Http\Controllers\Back\AdminUserController as BackAdminUserController;
@@ -208,7 +210,7 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     Route::get('/clear-cache', [BackDashboardController::class, 'clearCache']);
     Route::get('/leftsidebar/session', [BackDashboardController::class, 'sideBarLeft']);
     Route::get('/search', [BackSearchController::class, 'search']);
-    Route::get('/site-map', [BackSiteMapController::class, 'siteMap']);
+    Route::get('/generate-site-map', [BackGenerateSiteMapController::class, 'generateSiteMap']);
     Route::resource('/manage-theme', BackThemeController::class);
     Route::post('/manage-theme/update', [BackThemeController::class, 'save']);
     //package qustion start
@@ -378,6 +380,21 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     Route::post('/getServiceExtraImageAltTitle', [BackServiceController::class, 'getServiceExtraImageAltTitle']);
     Route::post('/saveServiceExtraImageAltTitle', [BackServiceController::class, 'saveServiceExtraImageAltTitle']);
     Route::post('/saveServiceExtraImagesMarkBeforeAfter', [BackServiceController::class, 'saveServiceExtraImagesMarkBeforeAfter']);
+    /************************* */
+    /************************* */
+    Route::get('/site-map', [BackSiteMapController::class, 'index'])->name('site.map.index');
+    Route::get('/site-map/create', [BackSiteMapController::class, 'create'])->name('site.map.create');
+    Route::post('/site-map', [BackSiteMapController::class, 'store'])->name('site.map.store');
+    Route::get('/site-map/{siteMapObj}', [BackSiteMapController::class, 'show'])->name('site.map.show');
+    Route::get('/site-map/{siteMapObj}/edit', [BackSiteMapController::class, 'edit'])->name('site.map.edit');
+    Route::put('/site-map/{siteMapObj}', [BackSiteMapController::class, 'update'])->name('site.map.update');
+    Route::delete('/site-map/{siteMapObj}', [BackSiteMapController::class, 'destroy'])->name('site.map.destroy');
+    Route::get('fetch-site-map-ajax', [BackSiteMapController::class, 'fetchSiteMapsAjax'])->name('fetch.site.map.ajax');
+    Route::post('update-site-map-status', [BackSiteMapController::class, 'updateSiteMapStatus'])->name('update.site.map.status');
+    Route::get('site-map-sort', [BackSiteMapController::class, 'sortSiteMap'])->name('site.map.sort');
+    Route::get('site-map-sort-data', [BackSiteMapController::class, 'siteMapSortData'])->name('site.map.sort.data');
+    Route::put('site-map-sort-update', [BackSiteMapController::class, 'siteMapSortUpdate'])->name('site.map.sort.update');
+    Route::get('sort-site-map-by-title', [BackSiteMapController::class, 'sortSiteMapByTitle'])->name('sort.site.map.by.title');
 });
 /************************************* */
 /************************************* */
@@ -406,6 +423,7 @@ Route::group(['middleware' => ['siteStatus', 'clearCache', 'ipmiddleware']], fun
     Route::post('/addSubscriber', [HomeController::class, 'addSubscriber']);
     Route::get('/services/{slug}', [ServiceController::class, 'show']);
     Route::get('/services', [ServiceController::class, 'index']);
+    Route::get('/site-map', [SiteMapController::class, 'index']);
     Route::get('/invoice/{slug}', [InvoiceController::class, 'paypal']);
     Route::get('/invoice/cancel/{slug}', [InvoiceController::class, 'payment_cancel']);
     Route::get('/invoice/success/{slug}', [InvoiceController::class, 'payment_success']);

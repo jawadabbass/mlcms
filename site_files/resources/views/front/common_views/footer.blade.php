@@ -45,7 +45,7 @@
                 <div class="col-md-4 equal-height item">
                     <div class="f-item">
                         <h4>About</h4>
-                        {{-- <p> {{ get_widget(71) }} </p> --}}
+                        {!! get_widget(92) !!}
                         <div class="social">
                             <ul>
                                 @php echo social_media(); @endphp
@@ -59,11 +59,13 @@
                     <div class="f-item link">
                         <h4>Services</h4>
                         <ul>
-                            @php $get_all_services=get_services(); @endphp
+                            @php
+                                $get_all_services = \App\Models\Back\Service::where('is_featured', 1)->active()->sorted()->get();
+                            @endphp
                             @if (count($get_all_services) > 0)
                                 @foreach ($get_all_services as $services)
                                     <li><a
-                                            href="@php echo base_url().$services->post_slug @endphp">{{ $services->heading }}</a>
+                                            href="{{ url('services/'.$services->slug) }}">{{ $services->title }}</a>
                                     </li>
                                 @endforeach
                             @endif
@@ -103,11 +105,9 @@
                 <div class="col-md-6">
                     <p>&copy; Copyright {{ date('Y') }}. All Rights Reserved by <a href="https://www.medialinkers.com">Medialinkers</a></p>
                 </div>
-                <div class="col-md-6 text-end link">
+                <div class="col-md-6 text-end link">                    
                     <ul>
-                        <li> <a href="#">Terms of user</a> </li>
-                        <li> <a href="#">License</a> </li>
-                        <li> <a href="#">Support</a> </li>
+                        @php echo getDropDown('footer'); @endphp
                     </ul>
                 </div>
             </div>

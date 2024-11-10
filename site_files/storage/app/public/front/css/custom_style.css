@@ -3,30 +3,93 @@
   overflow: hidden;
   background: #2e3e4e;
 }
+
 .error-bg {
-  background-color:#e6cfcf;
+  background-color: #e6cfcf;
 }
+
 .error {
-  color:#FF0000;
+  color: #FF0000;
 }
-.underline{
+
+.underline {
   text-decoration: underline;
 }
-.pad-left-0{
+
+.pad-left-0 {
   padding-left: 0rem !important;
 }
-.pad-left-1{
+
+.pad-left-1 {
   padding-left: 2rem !important;
 }
-.pad-left-2{
+
+.pad-left-2 {
   padding-left: 4rem !important;
 }
-.pad-left-3{
+
+.pad-left-3 {
   padding-left: 6rem !important;
 }
-.pad-left-4{
+
+.pad-left-4 {
   padding-left: 8px !important;
 }
-.pad-left-5{
+
+.pad-left-5 {
   padding-left: 10rem !important;
+}
+
+.site-map-border {
+  margin-bottom: 15px !important;
+  padding: 5px !important;
+  border: 1px dotted !important;
+}
+
+.site-map-level-0 {
+  margin-left: 0rem !important;
+}
+
+.site-map-level-1 {
+  margin-left: 2rem !important;
+}
+
+.site-map-level-2 {
+  margin-left: 4rem !important;
+}
+
+.site-map-level-3 {
+  margin-left: 6rem !important;
+}
+
+.site-map-level-4 {
+  margin-left: 8px !important;
+}
+
+.site-map-level-5 {
+  margin-left: 10rem !important;
+}
+
+.color-0 {
+  color: #000 !important;
+}
+
+.color-1 {
+  color: #2f9941 !important;
+}
+
+.color-2 {
+  color: #243688 !important;
+}
+
+.color-3 {
+  color: #802583 !important;
+}
+
+.color-4 {
+  color: #722020 !important;
+}
+
+.color-5 {
+  color: #b3932a !important;
 }

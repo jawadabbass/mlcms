@@ -206,9 +206,9 @@ function searchResult() {
     });
 }
 $(document).ready(function () {
-    $("#sitemap").click(function () {
+    $("#generateSiteMap").click(function () {
         $("#lContainer").css("display", "block");
-        url = base_url + "adminmedia/site-map";
+        url = base_url + "adminmedia/generate-site-map";
         $.ajax({
             url: url,
             type: 'GET',

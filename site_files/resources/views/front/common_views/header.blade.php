@@ -82,42 +82,11 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="navbar-menu">
                 <ul class="nav navbar-nav navbar-right" data-in="#" data-out="#">
-
-                    @php
-                        
+                    @php                        
                         $isactive = Request::segment(1) == '' || Request::segment(1) == '/' ? ' active' : '';
                     @endphp
                     <li class="dropdown{{ $isactive }}"> <a href="{{ base_url() }}">Home</a> </li>
                     @php echo getDropDown(); @endphp
-                    <!--<li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pages</a>
-            <ul class="dropdown-menu">
-              <li><a href="about-us.html">About us</a></li>
-              <li><a href="login.html">login</a></li>
-              <li><a href="register.html">register</a></li>
-              <li><a href="contact.html">Contact</a></li>
-              <li><a href="pricing-table.html">Pricing Table</a></li>
-              <li><a href="faq.html">Faq</a></li>
-              <li><a href="404.html">Error Page</a></li>
-            </ul>
-          </li>
-          <li class="dropdown"> <a href="#" class="dropdown-toggle active" data-toggle="dropdown" >Gallery</a>
-            <ul class="dropdown-menu">
-              <li><a href="gallery.html">Our Gallery</a></li>
-            </ul>
-          </li>
-          <li class="dropdown"> <a href="#" class="dropdown-toggle active" data-toggle="dropdown" >Services</a>
-            <ul class="dropdown-menu">
-              <li><a href="services.html">Services</a></li>
-              <li><a href="services-details.html">Services Details</a></li>
-            </ul>
-          </li>
-          <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" >Blog</a>
-            <ul class="dropdown-menu">
-              <li><a href="blog.html">Blog</a></li>
-              <li><a href="blog-details.html">Single Details</a></li>
-            </ul>
-          </li>
-          <li> <a href="contact.html">contact</a> </li>-->
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
