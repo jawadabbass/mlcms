@@ -38,9 +38,7 @@ class SettingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-    }
+    public function create() {}
     /**
      * Store a newly created resource in storage.
      *
@@ -52,6 +50,19 @@ class SettingController extends Controller
         $setting->google_analytics = $request->google_analytics;
         $setting->google_analytics = $request->google_analytics;
         $setting->save();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $setting->ID,
+            'record_title' => 'google_analytics',
+            'model_or_table' => 'Setting',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($setting->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
         session(['message' => 'Updated Successfully', 'type' => 'success']);
         return redirect()->back();
     }
@@ -117,6 +128,19 @@ class SettingController extends Controller
         }
         $setting->web_down_msg = $request->web_down_msg;
         $setting->save();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $setting->ID,
+            'record_title' => 'web_down_status',
+            'model_or_table' => 'Setting',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($setting->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
         session(['message' => 'Updated Successfully', 'type' => 'success']);
         return redirect()->back();
     }
@@ -134,6 +158,19 @@ class SettingController extends Controller
         $setting->google_adsense_left = $request->google_adsense_left;
         $setting->google_adsense_right = $request->google_adsense_right;
         $setting->save();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $setting->ID,
+            'record_title' => 'google_adsense',
+            'model_or_table' => 'Setting',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($setting->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
         session(['message' => 'Updated Successfully', 'type' => 'success']);
         return redirect()->back();
     }
@@ -146,18 +183,78 @@ class SettingController extends Controller
      */
     public function updateMetaData(Request $request)
     {
-        $timeZone = Metadata::where('data_key', 'time_zone')->first();
-        $timeZone->val1 = $request->timeZone;
-        $timeZone->save();
-        $dateFormat = Metadata::where('data_key', 'date_format')->first();
-        $dateFormat->val1 = $request->dateFormat;
-        $dateFormat->save();
-        $dateTimeFormat = Metadata::where('data_key', 'date_time_format')->first();
-        $dateTimeFormat->val1 = $request->dateTimeFormat;
-        $dateTimeFormat->save();
-        $imageSize = Metadata::where('data_key', 'max_image_size')->first();
-        $imageSize->val1 = $request->imageMaxSize;
-        $imageSize->save();
+        $metaDataObj = Metadata::where('data_key', 'time_zone')->first();
+        $metaDataObj->val1 = $request->timeZone;
+        $metaDataObj->save();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $metaDataObj->id,
+            'record_title' => $metaDataObj->data_key,
+            'model_or_table' => 'MetaData',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($metaDataObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
+
+
+        $metaDataObj = Metadata::where('data_key', 'date_format')->first();
+        $metaDataObj->val1 = $request->dateFormat;
+        $metaDataObj->save();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $metaDataObj->id,
+            'record_title' => $metaDataObj->data_key,
+            'model_or_table' => 'MetaData',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($metaDataObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
+
+
+        $metaDataObj = Metadata::where('data_key', 'date_time_format')->first();
+        $metaDataObj->val1 = $request->dateTimeFormat;
+        $metaDataObj->save();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $metaDataObj->id,
+            'record_title' => $metaDataObj->data_key,
+            'model_or_table' => 'MetaData',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($metaDataObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
+
+        $metaDataObj = Metadata::where('data_key', 'max_image_size')->first();
+        $metaDataObj->val1 = $request->imageMaxSize;
+        $metaDataObj->save();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $metaDataObj->id,
+            'record_title' => $metaDataObj->data_key,
+            'model_or_table' => 'MetaData',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($metaDataObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
+
+
+
         session([
             'date_format' => $request->dateFormat,
             'date_time_format' => $request->dateTimeFormat,
@@ -169,18 +266,46 @@ class SettingController extends Controller
     }
     public function saveCaptcha(Request $request)
     {
-        $reCaptchaSite = Metadata::where('data_key', 'recaptcha_site_key')->first();
-        $reCaptchaSite->val1 = $request->siteKey;
-        $reCaptchaSite->save();
-        $reCaptchaSecret = Metadata::where('data_key', 'recaptcha_secret_key')->first();
-        $reCaptchaSecret->val1 = $request->secretKey;
-        $reCaptchaSecret->save();
+        $metaDataObj = Metadata::where('data_key', 'recaptcha_site_key')->first();
+        $metaDataObj->val1 = $request->siteKey;
+        $metaDataObj->save();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $metaDataObj->id,
+            'record_title' => $metaDataObj->data_key,
+            'model_or_table' => 'MetaData',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($metaDataObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
+
+        $metaDataObj = Metadata::where('data_key', 'recaptcha_secret_key')->first();
+        $metaDataObj->val1 = $request->secretKey;
+        $metaDataObj->save();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $metaDataObj->id,
+            'record_title' => $metaDataObj->data_key,
+            'model_or_table' => 'MetaData',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($metaDataObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
+
         session(['message' => 'Updated Successfully', 'type' => 'success']);
         return redirect()->back();
     }
     public function ipAddress(Request $request)
     {
-        $blockIPs = Metadata::where('data_key', 'blocked_ips')->first();
+        $metaDataObj = Metadata::where('data_key', 'blocked_ips')->first();
         $blockedIPs = $request->ipAddresses;
         $ip = $request->ip();
         $wholeBlock = strcmp($request->blocked_area, 'website') ? false : 'true';
@@ -189,12 +314,27 @@ class SettingController extends Controller
                 session(['message' => 'You have denied access to the IP address you are logged in from. This will lock you out of website. The request to add IP was denied by system.', 'type' => 'error']);
                 return redirect()->back();
             }
-            $blockIPs->val1 = implode(',', $blockedIPs);
+            $metaDataObj->val1 = implode(',', $blockedIPs);
         } else {
-            $blockIPs->val1 = '';
+            $metaDataObj->val1 = '';
         }
-        $blockIPs->save();
-        $traffic = Metadata::where('data_key', 'restrict_traffic')->first();
+        $metaDataObj->save();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $metaDataObj->id,
+            'record_title' => $metaDataObj->data_key,
+            'model_or_table' => 'MetaData',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($metaDataObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
+
+
+        $metaDataObj = Metadata::where('data_key', 'restrict_traffic')->first();
         if (isset($request->restrict_traffic)) {
             if ($request->block_list_active == 1) {
                 if ($wholeBlock && isSelfCountryInBlockedList($ip, $request->blockedCounties)) {
@@ -208,42 +348,154 @@ class SettingController extends Controller
                     return redirect()->back();
                 }
             }
-            $traffic->val1 = 1;
+            $metaDataObj->val1 = 1;
         } else {
-            $traffic->val1 = 0;
+            $metaDataObj->val1 = 0;
         }
-        $traffic->save();
-        $blockList = Metadata::where('data_key', 'block_list_active')->first();
-        $blockList->val1 = $request->block_list_active;
-        $blockList->save();
-        $blockedCountries = Metadata::where('data_key', 'blocked_countries')->first();
-        $blockedCountries->val1 = implode(',', $request->blockedCounties);
-        $blockedCountries->save();
-        $allowedCountries = Metadata::where('data_key', 'allowed_countries')->first();
-        $allowedCountries->val1 = implode(',', $request->openedCounties);
-        $allowedCountries->save();
-        $blockList = Metadata::where('data_key', 'blocked_area')->first();
-        $blockList->val1 = $request->blocked_area;
-        $blockList->save();
-        $blockMsg = Metadata::where('data_key', 'web_blocked_msg')->first();
-        $blockMsg->val1 = $request->web_blocked_msg;
-        $blockMsg->save();
-        $negativeKeywordsMetaData = Metadata::where('data_key', 'negative_keywords')->first();
+        $metaDataObj->save();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $metaDataObj->id,
+            'record_title' => $metaDataObj->data_key,
+            'model_or_table' => 'MetaData',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($metaDataObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
+
+        $metaDataObj = Metadata::where('data_key', 'block_list_active')->first();
+        $metaDataObj->val1 = $request->block_list_active;
+        $metaDataObj->save();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $metaDataObj->id,
+            'record_title' => $metaDataObj->data_key,
+            'model_or_table' => 'MetaData',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($metaDataObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
+
+        $metaDataObj = Metadata::where('data_key', 'blocked_countries')->first();
+        $metaDataObj->val1 = implode(',', $request->blockedCounties);
+        $metaDataObj->save();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $metaDataObj->id,
+            'record_title' => $metaDataObj->data_key,
+            'model_or_table' => 'MetaData',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($metaDataObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
+
+        $metaDataObj = Metadata::where('data_key', 'allowed_countries')->first();
+        $metaDataObj->val1 = implode(',', $request->openedCounties);
+        $metaDataObj->save();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $metaDataObj->id,
+            'record_title' => $metaDataObj->data_key,
+            'model_or_table' => 'MetaData',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($metaDataObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
+
+
+        $metaDataObj = Metadata::where('data_key', 'blocked_area')->first();
+        $metaDataObj->val1 = $request->blocked_area;
+        $metaDataObj->save();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $metaDataObj->id,
+            'record_title' => $metaDataObj->data_key,
+            'model_or_table' => 'MetaData',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($metaDataObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
+
+        $metaDataObj = Metadata::where('data_key', 'web_blocked_msg')->first();
+        $metaDataObj->val1 = $request->web_blocked_msg;
+        $metaDataObj->save();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $metaDataObj->id,
+            'record_title' => $metaDataObj->data_key,
+            'model_or_table' => 'MetaData',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($metaDataObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
+
+        $metaDataObj = Metadata::where('data_key', 'negative_keywords')->first();
         $negativeKeywords = $request->negativeKeywords;
         if (is_array($negativeKeywords) && count($negativeKeywords) > 0) {
-            $negativeKeywordsMetaData->val1 = implode(',', $negativeKeywords);
+            $metaDataObj->val1 = implode(',', $negativeKeywords);
         } else {
-            $negativeKeywordsMetaData->val1 = '';
+            $metaDataObj->val1 = '';
         }
-        $negativeKeywordsMetaData->save();
-        $negativeTLDsMetaData = Metadata::where('data_key', 'negative_TLDs')->first();
+        $metaDataObj->save();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $metaDataObj->id,
+            'record_title' => $metaDataObj->data_key,
+            'model_or_table' => 'MetaData',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($metaDataObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
+
+        $metaDataObj = Metadata::where('data_key', 'negative_TLDs')->first();
         $negativeTLDs = $request->negativeTLDs;
         if (is_array($negativeTLDs) && count($negativeTLDs) > 0) {
-            $negativeTLDsMetaData->val1 = implode(',', $negativeTLDs);
+            $metaDataObj->val1 = implode(',', $negativeTLDs);
         } else {
-            $negativeTLDsMetaData->val1 = '';
+            $metaDataObj->val1 = '';
         }
-        $negativeTLDsMetaData->save();
+        $metaDataObj->save();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $metaDataObj->id,
+            'record_title' => $metaDataObj->data_key,
+            'model_or_table' => 'MetaData',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($metaDataObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
         session(['message' => 'Updated Successfully', 'type' => 'success']);
         return redirect()->back();
     }
@@ -260,9 +512,7 @@ class SettingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-    }
+    public function destroy($id) {}
     public function file_upload_max_size()
     {
         static $max_size = -1;
@@ -299,6 +549,19 @@ class SettingController extends Controller
         $setting->head_js = $request->head_js;
         $setting->body_js = $request->body_js;
         $setting->save();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $setting->ID,
+            'record_title' => 'head_body_js',
+            'model_or_table' => 'Setting',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($setting->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
         session(['message' => 'Updated Successfully', 'type' => 'success']);
         return redirect()->back();
     }
@@ -336,30 +599,108 @@ class SettingController extends Controller
             $setting->og_image = $fileName;
         }
         $setting->save();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $setting->ID,
+            'record_title' => 'admin_logo_favicon',
+            'model_or_table' => 'Setting',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($setting->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
         session(['message' => 'Updated Successfully', 'type' => 'success']);
         return redirect()->back();
     }
     public function savePaypal(Request $request)
     {
-        $paypal_live_client_id = Metadata::where('data_key', 'paypal_live_client_id')->first();
-        $paypal_live_client_id->val1 = $request->paypal_live_client_id;
-        $paypal_live_client_id->save();
+        $metaDataObj = Metadata::where('data_key', 'paypal_live_client_id')->first();
+        $metaDataObj->val1 = $request->paypal_live_client_id;
+        $metaDataObj->save();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $metaDataObj->id,
+            'record_title' => $metaDataObj->data_key,
+            'model_or_table' => 'MetaData',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($metaDataObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
         /*************************************** */
-        $paypal_live_secret = Metadata::where('data_key', 'paypal_live_secret')->first();
-        $paypal_live_secret->val1 = $request->paypal_live_secret;
-        $paypal_live_secret->save();
+        $metaDataObj = Metadata::where('data_key', 'paypal_live_secret')->first();
+        $metaDataObj->val1 = $request->paypal_live_secret;
+        $metaDataObj->save();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $metaDataObj->id,
+            'record_title' => $metaDataObj->data_key,
+            'model_or_table' => 'MetaData',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($metaDataObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
         /*************************************** */
-        $paypal_sandbox_client_id = Metadata::where('data_key', 'paypal_sandbox_client_id')->first();
-        $paypal_sandbox_client_id->val1 = $request->paypal_sandbox_client_id;
-        $paypal_sandbox_client_id->save();
+        $metaDataObj = Metadata::where('data_key', 'paypal_sandbox_client_id')->first();
+        $metaDataObj->val1 = $request->paypal_sandbox_client_id;
+        $metaDataObj->save();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $metaDataObj->id,
+            'record_title' => $metaDataObj->data_key,
+            'model_or_table' => 'MetaData',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($metaDataObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
         /*************************************** */
-        $paypal_sandbox_secret = Metadata::where('data_key', 'paypal_sandbox_secret')->first();
-        $paypal_sandbox_secret->val1 = $request->paypal_sandbox_secret;
-        $paypal_sandbox_secret->save();
+        $metaDataObj = Metadata::where('data_key', 'paypal_sandbox_secret')->first();
+        $metaDataObj->val1 = $request->paypal_sandbox_secret;
+        $metaDataObj->save();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $metaDataObj->id,
+            'record_title' => $metaDataObj->data_key,
+            'model_or_table' => 'MetaData',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($metaDataObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
         /*************************************** */
-        $paypal_mode = Metadata::where('data_key', 'paypal_mode')->first();
-        $paypal_mode->val1 = $request->paypal_mode;
-        $paypal_mode->save();
+        $metaDataObj = Metadata::where('data_key', 'paypal_mode')->first();
+        $metaDataObj->val1 = $request->paypal_mode;
+        $metaDataObj->save();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $metaDataObj->id,
+            'record_title' => $metaDataObj->data_key,
+            'model_or_table' => 'MetaData',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($metaDataObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
         /*************************************** */
         session(['message' => 'Updated Successfully', 'type' => 'success']);
         return redirect()->back();
@@ -370,21 +711,61 @@ class SettingController extends Controller
         $validated = $request->validate([
             'service_account_credentials_json' => [new CheckIfJson()],
         ]);
-        $is_show_analytics = Metadata::where('data_key', 'is_show_analytics')->first();
-        $is_show_analytics->val1 = $request->input('is_show_analytics', 0);
-        $is_show_analytics->save();
+        $metaDataObj = Metadata::where('data_key', 'is_show_analytics')->first();
+        $metaDataObj->val1 = $request->input('is_show_analytics', 0);
+        $metaDataObj->save();
 
-        $analytics_property_id = Metadata::where('data_key', 'analytics_property_id')->first();
-        $analytics_property_id->val1 = $request->input('analytics_property_id', '');
-        $analytics_property_id->save();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $metaDataObj->id,
+            'record_title' => $metaDataObj->data_key,
+            'model_or_table' => 'MetaData',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($metaDataObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
+
+        $metaDataObj = Metadata::where('data_key', 'analytics_property_id')->first();
+        $metaDataObj->val1 = $request->input('analytics_property_id', '');
+        $metaDataObj->save();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $metaDataObj->id,
+            'record_title' => $metaDataObj->data_key,
+            'model_or_table' => 'MetaData',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($metaDataObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
 
         if ($request->hasFile('service_account_credentials_json')) {
-            $service_account_credentials_json = Metadata::where('data_key', 'service_account_credentials_json')->first();
-            ImageUploader::deleteFile('analytics', $service_account_credentials_json->val1);
+            $metaDataObj = Metadata::where('data_key', 'service_account_credentials_json')->first();
+            ImageUploader::deleteFile('analytics', $metaDataObj->val1);
             $service_account_credentials_json_file = $request->file('service_account_credentials_json');
             $fileName = ImageUploader::UploadFile('analytics', $service_account_credentials_json_file);
-            $service_account_credentials_json->val1 = $fileName;
-            $service_account_credentials_json->save();
+            $metaDataObj->val1 = $fileName;
+            $metaDataObj->save();
+            /******************************* */
+            /******************************* */
+            $recordUpdateHistoryData = [
+                'record_id' => $metaDataObj->id,
+                'record_title' => $metaDataObj->data_key,
+                'model_or_table' => 'MetaData',
+                'admin_id' => auth()->user()->id,
+                'ip' => request()->ip(),
+                'draft' => json_encode($metaDataObj->toArray()),
+            ];
+            recordUpdateHistory($recordUpdateHistoryData);
+            /******************************* */
+            /******************************* */
         }
         session(['message' => 'Updated Successfully', 'type' => 'success']);
         return redirect()->back();
@@ -396,17 +777,43 @@ class SettingController extends Controller
             'banner_popup_image' => 'image',
             'banner_popup_status' => 'required'
         ]);
-        $banner_popup_image_obj = Metadata::where('data_key', 'banner_popup_image')->first();
-        $banner_popup_status_obj = Metadata::where('data_key', 'banner_popup_status')->first();
+        $metaDataObj = Metadata::where('data_key', 'banner_popup_image')->first();
         if ($request->hasFile('banner_popup_image')) {
-            ImageUploader::deleteImage('banner_popup', $banner_popup_image_obj->val1, false);
+            ImageUploader::deleteImage('banner_popup', $metaDataObj->val1, false);
             $image = $request->file('banner_popup_image');
             $fileName = ImageUploader::UploadImage('banner_popup', $image, '', 2200, 2200, false);
-            $banner_popup_image_obj->val1 = $fileName;
-            $banner_popup_image_obj->save();
+            $metaDataObj->val1 = $fileName;
+            $metaDataObj->save();
+            /******************************* */
+            /******************************* */
+            $recordUpdateHistoryData = [
+                'record_id' => $metaDataObj->id,
+                'record_title' => $metaDataObj->data_key,
+                'model_or_table' => 'MetaData',
+                'admin_id' => auth()->user()->id,
+                'ip' => request()->ip(),
+                'draft' => json_encode($metaDataObj->toArray()),
+            ];
+            recordUpdateHistory($recordUpdateHistoryData);
+            /******************************* */
+            /******************************* */
         }
-        $banner_popup_status_obj->val1 = $request->banner_popup_status;
-        $banner_popup_status_obj->save();
+        $metaDataObj = Metadata::where('data_key', 'banner_popup_status')->first();
+        $metaDataObj->val1 = $request->banner_popup_status;
+        $metaDataObj->save();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $metaDataObj->id,
+            'record_title' => $metaDataObj->data_key,
+            'model_or_table' => 'MetaData',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($metaDataObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
         Session::flash('updated_action', 'Updated');
         return redirect()->back();
     }

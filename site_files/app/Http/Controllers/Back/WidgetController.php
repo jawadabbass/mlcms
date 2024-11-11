@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Back;
 
 use App\Helpers\ImageUploader;
@@ -7,6 +8,7 @@ use App\Models\Back\Widget;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+
 class WidgetController extends Controller
 {
     /**
@@ -80,6 +82,21 @@ class WidgetController extends Controller
         $widget->featured_image_title = $request->featured_image_title;
         $widget->featured_image_alt = $request->featured_image_alt;
         $widget->save();
+
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $widget->ID,
+            'record_title' => $widget->heading,
+            'model_or_table' => 'Widget',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($widget->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
+
         session(['message' => 'Added Successfully', 'type' => 'success']);
         return redirect(route('widgets.index'));
     }
@@ -120,6 +137,19 @@ class WidgetController extends Controller
         }
         $widget->sts = $new_status;
         $widget->update();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $widget->ID,
+            'record_title' => $widget->heading,
+            'model_or_table' => 'Widget',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($widget->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
         echo $new_status;
         return;
     }
@@ -152,16 +182,42 @@ class WidgetController extends Controller
         $widget->featured_image_title = $request->featured_image_title;
         $widget->featured_image_alt = $request->featured_image_alt;
         $widget->update();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $widget->ID,
+            'record_title' => $widget->heading,
+            'model_or_table' => 'Widget',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($widget->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
         session(['message' => 'Updated Successfully', 'type' => 'success']);
         return back();
     }
     public function removeFeaturedImage($id)
     {
-        $data = Widget::find($id);
-        if (null !== $data) {
-            ImageUploader::deleteImage('widgets/', $data->featured_image);
-            $data->featured_image = '';
-            $data->save();
+        $widget = Widget::find($id);
+        if (null !== $widget) {
+            ImageUploader::deleteImage('widgets/', $widget->featured_image);
+            $widget->featured_image = '';
+            $widget->save();
+            /******************************* */
+            /******************************* */
+            $recordUpdateHistoryData = [
+                'record_id' => $widget->ID,
+                'record_title' => $widget->heading,
+                'model_or_table' => 'Widget',
+                'admin_id' => auth()->user()->id,
+                'ip' => request()->ip(),
+                'draft' => json_encode($widget->toArray()),
+            ];
+            recordUpdateHistory($recordUpdateHistoryData);
+            /******************************* */
+            /******************************* */
         }
     }
     /**
@@ -202,6 +258,19 @@ class WidgetController extends Controller
         $widget->admin_data = json_encode($admin_data);
         $widget->pages_id = $request->pages_id;
         $widget->update();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $widget->ID,
+            'record_title' => $widget->heading,
+            'model_or_table' => 'Widget',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($widget->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
         session(['message' => 'Updated Successfully', 'type' => 'success']);
         return back();
     }

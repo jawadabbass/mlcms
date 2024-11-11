@@ -151,6 +151,21 @@ class ContactUsController extends Controller
         $contact->dated = $request->dated;
         $contact->added_by = Auth::user()->id;
         $contact->save();
+
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $contact->id,
+            'record_title' => $contact->email,
+            'model_or_table' => 'ContactUsRequest',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($contact->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
+
         session(['message' => 'Added Successfully', 'type' => 'success']);
         return redirect(route('contact_request.index'));
     }
@@ -179,6 +194,19 @@ class ContactUsController extends Controller
             $clientObj->assesment_code = $contact->assesment_code;
             $clientObj->added_by = Auth::user()->id;
             $clientObj->save();
+            /******************************* */
+            /******************************* */
+            $recordUpdateHistoryData = [
+                'record_id' => $clientObj->id,
+                'record_title' => $clientObj->email,
+                'model_or_table' => 'Client',
+                'admin_id' => auth()->user()->id,
+                'ip' => request()->ip(),
+                'draft' => json_encode($clientObj->toArray()),
+            ];
+            recordUpdateHistory($recordUpdateHistoryData);
+            /******************************* */
+            /******************************* */
             AssessmentAnswers::where('lead_id', $id)->update(['type' => 'client', 'lead_id' => ' ', 'client_id' => $clientObj->id]);
             if (!$contact->package_id == null) {
                 $package = new ClientPackages();
@@ -414,6 +442,20 @@ class ContactUsController extends Controller
         $contatUsRequestObj->dated = $request->dated;
         $contatUsRequestObj->added_by = Auth::user()->id;
         $contatUsRequestObj->update();
+
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $contatUsRequestObj->id,
+            'record_title' => $contatUsRequestObj->email,
+            'model_or_table' => 'ContactUsRequest',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($contatUsRequestObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
         return response()->json(['message' => 'Contact request updated successfully!', 'contatUsRequestObj' => $contatUsRequestObj]);
     }
     public function contactUsBulkActions(Request $request)

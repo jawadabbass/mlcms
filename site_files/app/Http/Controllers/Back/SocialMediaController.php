@@ -68,6 +68,19 @@ class SocialMediaController extends Controller
 			$socialMedia->open_in_new_tab = 'No';
 		}
 		$socialMedia->save();
+		/******************************* */
+		/******************************* */
+		$recordUpdateHistoryData = [
+			'record_id' => $socialMedia->ID,
+			'record_title' => $socialMedia->name,
+			'model_or_table' => 'SocialMedia',
+			'admin_id' => auth()->user()->id,
+			'ip' => request()->ip(),
+			'draft' => json_encode($socialMedia->toArray()),
+		];
+		recordUpdateHistory($recordUpdateHistoryData);
+		/******************************* */
+		/******************************* */
 		session(['message' => 'Added Successfully', 'type' => 'success']);
 		return redirect(route('social_media.index'));
 	}
@@ -92,15 +105,29 @@ class SocialMediaController extends Controller
 	{
 		$new_status = 0;
 		if ((int)$id > 0) {
-			$widget = SocialMedia::find((int)$id);
-			$status = (int)$widget->sts;
+			$socialMedia = SocialMedia::find((int)$id);
+			$status = (int)$socialMedia->sts;
 			if ($status == 1) {
 				$new_status = 0;
 			} else {
 				$new_status = 1;
 			}
-			$widget->sts = $new_status;
-			$widget->save();
+			$socialMedia->sts = $new_status;
+			$socialMedia->save();
+
+			/******************************* */
+			/******************************* */
+			$recordUpdateHistoryData = [
+				'record_id' => $socialMedia->ID,
+				'record_title' => $socialMedia->name,
+				'model_or_table' => 'SocialMedia',
+				'admin_id' => auth()->user()->id,
+				'ip' => request()->ip(),
+				'draft' => json_encode($socialMedia->toArray()),
+			];
+			recordUpdateHistory($recordUpdateHistoryData);
+			/******************************* */
+			/******************************* */
 		}
 		echo $new_status;
 		return;
@@ -131,6 +158,19 @@ class SocialMediaController extends Controller
 			$socialMedia->open_in_new_tab = 'No';
 		}
 		$socialMedia->save();
+		/******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $socialMedia->ID,
+            'record_title' => $socialMedia->name,
+            'model_or_table' => 'SocialMedia',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($socialMedia->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
 		session(['message' => 'Updated Successfully', 'type' => 'success']);
 		return redirect(route('social_media.index'));
 	}

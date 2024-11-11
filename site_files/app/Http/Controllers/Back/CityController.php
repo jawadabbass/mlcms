@@ -106,6 +106,19 @@ class CityController extends Controller
         $cityObj = new City();
         $cityObj = $this->setCityValues($request, $cityObj);
         $cityObj->save();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $cityObj->id,
+            'record_title' => $cityObj->city_name,
+            'model_or_table' => 'City',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($cityObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
         session(['message' => 'City has been added!', 'type' => 'success']);
         return Redirect::route('cities.index');
     }
@@ -149,6 +162,20 @@ class CityController extends Controller
         $cityObj = $this->setCityValues($request, $cityObj);
         $cityObj->save();
 
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $cityObj->id,
+            'record_title' => $cityObj->city_name,
+            'model_or_table' => 'City',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($cityObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
+
         /*         * ************************************ */
         session(['message' => 'City has been updated!', 'type' => 'success']);
         return Redirect::route('cities.index');
@@ -172,6 +199,19 @@ class CityController extends Controller
         $cityObj = City::find($request->id);
         $cityObj = $this->setCityStatus($request, $cityObj);
         $cityObj->update();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $cityObj->id,
+            'record_title' => $cityObj->city_name,
+            'model_or_table' => 'City',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($cityObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
         return response()->json(['status' => 'success', 'message' => $cityObj->status]);
     }
 

@@ -72,6 +72,20 @@ class GeneralEmailTemplateController extends Controller
         $generalEmailTemplateObj = $this->setGeneralEmailTemplateValues($request, $generalEmailTemplateObj);
         $generalEmailTemplateObj->save();
 
+        /******************************* */
+		/******************************* */
+		$recordUpdateHistoryData = [
+			'record_id' => $generalEmailTemplateObj->id,
+			'record_title' => $generalEmailTemplateObj->template_name,
+			'model_or_table' => 'GeneralEmailTemplate',
+			'admin_id' => auth()->user()->id,
+			'ip' => request()->ip(),
+			'draft' => json_encode($generalEmailTemplateObj->toArray()),
+		];
+		recordUpdateHistory($recordUpdateHistoryData);
+		/******************************* */
+		/******************************* */
+
         /*         * ************************************ */
 
         flash('Email Template has been updated!')->success();
@@ -105,6 +119,20 @@ class GeneralEmailTemplateController extends Controller
     {
         $generalEmailTemplateObj = $this->setGeneralEmailTemplateValues($request, $generalEmailTemplateObj);
         $generalEmailTemplateObj->update();
+
+        /******************************* */
+		/******************************* */
+		$recordUpdateHistoryData = [
+			'record_id' => $generalEmailTemplateObj->id,
+			'record_title' => $generalEmailTemplateObj->template_name,
+			'model_or_table' => 'GeneralEmailTemplate',
+			'admin_id' => auth()->user()->id,
+			'ip' => request()->ip(),
+			'draft' => json_encode($generalEmailTemplateObj->toArray()),
+		];
+		recordUpdateHistory($recordUpdateHistoryData);
+		/******************************* */
+		/******************************* */
 
         /*         * ************************************ */
 

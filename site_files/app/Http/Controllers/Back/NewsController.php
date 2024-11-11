@@ -114,6 +114,21 @@ class NewsController extends Controller
         $newsObj = new News();
         $newsObj = $this->setNewsValues($request, $newsObj);
         $newsObj->save();
+
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $newsObj->id,
+            'record_title' => $newsObj->title,
+            'model_or_table' => 'News',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($newsObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
+
         session(['message' => 'News has been added!', 'type' => 'success']);
 
         return Redirect::route('news.index');
@@ -160,6 +175,19 @@ class NewsController extends Controller
     {
         $newsObj = $this->setNewsValues($request, $newsObj);
         $newsObj->save();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $newsObj->id,
+            'record_title' => $newsObj->title,
+            'model_or_table' => 'News',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($newsObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
         session(['message' => 'News has been updated!', 'type' => 'success']);
         return Redirect::route('news.index');
     }

@@ -72,6 +72,19 @@ class CategoriesController extends Controller
 		$category->cat = $request->catId;
 		$category->slug = $request->slug;
 		$category->save();
+		/******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $category->id,
+            'record_title' => $category->title,
+            'model_or_table' => 'Category',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($category->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
 		session(['message' => 'Added Successfully', 'type' => 'success']);
 		return json_encode(['msg' => 'done']);
 	}
@@ -118,6 +131,21 @@ class CategoriesController extends Controller
 		}
 		$category->title = $request->edit_title;
 		$category->save();
+
+		/******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $category->id,
+            'record_title' => $category->title,
+            'model_or_table' => 'Category',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($category->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
+		
 		session(['message' => 'Updated Successfully', 'type' => 'success']);
 		return back();
 		// return json_encode(['success' => 'done']);

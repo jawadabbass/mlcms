@@ -47,6 +47,21 @@ class BlogCategoriesController extends Controller
         $blogCategory->cate_description = myform_admin_cms_filter($request->editor1);
         $blogCategory->dated = date("Y-m-d H:i:s");
         $blogCategory->save();
+
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $blogCategory->ID,
+            'record_title' => $blogCategory->cate_title,
+            'model_or_table' => 'BlogCategory',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($blogCategory->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
+
         session(['message' => 'Added Successfully', 'type' => 'success']);
         return redirect(route('blog_categories.index'));
     }
@@ -61,8 +76,8 @@ class BlogCategoriesController extends Controller
         if ($id == '') {
             echo 'error';
         }
-        $blogCattegory = BlogCategory::find($id);
-        $status = $blogCattegory->sts;
+        $blogCategory = BlogCategory::find($id);
+        $status = $blogCategory->sts;
         if ($status == '') {
             echo 'invalid current status provided.';
         }
@@ -71,8 +86,23 @@ class BlogCategoriesController extends Controller
         } else {
             $new_status = 1;
         }
-        $blogCattegory->sts = $new_status;
-        $blogCattegory->update();
+        $blogCategory->sts = $new_status;
+        $blogCategory->update();
+
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $blogCategory->ID,
+            'record_title' => $blogCategory->cate_title,
+            'model_or_table' => 'BlogCategory',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($blogCategory->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
+
         echo $new_status;
     }
     /**
@@ -105,8 +135,22 @@ class BlogCategoriesController extends Controller
         $blogCategory->cate_title = $request->title;
         $blogCategory->cate_slug = $cate_slug;
         $blogCategory->cate_description = myform_admin_cms_filter($request->editor1);
-        $blogCategory->save();
-        //	    echo "Saved";
+        $blogCategory->update();
+        
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $blogCategory->ID,
+            'record_title' => $blogCategory->cate_title,
+            'model_or_table' => 'BlogCategory',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($blogCategory->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
+
         session(['message' => 'Updated Successfully', 'type' => 'success']);
         return redirect(route('blog_categories.index'));
     }

@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers\Back;
+
 use App\Http\Controllers\Controller;
 use App\Models\Back\BlogCategory;
 use App\Models\Back\BlogComment;
@@ -8,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+
 class BlogController extends Controller
 {
     /**
@@ -110,6 +113,20 @@ class BlogController extends Controller
         $blog->canonical_url = $request->canonical_url;
         $blog->dated = $request->input('datepicker', date('Y-m-d H:i:s'));
         $blog->save();
+
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $blog->ID,
+            'record_title' => $blog->title,
+            'model_or_table' => 'BlogPost',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($blog->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
         return response()->json(['success' => 'New Blog Created Successfully.' . $request->module_id]);
     }
     /**
@@ -138,8 +155,8 @@ class BlogController extends Controller
             echo 'error';
             return;
         }
-        $blogCattegory = BlogPost::find($id);
-        $status = $blogCattegory->sts;
+        $blog = BlogPost::find($id);
+        $status = $blog->sts;
         if ($status == '') {
             echo 'invalid current status provided.';
             return;
@@ -149,8 +166,23 @@ class BlogController extends Controller
         } else {
             $new_status = 1;
         }
-        $blogCattegory->sts = $new_status;
-        $blogCattegory->update();
+        $blog->sts = $new_status;
+        $blog->update();
+
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $blog->ID,
+            'record_title' => $blog->title,
+            'model_or_table' => 'BlogPost',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($blog->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
+
         echo $new_status;
         return;
     }
@@ -193,6 +225,20 @@ class BlogController extends Controller
         $blog->meta_description = $request->meta_description;
         $blog->canonical_url = $request->canonical_url;
         $blog->save();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $blog->ID,
+            'record_title' => $blog->title,
+            'model_or_table' => 'BlogPost',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($blog->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
+
         return response()->json(['success' => 'Blog Post Successfully updated.' . $request->module_id]);
     }
     public function removeFeaturedImage(Request $request)
@@ -208,6 +254,19 @@ class BlogController extends Controller
             }
             $blog->featured_img = '';
             $blog->save();
+            /******************************* */
+            /******************************* */
+            $recordUpdateHistoryData = [
+                'record_id' => $blog->ID,
+                'record_title' => $blog->title,
+                'model_or_table' => 'BlogPost',
+                'admin_id' => auth()->user()->id,
+                'ip' => request()->ip(),
+                'draft' => json_encode($blog->toArray()),
+            ];
+            recordUpdateHistory($recordUpdateHistoryData);
+            /******************************* */
+            /******************************* */
             echo 'done';
         } else {
             echo 'error';

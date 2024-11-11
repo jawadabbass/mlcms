@@ -27,27 +27,21 @@ class FrontUserController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function create()
-	{
-	}
+	public function create() {}
 	/**
 	 * Store a newly created resource in storage.
 	 *
 	 * @param  \Illuminate\Http\Request  $request
 	 * @return \Illuminate\Http\Response
 	 */
-	public function store(Request $request)
-	{
-	}
+	public function store(Request $request) {}
 	/**
 	 * Display the specified resource.
 	 *
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show($id)
-	{
-	}
+	public function show($id) {}
 	/**
 	 * Show the form for editing the specified resource.
 	 *
@@ -72,10 +66,25 @@ class FrontUserController extends Controller
 		$user = User::find($id);
 		$user->name = $request->admin_name;
 		$user->email = $request->admin_email;
-		if ($request->password == '');
-		else
+		if ($request->password != ''); {
 			$user->password = Hash::make($request->password);
+		}
 		$user->save();
+
+		/******************************* */
+		/******************************* */
+		$recordUpdateHistoryData = [
+			'record_id' => $user->id,
+			'record_title' => $user->email,
+			'model_or_table' => 'User',
+			'admin_id' => auth()->user()->id,
+			'ip' => request()->ip(),
+			'draft' => json_encode($user->toArray()),
+		];
+		recordUpdateHistory($recordUpdateHistoryData);
+		/******************************* */
+		/******************************* */
+		
 		session(['message' => 'Added Successfully', 'type' => 'success']);
 		return redirect(route('front.index'));
 	}

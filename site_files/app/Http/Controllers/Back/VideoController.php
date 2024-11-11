@@ -54,6 +54,19 @@ class VideoController extends Controller
             }
             $video->sts = $new_status;
             $video->save();
+            /******************************* */
+            /******************************* */
+            $recordUpdateHistoryData = [
+                'record_id' => $video->ID,
+                'record_title' => $video->heading,
+                'model_or_table' => 'Video',
+                'admin_id' => auth()->user()->id,
+                'ip' => request()->ip(),
+                'draft' => json_encode($video->toArray()),
+            ];
+            recordUpdateHistory($recordUpdateHistoryData);
+            /******************************* */
+            /******************************* */
         }
         echo $new_status;
         return;
@@ -130,6 +143,19 @@ class VideoController extends Controller
         $Video->slug = Str::slug($request->heading);
         $Video->dated = date('Y-m-d H:i:s');
         $Video->save();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $Video->ID,
+            'record_title' => $Video->heading,
+            'model_or_table' => 'Video',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($Video->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
         return redirect('adminmedia/videos')->with(['success' => 'Added new records.']);
     }
     public function post_edit_video(Request $request)
@@ -193,7 +219,19 @@ class VideoController extends Controller
         $Video->heading = $request->heading;
         $Video->slug = Str::slug($request->heading);
         $Video->update();
-
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $Video->ID,
+            'record_title' => $Video->heading,
+            'model_or_table' => 'Video',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($Video->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
         return redirect('adminmedia/videos')->with(['success' => 'Updated records.']);
     }
     function file_upload_max_size()

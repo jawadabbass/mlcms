@@ -135,6 +135,19 @@ class ClientController extends Controller
             $client->conditions = json_encode($request->conditions);
         }
         $client->save();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $client->id,
+            'record_title' => $client->email,
+            'model_or_table' => 'Client',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($client->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
         return redirect()->route('manage_clients.index')->with('success', 'New Client Added Successfully');
     }
     /**
@@ -163,6 +176,20 @@ class ClientController extends Controller
         if ($clientObj) {
             $clientObj->status = $request->sts;
             $clientObj->save();
+            /******************************* */
+            /******************************* */
+            $recordUpdateHistoryData = [
+                'record_id' => $clientObj->id,
+                'record_title' => $clientObj->email,
+                'model_or_table' => 'Client',
+                'admin_id' => auth()->user()->id,
+                'ip' => request()->ip(),
+                'draft' => json_encode($clientObj->toArray()),
+            ];
+            recordUpdateHistory($recordUpdateHistoryData);
+            /******************************* */
+            /******************************* */
+
             $history->client_id = $request->idds;
             $history->msg = '"Status updated"' . " " . $request->sts;
             $history->u_type = Auth::user()->id;
@@ -171,6 +198,7 @@ class ClientController extends Controller
             $history->history_id = '';
             $history->email = Auth::user()->email;
             $history->save();
+
             $response['success'] = 'done';
             $response['errormsg'] = 'DONE';
             $response['status'] = $request->sts;
@@ -231,6 +259,19 @@ class ClientController extends Controller
         }
         $client->zip = $request->zip;
         $client->save();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $client->id,
+            'record_title' => $client->email,
+            'model_or_table' => 'Client',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($client->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
         session(['message' => 'Updated Successfully', 'type' => 'success']);
         return redirect(route('manage_clients.index'));
     }
@@ -515,6 +556,19 @@ class ClientController extends Controller
             $client->conditions = json_encode($cla_conditions);
             $client->save();
         }
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $client->id,
+            'record_title' => $client->email,
+            'model_or_table' => 'Client',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($client->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
         $client_upd = Client::find($request->id);
         $client_condition = json_decode($client_upd->conditions);
         foreach ($client_condition as $c_condition) {

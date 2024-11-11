@@ -103,6 +103,21 @@ class CountyController extends Controller
         $countyObj = new County();
         $countyObj = $this->setCountyValues($request, $countyObj);
         $countyObj->save();
+
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $countyObj->id,
+            'record_title' => $countyObj->county_name,
+            'model_or_table' => 'County',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($countyObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
+
         session(['message' => 'County has been added!', 'type' => 'success']);
         return Redirect::route('counties.index');
     }
@@ -145,7 +160,19 @@ class CountyController extends Controller
     {
         $countyObj = $this->setCountyValues($request, $countyObj);
         $countyObj->save();
-
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $countyObj->id,
+            'record_title' => $countyObj->county_name,
+            'model_or_table' => 'County',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($countyObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
         /*         * ************************************ */
         session(['message' => 'County has been Updated!', 'type' => 'success']);
         return Redirect::route('counties.index');
@@ -170,6 +197,19 @@ class CountyController extends Controller
         $countyObj = County::find($request->id);
         $countyObj = $this->setCountyStatus($request, $countyObj);
         $countyObj->update();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $countyObj->id,
+            'record_title' => $countyObj->county_name,
+            'model_or_table' => 'County',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($countyObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
         return response()->json(['status' => 'success', 'message' => $countyObj->status]);
     }
 

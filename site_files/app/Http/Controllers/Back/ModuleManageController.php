@@ -85,6 +85,22 @@ class ModuleManageController extends Controller
             $menu->status = $menuTableStatus;
             $menu->save();
         }
+
+        /******************************* */
+        /******************************* */
+        $cmsModuleObj = CmsModule::find($moduleData->cms_module_id);
+        $recordUpdateHistoryData = [
+            'record_id' => $moduleData->id,
+            'record_title' => $cmsModuleObj->title . ' - ' . $moduleData->heading,
+            'model_or_table' => 'CmsModuleData',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($moduleData->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
+
         echo $new_status;
         exit;
     }
@@ -92,7 +108,7 @@ class ModuleManageController extends Controller
     public function setIsFeatured($id, $new_is_featured)
     {
         $moduleData = CmsModuleData::find($id);
-        
+
         if ($new_is_featured == 1) {
             $module = CmsModule::where('id', $moduleData->cms_module_id)->first();
             $totalFeatured = CmsModuleData::where('cms_module_id', $moduleData->cms_module_id)
@@ -105,6 +121,20 @@ class ModuleManageController extends Controller
         }
         $moduleData->is_featured = $new_is_featured;
         $moduleData->save();
+        /******************************* */
+        /******************************* */
+        $cmsModuleObj = CmsModule::find($moduleData->cms_module_id);
+        $recordUpdateHistoryData = [
+            'record_id' => $moduleData->id,
+            'record_title' => $cmsModuleObj->title . ' - ' . $moduleData->heading,
+            'model_or_table' => 'CmsModuleData',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($moduleData->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
         echo 'Done Successfully!';
         exit;
     }
@@ -155,6 +185,20 @@ class ModuleManageController extends Controller
             $moduleData->featured_img_title = $request->featured_img_title;
             $moduleData->featured_img_alt = $request->featured_img_alt;
             $moduleData->save();
+            /******************************* */
+            /******************************* */
+            $cmsModuleObj = CmsModule::find($moduleData->cms_module_id);
+            $recordUpdateHistoryData = [
+                'record_id' => $moduleData->id,
+                'record_title' => $cmsModuleObj->title . ' - ' . $moduleData->heading,
+                'model_or_table' => 'CmsModuleData',
+                'admin_id' => auth()->user()->id,
+                'ip' => request()->ip(),
+                'draft' => json_encode($moduleData->toArray()),
+            ];
+            recordUpdateHistory($recordUpdateHistoryData);
+            /******************************* */
+            /******************************* */
             /**************************************** */
             $this->updateMoreImagesModuleDataId($request, $moduleData->id);
             /**************************************** */
@@ -272,6 +316,20 @@ class ModuleManageController extends Controller
             $moduleData->featured_img_title = $request->featured_img_title;
             $moduleData->featured_img_alt = $request->featured_img_alt;
             $moduleData->save();
+            /******************************* */
+            /******************************* */
+            $cmsModuleObj = CmsModule::find($moduleData->cms_module_id);
+            $recordUpdateHistoryData = [
+                'record_id' => $moduleData->id,
+                'record_title' => $cmsModuleObj->title . ' - ' . $moduleData->heading,
+                'model_or_table' => 'CmsModuleData',
+                'admin_id' => auth()->user()->id,
+                'ip' => request()->ip(),
+                'draft' => json_encode($moduleData->toArray()),
+            ];
+            recordUpdateHistory($recordUpdateHistoryData);
+            /******************************* */
+            /******************************* */
             $insert = $moduleData->id;
             $menu_types = $request->menu_type;
             $menus = Menu::where('menu_id', $insert)->get();
@@ -664,6 +722,20 @@ class ModuleManageController extends Controller
         $data->heading = $request->heading;
         $data->content = myform_admin_cms_filter(adjustUrl($request->editor3));
         $data->save();
+        /******************************* */
+        /******************************* */
+        $cmsModuleObj = CmsModule::find($data->cms_module_id);
+        $recordUpdateHistoryData = [
+            'record_id' => $data->id,
+            'record_title' => $cmsModuleObj->title . ' - ' . $data->heading,
+            'model_or_table' => 'CmsModuleData',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($data->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
         return redirect('adminmedia/module/careers/add');
     }
     public function ajax_crop_module_data_img(Request $request)

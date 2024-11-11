@@ -149,6 +149,20 @@ class ServiceController extends Controller
         $serviceObj->sort_order = $sort_order;
         $serviceObj->save();
 
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $serviceObj->id,
+            'record_title' => $serviceObj->title,
+            'model_or_table' => 'Service',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($serviceObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
+
         /**************************************** */
         $this->updateServiceExtraImagesServiceIds($request, $serviceObj->id);
         /**************************************** */
@@ -198,6 +212,19 @@ class ServiceController extends Controller
     {
         $serviceObj = $this->setServiceValues($request, $serviceObj);
         $serviceObj->save();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $serviceObj->id,
+            'record_title' => $serviceObj->title,
+            'model_or_table' => 'Service',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($serviceObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
 
         /*         * ************************************ */
 
@@ -211,6 +238,19 @@ class ServiceController extends Controller
         $serviceObj = Service::find($request->id);
         $serviceObj = $this->setServiceIsFeatured($request, $serviceObj);
         $serviceObj->update();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $serviceObj->id,
+            'record_title' => $serviceObj->title,
+            'model_or_table' => 'Service',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($serviceObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
         echo 'Done Successfully!';
         exit;
     }
@@ -220,6 +260,19 @@ class ServiceController extends Controller
         $serviceObj = Service::find($request->id);
         $serviceObj = $this->setServiceStatus($request, $serviceObj);
         $serviceObj->update();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $serviceObj->id,
+            'record_title' => $serviceObj->title,
+            'model_or_table' => 'Service',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($serviceObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
         echo 'Done Successfully!';
         exit;
     }

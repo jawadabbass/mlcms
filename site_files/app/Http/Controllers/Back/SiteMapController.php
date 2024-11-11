@@ -129,7 +129,6 @@ class SiteMapController extends Controller
         $siteMapObj = $this->setSiteMapValues($request, $siteMapObj);
         $siteMapObj->sort_order = $sort_order;
         $siteMapObj->save();
-
         /******************************* */
         /******************************* */
         $recordUpdateHistoryData = [
@@ -186,8 +185,6 @@ class SiteMapController extends Controller
     {
         $siteMapObj = $this->setSiteMapValues($request, $siteMapObj);
         $siteMapObj->save();
-
-        /*         * ************************************ */
         /******************************* */
         /******************************* */
         $recordUpdateHistoryData = [

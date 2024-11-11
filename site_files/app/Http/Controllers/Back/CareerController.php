@@ -116,6 +116,21 @@ class CareerController extends Controller
                 $careerBenefitObj->save();
             }
         }
+
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $careerObj->id,
+            'record_title' => $careerObj->title,
+            'model_or_table' => 'Career',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($careerObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
+
         session(['message' => 'Career has been added!', 'type' => 'success']);
         return Redirect::route('careers.index');
     }
@@ -164,6 +179,20 @@ class CareerController extends Controller
                 $careerBenefitObj->save();
             }
         }
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $careerObj->id,
+            'record_title' => $careerObj->title,
+            'model_or_table' => 'Career',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($careerObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
+
         session(['message' => 'Updated Successfully', 'type' => 'success']);
         return Redirect::route('careers.index');
     }
@@ -203,6 +232,20 @@ class CareerController extends Controller
         $careerObj = Career::find($request->id);
         $careerObj = $this->setCareerStatus($request, $careerObj);
         $careerObj->save();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $careerObj->id,
+            'record_title' => $careerObj->title,
+            'model_or_table' => 'Career',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($careerObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
+
         return response()->json(['status' => 'success', 'message' => $careerObj->status]);
     }
     public function destroy(Career $careerObj)

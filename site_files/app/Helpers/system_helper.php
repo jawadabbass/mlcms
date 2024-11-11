@@ -305,7 +305,7 @@ function deleteExtraRecordUpdateHistory($data)
         ->orderBy('created_at', 'asc')
         ->get();
 
-    $totalHistoryRecordsToMaintain = 50;
+    $totalHistoryRecordsToMaintain = 10;
     if ($allHistory->count() > $totalHistoryRecordsToMaintain) {
         $counter = $allHistory->count();
         foreach ($allHistory as $historyObj) {

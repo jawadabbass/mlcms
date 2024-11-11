@@ -1,9 +1,12 @@
 <?php
+
 namespace App\Http\Controllers\Back;
+
 use App\Http\Controllers\Controller;
 use App\Models\Back\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+
 class ProductController extends Controller
 {
     /**
@@ -67,6 +70,21 @@ class ProductController extends Controller
             $product->product_img_alt = $request->product_img_alt;
             $product->dated = date('Y-m-d H:i:s');
             $product->save();
+
+            /******************************* */
+            /******************************* */
+            $recordUpdateHistoryData = [
+                'record_id' => $product->id,
+                'record_title' => $product->product_name,
+                'model_or_table' => 'Product',
+                'admin_id' => auth()->user()->id,
+                'ip' => request()->ip(),
+                'draft' => json_encode($product->toArray()),
+            ];
+            recordUpdateHistory($recordUpdateHistoryData);
+            /******************************* */
+            /******************************* */
+
             return json_encode(['status' => true]);
         }
         $html = '';
@@ -100,6 +118,19 @@ class ProductController extends Controller
             $product->meta_description = $request->meta_description;
             $product->canonical_url = $request->canonical_url;
             $product->save();
+            /******************************* */
+            /******************************* */
+            $recordUpdateHistoryData = [
+                'record_id' => $product->id,
+                'record_title' => $product->product_name,
+                'model_or_table' => 'Product',
+                'admin_id' => auth()->user()->id,
+                'ip' => request()->ip(),
+                'draft' => json_encode($product->toArray()),
+            ];
+            recordUpdateHistory($recordUpdateHistoryData);
+            /******************************* */
+            /******************************* */
             return json_encode(['status' => true]);
         }
         $html = '';
@@ -135,6 +166,19 @@ class ProductController extends Controller
         }
         $product->sts = $new_status;
         $product->update();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $product->id,
+            'record_title' => $product->product_name,
+            'model_or_table' => 'Product',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($product->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
         echo $new_status;
         return;
     }
@@ -173,13 +217,26 @@ class ProductController extends Controller
     {
         $product_status = explode(',', $request->product_Sale_Status)[0];
         $id = explode(',', $request->product_Sale_Status)[1];
-        $result = Product::where('id', $id)->first();
+        $product = Product::where('id', $id)->first();
         if ($product_status == 1) {
-            $result->sell_status = 0;
+            $product->sell_status = 0;
         } else {
-            $result->sell_status = 1;
+            $product->sell_status = 1;
         }
-        $result->save();
+        $product->save();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $product->id,
+            'record_title' => $product->product_name,
+            'model_or_table' => 'Product',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($product->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
         return json_encode(['status' => true]);
     }
 }

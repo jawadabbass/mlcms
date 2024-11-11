@@ -101,8 +101,21 @@ class StateController extends Controller
         $stateObj = new State();
         $stateObj = $this->setStateValues($request, $stateObj);
         $stateObj->save();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $stateObj->id,
+            'record_title' => $stateObj->state_name,
+            'model_or_table' => 'State',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($stateObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
 
-        session(['message'=>'State has been added!', 'type'=>'success']);
+        session(['message' => 'State has been added!', 'type' => 'success']);
         return Redirect::route('states.index');
     }
 
@@ -144,7 +157,19 @@ class StateController extends Controller
     {
         $stateObj = $this->setStateValues($request, $stateObj);
         $stateObj->save();
-
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $stateObj->id,
+            'record_title' => $stateObj->state_name,
+            'model_or_table' => 'State',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($stateObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
         /*         * ************************************ */
         session(['message' => 'State has been updated!', 'type' => 'success']);
         return Redirect::route('states.index');
@@ -170,6 +195,19 @@ class StateController extends Controller
         $stateObj = State::find($request->id);
         $stateObj = $this->setStateStatus($request, $stateObj);
         $stateObj->update();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $stateObj->id,
+            'record_title' => $stateObj->state_name,
+            'model_or_table' => 'State',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($stateObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
         return response()->json(['status' => 'success', 'message' => $stateObj->status]);
     }
 

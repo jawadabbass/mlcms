@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers\Back;
 
-use App\Http\Controllers\Controller;
-use App\Models\Back\CmsModuleData;
-use App\Models\Back\Product;
-use App\Models\Back\Metadata;
-use App\Models\Back\AssesmentQuestion;
 use Illuminate\Http\Request;
+use App\Models\Back\Metadata;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Input;
+use App\Http\Controllers\Controller;
+use App\Models\Back\AssesmentQuestion;
 use Illuminate\Support\Facades\Validator;
 
 class AssesmentQuestionController extends Controller
@@ -76,7 +73,21 @@ class AssesmentQuestionController extends Controller
                     'pattern' => 'radio',
                     'value' => json_encode($request->radio_field),
                 ];
-                $create = \DB::table('assesment_questions')->insert($data);
+                $create = DB::table('assesment_questions')->insert($data);
+                $createObj = DB::table('assesment_questions')->orderBy('id', 'desc')->first();
+                /******************************* */
+                /******************************* */
+                $recordUpdateHistoryData = [
+                    'record_id' => $createObj->id,
+                    'record_title' => $createObj->question,
+                    'model_or_table' => 'assesment_questions',
+                    'admin_id' => auth()->user()->id,
+                    'ip' => request()->ip(),
+                    'draft' => json_encode($createObj->toArray()),
+                ];
+                recordUpdateHistory($recordUpdateHistoryData);
+                /******************************* */
+                /******************************* */
                 return back()->with('success', 'Record Added Successfully');
             } elseif ($request->additional_fields == 2) {
                 if (count($request->check_field) < 1) {
@@ -92,7 +103,21 @@ class AssesmentQuestionController extends Controller
                     'pattern' => 'check',
                     'value' => json_encode($request->check_field),
                 ];
-                $create = \DB::table('assesment_questions')->insert($data);
+                $create = DB::table('assesment_questions')->insert($data);
+                $createObj = DB::table('assesment_questions')->orderBy('id', 'desc')->first();
+                /******************************* */
+                /******************************* */
+                $recordUpdateHistoryData = [
+                    'record_id' => $createObj->id,
+                    'record_title' => $createObj->question,
+                    'model_or_table' => 'assesment_questions',
+                    'admin_id' => auth()->user()->id,
+                    'ip' => request()->ip(),
+                    'draft' => json_encode($createObj->toArray()),
+                ];
+                recordUpdateHistory($recordUpdateHistoryData);
+                /******************************* */
+                /******************************* */
                 return back()->with('success', 'Record Added Successfully');
             } else {
                 $data = [
@@ -100,7 +125,21 @@ class AssesmentQuestionController extends Controller
                     'pattern' => 'input',
                     'value' => 'input',
                 ];
-                $create = \DB::table('assesment_questions')->insert($data);
+                $create = DB::table('assesment_questions')->insert($data);
+                $createObj = DB::table('assesment_questions')->orderBy('id', 'desc')->first();
+                /******************************* */
+                /******************************* */
+                $recordUpdateHistoryData = [
+                    'record_id' => $createObj->id,
+                    'record_title' => $createObj->question,
+                    'model_or_table' => 'assesment_questions',
+                    'admin_id' => auth()->user()->id,
+                    'ip' => request()->ip(),
+                    'draft' => json_encode($createObj->toArray()),
+                ];
+                recordUpdateHistory($recordUpdateHistoryData);
+                /******************************* */
+                /******************************* */
                 return back()->with('success', 'Record Added Successfully');
             }
         }
@@ -128,6 +167,20 @@ class AssesmentQuestionController extends Controller
                     'value' => json_encode($request->radio_field),
                 ];
                 $create = \DB::table('assesment_questions')->where('id', $id)->update($data);
+                $updateObj = DB::table('assesment_questions')->where('id', $id)->first();
+                /******************************* */
+                /******************************* */
+                $recordUpdateHistoryData = [
+                    'record_id' => $updateObj->id,
+                    'record_title' => $updateObj->title,
+                    'model_or_table' => 'assesment_questions',
+                    'admin_id' => auth()->user()->id,
+                    'ip' => request()->ip(),
+                    'draft' => json_encode($updateObj->toArray()),
+                ];
+                recordUpdateHistory($recordUpdateHistoryData);
+                /******************************* */
+                /******************************* */
                 return redirect()->route('assesment_question.index')->with('success', 'Record Updated Successfully');
             } elseif ($request->additional_fields == 2) {
                 if (count($request->check_field) < 1) {
@@ -144,6 +197,20 @@ class AssesmentQuestionController extends Controller
                     'value' => json_encode($request->check_field),
                 ];
                 $create = \DB::table('assesment_questions')->where('id', $id)->update($data);
+                $updateObj = DB::table('assesment_questions')->where('id', $id)->first();
+                /******************************* */
+                /******************************* */
+                $recordUpdateHistoryData = [
+                    'record_id' => $updateObj->id,
+                    'record_title' => $updateObj->title,
+                    'model_or_table' => 'assesment_questions',
+                    'admin_id' => auth()->user()->id,
+                    'ip' => request()->ip(),
+                    'draft' => json_encode($updateObj->toArray()),
+                ];
+                recordUpdateHistory($recordUpdateHistoryData);
+                /******************************* */
+                /******************************* */
                 return redirect()->route('assesment_question.index')->with('success', 'Record Updated Successfully');
             } else {
                 $data = [
@@ -152,6 +219,20 @@ class AssesmentQuestionController extends Controller
                     'value' => 'input',
                 ];
                 $create = \DB::table('assesment_questions')->where('id', $id)->update($data);
+                $updateObj = DB::table('assesment_questions')->where('id', $id)->first();
+                /******************************* */
+                /******************************* */
+                $recordUpdateHistoryData = [
+                    'record_id' => $updateObj->id,
+                    'record_title' => $updateObj->title,
+                    'model_or_table' => 'assesment_questions',
+                    'admin_id' => auth()->user()->id,
+                    'ip' => request()->ip(),
+                    'draft' => json_encode($updateObj->toArray()),
+                ];
+                recordUpdateHistory($recordUpdateHistoryData);
+                /******************************* */
+                /******************************* */
                 return redirect()->route('assesment_question.index')->with('success', 'Record Updated Successfully');
             }
         }
@@ -182,6 +263,19 @@ class AssesmentQuestionController extends Controller
 
         $obj->sts = $new_status;
         $obj->update();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $obj->id,
+            'record_title' => $obj->title,
+            'model_or_table' => 'assesment_questions',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($obj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
         echo $new_status;
         return;
     }

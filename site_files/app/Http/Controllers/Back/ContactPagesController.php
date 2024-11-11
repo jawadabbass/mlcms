@@ -56,6 +56,19 @@ class ContactPagesController extends Controller
 		$setting->working_days = $request->working_days;
 		$setting->working_hours = $request->working_hours;
 		$setting->save();
+		/******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $setting->ID,
+            'record_title' => '',
+            'model_or_table' => 'Setting',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($setting->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
 		session(['message' => 'Created Successfully', 'type' => 'success']);
 		return redirect('adminmedia/manage_contact');
 	}
@@ -82,6 +95,19 @@ class ContactPagesController extends Controller
 		$setting = Setting::find($id);
 		$setting->google_map_status = $request->google_map_status;
 		$setting->save();
+		/******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $setting->ID,
+            'record_title' => 'google_map_status',
+            'model_or_table' => 'Setting',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($setting->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
 		session(['message' => 'Updated Successfully', 'type' => 'success']);
 		return redirect(route('manage_contact.index'));
 	}
@@ -109,6 +135,19 @@ class ContactPagesController extends Controller
 		$setting->working_days = $request->working_days;
 		$setting->working_hours = $request->working_hours;
 		$setting->update();
+		/******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $setting->ID,
+            'record_title' => '',
+            'model_or_table' => 'Setting',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($setting->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
 		session(['message' => 'Updated Successfully', 'type' => 'success']);
 		return redirect('adminmedia/manage_contact');
 	}
@@ -148,6 +187,20 @@ class ContactPagesController extends Controller
 		else
 			$setting->bcc_email = $newEmail;
 		$setting->save();
+
+		/******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $setting->ID,
+            'record_title' => '',
+            'model_or_table' => 'Setting',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($setting->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
 		echo "Done";
 		return;
 	}
@@ -188,6 +241,20 @@ class ContactPagesController extends Controller
 		else
 			$setting->bcc_email = $email_in_arrays;
 		$setting->save();
+
+		/******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $setting->ID,
+            'record_title' => '',
+            'model_or_table' => 'Setting',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($setting->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
 		echo "Done";
 		return;
 	}
