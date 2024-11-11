@@ -1,4 +1,7 @@
 <?php
+
+use App\Models\Back\RecordUpdateHistory;
+
 function cacheTime()
 {
     return 60 * 60;
@@ -6,95 +9,6 @@ function cacheTime()
 function exeTime()
 {
     return microtime(true) - LARAVEL_START;
-}
-function get_all($limit, $start, $module_id)
-{
-    $data = getModuleData($module_id, $limit, $start);
-    return $data;
-}
-function get_alls($limit, $start, $module_id, $dateFormat = 'M d, Y')
-{
-    $moduleArr = \App\Models\Back\CmsModule::find($module_id)->toArray();
-    $getArr = getModuleData($module_id, $limit, $start);
-    if (sizeof($getArr) > 0) {
-        $getArr = $getArr->toArray();
-    } else {
-        return [];
-    }
-    return format_records($getArr, $module_id, $moduleArr, $dateFormat);
-}
-function get_one($parent, $slug, $dateFormat = 'M d, Y')
-{
-    $moduleArr = \App\Models\Back\CmsModule::where('type', $parent)->first()->toArray();
-    $getArr = \App\Models\Back\CmsModuleData::where('sts', 1)
-        ->where('cms_module_id', $moduleArr['id'])
-        ->where('sts', 1)
-        ->where('post_slug', $parent . '/' . $slug);
-    $getArr = $getArr->first();
-    if (isset($getArr)) {
-        $getArr = $getArr->toArray();
-    } else {
-        abort(404);
-    }
-    return format_record($getArr, $moduleArr['id'], $moduleArr, $dateFormat);
-}
-function format_records($getArr, $module_id, $moduleArr, $dateFormat)
-{
-    $dataArr = array();
-    foreach ($getArr as $key => $subValsArr) {
-        foreach ($subValsArr as $subKey => $subValue) {
-            if ($subKey == 'post_slug') {
-                $dataArr[$key][$subKey] = base_url() . $subValue;
-            } else if ($subKey == 'featured_img') {
-                if ($subValue != '') {
-                    if ($module_id == 2 || $module_id == 33) {
-                        $dataArr[$key][$subKey] = asset_uploads('module/' . $moduleArr['type'] . '/' . $subValue);
-                        $dataArr[$key]['main_img'] = asset_uploads('module/' . $moduleArr['type'] . '/' . $subValue);
-                    } else {
-                        $dataArr[$key][$subKey] = asset_uploads('module/' . $moduleArr['type'] . '/thumb/' . $subValue);
-                        $dataArr[$key]['main_img'] = asset_uploads('module/' . $moduleArr['type'] . '/' . $subValue);
-                    }
-                } else {
-                    // noImg.jpg
-                    if (file_exists(storage_uploads('module/' . $moduleArr['type'] . '/thumb/no_image.jpg'))) {
-                        $dataArr[$key][$subKey] = asset_uploads('module/' . $moduleArr['type'] . '/thumb/no_image.jpg');
-                    } else {
-                        $dataArr[$key][$subKey] = getImage('front/images', 'no_image.jpg');
-                    }
-                }
-            } else if ($subKey == 'dated') {
-                $dataArr[$key][$subKey] = date($dateFormat, strtotime($subValue));
-            } else {
-                $dataArr[$key][$subKey] = $subValue;
-            }
-        }
-    }
-    return $dataArr;
-}
-function format_record($subValsArr, $module_id, $moduleArr, $dateFormat)
-{
-    $dataArr = array();
-    foreach ($subValsArr as $kk => $vv) {
-        if ($kk == 'post_slug') {
-            $dataArr[$kk] = base_url() . $subValsArr[$kk];
-        } else if ($kk == 'featured_img') {
-            if ($subValsArr[$kk] != '') {
-                $dataArr[$kk] = asset_uploads('module/' . $moduleArr['type'] . '/' . $subValsArr[$kk]);
-            } else {
-                $dataArr[$kk] = '';
-            }
-        } else if ($kk == 'dated') {
-            $dataArr[$kk] = date($dateFormat, strtotime($subValsArr[$kk]));
-        } else {
-            $dataArr[$kk] = $subValsArr[$kk];
-        }
-    }
-    return $dataArr;
-}
-function get_all_order($limit, $start, $module_id)
-{
-    $data = getModuleData($module_id, $limit, $start);
-    return $data;
 }
 if (!function_exists('get_widgets')) {
     function get_widgets($widget = '62')
@@ -109,26 +23,6 @@ if (!function_exists('get_widget')) {
         $widgetData = \App\Models\Back\Widget::find($widget);
         return adjustUrl($widgetData->content);
     }
-}
-function get_permalink($id)
-{
-    $link = \App\Models\Back\CmsModuleData::where('id', $id)->value('post_slug');
-    if ($link != '') {
-        return base_url() . $link;
-    }
-    return '';
-}
-function get_page($id)
-{
-    $page = \App\Models\Back\CmsModuleData::where('id', $id)->first();
-    if ($page) {
-        return $page;
-    }
-    return '';
-}
-function get_meta_val($key)
-{
-    return \App\Models\Back\Metadata::where('data_key', $key)->first()->val1;
 }
 function cms_edit_page($type = "cms", $id = 0)
 {
@@ -186,8 +80,7 @@ function showUploadedVideo($link, $type, $w = '100%', $h = '400', $class = 'd-bl
         <video width="' . $w . '" height="' . $h . '" class="' . $class . '" autoplay playsinline controls>
             <source src="' . asset_storage($videoURL . $link) . '" type="video/mp4">
         </video> ';
-    }
-    else {
+    } else {
         return $link;
     }
 }
@@ -403,4 +296,35 @@ function __shortcode($content)
 {
     $content = str_replace('{{add_icon}}', '<i class="fas fa-plus" aria-hidden="true"></i>', $content);
     return $content;
+}
+function deleteExtraRecordUpdateHistory($data)
+{
+    $allHistory = RecordUpdateHistory::where('record_id', $data['record_id'])
+        ->where('record_title', 'like', $data['record_title'])
+        ->where('model_or_table', 'like', $data['model_or_table'])
+        ->orderBy('created_at', 'asc')
+        ->get();
+
+    $totalHistoryRecordsToMaintain = 50;
+    if ($allHistory->count() > $totalHistoryRecordsToMaintain) {
+        $counter = $allHistory->count();
+        foreach ($allHistory as $historyObj) {
+            if ($counter > $totalHistoryRecordsToMaintain) {
+                $historyObj->delete();
+                $counter--;
+            }
+        }
+    }
+}
+function recordUpdateHistory($data)
+{
+    deleteExtraRecordUpdateHistory($data);
+    $history = new RecordUpdateHistory();
+    $history->record_id = $data['record_id'];
+    $history->record_title = $data['record_title'];
+    $history->model_or_table = $data['model_or_table'];
+    $history->admin_id = $data['admin_id'];
+    $history->ip = $data['ip'];
+    $history->draft = $data['draft'];
+    $history->save();
 }

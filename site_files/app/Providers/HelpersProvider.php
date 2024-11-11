@@ -30,8 +30,15 @@ class HelpersProvider extends ServiceProvider
         require_once app_path() . '/Helpers/DashboardLinks.php';
         require_once app_path() . '/Helpers/mod_builder_helper.php';
         require_once app_path() . '/Helpers/common_functions.php';
-        require_once app_path() . '/Helpers/my_helper.php';
         require_once app_path() . '/Helpers/service_helper.php';
         require_once app_path() . '/Helpers/site_map_helper.php';
+        require_once app_path() . '/Helpers/city_state_country_helper.php';
+        require_once app_path() . '/Helpers/metadata_helper.php';
+        require_once app_path() . '/Helpers/image_uploader_helper.php';
+        require_once app_path() . '/Helpers/module_helper.php';
+        require_once app_path() . '/Helpers/dropdown_helper.php';
+        require_once app_path() . '/Helpers/news_helper.php';
+        require_once app_path() . '/Helpers/error_helper.php';
+        require_once app_path() . '/Helpers/seo_helper.php';
     }
 }

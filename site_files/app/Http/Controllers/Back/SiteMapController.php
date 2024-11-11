@@ -11,6 +11,8 @@ use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\Back\SiteMapBackFormRequest;
 
+use function Safe\json_encode;
+
 class SiteMapController extends Controller
 {
     use SiteMapTrait;
@@ -128,8 +130,20 @@ class SiteMapController extends Controller
         $siteMapObj->sort_order = $sort_order;
         $siteMapObj->save();
 
-
-        flash('Site Maphas been added!', 'success');
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $siteMapObj->id,
+            'record_title' => $siteMapObj->title,
+            'model_or_table' => 'SiteMap',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($siteMapObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
+        flash('Site Map has been added!', 'success');
         return Redirect::route('site.map.index');
     }
 
@@ -174,6 +188,19 @@ class SiteMapController extends Controller
         $siteMapObj->save();
 
         /*         * ************************************ */
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $siteMapObj->id,
+            'record_title' => $siteMapObj->title,
+            'model_or_table' => 'SiteMap',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($siteMapObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
         flash('Site Maphas been updated!', 'success');
         return Redirect::route('site.map.index');
     }
