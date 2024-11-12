@@ -14,6 +14,7 @@ class RecordUpdateHistory extends Model
         'id',
         'record_id',
         'record_title',
+        'record_link',
         'model_or_table',
         'admin_id',
         'ip',

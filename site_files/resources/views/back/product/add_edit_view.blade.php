@@ -3,14 +3,24 @@
         <form action="#" id="form" class="form-horizontal" enctype="multipart/form-data">
             <div class="modal-content"> @csrf
                 <div class="modal-header">
-                    <h4 class="modal-title">Person Form</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="row" style="width: 100%;">
+                        <div class="col-md-6">
+                            <h4 class="modal-title">Edit Product</h4>
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <a href="javascript:void(0);" onclick="showProductRecordUpdateHistory();"
+                                class="go-back mr-4" id="showProductRecordUpdateHistoryLink"><i class="fas fa-bars"
+                                    aria-hidden="true"></i>
+                                History </a>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                    </div>
                 </div>
-                <!-- <span id="product_name" style="padding-left:2px;" class="err"></span> -->
                 <div class="modal-body form">
                     <div class=" card-body">
                         <div class="alert alert-danger error-div" style="display:none"></div>
-                        <input type="hidden" value="" name="id" />
+                        <input type="hidden" value="" name="id" id="product_id" />
                         <div class="form-body">
                             <div>
                                 <label class="form-label">Product Name</label>
@@ -20,8 +30,7 @@
                             </div>
                             <div>
                                 <label for="basic-url">Page Link @php echo helptooltip('page_link'); @endphp</label>
-                                <div class="mb-2"> <span class="mb-2-addon"
-                                        id="basic-addon3">@php echo  base_url().'products' @endphp</span>
+                                <div class="mb-2"> <span class="mb-2-addon" id="basic-addon3">@php echo  base_url().'products' @endphp</span>
                                     <input type="text" class="form-control slug-field" name="product_slug"
                                         placeholder="Product Page Link">
                                 </div>
@@ -38,7 +47,8 @@
                                 <span id="price" style="padding-left:2px;" class="err"></span>
                             </div>
                             <div id="fea_img">
-                                <label class="form-label"> Update Product Image <span style="font-size: 12px;color: red"> max size:
+                                <label class="form-label"> Update Product Image <span
+                                        style="font-size: 12px;color: red"> max size:
                                         {{ getMaxUploadSize() }}MB </span> @php echo helptooltip('max_image_size') @endphp </label>
                                 <div id="file-field">
                                     <input type="file" name="product_img" id="module_img" class="form-control">
@@ -59,16 +69,21 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div id="product_img_div" style="display: none">
                             </div>
-                            @include('back.common_views.seo_fields', ['meta_title'=>'','meta_keywords'=>'','meta_description'=>'','canonical_url'=>''])
+                            @include('back.common_views.seo_fields', [
+                                'meta_title' => '',
+                                'meta_keywords' => '',
+                                'meta_description' => '',
+                                'canonical_url' => '',
+                            ])
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" id="btnSave" onclick="save()" class="btn btn-success">Save Record</button>
+                    <button type="button" id="btnSave" onclick="save()" class="btn btn-success">Save
+                        Record</button>
                 </div>
             </div>
         </form>

@@ -53,6 +53,7 @@ class BlogCategoriesController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $blogCategory->ID,
             'record_title' => $blogCategory->cate_title,
+            'record_link' => url('adminmedia/blog_categories/'.$blogCategory->ID.'/edit'),
             'model_or_table' => 'BlogCategory',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -94,6 +95,7 @@ class BlogCategoriesController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $blogCategory->ID,
             'record_title' => $blogCategory->cate_title,
+            'record_link' => url('adminmedia/blog_categories/'.$blogCategory->ID.'/edit'),
             'model_or_table' => 'BlogCategory',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -142,6 +144,7 @@ class BlogCategoriesController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $blogCategory->ID,
             'record_title' => $blogCategory->cate_title,
+            'record_link' => url('adminmedia/blog_categories/'.$blogCategory->ID.'/edit'),
             'model_or_table' => 'BlogCategory',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),

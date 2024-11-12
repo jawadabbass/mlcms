@@ -134,6 +134,7 @@ class SiteMapController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $siteMapObj->id,
             'record_title' => $siteMapObj->title,
+            'record_link' => url('adminmedia/site-map/'.$siteMapObj->id.'/edit'),
             'model_or_table' => 'SiteMap',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -190,6 +191,7 @@ class SiteMapController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $siteMapObj->id,
             'record_title' => $siteMapObj->title,
+            'record_link' => url('adminmedia/site-map/'.$siteMapObj->id.'/edit'),
             'model_or_table' => 'SiteMap',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),

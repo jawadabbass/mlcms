@@ -15,64 +15,84 @@
         </section>
         <section class="content">
 
+            <div class="card p-3">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3>Add Video</h3>
+                        </div>
+                        <div class="col-md-6 text-right">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    @include('flash::message')
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    <form method="post" action="{{ admin_url() }}videos/add" enctype="multipart/form-data">
+                        @csrf
+                        <div class="row">
+                            <div class="col-md-4 text-end">Heading:</div>
+                            <div class="col-md-8"><input type="text" name="heading" id="heading" class="form-control"
+                                    value="" placeholder=""></div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-4 text-end">Video Type:</div>
+                            <div class="col-md-8">
+                                <select class="form-control" name="video_type" id="video_type">
+                                    <option value="Youtube" selected="">YouTube Video</option>
+                                    <option value="Vimeo">Vimeo Video</option>
+                                    <option value="upload">Video Upload</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-4 text-end"><span id="s_title">Youtube Video:</span> </div>
+                            <div class="col-md-8" id="field_type_div">
+                                <textarea name="linkk" id="linkk" class="form-control" placeholder="Embed Code Here!"></textarea>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-4 text-end">Short Description:</div>
+                            <div class="col-md-8">
+                                <textarea name="descp" id="descp" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <br>
 
-            <form method="post" action="{{ admin_url() }}videos/add" enctype="multipart/form-data">
-                @csrf
-                <div class="row">
-                    <div class="col-md-4 text-end">Heading:</div>
-                    <div class="col-md-8"><input type="text" name="heading" id="heading" class="form-control"
-                            value="" placeholder=""></div>
+                        <div class="row" id="thumbnail_div" style="display: none;">
+                            <div class="col-md-4 text-end">Thumbnail Image:</div>
+                            <div class="col-md-8"><input type="file" name="fimg" id="fimg" class="form-control"
+                                    value="" placeholder=""></div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-4 text-end"></div>
+                            <div class="col-md-8">
+                                <button id="submit" type="submit" class="btn btn-info"
+                                    onClick="document.getElementsById('submit').display='none'"><i
+                                        class="fas fa-plus-circle" aria-hidden="true"></i> Submit</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <br>
-                <div class="row">
-                    <div class="col-md-4 text-end">Video Type:</div>
-                    <div class="col-md-8">
-                        <select class="form-control" name="video_type" id="video_type">
-                            <option value="Youtube" selected="">YouTube Video</option>
-                            <option value="Vimeo">Vimeo Video</option>
-                            <option value="upload">Video Upload</option>
-                        </select>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-md-4 text-end"><span id="s_title">Youtube Video:</span> </div>
-                    <div class="col-md-8" id="field_type_div">
-                        <textarea name="linkk" id="linkk" class="form-control" placeholder="Embed Code Here!"></textarea>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-md-4 text-end">Short Description:</div>
-                    <div class="col-md-8">
-                        <textarea name="descp" id="descp" class="form-control"></textarea>
-                    </div>
-                </div>
-                <br>
-
-                <div class="row" id="thumbnail_div" style="display: none;">
-                    <div class="col-md-4 text-end">Thumbnail Image:</div>
-                    <div class="col-md-8"><input type="file" name="fimg" id="fimg" class="form-control"
-                            value="" placeholder=""></div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-md-4 text-end"></div>
-                    <div class="col-md-8">
-                        <button id="submit" type="submit"  class="btn btn-info"
-                            onClick="document.getElementsById('submit').display='none'"><i class="fas fa-plus-circle"
-                                aria-hidden="true"></i> Submit</button>
-                    </div>
-                </div>
-            </form>
-
 
         </section>
     </div>
 @endsection
 @section('beforeBodyClose')
     <script type="text/javascript">
-        
         $("#video_type").change(function(event) {
             console.clear();
             if ($(this).val() != 'upload') {
@@ -81,13 +101,13 @@
                     $("#linkk").remove();
                     $("#field_type_div").html(
                         '<textarea name="linkk" id="linkk" class="form-control" placeholder="Embed Code Here!"></textarea>'
-                        );
+                    );
                     $("#s_title").html($(this).val() + " Embed Code:");
                 }
             } else {
                 $("#s_title").html(
                     "Please select (<code>.mp4</code>) file: <br/><p class=\"text-red\">Maximum allowed size on server: {{ $file_upload_max_size }}MB</p>"
-                    );
+                );
                 $("#linkk").attr('placeholder', '');
                 $("#linkk").remove();
                 $("#field_type_div").html(

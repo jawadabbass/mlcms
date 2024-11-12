@@ -111,6 +111,7 @@ class CityController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $cityObj->id,
             'record_title' => $cityObj->city_name,
+            'record_link' => url('adminmedia/cities/'.$cityObj->id.'/edit'),
             'model_or_table' => 'City',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -167,6 +168,7 @@ class CityController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $cityObj->id,
             'record_title' => $cityObj->city_name,
+            'record_link' => url('adminmedia/cities/'.$cityObj->id.'/edit'),
             'model_or_table' => 'City',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -204,6 +206,7 @@ class CityController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $cityObj->id,
             'record_title' => $cityObj->city_name,
+            'record_link' => url('adminmedia/cities/'.$cityObj->id.'/edit'),
             'model_or_table' => 'City',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),

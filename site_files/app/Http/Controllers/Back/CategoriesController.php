@@ -77,7 +77,8 @@ class CategoriesController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $category->id,
             'record_title' => $category->title,
-            'model_or_table' => 'Category',
+            'record_link' => url('adminmedia/categories/'.$category->id.'/edit'),
+			'model_or_table' => 'Category',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
             'draft' => json_encode($category->toArray()),
@@ -137,7 +138,8 @@ class CategoriesController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $category->id,
             'record_title' => $category->title,
-            'model_or_table' => 'Category',
+            'record_link' => url('adminmedia/categories/'.$category->id.'/edit'),
+			'model_or_table' => 'Category',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
             'draft' => json_encode($category->toArray()),

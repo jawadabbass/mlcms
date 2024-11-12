@@ -77,7 +77,8 @@ class GeneralEmailTemplateController extends Controller
 		$recordUpdateHistoryData = [
 			'record_id' => $generalEmailTemplateObj->id,
 			'record_title' => $generalEmailTemplateObj->template_name,
-			'model_or_table' => 'GeneralEmailTemplate',
+			'record_link' => url('adminmedia/generalEmailTemplates/'.$generalEmailTemplateObj->id.'/edit'),
+            'model_or_table' => 'GeneralEmailTemplate',
 			'admin_id' => auth()->user()->id,
 			'ip' => request()->ip(),
 			'draft' => json_encode($generalEmailTemplateObj->toArray()),
@@ -125,7 +126,8 @@ class GeneralEmailTemplateController extends Controller
 		$recordUpdateHistoryData = [
 			'record_id' => $generalEmailTemplateObj->id,
 			'record_title' => $generalEmailTemplateObj->template_name,
-			'model_or_table' => 'GeneralEmailTemplate',
+			'record_link' => url('adminmedia/generalEmailTemplates/'.$generalEmailTemplateObj->id.'/edit'),
+            'model_or_table' => 'GeneralEmailTemplate',
 			'admin_id' => auth()->user()->id,
 			'ip' => request()->ip(),
 			'draft' => json_encode($generalEmailTemplateObj->toArray()),

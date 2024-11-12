@@ -55,6 +55,7 @@ class SettingController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $setting->ID,
             'record_title' => 'google_analytics',
+            'record_link' => url('adminmedia/settings/'.$setting->ID.'/edit'),
             'model_or_table' => 'Setting',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -133,6 +134,7 @@ class SettingController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $setting->ID,
             'record_title' => 'web_down_status',
+            'record_link' => url('adminmedia/settings/'.$setting->ID.'/edit'),
             'model_or_table' => 'Setting',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -163,6 +165,7 @@ class SettingController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $setting->ID,
             'record_title' => 'google_adsense',
+            'record_link' => url('adminmedia/settings/'.$setting->ID.'/edit'),
             'model_or_table' => 'Setting',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -191,6 +194,7 @@ class SettingController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $metaDataObj->id,
             'record_title' => $metaDataObj->data_key,
+            'record_link' => url('adminmedia/setting/meta_data'),
             'model_or_table' => 'MetaData',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -209,6 +213,7 @@ class SettingController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $metaDataObj->id,
             'record_title' => $metaDataObj->data_key,
+            'record_link' => url('adminmedia/setting/meta_data'),
             'model_or_table' => 'MetaData',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -227,6 +232,7 @@ class SettingController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $metaDataObj->id,
             'record_title' => $metaDataObj->data_key,
+            'record_link' => url('adminmedia/setting/meta_data'),
             'model_or_table' => 'MetaData',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -244,6 +250,7 @@ class SettingController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $metaDataObj->id,
             'record_title' => $metaDataObj->data_key,
+            'record_link' => url('adminmedia/setting/meta_data'),
             'model_or_table' => 'MetaData',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -274,6 +281,7 @@ class SettingController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $metaDataObj->id,
             'record_title' => $metaDataObj->data_key,
+            'record_link' => url('adminmedia/setting/captcha'),
             'model_or_table' => 'MetaData',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -291,6 +299,7 @@ class SettingController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $metaDataObj->id,
             'record_title' => $metaDataObj->data_key,
+            'record_link' => url('adminmedia/setting/captcha'),
             'model_or_table' => 'MetaData',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -324,6 +333,7 @@ class SettingController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $metaDataObj->id,
             'record_title' => $metaDataObj->data_key,
+            'record_link' => url('adminmedia/setting/ip-address'),
             'model_or_table' => 'MetaData',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -358,6 +368,7 @@ class SettingController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $metaDataObj->id,
             'record_title' => $metaDataObj->data_key,
+            'record_link' => url('adminmedia/setting/ip-address'),
             'model_or_table' => 'MetaData',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -375,6 +386,7 @@ class SettingController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $metaDataObj->id,
             'record_title' => $metaDataObj->data_key,
+            'record_link' => url('adminmedia/setting/ip-address'),
             'model_or_table' => 'MetaData',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -392,6 +404,7 @@ class SettingController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $metaDataObj->id,
             'record_title' => $metaDataObj->data_key,
+            'record_link' => url('adminmedia/setting/ip-address'),
             'model_or_table' => 'MetaData',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -409,6 +422,7 @@ class SettingController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $metaDataObj->id,
             'record_title' => $metaDataObj->data_key,
+            'record_link' => url('adminmedia/setting/ip-address'),
             'model_or_table' => 'MetaData',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -427,6 +441,7 @@ class SettingController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $metaDataObj->id,
             'record_title' => $metaDataObj->data_key,
+            'record_link' => url('adminmedia/setting/ip-address'),
             'model_or_table' => 'MetaData',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -444,6 +459,7 @@ class SettingController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $metaDataObj->id,
             'record_title' => $metaDataObj->data_key,
+            'record_link' => url('adminmedia/setting/ip-address'),
             'model_or_table' => 'MetaData',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -466,6 +482,7 @@ class SettingController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $metaDataObj->id,
             'record_title' => $metaDataObj->data_key,
+            'record_link' => url('adminmedia/setting/ip-address'),
             'model_or_table' => 'MetaData',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -488,6 +505,7 @@ class SettingController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $metaDataObj->id,
             'record_title' => $metaDataObj->data_key,
+            'record_link' => url('adminmedia/setting/ip-address'),
             'model_or_table' => 'MetaData',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -554,6 +572,7 @@ class SettingController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $setting->ID,
             'record_title' => 'head_body_js',
+            'record_link' => url('adminmedia/settings/'.$setting->ID.'/edit'),
             'model_or_table' => 'Setting',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -604,6 +623,7 @@ class SettingController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $setting->ID,
             'record_title' => 'admin_logo_favicon',
+            'record_link' => url('adminmedia/settings/'.$setting->ID.'/edit'),
             'model_or_table' => 'Setting',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -625,6 +645,7 @@ class SettingController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $metaDataObj->id,
             'record_title' => $metaDataObj->data_key,
+            'record_link' => url('adminmedia/setting/paypal'),
             'model_or_table' => 'MetaData',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -642,6 +663,7 @@ class SettingController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $metaDataObj->id,
             'record_title' => $metaDataObj->data_key,
+            'record_link' => url('adminmedia/setting/paypal'),
             'model_or_table' => 'MetaData',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -659,6 +681,7 @@ class SettingController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $metaDataObj->id,
             'record_title' => $metaDataObj->data_key,
+            'record_link' => url('adminmedia/setting/paypal'),
             'model_or_table' => 'MetaData',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -676,6 +699,7 @@ class SettingController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $metaDataObj->id,
             'record_title' => $metaDataObj->data_key,
+            'record_link' => url('adminmedia/setting/paypal'),
             'model_or_table' => 'MetaData',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -693,6 +717,7 @@ class SettingController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $metaDataObj->id,
             'record_title' => $metaDataObj->data_key,
+            'record_link' => url('adminmedia/setting/paypal'),
             'model_or_table' => 'MetaData',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -720,6 +745,7 @@ class SettingController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $metaDataObj->id,
             'record_title' => $metaDataObj->data_key,
+            'record_link' => url('adminmedia/setting/savePropertyIdAndJsonFile'),
             'model_or_table' => 'MetaData',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -737,6 +763,7 @@ class SettingController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $metaDataObj->id,
             'record_title' => $metaDataObj->data_key,
+            'record_link' => url('adminmedia/setting/savePropertyIdAndJsonFile'),
             'model_or_table' => 'MetaData',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -758,6 +785,7 @@ class SettingController extends Controller
             $recordUpdateHistoryData = [
                 'record_id' => $metaDataObj->id,
                 'record_title' => $metaDataObj->data_key,
+                'record_link' => url('adminmedia/setting/savePropertyIdAndJsonFile'),
                 'model_or_table' => 'MetaData',
                 'admin_id' => auth()->user()->id,
                 'ip' => request()->ip(),
@@ -789,6 +817,7 @@ class SettingController extends Controller
             $recordUpdateHistoryData = [
                 'record_id' => $metaDataObj->id,
                 'record_title' => $metaDataObj->data_key,
+                'record_link' => url('adminmedia/setting/banner_popup'),
                 'model_or_table' => 'MetaData',
                 'admin_id' => auth()->user()->id,
                 'ip' => request()->ip(),
@@ -806,6 +835,7 @@ class SettingController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $metaDataObj->id,
             'record_title' => $metaDataObj->data_key,
+            'record_link' => url('adminmedia/setting/banner_popup'),
             'model_or_table' => 'MetaData',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),

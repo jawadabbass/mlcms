@@ -80,6 +80,7 @@ class AssesmentQuestionController extends Controller
                 $recordUpdateHistoryData = [
                     'record_id' => $createObj->id,
                     'record_title' => $createObj->question,
+                    'record_link' => url('adminmedia/assesment_question/'.$createObj->id.'/edit'),
                     'model_or_table' => 'assesment_questions',
                     'admin_id' => auth()->user()->id,
                     'ip' => request()->ip(),
@@ -110,6 +111,7 @@ class AssesmentQuestionController extends Controller
                 $recordUpdateHistoryData = [
                     'record_id' => $createObj->id,
                     'record_title' => $createObj->question,
+                    'record_link' => url('adminmedia/assesment_question/'.$createObj->id.'/edit'),
                     'model_or_table' => 'assesment_questions',
                     'admin_id' => auth()->user()->id,
                     'ip' => request()->ip(),
@@ -132,6 +134,7 @@ class AssesmentQuestionController extends Controller
                 $recordUpdateHistoryData = [
                     'record_id' => $createObj->id,
                     'record_title' => $createObj->question,
+                    'record_link' => url('adminmedia/assesment_question/'.$createObj->id.'/edit'),
                     'model_or_table' => 'assesment_questions',
                     'admin_id' => auth()->user()->id,
                     'ip' => request()->ip(),
@@ -173,7 +176,7 @@ class AssesmentQuestionController extends Controller
                 $recordUpdateHistoryData = [
                     'record_id' => $updateObj->id,
                     'record_title' => $updateObj->title,
-                    'model_or_table' => 'assesment_questions',
+                    'record_link' => url('adminmedia/assesment_question/'.$createObj->id.'/edit')                   'model_or_table' => 'assesment_questions',
                     'admin_id' => auth()->user()->id,
                     'ip' => request()->ip(),
                     'draft' => json_encode($updateObj->toArray()),
@@ -203,7 +206,7 @@ class AssesmentQuestionController extends Controller
                 $recordUpdateHistoryData = [
                     'record_id' => $updateObj->id,
                     'record_title' => $updateObj->title,
-                    'model_or_table' => 'assesment_questions',
+                    'record_link' => url('adminmedia/assesment_question/'.$createObj->id.'/edit')                   'model_or_table' => 'assesment_questions',
                     'admin_id' => auth()->user()->id,
                     'ip' => request()->ip(),
                     'draft' => json_encode($updateObj->toArray()),
@@ -225,7 +228,7 @@ class AssesmentQuestionController extends Controller
                 $recordUpdateHistoryData = [
                     'record_id' => $updateObj->id,
                     'record_title' => $updateObj->title,
-                    'model_or_table' => 'assesment_questions',
+                    'record_link' => url('adminmedia/assesment_question/'.$createObj->id.'/edit')                   'model_or_table' => 'assesment_questions',
                     'admin_id' => auth()->user()->id,
                     'ip' => request()->ip(),
                     'draft' => json_encode($updateObj->toArray()),
@@ -268,7 +271,7 @@ class AssesmentQuestionController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $obj->id,
             'record_title' => $obj->title,
-            'model_or_table' => 'assesment_questions',
+            'record_link' => url('adminmedia/assesment_question/'.$createObj->id.'/edit')     'model_or_table' => 'assesment_questions',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
             'draft' => json_encode($obj->toArray()),

@@ -119,6 +119,7 @@ class BlogController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $blog->ID,
             'record_title' => $blog->title,
+            'record_link' => url('adminmedia/blog/'.$blog->ID.'/edit'),
             'model_or_table' => 'BlogPost',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -174,6 +175,7 @@ class BlogController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $blog->ID,
             'record_title' => $blog->title,
+            'record_link' => url('adminmedia/blog/'.$blog->ID.'/edit'),
             'model_or_table' => 'BlogPost',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -230,6 +232,7 @@ class BlogController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $blog->ID,
             'record_title' => $blog->title,
+            'record_link' => url('adminmedia/blog/'.$blog->ID.'/edit'),
             'model_or_table' => 'BlogPost',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -259,6 +262,7 @@ class BlogController extends Controller
             $recordUpdateHistoryData = [
                 'record_id' => $blog->ID,
                 'record_title' => $blog->title,
+                'record_link' => url('adminmedia/blog/'.$blog->ID.'/edit'),
                 'model_or_table' => 'BlogPost',
                 'admin_id' => auth()->user()->id,
                 'ip' => request()->ip(),

@@ -128,10 +128,18 @@
                 @csrf
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Add Blog Post</h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-
-                        </button>
+                        <div class="row" style="width: 100%;">
+                            <div class="col-md-6">
+                                <h4 class="modal-title">Add Blog Post</h4>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <a href="javascript:void(0);" onclick="showBlogRecordUpdateHistory();" class="go-back mr-4"
+                                    id="showBlogRecordUpdateHistoryLink"><i class="fas fa-bars" aria-hidden="true"></i>
+                                    History </a>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-body">
                         <div class=" card-body">
@@ -140,7 +148,8 @@
                                     <label>Categories</label><br />
                                     @foreach ($all_categories as $all_category)
                                         <div class="col-md-4">
-                                            <label><input type="checkbox" name="blog_cat[]" value="{{ $all_category->ID }}"
+                                            <label><input type="checkbox" name="blog_cat[]"
+                                                    value="{{ $all_category->ID }}"
                                                     id="blog_cat_{{ $all_category->ID }}">
                                                 {{ $all_category->cate_title }}</label>
                                         </div>
@@ -195,7 +204,12 @@
                                     </div>
                                 </div>
                             </div>
-                            @include('back.common_views.seo_fields', ['meta_title'=>'','meta_keywords'=>'','meta_description'=>'','canonical_url'=>''])
+                            @include('back.common_views.seo_fields', [
+                                'meta_title' => '',
+                                'meta_keywords' => '',
+                                'meta_description' => '',
+                                'canonical_url' => '',
+                            ])
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -219,6 +233,11 @@
         var csrfToken = $('meta[name="csrf-token"]').attr('content');
         var show_cropper = false;
         var save_method = "POST";
+
+        function showBlogRecordUpdateHistory() {
+            let id = $('#cms_id').val();
+            window.location.href = base_url + 'adminmedia/record-update-history/BlogPost/' + id;
+        }
     </script>
     <script type="text/javascript" src="{{ asset_storage('') . 'back/js/fileUploader.js' }}"></script>
     <script type="text/javascript">

@@ -2,8 +2,6 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Front\SiteMapController;
-use App\Http\Controllers\Back\SiteMapController as BackSiteMapController;
 use App\Http\Controllers\Front\AjaxController;
 use App\Http\Controllers\Front\BlogController;
 use App\Http\Controllers\Front\HomeController;
@@ -12,8 +10,9 @@ use App\Http\Controllers\Front\VideoController;
 use App\Http\Controllers\Back\MassMailController;
 use App\Http\Controllers\Front\GalleryController;
 use App\Http\Controllers\Front\InvoiceController;
-use App\Http\Controllers\Back\FrontUserController;
 use App\Http\Controllers\Front\ServiceController;
+use App\Http\Controllers\Front\SiteMapController;
+use App\Http\Controllers\Back\FrontUserController;
 use App\Http\Controllers\Front\ContactUsController;
 use App\Http\Controllers\Front\MailChimpController;
 use App\Http\Controllers\Front\TestimonialController;
@@ -43,7 +42,7 @@ use App\Http\Controllers\Back\MessageController as BackMessageController;
 use App\Http\Controllers\Back\ProductController as BackProductController;
 use App\Http\Controllers\Back\ServiceController as BackServiceController;
 use App\Http\Controllers\Back\SettingController as BackSettingController;
-use App\Http\Controllers\Back\GenerateSiteMapController as BackGenerateSiteMapController;
+use App\Http\Controllers\Back\SiteMapController as BackSiteMapController;
 use App\Http\Controllers\Back\AdminLogController as BackAdminLogController;
 use App\Http\Controllers\Back\ContactFormSetting as BackContactFormSetting;
 use App\Http\Controllers\Back\AdminUserController as BackAdminUserController;
@@ -60,11 +59,13 @@ use App\Http\Controllers\Back\PaymentOptionController as BackPaymentOptionContro
 use App\Http\Controllers\Back\BlogCategoriesController as BackBlogCategoriesController;
 use App\Http\Controllers\Back\JobApplicationController as BackJobApplicationController;
 use App\Http\Controllers\Back\PackageContentController as BackPackageContentController;
+use App\Http\Controllers\Back\GenerateSiteMapController as BackGenerateSiteMapController;
 use App\Http\Controllers\Back\PackageQuestionController as BackPackageQuestionController;
 use App\Http\Controllers\AdminAuth\VerificationController as AdminAuthVerificationController;
 use App\Http\Controllers\Back\AssesmentQuestionController as BackAssesmentQuestionController;
 use App\Http\Controllers\AdminAuth\ResetPasswordController as AdminAuthResetPasswordController;
 use App\Http\Controllers\AdminAuth\ForgotPasswordController as AdminAuthForgotPasswordController;
+use App\Http\Controllers\Back\RecordUpdateHistoryController as BackRecordUpdateHistoryController;
 use App\Http\Controllers\AdminAuth\ConfirmPasswordController as AdminAuthConfirmPasswordController;
 /*
 |--------------------------------------------------------------------------
@@ -395,6 +396,11 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     Route::get('site-map-sort-data', [BackSiteMapController::class, 'siteMapSortData'])->name('site.map.sort.data');
     Route::put('site-map-sort-update', [BackSiteMapController::class, 'siteMapSortUpdate'])->name('site.map.sort.update');
     Route::get('sort-site-map-by-title', [BackSiteMapController::class, 'sortSiteMapByTitle'])->name('sort.site.map.by.title');
+    /************************* */
+    /************************* */
+    Route::get('/record-update-history/{model_or_table}/{record_id}', [BackRecordUpdateHistoryController::class, 'index'])->name('record.update.history.index');
+    Route::get('/record-update-history/{recordUpdateHistoryObj}', [BackRecordUpdateHistoryController::class, 'show'])->name('record.update.history.show');
+    Route::get('fetch-record-update-history-ajax', [BackRecordUpdateHistoryController::class, 'fetchRecordUpdateHistoryAjax'])->name('fetch.record.update.history.ajax');
 });
 /************************************* */
 /************************************* */
@@ -461,6 +467,11 @@ Route::get('/clear-cache', function () {
     /*************************** */
     return 'Cache is cleared';
 });
+
+Route::get('show-all-routes', function () {
+    showAllRoutes();
+});
+
 Route::group(['middleware' => ['siteStatus', 'clearCache', 'ipmiddleware']], function () {
     Route::get('/{slug}', [HomeController::class, 'page']);
 });

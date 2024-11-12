@@ -27,11 +27,20 @@ $city_id = old('city_id', $city_id);
             <div class="row">
                 <div class="col-xs-12 col-md-12">
                     <div class="card p-2">
+                        <div class="card-header">
+                            <div class="row" style="width: 100%;">
+                                <div class="col-md-6">
+                                    <h3> Edit Client</h3>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <a href="{{ url('adminmedia/record-update-history/Client/' . $clientObj->id) }}" target="_blank" class=" mr-4"><i
+                                            class="fas fa-bars" aria-hidden="true"></i> History </a>
+                                    <a href="{{ url('adminmedia/manage_clients') }}" class=""><i class="fas fa-angle-double-left"
+                                            aria-hidden="true"></i> Back </a>
+                                </div>
+                            </div>
+                        </div>
                         <div class=" card-body">
-
-                            <h2> <i class="fas fa-plus-circle" aria-hidden="true"></i> Edit Client</h2>
-                            <br>
-
                             <form role="form" method="POST" id="register_action"
                                 action="{{ route('client_update_record_store', $clientObj->id) }}">
                                 {{ csrf_field() }}

@@ -106,6 +106,7 @@ class StateController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $stateObj->id,
             'record_title' => $stateObj->state_name,
+            'record_link' => url('adminmedia/states/'.$stateObj->id.'/edit'),
             'model_or_table' => 'State',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -162,6 +163,7 @@ class StateController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $stateObj->id,
             'record_title' => $stateObj->state_name,
+            'record_link' => url('adminmedia/states/'.$stateObj->id.'/edit'),
             'model_or_table' => 'State',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -200,6 +202,7 @@ class StateController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $stateObj->id,
             'record_title' => $stateObj->state_name,
+            'record_link' => url('adminmedia/states/'.$stateObj->id.'/edit'),
             'model_or_table' => 'State',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),

@@ -1,4 +1,4 @@
-@extends('back.layouts.app',['title'=>$title])
+@extends('back.layouts.app', ['title' => $title])
 @section('content')
     <div class="content-wrapper pl-3 pr-2">
         <!-- Content Header (Page header) -->
@@ -27,29 +27,41 @@
         <section class="content">
             <div class="row">
                 <div class="col-xs-12 col-md-12">
-                    <div class="card p-2">
-                        @include('flash::message')
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-                        <form action="{{ route('news.store') }}" method="POST" class="form-horizontal"
-                            enctype="multipart/form-data">
-                            @csrf
-                            <div class="form-body">
-                                <div class="row">
-                                    @include('back.news.form')
-                                    <div class="col-12 mb-4">
-                                        <button type="submit"  class="btn btn-success">Save</button>
-                                    </div>
+                    <div class="card p-3">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h3>Add News</h3>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    
                                 </div>
                             </div>
-                        </form>
+                        </div>
+                        <div class="card-body">
+                            @include('flash::message')
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                            <form action="{{ route('news.store') }}" method="POST" class="form-horizontal"
+                                enctype="multipart/form-data">
+                                @csrf
+                                <div class="form-body">
+                                    <div class="row">
+                                        @include('back.news.form')
+                                        <div class="col-12 mb-4">
+                                            <button type="submit" class="btn btn-success">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                     <!-- /.box -->
                     <!-- /.box -->
@@ -58,5 +70,5 @@
         </section>
         <!-- /.content -->
     </div>
-    
+
 @endsection

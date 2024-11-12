@@ -139,9 +139,18 @@
                 <input type="hidden" name="_method" value="PUT">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Edit Category</h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                        </button>
+                        <div class="row" style="width: 100%;">
+                            <div class="col-md-6">
+                                <h4 class="modal-title">Edit Category</h4>                        
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <a href="javascript:void(0);" onclick="showBlogCategoryRecordUpdateHistory();" class="go-back mr-4"
+                                    id="showBlogCategoryRecordUpdateHistoryLink"><i class="fas fa-bars" aria-hidden="true"></i>
+                                    History </a>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-body">
                         <div class=" card-body">
@@ -181,6 +190,10 @@
             });
             table = $('#example2').DataTable();
         });
+        function showBlogCategoryRecordUpdateHistory() {
+            let id = $('#category_id').val();
+            window.location.href = base_url + 'adminmedia/record-update-history/BlogCategory/' + id;
+        }
     </script>
     @if ($errors->any())
         <script type="text/javascript">

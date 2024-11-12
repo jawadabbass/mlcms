@@ -40,9 +40,7 @@ class MenuController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function create()
-	{
-	}
+	public function create() {}
 	/**
 	 * Store a newly created resource in storage.
 	 *
@@ -73,6 +71,21 @@ class MenuController extends Controller
 					$menu->show_no_follow = $request->show_no_follow;
 					$menu->is_external_link = ($request->is_external_link == 'Y') ? 'Y' : 'N';
 					$menu->save();
+
+					/******************************* */
+					/******************************* */
+					$recordUpdateHistoryData = [
+						'record_id' => $menu->id,
+						'record_title' => $menu->menu_label,
+						'record_link' => url('adminmedia/menus/' . $menu->id . '/edit'),
+						'model_or_table' => 'Menu',
+						'admin_id' => auth()->user()->id,
+						'ip' => request()->ip(),
+						'draft' => json_encode($menu->toArray()),
+					];
+					recordUpdateHistory($recordUpdateHistoryData);
+					/******************************* */
+					/******************************* */
 				}
 			}
 		} else {
@@ -101,6 +114,21 @@ class MenuController extends Controller
 			//			$this->Menu_model->update_menu_orders($key, $array_marge);
 			$menu->save();
 			$order_menu++;
+
+			/******************************* */
+			/******************************* */
+			$recordUpdateHistoryData = [
+				'record_id' => $menu->id,
+				'record_title' => $menu->menu_label,
+				'record_link' => url('adminmedia/menus/' . $menu->id . '/edit'),
+				'model_or_table' => 'Menu',
+				'admin_id' => auth()->user()->id,
+				'ip' => request()->ip(),
+				'draft' => json_encode($menu->toArray()),
+			];
+			recordUpdateHistory($recordUpdateHistoryData);
+			/******************************* */
+			/******************************* */
 		}
 		session(['message' => 'Sorted Successfully', 'type' => 'success']);
 		echo 'done';
@@ -139,6 +167,21 @@ class MenuController extends Controller
 			$menu->show_no_follow = $request->show_no_follow;
 			$menu->is_external_link = ($request->is_external_link == 'Y') ? 'Y' : 'N';
 			$menu->save();
+
+			/******************************* */
+			/******************************* */
+			$recordUpdateHistoryData = [
+				'record_id' => $menu->id,
+				'record_title' => $menu->menu_label,
+				'record_link' => url('adminmedia/menus/' . $menu->id . '/edit'),
+				'model_or_table' => 'Menu',
+				'admin_id' => auth()->user()->id,
+				'ip' => request()->ip(),
+				'draft' => json_encode($menu->toArray()),
+			];
+			recordUpdateHistory($recordUpdateHistoryData);
+			/******************************* */
+			/******************************* */
 		} else {
 			echo json_encode(array("status" => FALSE, 'errors' => $validator->errors()));
 			return;
@@ -155,7 +198,7 @@ class MenuController extends Controller
 	public function destroy($id)
 	{
 		Menu::destroy($id);
-		session(['message'=>'Deleted Successfully', 'type'=>'success']);
+		session(['message' => 'Deleted Successfully', 'type' => 'success']);
 		return json_encode(array("status" => TRUE));
 	}
 }

@@ -157,6 +157,7 @@ class ContactUsController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $contact->id,
             'record_title' => $contact->email,
+            'record_link' => url('adminmedia/contact_request/'.$contact->id.'/edit'),
             'model_or_table' => 'ContactUsRequest',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -199,6 +200,7 @@ class ContactUsController extends Controller
             $recordUpdateHistoryData = [
                 'record_id' => $clientObj->id,
                 'record_title' => $clientObj->email,
+                'record_link' => url('adminmedia/contact_request/'.$contact->id.'/edit'),
                 'model_or_table' => 'Client',
                 'admin_id' => auth()->user()->id,
                 'ip' => request()->ip(),
@@ -448,6 +450,7 @@ class ContactUsController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $contatUsRequestObj->id,
             'record_title' => $contatUsRequestObj->email,
+            'record_link' => url('adminmedia/contact_request/'.$contatUsRequestObj->id.'/edit'),
             'model_or_table' => 'ContactUsRequest',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),

@@ -72,12 +72,6 @@ class ModuleManageController extends Controller
             $new_status = 1;
             $menuTableStatus = 'Y';
         }
-        if ($moduleData->cms_module_id == 48) {
-            if ($moduleData->is_shared_on_pp == 'Yes') {
-                $newJobSts = ($new_status == 0) ? 0 : 1;
-                change_job_sts_on_pp($moduleData->id, $moduleData->pp_job_id, $newJobSts);
-            }
-        }
         $moduleData->sts = $new_status;
         $moduleData->save();
         $menu = Menu::where('menu_id', $id)->first();
@@ -92,6 +86,7 @@ class ModuleManageController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $moduleData->id,
             'record_title' => $cmsModuleObj->title . ' - ' . $moduleData->heading,
+            'record_link' => url('adminmedia/module/'.$cmsModuleObj->type.'/edit/'.$moduleData->id),
             'model_or_table' => 'CmsModuleData',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -127,6 +122,7 @@ class ModuleManageController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $moduleData->id,
             'record_title' => $cmsModuleObj->title . ' - ' . $moduleData->heading,
+            'record_link' => url('adminmedia/module/'.$cmsModuleObj->type.'/edit/'.$moduleData->id),
             'model_or_table' => 'CmsModuleData',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -191,6 +187,7 @@ class ModuleManageController extends Controller
             $recordUpdateHistoryData = [
                 'record_id' => $moduleData->id,
                 'record_title' => $cmsModuleObj->title . ' - ' . $moduleData->heading,
+                'record_link' => url('adminmedia/module/'.$cmsModuleObj->type.'/edit/'.$moduleData->id),
                 'model_or_table' => 'CmsModuleData',
                 'admin_id' => auth()->user()->id,
                 'ip' => request()->ip(),
@@ -322,6 +319,7 @@ class ModuleManageController extends Controller
             $recordUpdateHistoryData = [
                 'record_id' => $moduleData->id,
                 'record_title' => $cmsModuleObj->title . ' - ' . $moduleData->heading,
+                'record_link' => url('adminmedia/module/'.$cmsModuleObj->type.'/edit/'.$moduleData->id),
                 'model_or_table' => 'CmsModuleData',
                 'admin_id' => auth()->user()->id,
                 'ip' => request()->ip(),
@@ -598,7 +596,7 @@ class ModuleManageController extends Controller
         // FIles
         $filesObj = $this->filesObj();
         $filesExts = filesExtsAllowed();
-        $widget = \DB::table('widgets')
+        $widget = DB::table('widgets')
             ->whereRaw("find_in_set('" . $id . "',pages_id)")
             ->get();
         $templates = Template::all();
@@ -618,18 +616,18 @@ class ModuleManageController extends Controller
         $ID = 0;
         if (isset($_GET['url'])) {
             $url = trim($_GET['url']);
-            $ID = \DB::table('wp_postmeta')
+            $ID = DB::table('wp_postmeta')
                 ->where('meta_key', 'custom_permalink')
                 ->where('meta_value', $url)
                 ->value('post_id');
         }
-        $old_posts = \DB::table('wp_posts')->where('ID', $ID)->orderBy('ID', 'ASC')->first();
-        $old_postmeta = \DB::table('wp_postmeta')->where('post_id', $ID)->get();
+        $old_posts = DB::table('wp_posts')->where('ID', $ID)->orderBy('ID', 'ASC')->first();
+        $old_postmeta = DB::table('wp_postmeta')->where('post_id', $ID)->get();
         $act_url = '';
-        $act_url = \DB::table('wp_postmeta')->where('meta_key', 'custom_permalink')->where('post_id', $ID)->value('meta_value');
-        $meta_title = \DB::table('wp_postmeta')->where('meta_key', '_yoast_wpmeta_title')->where('post_id', $ID)->value('meta_value');
-        $meta_description = \DB::table('wp_postmeta')->where('meta_key', '_yoast_wpseo_metadesc')->where('post_id', $ID)->value('meta_value');
-        $meta_keywords = \DB::table('wp_postmeta')->where('meta_key', '_yoast_wpseo_metakeywords')->where('post_id', $ID)->value('meta_value');
+        $act_url = DB::table('wp_postmeta')->where('meta_key', 'custom_permalink')->where('post_id', $ID)->value('meta_value');
+        $meta_title = DB::table('wp_postmeta')->where('meta_key', '_yoast_wpmeta_title')->where('post_id', $ID)->value('meta_value');
+        $meta_description = DB::table('wp_postmeta')->where('meta_key', '_yoast_wpseo_metadesc')->where('post_id', $ID)->value('meta_value');
+        $meta_keywords = DB::table('wp_postmeta')->where('meta_key', '_yoast_wpseo_metakeywords')->where('post_id', $ID)->value('meta_value');
         if (DB::table('cms_module_datas')->where('post_slug', $act_url)->exists()) {
             cp('ERROR: EXISTS');
         }
@@ -658,13 +656,13 @@ class ModuleManageController extends Controller
             ->get();
         foreach ($blogArr as $key => $value) {
             $ID = $value->ID;
-            $old_posts = \DB::table('wp_posts')->where('ID', $ID)->orderBy('ID', 'ASC')->first();
-            $old_postmeta = \DB::table('wp_postmeta')->where('post_id', $ID)->get();
+            $old_posts = DB::table('wp_posts')->where('ID', $ID)->orderBy('ID', 'ASC')->first();
+            $old_postmeta = DB::table('wp_postmeta')->where('post_id', $ID)->get();
             $act_url = '';
-            $act_url = \DB::table('wp_postmeta')->where('meta_key', 'custom_permalink')->where('post_id', $ID)->value('meta_value');
-            $meta_title = \DB::table('wp_postmeta')->where('meta_key', '_yoast_wpmeta_title')->where('post_id', $ID)->value('meta_value');
-            $meta_description = \DB::table('wp_postmeta')->where('meta_key', '_yoast_wpseo_metadesc')->where('post_id', $ID)->value('meta_value');
-            $meta_keywords = \DB::table('wp_postmeta')->where('meta_key', '_yoast_wpseo_metakeywords')->where('post_id', $ID)->value('meta_value');
+            $act_url = DB::table('wp_postmeta')->where('meta_key', 'custom_permalink')->where('post_id', $ID)->value('meta_value');
+            $meta_title = DB::table('wp_postmeta')->where('meta_key', '_yoast_wpmeta_title')->where('post_id', $ID)->value('meta_value');
+            $meta_description = DB::table('wp_postmeta')->where('meta_key', '_yoast_wpseo_metadesc')->where('post_id', $ID)->value('meta_value');
+            $meta_keywords = DB::table('wp_postmeta')->where('meta_key', '_yoast_wpseo_metakeywords')->where('post_id', $ID)->value('meta_value');
             $arr = [];
             $arr['title'] = $old_posts->post_title;
             // $arr['news_date_time']=$old_posts->news_date_time;
@@ -728,6 +726,7 @@ class ModuleManageController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $data->id,
             'record_title' => $cmsModuleObj->title . ' - ' . $data->heading,
+            'record_link' => url('adminmedia/module/'.$cmsModuleObj->type.'/edit/'.$data->id),
             'model_or_table' => 'CmsModuleData',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),

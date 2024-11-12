@@ -25,30 +25,45 @@
         <section class="content">
             <div class="row">
                 <div class="col-xs-12 col-md-12">
-                    <div class="card p-2">
-                        @include('flash::message')
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-                        <form action="{{ route('news.update', ['newsObj' => $newsObj->id]) }}"
-                            method="POST" class="form-horizontal" enctype="multipart/form-data">
-                            @csrf
-                            @method('PUT')
-                            <div class="form-body">
-                                <div class="row">
-                                    @include('back.news.form')
-                                    <div class="col-12 mb-4">
-                                        <button type="submit"  class="btn btn-success">Update</button>
-                                    </div>
+                    <div class="card p-3">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h3>Edit News</h3>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <a href="{{ url('adminmedia/record-update-history/News/' . $newsObj->id) }}"
+                                        target="_blank" class=""><i class="fas fa-bars" aria-hidden="true"></i>
+                                        History
+                                    </a>
                                 </div>
                             </div>
-                        </form>
+                        </div>
+                        <div class="card-body">
+                            @include('flash::message')
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                            <form action="{{ route('news.update', ['newsObj' => $newsObj->id]) }}" method="POST"
+                                class="form-horizontal" enctype="multipart/form-data">
+                                @csrf
+                                @method('PUT')
+                                <div class="form-body">
+                                    <div class="row">
+                                        @include('back.news.form')
+                                        <div class="col-12 mb-4">
+                                            <button type="submit" class="btn btn-success">Update</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                     <!-- /.box -->
                     <!-- /.box -->
@@ -57,5 +72,5 @@
         </section>
         <!-- /.content -->
     </div>
-    
+
 @endsection

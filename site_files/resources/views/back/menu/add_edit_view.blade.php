@@ -4,14 +4,22 @@
             @csrf
             <div class="modal-content">
                 <div class="modal-header">
-
-                    <h4 class="modal-title">Menu Form</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="row" style="width: 100%;">
+                        <div class="col-md-6">
+                            <h4 class="modal-title">Menu Form</h4>
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <a href="javascript:void(0);" onclick="showMenuRecordUpdateHistory();"
+                                class="go-back mr-4" id="showMenuRecordUpdateHistoryLink"><i class="fas fa-bars" aria-hidden="true"></i> History </a>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-body form">
                     <div class=" card-body">
                         <input type="hidden" value="" name="id" />
-                        <input type="hidden" value="" name="menu_actual_id" />
+                        <input type="hidden" value="" name="menu_actual_id" id="menu_actual_id" />
                         <div class="form-body">
                             <div>
                                 <label class="form-label">Menu Label</label>
@@ -34,8 +42,9 @@
                                     <label class="form-label">Show this page in</label><br>
                                     @if ($menu_types)
                                         @foreach ($menu_types as $meny_type)
-                                            <label class="form-label"><input name="menu_type[]" value="{{ $meny_type->id }}"
-                                                    type="checkbox" /> {{ ucfirst($meny_type->menu_type) }}
+                                            <label class="form-label"><input name="menu_type[]"
+                                                    value="{{ $meny_type->id }}" type="checkbox" />
+                                                {{ ucfirst($meny_type->menu_type) }}
                                                 Menu</label>
                                         @endforeach
                                     @endif

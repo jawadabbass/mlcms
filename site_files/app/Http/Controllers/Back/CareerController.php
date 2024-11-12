@@ -122,6 +122,7 @@ class CareerController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $careerObj->id,
             'record_title' => $careerObj->title,
+            'record_link' => url('adminmedia/career/'.$careerObj->id.'/edit'),
             'model_or_table' => 'Career',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -184,6 +185,7 @@ class CareerController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $careerObj->id,
             'record_title' => $careerObj->title,
+            'record_link' => url('adminmedia/career/'.$careerObj->id.'/edit'),
             'model_or_table' => 'Career',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -237,6 +239,7 @@ class CareerController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $careerObj->id,
             'record_title' => $careerObj->title,
+            'record_link' => url('adminmedia/career/'.$careerObj->id.'/edit'),
             'model_or_table' => 'Career',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),

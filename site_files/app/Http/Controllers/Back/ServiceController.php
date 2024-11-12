@@ -154,6 +154,7 @@ class ServiceController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $serviceObj->id,
             'record_title' => $serviceObj->title,
+            'record_link' => url('adminmedia/services/'.$serviceObj->id.'/edit'),
             'model_or_table' => 'Service',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -217,6 +218,7 @@ class ServiceController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $serviceObj->id,
             'record_title' => $serviceObj->title,
+            'record_link' => url('adminmedia/services/'.$serviceObj->id.'/edit'),
             'model_or_table' => 'Service',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -243,6 +245,7 @@ class ServiceController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $serviceObj->id,
             'record_title' => $serviceObj->title,
+            'record_link' => url('adminmedia/services/'.$serviceObj->id.'/edit'),
             'model_or_table' => 'Service',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -265,6 +268,7 @@ class ServiceController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $serviceObj->id,
             'record_title' => $serviceObj->title,
+            'record_link' => url('adminmedia/services/'.$serviceObj->id.'/edit'),
             'model_or_table' => 'Service',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),

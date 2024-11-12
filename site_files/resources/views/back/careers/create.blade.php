@@ -29,15 +29,27 @@
                 <div class="col-xs-12 col-md-12">
                     <div class="card p-2">
                         @include('flash::message')
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h3>Add Career</h3>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    
+                                </div>
                             </div>
-                        @endif
+                        </div>
+                        <div class="card-body">
+                            @include('flash::message')
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                         <form action="{{ route('career.store') }}" method="POST" class="form-horizontal"
                             enctype="multipart/form-data">
                             @csrf
@@ -50,6 +62,7 @@
                                 </div>
                             </div>
                         </form>
+                    </div>
                     </div>
                     <!-- /.box -->
                     <!-- /.box -->

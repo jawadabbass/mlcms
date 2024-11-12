@@ -61,7 +61,8 @@ class ContactPagesController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $setting->ID,
             'record_title' => '',
-            'model_or_table' => 'Setting',
+            'record_link' => url('adminmedia/manage_contact/'.$setting->ID.'/edit'),
+			'model_or_table' => 'Setting',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
             'draft' => json_encode($setting->toArray()),
@@ -100,7 +101,8 @@ class ContactPagesController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $setting->ID,
             'record_title' => 'google_map_status',
-            'model_or_table' => 'Setting',
+            'record_link' => url('adminmedia/manage_contact/'.$setting->ID.'/edit'),
+			'model_or_table' => 'Setting',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
             'draft' => json_encode($setting->toArray()),
@@ -140,7 +142,8 @@ class ContactPagesController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $setting->ID,
             'record_title' => '',
-            'model_or_table' => 'Setting',
+            'record_link' => url('adminmedia/manage_contact/'.$setting->ID.'/edit'),
+			'model_or_table' => 'Setting',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
             'draft' => json_encode($setting->toArray()),
@@ -193,7 +196,8 @@ class ContactPagesController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $setting->ID,
             'record_title' => '',
-            'model_or_table' => 'Setting',
+            'record_link' => url('adminmedia/manage_contact/'.$setting->ID.'/edit'),
+			'model_or_table' => 'Setting',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
             'draft' => json_encode($setting->toArray()),
@@ -247,7 +251,8 @@ class ContactPagesController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $setting->ID,
             'record_title' => '',
-            'model_or_table' => 'Setting',
+            'record_link' => url('adminmedia/manage_contact/'.$setting->ID.'/edit'),
+			'model_or_table' => 'Setting',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
             'draft' => json_encode($setting->toArray()),

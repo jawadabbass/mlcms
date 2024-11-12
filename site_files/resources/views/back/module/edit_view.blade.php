@@ -19,16 +19,28 @@
             </div>
         </section>
         <section class="content p-0">
-             <form action="{{ admin_url() . 'module/' . $module->id . '/' . $moduleData->id }}" id="form_edit_1"
+            <form action="{{ admin_url() . 'module/' . $module->id . '/' . $moduleData->id }}" id="form_edit_1"
                 method="post" class="form-horizontal" enctype="multipart/form-data">
                 @csrf
                 @php $style_hide="style='dispaly:none'"; @endphp
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 id="modal_form_title" class="modal-title"> Edit {{ ucwords($module->term) }}
-                        </h4>
-                        <a href="{{ admin_url() . 'module/' . $module->type }}" class="go-back"><i
-                                class="fas fa-angle-double-left" aria-hidden="true"></i> Back </a>
+                        <div class="row" style="width: 100%;">
+                            <div class="col-md-6">
+                                <h4 id="modal_form_title" class="modal-title"> Edit {{ ucwords($module->term) }}
+                                </h4>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <a href="{{ admin_url() . 'record-update-history/CmsModuleData/' . $moduleData->id }}"
+                                    class="go-back mr-4"><i class="fas fa-bars" aria-hidden="true"></i> History </a>
+
+                                    <a href="{{ admin_url() . 'module/' . $module->type }}" class="go-back"><i
+                                        class="fas fa-angle-double-left" aria-hidden="true"></i> Back </a>
+
+                            </div>
+                        </div>
+
+
                     </div>
                     <div class="modal-body form">
                         <div class=" card-body">
@@ -85,8 +97,7 @@
                                     <label class="form-label">{{ ucwords($module->term) }} Description</label>
                                     <label for="">
                                         <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#media_image"
-                                            class="btn btn-info"> <i class="fas fa-cloud-download"
-                                                aria-hidden="true"></i>
+                                            class="btn btn-info"> <i class="fas fa-cloud-download" aria-hidden="true"></i>
                                             Insert Image from Media</a>
                                         <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#media_files"
                                             class="btn btn-warning"> <i class="fas fa-cloud-download"
@@ -284,7 +295,12 @@
                             <br>
                             <div id="page_seo_option"
                                 style="display: {{ $module->show_seo_field == 1 ? 'block' : 'none' }}">
-                                @include('back.common_views.seo_fields', ['meta_title'=>$moduleData->meta_title,'meta_keywords'=>$moduleData->meta_keywords,'meta_description'=>$moduleData->meta_description,'canonical_url'=>$moduleData->canonical_url])
+                                @include('back.common_views.seo_fields', [
+                                    'meta_title' => $moduleData->meta_title,
+                                    'meta_keywords' => $moduleData->meta_keywords,
+                                    'meta_description' => $moduleData->meta_description,
+                                    'canonical_url' => $moduleData->canonical_url,
+                                ])
                             </div>
                         </div>
                     </div>
@@ -298,9 +314,9 @@
                             class="btn btn-danger" data-bs-dismiss="modal"><i class="fas fa-angle-double-left"
                                 aria-hidden="true"></i> Back </button></a>
                 </div>
-                </div>
-            </form>
-        </section>
+    </div>
+    </form>
+    </section>
     </div>
     <!-- /.modal -->
     <div class="modal fade" id="cropper_form" role="dialog">
@@ -366,7 +382,7 @@
 @endsection
 
 @section('beforeBodyClose')
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
     <script type="text/javascript" src="{{ asset_storage('') . 'module/module/admin/js/module.js' }}"></script>
     <!-- Filer -->
     <link rel="stylesheet" href="{{ asset_storage('') . 'module/module/admin/crop-avatar/cropper.css' }}">
@@ -388,6 +404,7 @@
                 $(this).attr("type", 'date').trigger('click');
             });
         });
+
         function bind_cropper_preview() {
             var $previews = $('.preview');
             var $image = $('#image');
@@ -448,6 +465,7 @@
                 });
             });
         }
+
         function save_cropped_img() {
             var json = [
                 '{"x":' + $('#crop_x').val(),
@@ -471,6 +489,7 @@
                 error: function(jqXHR, textStatus, errorThrown) {}
             });
         }
+
         function add_content() {
             reset_model();
             save_method = 'add';
@@ -478,6 +497,7 @@
             var my_editor_id = 'editor1';
             tinyMCE.get('editor1').setContent('');
         }
+
         function save() {
             var url;
             var content = tinyMCE.get('editor1').getContent();
@@ -529,6 +549,7 @@
                 }
             });
         }
+
         function delete_content(id) {
             $('.message-container').fadeOut(3000);
             var mess_alert = '';
@@ -559,6 +580,7 @@
                 });
             }
         }
+
         function remove_featured_img(id) {
             if (confirm("Are you sure you want to delete this {{ ucwords($module->term) }} Image?")) {
                 url = "{{ base_url() }}adminmedia/modul/remove_image?id=" + id + '&&type={{ $module->type }}';

@@ -76,6 +76,7 @@ class FrontUserController extends Controller
 		$recordUpdateHistoryData = [
 			'record_id' => $user->id,
 			'record_title' => $user->email,
+			'record_link' => url('adminmedia/user/front/'.$user->id.'/edit'),
 			'model_or_table' => 'User',
 			'admin_id' => auth()->user()->id,
 			'ip' => request()->ip(),

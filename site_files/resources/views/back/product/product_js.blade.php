@@ -57,6 +57,7 @@
             }
         });
     }
+
     function save() {
         let url;
         if (save_method === 'add') {
@@ -170,7 +171,8 @@
                         console.log(data);
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
-                        alert('Error adding / update data ' + ' ' + textStatus + ' ' + errorThrown);
+                        alert('Error adding / update data ' + ' ' + textStatus + ' ' +
+                            errorThrown);
                         console.log(jqXHR);
                         console.log(textStatus);
                         console.log(errorThrown);
@@ -185,7 +187,12 @@
         var myurl = base_url + 'adminmedia/products/' + id + '?status=' + current_status;
         $.get(myurl, function(sts) {
             alertme('<i class="fas fa-check" aria-hidden="true"></i> Done Successfully ',
-                        'success', true, 1500);
+                'success', true, 1500);
         });
+    }
+
+    function showProductRecordUpdateHistory() {
+        let id = $('#product_id').val();
+        window.location.href = base_url + 'adminmedia/record-update-history/Product/' + id;
     }
 </script>

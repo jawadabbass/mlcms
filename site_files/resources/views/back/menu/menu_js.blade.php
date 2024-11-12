@@ -40,9 +40,11 @@
         if (positions === "footer") {
             $('#footer_menu').prop('checked', true);
         }
+        $('#showMenuRecordUpdateHistoryLink').hide();
     }
 
     function edit_menu(menu_id, id) {
+
         save_method = 'update';
         $("#hide_types").hide();
         // reset_model(save_method);
@@ -82,6 +84,8 @@
                 }
                 $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
                 $('.modal-title').text('Edit Menu'); // Set title to Bootstrap modal title
+
+                $('#showMenuRecordUpdateHistoryLink').show();
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 alert('Error get data from ajax');
@@ -190,5 +194,10 @@
                 }
             });
         }
+    }
+
+    function showMenuRecordUpdateHistory() {
+        let id = $('#menu_actual_id').val();
+        window.location.href = base_url + 'adminmedia/record-update-history/Menu/' + id;
     }
 </script>

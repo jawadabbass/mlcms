@@ -140,6 +140,7 @@ class ClientController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $client->id,
             'record_title' => $client->email,
+            'record_link' => url('adminmedia/manage_clients/'.$client->id.'/edit'),
             'model_or_table' => 'Client',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -181,6 +182,7 @@ class ClientController extends Controller
             $recordUpdateHistoryData = [
                 'record_id' => $clientObj->id,
                 'record_title' => $clientObj->email,
+                'record_link' => url('adminmedia/manage_clients/'.$clientObj->id.'/edit'),
                 'model_or_table' => 'Client',
                 'admin_id' => auth()->user()->id,
                 'ip' => request()->ip(),
@@ -264,6 +266,7 @@ class ClientController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $client->id,
             'record_title' => $client->email,
+            'record_link' => url('adminmedia/manage_clients/'.$client->id.'/edit'),
             'model_or_table' => 'Client',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -561,6 +564,7 @@ class ClientController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $client->id,
             'record_title' => $client->email,
+            'record_link' => url('adminmedia/manage_clients/'.$client->id.'/edit'),
             'model_or_table' => 'Client',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),

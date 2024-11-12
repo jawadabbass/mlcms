@@ -120,6 +120,7 @@ class NewsController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $newsObj->id,
             'record_title' => $newsObj->title,
+            'record_link' => url('adminmedia/news/'.$newsObj->id.'/edit'),
             'model_or_table' => 'News',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -180,6 +181,7 @@ class NewsController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $newsObj->id,
             'record_title' => $newsObj->title,
+            'record_link' => url('adminmedia/news/'.$newsObj->id.'/edit'),
             'model_or_table' => 'News',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),

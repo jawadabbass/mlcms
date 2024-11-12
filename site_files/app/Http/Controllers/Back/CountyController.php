@@ -109,6 +109,7 @@ class CountyController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $countyObj->id,
             'record_title' => $countyObj->county_name,
+            'record_link' => url('adminmedia/counties/'.$countyObj->id.'/edit'),
             'model_or_table' => 'County',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -165,6 +166,7 @@ class CountyController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $countyObj->id,
             'record_title' => $countyObj->county_name,
+            'record_link' => url('adminmedia/counties/'.$countyObj->id.'/edit'),
             'model_or_table' => 'County',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -202,6 +204,7 @@ class CountyController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $countyObj->id,
             'record_title' => $countyObj->county_name,
+            'record_link' => url('adminmedia/counties/'.$countyObj->id.'/edit'),
             'model_or_table' => 'County',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),

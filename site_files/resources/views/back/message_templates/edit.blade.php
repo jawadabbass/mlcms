@@ -31,8 +31,19 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card mb-8">
+                        <div class="card-header">                            
+                            <div class="row" style="width: 100%;">
+                                <div class="col-md-6">
+                                    <h3> Edit Message</h3>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <a href="{{ url('adminmedia/record-update-history/MessageTemplate/' . $data->id) }}" target="_blank" class=""><i
+                                            class="fas fa-bars" aria-hidden="true"></i> History </a>                                        
+                                </div>
+                            </div>
+                        </div>
+                        
                         <div class="card-body">
-                            <div class="card-title mb-3">Edit Message</div>
                             <form method="post" action="{{ route('custom_msg_update', $data->id) }}"
                                 enctype="multipart/form-data">
                                 @csrf

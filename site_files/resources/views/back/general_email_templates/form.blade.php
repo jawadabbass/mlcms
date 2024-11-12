@@ -1,5 +1,9 @@
 <input type="hidden" name="id" value="{{ $generalEmailTemplateObj->id }}" />
 <input type="hidden" name="dynamic_values" value="{{ $generalEmailTemplateObj->dynamic_values }}" />
+<div class="col-12 mb-4 text-right">
+    <a href="{{ url('adminmedia/record-update-history/GeneralEmailTemplate/' . $generalEmailTemplateObj->id) }}" target="_blank" class=" mr-4"><i
+        class="fas fa-bars" aria-hidden="true"></i> History </a>
+</div>
 <div class="col-12 mb-4">
     <label>Template Name</label>
     <input id="template_name" name="template_name" type="text" placeholder="Template Name"

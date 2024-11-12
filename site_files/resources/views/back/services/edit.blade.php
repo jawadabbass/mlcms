@@ -14,7 +14,8 @@
                         <li class="active">
                             <a href="{{ base_url() . 'adminmedia/services' }}">
                                 Services Management
-                            </a></li>
+                            </a>
+                        </li>
                     </ol>
                 </div>
                 <div class="col-md-7 col-sm-12">
@@ -27,29 +28,44 @@
             <div class="row">
                 <div class="col-xs-12 col-md-12">
                     <div class="card p-3">
-                        @include('flash::message')
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-                        <form action="{{ route('services.update', ['serviceObj' => $serviceObj->id]) }}" method="POST"
-                            class="form-horizontal" enctype="multipart/form-data">
-                            @csrf
-                            @method('PUT')
-                            <div class="form-body">
-                                <div class="row">
-                                    @include('back.services.form')
-                                    <div class="col-12 mb-4">
-                                        <button type="submit" class="btn btn-success">Update</button>
-                                    </div>
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h3>Edit Service</h3>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <a href="{{ url('adminmedia/record-update-history/Service/' . $serviceObj->id) }}"
+                                        target="_blank" class=""><i class="fas fa-bars" aria-hidden="true"></i>
+                                        History
+                                    </a>
                                 </div>
                             </div>
-                        </form>
+                        </div>
+                        <div class="card-body">
+                            @include('flash::message')
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                            <form action="{{ route('services.update', ['serviceObj' => $serviceObj->id]) }}" method="POST"
+                                class="form-horizontal" enctype="multipart/form-data">
+                                @csrf
+                                @method('PUT')
+                                <div class="form-body">
+                                    <div class="row">
+                                        @include('back.services.form')
+                                        <div class="col-12 mb-4">
+                                            <button type="submit" class="btn btn-success">Update</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                     <!-- /.card p-3 -->
                     <!-- /.card p-3 -->

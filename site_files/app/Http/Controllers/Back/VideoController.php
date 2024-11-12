@@ -59,6 +59,7 @@ class VideoController extends Controller
             $recordUpdateHistoryData = [
                 'record_id' => $video->ID,
                 'record_title' => $video->heading,
+                'record_link' => url('adminmedia/videos/edit/'.$video->ID),
                 'model_or_table' => 'Video',
                 'admin_id' => auth()->user()->id,
                 'ip' => request()->ip(),
@@ -98,6 +99,7 @@ class VideoController extends Controller
     public function post_add_video(Request $request)
     {
         $request->validate([
+            'heading' => 'required',
             'fimg' => 'mimes:jpg,png,jpeg'
         ]);
         $img_name = '';
@@ -148,6 +150,7 @@ class VideoController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $Video->ID,
             'record_title' => $Video->heading,
+            'record_link' => url('adminmedia/videos/edit/'.$Video->ID),
             'model_or_table' => 'Video',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -160,6 +163,11 @@ class VideoController extends Controller
     }
     public function post_edit_video(Request $request)
     {
+        $request->validate([
+            'heading' => 'required',
+            'fimg' => 'mimes:jpg,png,jpeg'
+        ]);
+        
         $idd = (int)$request->idd;
         if ($idd == 0) {
             abort(404);
@@ -224,6 +232,7 @@ class VideoController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $Video->ID,
             'record_title' => $Video->heading,
+            'record_link' => url('adminmedia/videos/edit/'.$Video->ID),
             'model_or_table' => 'Video',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),

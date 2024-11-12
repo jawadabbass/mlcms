@@ -320,11 +320,8 @@ function recordUpdateHistory($data)
 {
     deleteExtraRecordUpdateHistory($data);
     $history = new RecordUpdateHistory();
-    $history->record_id = $data['record_id'];
-    $history->record_title = $data['record_title'];
-    $history->model_or_table = $data['model_or_table'];
-    $history->admin_id = $data['admin_id'];
-    $history->ip = $data['ip'];
-    $history->draft = $data['draft'];
+    foreach($data as $key=>$value){
+        $history->{$key} = $value;
+    }
     $history->save();
 }
