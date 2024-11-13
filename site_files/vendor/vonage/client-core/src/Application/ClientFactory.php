@@ -1,18 +1,12 @@
 <?php
 
-/**
- * Vonage Client Library for PHP
- *
- * @copyright Copyright (c) 2016-2020 Vonage, Inc. (http://vonage.com)
- * @license https://github.com/Vonage/vonage-php-sdk-core/blob/master/LICENSE.txt Apache License 2.0
- */
-
 declare(strict_types=1);
 
 namespace Vonage\Application;
 
 use Psr\Container\ContainerInterface;
 use Vonage\Client\APIResource;
+use Vonage\Client\Credentials\Handler\BasicHandler;
 
 class ClientFactory
 {
@@ -22,7 +16,8 @@ class ClientFactory
         $api = $container->make(APIResource::class);
         $api
             ->setBaseUri('/v2/applications')
-            ->setCollectionName('applications');
+            ->setCollectionName('applications')
+            ->setAuthHandlers(new BasicHandler());
 
         return new Client($api, new Hydrator());
     }

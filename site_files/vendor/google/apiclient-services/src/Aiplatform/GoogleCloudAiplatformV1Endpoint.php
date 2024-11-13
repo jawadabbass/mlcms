@@ -20,10 +20,20 @@ namespace Google\Service\Aiplatform;
 class GoogleCloudAiplatformV1Endpoint extends \Google\Collection
 {
   protected $collection_key = 'deployedModels';
+  protected $clientConnectionConfigType = GoogleCloudAiplatformV1ClientConnectionConfig::class;
+  protected $clientConnectionConfigDataType = '';
   /**
    * @var string
    */
   public $createTime;
+  /**
+   * @var string
+   */
+  public $dedicatedEndpointDns;
+  /**
+   * @var bool
+   */
+  public $dedicatedEndpointEnabled;
   protected $deployedModelsType = GoogleCloudAiplatformV1DeployedModel::class;
   protected $deployedModelsDataType = 'array';
   /**
@@ -65,6 +75,14 @@ class GoogleCloudAiplatformV1Endpoint extends \Google\Collection
   protected $privateServiceConnectConfigType = GoogleCloudAiplatformV1PrivateServiceConnectConfig::class;
   protected $privateServiceConnectConfigDataType = '';
   /**
+   * @var bool
+   */
+  public $satisfiesPzi;
+  /**
+   * @var bool
+   */
+  public $satisfiesPzs;
+  /**
    * @var int[]
    */
   public $trafficSplit;
@@ -73,6 +91,20 @@ class GoogleCloudAiplatformV1Endpoint extends \Google\Collection
    */
   public $updateTime;
 
+  /**
+   * @param GoogleCloudAiplatformV1ClientConnectionConfig
+   */
+  public function setClientConnectionConfig(GoogleCloudAiplatformV1ClientConnectionConfig $clientConnectionConfig)
+  {
+    $this->clientConnectionConfig = $clientConnectionConfig;
+  }
+  /**
+   * @return GoogleCloudAiplatformV1ClientConnectionConfig
+   */
+  public function getClientConnectionConfig()
+  {
+    return $this->clientConnectionConfig;
+  }
   /**
    * @param string
    */
@@ -86,6 +118,34 @@ class GoogleCloudAiplatformV1Endpoint extends \Google\Collection
   public function getCreateTime()
   {
     return $this->createTime;
+  }
+  /**
+   * @param string
+   */
+  public function setDedicatedEndpointDns($dedicatedEndpointDns)
+  {
+    $this->dedicatedEndpointDns = $dedicatedEndpointDns;
+  }
+  /**
+   * @return string
+   */
+  public function getDedicatedEndpointDns()
+  {
+    return $this->dedicatedEndpointDns;
+  }
+  /**
+   * @param bool
+   */
+  public function setDedicatedEndpointEnabled($dedicatedEndpointEnabled)
+  {
+    $this->dedicatedEndpointEnabled = $dedicatedEndpointEnabled;
+  }
+  /**
+   * @return bool
+   */
+  public function getDedicatedEndpointEnabled()
+  {
+    return $this->dedicatedEndpointEnabled;
   }
   /**
    * @param GoogleCloudAiplatformV1DeployedModel[]
@@ -254,6 +314,34 @@ class GoogleCloudAiplatformV1Endpoint extends \Google\Collection
   public function getPrivateServiceConnectConfig()
   {
     return $this->privateServiceConnectConfig;
+  }
+  /**
+   * @param bool
+   */
+  public function setSatisfiesPzi($satisfiesPzi)
+  {
+    $this->satisfiesPzi = $satisfiesPzi;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzi()
+  {
+    return $this->satisfiesPzi;
+  }
+  /**
+   * @param bool
+   */
+  public function setSatisfiesPzs($satisfiesPzs)
+  {
+    $this->satisfiesPzs = $satisfiesPzs;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzs()
+  {
+    return $this->satisfiesPzs;
   }
   /**
    * @param int[]

@@ -54,6 +54,10 @@ class GoogleCloudSecuritycenterV2Finding extends \Google\Collection
    * @var string
    */
   public $createTime;
+  protected $dataAccessEventsType = GoogleCloudSecuritycenterV2DataAccessEvent::class;
+  protected $dataAccessEventsDataType = 'array';
+  protected $dataFlowEventsType = GoogleCloudSecuritycenterV2DataFlowEvent::class;
+  protected $dataFlowEventsDataType = 'array';
   protected $databaseType = GoogleCloudSecuritycenterV2Database::class;
   protected $databaseDataType = '';
   /**
@@ -78,6 +82,8 @@ class GoogleCloudSecuritycenterV2Finding extends \Google\Collection
    * @var string
    */
   public $findingClass;
+  protected $groupMembershipsType = GoogleCloudSecuritycenterV2GroupMembership::class;
+  protected $groupMembershipsDataType = 'array';
   protected $iamBindingsType = GoogleCloudSecuritycenterV2IamBinding::class;
   protected $iamBindingsDataType = 'array';
   protected $indicatorType = GoogleCloudSecuritycenterV2Indicator::class;
@@ -100,6 +106,8 @@ class GoogleCloudSecuritycenterV2Finding extends \Google\Collection
    * @var string
    */
   public $mute;
+  protected $muteInfoType = GoogleCloudSecuritycenterV2MuteInfo::class;
+  protected $muteInfoDataType = '';
   /**
    * @var string
    */
@@ -150,6 +158,8 @@ class GoogleCloudSecuritycenterV2Finding extends \Google\Collection
    * @var string
    */
   public $state;
+  protected $toxicCombinationType = GoogleCloudSecuritycenterV2ToxicCombination::class;
+  protected $toxicCombinationDataType = '';
   protected $vulnerabilityType = GoogleCloudSecuritycenterV2Vulnerability::class;
   protected $vulnerabilityDataType = '';
 
@@ -350,6 +360,34 @@ class GoogleCloudSecuritycenterV2Finding extends \Google\Collection
     return $this->createTime;
   }
   /**
+   * @param GoogleCloudSecuritycenterV2DataAccessEvent[]
+   */
+  public function setDataAccessEvents($dataAccessEvents)
+  {
+    $this->dataAccessEvents = $dataAccessEvents;
+  }
+  /**
+   * @return GoogleCloudSecuritycenterV2DataAccessEvent[]
+   */
+  public function getDataAccessEvents()
+  {
+    return $this->dataAccessEvents;
+  }
+  /**
+   * @param GoogleCloudSecuritycenterV2DataFlowEvent[]
+   */
+  public function setDataFlowEvents($dataFlowEvents)
+  {
+    $this->dataFlowEvents = $dataFlowEvents;
+  }
+  /**
+   * @return GoogleCloudSecuritycenterV2DataFlowEvent[]
+   */
+  public function getDataFlowEvents()
+  {
+    return $this->dataFlowEvents;
+  }
+  /**
    * @param GoogleCloudSecuritycenterV2Database
    */
   public function setDatabase(GoogleCloudSecuritycenterV2Database $database)
@@ -460,6 +498,20 @@ class GoogleCloudSecuritycenterV2Finding extends \Google\Collection
   public function getFindingClass()
   {
     return $this->findingClass;
+  }
+  /**
+   * @param GoogleCloudSecuritycenterV2GroupMembership[]
+   */
+  public function setGroupMemberships($groupMemberships)
+  {
+    $this->groupMemberships = $groupMemberships;
+  }
+  /**
+   * @return GoogleCloudSecuritycenterV2GroupMembership[]
+   */
+  public function getGroupMemberships()
+  {
+    return $this->groupMemberships;
   }
   /**
    * @param GoogleCloudSecuritycenterV2IamBinding[]
@@ -586,6 +638,20 @@ class GoogleCloudSecuritycenterV2Finding extends \Google\Collection
   public function getMute()
   {
     return $this->mute;
+  }
+  /**
+   * @param GoogleCloudSecuritycenterV2MuteInfo
+   */
+  public function setMuteInfo(GoogleCloudSecuritycenterV2MuteInfo $muteInfo)
+  {
+    $this->muteInfo = $muteInfo;
+  }
+  /**
+   * @return GoogleCloudSecuritycenterV2MuteInfo
+   */
+  public function getMuteInfo()
+  {
+    return $this->muteInfo;
   }
   /**
    * @param string
@@ -796,6 +862,20 @@ class GoogleCloudSecuritycenterV2Finding extends \Google\Collection
   public function getState()
   {
     return $this->state;
+  }
+  /**
+   * @param GoogleCloudSecuritycenterV2ToxicCombination
+   */
+  public function setToxicCombination(GoogleCloudSecuritycenterV2ToxicCombination $toxicCombination)
+  {
+    $this->toxicCombination = $toxicCombination;
+  }
+  /**
+   * @return GoogleCloudSecuritycenterV2ToxicCombination
+   */
+  public function getToxicCombination()
+  {
+    return $this->toxicCombination;
   }
   /**
    * @param GoogleCloudSecuritycenterV2Vulnerability

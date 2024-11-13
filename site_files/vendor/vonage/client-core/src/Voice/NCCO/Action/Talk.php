@@ -1,12 +1,5 @@
 <?php
 
-/**
- * Vonage Client Library for PHP
- *
- * @copyright Copyright (c) 2016-2020 Vonage, Inc. (http://vonage.com)
- * @license https://github.com/Vonage/vonage-php-sdk-core/blob/master/LICENSE.txt Apache License 2.0
- */
-
 declare(strict_types=1);
 
 namespace Vonage\Voice\NCCO\Action;
@@ -27,13 +20,10 @@ class Talk implements ActionInterface
 
     protected int $loop = 1;
 
-    protected ?string $text = '';
-
     protected bool $premium = false;
 
-    public function __construct(string $text = null)
+    public function __construct(protected ?string $text = null)
     {
-        $this->text = $text;
     }
 
     /**

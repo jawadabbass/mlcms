@@ -1,12 +1,5 @@
 <?php
 
-/**
- * Vonage Client Library for PHP
- *
- * @copyright Copyright (c) 2016-2020 Vonage, Inc. (http://vonage.com)
- * @license https://github.com/Vonage/vonage-php-sdk-core/blob/master/LICENSE.txt Apache License 2.0
- */
-
 declare(strict_types=1);
 
 namespace Vonage\Application;
@@ -18,53 +11,31 @@ use Vonage\Entity\EntityInterface;
 use Vonage\Entity\Hydrator\ArrayHydrateInterface;
 use Vonage\Entity\JsonResponseTrait;
 use Vonage\Entity\JsonSerializableTrait;
-use Vonage\Entity\JsonUnserializableInterface;
 use Vonage\Entity\Psr7Trait;
 
 use function count;
 use function ucfirst;
 
-class Application implements EntityInterface, JsonSerializable, JsonUnserializableInterface, ArrayHydrateInterface
+class Application implements EntityInterface, JsonSerializable, ArrayHydrateInterface, \Stringable
 {
     use JsonSerializableTrait;
     use Psr7Trait;
     use JsonResponseTrait;
 
-    /**
-     * @var VoiceConfig
-     */
-    protected $voiceConfig;
+    protected VoiceConfig $voiceConfig;
 
-    /**
-     * @var MessagesConfig
-     */
-    protected $messagesConfig;
+    protected MessagesConfig $messagesConfig;
 
-    /**
-     * @var RtcConfig
-     */
-    protected $rtcConfig;
+    protected RtcConfig $rtcConfig;
 
-    /**
-     * @var VbcConfig
-     */
-    protected $vbcConfig;
+    protected VbcConfig $vbcConfig;
 
-    protected $name;
+    protected ?string $name = null;
 
-    /**
-     * @var array
-     */
-    protected $keys = [];
+    protected array $keys = [];
 
-    /**
-     * @var string|null
-     */
-    protected $id;
-
-    public function __construct(?string $id = null)
+    public function __construct(protected ?string $id = null)
     {
-        $this->id = $id;
     }
 
     public function getId(): ?string
@@ -206,16 +177,6 @@ class Application implements EntityInterface, JsonSerializable, JsonUnserializab
         return $this->name;
     }
 
-    public function jsonUnserialize(array $json): void
-    {
-        trigger_error(
-            get_class($this) . "::jsonUnserialize is deprecated, please fromArray() instead",
-            E_USER_DEPRECATED
-        );
-
-        $this->fromArray($json);
-    }
-
     public function jsonSerialize(): array
     {
         return $this->toArray();
@@ -269,7 +230,7 @@ class Application implements EntityInterface, JsonSerializable, JsonUnserializab
     {
         // Build up capabilities that are set
         $availableCapabilities = [
-            'voice' => [VoiceConfig::ANSWER, VoiceConfig::EVENT],
+            'voice' => [VoiceConfig::ANSWER, VoiceConfig::EVENT, VoiceConfig::FALLBACK_ANSWER_URL],
             'messages' => [MessagesConfig::INBOUND, MessagesConfig::STATUS],
             'rtc' => [RtcConfig::EVENT]
         ];
@@ -280,6 +241,7 @@ class Application implements EntityInterface, JsonSerializable, JsonUnserializab
             $configAccessorMethod = 'get' . ucfirst($type) . 'Config';
 
             foreach ($values as $constant) {
+                /** @var Webhook|\Vonage\Voice\Webhook $webhook */
                 $webhook = $this->$configAccessorMethod()->getWebhook($constant);
 
                 if ($webhook) {
@@ -291,8 +253,29 @@ class Application implements EntityInterface, JsonSerializable, JsonUnserializab
                         'address' => $webhook->getUrl(),
                         'http_method' => $webhook->getMethod(),
                     ];
+
+                    if (!is_null($webhook->getConnectionTimeout())) {
+                        $capabilities[$type]['webhooks'][$constant]['connection_timeout'] = $webhook->getConnectionTimeout();
+                    }
+
+                    if (!is_null($webhook->getSocketTimeout())) {
+                        $capabilities[$type]['webhooks'][$constant]['socket_timeout'] = $webhook->getSocketTimeout();
+                    }
                 }
             }
+        }
+
+        // Handle other Voice capabilities outside of that needlessly complicated webhook loop
+        if (!is_null($this->getVoiceConfig()->getRegion())) {
+            $capabilities['voice']['region'] = $this->getVoiceConfig()->getRegion();
+        }
+
+        if (!is_null($this->getVoiceConfig()->getConversationsTtl())) {
+            $capabilities['voice']['conversations_ttl'] = $this->getVoiceConfig()->getConversationsTtl();
+        }
+
+        if (!is_null($this->getVoiceConfig()->getSignedCallbacks())) {
+            $capabilities['voice']['signed_callbacks'] = $this->getVoiceConfig()->getSignedCallbacks();
         }
 
         // Handle VBC specifically

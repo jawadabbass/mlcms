@@ -17,6 +17,7 @@
 
 namespace Google\Service\DiscoveryEngine\Resource;
 
+use Google\Service\DiscoveryEngine\GoogleApiHttpBody;
 use Google\Service\DiscoveryEngine\GoogleCloudDiscoveryengineV1UserEvent;
 
 /**
@@ -30,6 +31,35 @@ use Google\Service\DiscoveryEngine\GoogleCloudDiscoveryengineV1UserEvent;
 class ProjectsLocationsUserEvents extends \Google\Service\Resource
 {
   /**
+   * Writes a single user event from the browser. This uses a GET request to due
+   * to browser restriction of POST-ing to a third-party domain. This method is
+   * used only by the Discovery Engine API JavaScript pixel and Google Tag
+   * Manager. Users should not call this method directly. (userEvents.collect)
+   *
+   * @param string $parent Required. The parent DataStore resource name, such as `
+   * projects/{project}/locations/{location}/collections/{collection}/dataStores/{
+   * data_store}`.
+   * @param array $optParams Optional parameters.
+   *
+   * @opt_param string ets The event timestamp in milliseconds. This prevents
+   * browser caching of otherwise identical get requests. The name is abbreviated
+   * to reduce the payload bytes.
+   * @opt_param string uri The URL including cgi-parameters but excluding the hash
+   * fragment with a length limit of 5,000 characters. This is often more useful
+   * than the referer URL, because many browsers only send the domain for third-
+   * party requests.
+   * @opt_param string userEvent Required. URL encoded UserEvent proto with a
+   * length limit of 2,000,000 characters.
+   * @return GoogleApiHttpBody
+   * @throws \Google\Service\Exception
+   */
+  public function collect($parent, $optParams = [])
+  {
+    $params = ['parent' => $parent];
+    $params = array_merge($params, $optParams);
+    return $this->call('collect', [$params], GoogleApiHttpBody::class);
+  }
+  /**
    * Writes a single user event. (userEvents.write)
    *
    * @param string $parent Required. The parent resource name. If the write user
@@ -40,6 +70,10 @@ class ProjectsLocationsUserEvents extends \Google\Service\Resource
    * `projects/{project}/locations/{location}`.
    * @param GoogleCloudDiscoveryengineV1UserEvent $postBody
    * @param array $optParams Optional parameters.
+   *
+   * @opt_param bool writeAsync If set to true, the user event is written
+   * asynchronously after validation, and the API responds without waiting for the
+   * write.
    * @return GoogleCloudDiscoveryengineV1UserEvent
    * @throws \Google\Service\Exception
    */

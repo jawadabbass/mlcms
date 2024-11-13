@@ -5,9 +5,7 @@ namespace App\Http\Controllers\Back;
 use App\Helpers\ImageUploader;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\DB;
 
 class FilesController extends Controller
 {
@@ -16,7 +14,6 @@ class FilesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
     /* To display all galleries */
     public function index()
     {
@@ -26,7 +23,6 @@ class FilesController extends Controller
         $folodersArr = array();
         $filesBasePath = filesBasePath();
         $folodersArr = array_filter(glob($filesBasePath . '*'), 'is_dir');
-        
         $cnt = 0;
         //>>>>>>>>>>>>>>>>> **Start** Root Files
         $folderName = 'root';
@@ -73,9 +69,7 @@ class FilesController extends Controller
         }
         echo json_encode(array('done' => 'ok'));
     }
-    public function update_album(Request $request)
-    {
-    }
+    public function update_album(Request $request) {}
     public function upload_album_images(Request $request)
     {
         $maxImageSize = getMaxUploadSize() * 1024;
@@ -105,7 +99,6 @@ class FilesController extends Controller
         foreach ($request->file('uploadFile') as $key => $value) {
             ImageUploader::UploadDoc($album_name, $value);
         }
-
         return back()->with('success', 'Images Uploaded Successfully.');
     }
     /**
@@ -120,7 +113,6 @@ class FilesController extends Controller
         //>>>>>>>>>>>>>>>>> **Start** Apply Security Filters
         //HERE
         //<<<<<<<<<<<<<<<<< ***End*** Apply Security Filters
-
         if (file_exists($fileWithPath)) {
             unlink($fileWithPath);
         }

@@ -5,24 +5,29 @@ namespace Vonage\Messages\Channel\WhatsApp;
 use Vonage\Messages\MessageObjects\FileObject;
 use Vonage\Messages\MessageObjects\TemplateObject;
 use Vonage\Messages\Channel\BaseMessage;
+use Vonage\Messages\MessageTraits\ContextTrait;
 
 class WhatsAppTemplate extends BaseMessage
 {
+    use ContextTrait;
+
     protected string $channel = 'whatsapp';
     protected string $subType = BaseMessage::MESSAGES_SUBTYPE_TEMPLATE;
-    protected TemplateObject $templateObject;
-    protected string $locale = 'en_US';
+    protected bool $validatesE164 = true;
 
     public function __construct(
         string $to,
         string $from,
-        TemplateObject $templateObject,
-        string $locale
+        protected TemplateObject $templateObject,
+        protected string $locale
     ) {
         $this->to = $to;
         $this->from = $from;
-        $this->templateObject = $templateObject;
-        $this->locale = $locale;
+    }
+
+    public function validatesE164(): bool
+    {
+        return $this->validatesE164;
     }
 
     public function toArray(): array
@@ -34,6 +39,8 @@ class WhatsAppTemplate extends BaseMessage
                 'locale' => $this->getLocale()
             ]
         ];
+
+        $returnArray['context'] = $this->context ?? null;
 
         return array_merge($this->getBaseMessageUniversalOutputArray(), $returnArray);
     }

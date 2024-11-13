@@ -1,12 +1,5 @@
 <?php
 
-/**
- * Vonage Client Library for PHP
- *
- * @copyright Copyright (c) 2016-2020 Vonage, Inc. (http://vonage.com)
- * @license https://github.com/Vonage/vonage-php-sdk-core/blob/master/LICENSE.txt Apache License 2.0
- */
-
 declare(strict_types=1);
 
 namespace Vonage\Client;
@@ -26,15 +19,8 @@ use function strtoupper;
 use function time;
 use function urldecode;
 
-class Signature
+class Signature implements \Stringable
 {
-    /**
-     * Params to Sign
-     *
-     * @var array
-     */
-    protected $params;
-
     /**
      * Params with Signature (and timestamp if not present)
      *
@@ -47,9 +33,13 @@ class Signature
      *
      * @throws ClientException
      */
-    public function __construct(array $params, $secret, $signatureMethod)
-    {
-        $this->params = $params;
+    public function __construct(/**
+         * Params to Sign
+         */
+        protected array $params,
+        $secret,
+        $signatureMethod
+    ) {
         $this->signed = $params;
 
         if (!isset($this->signed['timestamp'])) {
@@ -93,7 +83,7 @@ class Signature
             case 'sha1':
             case 'sha256':
             case 'sha512':
-                return strtoupper(hash_hmac($signatureMethod, $data, $secret));
+                return strtoupper(hash_hmac((string) $signatureMethod, (string) $data, (string) $secret));
             default:
                 throw new ClientException(
                     'Unknown signature algorithm: ' . $signatureMethod .
@@ -147,7 +137,7 @@ class Signature
             throw new InvalidArgumentException('signature must be string, or present in array or parameters');
         }
 
-        return strtolower($signature) === strtolower($this->signed['sig']);
+        return strtolower($signature) === strtolower((string) $this->signed['sig']);
     }
 
     /**

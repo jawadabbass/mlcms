@@ -211,8 +211,14 @@ class Objects extends \Google\Service\Resource
    * @opt_param string ifMetagenerationNotMatch Makes the operation conditional on
    * whether the object's current metageneration does not match the given value.
    * @opt_param string projection Set of properties to return. Defaults to noAcl.
+   * @opt_param string restoreToken Restore token used to differentiate soft-
+   * deleted objects with the same name and generation. Only applicable for
+   * hierarchical namespace buckets and if softDeleted is set to true. This
+   * parameter is optional, and is only required in the rare case when there are
+   * multiple soft-deleted objects with the same name and generation.
    * @opt_param bool softDeleted If true, only soft-deleted object versions will
-   * be listed. The default is false. For more information, see Soft Delete.
+   * be listed. The default is false. For more information, see [Soft
+   * Delete](https://cloud.google.com/storage/docs/soft-delete).
    * @opt_param string userProject The project to be billed for this request.
    * Required for Requester Pays buckets.
    * @return StorageObject
@@ -328,7 +334,8 @@ class Objects extends \Google\Service\Resource
    * this prefix.
    * @opt_param string projection Set of properties to return. Defaults to noAcl.
    * @opt_param bool softDeleted If true, only soft-deleted object versions will
-   * be listed. The default is false. For more information, see Soft Delete.
+   * be listed. The default is false. For more information, see [Soft
+   * Delete](https://cloud.google.com/storage/docs/soft-delete).
    * @opt_param string startOffset Filter results to objects whose names are
    * lexicographically equal to or after startOffset. If endOffset is also set,
    * the objects listed will have names between startOffset (inclusive) and
@@ -336,7 +343,8 @@ class Objects extends \Google\Service\Resource
    * @opt_param string userProject The project to be billed for this request.
    * Required for Requester Pays buckets.
    * @opt_param bool versions If true, lists all versions of an object as distinct
-   * results. The default is false. For more information, see Object Versioning.
+   * results. The default is false. For more information, see [Object
+   * Versioning](https://cloud.google.com/storage/docs/object-versioning).
    * @return ObjectsModel
    * @throws \Google\Service\Exception
    */
@@ -391,7 +399,8 @@ class Objects extends \Google\Service\Resource
    *
    * @param string $bucket Name of the bucket in which the object resides.
    * @param string $object Name of the object. For information about how to URL
-   * encode object names to be path safe, see Encoding URI Path Parts.
+   * encode object names to be path safe, see [Encoding URI Path
+   * Parts](https://cloud.google.com/storage/docs/request-endpoints#encoding).
    * @param string $generation Selects a specific revision of this object.
    * @param array $optParams Optional parameters.
    *
@@ -410,6 +419,11 @@ class Objects extends \Google\Service\Resource
    * @opt_param string ifMetagenerationNotMatch Makes the operation conditional on
    * whether none of the object's live metagenerations match the given value.
    * @opt_param string projection Set of properties to return. Defaults to full.
+   * @opt_param string restoreToken Restore token used to differentiate sof-
+   * deleted objects with the same name and generation. Only applicable for
+   * hierarchical namespace buckets. This parameter is optional, and is only
+   * required in the rare case when there are multiple soft-deleted objects with
+   * the same name and generation.
    * @opt_param string userProject The project to be billed for this request.
    * Required for Requester Pays buckets.
    * @return StorageObject
@@ -620,7 +634,8 @@ class Objects extends \Google\Service\Resource
    * @opt_param string userProject The project to be billed for this request.
    * Required for Requester Pays buckets.
    * @opt_param bool versions If true, lists all versions of an object as distinct
-   * results. The default is false. For more information, see Object Versioning.
+   * results. The default is false. For more information, see [Object
+   * Versioning](https://cloud.google.com/storage/docs/object-versioning).
    * @return Channel
    * @throws \Google\Service\Exception
    */

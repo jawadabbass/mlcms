@@ -4,16 +4,20 @@
 
 namespace Stripe\Service;
 
+/**
+ * @phpstan-import-type RequestOptionsArray from \Stripe\Util\RequestOptions
+ * @psalm-import-type RequestOptionsArray from \Stripe\Util\RequestOptions
+ */
 class PaymentMethodService extends \Stripe\Service\AbstractService
 {
     /**
-     * Returns a list of PaymentMethods attached to the StripeAccount. For listing a
-     * customer’s payment methods, you should use <a
+     * Returns a list of PaymentMethods for Treasury flows. If you want to list the
+     * PaymentMethods attached to a Customer for payments, you should use the <a
      * href="/docs/api/payment_methods/customer_list">List a Customer’s
-     * PaymentMethods</a>.
+     * PaymentMethods</a> API instead.
      *
      * @param null|array $params
-     * @param null|array|\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\Stripe\Util\RequestOptions $opts
      *
      * @throws \Stripe\Exception\ApiErrorException if the request fails
      *
@@ -46,7 +50,7 @@ class PaymentMethodService extends \Stripe\Service\AbstractService
      *
      * @param string $id
      * @param null|array $params
-     * @param null|array|\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\Stripe\Util\RequestOptions $opts
      *
      * @throws \Stripe\Exception\ApiErrorException if the request fails
      *
@@ -69,7 +73,7 @@ class PaymentMethodService extends \Stripe\Service\AbstractService
      * method details ahead of a future payment.
      *
      * @param null|array $params
-     * @param null|array|\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\Stripe\Util\RequestOptions $opts
      *
      * @throws \Stripe\Exception\ApiErrorException if the request fails
      *
@@ -86,7 +90,7 @@ class PaymentMethodService extends \Stripe\Service\AbstractService
      *
      * @param string $id
      * @param null|array $params
-     * @param null|array|\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\Stripe\Util\RequestOptions $opts
      *
      * @throws \Stripe\Exception\ApiErrorException if the request fails
      *
@@ -105,7 +109,7 @@ class PaymentMethodService extends \Stripe\Service\AbstractService
      *
      * @param string $id
      * @param null|array $params
-     * @param null|array|\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\Stripe\Util\RequestOptions $opts
      *
      * @throws \Stripe\Exception\ApiErrorException if the request fails
      *
@@ -122,7 +126,7 @@ class PaymentMethodService extends \Stripe\Service\AbstractService
      *
      * @param string $id
      * @param null|array $params
-     * @param null|array|\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\Stripe\Util\RequestOptions $opts
      *
      * @throws \Stripe\Exception\ApiErrorException if the request fails
      *

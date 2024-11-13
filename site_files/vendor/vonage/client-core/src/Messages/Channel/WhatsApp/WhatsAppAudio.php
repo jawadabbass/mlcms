@@ -4,27 +4,35 @@ namespace Vonage\Messages\Channel\WhatsApp;
 
 use Vonage\Messages\MessageObjects\AudioObject;
 use Vonage\Messages\Channel\BaseMessage;
+use Vonage\Messages\MessageTraits\ContextTrait;
 
 class WhatsAppAudio extends BaseMessage
 {
+    use ContextTrait;
+
     protected string $channel = 'whatsapp';
     protected string $subType = BaseMessage::MESSAGES_SUBTYPE_AUDIO;
-    protected AudioObject $audioObject;
+    protected bool $validatesE164 = true;
 
     public function __construct(
         string $to,
         string $from,
-        AudioObject $audioObject
+        protected AudioObject $audioObject
     ) {
         $this->to = $to;
         $this->from = $from;
-        $this->audioObject = $audioObject;
+    }
+
+    public function validatesE164(): bool
+    {
+        return $this->validatesE164;
     }
 
     public function toArray(): array
     {
         $returnArray = $this->getBaseMessageUniversalOutputArray();
         $returnArray['audio'] = $this->audioObject->toArray();
+        $returnArray['context'] = $this->context ?? null;
 
         return $returnArray;
     }

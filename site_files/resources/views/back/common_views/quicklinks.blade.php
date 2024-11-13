@@ -10,11 +10,6 @@
         </button>
     </li>
     <li class="refres">
-        <a href="#" data-bs-toggle="tooltip" title="Create/Update Sitemap" id="generateSiteMap">
-            <i class="fas fa-sitemap" aria-hidden="true"></i>
-        </a>
-    </li>
-    <li class="refres">
         <a href="{{ admin_url() . 'clear-cache' }}" data-bs-toggle="tooltip" title="Clear Cache">
             <i class="fas fa-sync" aria-hidden="true"></i>
         </a>

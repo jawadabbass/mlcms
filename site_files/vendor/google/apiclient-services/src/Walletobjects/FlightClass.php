@@ -19,7 +19,7 @@ namespace Google\Service\Walletobjects;
 
 class FlightClass extends \Google\Collection
 {
-  protected $collection_key = 'textModulesData';
+  protected $collection_key = 'valueAddedModuleData';
   /**
    * @var bool
    */
@@ -112,6 +112,10 @@ class FlightClass extends \Google\Collection
    * @var string
    */
   public $multipleDevicesAndHoldersAllowedStatus;
+  /**
+   * @var string
+   */
+  public $notifyPreference;
   protected $originType = AirportInfo::class;
   protected $originDataType = '';
   /**
@@ -128,6 +132,8 @@ class FlightClass extends \Google\Collection
   protected $securityAnimationDataType = '';
   protected $textModulesDataType = TextModuleData::class;
   protected $textModulesDataDataType = 'array';
+  protected $valueAddedModuleDataType = ValueAddedModuleData::class;
+  protected $valueAddedModuleDataDataType = 'array';
   /**
    * @var string
    */
@@ -560,6 +566,20 @@ class FlightClass extends \Google\Collection
     return $this->multipleDevicesAndHoldersAllowedStatus;
   }
   /**
+   * @param string
+   */
+  public function setNotifyPreference($notifyPreference)
+  {
+    $this->notifyPreference = $notifyPreference;
+  }
+  /**
+   * @return string
+   */
+  public function getNotifyPreference()
+  {
+    return $this->notifyPreference;
+  }
+  /**
    * @param AirportInfo
    */
   public function setOrigin(AirportInfo $origin)
@@ -642,6 +662,20 @@ class FlightClass extends \Google\Collection
   public function getTextModulesData()
   {
     return $this->textModulesData;
+  }
+  /**
+   * @param ValueAddedModuleData[]
+   */
+  public function setValueAddedModuleData($valueAddedModuleData)
+  {
+    $this->valueAddedModuleData = $valueAddedModuleData;
+  }
+  /**
+   * @return ValueAddedModuleData[]
+   */
+  public function getValueAddedModuleData()
+  {
+    return $this->valueAddedModuleData;
   }
   /**
    * @param string

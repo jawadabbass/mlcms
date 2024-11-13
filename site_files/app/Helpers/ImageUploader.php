@@ -4,7 +4,9 @@ namespace App\Helpers;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use Intervention\Image\Facades\Image;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\Encoders\WebpEncoder;
 
 class ImageUploader
 {
@@ -15,6 +17,7 @@ class ImageUploader
     private static $tinyMCEImgWidth = 500;
     private static $tinyMCEImgHeight = 500;
     private static $thumbFolder = '/thumb';
+
     public static function UploadImage($originalDestinationPath, $field, $newName = '', $width = 0, $height = 0, $makeOtherSizesImages = true)
     {
         if ($width > 0 && $height > 0) {
@@ -28,24 +31,22 @@ class ImageUploader
         $webpFileName = self::getFileNameWebp($fileName);
         $field->storeAs('/public/uploads/' . $originalDestinationPath, $fileName);
         /*         * **** Resizing Images ******** */
-        $imageToResize = Image::make($destinationPath . '/' . $fileName)->encode('webp', 100);
-        $imageToResize->resize(self::$mainImgWidth, self::$mainImgHeight, function ($constraint) {
-            $constraint->aspectRatio();
-            $constraint->upsize();
-        })->save($destinationPath . '/' . $webpFileName);
+
+        $imageManager = new ImageManager(new Driver());
+        $imageToResize = $imageManager->read($destinationPath . '/' . $fileName);
+        $imageToResize->scaleDown(self::$mainImgWidth, self::$mainImgHeight)
+            ->encode(new WebpEncoder(quality: 100))
+            ->save($destinationPath . '/' . $webpFileName);
         /**************************** */
         /**************************** */
-        if($destinationPath . '/' . $webpFileName !== $destinationPath . '/' . $fileName){
+        if ($destinationPath . '/' . $webpFileName !== $destinationPath . '/' . $fileName) {
             File::delete($destinationPath . '/' . $fileName);
         }
         /**************************** */
         /**************************** */
         if ($makeOtherSizesImages === true) {
             self::createDirectory($thumbImagePath);
-            $imageToResize->resize(self::$thumbImgWidth, self::$thumbImgHeight, function ($constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            })->save($thumbImagePath . '/' . $webpFileName);
+            $imageToResize->scaleDown(self::$thumbImgWidth, self::$thumbImgHeight)->save($thumbImagePath . '/' . $webpFileName);
             /*             * **** End Resizing Images ******** */
         }
         return $webpFileName;
@@ -61,7 +62,8 @@ class ImageUploader
         $destinationPath = ImageUploader::storage_uploads() . $destinationPath;
         $thumbImagePath = $destinationPath . self::$thumbFolder;
         /*         * **** Resizing Images ******** */
-        $imageToResize = Image::make($destinationPath . '/' . $fileName);
+        $imageManager = new ImageManager(new Driver());
+        $imageToResize = $imageManager->read($destinationPath . '/' . $fileName);
         $imageToResize->text('Before', 0, $imageToResize->height(), function ($font) {
             $font->file(self::font_path());
             $font->size(70);
@@ -79,7 +81,8 @@ class ImageUploader
             $font->angle(0);
         })->save($destinationPath . '/' . $fileName);
         if ($makeOtherSizesImages === true) {
-            $imageToResize = Image::make($thumbImagePath . '/' . $fileName);
+            $imageManager = new ImageManager(new Driver());
+            $imageToResize = $imageManager->read($thumbImagePath . '/' . $fileName);
             $imageToResize->text('Before', 0, $imageToResize->height(), function ($font) {
                 $font->file(self::font_path());
                 $font->size(10);
@@ -103,7 +106,8 @@ class ImageUploader
     {
         $imagePath = ImageUploader::storage_uploads() . $imagePath;
         $thumbImagePath = $imagePath . self::$thumbFolder;
-        $imageToCrop = Image::make($imagePath . '/' . $fileName);
+        $imageManager = new ImageManager(new Driver());
+        $imageToCrop = $imageManager->read($imagePath . '/' . $fileName);
         self::createDirectory($thumbImagePath);
         $imageToCrop->crop($width, $height, $x, $y)->save($thumbImagePath . '/' . $fileName);
         /*             * **** End Resizing Images ******** */
@@ -134,7 +138,7 @@ class ImageUploader
     {
         $fileNameArr = explode('.', $fileName);
         $extension = end($fileNameArr);
-        $fileName = str_ireplace('.'.$extension, '.webp', $fileName);
+        $fileName = str_ireplace('.' . $extension, '.webp', $fileName);
         return $fileName;
     }
     public static function getFileName($fileName)
@@ -182,11 +186,11 @@ class ImageUploader
         $webpFileName = self::getFileNameWebp($fileName);
         $field->storeAs('/public/uploads/' . $originalDestinationPath, $fileName);
         /*         * **** Resizing Images ******** */
-        $imageToResize = Image::make($destinationPath . '/' . $fileName)->encode('webp', 100);
-        $imageToResize->resize(self::$tinyMCEImgWidth, self::$tinyMCEImgHeight, function ($constraint) {
-            $constraint->aspectRatio();
-            $constraint->upsize();
-        })->save($destinationPath . '/' . $webpFileName);
+        $imageManager = new ImageManager(new Driver());
+        $imageToResize = $imageManager->read($destinationPath . '/' . $fileName);
+        $imageToResize->scaleDown(self::$tinyMCEImgWidth, self::$tinyMCEImgHeight)
+            ->encode(new WebpEncoder(quality: 100))
+            ->save($destinationPath . '/' . $webpFileName);
         /*         * **** End Resizing Images ******** */
         /**************************** */
         /**************************** */

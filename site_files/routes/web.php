@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front\AjaxController;
@@ -77,7 +76,6 @@ use App\Http\Controllers\AdminAuth\ConfirmPasswordController as AdminAuthConfirm
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 /************************************* */
 /************************************* */
 /***********  ADMINMEDIA ************* */
@@ -211,7 +209,6 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     Route::get('/clear-cache', [BackDashboardController::class, 'clearCache']);
     Route::get('/leftsidebar/session', [BackDashboardController::class, 'sideBarLeft']);
     Route::get('/search', [BackSearchController::class, 'search']);
-    Route::get('/generate-site-map', [BackGenerateSiteMapController::class, 'generateSiteMap']);
     Route::resource('/manage-theme', BackThemeController::class);
     Route::post('/manage-theme/update', [BackThemeController::class, 'save']);
     //package qustion start
@@ -235,13 +232,8 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     //Contact us leads
     Route::resource('/contact_request', BackContactUsController::class);
     Route::get('/contact_request/convert_client/{id}', [BackContactUsController::class, 'convert_client'])->name('lead_convert_client');
-
-
     Route::get('/contact_request/loadDataToGoogleCalendarModal/{id}', [BackContactUsController::class, 'loadDataToGoogleCalendarModal'])->name('loadDataToGoogleCalendarModal');
     Route::post('/contact_request/save_to_google_calendar', [BackContactUsController::class, 'save_to_google_calendar'])->name('save_to_google_calendar');
-
-
-
     Route::get('/contact_request/export/{exportType}', [BackContactUsController::class, 'exportLeads'])->name('export.leads');
     Route::post('/contact-request-bulk-actions', [BackContactUsController::class, 'contactUsBulkActions'])->name('contact_request.bulk.actions');
     Route::resource('/manage_contact', BackContactPagesController::class);
@@ -346,7 +338,6 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     Route::get('/job-application/{jobApplicationObj}', [BackJobApplicationController::class, 'show'])->name('job.application.show');
     Route::delete('/job-application/{jobApplicationObj}', [BackJobApplicationController::class, 'destroy'])->name('job.application.destroy');
     Route::get('fetchJobApplicationsAjax', [BackJobApplicationController::class, 'fetchJobApplicationsAjax'])->name('fetchJobApplicationsAjax');
-
     Route::get('/generalEmailTemplates', [GeneralEmailTemplateController::class, 'index'])->name('generalEmailTemplates.index');
     Route::get('/generalEmailTemplates/create', [GeneralEmailTemplateController::class, 'create'])->name('generalEmailTemplates.create');
     Route::post('/generalEmailTemplates', [GeneralEmailTemplateController::class, 'store'])->name('generalEmailTemplates.store');
@@ -354,12 +345,10 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     Route::get('/generalEmailTemplates/{generalEmailTemplateObj}/edit', [GeneralEmailTemplateController::class, 'edit'])->name('generalEmailTemplates.edit');
     Route::put('/generalEmailTemplates/{generalEmailTemplateObj}', [GeneralEmailTemplateController::class, 'update'])->name('generalEmailTemplates.update');
     Route::get('fetchGeneralEmailTemplatesAjax', [GeneralEmailTemplateController::class, 'fetchGeneralEmailTemplatesAjax'])->name('fetchGeneralEmailTemplatesAjax');
-
     Route::get('/mass-mail', [MassMailController::class, 'index'])->name('mass.mail.index');
     Route::get('/mass-mail-queued', [MassMailController::class, 'massMailQueued'])->name('mass.mail.queued');
     Route::post('/mass-mail', [MassMailController::class, 'sendMassMail'])->name('submit.mass.mail');
     Route::post('/get-mail-template-view', [MassMailController::class, 'getMailTemplateView'])->name('get.mail.template.view');
-
     Route::get('/services', [BackServiceController::class, 'index'])->name('services.index');
     Route::get('/services/create', [BackServiceController::class, 'create'])->name('services.create');
     Route::post('/services', [BackServiceController::class, 'store'])->name('services.store');
@@ -467,11 +456,9 @@ Route::get('/clear-cache', function () {
     /*************************** */
     return 'Cache is cleared';
 });
-
 Route::get('show-all-routes', function () {
     showAllRoutes();
 });
-
 Route::group(['middleware' => ['siteStatus', 'clearCache', 'ipmiddleware']], function () {
     Route::get('/{slug}', [HomeController::class, 'page']);
 });

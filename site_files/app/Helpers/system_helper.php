@@ -252,7 +252,8 @@ function getImagesListInDir($mediaBasePath)
             $path_info['extension'] == 'JPG' ||
             $path_info['extension'] == 'JPEG' ||
             $path_info['extension'] == 'PNG' ||
-            $path_info['extension'] == 'GIF'
+            $path_info['extension'] == 'GIF' ||
+            $path_info['extension'] == 'webp'
         )) {
             $url = str_replace(storage_uploads(''), '', $value);
             $fileName = str_replace($mediaBasePath, '', $value);

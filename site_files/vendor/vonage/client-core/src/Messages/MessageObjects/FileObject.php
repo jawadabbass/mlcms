@@ -6,13 +6,11 @@ use Vonage\Entity\Hydrator\ArrayHydrateInterface;
 
 class FileObject implements ArrayHydrateInterface
 {
-    private string $url;
-    private string $caption;
-
-    public function __construct(string $url, string $caption = '')
-    {
-        $this->url = $url;
-        $this->caption = $caption;
+    public function __construct(
+        private string $url,
+        private string $caption = '',
+        private ?string $name = null,
+    ) {
     }
 
     public function fromArray(array $data): FileObject
@@ -21,6 +19,10 @@ class FileObject implements ArrayHydrateInterface
 
         if (isset($data['caption'])) {
             $this->caption = $data['caption'];
+        }
+
+        if (isset($data['name'])) {
+            $this->name = $data['name'];
         }
 
         return $this;
@@ -32,8 +34,12 @@ class FileObject implements ArrayHydrateInterface
             'url' => $this->url
         ];
 
-        if ($this->caption) {
-            $returnArray['caption'] = $this->caption;
+        if ($this->getCaption()) {
+            $returnArray['caption'] = $this->getCaption();
+        }
+
+        if ($this->getName()) {
+            $returnArray['name'] = $this->getName();
         }
 
         return $returnArray;
@@ -47,5 +53,15 @@ class FileObject implements ArrayHydrateInterface
     public function getCaption(): string
     {
         return $this->caption;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): void
+    {
+        $this->name = $name;
     }
 }

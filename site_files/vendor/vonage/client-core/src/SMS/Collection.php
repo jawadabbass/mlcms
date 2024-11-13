@@ -1,12 +1,5 @@
 <?php
 
-/**
- * Vonage Client Library for PHP
- *
- * @copyright Copyright (c) 2016-2020 Vonage, Inc. (http://vonage.com)
- * @license https://github.com/Vonage/vonage-php-sdk-core/blob/master/LICENSE.txt Apache License 2.0
- */
-
 declare(strict_types=1);
 
 namespace Vonage\SMS;
@@ -16,19 +9,13 @@ use Iterator;
 
 class Collection implements Countable, Iterator
 {
-    /**
-     * @var array{message-count: int, messages: array<string, mixed>}
-     */
-    protected $data;
+    protected int $current = 0;
 
     /**
-     * @var int
+     * @param array<string, int|array<string, mixed>> $data
      */
-    protected $current = 0;
-
-    public function __construct(array $apiResponse)
+    public function __construct(protected array $data)
     {
-        $this->data = $apiResponse;
     }
 
     public function count(): int
@@ -63,5 +50,10 @@ class Collection implements Countable, Iterator
     public function valid(): bool
     {
         return isset($this->data['messages'][$this->current]);
+    }
+
+    public function getAllMessagesRaw(): array
+    {
+        return $this->data;
     }
 }

@@ -1,12 +1,5 @@
 <?php
 
-/**
- * Vonage Client Library for PHP
- *
- * @copyright Copyright (c) 2016-2020 Vonage, Inc. (http://vonage.com)
- * @license https://github.com/Vonage/vonage-php-sdk-core/blob/master/LICENSE.txt Apache License 2.0
- */
-
 declare(strict_types=1);
 
 namespace Vonage\SMS\Webhook;
@@ -29,7 +22,10 @@ class Factory extends WebhookFactory
      */
     public static function createFromArray(array $data)
     {
-        if (array_key_exists('scts', $data)) {
+        // We are dealing with only two webhooks here. One has the text field, one does not.
+        // A sort of if/else style block here smells a bit, ideally the backend needs to change.
+
+        if (!array_key_exists('text', $data)) {
             return new DeliveryReceipt($data);
         }
 

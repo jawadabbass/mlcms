@@ -1,17 +1,11 @@
 <?php
 
-/**
- * Vonage Client Library for PHP
- *
- * @copyright Copyright (c) 2016-2020 Vonage, Inc. (http://vonage.com)
- * @license https://github.com/Vonage/vonage-php-sdk-core/blob/master/LICENSE.txt Apache License 2.0
- */
-
 declare(strict_types=1);
 
 namespace Vonage\Numbers\Filter;
 
 use InvalidArgumentException;
+use Vonage\Client\Exception\Request;
 use Vonage\Entity\Filter\FilterInterface;
 
 use function array_key_exists;
@@ -25,53 +19,68 @@ class OwnedNumbers implements FilterInterface
     public const SEARCH_PATTERN_CONTAINS = 1;
     public const SEARCH_PATTERN_ENDS = 2;
 
-    /**
-     * @var string
-     */
-    protected $applicationId;
+    public static array $possibleParameters = [
+        'country' => 'string',
+        'pattern' => 'string',
+        'search_pattern' => 'integer',
+        'size' => 'integer',
+        'index' => 'integer',
+        'has_application' => 'boolean',
+        'application_id' => 'string',
+        'features' => 'string'
+    ];
 
-    /**
-     * @var string
-     */
-    protected $country;
+    protected ?string $applicationId = null;
 
-    /**
-     * @var bool
-     */
-    protected $hasApplication;
+    protected ?string $country = null;
 
-    /**
-     * @var int
-     */
-    protected $pageIndex = 1;
+    protected ?bool $hasApplication = null;
 
-    /**
-     * @var string
-     */
-    protected $pattern;
+    protected int $pageIndex = 1;
 
-    /**
-     * @var int
-     */
-    protected $searchPattern = 0;
+    protected ?string $pattern = null;
 
-    /**
-     * @var int
-     */
-    protected $pageSize = 10;
+    protected int $searchPattern = 0;
+
+    protected int $pageSize = 10;
 
     public function __construct(array $filter = [])
     {
+        foreach ($filter as $key => $value) {
+            if (!array_key_exists($key, self::$possibleParameters)) {
+                throw new Request("Unknown option: '" . $key . "'");
+            }
+
+            switch (self::$possibleParameters[$key]) {
+                case 'boolean':
+                    $value = filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+                    if (is_null($value)) {
+                        throw new Request("Invalid value: '" . $key . "' must be a boolean value");
+                    }
+                    $value = $value ? "true" : "false";
+                    break;
+                case 'integer':
+                    $value = filter_var($value, FILTER_VALIDATE_INT);
+                    if ($value === false) {
+                        throw new Request("Invalid value: '" . $key . "' must be an integer");
+                    }
+                    break;
+                default:
+                    // No-op, take the value whatever it is
+                    break;
+            }
+        }
+
         if (array_key_exists('country', $filter)) {
             $this->setCountry($filter['country']);
         }
 
         if (array_key_exists('size', $filter)) {
-            $this->setPageSize($filter['size']);
+            $this->setPageSize((int)$filter['size']);
         }
 
         if (array_key_exists('index', $filter)) {
-            $this->setPageIndex($filter['index']);
+            $this->setPageIndex((int)$filter['index']);
         }
 
         if (array_key_exists('pattern', $filter)) {
@@ -140,9 +149,6 @@ class OwnedNumbers implements FilterInterface
         return $this->pageIndex;
     }
 
-    /**
-     * @return $this
-     */
     public function setPageIndex(int $pageIndex): self
     {
         $this->pageIndex = $pageIndex;
@@ -155,9 +161,6 @@ class OwnedNumbers implements FilterInterface
         return $this->pattern;
     }
 
-    /**
-     * @return $this
-     */
     public function setPattern(string $pattern): self
     {
         $this->pattern = $pattern;
@@ -170,9 +173,6 @@ class OwnedNumbers implements FilterInterface
         return $this->searchPattern;
     }
 
-    /**
-     * @return $this
-     */
     public function setSearchPattern(int $searchPattern): self
     {
         $this->searchPattern = $searchPattern;
@@ -185,9 +185,6 @@ class OwnedNumbers implements FilterInterface
         return $this->pageSize;
     }
 
-    /**
-     * @return $this
-     */
     public function setPageSize(int $pageSize): self
     {
         $this->pageSize = $pageSize;
@@ -200,9 +197,6 @@ class OwnedNumbers implements FilterInterface
         return $this->applicationId;
     }
 
-    /**
-     * @return $this
-     */
     public function setApplicationId(string $applicationId): self
     {
         $this->applicationId = $applicationId;
@@ -215,9 +209,6 @@ class OwnedNumbers implements FilterInterface
         return $this->hasApplication;
     }
 
-    /**
-     * @return $this
-     */
     public function setHasApplication(bool $hasApplication): self
     {
         $this->hasApplication = $hasApplication;

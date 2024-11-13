@@ -24,10 +24,16 @@ class GoogleCloudAiplatformV1GenerateContentRequest extends \Google\Collection
   protected $contentsDataType = 'array';
   protected $generationConfigType = GoogleCloudAiplatformV1GenerationConfig::class;
   protected $generationConfigDataType = '';
+  /**
+   * @var string[]
+   */
+  public $labels;
   protected $safetySettingsType = GoogleCloudAiplatformV1SafetySetting::class;
   protected $safetySettingsDataType = 'array';
   protected $systemInstructionType = GoogleCloudAiplatformV1Content::class;
   protected $systemInstructionDataType = '';
+  protected $toolConfigType = GoogleCloudAiplatformV1ToolConfig::class;
+  protected $toolConfigDataType = '';
   protected $toolsType = GoogleCloudAiplatformV1Tool::class;
   protected $toolsDataType = 'array';
 
@@ -60,6 +66,20 @@ class GoogleCloudAiplatformV1GenerateContentRequest extends \Google\Collection
     return $this->generationConfig;
   }
   /**
+   * @param string[]
+   */
+  public function setLabels($labels)
+  {
+    $this->labels = $labels;
+  }
+  /**
+   * @return string[]
+   */
+  public function getLabels()
+  {
+    return $this->labels;
+  }
+  /**
    * @param GoogleCloudAiplatformV1SafetySetting[]
    */
   public function setSafetySettings($safetySettings)
@@ -86,6 +106,20 @@ class GoogleCloudAiplatformV1GenerateContentRequest extends \Google\Collection
   public function getSystemInstruction()
   {
     return $this->systemInstruction;
+  }
+  /**
+   * @param GoogleCloudAiplatformV1ToolConfig
+   */
+  public function setToolConfig(GoogleCloudAiplatformV1ToolConfig $toolConfig)
+  {
+    $this->toolConfig = $toolConfig;
+  }
+  /**
+   * @return GoogleCloudAiplatformV1ToolConfig
+   */
+  public function getToolConfig()
+  {
+    return $this->toolConfig;
   }
   /**
    * @param GoogleCloudAiplatformV1Tool[]

@@ -224,7 +224,6 @@ class GalleryController extends Controller
     public function upload_album_images(Request $request)
     {
         $maxImageSize = getMaxUploadSize() * 1024;
-
         $isBeforeAfter = (int) $request->input('isBeforeAfter', 0);
         $isBeforeAfterHaveTwoImages = (int) $request->input('isBeforeAfterHaveTwoImages', 0);
         if ($isBeforeAfter == 1) {

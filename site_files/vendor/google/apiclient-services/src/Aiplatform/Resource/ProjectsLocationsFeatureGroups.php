@@ -42,7 +42,7 @@ class ProjectsLocationsFeatureGroups extends \Google\Service\Resource
    *
    * @opt_param string featureGroupId Required. The ID to use for this
    * FeatureGroup, which will become the final component of the FeatureGroup's
-   * resource name. This value may be up to 60 characters, and valid characters
+   * resource name. This value may be up to 128 characters, and valid characters
    * are `[a-z0-9_]`. The first character cannot be a number. The value must be
    * unique within the project and location.
    * @return GoogleLongrunningOperation
@@ -140,7 +140,8 @@ class ProjectsLocationsFeatureGroups extends \Google\Service\Resource
    * field will be overwritten if it is in the mask. If the user does not provide
    * a mask then only the non-empty fields present in the request will be
    * overwritten. Set the update_mask to `*` to override all fields. Updatable
-   * fields: * `labels`
+   * fields: * `labels` * `description` * `big_query` *
+   * `big_query.entity_id_columns`
    * @return GoogleLongrunningOperation
    * @throws \Google\Service\Exception
    */

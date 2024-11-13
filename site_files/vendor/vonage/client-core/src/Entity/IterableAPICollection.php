@@ -1,12 +1,5 @@
 <?php
 
-/**
- * Vonage Client Library for PHP
- *
- * @copyright Copyright (c) 2016-2020 Vonage, Inc. (http://vonage.com)
- * @license https://github.com/Vonage/vonage-php-sdk-core/blob/master/LICENSE.txt Apache License 2.0
- */
-
 declare(strict_types=1);
 
 namespace Vonage\Entity;
@@ -22,6 +15,8 @@ use Vonage\Client\APIResource;
 use Vonage\Client\ClientAwareInterface;
 use Vonage\Client\ClientAwareTrait;
 use Vonage\Client\Exception as ClientException;
+use Vonage\Client\Exception\Exception;
+use Vonage\Client\Exception\Server;
 use Vonage\Entity\Filter\EmptyFilter;
 use Vonage\Entity\Filter\FilterInterface;
 
@@ -33,7 +28,6 @@ use function http_build_query;
 use function is_null;
 use function json_decode;
 use function md5;
-use function strpos;
 
 /**
  * Common code for iterating over a collection, and using the collection class to discover the API path.
@@ -42,36 +36,36 @@ class IterableAPICollection implements ClientAwareInterface, Iterator, Countable
 {
     use ClientAwareTrait;
 
+    protected APIResource $api;
+
     /**
-     * @var APIResource
+     * This allows for override if the endpoint API uÏses a different query key
      */
-    protected $api;
+    protected string $pageIndexKey = 'page_index';
+
+    /**
+     * This allows for override if the endpoint API uses a different query key
+     */
+    protected string $pageSizeKey = 'page_size';
 
     /**
      * Determines if the collection will automatically go to the next page
-     *
-     * @var bool
      */
-    protected $autoAdvance = true;
+    protected bool $autoAdvance = true;
 
-    /**
-     * @var string
-     */
-    protected $baseUrl = Client::BASE_API;
+    protected string $baseUrl = Client::BASE_API;
 
     /**
      * Holds a cache of various pages we have already polled
      *
      * @var array<string, string>
      */
-    protected $cache = [];
+    protected array $cache = [];
 
     /**
      * Index of the current resource of the current page
-     *
-     * @var int
      */
-    protected $current;
+    protected int $current = 0;
 
     /**
      * Count the items in the response instead of returning the count parameter
@@ -80,57 +74,91 @@ class IterableAPICollection implements ClientAwareInterface, Iterator, Countable
      *
      * @var bool
      */
-    protected $naiveCount = false;
+    protected bool $naiveCount = false;
 
     /**
      * Current page data.
-     *
-     * @var array
      */
-    protected $page;
+    protected ?array $pageData = null;
 
     /**
      * Last API Response
-     *
-     * @var ResponseInterface
      */
-    protected $response;
+    protected ?ResponseInterface $response = null;
 
     /**
      * User set page index.
-     *
-     * @var int
      */
-    protected $index = 1;
+    protected ?int $index = 1;
+
+    protected bool $isHAL = true;
 
     /**
-     * @var bool
+     * Used to override the index, this is to hack inconsistent API behaviours
      */
-    protected $isHAL = true;
+    protected bool $noIndex = false;
 
     /**
-     * User set pgge sixe.
-     *
-     * @var int
+     * Used if there are HAL elements, but entities are all in one request
+     * Specifically removes automatic pagination that adds request parameters
      */
-    protected $size;
+    protected bool $noQueryParameters = false;
 
     /**
-     * @var FilterInterface
+     * User set pgge size.
      */
-    protected $filter;
+    protected ?int $size = null;
+
+    protected ?FilterInterface $filter = null;
 
     /**
-     * @var string
+     * Used when HAL convention is used, but there is no collection name in the result
      */
-    protected $collectionName = '';
-
-    /**
-     * @var string
-     */
-    protected $collectionPath;
+    protected bool $halNoCollection = false;
 
     protected $hydrator;
+
+    /**
+     * Used to override pagination to remove it from the URL page query
+     * but differs from noQueryParameters when you want to use other filters
+     */
+    protected bool $hasPagination = true;
+
+    public function isHalNoCollection(): bool
+    {
+        return $this->halNoCollection;
+    }
+
+    public function setHalNoCollection(bool $halNoCollection): IterableAPICollection
+    {
+        $this->halNoCollection = $halNoCollection;
+
+        return $this;
+    }
+
+    public function getPageIndexKey(): string
+    {
+        return $this->pageIndexKey;
+    }
+
+    public function setPageIndexKey(string $pageIndexKey): IterableAPICollection
+    {
+        $this->pageIndexKey = $pageIndexKey;
+
+        return $this;
+    }
+
+    public function getPageSizeKey(): string
+    {
+        return $this->pageSizeKey;
+    }
+
+    public function setPageSizeKey(string $pageSizeKey): IterableAPICollection
+    {
+        $this->pageSizeKey = $pageSizeKey;
+
+        return $this;
+    }
 
     /**
      * @param $hydrator
@@ -160,21 +188,25 @@ class IterableAPICollection implements ClientAwareInterface, Iterator, Countable
     {
         // Handles issues where an API returns empty for no results, as opposed
         // to a proper API response with a count field of 0
-        if (empty($this->page)) {
+        if (empty($this->pageData)) {
             return [];
         }
 
         $collectionName = $this->getApiResource()->getCollectionName();
 
         if ($this->getApiResource()->isHAL()) {
-            return $this->page['_embedded'][$collectionName];
+            if ($this->isHalNoCollection() === true) {
+                return $this->pageData['_embedded'];
+            }
+
+            return $this->pageData['_embedded'][$collectionName];
         }
 
         if (!empty($this->getApiResource()->getCollectionName())) {
-            return $this->page[$collectionName];
+            return $this->pageData[$collectionName];
         }
 
-        return $this->page;
+        return $this->pageData;
     }
 
     /**
@@ -228,14 +260,15 @@ class IterableAPICollection implements ClientAwareInterface, Iterator, Countable
     public function valid(): bool
     {
         //can't be valid if there's not a page (rewind sets this)
-        if (!isset($this->page)) {
+        if (!isset($this->pageData)) {
             return false;
         }
 
         //all hal collections have an `_embedded` object, we expect there to be a property matching the collection name
         if (
+            $this->isHalNoCollection() === false &&
             $this->getApiResource()->isHAL() &&
-            !isset($this->page['_embedded'][$this->getApiResource()->getCollectionName()])
+            !isset($this->pageData['_embedded'][$this->getApiResource()->getCollectionName()])
         ) {
             return false;
         }
@@ -257,9 +290,9 @@ class IterableAPICollection implements ClientAwareInterface, Iterator, Countable
 
         //if our current index is past the current page, fetch the next page if possible and reset the index
         if ($this->getAutoAdvance() && !isset($this->getResourceRoot()[$this->current])) {
-            if (isset($this->page['_links'])) {
-                if (isset($this->page['_links']['next'])) {
-                    $this->fetchPage($this->page['_links']['next']['href']);
+            if (isset($this->pageData['_links'])) {
+                if (isset($this->pageData['_links']['next'])) {
+                    $this->fetchPage($this->pageData['_links']['next']['href']);
                     $this->current = 0;
 
                     return true;
@@ -321,22 +354,22 @@ class IterableAPICollection implements ClientAwareInterface, Iterator, Countable
      */
     public function count(): int
     {
-        if (!isset($this->page)) {
+        if (!isset($this->pageData)) {
             $this->rewind();
         }
 
-        if (isset($this->page)) {
+        if (isset($this->pageData)) {
             // Force counting the items for legacy reasons
             if ($this->getNaiveCount()) {
                 return count($this->getResourceRoot());
             }
 
-            if (array_key_exists('total_items', $this->page)) {
-                return $this->page['total_items'];
+            if (array_key_exists('total_items', $this->pageData)) {
+                return $this->pageData['total_items'];
             }
 
-            if (array_key_exists('count', $this->page)) {
-                return $this->page['count'];
+            if (array_key_exists('count', $this->pageData)) {
+                return $this->pageData['count'];
             }
 
             return count($this->getResourceRoot());
@@ -370,14 +403,14 @@ class IterableAPICollection implements ClientAwareInterface, Iterator, Countable
     /**
      * @return int|mixed
      */
-    public function getPage()
+    public function getPage(): mixed
     {
-        if (isset($this->page)) {
-            if (array_key_exists('page', $this->page)) {
-                return $this->page['page'];
+        if (isset($this->pageData)) {
+            if (array_key_exists('page', $this->pageData)) {
+                return $this->pageData['page'];
             }
 
-            return $this->page['page_index'];
+            return $this->pageData['page_index'];
         }
 
         if (isset($this->index)) {
@@ -395,16 +428,16 @@ class IterableAPICollection implements ClientAwareInterface, Iterator, Countable
      */
     public function getPageData(): ?array
     {
-        if (is_null($this->page)) {
+        if (is_null($this->pageData)) {
             $this->rewind();
         }
 
-        return $this->page;
+        return $this->pageData;
     }
 
     public function setPageData(array $data): void
     {
-        $this->page = $data;
+        $this->pageData = $data;
     }
 
     /**
@@ -412,9 +445,9 @@ class IterableAPICollection implements ClientAwareInterface, Iterator, Countable
      */
     public function getSize()
     {
-        if (isset($this->page)) {
-            if (array_key_exists('page_size', $this->page)) {
-                return $this->page['page_size'];
+        if (isset($this->pageData)) {
+            if (array_key_exists('page_size', $this->pageData)) {
+                return $this->pageData['page_size'];
             }
 
             return count($this->getResourceRoot());
@@ -427,11 +460,6 @@ class IterableAPICollection implements ClientAwareInterface, Iterator, Countable
         throw new RuntimeException('size not set');
     }
 
-    /**
-     * @param $size
-     *
-     * @return $this
-     */
     public function setSize($size): self
     {
         $this->size = (int)$size;
@@ -441,8 +469,6 @@ class IterableAPICollection implements ClientAwareInterface, Iterator, Countable
 
     /**
      * Filters reduce to query params and include paging settings.
-     *
-     * @return $this
      */
     public function setFilter(FilterInterface $filter): self
     {
@@ -462,8 +488,6 @@ class IterableAPICollection implements ClientAwareInterface, Iterator, Countable
     /**
      * Fetch a page using the current filter if no query is provided.
      *
-     * @param $absoluteUri
-     *
      * @throws ClientException\Exception
      * @throws ClientException\Request
      * @throws ClientException\Server
@@ -472,15 +496,17 @@ class IterableAPICollection implements ClientAwareInterface, Iterator, Countable
     protected function fetchPage($absoluteUri): void
     {
         //use filter if no query provided
-        if (false === strpos($absoluteUri, '?')) {
+        if (!str_contains((string) $absoluteUri, '?')) {
+            $originalUri = $absoluteUri;
+
             $query = [];
 
             if (isset($this->size)) {
-                $query['page_size'] = $this->size;
+                $query[$this->pageSizeKey] = $this->size;
             }
 
-            if (isset($this->index)) {
-                $query['page_index'] = $this->index;
+            if (isset($this->index) && $this->hasPagination()) {
+                $query[$this->pageIndexKey] = $this->index;
             }
 
             if (isset($this->filter)) {
@@ -488,6 +514,11 @@ class IterableAPICollection implements ClientAwareInterface, Iterator, Countable
             }
 
             $absoluteUri .= '?' . http_build_query($query);
+
+            // This is an override to completely remove request parameters for single requests
+            if ($this->getNoQueryParameters()) {
+                $absoluteUri = $originalUri;
+            }
         }
 
         $requestUri = $absoluteUri;
@@ -496,14 +527,19 @@ class IterableAPICollection implements ClientAwareInterface, Iterator, Countable
             $requestUri = $this->getApiResource()->getBaseUrl() . $absoluteUri;
         }
 
-        $cacheKey = md5($requestUri);
+        $cacheKey = md5((string) $requestUri);
         if (array_key_exists($cacheKey, $this->cache)) {
-            $this->page = $this->cache[$cacheKey];
+            $this->pageData = $this->cache[$cacheKey];
 
             return;
         }
 
         $request = new Request($requestUri, 'GET');
+
+        if ($this->getApiResource()->getAuthHandlers()) {
+            $request = $this->getApiResource()->addAuth($request);
+        }
+
         $response = $this->client->send($request);
 
         $this->getApiResource()->setLastRequest($request);
@@ -512,20 +548,15 @@ class IterableAPICollection implements ClientAwareInterface, Iterator, Countable
 
         $body = $this->response->getBody()->getContents();
         $json = json_decode($body, true);
-        $this->cache[md5($requestUri)] = $json;
-        $this->page = $json;
+        $this->cache[md5((string) $requestUri)] = $json;
+        $this->pageData = $json;
 
         if ((int)$response->getStatusCode() !== 200) {
             throw $this->getException($response);
         }
     }
 
-    /**
-     * @throws ClientException\Exception
-     *
-     * @return ClientException\Request|ClientException\Server
-     */
-    protected function getException(ResponseInterface $response)
+    protected function getException(ResponseInterface $response): ClientException\Request|ClientException\Server
     {
         $response->getBody()->rewind();
         $body = json_decode($response->getBody()->getContents(), true);
@@ -555,9 +586,6 @@ class IterableAPICollection implements ClientAwareInterface, Iterator, Countable
         return $this->autoAdvance;
     }
 
-    /**
-     * @return $this
-     */
     public function setAutoAdvance(bool $autoAdvance): self
     {
         $this->autoAdvance = $autoAdvance;
@@ -570,12 +598,40 @@ class IterableAPICollection implements ClientAwareInterface, Iterator, Countable
         return $this->naiveCount;
     }
 
-    /**
-     * @return $this
-     */
     public function setNaiveCount(bool $naiveCount): self
     {
         $this->naiveCount = $naiveCount;
+
+        return $this;
+    }
+
+    public function setNoQueryParameters(bool $noQueryParameters): self
+    {
+        $this->noQueryParameters = $noQueryParameters;
+
+        return $this;
+    }
+
+    public function getNoQueryParameters(): bool
+    {
+        return $this->noQueryParameters;
+    }
+
+    public function setIndex(?int $index): IterableAPICollection
+    {
+        $this->index = $index;
+
+        return $this;
+    }
+
+    public function hasPagination(): bool
+    {
+        return $this->hasPagination;
+    }
+
+    public function setHasPagination(bool $hasPagination): static
+    {
+        $this->hasPagination = $hasPagination;
 
         return $this;
     }

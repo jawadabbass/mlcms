@@ -1,12 +1,5 @@
 <?php
 
-/**
- * Vonage Client Library for PHP
- *
- * @copyright Copyright (c) 2016-2020 Vonage, Inc. (http://vonage.com)
- * @license https://github.com/Vonage/vonage-php-sdk-core/blob/master/LICENSE.txt Apache License 2.0
- */
-
 declare(strict_types=1);
 
 namespace Vonage\Application;
@@ -28,20 +21,8 @@ class Client implements ClientAwareInterface, APIClient
 {
     use ClientAwareTrait;
 
-    /**
-     * @var APIResource
-     */
-    protected APIResource $api;
-
-    /**
-     * @var HydratorInterface
-     */
-    protected HydratorInterface $hydrator;
-
-    public function __construct(APIResource $api, HydratorInterface $hydrator = null)
+    public function __construct(protected APIResource $api, protected ?HydratorInterface $hydrator = null)
     {
-        $this->api = $api;
-        $this->hydrator = $hydrator;
     }
 
     public function getApiResource(): APIResource

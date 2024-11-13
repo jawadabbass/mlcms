@@ -48,6 +48,8 @@ class InstanceGroupManager extends \Google\Collection
    * @var string
    */
   public $id;
+  protected $instanceFlexibilityPolicyType = InstanceGroupManagerInstanceFlexibilityPolicy::class;
+  protected $instanceFlexibilityPolicyDataType = '';
   /**
    * @var string
    */
@@ -76,6 +78,14 @@ class InstanceGroupManager extends \Google\Collection
    * @var string
    */
   public $region;
+  /**
+   * @var bool
+   */
+  public $satisfiesPzi;
+  /**
+   * @var bool
+   */
+  public $satisfiesPzs;
   /**
    * @var string
    */
@@ -228,6 +238,20 @@ class InstanceGroupManager extends \Google\Collection
     return $this->id;
   }
   /**
+   * @param InstanceGroupManagerInstanceFlexibilityPolicy
+   */
+  public function setInstanceFlexibilityPolicy(InstanceGroupManagerInstanceFlexibilityPolicy $instanceFlexibilityPolicy)
+  {
+    $this->instanceFlexibilityPolicy = $instanceFlexibilityPolicy;
+  }
+  /**
+   * @return InstanceGroupManagerInstanceFlexibilityPolicy
+   */
+  public function getInstanceFlexibilityPolicy()
+  {
+    return $this->instanceFlexibilityPolicy;
+  }
+  /**
    * @param string
    */
   public function setInstanceGroup($instanceGroup)
@@ -338,6 +362,34 @@ class InstanceGroupManager extends \Google\Collection
   public function getRegion()
   {
     return $this->region;
+  }
+  /**
+   * @param bool
+   */
+  public function setSatisfiesPzi($satisfiesPzi)
+  {
+    $this->satisfiesPzi = $satisfiesPzi;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzi()
+  {
+    return $this->satisfiesPzi;
+  }
+  /**
+   * @param bool
+   */
+  public function setSatisfiesPzs($satisfiesPzs)
+  {
+    $this->satisfiesPzs = $satisfiesPzs;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzs()
+  {
+    return $this->satisfiesPzs;
   }
   /**
    * @param string

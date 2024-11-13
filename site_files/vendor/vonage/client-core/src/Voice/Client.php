@@ -1,12 +1,5 @@
 <?php
 
-/**
- * Vonage Client Library for PHP
- *
- * @copyright Copyright (c) 2016-2020 Vonage, Inc. (http://vonage.com)
- * @license https://github.com/Vonage/vonage-php-sdk-core/blob/master/LICENSE.txt Apache License 2.0
- */
-
 declare(strict_types=1);
 
 namespace Vonage\Voice;
@@ -15,6 +8,7 @@ use DateTimeImmutable;
 use DateTimeZone;
 use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
+use Psr\Http\Message\StreamInterface;
 use Vonage\Client\APIClient;
 use Vonage\Client\APIResource;
 use Vonage\Entity\Filter\FilterInterface;
@@ -28,14 +22,8 @@ use function is_null;
 
 class Client implements APIClient
 {
-    /**
-     * @var APIResource
-     */
-    protected $api;
-
-    public function __construct(APIResource $api)
+    public function __construct(protected APIResource $api)
     {
-        $this->api = $api;
     }
 
     public function getAPIResource(): APIResource
@@ -87,6 +75,10 @@ class Client implements APIClient
 
         if (!is_null($call->getRingingTimer())) {
             $json['ringing_timer'] = (string)$call->getRingingTimer();
+        }
+
+        if (!is_null($call->getAdvancedMachineDetection())) {
+            $json['advanced_machine_detection'] = $call->getAdvancedMachineDetection()->toArray();
         }
 
         $event = $this->api->create($json);
@@ -271,5 +263,10 @@ class Client implements APIClient
     public function unmuteCall(string $callId): void
     {
         $this->modifyCall($callId, CallAction::UNMUTE);
+    }
+
+    public function getRecording(string $url): StreamInterface
+    {
+        return $this->getAPIResource()->get($url, [], [], false, true);
     }
 }

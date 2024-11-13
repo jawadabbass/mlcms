@@ -205,30 +205,6 @@ function searchResult() {
         }
     });
 }
-$(document).ready(function () {
-    $("#generateSiteMap").click(function () {
-        $("#lContainer").css("display", "block");
-        url = base_url + "adminmedia/generate-site-map";
-        $.ajax({
-            url: url,
-            type: 'GET',
-            async: true,
-            cache: false,
-            success: function (data) {
-                console.log(data);
-                $("#lContainer").css("display", "none");
-                var win = window.open(base_url + 'sitemap.xml', '_blank');
-                win.focus();
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR);
-                console.log(textStatus);
-                $("#lContainer").css("display", "none");
-                console.log(errorThrown);
-            }
-        });
-    });
-});
 function delete_widget(id) {
     var myurl = base_url + 'adminmedia/widgets/' + id;
     var is_confirm = confirm("Are you sure you want to delete this Widgets?");

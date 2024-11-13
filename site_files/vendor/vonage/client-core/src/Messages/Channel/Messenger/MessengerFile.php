@@ -11,18 +11,17 @@ class MessengerFile extends BaseMessage
 
     protected string $channel = 'messenger';
     protected string $subType = BaseMessage::MESSAGES_SUBTYPE_FILE;
-    protected FileObject $fileObject;
+    protected bool $validatesE164 = false;
 
     public function __construct(
         string $to,
         string $from,
-        FileObject $fileObject,
+        protected FileObject $fileObject,
         ?string $category = null,
         ?string $tag = null
     ) {
         $this->to = $to;
         $this->from = $from;
-        $this->fileObject = $fileObject;
         $this->category = $category;
         $this->tag = $tag;
     }
@@ -37,5 +36,10 @@ class MessengerFile extends BaseMessage
         }
 
         return $returnArray;
+    }
+
+    public function validatesE164(): bool
+    {
+        return $this->validatesE164;
     }
 }

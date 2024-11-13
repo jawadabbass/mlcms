@@ -19,7 +19,7 @@ namespace Google\Service\Walletobjects;
 
 class EventTicketClass extends \Google\Collection
 {
-  protected $collection_key = 'textModulesData';
+  protected $collection_key = 'valueAddedModuleData';
   /**
    * @var bool
    */
@@ -105,6 +105,10 @@ class EventTicketClass extends \Google\Collection
    */
   public $multipleDevicesAndHoldersAllowedStatus;
   /**
+   * @var string
+   */
+  public $notifyPreference;
+  /**
    * @var string[]
    */
   public $redemptionIssuers;
@@ -130,6 +134,8 @@ class EventTicketClass extends \Google\Collection
   protected $securityAnimationDataType = '';
   protected $textModulesDataType = TextModuleData::class;
   protected $textModulesDataDataType = 'array';
+  protected $valueAddedModuleDataType = ValueAddedModuleData::class;
+  protected $valueAddedModuleDataDataType = 'array';
   protected $venueType = EventVenue::class;
   protected $venueDataType = '';
   /**
@@ -580,6 +586,20 @@ class EventTicketClass extends \Google\Collection
     return $this->multipleDevicesAndHoldersAllowedStatus;
   }
   /**
+   * @param string
+   */
+  public function setNotifyPreference($notifyPreference)
+  {
+    $this->notifyPreference = $notifyPreference;
+  }
+  /**
+   * @return string
+   */
+  public function getNotifyPreference()
+  {
+    return $this->notifyPreference;
+  }
+  /**
    * @param string[]
    */
   public function setRedemptionIssuers($redemptionIssuers)
@@ -690,6 +710,20 @@ class EventTicketClass extends \Google\Collection
   public function getTextModulesData()
   {
     return $this->textModulesData;
+  }
+  /**
+   * @param ValueAddedModuleData[]
+   */
+  public function setValueAddedModuleData($valueAddedModuleData)
+  {
+    $this->valueAddedModuleData = $valueAddedModuleData;
+  }
+  /**
+   * @return ValueAddedModuleData[]
+   */
+  public function getValueAddedModuleData()
+  {
+    return $this->valueAddedModuleData;
   }
   /**
    * @param EventVenue

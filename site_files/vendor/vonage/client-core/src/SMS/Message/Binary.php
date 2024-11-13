@@ -1,12 +1,5 @@
 <?php
 
-/**
- * Vonage Client Library for PHP
- *
- * @copyright Copyright (c) 2016-2020 Vonage, Inc. (http://vonage.com)
- * @license https://github.com/Vonage/vonage-php-sdk-core/blob/master/LICENSE.txt Apache License 2.0
- */
-
 declare(strict_types=1);
 
 namespace Vonage\SMS\Message;
@@ -16,30 +9,11 @@ class Binary extends OutboundMessage
     /**
      * @var string
      */
-    protected $body;
+    protected string $type = 'binary';
 
-    /**
-     * @var ?int
-     */
-    protected $protocolId;
-
-    /**
-     * @var string
-     */
-    protected $type = 'binary';
-
-    /**
-     * @var string
-     */
-    protected $udh;
-
-    public function __construct(string $to, string $from, string $body, string $udh, int $protocolId = null)
+    public function __construct(string $to, string $from, protected string $body, protected string $udh, protected ?int $protocolId = null)
     {
         parent::__construct($to, $from);
-
-        $this->body = $body;
-        $this->udh = $udh;
-        $this->protocolId = $protocolId;
     }
 
     /**

@@ -1,12 +1,5 @@
 <?php
 
-/**
- * Vonage Client Library for PHP
- *
- * @copyright Copyright (c) 2016-2020 Vonage, Inc. (http://vonage.com)
- * @license https://github.com/Vonage/vonage-php-sdk-core/blob/master/LICENSE.txt Apache License 2.0
- */
-
 declare(strict_types=1);
 
 namespace Vonage\Voice\NCCO\Action;
@@ -20,49 +13,28 @@ use function is_null;
 
 class Conversation implements ActionInterface
 {
-    /**
-     * @var string
-     */
-    protected $name;
+    protected ?string $musicOnHoldUrl = null;
 
-    /**
-     * @var ?string
-     */
-    protected $musicOnHoldUrl;
+    protected ?bool $startOnEnter = null;
 
-    /**
-     * @var bool
-     */
-    protected $startOnEnter;
+    protected ?bool $endOnExit = null;
 
-    /**
-     * @var bool
-     */
-    protected $endOnExit;
-
-    /**
-     * @var bool
-     */
-    protected $record;
+    protected ?bool $record = null;
 
     /**
      * @var ?array<string>
      */
-    protected $canSpeak;
+    protected ?array $canSpeak = null;
 
     /**
      * @var ?array<string>
      */
-    protected $canHear;
+    protected ?array $canHear = null;
 
-    /**
-     * @var Webhook
-     */
-    protected $eventWebhook;
+    protected ?Webhook $eventWebhook = null;
 
-    public function __construct(string $name)
+    public function __construct(protected string $name)
     {
-        $this->name = $name;
     }
 
     public function getName(): string
@@ -120,9 +92,6 @@ class Conversation implements ActionInterface
         return $this->record;
     }
 
-    /**
-     * @return $this
-     */
     public function setRecord(bool $record): self
     {
         $this->record = $record;
@@ -140,8 +109,6 @@ class Conversation implements ActionInterface
 
     /**
      * @param array<string> $canSpeak
-     *
-     * @return Conversation
      */
     public function setCanSpeak(array $canSpeak): self
     {
@@ -150,9 +117,6 @@ class Conversation implements ActionInterface
         return $this;
     }
 
-    /**
-     * @return $this
-     */
     public function addCanSpeak(string $uuid): self
     {
         $this->canSpeak[] = $uuid;
@@ -170,8 +134,6 @@ class Conversation implements ActionInterface
 
     /**
      * @param array<string> $canHear
-     *
-     * @return Conversation
      */
     public function setCanHear(array $canHear): self
     {
@@ -180,9 +142,6 @@ class Conversation implements ActionInterface
         return $this;
     }
 
-    /**
-     * @return $this
-     */
     public function addCanHear(string $uuid): self
     {
         $this->canHear[] = $uuid;

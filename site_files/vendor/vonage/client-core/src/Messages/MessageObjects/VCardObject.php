@@ -6,11 +6,10 @@ use Vonage\Entity\Hydrator\ArrayHydrateInterface;
 
 class VCardObject implements ArrayHydrateInterface
 {
-    private string $url;
-
-    public function __construct(string $url)
-    {
-        $this->url = $url;
+    public function __construct(
+        private string $url,
+        private ?string $caption = null
+    ) {
     }
 
     public function fromArray(array $data): VCardObject
@@ -30,5 +29,15 @@ class VCardObject implements ArrayHydrateInterface
     public function getUrl(): string
     {
         return $this->url;
+    }
+
+    public function getCaption(): ?string
+    {
+        return $this->caption;
+    }
+
+    public function setCaption(?string $caption): void
+    {
+        $this->caption = $caption;
     }
 }

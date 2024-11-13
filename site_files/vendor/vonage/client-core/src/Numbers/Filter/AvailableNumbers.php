@@ -1,17 +1,11 @@
 <?php
 
-/**
- * Vonage Client Library for PHP
- *
- * @copyright Copyright (c) 2016-2020 Vonage, Inc. (http://vonage.com)
- * @license https://github.com/Vonage/vonage-php-sdk-core/blob/master/LICENSE.txt Apache License 2.0
- */
-
 declare(strict_types=1);
 
 namespace Vonage\Numbers\Filter;
 
 use InvalidArgumentException;
+use Vonage\Client\Exception\Request;
 use Vonage\Entity\Filter\FilterInterface;
 use Vonage\Numbers\Number;
 
@@ -26,53 +20,73 @@ class AvailableNumbers implements FilterInterface
     public const SEARCH_PATTERN_CONTAINS = 1;
     public const SEARCH_PATTERN_ENDS = 2;
 
-    /**
-     * @var string
-     */
-    protected $country;
+    public static array $possibleParameters = [
+        'country' => 'string',
+        'pattern' => 'string',
+        'search_pattern' => 'integer',
+        'size' => 'integer',
+        'index' => 'integer',
+        'has_application' => 'boolean',
+        'application_id' => 'string',
+        'features' => 'string',
+        'type' => 'string',
+    ];
 
-    /**
-     * @var string
-     */
-    protected $features;
+    protected ?string $country = null;
 
-    /**
-     * @var int
-     */
-    protected $pageIndex = 1;
+    protected ?string $features = null;
 
-    /**
-     * @var int
-     */
-    protected $pageSize = 10;
+    protected int $pageIndex = 1;
 
-    /**
-     * @var string
-     */
-    protected $pattern;
+    protected int $pageSize = 10;
 
-    /**
-     * @var int
-     */
-    protected $searchPattern = 0;
+    protected ?string $pattern = null;
 
-    /**
-     * @var string
-     */
-    protected $type;
+    protected int $searchPattern = 0;
+
+    protected ?string $type = null;
+
+    protected ?bool $hasApplication = null;
+
+    protected ?string $applicationId = null;
 
     public function __construct(array $filter = [])
     {
+        foreach ($filter as $key => $value) {
+            if (!array_key_exists($key, self::$possibleParameters)) {
+                throw new Request("Unknown option: '" . $key . "'");
+            }
+
+            switch (self::$possibleParameters[$key]) {
+                case 'boolean':
+                    $value = filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+                    if (is_null($value)) {
+                        throw new Request("Invalid value: '" . $key . "' must be a boolean value");
+                    }
+                    $value = $value ? "true" : "false";
+                    break;
+                case 'integer':
+                    $value = filter_var($value, FILTER_VALIDATE_INT);
+                    if ($value === false) {
+                        throw new Request("Invalid value: '" . $key . "' must be an integer");
+                    }
+                    break;
+                default:
+                    // No-op, take the value whatever it is
+                    break;
+            }
+        }
+
         if (array_key_exists('country', $filter)) {
             $this->setCountry($filter['country']);
         }
 
         if (array_key_exists('size', $filter)) {
-            $this->setPageSize($filter['size']);
+            $this->setPageSize((int)$filter['size']);
         }
 
         if (array_key_exists('index', $filter)) {
-            $this->setPageIndex($filter['index']);
+            $this->setPageIndex((int)$filter['index']);
         }
 
         if (array_key_exists('pattern', $filter)) {
@@ -93,6 +107,14 @@ class AvailableNumbers implements FilterInterface
             }
 
             $this->setFeatures($filter['features']);
+        }
+
+        if (array_key_exists('has_application', $filter)) {
+            $this->setHasApplication((bool)$filter['has_application']);
+        }
+
+        if (array_key_exists('application_id', $filter)) {
+            $this->setApplicationId($filter['application_id']);
         }
     }
 
@@ -121,6 +143,14 @@ class AvailableNumbers implements FilterInterface
 
         if ($this->getFeatures()) {
             $data['features'] = $this->getFeatures();
+        }
+
+        if ($this->getHasApplication() !== null) {
+            $data['has_application'] = $this->getHasApplication();
+        }
+
+        if ($this->getApplicationId() !== null) {
+            $data['application_id'] = $this->getApplicationId();
         }
 
         return $data;
@@ -241,6 +271,36 @@ class AvailableNumbers implements FilterInterface
     public function setPageSize(int $pageSize): self
     {
         $this->pageSize = $pageSize;
+
+        return $this;
+    }
+
+    public function getHasApplication(): ?bool
+    {
+        return $this->hasApplication;
+    }
+
+    /**
+     * @return $this
+     */
+    public function setHasApplication(bool $hasApplication): self
+    {
+        $this->hasApplication = $hasApplication;
+
+        return $this;
+    }
+
+    public function getApplicationId(): ?string
+    {
+        return $this->applicationId;
+    }
+
+    /**
+     * @return $this
+     */
+    public function setApplicationId(string $applicationId): self
+    {
+        $this->applicationId = $applicationId;
 
         return $this;
     }

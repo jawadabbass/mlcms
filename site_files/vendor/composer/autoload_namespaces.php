@@ -6,8 +6,9 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'PHPExcel' => array($vendorDir . '/phpoffice/phpexcel/Classes'),
     'Orangehill\\Iseed' => array($vendorDir . '/orangehill/iseed/src'),
+    'Maatwebsite\\Excel\\' => array($vendorDir . '/maatwebsite/excel/src'),
     'Laracasts\\Flash' => array($vendorDir . '/laracasts/flash/src'),
     'JShrink' => array($vendorDir . '/tedivm/jshrink/src'),
-    'HTMLPurifier' => array($vendorDir . '/ezyang/htmlpurifier/library'),
 );

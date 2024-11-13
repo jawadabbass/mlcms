@@ -4,9 +4,7 @@ namespace App\Http\Controllers\Back;
 
 use Illuminate\Http\Request;
 use App\Helpers\ImageUploader;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class MediaController extends Controller
@@ -16,7 +14,6 @@ class MediaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
     /* To display all galleries */
     public function index()
     {
@@ -27,7 +24,6 @@ class MediaController extends Controller
         $mediaBasePath = mediaBasePath();
         $album_path = mediaBasePath();
         $folodersArr = array_filter(glob($mediaBasePath . '*'), 'is_dir');
-
         $cnt = 0;
         //>>>>>>>>>>>>>>>>> **Start** Root Files
         $folderName = 'root';
@@ -75,12 +71,9 @@ class MediaController extends Controller
         }
         echo json_encode(array('done' => 'ok'));
     }
-    public function update_album(Request $request)
-    {
-    }
+    public function update_album(Request $request) {}
     public function upload_album_images(Request $request)
     {
-
         $maxImageSize = getMaxUploadSize() * 1024;
         $validator = Validator::make(
             $request->all(),
@@ -104,7 +97,6 @@ class MediaController extends Controller
         request()->validate([
             'uploadFile' => 'required',
         ]);
-
         $album_name = str_ireplace(storage_uploads(''), '', $request->album);
         foreach ($request->file('uploadFile') as $key => $value) {
             ImageUploader::UploadDoc($album_name, $value);
@@ -123,7 +115,6 @@ class MediaController extends Controller
         //>>>>>>>>>>>>>>>>> **Start** Apply Security Filters
         //HERE
         //<<<<<<<<<<<<<<<<< ***End*** Apply Security Filters
-
         if (file_exists($fileWithPath)) {
             unlink($fileWithPath);
         }

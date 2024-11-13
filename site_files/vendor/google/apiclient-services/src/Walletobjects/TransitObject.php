@@ -19,7 +19,7 @@ namespace Google\Service\Walletobjects;
 
 class TransitObject extends \Google\Collection
 {
-  protected $collection_key = 'ticketLegs';
+  protected $collection_key = 'valueAddedModuleData';
   protected $activationStatusType = ActivationStatus::class;
   protected $activationStatusDataType = '';
   protected $appLinkDataType = AppLinkData::class;
@@ -70,12 +70,20 @@ class TransitObject extends \Google\Collection
   protected $imageModulesDataDataType = 'array';
   protected $infoModuleDataType = InfoModuleData::class;
   protected $infoModuleDataDataType = '';
+  /**
+   * @var string[]
+   */
+  public $linkedObjectIds;
   protected $linksModuleDataType = LinksModuleData::class;
   protected $linksModuleDataDataType = '';
   protected $locationsType = LatLongPoint::class;
   protected $locationsDataType = 'array';
   protected $messagesType = Message::class;
   protected $messagesDataType = 'array';
+  /**
+   * @var string
+   */
+  public $notifyPreference;
   protected $passConstraintsType = PassConstraints::class;
   protected $passConstraintsDataType = '';
   /**
@@ -90,6 +98,8 @@ class TransitObject extends \Google\Collection
   protected $purchaseDetailsDataType = '';
   protected $rotatingBarcodeType = RotatingBarcode::class;
   protected $rotatingBarcodeDataType = '';
+  protected $saveRestrictionsType = SaveRestrictions::class;
+  protected $saveRestrictionsDataType = '';
   /**
    * @var string
    */
@@ -124,6 +134,8 @@ class TransitObject extends \Google\Collection
   public $tripType;
   protected $validTimeIntervalType = TimeInterval::class;
   protected $validTimeIntervalDataType = '';
+  protected $valueAddedModuleDataType = ValueAddedModuleData::class;
+  protected $valueAddedModuleDataDataType = 'array';
   /**
    * @var string
    */
@@ -382,6 +394,20 @@ class TransitObject extends \Google\Collection
     return $this->infoModuleData;
   }
   /**
+   * @param string[]
+   */
+  public function setLinkedObjectIds($linkedObjectIds)
+  {
+    $this->linkedObjectIds = $linkedObjectIds;
+  }
+  /**
+   * @return string[]
+   */
+  public function getLinkedObjectIds()
+  {
+    return $this->linkedObjectIds;
+  }
+  /**
    * @param LinksModuleData
    */
   public function setLinksModuleData(LinksModuleData $linksModuleData)
@@ -422,6 +448,20 @@ class TransitObject extends \Google\Collection
   public function getMessages()
   {
     return $this->messages;
+  }
+  /**
+   * @param string
+   */
+  public function setNotifyPreference($notifyPreference)
+  {
+    $this->notifyPreference = $notifyPreference;
+  }
+  /**
+   * @return string
+   */
+  public function getNotifyPreference()
+  {
+    return $this->notifyPreference;
   }
   /**
    * @param PassConstraints
@@ -492,6 +532,20 @@ class TransitObject extends \Google\Collection
   public function getRotatingBarcode()
   {
     return $this->rotatingBarcode;
+  }
+  /**
+   * @param SaveRestrictions
+   */
+  public function setSaveRestrictions(SaveRestrictions $saveRestrictions)
+  {
+    $this->saveRestrictions = $saveRestrictions;
+  }
+  /**
+   * @return SaveRestrictions
+   */
+  public function getSaveRestrictions()
+  {
+    return $this->saveRestrictions;
   }
   /**
    * @param string
@@ -646,6 +700,20 @@ class TransitObject extends \Google\Collection
   public function getValidTimeInterval()
   {
     return $this->validTimeInterval;
+  }
+  /**
+   * @param ValueAddedModuleData[]
+   */
+  public function setValueAddedModuleData($valueAddedModuleData)
+  {
+    $this->valueAddedModuleData = $valueAddedModuleData;
+  }
+  /**
+   * @return ValueAddedModuleData[]
+   */
+  public function getValueAddedModuleData()
+  {
+    return $this->valueAddedModuleData;
   }
   /**
    * @param string

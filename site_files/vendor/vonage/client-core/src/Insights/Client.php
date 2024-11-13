@@ -1,12 +1,5 @@
 <?php
 
-/**
- * Vonage Client Library for PHP
- *
- * @copyright Copyright (c) 2016-2020 Vonage, Inc. (http://vonage.com)
- * @license https://github.com/Vonage/vonage-php-sdk-core/blob/master/LICENSE.txt Apache License 2.0
- */
-
 declare(strict_types=1);
 
 namespace Vonage\Insights;
@@ -14,140 +7,113 @@ namespace Vonage\Insights;
 use Psr\Http\Client\ClientExceptionInterface;
 use Vonage\Client\APIClient;
 use Vonage\Client\APIResource;
-use Vonage\Client\ClientAwareInterface;
-use Vonage\Client\ClientAwareTrait;
 use Vonage\Client\Exception as ClientException;
+use Vonage\Client\Exception\Exception;
+use Vonage\Client\Exception\Request;
+use Vonage\Client\Exception\Server;
 use Vonage\Entity\Filter\KeyValueFilter;
+use Vonage\Entity\IterableAPICollection;
 use Vonage\Numbers\Number;
-
-use function is_null;
 
 /**
  * Class Client
  */
-class Client implements ClientAwareInterface, APIClient
+class Client implements APIClient
 {
-    /**
-     * @deprecated This client no longer needs to be ClientAware
-     */
-    use ClientAwareTrait;
+    protected array $chargeableCodes = [0, 43, 44, 45];
 
-    /**
-     * @var APIResource
-     */
-    protected $api;
-
-    public function __construct(APIResource $api = null)
+    public function __construct(protected ?APIResource $api = null)
     {
-        $this->api = $api;
     }
 
-    /**
-     * Shim to handle older instantiations of this class
-     *
-     * @deprecated Will change in v3 to just return the required API object
-     */
     public function getApiResource(): APIResource
     {
-        if (is_null($this->api)) {
-            $api = new APIResource();
-            $api->setClient($this->getClient())
-                ->setIsHAL(false);
-            $this->api = $api;
-        }
         return clone $this->api;
     }
 
     /**
-     * @param $number
-     *
      * @throws ClientExceptionInterface
-     * @throws ClientException\Exception
-     * @throws ClientException\Request
-     * @throws ClientException\Server
+     * @throws Exception
+     * @throws Request
+     * @throws Server
      */
-    public function basic($number): Basic
+    public function basic(string $number): Basic
     {
         $insightsResults = $this->makeRequest('/ni/basic/json', $number);
 
         $basic = new Basic($insightsResults['national_format_number']);
         $basic->fromArray($insightsResults);
+
         return $basic;
     }
 
     /**
-     * @param $number
-     *
      * @throws ClientExceptionInterface
-     * @throws ClientException\Exception
-     * @throws ClientException\Request
-     * @throws ClientException\Server
+     * @throws Exception
+     * @throws Request
+     * @throws Server
      */
-    public function standardCNam($number): StandardCnam
+    public function standardCNam(string $number): StandardCnam
     {
         $insightsResults = $this->makeRequest('/ni/standard/json', $number, ['cnam' => 'true']);
         $standard = new StandardCnam($insightsResults['national_format_number']);
         $standard->fromArray($insightsResults);
+
         return $standard;
     }
 
     /**
-     * @param $number
-     *
      * @throws ClientExceptionInterface
-     * @throws ClientException\Exception
-     * @throws ClientException\Request
-     * @throws ClientException\Server
+     * @throws Exception
+     * @throws Request
+     * @throws Server
      */
-    public function advancedCnam($number): AdvancedCnam
+    public function advancedCnam(string $number): AdvancedCnam
     {
         $insightsResults = $this->makeRequest('/ni/advanced/json', $number, ['cnam' => 'true']);
         $standard = new AdvancedCnam($insightsResults['national_format_number']);
         $standard->fromArray($insightsResults);
+
         return $standard;
     }
 
     /**
-     * @param $number
-     *
      * @throws ClientExceptionInterface
      * @throws ClientException\Exception
      * @throws ClientException\Request
      * @throws ClientException\Server
      */
-    public function standard($number): Standard
+    public function standard(string $number): Standard
     {
         $insightsResults = $this->makeRequest('/ni/standard/json', $number);
         $standard = new Standard($insightsResults['national_format_number']);
         $standard->fromArray($insightsResults);
+
         return $standard;
     }
 
     /**
-     * @param $number
-     *
      * @throws ClientExceptionInterface
      * @throws ClientException\Exception
      * @throws ClientException\Request
      * @throws ClientException\Server
      */
-    public function advanced($number): Advanced
+    public function advanced(string $number): Advanced
     {
         $insightsResults = $this->makeRequest('/ni/advanced/json', $number);
         $advanced = new Advanced($insightsResults['national_format_number']);
         $advanced->fromArray($insightsResults);
+
         return $advanced;
     }
 
     /**
-     * @param $number
-     *
      * @throws ClientExceptionInterface
      * @throws ClientException\Exception
      * @throws ClientException\Request
      * @throws ClientException\Server
      */
-    public function advancedAsync($number, string $webhook): void
+    public function advancedAsync(string $number, string $webhook): void
     {
         // This method does not have a return value as it's async. If there is no exception thrown
         // We can assume that everything is fine
@@ -156,8 +122,6 @@ class Client implements ClientAwareInterface, APIClient
 
     /**
      * Common code for generating a request
-     *
-     * @param $number
      *
      * @throws ClientException\Exception
      * @throws ClientException\Request
@@ -168,6 +132,9 @@ class Client implements ClientAwareInterface, APIClient
     {
         $api = $this->getApiResource();
         $api->setBaseUri($path);
+        $collectionPrototype = new IterableAPICollection();
+        $collectionPrototype->setHasPagination(false);
+        $api->setCollectionPrototype($collectionPrototype);
 
         if ($number instanceof Number) {
             $number = $number->getMsisdn();
@@ -178,7 +145,7 @@ class Client implements ClientAwareInterface, APIClient
         $data = $result->getPageData();
 
         // check the status field in response (HTTP status is 200 even for errors)
-        if ((int)$data['status'] !== 0) {
+        if (! in_array((int)$data['status'], $this->chargeableCodes, true)) {
             throw $this->getNIException($data);
         }
 

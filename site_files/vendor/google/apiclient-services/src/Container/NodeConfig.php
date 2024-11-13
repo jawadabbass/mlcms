@@ -41,6 +41,10 @@ class NodeConfig extends \Google\Collection
    */
   public $diskType;
   /**
+   * @var string
+   */
+  public $effectiveCgroupMode;
+  /**
    * @var bool
    */
   public $enableConfidentialStorage;
@@ -70,6 +74,10 @@ class NodeConfig extends \Google\Collection
    * @var int
    */
   public $localSsdCount;
+  /**
+   * @var string
+   */
+  public $localSsdEncryptionMode;
   protected $loggingConfigType = NodePoolLoggingConfig::class;
   protected $loggingConfigDataType = '';
   /**
@@ -122,6 +130,10 @@ class NodeConfig extends \Google\Collection
    * @var bool
    */
   public $spot;
+  /**
+   * @var string[]
+   */
+  public $storagePools;
   /**
    * @var string[]
    */
@@ -230,6 +242,20 @@ class NodeConfig extends \Google\Collection
   public function getDiskType()
   {
     return $this->diskType;
+  }
+  /**
+   * @param string
+   */
+  public function setEffectiveCgroupMode($effectiveCgroupMode)
+  {
+    $this->effectiveCgroupMode = $effectiveCgroupMode;
+  }
+  /**
+   * @return string
+   */
+  public function getEffectiveCgroupMode()
+  {
+    return $this->effectiveCgroupMode;
   }
   /**
    * @param bool
@@ -384,6 +410,20 @@ class NodeConfig extends \Google\Collection
   public function getLocalSsdCount()
   {
     return $this->localSsdCount;
+  }
+  /**
+   * @param string
+   */
+  public function setLocalSsdEncryptionMode($localSsdEncryptionMode)
+  {
+    $this->localSsdEncryptionMode = $localSsdEncryptionMode;
+  }
+  /**
+   * @return string
+   */
+  public function getLocalSsdEncryptionMode()
+  {
+    return $this->localSsdEncryptionMode;
   }
   /**
    * @param NodePoolLoggingConfig
@@ -622,6 +662,20 @@ class NodeConfig extends \Google\Collection
   public function getSpot()
   {
     return $this->spot;
+  }
+  /**
+   * @param string[]
+   */
+  public function setStoragePools($storagePools)
+  {
+    $this->storagePools = $storagePools;
+  }
+  /**
+   * @return string[]
+   */
+  public function getStoragePools()
+  {
+    return $this->storagePools;
   }
   /**
    * @param string[]

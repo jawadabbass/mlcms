@@ -180,35 +180,35 @@
 
         setTimeout(() => {
             var $image = $('#service_extra_image_crop_form').find('#image');
-        var cropBoxData;
-        var canvasData;
-        $image.cropper({
-            autoCropArea: 0.5,
-            viewMode: 1,
-            dragMode: 'crop',
-            guides: true,
-            restore: true,
-            highlight: true,
-            movable: false,
-            zoomable: false,
-            cropBoxMovable: true,
-            cropBoxResizable: true,
-            //aspectRatio: 1,
-            minCropBoxWidth: 400,
-            minCropBoxHeight: 300,
-            ready: function() {
-                $image.cropper('setCanvasData', canvasData);
-                $image.cropper('setCropBoxData', cropBoxData);
-            },
-            crop: function(e) {
-                var imageData = $(this).cropper('getImageData');
-                $('#service_extra_image_crop_form').find('#crop_x').val(e.x);
-                $('#service_extra_image_crop_form').find('#crop_y').val(e.y);
-                $('#service_extra_image_crop_form').find('#crop_height').val(e.height);
-                $('#service_extra_image_crop_form').find('#crop_width').val(e.width);
-                $('#service_extra_image_crop_form').find('#crop_rotate').val(e.rotate);
-            }
-        });
+            var cropBoxData;
+            var canvasData;
+            $image.cropper({
+                autoCropArea: 0.5,
+                viewMode: 1,
+                dragMode: 'crop',
+                guides: true,
+                restore: true,
+                highlight: true,
+                movable: false,
+                zoomable: false,
+                cropBoxMovable: true,
+                cropBoxResizable: true,
+                //aspectRatio: 1,
+                minCropBoxWidth: 400,
+                minCropBoxHeight: 300,
+                ready: function() {
+                    $image.cropper('setCanvasData', canvasData);
+                    $image.cropper('setCropBoxData', cropBoxData);
+                },
+                crop: function(e) {
+                    var imageData = $(this).cropper('getImageData');
+                    $('#service_extra_image_crop_form').find('#crop_x').val(e.x);
+                    $('#service_extra_image_crop_form').find('#crop_y').val(e.y);
+                    $('#service_extra_image_crop_form').find('#crop_height').val(e.height);
+                    $('#service_extra_image_crop_form').find('#crop_width').val(e.width);
+                    $('#service_extra_image_crop_form').find('#crop_rotate').val(e.rotate);
+                }
+            });
         }, 500);
     });
 

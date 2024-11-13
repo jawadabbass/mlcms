@@ -1,22 +1,15 @@
 <?php
 
-/**
- * Vonage Client Library for PHP
- *
- * @copyright Copyright (c) 2016-2020 Vonage, Inc. (http://vonage.com)
- * @license https://github.com/Vonage/vonage-php-sdk-core/blob/master/LICENSE.txt Apache License 2.0
- */
-
 declare(strict_types=1);
 
 namespace Vonage\Verify;
 
 use Psr\Container\ContainerInterface;
 use Vonage\Client\APIResource;
+use Vonage\Client\Credentials\Handler\TokenBodyHandler;
 
 class ClientFactory
 {
-
     public function __invoke(ContainerInterface $container): Client
     {
         /** @var APIResource $api */
@@ -25,6 +18,7 @@ class ClientFactory
             ->setIsHAL(false)
             ->setBaseUri('/verify')
             ->setErrorsOn200(true)
+            ->setAuthHandlers(new TokenBodyHandler())
             ->setExceptionErrorHandler(new ExceptionErrorHandler());
 
         return new Client($api);
