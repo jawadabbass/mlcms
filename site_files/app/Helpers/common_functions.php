@@ -9,6 +9,7 @@ use Illuminate\Routing\Route;
 use App\Models\Back\CmsModuleData;
 use App\Models\Back\ClientPackages;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 if (!function_exists('showAllRoutes')) {
 	function showAllRoutes()
@@ -37,6 +38,8 @@ if (!function_exists('clearCache')) {
 	function clearCache()
 	{
 		Cache::flush();
+		DB::table('cache')->truncate();
+		DB::table('cache_locks')->truncate();
 		/*************************** */
 	}
 }
@@ -45,6 +48,8 @@ if (!function_exists('clearTempFiles')) {
 	{
 		$ignoreFiles = ['.gitignore', '.', '..'];
 		Cache::flush();
+		DB::table('cache')->truncate();
+		DB::table('cache_locks')->truncate();
 		/*************************** */
 		$directory = config('view.compiled');
 		if (is_dir($directory)) {
@@ -66,6 +71,7 @@ if (!function_exists('clearTempFiles')) {
 			}
 		}
 		/*************************** */
+		DB::table('sessions')->truncate();
 		$directory = config('session.files');
 		if (is_dir($directory)) {
 			$files = scandir($directory);
