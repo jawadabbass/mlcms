@@ -46,7 +46,7 @@ function generateModuleDataImageHtml($folder, $image)
                                     title="' . $image->image_title . '">
                             </a>
                         </div>
-                        <div class="image_btn mt-2">
+                        <div class="mt-2 image_btn">
                             <div class="drag sortable_div" title="Drag and Drop to sort">
                                 <i class="fas fa-arrows" aria-hidden="true"></i>
                             </div>
@@ -117,7 +117,7 @@ function generateModuleCodeFieldLabel($field_counter, $errors, $oldData, $hide_s
     $field_label = (isset($oldData['field_label'][$field_counter_minus_1])) ? $oldData['field_label'][$field_counter_minus_1] : '';
     return '
         <div class="row">
-            <div class="col-md-5 mb-1 field_' . $field_counter . '">
+            <div class="mb-1 col-md-5 field_' . $field_counter . '">
                 <label class="form-label">Field Name:*</label>
                 <input name="field_name[]" value="' . $field_name . '"
                     type="text"
@@ -125,7 +125,7 @@ function generateModuleCodeFieldLabel($field_counter, $errors, $oldData, $hide_s
                     placeholder="student_name">
                 ' . showErrors($errors, "field_name.$field_counter_minus_1") . '
             </div>
-            <div class="col-md-5 mb-1 field_' . $field_counter . '">
+            <div class="mb-1 col-md-5 field_' . $field_counter . '">
                 <label class="form-label">Field Label:*</label>
                 <input name="field_label[]" value="' . $field_label . '"
                     type="text"
@@ -133,7 +133,7 @@ function generateModuleCodeFieldLabel($field_counter, $errors, $oldData, $hide_s
                     placeholder="Student Name">
                 ' . showErrors($errors, "field_label.$field_counter_minus_1") . '
             </div>
-            <div class="col-md-2 mb-1 field_' . $field_counter . ' ' . $hide_show . '">
+            <div class="mb-1 col-md-2 field_' . $field_counter . ' ' . $hide_show . '">
                 <label class="form-label">&nbsp;</label><br/>
                 <button type="button" class="btn btn-danger" onclick="removeField(' . $field_counter . ');">Remove</button>
             </div>

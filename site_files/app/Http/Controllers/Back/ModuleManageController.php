@@ -396,18 +396,16 @@ class ModuleManageController extends Controller
     public function destroy($id)
     {
         $moduleData = CmsModuleData::find($id);
-        $module = CmsModule::find($moduleData->cms_module_id);
+        $moduleObj = CmsModule::find($moduleData->cms_module_id);
         $moduleDataImages = ModuleDataImage::where('module_data_id', $id)->sorted()->get();
         foreach ($moduleDataImages as $image) {
             ImageUploader::deleteImage('module/' . $image->module_type, $image->image_name, true);
             $image->delete();
         }
-        if (!empty($moduleData->featured_img) && file_exists(storage_uploads('module/' . $module->type . '/' . $moduleData->featured_img))) {
-            unlink(storage_uploads('module/' . $module->type . '/' . $moduleData->featured_img));
-        }
+        ImageUploader::deleteImage('module/' . $moduleObj->type . '/' . $moduleData->featured_img, true);
         $moduleData->delete();
         Menu::where('menu_id', $id)->delete();
-        session(['message' => $module->term . ' deleted successfully', 'type' => 'success',]);
+        session(['message' => $moduleObj->term . ' deleted successfully', 'type' => 'success',]);
         echo 'done';
     }
     /**

@@ -158,12 +158,10 @@
                                                         </td> --}}
                                                         <td>{{ fmtDate($row->dated, 'd M, Y') }}</td>
                                                         <td>
-                                                            <a href="javascript:;" data-bs-toggle="popover"
-                                                                data-bs-trigger="focus" class="btn btn-sm btn-success"
-                                                                data-bs-placement="bottom" data-bs-title="User Comment"
-                                                                data-bs-content="{{ $row->comments }}">
+                                                            <a href="javascript:;" onclick="showLeadCommentModal({{ $row->id }});" class="btn btn-sm btn-success">
                                                                 <i class="fas fa-comment" aria-hidden="true"></i>
                                                             </a>
+                                                            <div style="display: none;" id="comments_div_{{ $row->id }}">{!! $row->comments !!}</div>
                                                         </td>
                                                     </tr>
                                                     <tr style="display: none;" id="subtrr{{ $row->id }}">
@@ -443,6 +441,20 @@
     </div>
 @endsection
 @section('beforeBodyClose')
+    <div class="modal fade" id="leadCommentModal" tabindex="-1" aria-labelledby="leadCommentModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row" id="leadCommentModalContainer"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     @include('back.contactus.google_calendar_modal')
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
@@ -451,6 +463,10 @@
     <script type="text/javascript" src="{{ asset_storage('') }}back/mod/mod_js.js"></script>
     @include('back.clients.common.sms_script')
     <script>
+        function showLeadCommentModal(id) {
+            $('#leadCommentModalContainer').html($('#comments_div_'+id).html());
+            $('#leadCommentModal').modal('show');
+        }
         $(document).ready(function() {
             $('[data-bs-toggle="popover"]').popover();
         });

@@ -11,11 +11,11 @@
             </div>
             <div class="caption myadelbtn">
             </div>
-            <div class="image_btn mt-2">
+            <div class="mt-2 image_btn">
                 <div class="drag sortable_div" title="Drag and Drop to sort"><i class="fas fa-arrows"
                         aria-hidden="true"></i></div>
                 <a title="Delete Image"
-                    onclick="deleteModuleDataImage({{ $image->id, '\'' . $image->image_name . '\'' }}, this);"
+                    onclick="deleteModuleDataImage({{ $image->id }}, {{ '\'' . $image->image_name . '\'' }}, this);"
                     class="mb-1 btn btn-danger" data-bs-toggle="tooltip" data-placement="left" title="Delete this image"
                     href="javascript:;"> <i class="fas fa-trash"></i></a>
                 @if ((bool) $image->isBeforeAfter == false)
@@ -77,15 +77,15 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12 text-center">
+            <div class="text-center col-md-12">
                 <div class="mb-3">
                     <div class="caption myadelbtn">
                     </div>
-                    <div class="image_btn mt-2">
+                    <div class="mt-2 image_btn">
                         <div class="drag sortable_div" title="Drag and Drop to sort"><i class="fas fa-arrows"
                                 aria-hidden="true"></i></div>
                         <a title="Delete Image"
-                            onclick="deleteModuleDataImage({{ $image->id, '\'' . $image->image_name . '\'' }}, this);"
+                            onclick="deleteModuleDataImage({{ $image->id }}, {{ '\'' . $image->image_name . '\'' }}, this);"
                             class="mb-1 btn btn-danger" data-bs-toggle="tooltip" data-placement="left"
                             title="Delete this image" href="javascript:;">
                             <i class="fas fa-trash"></i></a>

@@ -76,9 +76,17 @@ function is_admin()
 function showUploadedVideo($link, $type, $w = '100%', $h = '400', $class = 'd-block', $videoURL = 'uploads/videos/video/')
 {
     if ($type == 'upload') {
+        $width = '';
+        $height = '';
+        if(!empty($w)){
+            $width = ' width="'.$w.'" ';
+        }
+        if(!empty($h)){
+            $height = ' height="'.$h.'" ';
+        }
         return '
-        <video width="' . $w . '" height="' . $h . '" class="' . $class . '" autoplay playsinline controls>
-            <source src="' . asset_storage($videoURL . $link) . '" type="video/mp4">
+        <video ' . $width . ' ' . $height . ' class="' . $class . '" autoplay playsinline controls>
+            <source src="' . asset($videoURL . $link) . '" type="video/mp4">
         </video> ';
     } else {
         return $link;

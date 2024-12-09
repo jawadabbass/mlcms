@@ -116,6 +116,7 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     Route::get('/module/set_is_featured/{id}/{new_is_featured}', [BackModuleManageController::class, 'setIsFeatured']);
     Route::get('/modul/remove_image', [BackModuleManageController::class, 'removeFeaturedImage']);
     Route::post('/modul/crop_image', [BackModuleManageController::class, 'ajax_crop_img']);
+    
     Route::post('/module_image/upload_image', [BackImageUploadController::class, 'store']);
     Route::post('uploadTinyMceImage', [BackImageUploadController::class, 'uploadTinyMceImage'])->name('uploadTinyMceImage');
     Route::post('/module_image/remove_image', [BackImageUploadController::class, 'removeUploadedImage']);
@@ -125,6 +126,7 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     Route::post('/getModuleDataImageAltTitle', [BackModuleManageController::class, 'getModuleDataImageAltTitle']);
     Route::post('/saveModuleDataImageAltTitle', [BackModuleManageController::class, 'saveModuleDataImageAltTitle']);
     Route::post('/saveModuleDataImagesMarkBeforeAfter', [BackModuleManageController::class, 'saveModuleDataImagesMarkBeforeAfter']);
+    
     Route::post('/modules/updatePageOptions', [BackModuleController::class, 'updatePageOptions']);
     Route::post('/payment_options/paypal_email', [BackPaymentOptionController::class, 'paypal_email']);
     Route::post('/payment_options/authorize_net', [BackPaymentOptionController::class, 'authorize_net']);
