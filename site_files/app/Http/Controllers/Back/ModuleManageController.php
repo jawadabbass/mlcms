@@ -86,7 +86,7 @@ class ModuleManageController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $moduleData->id,
             'record_title' => $cmsModuleObj->title . ' - ' . $moduleData->heading,
-            'record_link' => url('adminmedia/module/'.$cmsModuleObj->type.'/edit/'.$moduleData->id),
+            'record_link' => url('adminmedia/module/' . $cmsModuleObj->type . '/edit/' . $moduleData->id),
             'model_or_table' => 'CmsModuleData',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -122,7 +122,7 @@ class ModuleManageController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $moduleData->id,
             'record_title' => $cmsModuleObj->title . ' - ' . $moduleData->heading,
-            'record_link' => url('adminmedia/module/'.$cmsModuleObj->type.'/edit/'.$moduleData->id),
+            'record_link' => url('adminmedia/module/' . $cmsModuleObj->type . '/edit/' . $moduleData->id),
             'model_or_table' => 'CmsModuleData',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -141,86 +141,92 @@ class ModuleManageController extends Controller
      */
     public function store($type, Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $rules = [
             'module_heading' => 'required',
             'module_slug' => 'required',
-            'module_description' => '',
-        ]);
-        if ($validator->passes()) {
-            $module_id = $request->module_id;
-            $module_type = CmsModule::find($module_id);
-            $moduleData = new CmsModuleData();
-            $moduleData->heading = $request->module_heading;
-            $page_slug = $request->module_slug;
-            $slugs = $page_slug;
-            $slugs = ((isset($module_type) && $module_type->type && $module_type->id != 1) ? $module_type->type . '/' : '') . $slugs;
-            $slugs = $this->createUniqueURL($slugs);
-            $moduleData->post_slug = $slugs;
-            $moduleData->content = myform_admin_cms_filter(adjustUrl($request->module_description));
-            $moduleData->additional_field_1 = $request->additional_field_1;
-            $moduleData->additional_field_2 = $request->additional_field_2;
-            $moduleData->additional_field_3 = $request->additional_field_3;
-            $moduleData->additional_field_4 = $request->additional_field_4;
-            $moduleData->additional_field_5 = $request->additional_field_5;
-            $moduleData->additional_field_6 = $request->additional_field_6;
-            $moduleData->additional_field_7 = $request->additional_field_7;
-            $moduleData->additional_field_8 = $request->additional_field_8;
-            $moduleData->cms_module_id = $request->module_id;
-            $moduleData->cat_id = $request->cat;
-            $moduleData->is_pages = (strcmp($module_type->type, 'cms)') ? 1 : 0);
-            $moduleData->show_follow = $request->show_follow;
-            $moduleData->show_index = $request->show_index;
-            $moduleData->meta_title = $request->meta_title;
-            $moduleData->meta_keywords = $request->meta_keywords;
-            $moduleData->meta_description = $request->meta_description;
-            $moduleData->canonical_url = $request->canonical_url;
-            $moduleData->dated = date('Y-m-d H:i:s');
-            if (!empty($request->featured_img)) {
-                $moduleData->featured_img = $request->featured_img;
-            }
-            $moduleData->featured_img_title = $request->featured_img_title;
-            $moduleData->featured_img_alt = $request->featured_img_alt;
-            $moduleData->save();
-            /******************************* */
-            /******************************* */
-            $cmsModuleObj = CmsModule::find($moduleData->cms_module_id);
-            $recordUpdateHistoryData = [
-                'record_id' => $moduleData->id,
-                'record_title' => $cmsModuleObj->title . ' - ' . $moduleData->heading,
-                'record_link' => url('adminmedia/module/'.$cmsModuleObj->type.'/edit/'.$moduleData->id),
-                'model_or_table' => 'CmsModuleData',
-                'admin_id' => auth()->user()->id,
-                'ip' => request()->ip(),
-                'draft' => json_encode($moduleData->toArray()),
-            ];
-            recordUpdateHistory($recordUpdateHistoryData);
-            /******************************* */
-            /******************************* */
-            /**************************************** */
-            $this->updateMoreImagesModuleDataId($request, $moduleData->id);
-            /**************************************** */
-            $insert = $moduleData->id;
-            $menu_types = $request->menu_type;
-            if (isset($menu_types) && !empty($menu_types)) {
-                foreach ($menu_types as $menu_type_id) {
-                    $menu = new Menu();
-                    $max_orders = DB::table('menus')->max('menu_sort_order');
-                    $max_order = $max_orders + 1;
-                    $menu->menu_id = $insert;
-                    $menu->menu_label = $request->module_heading;
-                    $slugPrefix = strcmp($module_type->type, 'cms)') ? '' : '';
-                    $menu->menu_url = $slugPrefix . $slugs;
-                    $menu->menu_types = $menu_type_id;
-                    $menu->menu_sort_order = $max_order;
-                    $menu->open_in_new_window = $request->open_in_new_window;
-                    $menu->show_no_follow = $request->show_no_follow;
-                    $menu->save();
-                }
-            }
-            session(['message' => $module_type->term . ' added successfully', 'type' => 'success',]);
-            return response()->json(['success' => 'Added new records.', 'module_id' => $request->module_id, 'module_data_id' => $moduleData->id]);
+        ];
+        $messages = [
+            'module_heading.required' => 'Heading is required',
+            'module_slug.required' => 'Slug is required',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()->all()]);
         }
-        return response()->json(['error' => $validator->errors()->all()]);
+
+        $module_id = $request->module_id;
+        $moduleObj = CmsModule::find($module_id);
+        $moduleData = new CmsModuleData();
+        $moduleData->heading = $request->module_heading;
+        $page_slug = $request->module_slug;
+        $slugs = $page_slug;
+        $slugs = ((isset($moduleObj) && $moduleObj->type && $moduleObj->id != 1) ? $moduleObj->type . '/' : '') . $slugs;
+        $slugs = $this->createUniqueURL($slugs);
+        $moduleData->post_slug = $slugs;
+        $moduleData->content = myform_admin_cms_filter(adjustUrl($request->module_description));
+        $moduleData->additional_field_1 = $request->additional_field_1;
+        $moduleData->additional_field_2 = $request->additional_field_2;
+        $moduleData->additional_field_3 = $request->additional_field_3;
+        $moduleData->additional_field_4 = $request->additional_field_4;
+        $moduleData->additional_field_5 = $request->additional_field_5;
+        $moduleData->additional_field_6 = $request->additional_field_6;
+        $moduleData->additional_field_7 = $request->additional_field_7;
+        $moduleData->additional_field_8 = $request->additional_field_8;
+        $moduleData->cms_module_id = $request->module_id;
+        $moduleData->cat_id = $request->cat;
+        $moduleData->is_pages = (strcmp($moduleObj->type, 'cms)') ? 1 : 0);
+        $moduleData->show_follow = $request->show_follow;
+        $moduleData->show_index = $request->show_index;
+        $moduleData->meta_title = $request->meta_title;
+        $moduleData->meta_keywords = $request->meta_keywords;
+        $moduleData->meta_description = $request->meta_description;
+        $moduleData->canonical_url = $request->canonical_url;
+        $moduleData->dated = date('Y-m-d H:i:s');
+        if (!empty($request->featured_img)) {
+            $moduleData->featured_img = $request->featured_img;
+        }
+        $moduleData->featured_img_title = $request->featured_img_title;
+        $moduleData->featured_img_alt = $request->featured_img_alt;
+        $moduleData->save();
+        /******************************* */
+        /******************************* */
+        $cmsModuleObj = CmsModule::find($moduleData->cms_module_id);
+        $recordUpdateHistoryData = [
+            'record_id' => $moduleData->id,
+            'record_title' => $cmsModuleObj->title . ' - ' . $moduleData->heading,
+            'record_link' => url('adminmedia/module/' . $cmsModuleObj->type . '/edit/' . $moduleData->id),
+            'model_or_table' => 'CmsModuleData',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($moduleData->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
+        /**************************************** */
+        $this->updateMoreImagesModuleDataId($request, $moduleData->id);
+        /**************************************** */
+        $insert = $moduleData->id;
+        $menu_types = $request->menu_type;
+        if (isset($menu_types) && !empty($menu_types)) {
+            foreach ($menu_types as $menu_type_id) {
+                $menu = new Menu();
+                $max_orders = DB::table('menus')->max('menu_sort_order');
+                $max_order = $max_orders + 1;
+                $menu->menu_id = $insert;
+                $menu->menu_label = $request->module_heading;
+                $slugPrefix = strcmp($moduleObj->type, 'cms)') ? '' : '';
+                $menu->menu_url = $slugPrefix . $slugs;
+                $menu->menu_types = $menu_type_id;
+                $menu->menu_sort_order = $max_order;
+                $menu->open_in_new_window = $request->open_in_new_window;
+                $menu->show_no_follow = $request->show_no_follow;
+                $menu->save();
+            }
+        }
+        session(['message' => $moduleObj->term . ' added successfully', 'type' => 'success',]);
+        return response()->json(['success' => 'Added new records.', 'module_id' => $request->module_id, 'module_data_id' => $moduleData->id]);
     }
     private function updateMoreImagesModuleDataId($request, $moduleDataId)
     {
@@ -264,126 +270,127 @@ class ModuleManageController extends Controller
      */
     public function update(Request $request, $type, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'module_heading' => 'required',
-            'module_description' => '',
-        ]);
         $module_id = $type;
-        $module_type = CmsModule::find($module_id);
+        $moduleObj = CmsModule::find($module_id);
         $moduleData = CmsModuleData::find($id);
-        if ($validator->passes()) {
-            $moduleData->heading = $request->module_heading;
-            $page_slug = $request->module_slug;
-            $slugs = $page_slug;
-            $slugs = str_replace($module_type->type . '/', '', $slugs);
-            $slugs = ((isset($module_type) && $module_type->type && $module_type->id != 1) ? $module_type->type . '/' : '') . $slugs;
-            if (CmsModuleData::where('post_slug', $slugs)->where('id', '<>', $id)->exists()) {
-                return response()->json(['error' => ['URL already assigned.']]);
+
+        $rules = [
+            'module_heading' => 'required',
+        ];
+        $messages = [
+            'module_heading.required' => 'Heading is required',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if ($validator->fails()) {
+            return redirect('adminmedia/module/' . $moduleObj->type . '/edit/' . $moduleData->id)->with('errors', $validator->errors());
+        }
+
+        $moduleData->heading = $request->module_heading;
+        $page_slug = $request->module_slug;
+        $slugs = $page_slug;
+        $slugs = str_replace($moduleObj->type . '/', '', $slugs);
+        $slugs = ((isset($moduleObj) && $moduleObj->type && $moduleObj->id != 1) ? $moduleObj->type . '/' : '') . $slugs;
+        if (CmsModuleData::where('post_slug', $slugs)->where('id', '<>', $id)->exists()) {
+            return response()->json(['error' => ['URL already assigned.']]);
+        }
+        $moduleData->post_slug = $slugs;
+        $moduleData->content = myform_admin_cms_filter(adjustUrl($request->module_description));
+        $moduleData->additional_field_1 = $request->additional_field_1;
+        $moduleData->additional_field_2 = $request->additional_field_2;
+        $moduleData->additional_field_3 = $request->additional_field_3;
+        $moduleData->additional_field_4 = $request->additional_field_4;
+        $moduleData->additional_field_5 = $request->additional_field_5;
+        $moduleData->additional_field_6 = $request->additional_field_6;
+        $moduleData->additional_field_7 = $request->additional_field_7;
+        $moduleData->additional_field_8 = $request->additional_field_8;
+        $moduleData->cat_id = $request->cat;
+        $moduleData->is_pages = (strcmp($moduleObj->type, 'cms)') ? 1 : 0);
+        $moduleData->show_follow = $request->show_follow;
+        $moduleData->show_index = $request->show_index;
+        $all_menus = '';
+        $menu_types = $request->menu_type;
+        if (isset($menu_types) && !empty($menu_types)) {
+            foreach ($menu_types as $menu_type_id) {
+                $all_menus .= $menu_type_id . ',';
             }
-            $moduleData->post_slug = $slugs;
-            $moduleData->content = myform_admin_cms_filter(adjustUrl($request->module_description));
-            $moduleData->additional_field_1 = $request->additional_field_1;
-            $moduleData->additional_field_2 = $request->additional_field_2;
-            $moduleData->additional_field_3 = $request->additional_field_3;
-            $moduleData->additional_field_4 = $request->additional_field_4;
-            $moduleData->additional_field_5 = $request->additional_field_5;
-            $moduleData->additional_field_6 = $request->additional_field_6;
-            $moduleData->additional_field_7 = $request->additional_field_7;
-            $moduleData->additional_field_8 = $request->additional_field_8;
-            $moduleData->cat_id = $request->cat;
-            $moduleData->is_pages = (strcmp($module_type->type, 'cms)') ? 1 : 0);
-            $moduleData->show_follow = $request->show_follow;
-            $moduleData->show_index = $request->show_index;
-            $all_menus = '';
-            $menu_types = $request->menu_type;
-            if (isset($menu_types) && !empty($menu_types)) {
-                foreach ($menu_types as $menu_type_id) {
-                    $all_menus .= $menu_type_id . ',';
-                }
-            }
-            $all_menus = rtrim($all_menus, ',');
-            $moduleData->menu_location = $all_menus;
-            $moduleData->meta_title = $request->meta_title;
-            $moduleData->meta_keywords = $request->meta_keywords;
-            $moduleData->meta_description = $request->meta_description;
-            $moduleData->canonical_url = $request->canonical_url;
-            if (!empty($request->featured_img)) {
-                $moduleData->featured_img = $request->featured_img;
-            }
-            $moduleData->featured_img_title = $request->featured_img_title;
-            $moduleData->featured_img_alt = $request->featured_img_alt;
-            $moduleData->save();
-            /******************************* */
-            /******************************* */
-            $cmsModuleObj = CmsModule::find($moduleData->cms_module_id);
-            $recordUpdateHistoryData = [
-                'record_id' => $moduleData->id,
-                'record_title' => $cmsModuleObj->title . ' - ' . $moduleData->heading,
-                'record_link' => url('adminmedia/module/'.$cmsModuleObj->type.'/edit/'.$moduleData->id),
-                'model_or_table' => 'CmsModuleData',
-                'admin_id' => auth()->user()->id,
-                'ip' => request()->ip(),
-                'draft' => json_encode($moduleData->toArray()),
-            ];
-            recordUpdateHistory($recordUpdateHistoryData);
-            /******************************* */
-            /******************************* */
-            $insert = $moduleData->id;
-            $menu_types = $request->menu_type;
-            $menus = Menu::where('menu_id', $insert)->get();
-            if (isset($menu_types) && !empty($menu_types)) {
-                foreach ($menus as $menu) {
-                    foreach ($menu_types as $menu_type_id) {
-                        $exist = false;
-                        if ($menu->menu_types == $menu_type_id) {
-                            $exist = true;
-                        }
-                        if (!$exist) {
-                            $menu->delete();
-                        }
-                    }
-                }
+        }
+        $all_menus = rtrim($all_menus, ',');
+        $moduleData->menu_location = $all_menus;
+        $moduleData->meta_title = $request->meta_title;
+        $moduleData->meta_keywords = $request->meta_keywords;
+        $moduleData->meta_description = $request->meta_description;
+        $moduleData->canonical_url = $request->canonical_url;
+        if (!empty($request->featured_img)) {
+            $moduleData->featured_img = $request->featured_img;
+        }
+        $moduleData->featured_img_title = $request->featured_img_title;
+        $moduleData->featured_img_alt = $request->featured_img_alt;
+        $moduleData->save();
+        /******************************* */
+        /******************************* */
+        $cmsModuleObj = CmsModule::find($moduleData->cms_module_id);
+        $recordUpdateHistoryData = [
+            'record_id' => $moduleData->id,
+            'record_title' => $cmsModuleObj->title . ' - ' . $moduleData->heading,
+            'record_link' => url('adminmedia/module/' . $cmsModuleObj->type . '/edit/' . $moduleData->id),
+            'model_or_table' => 'CmsModuleData',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($moduleData->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
+        $insert = $moduleData->id;
+        $menu_types = $request->menu_type;
+        $menus = Menu::where('menu_id', $insert)->get();
+        if (isset($menu_types) && !empty($menu_types)) {
+            foreach ($menus as $menu) {
                 foreach ($menu_types as $menu_type_id) {
                     $exist = false;
-                    $menu = null;
-                    foreach ($menus as $menul) {
-                        if ($menu_type_id == $menul->menu_types) {
-                            $exist = true;
-                            $menu = $menul;
-                        }
+                    if ($menu->menu_types == $menu_type_id) {
+                        $exist = true;
                     }
                     if (!$exist) {
-                        $menu = new Menu();
-                        $max_orders = DB::table('menus')->max('menu_sort_order');
-                        $max_order = $max_orders + 1;
-                        $menu->menu_sort_order = $max_order;
+                        $menu->delete();
                     }
-                    $menu->menu_id = $insert;
-                    $menu->menu_label = $request->module_heading;
-                    $slugPrefix = strcmp($module_type->type, 'cms)') ? '' : '';
-                    $menu->menu_url = $slugPrefix . $slugs;
-                    $menu->menu_types = $menu_type_id;
-                    $menu->open_in_new_window = $request->open_in_new_window;
-                    $menu->show_no_follow = $request->show_no_follow;
-                    $menu->save();
-                }
-            } else {
-                foreach ($menus as $menu) {
-                    $menu->delete();
                 }
             }
-            if (!empty($request->from_page_update)) {
-                session(['message' => $module_type->term . ' updated successfully', 'type' => 'success',]);
-                return redirect('adminmedia/module/' . $module_type->type . '/edit/' . $moduleData->id);
-            } else {
-                return response()->json(['success' => 'Added new records.' . $request->module_id]);
+            foreach ($menu_types as $menu_type_id) {
+                $exist = false;
+                $menu = null;
+                foreach ($menus as $menul) {
+                    if ($menu_type_id == $menul->menu_types) {
+                        $exist = true;
+                        $menu = $menul;
+                    }
+                }
+                if (!$exist) {
+                    $menu = new Menu();
+                    $max_orders = DB::table('menus')->max('menu_sort_order');
+                    $max_order = $max_orders + 1;
+                    $menu->menu_sort_order = $max_order;
+                }
+                $menu->menu_id = $insert;
+                $menu->menu_label = $request->module_heading;
+                $slugPrefix = strcmp($moduleObj->type, 'cms)') ? '' : '';
+                $menu->menu_url = $slugPrefix . $slugs;
+                $menu->menu_types = $menu_type_id;
+                $menu->open_in_new_window = $request->open_in_new_window;
+                $menu->show_no_follow = $request->show_no_follow;
+                $menu->save();
+            }
+        } else {
+            foreach ($menus as $menu) {
+                $menu->delete();
             }
         }
         if (!empty($request->from_page_update)) {
-            session(['message' => $module_type->term . ' updated successfully', 'type' => 'success',]);
-            return redirect('adminmedia/module/' . $module_type->type . '/edit/' . $moduleData->id);
+            session(['message' => $moduleObj->term . ' updated successfully', 'type' => 'success',]);
+            return redirect('adminmedia/module/' . $moduleObj->type . '/edit/' . $moduleData->id);
         } else {
-            return response()->json(['error' => $validator->errors()->all()]);
+            return response()->json(['success' => 'Added new records.' . $request->module_id]);
         }
     }
     /**
@@ -724,7 +731,7 @@ class ModuleManageController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $data->id,
             'record_title' => $cmsModuleObj->title . ' - ' . $data->heading,
-            'record_link' => url('adminmedia/module/'.$cmsModuleObj->type.'/edit/'.$data->id),
+            'record_link' => url('adminmedia/module/' . $cmsModuleObj->type . '/edit/' . $data->id),
             'model_or_table' => 'CmsModuleData',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),

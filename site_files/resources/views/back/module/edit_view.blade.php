@@ -1,6 +1,6 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('content')
-    <div class="content-wrapper pl-3 pr-2">
+    <div class="pl-3 pr-2 content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="row">
@@ -18,7 +18,7 @@
                 <div class="col-md-7 col-sm-12"> @include('back.common_views.quicklinks') </div>
             </div>
         </section>
-        <section class="content p-0">
+        <section class="p-0 content">
             <form action="{{ admin_url() . 'module/' . $module->id . '/' . $moduleData->id }}" id="form_edit_1"
                 method="post" class="form-horizontal" enctype="multipart/form-data">
                 @csrf
@@ -30,9 +30,9 @@
                                 <h4 id="modal_form_title" class="modal-title"> Edit {{ ucwords($module->term) }}
                                 </h4>
                             </div>
-                            <div class="col-md-6 text-right">
+                            <div class="text-right col-md-6">
                                 <a href="{{ admin_url() . 'record-update-history/CmsModuleData/' . $moduleData->id }}"
-                                    class="go-back mr-4"><i class="fas fa-bars" aria-hidden="true"></i> History </a>
+                                    class="mr-4 go-back"><i class="fas fa-bars" aria-hidden="true"></i> History </a>
 
                                     <a href="{{ admin_url() . 'module/' . $module->type }}" class="go-back"><i
                                         class="fas fa-angle-double-left" aria-hidden="true"></i> Back </a>
@@ -128,7 +128,7 @@
                @endif --}}
                                 @if ($module->id == 36)
                                     <div class="row">
-                                        <div class="col-sm-12 mb-2">
+                                        <div class="mb-2 col-sm-12">
                                             <label class="form-label">Page Template</label>
                                             <select class="form-control">
                                                 <option>Select Page Template</option>
@@ -141,7 +141,7 @@
                                 @endif
                                 @if ($module->id == 36)
                                     <div class="row">
-                                        <div class="col-sm-12 mb-2">
+                                        <div class="mb-2 col-sm-12">
                                             <label class="form-label">Click On Widget For Update</label>
                                             @if (is_array($widget) || is_object($widget))
                                                 <ul>
@@ -617,6 +617,8 @@
     <!-- End Bootstrap modal -->
     <script type="text/javascript">
         function updatePageContent() {
+            $('#btnSave').attr('disabled', 'disabled');
+            $('#btnSave').text('Submitting...');
             var content = tinyMCE.get('editor1').getContent();
             $('#module_description1').val(content);
             $('#form_edit_1').submit();

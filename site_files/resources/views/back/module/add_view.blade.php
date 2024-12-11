@@ -1,6 +1,6 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('content')
-    <div class="content-wrapper pl-3 pr-2">
+    <div class="pl-3 pr-2 content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="row">
@@ -18,7 +18,7 @@
                 <div class="col-md-7 col-sm-12"> @include('back.common_views.quicklinks') </div>
             </div>
         </section>
-        <section class="content p-0">
+        <section class="p-0 content">
             <form action="{{ admin_url() . 'module/' . $module->type . '/' . $module->id }}" id="form"
                 class="form-horizontal" enctype="multipart/form-data">
                 @csrf
@@ -84,7 +84,7 @@
                                 </div>
                                 {{-- @if ($module->id == 36)
             <div class="row">
-               <div class="col-sm-12 mb-2">
+               <div class="mb-2 col-sm-12">
                   <label class="form-label">Page Template</label>
                   <select class="form-control">
                      <option>Select Page Template</option>
@@ -329,7 +329,7 @@
 @endsection
 
 @section('beforeBodyClose')
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
     <script type="text/javascript" src="{{ asset_storage('') . 'module/module/admin/js/module.js' }}"></script>
 
     <!-- Filer -->
@@ -446,6 +446,9 @@
         }
 
         function save() {
+            $('#btnSave').attr('disabled', 'disabled');
+            $('#btnSave').text('Submitting...');
+
             $(window).off('beforeunload');
             var url;
             var content = tinyMCE.get('editor1').getContent();
@@ -472,6 +475,8 @@
                 data: $("#form").serialize(),
                 success: function(data, status) {
                     console.log(data);
+                    $('#btnSave').removeAttr('disabled');
+                    $('#btnSave').text('Save');
                     if ($.isEmptyObject(data.error)) {
                         $('#modal_form').modal('hide');
                         if ($("#from_page_update").val() == "yess") {
