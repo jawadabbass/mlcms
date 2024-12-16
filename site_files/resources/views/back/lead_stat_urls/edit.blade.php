@@ -23,7 +23,7 @@
         </section>
         <!-- Main content -->
         <section class="content">
-            @if (\Session::has('message'))
+            @if (\Session::has('message') && !empty(\Session::get('message')))
                 <div class="message-container">
                     <div class="callout callout-success">
                         <h4>{{ session('message') }}</h4>

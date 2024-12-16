@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Back;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\Back\LeadStat;
+use App\Models\Back\ContactUsData;
+use App\Models\Back\QouteRequest;
 use App\Models\Back\LeadStatUrl;
 use App\Traits\LeadStatUrlTrait;
 use App\Http\Controllers\Controller;
@@ -107,6 +110,9 @@ class LeadStatUrlController extends Controller
     }
     public function destroy(LeadStatUrl $leadStatUrlObj)
     {
+        LeadStat::where('referrer', 'like', '%' . $leadStatUrlObj->referrer . '%')->delete();
+        ContactUsData::where('referrer', 'like', '%' . $leadStatUrlObj->referrer . '%')->update(['referrer' => '']);
+        QouteRequest::where('referrer', 'like', '%' . $leadStatUrlObj->referrer . '%')->update(['referrer' => '']);
         $leadStatUrlObj->delete();
         echo 'ok';
     }

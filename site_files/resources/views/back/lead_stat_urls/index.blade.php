@@ -33,6 +33,7 @@
                                 <div class="box-header">
                                     <h3 class="box-title">All Lead Stat Urls</h3>
                                 </div>
+                                @include('flash::message')
                             </div>
                         </div>
                         <!-- /.box-header -->
@@ -173,6 +174,7 @@
                         if (response.includes('ok')) {
                             var table = $('#leadStatUrlDatatableAjax').DataTable();
                             table.row('leadStatUrlDtRow' + id).remove().draw(false);
+                            alert('Deleted Successfully!');
                         } else {
                             alert('Request Failed!');
                         }

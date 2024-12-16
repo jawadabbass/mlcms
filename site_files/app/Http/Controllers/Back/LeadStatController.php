@@ -5,9 +5,10 @@ namespace App\Http\Controllers\Back;
 use Illuminate\Http\Request;
 use App\Models\Back\LeadStat;
 use App\Models\Back\LeadStatUrl;
+use App\Models\Back\QouteRequest;
 use App\Models\Back\ContactUsData;
 use App\Http\Controllers\Controller;
-use App\Models\Back\QouteRequest;
+use Illuminate\Support\Facades\Redirect;
 
 class LeadStatController extends Controller
 {
@@ -18,8 +19,8 @@ class LeadStatController extends Controller
         $contactStatUrls = LeadStatUrl::orderBy('referrer')->get();
         if ($contactStatUrls->count()) {
             foreach ($contactStatUrls as $contactStatUrlObj) {
-                $referrerQuery = LeadStat::where('referrer', 'like', '%' . $contactStatUrlObj->referrer . '%');
-                $contactsByReferrerQuery = ContactUsData::where('referrer', 'like', '%' . $contactStatUrlObj->referrer . '%');
+                $referrerQuery = LeadStat::where('referrer', 'like', '%' . $contactStatUrlObj->referrer . '%')->where('referrer', '<>', '');
+                $contactsByReferrerQuery = ContactUsData::where('referrer', 'like', '%' . $contactStatUrlObj->referrer . '%')->where('referrer', '<>', '');
                 if (isset($_GET['dates']) && !empty($_GET['dates'])) {
                     $date = $_GET['dates'];
                     $value = preg_split("#-#", $date);
@@ -41,8 +42,8 @@ class LeadStatController extends Controller
         $leadStatUrls = LeadStatUrl::orderBy('referrer')->get();
         if ($leadStatUrls->count()) {
             foreach ($leadStatUrls as $leadStatUrlObj) {
-                $referrerQuery = LeadStat::where('referrer', 'like', '%' . $leadStatUrlObj->referrer . '%');
-                $leadsByReferrerQuery = QouteRequest::where('referrer', 'like', '%' . $leadStatUrlObj->referrer . '%');
+                $referrerQuery = LeadStat::where('referrer', 'like', '%' . $leadStatUrlObj->referrer . '%')->where('referrer', '<>', '');
+                $leadsByReferrerQuery = QouteRequest::where('referrer', 'like', '%' . $leadStatUrlObj->referrer . '%')->where('referrer', '<>', '');
                 if (isset($_GET['dates']) && !empty($_GET['dates'])) {
                     $date = $_GET['dates'];
                     $value = preg_split("#-#", $date);
@@ -61,5 +62,14 @@ class LeadStatController extends Controller
         /********************************** */
         $title = config("Constants.SITE_NAME") . ' : Lead Stats';
         return view('back.lead_stats.index', compact('title', 'contactReferrerArray', 'referrerArray'));
+    }
+    public function clearLeadStats($referrer)
+    {
+        LeadStat::where('referrer', 'like', '%' . $referrer . '%')->delete();
+        ContactUsData::where('referrer', 'like', '%' . $referrer . '%')->update(['referrer' => '']);
+        QouteRequest::where('referrer', 'like', '%' . $referrer . '%')->update(['referrer' => '']);
+        /***************************** */
+        flash('Lead Stats Cleard successfully!', 'success');
+        return Redirect::route('lead.stats.index');
     }
 }

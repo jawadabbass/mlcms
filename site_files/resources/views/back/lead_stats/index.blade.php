@@ -18,6 +18,14 @@
             <div class="row">
                 <div class="col-xs-12 col-md-12">
                     <div class="box">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="box-header">
+                                    <h3 class="box-title">Lead Stats</h3>
+                                </div>
+                                @include('flash::message')
+                            </div>
+                        </div>
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-md-6 mb-3">
@@ -55,6 +63,7 @@
                                                     <th>Impressions</th>
                                                     <th>Leads</th>
                                                     <th>Ratio</th>
+                                                    <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -96,6 +105,11 @@
                                                                 {{ number_format($ratio, 0) }}%
                                                             @endif
                                                         </td>
+                                                        <td>
+                                                            @if ($row['totalReferrerCount'] > 0)
+                                                                <a href="{{ route('clear.lead.stats', ['referrer'=>$row['referrer']]) }}" class="btn btn-sm btn-warning"><i class="fa fa-trash-o" aria-hidden="true"></i> Clear Stats</a>
+                                                            @endif
+                                                        </td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
@@ -112,6 +126,7 @@
                                                     <th>Impressions</th>
                                                     <th>Leads</th>
                                                     <th>Ratio</th>
+                                                    <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -121,8 +136,7 @@
                                                 @endphp
                                                 @foreach ($referrerArray as $row)
                                                     @php
-                                                        $bgColor =
-                                                            isset($bgColor) && $bgColor == '#f9f9f9'
+                                                        $bgColor = isset($bgColor) && $bgColor == '#f9f9f9'
                                                                 ? '#FFFFFF'
                                                                 : '#f9f9f9';
                                                     @endphp
@@ -151,6 +165,11 @@
                                                                         100;
                                                                 @endphp
                                                                 {{ number_format($ratio, 0) }}%
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            @if ($row['totalReferrerCount'] > 0)
+                                                                <a href="{{ route('clear.lead.stats', ['referrer'=>$row['referrer']]) }}" class="btn btn-sm btn-warning"><i class="fa fa-trash-o" aria-hidden="true"></i> Clear Stats</a>
                                                             @endif
                                                         </td>
                                                     </tr>

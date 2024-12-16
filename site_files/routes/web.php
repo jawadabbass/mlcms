@@ -356,6 +356,7 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     Route::get('/record-update-history/{recordUpdateHistoryObj}', [BackRecordUpdateHistoryController::class, 'show'])->name('record.update.history.show');
     Route::get('fetch-record-update-history-ajax', [BackRecordUpdateHistoryController::class, 'fetchRecordUpdateHistoryAjax'])->name('fetch.record.update.history.ajax');
     Route::get('/lead-stats', [BackLeadStatController::class, 'index'])->name('lead.stats.index');
+    Route::get('/clear-lead-stats/{referrer}', [BackLeadStatController::class, 'clearLeadStats'])->name('clear.lead.stats');
     Route::get('/leadStatUrls', [BackLeadStatUrlController::class, 'index'])->name('leadStatUrls.index');
     Route::get('/leadStatUrl/create', [BackLeadStatUrlController::class, 'create'])->name('leadStatUrl.create');
     Route::post('/leadStatUrl', [BackLeadStatUrlController::class, 'store'])->name('leadStatUrl.store');
