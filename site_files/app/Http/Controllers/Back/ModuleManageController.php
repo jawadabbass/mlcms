@@ -7,15 +7,16 @@ use Illuminate\Http\Request;
 use App\Models\Back\Category;
 use App\Models\Back\MenuType;
 use App\Models\Back\Template;
+use Laminas\Diactoros\Module;
 use App\Helpers\ImageUploader;
 use App\Models\Back\CmsModule;
+use App\Models\Back\ModuleVideo;
 use App\Models\Back\CmsModuleData;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Back\ModuleDataImage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
-use Laminas\Diactoros\Module;
 
 class ModuleManageController extends Controller
 {
@@ -204,9 +205,13 @@ class ModuleManageController extends Controller
         recordUpdateHistory($recordUpdateHistoryData);
         /******************************* */
         /******************************* */
-        /**************************************** */
+        /******************************* */
         $this->updateMoreImagesModuleDataId($request, $moduleData->id);
-        /**************************************** */
+        /******************************* */
+        /******************************* */
+        $this->updateModuleVideosModuleDataId($request, $moduleData->id);
+        /******************************* */
+        /******************************* */
         $insert = $moduleData->id;
         $menu_types = $request->menu_type;
         if (isset($menu_types) && !empty($menu_types)) {
@@ -231,6 +236,10 @@ class ModuleManageController extends Controller
     private function updateMoreImagesModuleDataId($request, $moduleDataId)
     {
         ModuleDataImage::where('session_id', 'like', $request->session_id)->update(['module_data_id' => $moduleDataId, 'session_id' => NULL]);
+    }
+    private function updateModuleVideosModuleDataId($request, $moduleDataId)
+    {
+        ModuleVideo::where('session_id', 'like', $request->session_id)->update(['module_data_id' => $moduleDataId, 'session_id' => NULL]);
     }
     /**
      * Display the specified resource.
@@ -409,6 +418,12 @@ class ModuleManageController extends Controller
             ImageUploader::deleteImage('module/' . $image->module_type, $image->image_name, true);
             $image->delete();
         }
+        $moduleVideos = ModuleVideo::where('module_data_id', $id)->get();
+        foreach ($moduleVideos as $videoObj) {
+            ImageUploader::deleteFile('module/' . $moduleObj->type . '/videos/video/' . $videoObj->video_name);
+            ImageUploader::deleteFile('module/' . $moduleObj->type . '/videos/thumb/' . $videoObj->video_thumb_img);
+            $videoObj->delete();
+        }
         ImageUploader::deleteImage('module/' . $moduleObj->type . '/' . $moduleData->featured_img, true);
         $moduleData->delete();
         Menu::where('menu_id', $id)->delete();
@@ -496,7 +511,8 @@ class ModuleManageController extends Controller
         $templates = Template::all();
         $job_content = CmsModuleData::where('id', 226)->first();
         $moduleDataImages = ModuleDataImage::where('session_id', session()->getId())->sorted()->get();
-        return view('back.module.add_view', compact('module', 'menu_types', 'title', 'msg', 'allParentCategory', 'albumsObj', 'filesObj', 'filesExts', 'templates', 'job_content', 'moduleDataImages'));
+        $moduleVideos = ModuleVideo::where('session_id', session()->getId())->get();
+        return view('back.module.add_view', compact('module', 'menu_types', 'title', 'msg', 'allParentCategory', 'albumsObj', 'filesObj', 'filesExts', 'templates', 'job_content', 'moduleDataImages', 'moduleVideos'));
         // return view('back.module.add_edit_view', compact('module'));
     }
     public function filesObj()
@@ -606,7 +622,8 @@ class ModuleManageController extends Controller
             ->get();
         $templates = Template::all();
         $moduleDataImages = ModuleDataImage::where('module_data_id', $id)->sorted()->get();
-        return view('back.module.edit_view', compact('module', 'moduleData', 'menu_types', 'title', 'msg', 'allParentCategory', 'menu', 'albumsObj', 'filesObj', 'filesExts', 'widget', 'templates', 'moduleDataImages'));
+        $moduleVideos = ModuleVideo::where('module_data_id', $moduleData->id)->get();
+        return view('back.module.edit_view', compact('module', 'moduleData', 'menu_types', 'title', 'msg', 'allParentCategory', 'menu', 'albumsObj', 'filesObj', 'filesExts', 'widget', 'templates', 'moduleDataImages', 'moduleVideos'));
     }
     public function createUniqueURL($slugs)
     {

@@ -1,6 +1,6 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('content')
-    <div class="content-wrapper pl-3 pr-2">
+    <div class="pl-3 pr-2 content-wrapper">
         <section class="content-header">
             <div class="row">
                 <div class="col-md-5 col-sm-12">
@@ -15,13 +15,13 @@
         </section>
         <section class="content">
 
-            <div class="card p-3">
+            <div class="p-3 card">
                 <div class="card-header">
                     <div class="row">
                         <div class="col-md-6">
                             <h3>Add Video</h3>
                         </div>
-                        <div class="col-md-6 text-right">
+                        <div class="text-right col-md-6">
                             
                         </div>
                     </div>
@@ -106,7 +106,7 @@
                 }
             } else {
                 $("#s_title").html(
-                    "Please select (<code>.mp4</code>) file: <br/><p class=\"text-red\">Maximum allowed size on server: {{ $file_upload_max_size }}MB</p>"
+                    "Please select (<code>.mp4</code>) file: <br/><p class=\"text-red\">Maximum allowed size on server: {{ file_upload_max_size() }}MB</p>"
                 );
                 $("#linkk").attr('placeholder', '');
                 $("#linkk").remove();

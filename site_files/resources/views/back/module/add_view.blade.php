@@ -70,10 +70,10 @@
                                     <label class="form-label">{{ ucwords($module->term) }} Description</label>
                                     <label for="">
                                         <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#media_image"
-                                            class="btn btn-info"> <i class="fas fa-cloud-download" aria-hidden="true"></i>
+                                            class="btn btn-sm btn-info"> <i class="fas fa-cloud-download" aria-hidden="true"></i>
                                             Insert Image from Media</a>
                                         <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#media_files"
-                                            class="btn btn-warning"> <i class="fas fa-cloud-download"
+                                            class="btn btn-sm btn-warning"> <i class="fas fa-cloud-download"
                                                 aria-hidden="true"></i>
                                             Insert Document from Media</a>
                                     </label>
@@ -82,19 +82,6 @@
                                     <textarea name="module_description" id="module_description1" style="display: none;"></textarea>
                                     <span id="module_description" style="padding-left:2px;" class="err"></span>
                                 </div>
-                                {{-- @if ($module->id == 36)
-            <div class="row">
-               <div class="mb-2 col-sm-12">
-                  <label class="form-label">Page Template</label>
-                  <select class="form-control">
-                     <option>Select Page Template</option>
-                     @foreach ($templates as $temp)
-                     <option value="{{$temp->id}}">{{$temp->template}}</option>
-                     @endforeach
-                  </select>
-               </div>
-            </div>
-            @endif --}}
                                 {{-- @if ($module->have_category == '1')
             <div id="have_category">
                <label class="form-label">Category</label>
@@ -124,7 +111,7 @@
                                         <div class="row">
                                             <div class="col-md-4">{{ ucwords($module->additional_field_title_2) }}</div>
                                             <div class="col-md-8"><a href="javascript:;" data-bs-toggle="modal"
-                                                    data-bs-target="#media_image_addition" class="btn btn-info"> <i
+                                                    data-bs-target="#media_image_addition" class="btn btn-sm btn-info"> <i
                                                         class="fas fa-cloud-download" aria-hidden="true"></i> Insert
                                                     Image
                                                     from Media</a></div>
@@ -189,36 +176,50 @@
                                         placeholder="{{ ucwords($module->additional_field_title_8) }} ">
                                     <span id="additional_field8" style="padding-left:2px;" class="err"></span>
                                 </div>
-                                <div id="page_featured_img">
-                                    <div id="fea_img"
-                                        style="display:{{ $module->show_feature_img_field == 1 ? 'block' : 'none' }}">
-                                        <label class="form-label">Update {{ ucwords($module->term) }} Image <span
-                                                style="color: #ff0000;font-size: 12px">(max size:
-                                                {{ getMaxUploadSize() }}
-                                                MB)</span> @php echo helptooltip('max_image_size') @endphp </label>
-                                        <div id="file-field">
-                                            <input type="file" name="module_img" id="module_img"
-                                                class="form-control">
-                                            <div id="attached_files_div"></div>
-                                        </div>
-                                        <span id="featured_img" style="padding-left:2px;" class="err"></span>
-                                        <div id="featured_img"></div>
-                                        <div class="clear"></div>
-                                        <div class="mt-3 mb-3">
-                                            <label class="btn btn-primary img_alt_title_label">Image Title/Alt</label>
-                                            <div class="mt-3 mb-3" style="display:none;">
-                                                <label class="form-label">Image Title</label>
-                                                <input type="text" name="featured_img_title" id="featured_img_title"
-                                                    class="form-control" placeholder="Featured Image Title"
-                                                    value="">
-                                                <label class="mt-3">Image Alt</label>
-                                                <input type="text" name="featured_img_alt" id="featured_img_alt"
-                                                    class="form-control" placeholder="Featured Image Alt" value="">
+
+
+
+
+                                <div class="row" id="page_featured_img"
+                                    style="display:{{ $module->show_feature_img_field == 1 ? 'block' : 'none' }}">
+                                    <div class="col-md-12">
+                                        <div id="fea_img">
+                                            <div class="col-md-3">
+                                                <div id="module_featured_img" class="card">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label class="form-label">Update {{ ucwords($module->term) }} Image
+                                                    <span>(max
+                                                        size:{{ getMaxUploadSize() }}MB)</span> @php echo helptooltip('max_image_size') @endphp </label>
+
+                                                <div id="file-field">
+                                                    <input type="file" name="module_img" id="module_img"
+                                                        class="form-control">
+                                                    <div id="attached_files_div"></div>
+                                                </div>
+                                            </div>
+                                            <div class="clear"></div>
+                                            <div class="mt-3 mb-3">
+                                                <label class="text-sm text text-info img_alt_title_label"><i
+                                                        class="fas fa-bars" aria-hidden="true"></i> Image
+                                                    Title/Alt</label>
+                                                <div class="mt-3 mb-3" style="display:none;">
+                                                    <label class="form-label">Image Title</label>
+                                                    <input type="text" name="featured_img_title"
+                                                        id="featured_img_title" class="form-control"
+                                                        placeholder="Featured Image Title" value="">
+                                                    <label class="mt-3">Image Alt</label>
+                                                    <input type="text" name="featured_img_alt" id="featured_img_alt"
+                                                        class="form-control" placeholder="Featured Image Alt"
+                                                        value="">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div>                                
                                 @include('back.module.module_data_images.module_data_images_html')
+                                @include('back.module.module_videos.module_videos_html')
                                 <div id="page_follow"
                                     style="display: {{ $module->show_follow == 1 ? 'block' : 'none' }}">
                                     <label class="form-label">Make Follow</label>
@@ -256,9 +257,9 @@
                             <input type="hidden" name="module_id" id="module_id" value="{{ ucwords($module->id) }}">
                             <input type="hidden" name="from_page_update" id="from_page_update" value="yess">
                             <button type="button" id="btnSave" onclick="save()"
-                                class="btn btn-primary pull-right">Save</button>
+                                class="btn btn-sm btn-primary pull-right">Save</button>
                             <a href="{{ admin_url() . 'module/' . $module->type }}" class="go-back"><button
-                                    type="button" class="btn btn-danger" data-bs-dismiss="modal"><i
+                                    type="button" class="btn btn-sm btn-danger" data-bs-dismiss="modal"><i
                                         class="fas fa-angle-double-left" aria-hidden="true"></i> Back </button></a>
                         </div>
                     </div>
@@ -295,10 +296,10 @@
                         <input type="hidden" name="crop_rotate" id="crop_rotate" value="" />
                         <input type="hidden" name="module_id" value="{{ ucwords($module->id) }}">
                         <input type="hidden" name="image_1_2" id="image_1_2" value="">
-                        <button type="button" id="btnCrop" onclick="save_cropped_img()" class="btn btn-primary">Crop
+                        <button type="button" id="btnCrop" onclick="save_cropped_img()" class="btn btn-sm btn-primary">Crop
                             Image
                         </button>
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-sm btn-danger" data-bs-dismiss="modal">Cancel</button>
                     </div>
                 </div>
                 <!-- /.modal-content -->
@@ -343,6 +344,7 @@
 
     <!------------ Module JS Functions ---------------------->
     @include('back.module.module_data_images.module_data_images_js')
+    @include('back.module.module_videos.module_videos_js')
     <script type="text/javascript">
         var save_method; //for save method string
         var table;
@@ -545,8 +547,8 @@
                     url: url,
                     type: "GET",
                     success: function(data) {
-                        $('#featured_img').hide();
-                        $('#featured_img').html("");
+                        $('#module_featured_img').hide();
+                        $('#module_featured_img').html("");
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         console.log(jqXHR);

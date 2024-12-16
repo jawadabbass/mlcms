@@ -3,7 +3,7 @@
     @include('back.common_views.switch_css')
 @endsection
 @section('content')
-    <div class="content-wrapper pl-3 pr-2">
+    <div class="pl-3 pr-2 content-wrapper">
         <section class="content-header">
             <div class="row">
                 <div class="col-md-5 col-sm-12">
@@ -19,7 +19,7 @@
         <section class="content">
             <div class="row">
                 <div class="col-xs-12 col-md-12">
-                    <div class="card p-2">
+                    <div class="p-2 card">
                         <div class="row">
                             <div class="col-sm-8">
                                 <h3 class=" card-title">All Videos</h3>
@@ -123,7 +123,7 @@
                             <br />
                             <strong><input type="radio" name="add_video_type" id="add_video_type" value="upload"
                                     onclick="showVideoTypeDivAdd()"> Upload Video (Max:
-                                <code>{{ $file_upload_max_size }}MB</code>)</strong>
+                                <code>{{ file_upload_max_size() }}MB</code>)</strong>
 
                             <hr>
                             <div class="mb-2" style="display: none;" id="add_type_code">

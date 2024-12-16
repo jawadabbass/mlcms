@@ -12,7 +12,7 @@
                     <h3>Select Folder</h3>
                     <div class="btn-group">
                         @foreach ($filesObj as $ak => $av)
-                            <button type="button" class="fldbtns btn btn-default <?php if ($av['album_title'] == 'root') {
+                            <button type="button" class="fldbtns btn btn-sm btn-default <?php if ($av['album_title'] == 'root') {
                                 echo 'active';
                             } ?>"
                                 onClick="show_section('{{ $ak }}',this)" aria-haspopup="true"
@@ -57,7 +57,7 @@
                                         <a target="_blank" class="filepath"
                                             href="{{ storage_uploads($v['url']) }}">{{ $v['name'] }}</a>
                                         <span class="badge badge-secondary"><?php echo human_filesize(filesize(storage_uploads($v['url']))); ?></span>
-                                        <a class="btn btn-success" data-bs-toggle="tooltip" data-placement="left"
+                                        <a class="btn btn-sm btn-success" data-bs-toggle="tooltip" data-placement="left"
                                             title="Insert Document" href="javascript:;"
                                             onclick="media_insert_file('{{ asset_uploads($v['url']) }}');"><i
                                                 class="fas fa-cloud-download" aria-hidden="true"></i></a>
@@ -84,7 +84,7 @@
                     <input type="hidden" id="file_c_url" name="file_c_url" value="" />
                     <div class="mb-2-append">
                         <span class="mb-2-text">
-                            <a href="javascript:;" onClick="insert_media_file_html();" class="btn btn-info">Insert</a>
+                            <a href="javascript:;" onClick="insert_media_file_html();" class="btn btn-sm btn-info">Insert</a>
                         </span>
                     </div>
                 </div>

@@ -159,16 +159,16 @@
                                                 @endif
                                                 @if ($module->term == 'Classes')
                                                     <a href="{{ route('class.show', $moduleMember->id) }}"
-                                                        class="btn btn-success btn-sm">View Registered
+                                                        class="btn btn-sm btn-success btn-sm">View Registered
                                                         User</a>
                                                 @elseif($module->term == 'Camps')
                                                     <a href="{{ route('camp.show', $moduleMember->id) }}"
-                                                        class="btn btn-success btn-Sm">View Registered User</a>
+                                                        class="btn btn-sm btn-success btn-Sm">View Registered User</a>
                                                 @endif
                                                 @if ($moduleMember->cms_module_id == 37)
                                                     <br />
                                                     <a href="{{ route('package_content_index', $moduleMember->id) }}"
-                                                        class="btn btn-primary" style="margin-top:5px;">Manage Package
+                                                        class="btn btn-sm btn-primary" style="margin-top:5px;">Manage Package
                                                         Content</a>
                                                 @endif
                                             </td>

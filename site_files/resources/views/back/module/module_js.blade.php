@@ -239,8 +239,8 @@
                 url: url,
                 type: "GET",
                 success: function(data) {
-                    $('#featured_img').hide();
-                    $('#featured_img').html("");
+                    $('#module_featured_img').hide();
+                    $('#module_featured_img').html("");
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     console.log(jqXHR);

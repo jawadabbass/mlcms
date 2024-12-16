@@ -12,7 +12,7 @@
                     <h3>Select Folder</h3>
                     <div class="btn-group">
                         @foreach ($albumsObj as $ak => $av)
-                            <button type="button" class="fldbtns btn btn-default <?php if ($av['album_title'] == 'root') {
+                            <button type="button" class="fldbtns btn btn-sm btn-default <?php if ($av['album_title'] == 'root') {
                                 echo 'active';
                             } ?>"
                                 onClick="show_section('{{ $ak }}',this)" aria-haspopup="true"
@@ -34,7 +34,7 @@ if($val['album_title']!='root'){
                             </div>
                             <div class="col-md-4 text-end">
                                 <h3>
-                                    {{-- <a href="javascript:;" class="btn btn-warning" onClick="edit_album({{$val['album_id']}},'{{$val['album_title']}}');" data-bs-toggle="tooltip" title="Edit Folder"><i class="fas fa-edit" aria-hidden="true"></i></a> --}}
+                                    {{-- <a href="javascript:;" class="btn btn-sm btn-warning" onClick="edit_album({{$val['album_id']}},'{{$val['album_title']}}');" data-bs-toggle="tooltip" title="Edit Folder"><i class="fas fa-edit" aria-hidden="true"></i></a> --}}
                                     @if ($val['album_title'] != 'root')
                                     @endif
                                 </h3>
@@ -51,7 +51,7 @@ if($val['album_title']!='root'){
                                     <div class="thumbnail">
                                         <img alt="Lights" src="{{ asset_uploads($v['url']) }}" style="width:100%">
                                         <div class="myadelbtn">
-                                            <a class="btn btn-success" data-bs-toggle="tooltip" data-placement="left"
+                                            <a class="btn btn-sm btn-success" data-bs-toggle="tooltip" data-placement="left"
                                                 title="Insert Image" href="javascript:;"
                                                 onclick="media_insert_img('{{ asset_uploads($v['url']) }}');"><i
                                                     class="fas fa-cloud-download" aria-hidden="true"></i></a>
@@ -81,7 +81,7 @@ if($val['album_title']!='root'){
                         <h3>Select Folder</h3>
                         <div class="btn-group">
                             @foreach ($albumsObj as $ak => $av)
-                                <button type="button" class="fldbtns btn btn-default <?php if ($av['album_title'] == 'root') {
+                                <button type="button" class="fldbtns btn btn-sm btn-default <?php if ($av['album_title'] == 'root') {
                                     echo 'active';
                                 } ?>"
                                     onClick="show_section('{{ $ak }}',this)" aria-haspopup="true"
@@ -105,7 +105,7 @@ if($val['album_title']!='root'){
                                 </div>
                                 <div class="col-md-4 text-end">
                                     <h3>
-                                        {{-- <a href="javascript:;" class="btn btn-warning" onClick="edit_album({{$val['album_id']}},'{{$val['album_title']}}');" data-bs-toggle="tooltip" title="Edit Folder"><i class="fas fa-edit" aria-hidden="true"></i></a> --}}
+                                        {{-- <a href="javascript:;" class="btn btn-sm btn-warning" onClick="edit_album({{$val['album_id']}},'{{$val['album_title']}}');" data-bs-toggle="tooltip" title="Edit Folder"><i class="fas fa-edit" aria-hidden="true"></i></a> --}}
                                         @if ($val['album_title'] != 'root')
                                         @endif
                                     </h3>
@@ -122,7 +122,7 @@ if($val['album_title']!='root'){
                                         <div class="thumbnail">
                                             <img alt="Lights" src="{{ asset_uploads($v['url']) }}" style="width:100%">
                                             <div class="myadelbtn">
-                                                <a class="btn btn-success" data-bs-toggle="tooltip"
+                                                <a class="btn btn-sm btn-success" data-bs-toggle="tooltip"
                                                     data-placement="left" title="Insert Image" href="javascript:;"
                                                     onclick="media_insert_portfolio('{{ asset_uploads($v['url']) }}');"><i
                                                         class="fas fa-cloud-download" aria-hidden="true"></i></a>

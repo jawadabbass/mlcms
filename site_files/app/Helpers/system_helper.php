@@ -94,12 +94,43 @@ function showUploadedVideo($link, $type, $w = '100%', $h = '400', $class = 'd-bl
 }
 function youtubelink2id($link)
 {
-    preg_match('/embed\/([\w+\-+]+)[\"\?]/', $link, $match);
-    if (isset($match[1])) {
-        $youtube_id = $match[1];
-        return $youtube_id;
+    /*
+    https://www.youtube.com/watch?v=uUn-ngmOlm4
+    https://www.youtube.com/shorts/JWTEDgPoJkk?si=D24f7VXLL8R0wVRE
+    https://youtu.be/M1NT9zhb3hM?si=RmmeQHnLki5LKfGa
+    */
+    $youtube_id = '';
+    if (stripos($link, 'youtube.com/watch') !== false) {
+        $linkArr = explode('youtube.com/watch?', $link);
+        if (is_array($linkArr) && isset($linkArr[1])) {
+            $linkArr = explode('&', $linkArr[1]);
+            if (is_array($linkArr)) {
+                foreach ($linkArr as $param) {
+                    if (stripos($param, 'v=') !== false) {
+                        $linkArr = explode('v=', $param);
+                        $youtube_id = $linkArr[1];
+                    }
+                }
+            }
+        }
+    } elseif (stripos($link, 'youtube.com/shorts/') !== false) {
+        $linkArr = explode('youtube.com/shorts/', $link);
+        if (is_array($linkArr) && isset($linkArr[1])) {
+            $linkArr = explode('?', $linkArr[1]);
+            if (is_array($linkArr) && isset($linkArr[0])) {
+                $youtube_id = $linkArr[0];
+            }
+        }
+    } elseif (stripos($link, 'youtu.be/') !== false) {
+        $linkArr = explode('youtu.be/', $link);
+        if (is_array($linkArr) && isset($linkArr[1])) {
+            $linkArr = explode('?', $linkArr[1]);
+            if (is_array($linkArr) && isset($linkArr[0])) {
+                $youtube_id = $linkArr[0];
+            }
+        }
     }
-    return '';
+    return $youtube_id;
 }
 function vimeolink2id($link)
 {
@@ -333,4 +364,36 @@ function recordUpdateHistory($data)
         $history->{$key} = $value;
     }
     $history->save();
+}
+function file_upload_max_size()
+{
+    $max_size = -1;
+    if ($max_size < 0) {
+        // Start with post_max_size.
+        $post_max_size = parse_size(ini_get('post_max_size'));
+        if ($post_max_size > 0) {
+            $max_size = $post_max_size;
+        }
+
+        // If upload_max_size is less, then reduce. Except if upload_max_size is
+        // zero, which indicates no limit.
+        $upload_max = parse_size(ini_get('upload_max_filesize'));
+        if ($upload_max > 0 && $upload_max < $max_size) {
+            $max_size = $upload_max;
+        }
+    }
+    $max_size = $max_size / 1024;
+    return $max_size / 1024;
+}
+
+function parse_size($size)
+{
+    $unit = preg_replace('/[^bkmgtpezy]/i', '', $size); // Remove the non-unit characters from the size.
+    $size = preg_replace('/[^0-9\.]/', '', $size); // Remove the non-numeric characters from the size.
+    if ($unit) {
+        // Find the position of the unit in the ordered string which is the power of magnitude to multiply a kilobyte by.
+        return round($size * pow(1024, stripos('bkmgtpezy', $unit[0])));
+    } else {
+        return round($size);
+    }
 }

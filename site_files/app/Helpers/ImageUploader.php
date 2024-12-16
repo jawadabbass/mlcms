@@ -134,6 +134,15 @@ class ImageUploader
         }
         return $fileName;
     }
+    public static function getNewFileNameByName($destinationPath, $newName, $extension)
+    {
+        $destinationPath = ImageUploader::storage_uploads().$destinationPath;
+        $fileName = Str::slug($newName, '-').'.'.$extension;
+        if (file_exists($destinationPath.'/'.$fileName)) {
+            $fileName = time().'-'.$fileName;
+        }
+        return $fileName;
+    }
     public static function getFileNameWebp($fileName)
     {
         $fileNameArr = explode('.', $fileName);

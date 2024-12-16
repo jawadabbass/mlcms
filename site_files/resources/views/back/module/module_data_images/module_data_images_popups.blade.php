@@ -29,10 +29,10 @@
                     <input type="hidden" name="image_id" id="image_id" value="">
                     <input type="hidden" name="image_1_2" id="image_1_2" value="">
                     <button type="button" id="btnCrop" onclick="save_module_data_cropped_img();"
-                        class="btn btn-primary">Crop
+                        class="btn btn-sm btn-primary">Crop
                         Image
                     </button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-sm btn-danger" data-bs-dismiss="modal">Cancel</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -70,9 +70,9 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" id="btnCrop" onclick="saveModuleDataImageAltTitle();"
-                        class="btn btn-primary">Save
+                        class="btn btn-sm btn-primary">Save
                     </button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-sm btn-danger" data-bs-dismiss="modal">Cancel</button>
                 </div>
             </div>
             <!-- /.modal-content -->

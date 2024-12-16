@@ -1,6 +1,6 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('content')
-    <div class="content-wrapper pl-3 pr-2">
+    <div class="pl-3 pr-2 content-wrapper">
         <section class="content-header">
             <div class="row">
                 <div class="col-md-5 col-sm-12">
@@ -14,13 +14,13 @@
             </div>
         </section>
         <section class="content">
-            <div class="card p-3">
+            <div class="p-3 card">
                 <div class="card-header">
                     <div class="row">
                         <div class="col-md-6">
                             <h3>Edit Video</h3>
                         </div>
-                        <div class="col-md-6 text-right">
+                        <div class="text-right col-md-6">
                             <a href="{{ url('adminmedia/record-update-history/Video/' . $rec->ID) }}"
                                 target="_blank" class=""><i class="fas fa-bars" aria-hidden="true"></i>
                                 History
@@ -78,7 +78,7 @@
                             <div class="col-md-8"><input type="file" name="fimg" id="fimg" class="form-control"
                                     value="" placeholder=""></div>
                         </div>
-                        <div class="row mt-3" id="thumbnail_div">
+                        <div class="mt-3 row" id="thumbnail_div">
                             <div class="offset-md-4 col-md-8">
                                 @if ($rec->video_img != '')
                                     <img class="img" width=""
@@ -121,7 +121,7 @@
                 }
             } else {
                 $("#s_title").html(
-                    "Please select (<code>.mp4</code>) file: <br/><p class=\"text-red\">Maximum allowed size on server: {{ $file_upload_max_size }}MB</p>"
+                    "Please select (<code>.mp4</code>) file: <br/><p class=\"text-red\">Maximum allowed size on server: {{ file_upload_max_size() }}MB</p>"
                 );
                 $("#linkk").attr('placeholder', '');
                 $("#linkk").remove();
@@ -148,7 +148,7 @@
                 }
             } else {
                 $("#s_title").html(
-                    "Please select (<code>.mp4</code>) file: <br/><p class=\"text-red\">Maximum allowed size on server: {{ $file_upload_max_size }}MB</p>"
+                    "Please select (<code>.mp4</code>) file: <br/><p class=\"text-red\">Maximum allowed size on server: {{ file_upload_max_size() }}MB</p>"
                 );
                 $("#linkk").attr('placeholder', '');
                 $("#linkk").remove();
