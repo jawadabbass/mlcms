@@ -38,6 +38,7 @@
                                         <th>Video</th>
                                         <th>Status</th>
                                         <th>Action</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody id="sortable">
@@ -62,11 +63,13 @@
                                                         </label>
                                                     </td>
                                                 <td>
-<span></span>
                                                     <a href="{{ admin_url() }}videos/edit/{{ $row->id }}"
                                                         class="btn btn-success btn-sm">Edit</a>
                                                         <a href="javascript:delete_videos({{ $row->id }});"
                                                             class="btn btn-danger btn-sm">Delete</a>                                                        
+                                                </td>
+                                                <td align="center">
+                                                    <span></span>
                                                 </td>
                                             </tr>
                                         @endforeach

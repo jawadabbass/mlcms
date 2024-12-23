@@ -3,7 +3,7 @@
 @include('back.common_views.switch_css')
 @endsection
 @section('content')
-    <div class="content-wrapper pl-3 pr-2">
+    <div class="pl-3 pr-2 content-wrapper">
         <!-- Inner Header -->
         <section class="content-header">
             <div class="row">
@@ -60,7 +60,7 @@
                 </div>
             </div>
         </section>
-        <section class="content p-3">
+        <section class="p-3 content">
             <div class=" card-body table-responsive">
                 <table id="table" class="table table-bordered table-hover">
                     <thead>
@@ -71,6 +71,7 @@
                             <th class="text-center">Status</th>
                             <th class="text-center">Featured</th>
                             <th>Actions</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody id="sortable">
@@ -97,8 +98,8 @@
                                     <a href="javascript:;" class="text-white"
                                         onclick="isFeatured({{ $album->id }}, this)">
                                         {!! $album->isFeatured == 1
-                                            ? '<i class="fas fa-star bg-success bg-success p-2 text-white" aria-hidden="true"></i>'
-                                            : "<i class='fas fa-star p-2 bg-secondary' aria-hidden='true'></i>" !!}
+                                            ? '<i class="p-2 text-white fas fa-star bg-success" aria-hidden="true"></i>'
+                                            : "<i class='p-2 fas fa-star bg-secondary' aria-hidden='true'></i>" !!}
                                     </a>
                                 </td>
                                 <td>
@@ -115,6 +116,9 @@
                                         onclick="deleteAlbum({{ $album->id }}, this)" data-bs-toggle="tooltip"
                                         title="Delete this Album and Image(s)"><i class="fas fa-trash"
                                             aria-hidden="true"></i></a>
+                                    
+                                </td>
+                                <td align="center">
                                     <span></span>
                                 </td>
                             </tr>
@@ -287,10 +291,10 @@
                         }
                         if (data.message != 'disabled') {
                             elem.innerHTML =
-                                '<i class="fas fa-star bg-success bg-success p-2 text-white" aria-hidden="true"></i>';
+                                '<i class="p-2 text-white fas fa-star bg-success" aria-hidden="true"></i>';
                         } else {
                             elem.innerHTML =
-                                "<i class='fas fa-star p-2 bg-secondary p-2 text-white' aria-hidden='true'></i>";
+                                "<i class='p-2 text-white fas fa-star bg-secondary' aria-hidden='true'></i>";
                         }
                     },
                     error: function(jqXHR, textStatus, errorThrown) {

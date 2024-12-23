@@ -22,6 +22,19 @@
 <link href="{{ asset_storage('back/toggle_switch/bootstrap5-toggle.min.css') }}" rel="stylesheet" />
 <link href="{{ asset_storage('back/css/admin_dev_style.css') }}" rel="stylesheet" type="text/css" />
 <style>
+    #sortable tr td span {
+        background-color: unset;
+        background-image: url({{ asset_storage('back/images/drag.png') }});
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 30px;
+        height: 38px;
+        display: inline-block;
+        float: none;
+        cursor: move;
+    }
+</style>
+<style>
     .before,
     .after {
         margin: 0;

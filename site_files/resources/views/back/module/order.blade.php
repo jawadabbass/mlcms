@@ -1,7 +1,7 @@
 @extends('back.layouts.app', ['title' => $title])
 
 @section('content')
-    <div class="content-wrapper pl-3 pr-2">
+    <div class="pl-3 pr-2 content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="row">
@@ -25,7 +25,7 @@
         <section class="content">
             <div class="row">
                 <div class="col-xs-12 col-md-12">
-                    <div class="card p-2">
+                    <div class="p-2 card">
                         <div class="row">
                             <div class="col-sm-8">
                                 <div class="box-header">
@@ -64,7 +64,7 @@
                                             </td>
                                             <td>{{ $moduleMember->heading }}</td>
                                             <td> @php echo format_date($moduleMember->dated,'date_time'); @endphp</td>
-                                            <td>
+                                            <td align="center">
                                                 <span></span>
                                             </td>
                                         </tr>

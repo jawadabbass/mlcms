@@ -46,7 +46,8 @@
                                 <div id="form-errors"></div>
                                 <div id="page_heading">
                                     <label class="form-label">Heading</label>
-                                    <input onchange="string_to_slug('module_heading', 'module_slug');"
+                                    <input
+                                        @if ($module->show_page_slug_field == 1) onchange="string_to_slug('module_heading', 'module_slug');" @endif
                                         name="module_heading" placeholder="Heading" class="form-control" type="text"
                                         value="{{ $moduleData->heading }}">
                                     <span id="module_heading" style="padding-left:2px;" class="err"></span>
@@ -69,7 +70,8 @@
                                             @endphp
                                             <input type="text" class="form-control slug-field" name="module_slug"
                                                 id="slug_field" value="{{ $pslug }}"
-                                                placeholder="{{ ucwords($module->type) }} Link" onchange="check_slug('module_slug');">
+                                                placeholder="{{ ucwords($module->type) }} Link"
+                                                @if ($module->show_page_slug_field == 1) onchange="check_slug('module_slug');" @endif>
                                         </div>
                                     </div>
                                     <span id="page_slug" style="padding-left:2px;" class="err"></span>

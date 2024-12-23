@@ -1,6 +1,6 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('content')
-    <div class="content-wrapper pl-3 pr-2">
+    <div class="pl-3 pr-2 content-wrapper">
         <section class="content-header">
             <div class="row">
                 <div class="col-md-5 col-sm-12">
@@ -29,7 +29,7 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 col-md-12">
-                    <div class="card p-2">
+                    <div class="p-2 card">
                         <div class="row">
                             <div class="col-sm-8">
                                 <h3 class=" card-title">Social Media</h3>
@@ -50,6 +50,7 @@
                                         <th>Link</th>
                                         <th>Status</th>
                                         <th>Action</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody id="sortable">
@@ -75,7 +76,10 @@
                                                         onClick="load_social_media_edit_form({{ $row->id }});"
                                                         class="btn btn-success btn-sm">Edit</a> <a
                                                         href="javascript:delete_social_media({{ $row->id }});"
-                                                        class="btn btn-danger btn-sm">Delete</a> <span></span></td>
+                                                        class="btn btn-danger btn-sm">Delete</a></td>
+                                                        <td align="center">
+                                                            <span></span>
+                                                        </td>
                                             </tr>
                                         @endforeach
                                     @else

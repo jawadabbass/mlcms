@@ -36,7 +36,8 @@
                                 <div id="form-errors"></div>
                                 <div id="page_heading">
                                     <label class="form-label">Heading</label>
-                                    <input onchange="string_to_slug('module_heading', 'module_slug');"
+                                    <input
+                                        @if ($module->show_page_slug_field == 1) onchange="string_to_slug('module_heading', 'module_slug');" @endif
                                         name="module_heading" placeholder="Heading" class="form-control" type="text">
                                     <span id="module_heading" style="padding-left:2px;" class="err"></span>
                                 </div>
@@ -53,7 +54,8 @@
                                                 </span>
                                             </div>
                                             <input type="text" class="form-control slug-field" name="module_slug"
-                                                id="slug_field" placeholder="{{ ucwords($module->type) }} Link" onchange="check_slug('module_slug');">
+                                                id="slug_field" placeholder="{{ ucwords($module->type) }} Link"
+                                                @if ($module->show_page_slug_field == 1) onchange="check_slug('module_slug');" @endif>
                                         </div>
                                     </div>
                                     <span id="page_slug" style="padding-left:2px;" class="err"></span>
@@ -318,6 +320,7 @@
         .sortable_div {
             display: inline-block !important;
         }
+
         .sortable_div i {
             background-color: #b4b3b3;
             text-align: center;
@@ -350,6 +353,7 @@
         $(document).ready(function() {
             additional_fields({{ ucwords($module->additional_fields) }});
         });
+
         function bind_cropper_preview() {
             var $previews = $('.preview');
             var $image = $('#image');
@@ -410,6 +414,7 @@
                 });
             });
         }
+
         function save_cropped_img() {
             var json = [
                 '{"x":' + $('#crop_x').val(),
@@ -433,12 +438,14 @@
                 error: function(jqXHR, textStatus, errorThrown) {}
             });
         }
+
         function add_content() {
             reset_model();
             save_method = 'add';
             $('#modal_form_title').text('Add {{ ucwords($module->term) }}');
             tinyMCE.get('editor1').setContent('');
         }
+
         function save() {
             $('#btnSave').attr('disabled', 'disabled');
             $('#btnSave').text('Submitting...');
@@ -496,6 +503,7 @@
                 }
             });
         }
+
         function delete_content(id) {
             $('.message-container').fadeOut(3000);
             var mess_alert = '';
@@ -526,6 +534,7 @@
                 });
             }
         }
+
         function remove_featured_img(id) {
             if (confirm("Are you sure you want to delete this {{ ucwords($module->term) }} Image?")) {
                 url = "{{ base_url() }}adminmedia/modul/remove_image?id=" + id + '&&type={{ $module->type }}';

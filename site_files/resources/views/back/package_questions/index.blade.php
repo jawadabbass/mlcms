@@ -3,7 +3,7 @@
 @include('back.common_views.switch_css')
 @endsection
 @section('content')
-    <div class="content-wrapper pl-3 pr-2">
+    <div class="pl-3 pr-2 content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="row">
@@ -26,7 +26,7 @@
         <section class="content">
             <div class="row">
                 <div class="col-xs-12 col-md-12">
-                    <div class="card p-2">
+                    <div class="p-2 card">
                         <div class="row">
                             <div class="col-sm-8">
                                 <div class="box-header">
@@ -74,7 +74,8 @@
                                         <th>Question</th>
                                         <th>Package</th>
                                         <th>Status</th>
-                                        <th width="18%">Action</th>
+                                        <th>Action</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody id="sortable">
@@ -101,6 +102,9 @@
                                                 <a class="btn btn-sm btn-danger" href="javascript:void(0);" title="Delete"
                                                     onclick="delete_product({{ $product->id }})">
                                                     <i class="glyphicon glyphicon-trash"></i> Delete</a>
+                                                
+                                            </td>
+                                            <td align="center">
                                                 <span></span>
                                             </td>
                                         </tr>
