@@ -3,7 +3,7 @@
     @include('back.common_views.switch_css')
 @endsection
 @section('content')
-    <div class="content-wrapper pl-3 pr-2">
+    <div class="pl-3 pr-2 content-wrapper">
         <!-- Block Header (Page header) -->
         <section class="content-header">
             <div class="row">
@@ -19,7 +19,7 @@
         <section class="content">
             <div class="row">
                 <div class="col-xs-12 col-md-12">
-                    <div class="card p-2">
+                    <div class="p-2 card">
                         <div class="row">
                             <div class="col-sm-8">
                                 <h3 class=" card-title">All Widgets</h3>
@@ -47,7 +47,7 @@
                                 <tbody>
                                     @if ($result)
                                         @foreach ($result as $row)
-                                            <tr id="row_{{ $row->ID }}">
+                                            <tr id="row_{{ $row->id }}">
                                                 <td>
                                                     @if ($row->featured_image)
                                                         <img src="{{ asset_uploads('widgets/' . $row->featured_image) }}"
@@ -58,10 +58,10 @@
                                                 <td>{{ format_date($row->dated, 'date') }}</td>
                                                 <td>
                                                     <label class="switch">
-                                                        <input type="checkbox" name="{{ 'sts_' . $row->ID }}"
-                                                            id="{{ 'sts_' . $row->ID }}" <?php echo $row->sts == 1 ? ' checked' : ''; ?>
+                                                        <input type="checkbox" name="{{ 'sts_' . $row->id }}"
+                                                            id="{{ 'sts_' . $row->id }}" <?php echo $row->sts == 1 ? ' checked' : ''; ?>
                                                             value="<?php echo $row->sts; ?>"
-                                                            onClick="update_widgets_status({{ $row->ID }})">
+                                                            onClick="update_widgets_status({{ $row->id }})">
                                                         <div class="slider round">
                                                             <strong class="on">Active</strong>
                                                             <strong class="off">Inactive</strong>
@@ -69,13 +69,13 @@
                                                     </label>
                                                 </td>
                                                 <td>
-                                                    <a href="{{ route('widgets.show', $row->ID) }}"
+                                                    <a href="{{ route('widgets.show', $row->id) }}"
                                                         class="btn btn-success btn-sm">Edit</a>
 
-                                                    <a href="{{ route('widget.option', $row->ID) }}"
+                                                    <a href="{{ route('widget.option', $row->id) }}"
                                                         class="btn btn-warning btn-sm">option</a>
                                                     <a href="javascript:;"
-                                                        onClick="delete_widget({{ $row->ID }});"class="btn btn-danger btn-sm">Delete</a>
+                                                        onClick="delete_widget({{ $row->id }});"class="btn btn-danger btn-sm">Delete</a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -102,6 +102,9 @@
         $(document).ready(function(e) {
             $("#heading").change(function() {
                 string_to_slug('heading', 'page_slug');
+            });
+            $("#page_slug").change(function() {
+                check_slug('page_slug');
             });
         });
     </script>

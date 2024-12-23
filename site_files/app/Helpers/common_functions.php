@@ -5,7 +5,7 @@ use App\Models\Back\Goals;
 use App\Models\Back\Setting;
 use App\Models\Back\Category;
 use App\Models\Back\Metadata;
-use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Route;
 use App\Models\Back\CmsModuleData;
 use App\Models\Back\ClientPackages;
 use Illuminate\Support\Facades\Cache;

@@ -18,7 +18,7 @@ function load_my_edit_form(id) {
     $('#edit_frm_faq').trigger("reset");
     $.getJSON(base_url + 'adminmedia/contact_form_settings/' + id, function (data) {
         $('#edit_question').val(data.ip_list);
-        $('#faq_id').val(data.ID);
+        $('#faq_id').val(data.id);
         $('#edit_page_form').modal('show');
     });
 }

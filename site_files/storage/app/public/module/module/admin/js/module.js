@@ -54,14 +54,14 @@ function load_services_edit_form(id) {
         </div>
         <div class="card-footer">
             <button type="button" class="btn btn-sm btn-danger"
-                onclick="remove_featured_img(${data.ID});"><i
+                onclick="remove_featured_img(${data.id});"><i
                     class="fas fa-trash"></i></button>
         </div>`;
       $("#module_featured_img").html("");
       $("#module_featured_img").append(img);
     }
 
-    $("#service_id").val(data.ID);
+    $("#service_id").val(data.id);
     //tinymce.activeEditor.execCommand('mceInsertContent', false, data.details);
     tinyMCE.get("editor1").setContent(data.details);
     $("#edit_services_form").modal("show");

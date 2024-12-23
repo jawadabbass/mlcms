@@ -62,7 +62,7 @@ class BlogController extends Controller
 		$seoArr = array('title' => $blogCategory->cate_title . ' Category | ' . FindInsettingArr('business_name'));
 
 		$blogData = BlogPost::where('sts', 1)
-			->whereRaw("FIND_IN_SET(" . $blogCategory->ID . ",cate_ids)")
+			->whereRaw("FIND_IN_SET(" . $blogCategory->id . ",cate_ids)")
 			->paginate(10);
 		$blog_categories = BlogCategory::all();
 		return view('front.blog.index', compact('seoArr', 'blogData', 'blog_categories'));
@@ -100,7 +100,7 @@ class BlogController extends Controller
 		$slug = $id;
 		$obj_result = BlogPost::with('author', 'comments')->where('post_slug', $slug)->first();
 		if (isset($obj_result->title)) {
-			$seoArr = getSeoArrayBlog($obj_result->ID);
+			$seoArr = getSeoArrayBlog($obj_result->id);
 			$blog_post_details = $obj_result;
 			$blog_comments = $obj_result->comments;
 			$blog_categories = BlogCategory::all();

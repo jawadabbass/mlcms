@@ -20,7 +20,7 @@ function load_category_edit_form(id) {
         $('#edit_title').val(data.cate_title);
         $('#edit_cate_slug').val(data.cate_slug);
         tinyMCE.get('editor1').setContent(data.cate_description);
-        $('#category_id').val(data.ID);
+        $('#category_id').val(data.id);
         $('#edit_frm_blog_cat').modal('show');
     });
 }
@@ -177,9 +177,9 @@ function load_blog_post_edit_form(id) {
             $("#featured_img").fadeOut();
         } else {
             $("#featured_img").fadeIn();
-            var img = '<div class="featured-images-main" id="products_img_' + data.ID + '">' +
+            var img = '<div class="featured-images-main" id="products_img_' + data.id + '">' +
                 '<img style="width:150px" src="' + asset_uploads + '/blog/' + data.featured_img + '">' +
-                '<i onClick="remove_blog_post_featured_image(' + data.ID + ');" class="deleteIcon"></i></div>';
+                '<i onClick="remove_blog_post_featured_image(' + data.id + ');" class="deleteIcon"></i></div>';
             $('#featured_img').html('');
             $('#featured_img').append(img);
 
@@ -187,8 +187,8 @@ function load_blog_post_edit_form(id) {
         fillSeoFields(data);
 
         tinyMCE.get('editor1').setContent(data.description);
-        $('#cms_id').val(data.ID);
-        $('#blog_post_form').attr('action', base_url + 'adminmedia/blog/' + data.ID);
+        $('#cms_id').val(data.id);
+        $('#blog_post_form').attr('action', base_url + 'adminmedia/blog/' + data.id);
         if (!$('#methodPut').length) {
             $('<input>').attr({
                 type: 'hidden',

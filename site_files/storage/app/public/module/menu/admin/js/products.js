@@ -39,13 +39,13 @@ function load_products_edit_form(id) {
         } else {
             //   alert('image');
             $("#product_img").fadeIn();
-            var img = '<div class="featured-images-main" id="products_img_' + data.ID + '"><img style="width:150px" src="' + asset_uploads + 'products/thumb/' + data.product_img + '"><i onClick="remove_products_image(' + data.ID + ');" class="deleteIcon"></i></div>';
+            var img = '<div class="featured-images-main" id="products_img_' + data.id + '"><img style="width:150px" src="' + asset_uploads + 'products/thumb/' + data.product_img + '"><i onClick="remove_products_image(' + data.id + ');" class="deleteIcon"></i></div>';
             $('#product_imgg').html('');
             $('#product_imgg').append(img);
             // alert(img);
         }
         $('#edit_pname').val(data.product_name);
-        $('#products_id').val(data.ID);
+        $('#products_id').val(data.id);
         //$('#edit_product_category').val(data.cate_id);
         $('.edit_product_category select').val(data.cate_id);
         fillSeoFields(data);

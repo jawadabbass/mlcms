@@ -1,15 +1,17 @@
 <div class="modal fade" id="modal_form" role="dialog">
     <div class="modal-dialog modal-lg">
         <form action="#" id="form" class="form-horizontal" enctype="multipart/form-data">
-            <div class="modal-content"> @csrf
+            <div class="modal-content">
+                @csrf
+<input type="hidden" name="moduleType" id="moduleType" value="product">
                 <div class="modal-header">
                     <div class="row" style="width: 100%;">
                         <div class="col-md-6">
                             <h4 class="modal-title">Edit Product</h4>
                         </div>
-                        <div class="col-md-6 text-right">
+                        <div class="text-right col-md-6">
                             <a href="javascript:void(0);" onclick="showProductRecordUpdateHistory();"
-                                class="go-back mr-4" id="showProductRecordUpdateHistoryLink"><i class="fas fa-bars"
+                                class="mr-4 go-back" id="showProductRecordUpdateHistoryLink"><i class="fas fa-bars"
                                     aria-hidden="true"></i>
                                 History </a>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -24,15 +26,23 @@
                         <div class="form-body">
                             <div>
                                 <label class="form-label">Product Name</label>
-                                <input onchange="string_to_product_slug('product_name', 'product_slug');"
+                                <input onchange="string_to_slug('product_name', 'product_slug');"
                                     name="product_name" placeholder="Product Name" class="form-control" type="text">
                                 <span id="product_name" style="padding-left:2px;" class="err"></span>
                             </div>
                             <div>
                                 <label for="basic-url">Page Link @php echo helptooltip('page_link'); @endphp</label>
-                                <div class="mb-2"> <span class="mb-2-addon" id="basic-addon3">@php echo  base_url().'products' @endphp</span>
-                                    <input type="text" class="form-control slug-field" name="product_slug"
-                                        placeholder="Product Page Link">
+                                <div class="mb-2"> 
+                                    
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="slug_field_base_url">
+                                                {{ url('products').'/' }}
+                                            </span>
+                                        </div>
+                                        <input type="text" class="form-control slug-field" name="product_slug"
+                                        placeholder="Product Page Link" onchange="check_slug('product_slug');">
+                                    </div>                                    
                                 </div>
                                 <span id="product_slug" style="padding-left:2px;" class="err"></span>
                             </div>

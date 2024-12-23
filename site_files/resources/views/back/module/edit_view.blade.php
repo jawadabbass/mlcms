@@ -33,23 +33,20 @@
                             <div class="text-right col-md-6">
                                 <a href="{{ admin_url() . 'record-update-history/CmsModuleData/' . $moduleData->id }}"
                                     class="mr-4 go-back"><i class="fas fa-bars" aria-hidden="true"></i> History </a>
-
                                 <a href="{{ admin_url() . 'module/' . $module->type }}" class="go-back"><i
                                         class="fas fa-angle-double-left" aria-hidden="true"></i> Back </a>
-
                             </div>
                         </div>
-
-
                     </div>
                     <div class="modal-body form">
                         <div class=" card-body">
                             <input type="hidden" value="" name="id" />
+                            <input type="hidden" name="moduleType" id="moduleType" value="{{ $module->type }}">
                             <div class="form-body">
                                 <div id="form-errors"></div>
                                 <div id="page_heading">
                                     <label class="form-label">Heading</label>
-                                    <input onchange="string_to_product_slug('module_heading', 'module_slug');"
+                                    <input onchange="string_to_slug('module_heading', 'module_slug');"
                                         name="module_heading" placeholder="Heading" class="form-control" type="text"
                                         value="{{ $moduleData->heading }}">
                                     <span id="module_heading" style="padding-left:2px;" class="err"></span>
@@ -59,15 +56,21 @@
                                     <label for="basic-url">{{ ucwords($module->term) }}
                                         Link
                                         @php helptooltip('page_link') @endphp </label>
-                                    <div class="mb-2"> <span class="mb-2-addon"
-                                            id="basic-addon3">{{ base_url() }}@php echo ($module->type=='cms')?"":$module->type."/"; @endphp </span>
-                                        @php
-                                            $pslug = $moduleData->post_slug;
-                                            $pslug = str_replace($module->type . '/', '', $pslug);
-                                        @endphp
-                                        <input type="text" class="form-control slug-field" name="module_slug"
-                                            id="slug_field" value="{{ $pslug }}"
-                                            placeholder="{{ ucwords($module->type) }} Link">
+                                    <div class="mb-2">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    {{ url($module->type == 'cms' ? '' : $module->type . '/') }}
+                                                </span>
+                                            </div>
+                                            @php
+                                                $pslug = $moduleData->post_slug;
+                                                $pslug = str_replace($module->type . '/', '', $pslug);
+                                            @endphp
+                                            <input type="text" class="form-control slug-field" name="module_slug"
+                                                id="slug_field" value="{{ $pslug }}"
+                                                placeholder="{{ ucwords($module->type) }} Link" onchange="check_slug('module_slug');">
+                                        </div>
                                     </div>
                                     <span id="page_slug" style="padding-left:2px;" class="err"></span>
                                 </div>
@@ -97,7 +100,8 @@
                                     <label class="form-label">{{ ucwords($module->term) }} Description</label>
                                     <label for="">
                                         <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#media_image"
-                                            class="btn btn-sm btn-info"> <i class="fas fa-cloud-download" aria-hidden="true"></i>
+                                            class="btn btn-sm btn-info"> <i class="fas fa-cloud-download"
+                                                aria-hidden="true"></i>
                                             Insert Image from Media</a>
                                         <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#media_files"
                                             class="btn btn-sm btn-warning"> <i class="fas fa-cloud-download"
@@ -147,7 +151,7 @@
                                                 <ul>
                                                     @foreach ($widget as $wid)
                                                         <li><a
-                                                                href="{{ route('widgets.show', $wid->ID) }}">{{ $wid->heading }}</a>
+                                                                href="{{ route('widgets.show', $wid->id) }}">{{ $wid->heading }}</a>
                                                         </li>
                                                     @endforeach
                                                 </ul>
@@ -257,7 +261,6 @@
                                         <div class="col-md-12">
                                             <label class="form-label">Update {{ ucwords($module->term) }} Image <span>(max
                                                     size:{{ getMaxUploadSize() }}MB)</span> @php echo helptooltip('max_image_size') @endphp </label>
-
                                             <div id="file-field">
                                                 <input type="file" name="module_img" id="module_img"
                                                     class="form-control">
@@ -361,7 +364,8 @@
                         <input type="hidden" name="crop_rotate" id="crop_rotate" value="" />
                         <input type="hidden" name="module_id" value="{{ ucwords($module->id) }}">
                         <input type="hidden" name="image_1_2" id="image_1_2" value="">
-                        <button type="button" id="btnCrop" onclick="save_cropped_img()" class="btn btn-sm btn-primary">Crop
+                        <button type="button" id="btnCrop" onclick="save_cropped_img()"
+                            class="btn btn-sm btn-primary">Crop
                             Image
                         </button>
                         <button type="button" class="btn btn-sm btn-danger" data-bs-dismiss="modal">Cancel</button>
@@ -393,7 +397,6 @@
         }
     </style>
 @endsection
-
 @section('beforeBodyClose')
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
     <script type="text/javascript" src="{{ asset_storage('') . 'module/module/admin/js/module.js' }}"></script>

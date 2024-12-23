@@ -9,5 +9,5 @@ class ModTemplate extends Model
     //ab_gen_action_style
     public $timestamps = false;
     protected $table = 'ab_gen_action_style';
-    protected $primaryKey = 'ID';
+    protected $primaryKey = 'id';
 }

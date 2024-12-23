@@ -26,7 +26,7 @@
             type: "GET",
             success: function (data) {
                 data = JSON.parse(data);
-                $('[name="id"]').val(data.ID);
+                $('[name="id"]').val(data.id);
                 $('[name="product_name"]').val(data.product_name);
                 $('[name="product_slug"]').val(data.product_slug);
                 $('[name="product_description"]').val(data.product_description);

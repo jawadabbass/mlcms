@@ -5,7 +5,7 @@
     <link href="{{ asset_storage('') . 'module/blog/admin/css/' . $module . '.css' }}" rel="stylesheet" type="text/css" />
 @endsection
 @section('content')
-    <div class="content-wrapper pl-3 pr-2">
+    <div class="pl-3 pr-2 content-wrapper">
         <!-- Block Header (Page header) -->
         <section class="content-header">
             <div class="row">
@@ -23,7 +23,7 @@
         <section class="content">
             <div class="row">
                 <div class="col-xs-12 col-md-12">
-                    <div class="card p-2">
+                    <div class="p-2 card">
                         <div class="row">
                             <div class="col-sm-8">
                                 <h3 class=" card-title">All Blog Categories</h3>
@@ -52,16 +52,16 @@
                                 <tbody>
                                     @if ($result)
                                         @foreach ($result as $row)
-                                            <tr id="row_{{ $row->ID }}">
+                                            <tr id="row_{{ $row->id }}">
                                                 <td>{{ substr($row->cate_title, 0, 40) }}</td>
                                                 <td>@php echo substr($row->cate_description, 0, 60) @endphp</td>
                                                 <td>{{ format_date($row->dated, 'date') }}</td>
                                                 <td>
                                                     <label class="switch">
-                                                        <input type="checkbox" name="{{ 'sts_' . $row->ID }}"
-                                                            id="{{ 'cat_sts_' . $row->ID }}" <?php echo $row->sts == 1 ? ' checked' : ''; ?>
+                                                        <input type="checkbox" name="{{ 'sts_' . $row->id }}"
+                                                            id="{{ 'cat_sts_' . $row->id }}" <?php echo $row->sts == 1 ? ' checked' : ''; ?>
                                                             value="<?php echo $row->sts; ?>"
-                                                            onClick="update_category_status({{ $row->ID }})">
+                                                            onClick="update_category_status({{ $row->id }})">
                                                         <div class="slider round">
                                                             <strong class="on">Active</strong>
                                                             <strong class="off">Inactive</strong>
@@ -71,9 +71,9 @@
                                                 <td><a href="{{ 'blog/category/' . $row->cate_slug }}.html"
                                                         target="_bank">Preview</a></td>
                                                 <td><a href="javascript:;"
-                                                        onClick="load_category_edit_form({{ $row->ID }});"
+                                                        onClick="load_category_edit_form({{ $row->id }});"
                                                         class="btn btn-success btn-sm">Edit</a> <a
-                                                        href="javascript:delete_category({{ $row->ID }});"
+                                                        href="javascript:delete_category({{ $row->id }});"
                                                         class="btn btn-danger btn-sm">Delete</a></td>
                                             </tr>
                                         @endforeach
@@ -143,8 +143,8 @@
                             <div class="col-md-6">
                                 <h4 class="modal-title">Edit Category</h4>                        
                             </div>
-                            <div class="col-md-6 text-right">
-                                <a href="javascript:void(0);" onclick="showBlogCategoryRecordUpdateHistory();" class="go-back mr-4"
+                            <div class="text-right col-md-6">
+                                <a href="javascript:void(0);" onclick="showBlogCategoryRecordUpdateHistory();" class="mr-4 go-back"
                                     id="showBlogCategoryRecordUpdateHistoryLink"><i class="fas fa-bars" aria-hidden="true"></i>
                                     History </a>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -187,6 +187,9 @@
         $(document).ready(function(e) {
             $("#title").change(function() {
                 string_to_slug('title', 'cate_slug');
+            });
+            $("#cate_slug").change(function() {
+                check_slug('cate_slug');
             });
             table = $('#example2').DataTable();
         });

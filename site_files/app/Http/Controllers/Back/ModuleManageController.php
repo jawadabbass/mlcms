@@ -3,18 +3,20 @@
 namespace App\Http\Controllers\Back;
 
 use App\Models\Back\Menu;
+use App\Models\Back\Product;
 use Illuminate\Http\Request;
 use App\Models\Back\Category;
 use App\Models\Back\MenuType;
 use App\Models\Back\Template;
-use Laminas\Diactoros\Module;
 use App\Helpers\ImageUploader;
 use App\Models\Back\CmsModule;
 use App\Models\Back\ModuleVideo;
 use App\Models\Back\CmsModuleData;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Back\BlogPost;
 use App\Models\Back\ModuleDataImage;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
@@ -643,7 +645,7 @@ class ModuleManageController extends Controller
                 ->where('meta_value', $url)
                 ->value('post_id');
         }
-        $old_posts = DB::table('wp_posts')->where('ID', $ID)->orderBy('ID', 'ASC')->first();
+        $old_posts = DB::table('wp_posts')->where('id', $ID)->orderBy('id', 'ASC')->first();
         $old_postmeta = DB::table('wp_postmeta')->where('post_id', $ID)->get();
         $act_url = '';
         $act_url = DB::table('wp_postmeta')->where('meta_key', 'custom_permalink')->where('post_id', $ID)->value('meta_value');
@@ -677,8 +679,8 @@ class ModuleManageController extends Controller
         $blogArr = DB::table('wp_posts')->where('post_type', 'post')->where('post_status', 'publish')
             ->get();
         foreach ($blogArr as $key => $value) {
-            $ID = $value->ID;
-            $old_posts = DB::table('wp_posts')->where('ID', $ID)->orderBy('ID', 'ASC')->first();
+            $ID = $value->id;
+            $old_posts = DB::table('wp_posts')->where('id', $ID)->orderBy('id', 'ASC')->first();
             $old_postmeta = DB::table('wp_postmeta')->where('post_id', $ID)->get();
             $act_url = '';
             $act_url = DB::table('wp_postmeta')->where('meta_key', 'custom_permalink')->where('post_id', $ID)->value('meta_value');
@@ -805,6 +807,50 @@ class ModuleManageController extends Controller
             'status' => true,
             'message' => 'marked',
             'src' => asset_uploads($folder . '/thumb/', $image->image_name . '?' . time()),
+        ]);
+    }
+    public function checkRoute(Request $request)
+    {
+
+        $routeCollection = Route::getRoutes();
+
+        $slug = $request->slug;
+        $moduleType = $request->moduleType;
+        $newModuleType = ($moduleType == 'cms') ? '' : $moduleType;
+        $urlToCheck = url($newModuleType . '/' . $slug);
+        $url = '';
+        $urlToEdit = '';
+
+        foreach ($routeCollection as $value) {
+            $url = url($value->uri());
+            $status = true;
+            if ($urlToCheck === $url) {
+                $status = false;
+                break;
+            }
+            $slug = str_replace(url('/') . '/', '', $urlToCheck);
+            $obj = CmsModuleData::where('post_slug', 'like', $slug)->first();
+            if (null !== $obj) {
+                $urlToEdit = url('/adminmedia/module/'.$moduleType.'/edit/'.$obj->id);
+                $status = false;
+            }
+            $slug = str_replace(url('/') . '/blog/', '', $urlToCheck);
+            $obj = BlogPost::where('post_slug', 'like', $slug)->first();
+            if (null !== $obj) {
+                $urlToEdit = url('/adminmedia/blog/?id='.$obj->id);
+                $status = false;
+            }
+            $slug = str_replace(url('/') . '/product/', '', $urlToCheck);
+            $obj = Product::where('product_slug', 'like', $slug)->first();
+            if (null !== $obj) {
+                $urlToEdit = url('/adminmedia/products/?id='.$obj->id);
+                $status = false;
+            }
+        }
+        return response([
+            'status' => $status,
+            'urlToCheck' => $urlToCheck,
+            'urlToEdit' => $urlToEdit
         ]);
     }
 }

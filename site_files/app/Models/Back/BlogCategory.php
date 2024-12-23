@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class BlogCategory extends Model
 {
-    protected $primaryKey = "ID";
+    protected $primaryKey = "id";
     public $timestamps = false;
 }

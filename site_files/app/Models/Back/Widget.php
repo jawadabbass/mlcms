@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Widget extends Model
 {
-    protected $primaryKey = 'ID';
+    protected $primaryKey = 'id';
     public $timestamps = false;
 }

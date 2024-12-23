@@ -51,9 +51,9 @@ class BlogCategoriesController extends Controller
         /******************************* */
         /******************************* */
         $recordUpdateHistoryData = [
-            'record_id' => $blogCategory->ID,
+            'record_id' => $blogCategory->id,
             'record_title' => $blogCategory->cate_title,
-            'record_link' => url('adminmedia/blog_categories/'.$blogCategory->ID.'/edit'),
+            'record_link' => url('adminmedia/blog_categories/'.$blogCategory->id.'/edit'),
             'model_or_table' => 'BlogCategory',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -93,9 +93,9 @@ class BlogCategoriesController extends Controller
         /******************************* */
         /******************************* */
         $recordUpdateHistoryData = [
-            'record_id' => $blogCategory->ID,
+            'record_id' => $blogCategory->id,
             'record_title' => $blogCategory->cate_title,
-            'record_link' => url('adminmedia/blog_categories/'.$blogCategory->ID.'/edit'),
+            'record_link' => url('adminmedia/blog_categories/'.$blogCategory->id.'/edit'),
             'model_or_table' => 'BlogCategory',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -142,9 +142,9 @@ class BlogCategoriesController extends Controller
         /******************************* */
         /******************************* */
         $recordUpdateHistoryData = [
-            'record_id' => $blogCategory->ID,
+            'record_id' => $blogCategory->id,
             'record_title' => $blogCategory->cate_title,
-            'record_link' => url('adminmedia/blog_categories/'.$blogCategory->ID.'/edit'),
+            'record_link' => url('adminmedia/blog_categories/'.$blogCategory->id.'/edit'),
             'model_or_table' => 'BlogCategory',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),

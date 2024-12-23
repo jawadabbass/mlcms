@@ -21,7 +21,7 @@
                             <h3>Edit Video</h3>
                         </div>
                         <div class="text-right col-md-6">
-                            <a href="{{ url('adminmedia/record-update-history/Video/' . $rec->ID) }}"
+                            <a href="{{ url('adminmedia/record-update-history/Video/' . $rec->id) }}"
                                 target="_blank" class=""><i class="fas fa-bars" aria-hidden="true"></i>
                                 History
                             </a>
@@ -90,7 +90,7 @@
                         <div class="row">
                             <div class="col-md-4 text-end"></div>
                             <div class="col-md-8">
-                                <input type="hidden" name="idd" id="idd" value="{{ $rec->ID }}">
+                                <input type="hidden" name="idd" id="idd" value="{{ $rec->id }}">
                                 <div id="old_content" style="display: none;">{!! adjustUrl($rec->content) !!}</div>
                                 <p id="old_type" style="display: none;">{{ $rec->additional_field_4 }}</p>
                                 <button id="submit" type="submit" class="btn btn-info"

@@ -28,7 +28,7 @@
             type: "GET",
             success: function(data) {
                 data = JSON.parse(data);
-                $('[name="id"]').val(data.ID);
+                $('[name="id"]').val(data.id);
                 $('[name="product_name"]').val(data.product_name);
                 $('[name="product_slug"]').val(data.product_slug);
                 $('[name="product_description"]').val(data.product_description);
@@ -195,4 +195,9 @@
         let id = $('#product_id').val();
         window.location.href = base_url + 'adminmedia/record-update-history/Product/' + id;
     }
+    $(document).ready(function() {
+        @if (request()->input('id', 0) > 0)
+            edit_product({{ request()->input('id', 0) }});
+        @endif
+    });
 </script>

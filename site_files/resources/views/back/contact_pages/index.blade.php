@@ -52,23 +52,23 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title"><a data-bs-toggle="collapse" class="collapsed"
-                                        id="office_link_{{ $val->ID }}" href="{{ '#collapse' . $cnt }}"> Office
+                                        id="office_link_{{ $val->id }}" href="{{ '#collapse' . $cnt }}"> Office
                                         {{ $cnt }} Address
                                         @if ($val->type == 'main')
                                             {{ '(Main Office)' }} @php echo helptooltip('main_office'); @endphp
                                         @endif
                                     </a></h4>
                                 @if ($val->type != 'main')
-                                    <div class="remove"><a onClick="deleteAddress({{ $val->ID }})" href="#"> <i
+                                    <div class="remove"><a onClick="deleteAddress({{ $val->id }})" href="#"> <i
                                                 class="fas fa-times" title="Delete"></i> </a></div>
                                 @endif
                             </div>
                             <div id="{{ 'collapse' . $cnt }}" class="panel-collapse collapse">
                                 <div class="panel-body">
                                     <div class=" card-body box box-solid"><span style="padding-right:20px;">
-                                            <form name="emp_network_detail_ {{ $val->ID }}" method="post"
-                                                id="frm_ {{ $val->ID }}"
-                                                action=" {{ route('manage_contact.update', $val->ID) }}">
+                                            <form name="emp_network_detail_ {{ $val->id }}" method="post"
+                                                id="frm_ {{ $val->id }}"
+                                                action=" {{ route('manage_contact.update', $val->id) }}">
                                                 @csrf
                                                 <input type="hidden" name="_method" value="PUT">
                                                 <div class="row">
@@ -87,7 +87,7 @@
                                                         <div class="mb-2">
                                                             <label for="email">Email </label>
                                                             <input type="email" class="form-control"
-                                                                id="email_ {{ $val->ID }}" name="email"
+                                                                id="email_ {{ $val->id }}" name="email"
                                                                 value=" {{ old('email') ? old('email') : $val->email }}">
                                                             @if ($errors->has('email'))
                                                                 {{ $errors->first('email') }}
@@ -132,7 +132,7 @@
                                                     <div class="col-md-12 col-sm-12">
                                                         <div class="mb-2">
                                                             <label for="address">Address</label>
-                                                            <textarea type="text" class="form-control myeditor22" id="address_ {{ $val->ID }}"
+                                                            <textarea type="text" class="form-control myeditor22" id="address_ {{ $val->id }}"
                                                                 name="address"> {{ old('address') ? old('address') : $val->address }}</textarea>
                                                             @if ($errors->has('address'))
                                                                 {{ $errors->first('address') }}
@@ -161,7 +161,7 @@
                                                 <input type="submit"  name="change_network_details" value="Update"
                                                     class="sitebtn" />
                                                 <input type="hidden" id="office_id" name="office_id"
-                                                    value=" {{ $val->ID }}">
+                                                    value=" {{ $val->id }}">
                                             </form>
                                         </span></div>
                                 </div>
@@ -179,7 +179,7 @@
                             <div class="mb-2">
                                 <label for="to_email">To Email @php echo helptooltip('setting_email') @endphp</label>
                                 <input type="hidden" class="form-control" id="to_email"
-                                    value=" {{ $contact_email_result->ID }}">
+                                    value=" {{ $contact_email_result->id }}">
                                 <input type="email" class="form-control" id="to_email_tb">
                                 <p id="append_to_email"> @php
                                     
@@ -204,7 +204,7 @@
                             <div class="mb-2">
                                 <label for="cc_email">CC Email @php echo  helptooltip('setting_cc')@endphp</label>
                                 <input type="hidden" class="form-control" id="cc_id"
-                                    value=" {{ $contact_email_result->ID }}">
+                                    value=" {{ $contact_email_result->id }}">
                                 <input type="email" class="form-control" id="cc_email">
                                 <p id="append_cc_email"> @php
                                     
@@ -255,7 +255,7 @@
                 <div class="gmapbox">
                     <div class=" card-body box box-solid">
                         <form name="emp_network_detail" method="get"
-                            action=" {{ route('manage_contact.edit', $contact_email_result->ID) }}">
+                            action=" {{ route('manage_contact.edit', $contact_email_result->id) }}">
                             <div class="mb-2">
                                 <div class="mb-2">
                                     <iframe width="100%" height="250" frameborder="0" scrolling="no" marginheight="0"

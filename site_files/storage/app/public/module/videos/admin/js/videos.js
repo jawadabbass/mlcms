@@ -15,7 +15,7 @@ function load_videos_edit_form(id) {
     $.getJSON(base_url + 'adminmedia/videos/' + id, function (data) {
         $('#edit_heading').val(data.heading);
         $('#edit_content').val(data.content);
-        $('#video_id').val(data.ID);
+        $('#video_id').val(data.id);
         $('#edit_page_form').modal('show');
     });
 }

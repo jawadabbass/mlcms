@@ -53,9 +53,9 @@ class SettingController extends Controller
         /******************************* */
         /******************************* */
         $recordUpdateHistoryData = [
-            'record_id' => $setting->ID,
+            'record_id' => $setting->id,
             'record_title' => 'google_analytics',
-            'record_link' => url('adminmedia/settings/'.$setting->ID.'/edit'),
+            'record_link' => url('adminmedia/settings/'.$setting->id.'/edit'),
             'model_or_table' => 'Setting',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -132,9 +132,9 @@ class SettingController extends Controller
         /******************************* */
         /******************************* */
         $recordUpdateHistoryData = [
-            'record_id' => $setting->ID,
+            'record_id' => $setting->id,
             'record_title' => 'web_down_status',
-            'record_link' => url('adminmedia/settings/'.$setting->ID.'/edit'),
+            'record_link' => url('adminmedia/settings/'.$setting->id.'/edit'),
             'model_or_table' => 'Setting',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -163,9 +163,9 @@ class SettingController extends Controller
         /******************************* */
         /******************************* */
         $recordUpdateHistoryData = [
-            'record_id' => $setting->ID,
+            'record_id' => $setting->id,
             'record_title' => 'google_adsense',
-            'record_link' => url('adminmedia/settings/'.$setting->ID.'/edit'),
+            'record_link' => url('adminmedia/settings/'.$setting->id.'/edit'),
             'model_or_table' => 'Setting',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -539,9 +539,9 @@ class SettingController extends Controller
         /******************************* */
         /******************************* */
         $recordUpdateHistoryData = [
-            'record_id' => $setting->ID,
+            'record_id' => $setting->id,
             'record_title' => 'head_body_js',
-            'record_link' => url('adminmedia/settings/'.$setting->ID.'/edit'),
+            'record_link' => url('adminmedia/settings/'.$setting->id.'/edit'),
             'model_or_table' => 'Setting',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -590,9 +590,9 @@ class SettingController extends Controller
         /******************************* */
         /******************************* */
         $recordUpdateHistoryData = [
-            'record_id' => $setting->ID,
+            'record_id' => $setting->id,
             'record_title' => 'admin_logo_favicon',
-            'record_link' => url('adminmedia/settings/'.$setting->ID.'/edit'),
+            'record_link' => url('adminmedia/settings/'.$setting->id.'/edit'),
             'model_or_table' => 'Setting',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),

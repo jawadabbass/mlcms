@@ -86,9 +86,9 @@ class WidgetController extends Controller
         /******************************* */
         /******************************* */
         $recordUpdateHistoryData = [
-            'record_id' => $widget->ID,
+            'record_id' => $widget->id,
             'record_title' => $widget->heading,
-            'record_link' => url('adminmedia/widgets/'.$widget->ID.'/edit'),
+            'record_link' => url('adminmedia/widgets/'.$widget->id.'/edit'),
             'model_or_table' => 'Widget',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -141,9 +141,9 @@ class WidgetController extends Controller
         /******************************* */
         /******************************* */
         $recordUpdateHistoryData = [
-            'record_id' => $widget->ID,
+            'record_id' => $widget->id,
             'record_title' => $widget->heading,
-            'record_link' => url('adminmedia/widgets/'.$widget->ID.'/edit'),
+            'record_link' => url('adminmedia/widgets/'.$widget->id.'/edit'),
             'model_or_table' => 'Widget',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -187,9 +187,9 @@ class WidgetController extends Controller
         /******************************* */
         /******************************* */
         $recordUpdateHistoryData = [
-            'record_id' => $widget->ID,
+            'record_id' => $widget->id,
             'record_title' => $widget->heading,
-            'record_link' => url('adminmedia/widgets/'.$widget->ID.'/edit'),
+            'record_link' => url('adminmedia/widgets/'.$widget->id.'/edit'),
             'model_or_table' => 'Widget',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -211,9 +211,9 @@ class WidgetController extends Controller
             /******************************* */
             /******************************* */
             $recordUpdateHistoryData = [
-                'record_id' => $widget->ID,
+                'record_id' => $widget->id,
                 'record_title' => $widget->heading,
-                'record_link' => url('adminmedia/widgets/'.$widget->ID.'/edit'),
+                'record_link' => url('adminmedia/widgets/'.$widget->id.'/edit'),
                 'model_or_table' => 'Widget',
                 'admin_id' => auth()->user()->id,
                 'ip' => request()->ip(),
@@ -265,9 +265,9 @@ class WidgetController extends Controller
         /******************************* */
         /******************************* */
         $recordUpdateHistoryData = [
-            'record_id' => $widget->ID,
+            'record_id' => $widget->id,
             'record_title' => $widget->heading,
-            'record_link' => url('adminmedia/widgets/'.$widget->ID.'/edit'),
+            'record_link' => url('adminmedia/widgets/'.$widget->id.'/edit'),
             'model_or_table' => 'Widget',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),

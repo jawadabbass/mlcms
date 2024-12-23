@@ -57,9 +57,9 @@ class VideoController extends Controller
             /******************************* */
             /******************************* */
             $recordUpdateHistoryData = [
-                'record_id' => $video->ID,
+                'record_id' => $video->id,
                 'record_title' => $video->heading,
-                'record_link' => url('adminmedia/videos/edit/'.$video->ID),
+                'record_link' => url('adminmedia/videos/edit/'.$video->id),
                 'model_or_table' => 'Video',
                 'admin_id' => auth()->user()->id,
                 'ip' => request()->ip(),
@@ -148,9 +148,9 @@ class VideoController extends Controller
         /******************************* */
         /******************************* */
         $recordUpdateHistoryData = [
-            'record_id' => $Video->ID,
+            'record_id' => $Video->id,
             'record_title' => $Video->heading,
-            'record_link' => url('adminmedia/videos/edit/'.$Video->ID),
+            'record_link' => url('adminmedia/videos/edit/'.$Video->id),
             'model_or_table' => 'Video',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -230,9 +230,9 @@ class VideoController extends Controller
         /******************************* */
         /******************************* */
         $recordUpdateHistoryData = [
-            'record_id' => $Video->ID,
+            'record_id' => $Video->id,
             'record_title' => $Video->heading,
-            'record_link' => url('adminmedia/videos/edit/'.$Video->ID),
+            'record_link' => url('adminmedia/videos/edit/'.$Video->id),
             'model_or_table' => 'Video',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),

@@ -1,6 +1,6 @@
 @extends('back.layouts.app', ['title' => $title ?? ''])
 @section('content')
-    <div class="content-wrapper pl-3 pr-2">
+    <div class="pl-3 pr-2 content-wrapper">
         <!-- Block Header (Page header) -->
         <section class="content-header">
             <div class="row">
@@ -19,8 +19,8 @@
                     <div class="col-md-6">
                         <h3> Edit Widget</h3>
                     </div>
-                    <div class="col-md-6 text-right">
-                        <a href="{{ url('adminmedia/record-update-history/Widget/' . $widget->ID) }}" target="_blank" class=" mr-4"><i
+                    <div class="text-right col-md-6">
+                        <a href="{{ url('adminmedia/record-update-history/Widget/' . $widget->id) }}" target="_blank" class="mr-4 "><i
                                 class="fas fa-bars" aria-hidden="true"></i> History </a>
                         <a href="{{ route('widgets.index') }}" class=""><i class="fas fa-angle-double-left"
                                 aria-hidden="true"></i> Back </a>
@@ -31,7 +31,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <form enctype="multipart/form-data" role="form" method="post"
-                            action="{{ route('widget.update', $widget->ID) }}">
+                            action="{{ route('widget.update', $widget->id) }}">
                             @csrf
                             @if (!$admin_data == null)
                                 @if ($admin_data->show_heading == 1)
@@ -73,7 +73,7 @@
                                                         class="err featured_img">
                                                         <div class="featured-images-main" id="products_img_undefined"><img
                                                                 style="width:100px" src="<?php echo asset_uploads('') . 'widgets/' . $widget->featured_image; ?>"><i
-                                                                onclick="remove_widget_featured_image({{ $widget->ID }});"
+                                                                onclick="remove_widget_featured_image({{ $widget->id }});"
                                                                 class="deleteIcon"></i></div>
                                                     </span>
                                                 @endif
@@ -189,6 +189,9 @@
         $(document).ready(function(e) {
             $("#heading").change(function() {
                 string_to_slug('heading', 'page_slug');
+            });
+            $("#page_slug").change(function() {
+                check_slug('page_slug');
             });
         });
         function remove_widget_featured_image(id) {

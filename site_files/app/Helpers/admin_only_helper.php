@@ -332,7 +332,7 @@ function insertHistory($key, $dataArr, $client_id = 0, $u_type = 0, $user_id = 0
     $history->client_id = $client_id;
     $history->msg = $historyMsg;
     $history->add_by_user_id = $user_id;
-    $history->history_id = $emailTemplate->ID;
+    $history->history_id = $emailTemplate->id;
     $history->save();
     return true;
     if ($emailTemplate->Status == 'Yes') {

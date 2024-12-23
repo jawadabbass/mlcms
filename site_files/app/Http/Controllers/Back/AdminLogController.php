@@ -18,7 +18,7 @@ class AdminLogController extends Controller
     public function index()
     {
         $title = FindInsettingArr('business_name') . ': Admin logs';
-        $usersData = AdminLogHistory::with('user')->orderBy('ID', 'DESC')->paginate(25);
+        $usersData = AdminLogHistory::with('user')->orderBy('id', 'DESC')->paginate(25);
         return view('back.users.admin.admin_users_log', compact('title', 'usersData'));
     }
     /**
@@ -80,8 +80,8 @@ class AdminLogController extends Controller
     public function destroy($id)
     {
         if (Auth::user()->type == 'super-admin') {
-            $top = DB::table('admin_log_histories')->max('ID');
-            AdminLogHistory::where('ID', '<', $top - 4)->delete();
+            $top = DB::table('admin_log_histories')->max('id');
+            AdminLogHistory::where('id', '<', $top - 4)->delete();
             session(['message' => 'Deleted Successfully', 'type' => 'success']);
             echo "done";
             return;

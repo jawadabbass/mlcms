@@ -8,5 +8,5 @@ class ModActions extends Model
 {
     public $timestamps = false;
     protected $table = 'ab_gen_fields_actions_dd';
-    protected $primaryKey = 'ID';
+    protected $primaryKey = 'id';
 }

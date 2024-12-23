@@ -5,8 +5,8 @@
     $strlen_canonical_url = strlen($serviceObj->canonical_url);
 @endphp
 <input type="hidden" value="{{ $serviceObj->id }}" name="id">
-<div class="card card-primary card-tabs mb-3" style="width: 100%;">
-    <div class="card-header p-0 pt-1">
+<div class="mb-3 card card-primary card-tabs" style="width: 100%;">
+    <div class="p-0 pt-1 card-header">
         <ul class="nav nav-tabs" id="service-tabs" role="tablist">
             <li class="nav-item"> <a class="nav-link active" id="general-tab" data-bs-toggle="pill" href="#general"
                     role="tab" aria-controls="general" aria-selected="true">General</a> </li>
@@ -97,7 +97,7 @@
                 @include('back.services.services_extra_images.services_extra_images_html')
             </div>
             <div class="tab-pane fade" id="seo" role="tabpanel" aria-labelledby="seo-tab">
-                <div class="form-group mb-3">
+                <div class="mb-3 form-group">
                     <label class="form-label">Make Follow</label>
                     <input id="show_follow_rel_1" value="1" type="radio" name="show_follow"
                         value="{{ $serviceObj->show_follow }}"
@@ -108,7 +108,7 @@
                         value="{{ $serviceObj->show_follow }}"
                         {{ $serviceObj->show_follow == 0 ? 'checked' : '' }} />
                 </div>
-                <div class="form-group mb-3">
+                <div class="mb-3 form-group">
                     <label class="form-label">Indexing</label>
                     <input id="show_index_rel_1" value="1" type="radio" name="show_index"
                         value="{{ $serviceObj->show_index }}" {{ $serviceObj->show_index == 1 ? 'checked' : '' }} />
@@ -117,7 +117,7 @@
                     <input id="show_index_rel_0" value="0" type="radio" name="show_index"
                         value="{{ $serviceObj->show_index }}" {{ $serviceObj->show_index == 0 ? 'checked' : '' }} />
                 </div>
-                <div class="form-group mb-3">
+                <div class="mb-3 form-group">
                     <label class="form-label">Meta Title (<i class="text-primary">Recommended: 60 characters</i>)
                         @php echo helptooltip('seo_title')@endphp </label>
                     <input type="text" name="meta_title" id="meta_title" value="{{ $serviceObj->meta_title }}"
@@ -127,7 +127,7 @@
                         class="{{ $strlen_meta_title > 60 ? 'text-danger' : 'text-success' }}">{{ $strlen_meta_title }}
                         characters</span>
                 </div>
-                <div class="form-group mb-3">
+                <div class="mb-3 form-group">
                     <label class="form-label">Meta Keywords (<i class="text-primary">Recommended: 160 characters</i>)
                         @php echo helptooltip('seo_keywords')@endphp</label>
                     <textarea style="height: 100px !important;" class="form-control" rows="3" cols="70" name="meta_keywords" id="meta_keywords"
@@ -136,7 +136,7 @@
                         class="{{ $strlen_meta_keywords > 160 ? 'text-danger' : 'text-success' }}">{{ $strlen_meta_keywords }}
                         characters</span>
                 </div>
-                <div class="form-group mb-3">
+                <div class="mb-3 form-group">
                     <label class="form-label">Meta Description(<i class="text-primary">Recommended: 160
                             characters</i>) @php echo helptooltip('seo_descp')@endphp</label>
                     <textarea style="height: 100px !important;" class="form-control" rows="3" cols="70"
@@ -147,7 +147,7 @@
                         class="{{ $strlen_meta_description > 160 ? 'text-danger' : 'text-success' }}">{{ $strlen_meta_description }}
                         characters</span>
                 </div>
-                <div class="form-group mb-3">
+                <div class="mb-3 form-group">
                     <label class="form-label">Canonical URL @php echo helptooltip('canonical_url')@endphp</label>
                     <textarea style="height: 100px !important;" class="form-control" rows="3" cols="70"
                         name="canonical_url" id="canonical_url">{{ $serviceObj->canonical_url }}</textarea> <code>If Canonical URL is same as Page URL then Leave this field empty,
@@ -184,6 +184,9 @@
         $(document).ready(function(e) {
             $("#title").change(function() {
                 string_to_slug('title', 'slug');
+            });
+            $("#slug").change(function() {
+                check_slug('slug');
             });
         });
     </script>

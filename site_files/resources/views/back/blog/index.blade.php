@@ -7,7 +7,7 @@
     @include('back.common_views.switch_css')
 @endsection
 @section('content')
-    <div class="content-wrapper pl-3 pr-2">
+    <div class="pl-3 pr-2 content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="row">
@@ -29,7 +29,7 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 col-md-12">
-                    <div class="card p-2">
+                    <div class="p-2 card">
                         <div class="row">
                             <div class="col-sm-8">
                                 <h3 class=" card-title">All Blog Posts</h3>
@@ -59,7 +59,7 @@
                                 <tbody>
                                     @if ($result)
                                         @foreach ($result as $row)
-                                            <tr id="row_{{ $row->ID }}">
+                                            <tr id="row_{{ $row->id }}">
                                                 <td>
                                                     @if (!empty($row->featured_img))
                                                         <img width="80"
@@ -76,7 +76,7 @@
                                                 <td> {{ $row->title }} </td>
                                                 <td> @php echo substr(strip_tags($row->description),0,36) @endphp </td>
                                                 <td> {{ format_date($row->dated, 'date') }} </td>
-                                                <td><a href="{{ admin_url() . 'blog_comments?id=' . $row->ID }}">View
+                                                <td><a href="{{ admin_url() . 'blog_comments?id=' . $row->id }}">View
                                                         All <br>
                                                         @if ($row->total_unrevised_comments > 0)
                                                             ({{ 'Unreviewed ' . $row->total_unrevised_comments }})
@@ -87,10 +87,10 @@
                                                 </td>
                                                 <td>
                                                     <label class="switch">
-                                                        <input type="checkbox" name="{{ 'sts_' . $row->ID }}"
-                                                            id="{{ 'sts_' . $row->ID }}" <?php echo $row->sts == 1 ? ' checked' : ''; ?>
+                                                        <input type="checkbox" name="{{ 'sts_' . $row->id }}"
+                                                            id="{{ 'sts_' . $row->id }}" <?php echo $row->sts == 1 ? ' checked' : ''; ?>
                                                             value="<?php echo $row->sts; ?>"
-                                                            onClick="update_blog_post_status({{ $row->ID }})">
+                                                            onClick="update_blog_post_status({{ $row->id }})">
                                                         <div class="slider round">
                                                             <strong class="on">Active</strong>
                                                             <strong class="off">Inactive</strong>
@@ -98,9 +98,9 @@
                                                     </label>
                                                 </td>
                                                 <td><a href="javascript:;"
-                                                        onClick="load_blog_post_edit_form({{ $row->ID }});"
+                                                        onClick="load_blog_post_edit_form({{ $row->id }});"
                                                         class="btn btn-success btn-sm">Edit</a> <a
-                                                        href="javascript:delete_blog_post({{ $row->ID }});"
+                                                        href="javascript:delete_blog_post({{ $row->id }});"
                                                         class="btn btn-danger btn-sm">Delete</a>
                                                 </td>
                                             </tr>
@@ -126,14 +126,15 @@
             <form name="blog_post_form" id="blog_post_form" enctype="multipart/form-data" role="form" method="post"
                 action="#">
                 @csrf
+                <input type="hidden" name="moduleType" id="moduleType" value="blog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <div class="row" style="width: 100%;">
                             <div class="col-md-6">
                                 <h4 class="modal-title">Add Blog Post</h4>
                             </div>
-                            <div class="col-md-6 text-right">
-                                <a href="javascript:void(0);" onclick="showBlogRecordUpdateHistory();" class="go-back mr-4"
+                            <div class="text-right col-md-6">
+                                <a href="javascript:void(0);" onclick="showBlogRecordUpdateHistory();" class="mr-4 go-back"
                                     id="showBlogRecordUpdateHistoryLink"><i class="fas fa-bars" aria-hidden="true"></i>
                                     History </a>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -149,8 +150,8 @@
                                     @foreach ($all_categories as $all_category)
                                         <div class="col-md-4">
                                             <label><input type="checkbox" name="blog_cat[]"
-                                                    value="{{ $all_category->ID }}"
-                                                    id="blog_cat_{{ $all_category->ID }}">
+                                                    value="{{ $all_category->id }}"
+                                                    id="blog_cat_{{ $all_category->id }}">
                                                 {{ $all_category->cate_title }}</label>
                                         </div>
                                     @endforeach
@@ -164,8 +165,15 @@
                             </div>
                             <div class="mb-2">
                                 <label class="form-label">Post Slug</label>
-                                <input type="text" class="form-control" name="post_slug" id="post_slug"
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            {{ url('blog').'/' }}
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" name="post_slug" id="post_slug"
                                     placeholder="Post Slug">
+                                </div>   
                             </div>
                             <div class="mb-2">
                                 <label class="form-label">Page Content</label>
@@ -244,6 +252,9 @@
         $(document).ready(function(e) {
             $("#heading").change(function() {
                 string_to_slug('heading', 'post_slug');
+            });
+            $("#post_slug").change(function() {
+                check_slug('post_slug');
             });
         });
     </script>

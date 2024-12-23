@@ -8,5 +8,5 @@ class ModTemplateActions extends Model
 {
     public $timestamps = false;
     protected $table = 'ab_gen_actions';
-    protected $primaryKey = 'ID';
+    protected $primaryKey = 'id';
 }

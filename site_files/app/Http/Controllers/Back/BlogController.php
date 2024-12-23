@@ -23,7 +23,7 @@ class BlogController extends Controller
         $title = FindInsettingArr('business_name') . ': Blog Posts Management';
         $msg = '';
         $all_categories = BlogCategory::all();
-        $result = DB::select(' select *, (select count(comm.ID) from blog_comments as comm where comm.post_id = blog.ID AND comm.reviewed_status= "unreviewed") as total_unrevised_comments  from blog_posts as blog Order By dated DESC');
+        $result = DB::select(' select *, (select count(comm.id) from blog_comments as comm where comm.post_id = blog.id AND comm.reviewed_status= "unreviewed") as total_unrevised_comments  from blog_posts as blog Order By dated DESC');
         return view('back.blog.index', compact('title', 'msg', 'all_categories', 'result'));
     }
     /**
@@ -117,9 +117,9 @@ class BlogController extends Controller
         /******************************* */
         /******************************* */
         $recordUpdateHistoryData = [
-            'record_id' => $blog->ID,
+            'record_id' => $blog->id,
             'record_title' => $blog->title,
-            'record_link' => url('adminmedia/blog/'.$blog->ID.'/edit'),
+            'record_link' => url('adminmedia/blog/'.$blog->id.'/edit'),
             'model_or_table' => 'BlogPost',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -173,9 +173,9 @@ class BlogController extends Controller
         /******************************* */
         /******************************* */
         $recordUpdateHistoryData = [
-            'record_id' => $blog->ID,
+            'record_id' => $blog->id,
             'record_title' => $blog->title,
-            'record_link' => url('adminmedia/blog/'.$blog->ID.'/edit'),
+            'record_link' => url('adminmedia/blog/'.$blog->id.'/edit'),
             'model_or_table' => 'BlogPost',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -230,9 +230,9 @@ class BlogController extends Controller
         /******************************* */
         /******************************* */
         $recordUpdateHistoryData = [
-            'record_id' => $blog->ID,
+            'record_id' => $blog->id,
             'record_title' => $blog->title,
-            'record_link' => url('adminmedia/blog/'.$blog->ID.'/edit'),
+            'record_link' => url('adminmedia/blog/'.$blog->id.'/edit'),
             'model_or_table' => 'BlogPost',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -260,9 +260,9 @@ class BlogController extends Controller
             /******************************* */
             /******************************* */
             $recordUpdateHistoryData = [
-                'record_id' => $blog->ID,
+                'record_id' => $blog->id,
                 'record_title' => $blog->title,
-                'record_link' => url('adminmedia/blog/'.$blog->ID.'/edit'),
+                'record_link' => url('adminmedia/blog/'.$blog->id.'/edit'),
                 'model_or_table' => 'BlogPost',
                 'admin_id' => auth()->user()->id,
                 'ip' => request()->ip(),

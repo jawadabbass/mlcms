@@ -3,7 +3,7 @@
     <link href="{{ asset_storage('') . 'module/blog/front/css/blog.css' }}" rel="stylesheet" type="text/css" />
 @endsection
 @section('content')
-    @php echo cms_edit_page("blog",$blog_post_details->ID);@endphp
+    @php echo cms_edit_page("blog",$blog_post_details->id);@endphp
     {!! cms_page_heading($blog_post_details->title) !!}
     <div class="about-wrap">
         <!-- Start Blog

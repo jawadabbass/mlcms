@@ -27,18 +27,18 @@ foreach($actionDataArr as $key=>$val){
 //$action2Arr
 foreach($RSA as $vvv2){
 $atitle=$vvv2['action_name'];
-$vvv='a'.$vvv2['ID'];?>
-                                <h2><input type="checkbox" name="ok[]" value="<?php echo $vvv2['ID']; ?>" <?php if (in_array($vvv2['ID'], $actionAllowed)) {
+$vvv='a'.$vvv2['id'];?>
+                                <h2><input type="checkbox" name="ok[]" value="<?php echo $vvv2['id']; ?>" <?php if (in_array($vvv2['id'], $actionAllowed)) {
                                     echo 'checked';
                                 } ?>
-                                        onclick="checkallcat(this.value,'<?php echo $vvv2['ID']; ?>')">
+                                        onclick="checkallcat(this.value,'<?php echo $vvv2['id']; ?>')">
                                     <?php echo $vvv2['fa_class']; ?><?php echo $atitle; ?></h2>
                                 <?php
-if($vvv2['ID']!=3 && $vvv2['ID']!=4){
+if($vvv2['id']!=3 && $vvv2['id']!=4){
 foreach($fArr as $row){
-  $keyy=$mod.'_'.$vvv2['ID'].'_'.$row['db_name'];
+  $keyy=$mod.'_'.$vvv2['id'].'_'.$row['db_name'];
   $filedOk=true;
-  if($vvv2['ID']==1 || $vvv2['ID']==2){if($row['type']=='dbId'){$filedOk=false;}}
+  if($vvv2['id']==1 || $vvv2['id']==2){if($row['type']=='dbId'){$filedOk=false;}}
   if($row['type']=='auto'){$filedOk=false;}
   if($filedOk){
   ?>

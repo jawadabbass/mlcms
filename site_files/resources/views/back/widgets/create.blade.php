@@ -1,6 +1,6 @@
 @extends('back.layouts.app', ['title' => $title ?? ''])
 @section('content')
-    <div class="content-wrapper pl-3 pr-2">
+    <div class="pl-3 pr-2 content-wrapper">
         <!-- Block Header (Page header) -->
         <section class="content-header">
             <div class="row">
@@ -132,6 +132,9 @@
             $("#heading").change(function() {
                 string_to_slug('heading', 'page_slug');
             });
+            $("#page_slug").change(function() {
+                check_slug('page_slug');
+            });
 
         });
     </script>
@@ -169,6 +172,9 @@
         $(document).ready(function(e) {
             $("#heading").change(function() {
                 string_to_slug('heading', 'page_slug');
+            });
+            $("#page_slug").change(function() {
+                check_slug('page_slug');
             });
         });
     </script>

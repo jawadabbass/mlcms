@@ -3,7 +3,7 @@
     @include('back.common_views.switch_css')
 @endsection
 @section('content')
-    <div class="content-wrapper pl-3 pr-2">
+    <div class="pl-3 pr-2 content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="row">
@@ -25,7 +25,7 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 col-md-12">
-                    <div class="card p-2">
+                    <div class="p-2 card">
                         <div class="row">
                             <div class="col-sm-8">
                                 <h3 class=" card-title">All CMS Modules</h3>
@@ -650,6 +650,9 @@
         $(document).ready(function(e) {
             $("#term").change(function() {
                 string_to_slug('term', 'type');
+            });
+            $("#type").change(function() {
+                check_slug('type');
             });
             $("#additional_fields").change(function() {
                 var field_value = $("#additional_fields").val();

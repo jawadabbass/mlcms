@@ -31,11 +31,12 @@
                     <div class="modal-body form">
                         <div class=" card-body">
                             <input type="hidden" value="" name="id" />
+                            <input type="hidden" name="moduleType" id="moduleType" value="{{ $module->type }}">
                             <div class="form-body">
                                 <div id="form-errors"></div>
                                 <div id="page_heading">
                                     <label class="form-label">Heading</label>
-                                    <input onchange="string_to_product_slug('module_heading', 'module_slug');"
+                                    <input onchange="string_to_slug('module_heading', 'module_slug');"
                                         name="module_heading" placeholder="Heading" class="form-control" type="text">
                                     <span id="module_heading" style="padding-left:2px;" class="err"></span>
                                 </div>
@@ -44,10 +45,16 @@
                                     <label for="basic-url">{{ ucwords($module->term) }}
                                         Link
                                         @php helptooltip('page_link') @endphp </label>
-                                    <div class="mb-2"> <span class="mb-2-addon"
-                                            id="basic-addon3">{{ base_url() }}@php echo ($module->type=='cms')?"":$module->type."/"; @endphp </span>
-                                        <input type="text" class="form-control slug-field" name="module_slug"
-                                            id="slug_field" placeholder="{{ ucwords($module->type) }} Link">
+                                    <div class="mb-2">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    {{ url($module->type == 'cms' ? '' : $module->type . '/') }}
+                                                </span>
+                                            </div>
+                                            <input type="text" class="form-control slug-field" name="module_slug"
+                                                id="slug_field" placeholder="{{ ucwords($module->type) }} Link" onchange="check_slug('module_slug');">
+                                        </div>
                                     </div>
                                     <span id="page_slug" style="padding-left:2px;" class="err"></span>
                                 </div>
@@ -70,7 +77,8 @@
                                     <label class="form-label">{{ ucwords($module->term) }} Description</label>
                                     <label for="">
                                         <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#media_image"
-                                            class="btn btn-sm btn-info"> <i class="fas fa-cloud-download" aria-hidden="true"></i>
+                                            class="btn btn-sm btn-info"> <i class="fas fa-cloud-download"
+                                                aria-hidden="true"></i>
                                             Insert Image from Media</a>
                                         <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#media_files"
                                             class="btn btn-sm btn-warning"> <i class="fas fa-cloud-download"
@@ -176,10 +184,6 @@
                                         placeholder="{{ ucwords($module->additional_field_title_8) }} ">
                                     <span id="additional_field8" style="padding-left:2px;" class="err"></span>
                                 </div>
-
-
-
-
                                 <div class="row" id="page_featured_img"
                                     style="display:{{ $module->show_feature_img_field == 1 ? 'block' : 'none' }}">
                                     <div class="col-md-12">
@@ -192,7 +196,6 @@
                                                 <label class="form-label">Update {{ ucwords($module->term) }} Image
                                                     <span>(max
                                                         size:{{ getMaxUploadSize() }}MB)</span> @php echo helptooltip('max_image_size') @endphp </label>
-
                                                 <div id="file-field">
                                                     <input type="file" name="module_img" id="module_img"
                                                         class="form-control">
@@ -217,7 +220,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>                                
+                                </div>
                                 @include('back.module.module_data_images.module_data_images_html')
                                 @include('back.module.module_videos.module_videos_html')
                                 <div id="page_follow"
@@ -241,7 +244,6 @@
                                     <input name="show_index" id="show_index_rel_0" value="0" type="radio" />
                                 </div>
                                 <br>
-
                                 <div id="page_seo_option"
                                     style="display: {{ $module->show_seo_field == 1 ? 'block' : 'none' }}">
                                     @include('back.common_views.seo_fields', [
@@ -296,7 +298,8 @@
                         <input type="hidden" name="crop_rotate" id="crop_rotate" value="" />
                         <input type="hidden" name="module_id" value="{{ ucwords($module->id) }}">
                         <input type="hidden" name="image_1_2" id="image_1_2" value="">
-                        <button type="button" id="btnCrop" onclick="save_cropped_img()" class="btn btn-sm btn-primary">Crop
+                        <button type="button" id="btnCrop" onclick="save_cropped_img()"
+                            class="btn btn-sm btn-primary">Crop
                             Image
                         </button>
                         <button type="button" class="btn btn-sm btn-danger" data-bs-dismiss="modal">Cancel</button>
@@ -315,7 +318,6 @@
         .sortable_div {
             display: inline-block !important;
         }
-
         .sortable_div i {
             background-color: #b4b3b3;
             text-align: center;
@@ -328,11 +330,9 @@
         }
     </style>
 @endsection
-
 @section('beforeBodyClose')
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
     <script type="text/javascript" src="{{ asset_storage('') . 'module/module/admin/js/module.js' }}"></script>
-
     <!-- Filer -->
     <link rel="stylesheet" href="{{ asset_storage('') . 'module/module/admin/crop-avatar/cropper.css' }}">
     <style>
@@ -341,7 +341,6 @@
         }
     </style>
     <script src="{{ asset_storage('') . 'module/module/admin/crop-avatar/cropper.js' }}"></script>
-
     <!------------ Module JS Functions ---------------------->
     @include('back.module.module_data_images.module_data_images_js')
     @include('back.module.module_videos.module_videos_js')
@@ -351,9 +350,6 @@
         $(document).ready(function() {
             additional_fields({{ ucwords($module->additional_fields) }});
         });
-
-
-
         function bind_cropper_preview() {
             var $previews = $('.preview');
             var $image = $('#image');
@@ -414,7 +410,6 @@
                 });
             });
         }
-
         function save_cropped_img() {
             var json = [
                 '{"x":' + $('#crop_x').val(),
@@ -438,19 +433,15 @@
                 error: function(jqXHR, textStatus, errorThrown) {}
             });
         }
-
-
         function add_content() {
             reset_model();
             save_method = 'add';
             $('#modal_form_title').text('Add {{ ucwords($module->term) }}');
             tinyMCE.get('editor1').setContent('');
         }
-
         function save() {
             $('#btnSave').attr('disabled', 'disabled');
             $('#btnSave').text('Submitting...');
-
             $(window).off('beforeunload');
             var url;
             var content = tinyMCE.get('editor1').getContent();
@@ -464,8 +455,6 @@
                 console.log(id);
                 console.log(url);
             }
-
-
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -488,7 +477,6 @@
                         } else {
                             location.reload();
                         }
-
                     } else {
                         errorsHtml = '<div class="alert alert-danger"><ul>';
                         $.each(data, function(key, value) {
@@ -508,7 +496,6 @@
                 }
             });
         }
-
         function delete_content(id) {
             $('.message-container').fadeOut(3000);
             var mess_alert = '';
@@ -539,7 +526,6 @@
                 });
             }
         }
-
         function remove_featured_img(id) {
             if (confirm("Are you sure you want to delete this {{ ucwords($module->term) }} Image?")) {
                 url = "{{ base_url() }}adminmedia/modul/remove_image?id=" + id + '&&type={{ $module->type }}';

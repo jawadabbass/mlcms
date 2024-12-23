@@ -61,7 +61,7 @@ class ModController extends Controller
         'action_allowed' => array('Action allowed', '', ''),
     );
     public $arrFList = array( //index view page
-        't_id' => array('ID', 'dbId', ''),
+        't_id' => array('id', 'dbId', ''),
         'table_name' => array('Table Name', '', ''),
         'mod_name' => array('Module Name', '', ''),
         'mod_url' => array('Module URL', '', ''),
@@ -72,7 +72,7 @@ class ModController extends Controller
         //
     );
     public $arrSearch = array( //index view page
-        't_id' => array('ID', 'dbId', ''),
+        't_id' => array('id', 'dbId', ''),
         'table_name' => array('Table Name', '', ''),
         'mod_name' => array('Module Name', '', ''),
         'mod_url' => array('Module URL', '', ''),
@@ -82,7 +82,7 @@ class ModController extends Controller
         'action_allowed' => array('Action allowed', '', ''),
     );
     public $arrFView = array( //index view page
-        't_id' => array('ID', 'dbId', ''),
+        't_id' => array('id', 'dbId', ''),
         'table_name' => array('Table Name', '', ''),
         'mod_name' => array('Module Name', '', ''),
         'mod_url' => array('Module URL', '', ''),
@@ -613,7 +613,7 @@ class ModController extends Controller
         $funcArr = ModMainActions::get()->toArray();
         $strFunc = '';
         foreach ($funcArr as $key => $func) {
-            if (in_array($func['ID'], $module_active)) {
+            if (in_array($func['id'], $module_active)) {
                 $strFunc .= '\'' . $func['func_key'] . '\'=>true,' . chr(13);
             } else {
                 $strFunc .= '\'' . $func['func_key'] . '\'=>false,' . chr(13);
@@ -692,9 +692,9 @@ class ModController extends Controller
             if ($aval['have_multiple_val'] == 'Yes') {
 ?>public $<?php echo $aval['arrName'] ?>=array(//index view page
 <?php
-                // $RSF=GetDbRowAll('ab_gen_actions',"t_id='$loc_id' AND action_id='".$aval['ID']."'");
+                // $RSF=GetDbRowAll('ab_gen_actions',"t_id='$loc_id' AND action_id='".$aval['id']."'");
                 $loc_id = $mod;
-                $RSF = ModTemplateActions::where('t_id', $loc_id)->where('action_id', $aval['ID'])->get()->toArray();
+                $RSF = ModTemplateActions::where('t_id', $loc_id)->where('action_id', $aval['id'])->get()->toArray();
                 foreach ($RSF as $hhhh => $sfval) {
                     if (($sfval['action_id'] == '1' || $sfval['action_id'] == '2') && ($sfval['field_type'] == 'cdate' || $sfval['field_type'] == 'cip')) {
                         $autoArr[] = $sfval;
@@ -702,7 +702,7 @@ class ModController extends Controller
 ?>'<?php echo $sfval['db_name']; ?>'=>array('<?php echo $sfval['field_title']; ?>','<?php echo $sfval['field_type']; ?>',''),
 <?php }
                 } ?>
-<?php if ($aval['ID'] == 1 || $aval['ID'] == 2) { ?>
+<?php if ($aval['id'] == 1 || $aval['id'] == 2) { ?>
     <?php
                     foreach ($autoArr as $tttt => $sfval) { ?>
         '<?php echo $sfval['db_name']; ?>'=>array('<?php echo $sfval['field_title']; ?>','<?php echo substr($sfval['field_type'], 1, 55555); ?>',''),

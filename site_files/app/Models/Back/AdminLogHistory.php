@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class AdminLogHistory extends Model
 {
     public $timestamps = false;
-    protected $primaryKey = 'ID';
+    protected $primaryKey = 'id';
     public function user()
     {
-        return $this->hasOne('App\Models\User', 'id', 'admin_ID');
+        return $this->hasOne('App\Models\User', 'id', 'admin_id');
     }
 }

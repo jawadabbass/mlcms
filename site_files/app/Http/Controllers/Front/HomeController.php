@@ -139,7 +139,7 @@ class HomeController extends Controller
 
                 $obj_result = BlogPost::with('author', 'comments')->where('post_slug', $slug)->first();
                 if (isset($obj_result->title)) {
-                    $seoArr = getSeoArrayBlog($obj_result->ID);
+                    $seoArr = getSeoArrayBlog($obj_result->id);
                     $blog_post_details = $obj_result;
                     $blog_comments = $obj_result->comments;
                     $blog_categories = BlogCategory::all();

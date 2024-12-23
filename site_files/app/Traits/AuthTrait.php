@@ -39,7 +39,7 @@ trait AuthTrait
         ]);
         if (Auth::check() && (Auth::user()->type == 'super-admin' || Auth::user()->type == 'normal-admin')) {
             $adminLog = new AdminLogHistory();
-            $adminLog->admin_ID = Auth::user()->id;
+            $adminLog->admin_id = Auth::user()->id;
             $adminLog->ip_address = $request->ip();
             $adminLog->session_start = date("Y-m-d H:i:s");
             $adminLog->save();

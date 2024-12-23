@@ -55,16 +55,16 @@
                                 <tbody id="sortable">
                                     @if ($result)
                                         @foreach ($result as $row)
-                                            <tr id="row_{{ $row->ID }}">
+                                            <tr id="row_{{ $row->id }}">
                                                 <td style="font-size:36px;"><i class="fas {{ $row->i_class }}"></i></td>
                                                 <td>{{ $row->name }}</td>
                                                 <td>{{ $row->link }}</td>
                                                 <td> 
                                                     <label class="switch">
-                                                        <input type="checkbox" name="{{ 'sts_' . $row->ID }}"
-                                                            id="{{ 'sts_' . $row->ID }}" <?php echo $row->sts == 1 ? ' checked' : ''; ?>
+                                                        <input type="checkbox" name="{{ 'sts_' . $row->id }}"
+                                                            id="{{ 'sts_' . $row->id }}" <?php echo $row->sts == 1 ? ' checked' : ''; ?>
                                                             value="<?php echo $row->sts; ?>"
-                                                            onClick="update_social_media_status({{ $row->ID }})">
+                                                            onClick="update_social_media_status({{ $row->id }})">
                                                         <div class="slider round">
                                                             <strong class="on">Active</strong>
                                                             <strong class="off">Inactive</strong>
@@ -72,9 +72,9 @@
                                                     </label>
                                                 </td>
                                                 <td><a href="javascript:;"
-                                                        onClick="load_social_media_edit_form({{ $row->ID }});"
+                                                        onClick="load_social_media_edit_form({{ $row->id }});"
                                                         class="btn btn-success btn-sm">Edit</a> <a
-                                                        href="javascript:delete_social_media({{ $row->ID }});"
+                                                        href="javascript:delete_social_media({{ $row->id }});"
                                                         class="btn btn-danger btn-sm">Delete</a> <span></span></td>
                                             </tr>
                                         @endforeach

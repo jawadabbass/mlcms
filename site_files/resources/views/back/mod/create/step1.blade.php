@@ -102,7 +102,7 @@
                                                 -Select-
                                             </option>
                                             @foreach ($ModTemplate as $key => $val)
-                                                <option value="{{ $val->ID }}">{{ $val->title }}</option>
+                                                <option value="{{ $val->id }}">{{ $val->title }}</option>
                                             @endforeach
                                         </select>
                                         <p class="text-danger">

@@ -71,9 +71,9 @@ class SocialMediaController extends Controller
 		/******************************* */
 		/******************************* */
 		$recordUpdateHistoryData = [
-			'record_id' => $socialMedia->ID,
+			'record_id' => $socialMedia->id,
 			'record_title' => $socialMedia->name,
-			'record_link' => url('adminmedia/social_media/'.$socialMedia->ID.'/edit'),
+			'record_link' => url('adminmedia/social_media/'.$socialMedia->id.'/edit'),
 			'model_or_table' => 'SocialMedia',
 			'admin_id' => auth()->user()->id,
 			'ip' => request()->ip(),
@@ -119,9 +119,9 @@ class SocialMediaController extends Controller
 			/******************************* */
 			/******************************* */
 			$recordUpdateHistoryData = [
-				'record_id' => $socialMedia->ID,
+				'record_id' => $socialMedia->id,
 				'record_title' => $socialMedia->name,
-				'record_link' => url('adminmedia/social_media/'.$socialMedia->ID.'/edit'),
+				'record_link' => url('adminmedia/social_media/'.$socialMedia->id.'/edit'),
 				'model_or_table' => 'SocialMedia',
 				'admin_id' => auth()->user()->id,
 				'ip' => request()->ip(),
@@ -163,9 +163,9 @@ class SocialMediaController extends Controller
 		/******************************* */
         /******************************* */
         $recordUpdateHistoryData = [
-            'record_id' => $socialMedia->ID,
+            'record_id' => $socialMedia->id,
             'record_title' => $socialMedia->name,
-            'record_link' => url('adminmedia/social_media/'.$socialMedia->ID.'/edit'),
+            'record_link' => url('adminmedia/social_media/'.$socialMedia->id.'/edit'),
 			'model_or_table' => 'SocialMedia',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),

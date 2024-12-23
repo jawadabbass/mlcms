@@ -58,7 +58,7 @@
                                 <tbody>
                                     @if ($blogComments)
                                         @foreach ($blogComments as $row)
-                                            <tr id="row_{{ $row->ID }}">
+                                            <tr id="row_{{ $row->id }}">
                                                 <td>{{ $row->user_name }}</td>
                                                 <td>{{ $row->user_emails }}</td>
                                                 <td>{{ substr($row->description, 0, 200) }}</td>
@@ -70,14 +70,14 @@
                                                         $class_label = 'danger';
                                                     }
                                                 @endphp
-                                                    <a onClick="update_unrevised_comment_status({{ $row->ID }});"
-                                                        href="javascript:;" id="sts_{{ $row->ID }}">
+                                                    <a onClick="update_unrevised_comment_status({{ $row->id }});"
+                                                        href="javascript:;" id="sts_{{ $row->id }}">
                                                         <span
                                                             class="label label-{{ $class_label }}">{{ $row->reviewed_status }}</span>
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <a href="javascript:delete_blog_comments({{ $row->ID }});"
+                                                    <a href="javascript:delete_blog_comments({{ $row->id }});"
                                                         class="btn btn-danger btn-sm">Delete</a>
                                                 </td>
                                             </tr>

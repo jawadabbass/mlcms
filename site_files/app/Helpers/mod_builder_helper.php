@@ -61,7 +61,7 @@ function ModFBuild($fieldArr, $key, $val, $fieldFunc = '', $otherAttr = '')
 	} else if ($type == 'timezone') {
 		return drawDropDown($key, 'select timezone,timezone_key from ml_timezones WHERE 1', 'timezone', 'timezone_key', $val, '', '-TimeZone-');
 	} else if ($type == 'dd_status_order') {
-		return drawDropDown($key, 'select * from ml_sa_appointment_status WHERE 1 order by orderr asc', 'ID', 'Title', $val, '', '-Status-');
+		return drawDropDown($key, 'select * from ml_sa_appointment_status WHERE 1 order by orderr asc', 'id', 'Title', $val, '', '-Status-');
 	} else if ($type == 'dd_plan') {
 		return drawDropDown($key, 'select * from categories WHERE cat=14 order by orderr asc', 'id', 'title', $val, '', '-Package-');
 	} else if ($type == 'type_of_serv') {
@@ -132,7 +132,7 @@ function ModFBuild($fieldArr, $key, $val, $fieldFunc = '', $otherAttr = '')
   </div><input min="' . $tstArr[1] . '" type="range" max="' . $tstArr[2] . '" class="form-control' . $validationClass . '" onchange="document.getElementById(\'' . $key . '_info\').innerHTML=this.value" placeholder="' . $fieldName . '" name="' . $key . '" id="' . $key . '" value="' . htmlspecialchars($val) . '" /></div>';
 		return $img;
 	} else if ($type == 'dd_loc') {
-		return drawDropDown($key, 'select * from ml_locations WHERE 1', 'ID', 'loc_name', $val, '', '-Location-');
+		return drawDropDown($key, 'select * from ml_locations WHERE 1', 'id', 'loc_name', $val, '', '-Location-');
 	} else if ($type == 'dd_state') {
 		$img = myform_state_dd($val, $key);
 		return $img;
@@ -286,7 +286,7 @@ function ModTBuild($txt, $format = '', $baseImg = '')
 	else if ($format == 'tick_cross') {
 		return ($txt == 'Yes') ? '<i class="fas fa-check text-success" aria-hidden="true"></i>' : '<i class="fas fa-times text-danger" aria-hidden="true"></i>';
 	} else if ($format == 'dd_status_order')
-		return GetDbValue('Title', 'ml_sa_appointment_status', "ID='" . $txt . "'");
+		return GetDbValue('Title', 'ml_sa_appointment_status', "id='" . $txt . "'");
 	else if ($format == 'e-msg')
 		return myform_msg($txt, 'e', false);
 	else if ($format == 's-msg')
@@ -302,7 +302,7 @@ function ModTBuild($txt, $format = '', $baseImg = '')
 			return 'Not Defined';
 		}
 	} else if ($format == 'loc_name' || $format == 'dd_loc')
-		return GetDbValue('loc_name', 'ml_locations', "ID='" . (int)$txt . "'");
+		return GetDbValue('loc_name', 'ml_locations', "id='" . (int)$txt . "'");
 	else if ($format == 'dd_paid_status') {
 		$txtArr = Mod_site_arr($format);
 		if (isset($txtArr[$txt])) {
@@ -408,7 +408,7 @@ function Mod_site_arr($type, $selectText = '')
 function Mod_site_Dynmic($type)
 {
 	if ($type == 'dyn_admin_users') {
-		return Q2Arr('dve_admin', 'ID', 'admin_name', "1", '-User-');
+		return Q2Arr('dve_admin', 'id', 'admin_name', "1", '-User-');
 	} else {
 		echo 'Dynmic Value not set mod file';
 		exit;
@@ -428,10 +428,10 @@ function Mod_auto_name_to_Key($key)
 	$arrCommaon = array(
 		'fname' => 'First Name',
 		'lname' => 'Last Name',
-		'id' => 'ID',
+		'id' => 'id',
 		'ip' => 'IP',
 		'pass' => 'Password',
-		'userid' => 'ID'
+		'userid' => 'id'
 	);
 	if (isset($arrCommaon[$key])) {
 		return $arrCommaon[$key];

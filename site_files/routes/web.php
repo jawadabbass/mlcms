@@ -369,6 +369,8 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     Route::post('/updateLeadStatUrl', [BackLeadStatUrlController::class, 'updateLeadStatUrl'])->name('updateLeadStatUrl');
     Route::post('/module_video/upload_video', [VideoUploadController::class, 'upload_video']);
     Route::post('/module_video/remove_video', [VideoUploadController::class, 'remove_video']);
+    
+    Route::post('checkRoute', [BackModuleManageController::class, 'checkRoute']);
 });
 Auth::routes();
 Route::group(['middleware' => ['siteStatus', 'clearCache', 'ipmiddleware']], function () {

@@ -4,7 +4,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset_storage('') . 'module/contact_form_settings/admin/css/css.css' }}">
 @endsection
 @section('content')
-    <div class="content-wrapper pl-3 pr-2">
+    <div class="pl-3 pr-2 content-wrapper">
         <section class="content-header">
             <div class="row">
                 <div class="col-md-5 col-sm-12">
@@ -22,7 +22,7 @@
         <section class="content">
             <div class="row">
                 <div class="col-xs-12 col-md-12">
-                    <div class="card p-2">
+                    <div class="p-2 card">
                         <div class="box-header">
                             <h3 class=" card-title">All Blocked IP addresses</h3>
                         </div>
@@ -30,7 +30,7 @@
 
                                 does it work?</a></div>
                         <div id="mod_info" style="display:none;" role="alert"
-                             class=" description alert alert-warning alert-dismissible "><strong>You can block exact IP
+                             class=" description alert alert-warning alert-dismissible"><strong>You can block exact IP
                                 or a range of IP addresses from submitting your Contact Form.
 
                                 If you put 0 it will be taken as full range.</strong> <br/>
@@ -73,7 +73,7 @@
                                 @if ($result)
 
                                     @foreach ($result as $row)
-                                        <tr id="row_{{ $row->ID }}">
+                                        <tr id="row_{{ $row->id }}">
                                             <td> {{ $row->ip_list }} </td>
                                             <td> @php
 
@@ -85,14 +85,14 @@
 
                                                     $class_label = 'danger';
 
-                                                @endphp <a onClick="update_my_status({{ $row->ID }});"
+                                                @endphp <a onClick="update_my_status({{ $row->id }});"
                                                            href="javascript:;"
-                                                           id="sts_{{ $row->ID }}"> <span
+                                                           id="sts_{{ $row->id }}"> <span
                                                             class="label label-{{ $class_label }}">{{ $row->sts }}</span>
                                                 </a></td>
-                                            <td><a href="javascript:;" onClick="load_my_edit_form({{ $row->ID }});"
+                                            <td><a href="javascript:;" onClick="load_my_edit_form({{ $row->id }});"
                                                    class="btn btn-success btn-sm">Edit</a> <a
-                                                        href="javascript:delete_my({{ $row->ID }});"
+                                                        href="javascript:delete_my({{ $row->id }});"
                                                         class="btn btn-danger btn-sm">Delete</a></td>
                                         </tr>
                                     @endforeach
@@ -252,6 +252,9 @@
         $(document).ready(function (e) {
             $("#heading").change(function () {
                 string_to_slug('heading', 'page_slug');
+            });
+            $("#post_slug").change(function () {
+                check_slug('page_slug');
             });
         });
     </script>

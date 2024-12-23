@@ -46,7 +46,7 @@
                                 @if($usersData)
                                     @php $i = 1; @endphp
                                     @foreach($usersData as $row)
-                                        <tr id="row_{{ $row->ID}}">
+                                        <tr id="row_{{ $row->id}}">
                                             <td>{{ $i++}}</td>
                                             <td>{{ $row->user->name ?? '-'}}</td>
                                             <td>{{ format_date($row->session_start,'date_time')}}</td>

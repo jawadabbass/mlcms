@@ -43,7 +43,7 @@
                                 <tbody id="sortable">
                                     @if ($result)
                                         @foreach ($result as $row)
-                                            <tr id="{{ $row->ID }}" class="row_{{ $row->ID }}">
+                                            <tr id="{{ $row->id }}" class="row_{{ $row->id }}">
                                                 <td>{{ format_date($row->dated, 'date') }}</td>
                                                 <td>
                                                     {{ $row->heading }}<br/><br/>
@@ -51,10 +51,10 @@
                                                 </td>
                                                 <td>
                                                         <label class="switch">
-                                                            <input type="checkbox" name="{{ 'sts_' . $row->ID }}"
-                                                                id="{{ 'sts_' . $row->ID }}" <?php echo $row->sts == 1 ? ' checked' : ''; ?>
+                                                            <input type="checkbox" name="{{ 'sts_' . $row->id }}"
+                                                                id="{{ 'sts_' . $row->id }}" <?php echo $row->sts == 1 ? ' checked' : ''; ?>
                                                                 value="<?php echo $row->sts; ?>"
-                                                                onClick="update_videos_sts({{ $row->ID }})">
+                                                                onClick="update_videos_sts({{ $row->id }})">
                                                             <div class="slider round">
                                                                 <strong class="on">Active</strong>
                                                                 <strong class="off">Inactive</strong>
@@ -63,9 +63,9 @@
                                                     </td>
                                                 <td>
 <span></span>
-                                                    <a href="{{ admin_url() }}videos/edit/{{ $row->ID }}"
+                                                    <a href="{{ admin_url() }}videos/edit/{{ $row->id }}"
                                                         class="btn btn-success btn-sm">Edit</a>
-                                                        <a href="javascript:delete_videos({{ $row->ID }});"
+                                                        <a href="javascript:delete_videos({{ $row->id }});"
                                                             class="btn btn-danger btn-sm">Delete</a>                                                        
                                                 </td>
                                             </tr>
@@ -250,6 +250,9 @@
         $(document).ready(function(e) {
             $("#heading").change(function() {
                 string_to_slug('heading', 'video_slug');
+            });
+            $("#video_slug").change(function() {
+                check_slug('video_slug');
             });
             @if ($errors->any())
                 load_video_add_form();

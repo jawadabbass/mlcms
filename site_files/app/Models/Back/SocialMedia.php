@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class SocialMedia extends Model
 {
     public $timestamps = false;
-    protected $primaryKey = 'ID';
+    protected $primaryKey = 'id';
 }

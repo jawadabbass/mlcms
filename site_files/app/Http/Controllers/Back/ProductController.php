@@ -74,9 +74,9 @@ class ProductController extends Controller
             /******************************* */
             /******************************* */
             $recordUpdateHistoryData = [
-                'record_id' => $product->ID,
+                'record_id' => $product->id,
                 'record_title' => $product->product_name,
-                'record_link' => url('adminmedia/products/'.$product->ID.'/edit'),
+                'record_link' => url('adminmedia/products/'.$product->id.'/edit'),
                 'model_or_table' => 'Product',
                 'admin_id' => auth()->user()->id,
                 'ip' => request()->ip(),
@@ -122,9 +122,9 @@ class ProductController extends Controller
             /******************************* */
             /******************************* */
             $recordUpdateHistoryData = [
-                'record_id' => $product->ID,
+                'record_id' => $product->id,
                 'record_title' => $product->product_name,
-                'record_link' => url('adminmedia/products/'.$product->ID.'/edit'),
+                'record_link' => url('adminmedia/products/'.$product->id.'/edit'),
                 'model_or_table' => 'Product',
                 'admin_id' => auth()->user()->id,
                 'ip' => request()->ip(),
@@ -171,9 +171,9 @@ class ProductController extends Controller
         /******************************* */
         /******************************* */
         $recordUpdateHistoryData = [
-            'record_id' => $product->ID,
+            'record_id' => $product->id,
             'record_title' => $product->product_name,
-            'record_link' => url('adminmedia/products/'.$product->ID.'/edit'),
+            'record_link' => url('adminmedia/products/'.$product->id.'/edit'),
             'model_or_table' => 'Product',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -230,9 +230,9 @@ class ProductController extends Controller
         /******************************* */
         /******************************* */
         $recordUpdateHistoryData = [
-            'record_id' => $product->ID,
+            'record_id' => $product->id,
             'record_title' => $product->product_name,
-            'record_link' => url('adminmedia/products/'.$product->ID.'/edit'),
+            'record_link' => url('adminmedia/products/'.$product->id.'/edit'),
             'model_or_table' => 'Product',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),

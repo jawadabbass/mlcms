@@ -54,14 +54,14 @@
                                 </thead>
                                 <tbody id="sortable">
                                     @forelse($products as $product)
-                                        <tr id="{{ $product->ID }}">
+                                        <tr id="{{ $product->id }}">
                                             <td>{{ format_date($product->dated, 'date') }}</td>
                                             <td>{{ $product->product_name }}</td>
                                             <td>{{ '$' . currency_format($product->price) }}</td>
                                             <td>
                                                 <label class="switch">
                                                     <input type="checkbox" id="togBtn" <?php echo $product->sell_status == '1' ? ' checked' : ''; ?>
-                                                        class="website_product_sell" value="<?php echo $product->sell_status . ',' . $product->ID; ?>">
+                                                        class="website_product_sell" value="<?php echo $product->sell_status . ',' . $product->id; ?>">
                                                     <div class="slider round">
 
                                                         <strong class="on">YES</strong>
@@ -75,10 +75,10 @@
 
                                             <td>
                                                 <label class="switch">
-                                                    <input type="checkbox" name="{{ 'pro_sts_' . $product->ID }}"
-                                                        id="{{ 'pro_sts_' . $product->ID }}" <?php echo $product->sts == 1 ? ' checked' : ''; ?>
+                                                    <input type="checkbox" name="{{ 'pro_sts_' . $product->id }}"
+                                                        id="{{ 'pro_sts_' . $product->id }}" <?php echo $product->sts == 1 ? ' checked' : ''; ?>
                                                         value="<?php echo !empty($product->sts)? $product->sts:'blocked' ; ?>"
-                                                        onClick="update_product_sts_toggle({{ $product->ID }})">
+                                                        onClick="update_product_sts_toggle({{ $product->id }})">
                                                     <div class="slider round">
                                                         <strong class="on">Active</strong>
                                                         <strong class="off">Inactive</strong>
@@ -88,10 +88,10 @@
 
                                             <td>
                                                 <a class="btn btn-sm btn-primary" href="javascript:void(0);" title="Edit"
-                                                    onclick="edit_product({{ $product->ID }})">
+                                                    onclick="edit_product({{ $product->id }})">
                                                     <i class="glyphicon glyphicon-pencil"></i> Edit</a>
                                                 <a class="btn btn-sm btn-danger" href="javascript:void(0);" title="Delete"
-                                                    onclick="delete_product({{ $product->ID }})">
+                                                    onclick="delete_product({{ $product->id }})">
                                                     <i class="glyphicon glyphicon-trash"></i> Delete</a>
                                                 <span></span>
                                             </td>
