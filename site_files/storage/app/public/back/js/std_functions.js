@@ -100,14 +100,19 @@ function checkRoute(slug) {
   request.done(function (response) {
     if (response.status == false) {
       Swal.fire({
-        title: "Info",
-        html: `<span style="font-size:12px;">Page with this URL already exists. To Edit the existing Page Click Here : <a href="${response.urlToEdit}">${response.urlToEdit}</a></span>`,
+        title: '<span style="font-size:18px;">Page with this URL already exists.</span>',
+        html: `<span style="font-size:16px;">To Edit the existing Page Click Here :</span><br/>
+        <span style="font-size:14px;"><a href="${response.urlToEdit}">${response.urlToEdit}</a></span>`,
         icon: "info",
       });
     }
   });
   request.fail(function (jqXHR, textStatus) {
-    alert("Request failed: " + textStatus);
+    Swal.fire({
+      title: 'Request failed',
+      html: textStatus,
+      icon: "error",
+    });
   });
 }
 function reset_model() {
