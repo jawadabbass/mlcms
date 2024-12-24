@@ -192,7 +192,7 @@
     }
 
     function showProductRecordUpdateHistory() {
-        let id = $('#product_id').val();
+        let id = $('#id').val();
         window.location.href = base_url + 'adminmedia/record-update-history/Product/' + id;
     }
     $(document).ready(function() {

@@ -163,6 +163,7 @@ function load_blog_post_edit_form(id) {
     $('#edit_top_menu').prop('checked', false);
     $.getJSON(base_url + 'adminmedia/blog/' + id, function (data) {
         save_method = "PUT";
+        $('#id').val(data.id);
         $('#heading').val(data.title);
         $('#post_slug').val(data.post_slug);
         $('#date').val(data.dated);
@@ -185,9 +186,7 @@ function load_blog_post_edit_form(id) {
 
         }
         fillSeoFields(data);
-
         tinyMCE.get('editor1').setContent(data.description);
-        $('#cms_id').val(data.id);
         $('#blog_post_form').attr('action', base_url + 'adminmedia/blog/' + data.id);
         if (!$('#methodPut').length) {
             $('<input>').attr({

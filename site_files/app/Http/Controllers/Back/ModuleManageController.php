@@ -812,45 +812,68 @@ class ModuleManageController extends Controller
     public function checkRoute(Request $request)
     {
 
+        /********************** */
         $routeCollection = Route::getRoutes();
-
+        /********************** */
+        $id = (int)$request->id;
         $slug = $request->slug;
         $moduleType = $request->moduleType;
         $newModuleType = ($moduleType == 'cms') ? '' : $moduleType;
         $urlToCheck = url($newModuleType . '/' . $slug);
         $url = '';
         $urlToEdit = '';
-
+        $urlIn = '';
+        $status = true;
+        /********************** */
         foreach ($routeCollection as $value) {
             $url = url($value->uri());
-            $status = true;
-            if ($urlToCheck === $url) {
+            if ($status && ($urlToCheck === $url)) {
                 $status = false;
-                break;
-            }
-            $slug = str_replace(url('/') . '/', '', $urlToCheck);
-            $obj = CmsModuleData::where('post_slug', 'like', $slug)->first();
-            if (null !== $obj) {
-                $urlToEdit = url('/adminmedia/module/'.$moduleType.'/edit/'.$obj->id);
-                $status = false;
-            }
-            $slug = str_replace(url('/') . '/blog/', '', $urlToCheck);
-            $obj = BlogPost::where('post_slug', 'like', $slug)->first();
-            if (null !== $obj) {
-                $urlToEdit = url('/adminmedia/blog/?id='.$obj->id);
-                $status = false;
-            }
-            $slug = str_replace(url('/') . '/product/', '', $urlToCheck);
-            $obj = Product::where('product_slug', 'like', $slug)->first();
-            if (null !== $obj) {
-                $urlToEdit = url('/adminmedia/products/?id='.$obj->id);
-                $status = false;
+                $urlIn = 'Laravel Routes';
             }
         }
+        /********************** */
+        $slug = str_replace(url('/') . '/', '', $urlToCheck);
+        $cmsModuleDataObj = CmsModuleData::where('post_slug', 'like', $slug)->first();
+        if (null !== $cmsModuleDataObj && $cmsModuleDataObj->id != $id) {
+            $urlToEdit = url('/adminmedia/module/' . $moduleType . '/edit/' . $cmsModuleDataObj->id);
+            $status = false;
+            $urlIn = 'CMS';
+        } elseif (null !== $cmsModuleDataObj && $cmsModuleDataObj->id == $id) {
+            $urlToEdit = '';
+            $status = true;
+            $urlIn = '';
+        }
+        /********************** */
+        $slug = str_replace(url('/') . '/blog/', '', $urlToCheck);
+        $blogPostObj = BlogPost::where('post_slug', 'like', $slug)->first();
+        if (null !== $blogPostObj && $blogPostObj->id != $id) {
+            $urlToEdit = url('/adminmedia/blog/?id=' . $blogPostObj->id);
+            $status = false;
+            $urlIn = 'Blog';
+        } elseif (null !== $blogPostObj && $blogPostObj->id == $id) {
+            $urlToEdit = '';
+            $status = true;
+            $urlIn = '';
+        }
+        /********************** */
+        $slug = str_replace(url('/') . '/product/', '', $urlToCheck);
+        $productObj = Product::where('product_slug', 'like', $slug)->first();
+        if (null !== $productObj && $productObj->id != $id) {
+            $urlToEdit = url('/adminmedia/products/?id=' . $productObj->id);
+            $status = false;
+            $urlIn = 'Products';
+        } elseif (null !== $productObj && $productObj->id == $id) {
+            $urlToEdit = '';
+            $status = true;
+            $urlIn = '';
+        }
+        /********************** */
         return response([
             'status' => $status,
             'urlToCheck' => $urlToCheck,
-            'urlToEdit' => $urlToEdit
+            'urlToEdit' => $urlToEdit,
+            'urlIn' => $urlIn
         ]);
     }
 }

@@ -11,10 +11,10 @@
                 @foreach ($get_all_banner as $banner)
                     @php $b_class=($b_count==0)?'active':''; @endphp
                     <div class="item {{ $b_class }}">
-                        <div class="slider-thumb bg-fixed"
+                        <div class="bg-fixed slider-thumb"
                             style="background-image: url({{ asset_uploads('module/banner/' . $banner->featured_img) }});">
                         </div>
-                        <div class="box-table shadow dark">
+                        <div class="shadow box-table dark">
                             <div class="box-cell">
                                 <div class="container">
                                     <div class="row">
@@ -39,8 +39,8 @@
             <!-- End Wrapper for slides -->
 
             <!-- Left and right controls -->
-            <a class="left carousel-control shadow" href="#bootcarousel" data-slide="prev"> <i class="fa fa-angle-left"></i>
-                <span class="sr-only">Previous</span> </a> <a class="right carousel-control shadow" href="#bootcarousel"
+            <a class="shadow left carousel-control" href="#bootcarousel" data-slide="prev"> <i class="fa fa-angle-left"></i>
+                <span class="sr-only">Previous</span> </a> <a class="shadow right carousel-control" href="#bootcarousel"
                 data-slide="next"> <i class="fa fa-angle-right"></i> <span class="sr-only">Next</span> </a>
         </div>
     </div>
@@ -75,7 +75,7 @@
                 <!-- End About -->
 
                 <!-- Start Our Features -->
-                <div class="col-md-12 text-center about-items">
+                <div class="text-center col-md-12 about-items">
                     <div class="row">
 
                         @foreach ($get_all_features as $feature)
@@ -101,7 +101,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
-                    <div class="site-heading text-light text-center">
+                    <div class="text-center site-heading text-light">
                         <h2>Our Services</h2>
                         <p> While mirth large of on front. Ye he greater related adapted proceed entered an. Through it
                             examine express promise no. Past add size game cold girl off how old </p>
@@ -143,7 +143,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
-                    <div class="site-heading text-center">
+                    <div class="text-center site-heading">
                         <h2> Gallery </h2>
                         <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero recusandae perferendis, eius odit
                             quod! Modi cum illum odio ullam commodi, earum hic est repudiandae ex sit sunt doloremque, ipsum
@@ -151,10 +151,10 @@
                     </div>
                 </div>
             </div>
-            <div class="portfolio-items-area text-center">
+            <div class="text-center portfolio-items-area">
                 <div class="row">
                     <div class="col-md-12 portfolio-content">
-                        <div class="mix-item-menu text-center">
+                        <div class="text-center mix-item-menu">
                             <button class="active" data-filter="*">All</button>
                             @foreach ($albums as $album)
                                 <button data-filter=".album_{{ $album->id }}">{{ $album->title }}</button>
@@ -162,7 +162,7 @@
                         </div>
                         <!-- End Mixitup Nav-->
 
-                        <div class="row magnific-mix-gallery text-center masonary">
+                        <div class="text-center row magnific-mix-gallery masonary">
                             <div id="portfolio-grid" class="portfolio-items col-3">
                                 @foreach ($images as $image)
                                     <!-- Single Item -->
@@ -207,7 +207,7 @@
                         @foreach ($get_all_testimonials as $testimonial)
                             <!-- Single Item -->
                             <div class="item">
-                                <p> {{ adjustUrl($testimonial->content) }} </p>
+                                {!! adjustUrl($testimonial->content) !!}
                                 <div class="author">
                                     <div class="thumb"> <img
                                             src="{{ asset_uploads('module/testimonials/' . $testimonial->featured_img) }}"
@@ -266,7 +266,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
-                    <div class="site-heading text-center">
+                    <div class="text-center site-heading">
                         <h2>Latest Blog</h2>
                         <p> While mirth large of on front. Ye he greater related adapted proceed entered an. Through it
                             examine express promise no. Past add size game cold girl off how old </p>
@@ -329,7 +329,7 @@
                         sentiments led solicitude estimating friendship fat. Meant those event </p>
                 </div>
                 <div class="col-md-7 clients-box">
-                    <div class="clients-items owl-carousel owl-theme text-center">
+                    <div class="text-center clients-items owl-carousel owl-theme">
                         @foreach ($get_all_partners as $partner)
                             <div class="single-item">
                                 <a href="#">

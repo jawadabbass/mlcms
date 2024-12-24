@@ -21,8 +21,8 @@
                 </div>
                 <div class="modal-body form">
                     <div class=" card-body">
-                        <div class="alert alert-danger error-div" style="display:none"></div>
-                        <input type="hidden" value="" name="id" id="product_id" />
+                        <div class="alert alert-danger error-div" style="display:none"></div>                        
+                        <input type="hidden" name="id" id="id" value="">
                         <div class="form-body">
                             <div>
                                 <label class="form-label">Product Name</label>

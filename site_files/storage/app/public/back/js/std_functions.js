@@ -85,12 +85,14 @@ function check_slug(slugId) {
   }
 }
 function checkRoute(slug) {
+  var id = $("#id").val();
   var moduleType = $("#moduleType").val();
   var url = base_url + "adminmedia/checkRoute";
   var request = $.ajax({
     url: url,
     method: "POST",
     data: {
+      id: id,
       slug: slug,
       moduleType: moduleType,
       _token: csrf_token,
@@ -99,17 +101,29 @@ function checkRoute(slug) {
   });
   request.done(function (response) {
     if (response.status == false) {
+      var html = "";
+      if (response.urlIn == "Laravel Routes") {
+        html = `<span style="font-size:16px;">In Laravel Routes File</span>`;
+      }
+      if (
+        response.urlIn == "CMS" ||
+        response.urlIn == "Blog" ||
+        response.urlIn == "Prducts"
+      ) {
+        html = `<span style="font-size:16px;">To Edit the existing Page Click Here :</span><br/>
+      <span style="font-size:14px;"><a href="${response.urlToEdit}">${response.urlToEdit}</a></span>`;
+      }
       Swal.fire({
-        title: '<span style="font-size:18px;">Page with this URL already exists.</span>',
-        html: `<span style="font-size:16px;">To Edit the existing Page Click Here :</span><br/>
-        <span style="font-size:14px;"><a href="${response.urlToEdit}">${response.urlToEdit}</a></span>`,
+        title:
+          '<span style="font-size:18px;">Page with this URL already exists.</span>',
+        html: html,
         icon: "info",
       });
     }
   });
   request.fail(function (jqXHR, textStatus) {
     Swal.fire({
-      title: 'Request failed',
+      title: "Request failed",
       html: textStatus,
       icon: "error",
     });

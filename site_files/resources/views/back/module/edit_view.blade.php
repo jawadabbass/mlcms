@@ -40,7 +40,7 @@
                     </div>
                     <div class="modal-body form">
                         <div class=" card-body">
-                            <input type="hidden" value="" name="id" />
+                            <input type="hidden" name="id" id="id" value="{{ $moduleData->id }}">
                             <input type="hidden" name="moduleType" id="moduleType" value="{{ $module->type }}">
                             <div class="form-body">
                                 <div id="form-errors"></div>

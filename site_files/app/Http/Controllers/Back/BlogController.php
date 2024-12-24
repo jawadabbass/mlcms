@@ -198,12 +198,12 @@ class BlogController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'cms_id' => 'required',
+            'id' => 'required',
             'heading' => 'required',
             'post_slug' => 'required',
             'editor1' => 'required',
         ]);
-        $blog = BlogPost::find($request->cms_id);
+        $blog = BlogPost::find($request->id);
         $page_slug = $request->post_slug;
         $slugs = $page_slug;
         if ($request->blog_cat != '') {

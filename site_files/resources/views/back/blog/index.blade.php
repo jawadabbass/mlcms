@@ -127,6 +127,7 @@
                 action="#">
                 @csrf
                 <input type="hidden" name="moduleType" id="moduleType" value="blog">
+                <input type="hidden" name="id" id="id" value="">
                 <div class="modal-content">
                     <div class="modal-header">
                         <div class="row" style="width: 100%;">
@@ -179,7 +180,6 @@
                                 <label class="form-label">Page Content</label>
                                 <textarea id="editor1" name="editor1" rows="8" cols="80"></textarea>
                             </div>
-                            <input type="hidden" name="cms_id" id="cms_id" />
                             <div class="mb-2">
                                 <label class="form-label">Date Posted:</label>
                                 <div id="datepicker" class="mb-2 date">
@@ -243,7 +243,7 @@
         var save_method = "POST";
 
         function showBlogRecordUpdateHistory() {
-            let id = $('#cms_id').val();
+            let id = $('#id').val();
             window.location.href = base_url + 'adminmedia/record-update-history/BlogPost/' + id;
         }
     </script>
