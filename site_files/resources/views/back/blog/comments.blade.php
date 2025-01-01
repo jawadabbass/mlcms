@@ -4,7 +4,7 @@
     <link href="{{ asset_storage('') . 'module/blog/admin/css/' . $module . '.css' }}" rel="stylesheet" type="text/css" />
 @endsection
 @section('content')
-    <div class="content-wrapper pl-3 pr-2">
+    <div class="pl-3 pr-2 content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="row">
@@ -27,19 +27,14 @@
         <section class="content">
             <div class="row">
                 <div class="col-xs-12 col-md-12">
-                    <div class="card p-2">
+                    <div class="p-2 card">
                         <div class="row">
                             <div class="col-sm-8">
                                 <h3 class=" card-title">Comments</h3>
-                                <ul class="nav nav-pills blog-nav">
-                                    <li role="presentation" class="active">
-                                        <a href="{{ admin_url() . 'blog' }}" style="padding: 10px;">Blog</a>
-                                    </li>
-                                    <li role="presentation">
-                                        <a href="{{ admin_url() . 'blog_categories' }}"
-                                            style="padding: 10px;">Categories</a>
-                                    </li>
-                                </ul>
+                            </div>
+                            <div class="col-sm-4 text-end">
+                                <a href="{{ admin_url() . 'blog-posts' }}" class="m-1 btn btn-warning">Blog</a>
+                                <a href="{{ admin_url() . 'blog_categories' }}" class="m-1 btn btn-info">Categories</a>
                             </div>
                         </div>
                         <div class=" card-body table-responsive" style="padding: 15px 0;">

@@ -123,11 +123,6 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     Route::post('/invoice/re_send_invoice', [BackInvoiceController::class, 're_send_invoice']);
     Route::resource('/invoice', BackInvoiceController::class);
     Route::resource('/menus', BackMenuController::class);    
-    Route::resource('/blog', BackBlogController::class);
-    Route::post('/blog/remove_img', [BackBlogController::class, 'removeFeaturedImage']);
-    Route::get('/blog_comments', [BackBlogController::class, 'comments']);
-    Route::post('/blog_comments', [BackBlogController::class, 'deleteComment']);
-    Route::resource('/blog_categories', BackBlogCategoriesController::class);
     Route::get('/productSellStatus', [BackProductController::class, 'productSellStatus'])->name('product.sell.status');
     Route::resource('/products', BackProductController::class);
     Route::get('/videos/add/', [BackVideoController::class, 'add_video']);
@@ -371,6 +366,22 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     Route::post('/module_video/upload_video', [VideoUploadController::class, 'upload_video']);
     Route::post('/module_video/remove_video', [VideoUploadController::class, 'remove_video']);    
     Route::post('checkRoute', [BackModuleManageController::class, 'checkRoute']);
+
+
+    Route::get('/blog_comments', [BackBlogController::class, 'comments']);
+    Route::post('/blog_comments', [BackBlogController::class, 'deleteComment']);
+    Route::resource('/blog_categories', BackBlogCategoriesController::class);
+    
+    Route::get('/blog-posts', [BackBlogController::class, 'index'])->name('blog.posts.index');
+    Route::get('/blog-post/create', [BackBlogController::class, 'create'])->name('blog.post.create');
+    Route::post('/blog-post', [BackBlogController::class, 'store'])->name('blog.post.store');
+    Route::get('/blog-post/{blogPostObj}/edit', [BackBlogController::class, 'edit'])->name('blog.post.edit');
+    Route::put('/blog-post/{blogPostObj}', [BackBlogController::class, 'update'])->name('blog.post.update');
+    Route::get('/blog-post/{blogPostObj}', [BackBlogController::class, 'show'])->name('blog.post.show');
+    Route::delete('/blog-post/{blogPostObj}', [BackBlogController::class, 'destroy'])->name('blog.post.destroy');
+    Route::get('fetchBlogPostsAjax', [BackBlogController::class, 'fetchBlogPostsAjax'])->name('fetchBlogPostsAjax');
+    Route::post('updateBlogPostStatus', [BackBlogController::class, 'updateBlogPostStatus'])->name('updateBlogPostStatus');
+    
 });
 Auth::routes();
 Route::group(['middleware' => ['siteStatus', 'clearCache', 'ipmiddleware']], function () {

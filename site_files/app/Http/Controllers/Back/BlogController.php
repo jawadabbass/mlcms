@@ -2,36 +2,184 @@
 
 namespace App\Http\Controllers\Back;
 
-use App\Http\Controllers\Controller;
-use App\Models\Back\BlogCategory;
-use App\Models\Back\BlogComment;
-use App\Models\Back\BlogPost;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
+use App\Models\Back\BlogPost;
+use App\Traits\BlogPostTrait;
+use App\Helpers\ImageUploader;
+use App\Models\Back\BlogComment;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redirect;
+use Yajra\DataTables\Facades\DataTables;
+use App\Http\Requests\Back\BlogPostBackFormRequest;
 
 class BlogController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    use BlogPostTrait;
     public function index()
     {
-        $title = FindInsettingArr('business_name') . ': Blog Posts Management';
+        $title = config('Constants.SITE_NAME') . ': Blog Management';
         $msg = '';
-        $all_categories = BlogCategory::all();
-        $result = DB::select(' select *, (select count(comm.id) from blog_comments as comm where comm.post_id = blog.id AND comm.reviewed_status= "unreviewed") as total_unrevised_comments  from blog_posts as blog Order By dated DESC');
-        return view('back.blog.index', compact('title', 'msg', 'all_categories', 'result'));
+        return view('back.blog.index', compact('title', 'msg'));
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Request $request)
+    public function fetchBlogPostsAjax(Request $request)
+    {
+        $blogPostObj = Blogpost::select('*');
+        return DataTables::of($blogPostObj)
+            ->filter(function ($query) use ($request) {
+                if ($request->has('search') && !empty($request->search)) {
+                    $query->where(function ($q) use ($request) {
+                        $q->orWhere('blog_posts.title', 'like', $request->get('search'));
+                        $q->orWhere('blog_posts.post_slug', 'like', $request->get('search'));
+                        $q->orWhere('blog_posts.description', 'like', "%{$request->get('search')}%");
+                        $q->orWhere('blog_posts.meta_title', 'like', "%{$request->get('search')}%");
+                        $q->orWhere('blog_posts.meta_keywords', 'like', "%{$request->get('search')}%");
+                        $q->orWhere('blog_posts.meta_description', 'like', "%{$request->get('search')}%");
+                    });
+                }
+                if ($request->has('sts') && $request->sts != 2) {
+                    $query->where('blog_posts.sts', $request->get('sts'));
+                }
+            })
+            ->addColumn('dated', function ($blogPostObj) {
+                return date('m-d-Y', strtotime($blogPostObj->dated));
+            })
+            ->addColumn('total_unrevised_comments', function ($blogPostObj) {
+                $numUnreviewedComments = BlogComment::select('id')->where('post_id', $blogPostObj->id)->where('reviewed_status', 'like', 'unreviewed')->count();
+                $unreviewed = ($numUnreviewedComments > 0) ? 'Unreviewed ' . $numUnreviewedComments : '';
+                return '<a href="' . admin_url() . 'blog_comments?id=' . $blogPostObj->id . '">View All<br>' . $unreviewed . '</a>';
+            })
+            ->addColumn('featured_img', function ($blogPostObj) {
+                return '<img src="' . ImageUploader::print_image_src($blogPostObj->featured_img, 'blog/thumb') . '" style="max-width:165px !important; max-height:165px !important;"/>';
+            })
+            ->addColumn('preview', function ($blogPostObj) {
+                return '<a href="' . base_url() . 'blog/' . $blogPostObj->post_slug . '" target="_bank">Preview</a>';
+            })
+            ->addColumn('sts', function ($blogPostObj) {
+                $checked = ($blogPostObj->sts) == 1 ? ' checked' : '';
+
+                $str = '<input type="checkbox" data-toggle="toggle_sts" data-onlabel="Active"
+                data-offlabel="Not Active" data-onstyle="success"
+                data-offstyle="danger"
+                data-id="' . $blogPostObj->id . '"
+                name="sts_' . $blogPostObj->id . '"
+                id="sts_' . $blogPostObj->id . '" ' . $checked . '
+                value="' . $blogPostObj->sts . '">';
+                return $str;
+            })
+            ->addColumn('action', function ($blogPostObj) {
+                return '
+                		<a href="' . route('blog.post.edit', ['blogPostObj' => $blogPostObj->id]) . '" class="m-2 btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+						<a href="javascript:void(0);" onclick="deleteBlogpost(' . $blogPostObj->id . ');"  class="m-2 btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>';
+            })
+            ->rawColumns(['dated', 'featured_img', 'preview', 'sts', 'total_unrevised_comments', 'action'])
+            ->orderColumns(['dated', 'title'], ':column $1')
+            ->setRowId(function ($blogPostObj) {
+                return 'blogPostDtRow' . $blogPostObj->id;
+            })
+            ->make(true);
+    }
+
+    public function create()
+    {
+        $title = FindInsettingArr('business_name') . ': Blog Management';
+        $msg = '';
+        $blogPostObj = new BlogPost();
+        $blogPostObj->sts = 1;
+
+        return view('back.blog.create')
+            ->with('blogPostObj', $blogPostObj)
+            ->with('title', $title)
+            ->with('msg', $msg);
+    }
+
+    public function store(BlogPostBackFormRequest $request)
+    {
+        $blogPostObj = new BlogPost();
+        $blogPostObj = $this->setBlogPostValues($request, $blogPostObj);
+        $blogPostObj->save();
+
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $blogPostObj->id,
+            'record_title' => $blogPostObj->title,
+            'record_link' => url('adminmedia/blog/' . $blogPostObj->id . '/edit'),
+            'model_or_table' => 'BlogPost',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($blogPostObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
+
+        session(['message' => 'Blog Post has been added!', 'type' => 'success']);
+
+        return Redirect::route('blog.index');
+    }
+    public function edit(BlogPost $blogPostObj)
+    {
+        $title = FindInsettingArr('business_name') . ': Blog Management';
+        $msg = '';
+
+        return view('back.blog.edit')
+            ->with('blogPostObj', $blogPostObj)
+            ->with('title', $title)
+            ->with('msg', $msg);
+    }
+    public function update(BlogPostBackFormRequest $request, BlogPost $blogPostObj)
+    {
+        $blogPostObj = $this->setBlogPostValues($request, $blogPostObj);
+        $blogPostObj->save();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $blogPostObj->id,
+            'record_title' => $blogPostObj->title,
+            'record_link' => url('adminmedia/blog/' . $blogPostObj->id . '/edit'),
+            'model_or_table' => 'BlogPost',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($blogPostObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
+        session(['message' => 'Blog Post has been updated!', 'type' => 'success']);
+        return Redirect::route('blog.index');
+    }
+    public function updateBlogPostStatus(Request $request)
+    {
+        $blogPostObj = BlogPost::find($request->id);
+        $blogPostObj = $this->setBlogPostStatus($request, $blogPostObj);
+        $blogPostObj->save();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $blogPostObj->id,
+            'record_title' => $blogPostObj->title,
+            'record_link' => url('adminmedia/blog/' . $blogPostObj->id . '/edit'),
+            'model_or_table' => 'BlogPost',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($blogPostObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
+        echo 'Done Successfully!';
+        exit;
+    }
+
+    public function destroy(BlogPost $blogPostObj)
+    {
+        ImageUploader::deleteImage('blog', $blogPostObj->featured_img, true);
+        BlogComment::where('post_id', $blogPostObj->id)->delete();
+        $blogPostObj->delete();
+        session(['message' => 'Deleted Successfully', 'type' => 'success']);
+        echo 'ok';
+    }
+    public function updateCommentStatus(Request $request)
     {
         $id = $request->id;
         if ($id == '') {
@@ -54,240 +202,16 @@ class BlogController extends Controller
         echo $new_status;
         return;
     }
-    /**
-     * Show all comments.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function comments(Request $request)
     {
         $blogComments = BlogComment::where('post_id', $request->id)->get();
         return view('back.blog.comments', compact('blogComments'));
     }
-    /**
-     * Show all comments.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function deleteComment(Request $request)
     {
         if (isset($request->id)) {
             BlogComment::destroy($request->id);
         }
-        echo 'done';
-        return;
-    }
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $request->validate([
-            'heading' => 'required',
-            'post_slug' => 'required',
-            'editor1' => 'required',
-        ]);
-        $page_slug = $request->post_slug;
-        $slugs = $page_slug;
-        if ($request->blog_cat != '') {
-            $category_Ids = implode(',', $request->blog_cat);
-        } else {
-            $category_Ids = '';
-        }
-        $blog = new BlogPost();
-        $blog->title = $request->heading;
-        $blog->author_id = Auth::user()->id;
-        $blog->cate_ids = $category_Ids;
-        $blog->post_slug = $slugs;
-        $blog->description = myform_admin_cms_filter($request->editor1);
-        if (!empty($request->featured_img)) {
-            $blog->featured_img = $request->featured_img;
-        }
-        $blog->featured_img_title = $request->featured_img_title;
-        $blog->featured_img_alt = $request->featured_img_alt;
-        $blog->meta_title = ($request->meta_title == '') ? $request->heading : $request->meta_title;
-        $blog->meta_keywords = $request->meta_keywords;
-        $blog->meta_description = $request->meta_description;
-        $blog->canonical_url = $request->canonical_url;
-        $blog->dated = $request->input('datepicker', date('Y-m-d H:i:s'));
-        $blog->save();
-
-        /******************************* */
-        /******************************* */
-        $recordUpdateHistoryData = [
-            'record_id' => $blog->id,
-            'record_title' => $blog->title,
-            'record_link' => url('adminmedia/blog/'.$blog->id.'/edit'),
-            'model_or_table' => 'BlogPost',
-            'admin_id' => auth()->user()->id,
-            'ip' => request()->ip(),
-            'draft' => json_encode($blog->toArray()),
-        ];
-        recordUpdateHistory($recordUpdateHistoryData);
-        /******************************* */
-        /******************************* */
-        return response()->json(['success' => 'New Blog Created Successfully.' . $request->module_id]);
-    }
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $blogPost = BlogPost::find($id);
-        $blogPost->dated = date('Y-m-d', strtotime($blogPost->dated));
-        return json_encode($blogPost);
-    }
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id, Request $request)
-    {
-        if ($id == '') {
-            echo 'error';
-            return;
-        }
-        $blog = BlogPost::find($id);
-        $status = $blog->sts;
-        if ($status == '') {
-            echo 'invalid current status provided.';
-            return;
-        }
-        if ($status == 1) {
-            $new_status = 0;
-        } else {
-            $new_status = 1;
-        }
-        $blog->sts = $new_status;
-        $blog->update();
-
-        /******************************* */
-        /******************************* */
-        $recordUpdateHistoryData = [
-            'record_id' => $blog->id,
-            'record_title' => $blog->title,
-            'record_link' => url('adminmedia/blog/'.$blog->id.'/edit'),
-            'model_or_table' => 'BlogPost',
-            'admin_id' => auth()->user()->id,
-            'ip' => request()->ip(),
-            'draft' => json_encode($blog->toArray()),
-        ];
-        recordUpdateHistory($recordUpdateHistoryData);
-        /******************************* */
-        /******************************* */
-
-        echo $new_status;
-        return;
-    }
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'id' => 'required',
-            'heading' => 'required',
-            'post_slug' => 'required',
-            'editor1' => 'required',
-        ]);
-        $blog = BlogPost::find($request->id);
-        $page_slug = $request->post_slug;
-        $slugs = $page_slug;
-        if ($request->blog_cat != '') {
-            $category_Ids = implode(',', $request->blog_cat);
-        } else {
-            $category_Ids = '';
-        }
-        $blog->title = $request->heading;
-        $blog->author_id = Auth::user()->id;
-        $blog->cate_ids = $category_Ids;
-        $blog->post_slug = $slugs;
-        $blog->description = myform_admin_cms_filter($request->editor1);
-        $blog->meta_title = $request->meta_title;
-        $blog->meta_keywords = $request->meta_keywords;
-        if (!empty($request->featured_img)) {
-            $blog->featured_img = $request->featured_img;
-        }
-        $blog->featured_img_title = $request->featured_img_title;
-        $blog->featured_img_alt = $request->featured_img_alt;
-        $blog->dated = $request->input('datepicker', date('Y-m-d H:i:s'));
-        $blog->meta_description = $request->meta_description;
-        $blog->canonical_url = $request->canonical_url;
-        $blog->save();
-        /******************************* */
-        /******************************* */
-        $recordUpdateHistoryData = [
-            'record_id' => $blog->id,
-            'record_title' => $blog->title,
-            'record_link' => url('adminmedia/blog/'.$blog->id.'/edit'),
-            'model_or_table' => 'BlogPost',
-            'admin_id' => auth()->user()->id,
-            'ip' => request()->ip(),
-            'draft' => json_encode($blog->toArray()),
-        ];
-        recordUpdateHistory($recordUpdateHistoryData);
-        /******************************* */
-        /******************************* */
-
-        return response()->json(['success' => 'Blog Post Successfully updated.' . $request->module_id]);
-    }
-    public function removeFeaturedImage(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'id' => 'required',
-            'folder' => 'required',
-        ]);
-        if ($validator->passes()) {
-            $blog = BlogPost::find($request->id);
-            if (!empty($blog->featured_img)) {
-                unlink(storage_uploads($request->folder . '/' . $blog->featured_img));
-            }
-            $blog->featured_img = '';
-            $blog->save();
-            /******************************* */
-            /******************************* */
-            $recordUpdateHistoryData = [
-                'record_id' => $blog->id,
-                'record_title' => $blog->title,
-                'record_link' => url('adminmedia/blog/'.$blog->id.'/edit'),
-                'model_or_table' => 'BlogPost',
-                'admin_id' => auth()->user()->id,
-                'ip' => request()->ip(),
-                'draft' => json_encode($blog->toArray()),
-            ];
-            recordUpdateHistory($recordUpdateHistoryData);
-            /******************************* */
-            /******************************* */
-            echo 'done';
-        } else {
-            echo 'error';
-        }
-    }
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        BlogComment::where('post_id', $id)->delete();
-        BlogPost::destroy($id);
-        session(['message' => 'Deleted Successfully', 'type' => 'success']);
         echo 'done';
         return;
     }

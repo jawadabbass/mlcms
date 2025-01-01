@@ -1,11 +1,4 @@
 @extends('back.layouts.app', ['title' => $title])
-@section('beforeHeadClose')
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet"
-        type="text/css" />
-    @php $module = "blog" @endphp
-    <link href="{{ asset_storage('') . 'module/blog/admin/css/' . $module . '.css' }}" rel="stylesheet" type="text/css" />
-    @include('back.common_views.switch_css')
-@endsection
 @section('content')
     <div class="pl-3 pr-2 content-wrapper">
         <!-- Content Header (Page header) -->
@@ -13,268 +6,238 @@
             <div class="row">
                 <div class="col-md-5 col-sm-12">
                     <ol class="breadcrumb">
-                        <li><a href="{{ admin_url() }}"> <i class="fas fa-gauge"></i> Home </a></li>
-                        <li class="active">Blog Post</li>
+                        <li>
+                            <a href="{{ base_url() . 'adminmedia' }}">
+                                <i class="fas fa-tachometer-alt"></i> Home
+                            </a>
+                        </li>
+                        <li class="active">
+                            <a href="{{ base_url() . 'adminmedia/blog' }}">
+                                Blog Management
+                            </a>
+                        </li>
                     </ol>
                 </div>
-                <div class="col-md-7 col-sm-12"> @include('back.common_views.quicklinks') </div>
+                <div class="col-md-7 col-sm-12">
+                    @include('back.common_views.quicklinks')
+                </div>
             </div>
         </section>
         <!-- Main content -->
         <section class="content">
-            <div class="message-container" style="display: none;" id="action_container">
-                <div class="callout callout-success">
-                    <h4 id="post_action"></h4>
-                </div>
-            </div>
             <div class="row">
                 <div class="col-xs-12 col-md-12">
                     <div class="p-2 card">
                         <div class="row">
-                            <div class="col-sm-8">
-                                <h3 class=" card-title">All Blog Posts</h3>
-                                <a href="{{ admin_url() . 'blog' }}" class="btn btn-primary">Blog</a>
-                                <a href="{{ admin_url() . 'blog_categories' }}" class="btn btn-default">Categories</a>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="text-end" style="padding-bottom:2px;">
-                                    <input type="button" class="sitebtn" value="Add New Post" onClick="add_blog_post();" />
+                            <div class="col-sm-12">
+                                <div class="box-header">
+                                    <h3 class=" card-title">Blog Posts</h3>
                                 </div>
                             </div>
                         </div>
-                        <div class=" card-body table-responsive" style="padding: 15px 0;">
-                            <table id="populate-cms-data" class="table table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Image</th>
-                                        <th>Title</th>
-                                        <th>Description</th>
-                                        <th>Added Date</th>
-                                        <th>All Comment</th>
-                                        <th>Preview</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @if ($result)
-                                        @foreach ($result as $row)
-                                            <tr id="row_{{ $row->id }}">
-                                                <td>
-                                                    @if (!empty($row->featured_img))
-                                                        <img width="80"
-                                                            src="{{ asset_uploads('') . 'blog/' . $row->featured_img }}"
-                                                            title="{{ $row->featured_img_title }}"
-                                                            alt="{{ $row->featured_img_alt }}">
-                                                    @else
-                                                        <img width="80"
-                                                            src="{{ asset_storage('') . 'back/images/no_image.jpg' }}"
-                                                            title="{{ $row->featured_img_title }}"
-                                                            alt="{{ $row->featured_img_alt }}">
-                                                    @endif
-                                                </td>
-                                                <td> {{ $row->title }} </td>
-                                                <td> @php echo substr(strip_tags($row->description),0,36) @endphp </td>
-                                                <td> {{ format_date($row->dated, 'date') }} </td>
-                                                <td><a href="{{ admin_url() . 'blog_comments?id=' . $row->id }}">View
-                                                        All <br>
-                                                        @if ($row->total_unrevised_comments > 0)
-                                                            ({{ 'Unreviewed ' . $row->total_unrevised_comments }})
-                                                        @endif
-                                                    </a></td>
-                                                <td><a href="{{ base_url() . 'blog/' . $row->post_slug }}"
-                                                        target="_bank">Preview</a>
-                                                </td>
-                                                <td>
-                                                    <label class="switch">
-                                                        <input type="checkbox" name="{{ 'sts_' . $row->id }}"
-                                                            id="{{ 'sts_' . $row->id }}" <?php echo $row->sts == 1 ? ' checked' : ''; ?>
-                                                            value="<?php echo $row->sts; ?>"
-                                                            onClick="update_blog_post_status({{ $row->id }})">
-                                                        <div class="slider round">
-                                                            <strong class="on">Active</strong>
-                                                            <strong class="off">Inactive</strong>
-                                                        </div>
-                                                    </label>
-                                                </td>
-                                                <td><a href="javascript:;"
-                                                        onClick="load_blog_post_edit_form({{ $row->id }});"
-                                                        class="btn btn-success btn-sm">Edit</a> <a
-                                                        href="javascript:delete_blog_post({{ $row->id }});"
-                                                        class="btn btn-danger btn-sm">Delete</a>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    @else
+                        <!-- /.box-header -->
+                        <div class=" card-body table-responsive">
+                            <form method="post" id="blog-search-form">
+                                <div class="mb-3 row">
+                                    <div class="col-lg-4">
+
+                                        <button type="button" class="btn btn-info" onclick="showFilters();"
+                                            id="showFilterBtn">Show
+                                            Filters</button>
+                                        <button type="button" class="btn btn-warning" onclick="hideFilters();"
+                                            id="hideFilterBtn" style="display: none;">Hide Filters</button><br><br>
+                                    </div>
+
+                                    <div class="col-sm-8 text-end">
+                                        <div class="text-end" style="padding-bottom:2px;">
+                                            <a href="{{ admin_url() . 'blog_categories' }}" class="btn btn-warning">Categories</a>
+                                            <a href="{{ route('blog.post.create') }}" class="btn btn-success">Add Blog Post</a>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="mb-3 row" id="filterForm" style="display: none;">
+                                    <div class="col-md-3 form-group">
+                                        <label>Search</label>
+                                        <input id="search" name="search" type="text" placeholder="Search"
+                                            value="{{ request('search', '') }}" class="form-control">
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                        <label for="sts">Status:</label>
+                                        <select class="form-control" name="sts" id="sts">
+                                            {!! generateBlogPostStatusDropDown(request('sts', '')) !!}
+                                        </select>
+                                    </div>
+                                </div>
+                                <table class="table table-striped table-bordered" style="width: 100%"
+                                    id="blogDatatableAjax">
+                                    <thead>
                                         <tr>
-                                            <td colspan="7" align="center" class="text-red">No Record found!</td>
+                                            <th>Date</th>
+                                            <th>Image</th>
+                                            <th>Title</th>
+                                            <th>Comments</th>
+                                            <th>Preview</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
                                         </tr>
-                                    @endif
-                                </tbody>
-                                <tfoot>
-                                </tfoot>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </form>
                         </div>
+                        <!-- /. card-body -->
                     </div>
+                    <!-- /.box -->
+                    <!-- /.box -->
                 </div>
             </div>
         </section>
-    </div>
-    <!-- Add Edit Model-->
-    <div class="modal fade" id="blog_post_form_modal" data-backdrop="static">
-        <div class="modal-dialog modal-lg">
-            <form name="blog_post_form" id="blog_post_form" enctype="multipart/form-data" role="form" method="post"
-                action="#">
-                @csrf
-                <input type="hidden" name="moduleType" id="moduleType" value="blog">
-                <input type="hidden" name="id" id="id" value="">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <div class="row" style="width: 100%;">
-                            <div class="col-md-6">
-                                <h4 class="modal-title">Add Blog Post</h4>
-                            </div>
-                            <div class="text-right col-md-6">
-                                <a href="javascript:void(0);" onclick="showBlogRecordUpdateHistory();" class="mr-4 go-back"
-                                    id="showBlogRecordUpdateHistoryLink"><i class="fas fa-bars" aria-hidden="true"></i>
-                                    History </a>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-body">
-                        <div class=" card-body">
-                            <div class="mb-3">
-                                <div class="row">
-                                    <label>Categories</label><br />
-                                    @foreach ($all_categories as $all_category)
-                                        <div class="col-md-4">
-                                            <label><input type="checkbox" name="blog_cat[]"
-                                                    value="{{ $all_category->id }}"
-                                                    id="blog_cat_{{ $all_category->id }}">
-                                                {{ $all_category->cate_title }}</label>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                            <div class="mb-2" id="form-errors"></div>
-                            <div class="mb-2">
-                                <label class="form-label">Heading</label>
-                                <input type="text" class="form-control" id="heading" name="heading"
-                                    placeholder="Heading">
-                            </div>
-                            <div class="mb-2">
-                                <label class="form-label">Post Slug</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            {{ url('blog').'/' }}
-                                        </span>
-                                    </div>
-                                    <input type="text" class="form-control" name="post_slug" id="post_slug"
-                                    placeholder="Post Slug">
-                                </div>   
-                            </div>
-                            <div class="mb-2">
-                                <label class="form-label">Page Content</label>
-                                <textarea id="editor1" name="editor1" rows="8" cols="80"></textarea>
-                            </div>
-                            <div class="mb-2">
-                                <label class="form-label">Date Posted:</label>
-                                <div id="datepicker" class="mb-2 date">
-                                    <input class="form-control" type="date" id="date" name="datepicker"
-                                        value="{{ date('Y-m-d') }}" />
-                                    <span class="mb-2-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                </div>
-                            </div>
-                            <div id="fea_img">
-                                <label class="form-label"> Upload Featured Image <span style="font-size: 12px;color: red">
-                                        max size:
-                                        {{ getMaxUploadSize() }}
-                                        MB </span> @php echo helptooltip('max_image_size') @endphp </label>
-                                <div id="file-field">
-                                    <input type="file" name="product_img" id="module_img" class="form-control">
-                                    <div id="attached_files_div"></div>
-                                </div>
-                                <span id="featured_img" style="padding-left:2px;" class="err"></span>
-                                <div id="featured_img"></div>
-                                <div class="clear"></div>
-                                <div class="mt-3 mb-3">
-                                    <label class="btn btn-primary img_alt_title_label">Image Title/Alt</label>
-                                    <div class="mt-3 mb-3" style="display:none;">
-                                        <label class="form-label">Image Title</label>
-                                        <input type="text" name="featured_img_title" id="featured_img_title"
-                                            class="form-control" placeholder="Featured Image Title" value="">
-                                        <label class="mt-3">Image Alt</label>
-                                        <input type="text" name="featured_img_alt" id="featured_img_alt"
-                                            class="form-control" placeholder="Featured Image Alt" value="">
-                                    </div>
-                                </div>
-                            </div>
-                            @include('back.common_views.seo_fields', [
-                                'meta_title' => '',
-                                'meta_keywords' => '',
-                                'meta_description' => '',
-                                'canonical_url' => '',
-                            ])
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
-                        <button type="button" name="submitter" onclick="save_blog_post()" class="btn btn-primary">
-                            Update
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
+        <!-- /.content -->
     </div>
 @endsection
 @section('beforeBodyClose')
-    <!-- Filer -->
     <script>
-        var uploadUrl = "{{ admin_url() }}module_image/upload_image";
-        var deleteUrl = "{{ admin_url() }}module_image/remove_image";
-        var folder = "blog";
-        var maxSize = {{ getMaxUploadSize() }};
-        var csrfToken = $('meta[name="csrf-token"]').attr('content');
-        var show_cropper = false;
-        var save_method = "POST";
+        $(function() {
+            var oTable = $('#blogDatatableAjax').DataTable({
+                "autoWidth": true,
+                processing: true,
+                serverSide: true,
+                stateSave: true,
+                searching: false,
+                "order": [
+                    [0, "asc"]
+                ],
+                paging: true,
+                info: true,
+                ajax: {
+                    url: '{!! route('fetchBlogPostsAjax') !!}',
+                    data: function(d) {
+                        d.search = $('#search').val();
+                        d.sts = $('#sts').val();
+                    }
+                },
+                "drawCallback": function(settings) {
+                    setToggles();
+                },
+                columns: [{
+                        data: 'dated',
+                        name: 'dated'
+                    },
+                    {
+                        data: 'featured_img',
+                        name: 'featured_img'
+                    },
+                    {
+                        data: 'title',
+                        name: 'title'
+                    },
+                    {
+                        data: 'total_unrevised_comments',
+                        name: 'total_unrevised_comments'
+                    },
+                    {
+                        data: 'preview',
+                        name: 'preview'
+                    },
+                    {
+                        data: 'sts',
+                        name: 'sts'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    }
+                ]
+            });
 
-        function showBlogRecordUpdateHistory() {
-            let id = $('#id').val();
-            window.location.href = base_url + 'adminmedia/record-update-history/BlogPost/' + id;
+            $('#blog-search-form').on('submit', function(e) {
+                oTable.draw();
+                e.preventDefault();
+            });
+            $('#search').on('keyup', function(e) {
+                oTable.draw();
+                e.preventDefault();
+            });
+            $('#sts').on('change', function(e) {
+                oTable.draw();
+                e.preventDefault();
+            });
+        });
+
+        function showFilters() {
+            $('#filterForm').show('slow');
+            $('#showFilterBtn').hide('slow');
+            $('#hideFilterBtn').show('slow');
         }
-    </script>
-    <script type="text/javascript" src="{{ asset_storage('') . 'back/js/fileUploader.js' }}"></script>
-    <script type="text/javascript">
-        $(document).ready(function(e) {
-            $("#heading").change(function() {
-                string_to_slug('heading', 'post_slug');
-            });
-            $("#post_slug").change(function() {
-                check_slug('post_slug');
-            });
-        });
-    </script>
-    <!----- data table include library and script ----->
 
-    <script type="text/javascript" src="{{ asset_storage('') . 'back/js/bootstrap-multiselect.js' }}"></script>
-    <script type="text/javascript" src="{{ asset_storage('') . 'module/blog/admin/js/blog.js' }}"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            @if ($errors->any())
-                load_blog_add_form();
-            @endif
-            table = $('#populate-cms-data').DataTable();
+        function hideFilters() {
+            $('#filterForm').hide('slow');
+            $('#showFilterBtn').show('slow');
+            $('#hideFilterBtn').hide('slow');
+        }
+
+        function deleteBlogPost(id) {
+            var msg = 'Are you sure?';
+            var url = '{{ url('adminmedia/blog/') }}/' + id;
+            if (confirm(msg)) {
+                $.post(url, {
+                        id: id,
+                        _method: 'DELETE',
+                        _token: '{{ csrf_token() }}'
+                    })
+                    .done(function(response) {
+                        if (response.includes('ok')) {
+                            var table = $('#blogDatatableAjax').DataTable();
+                            table.row('blogPostDtRow' + id).remove().draw(false);
+                        } else {
+                            alert('Request Failed!');
+                        }
+                    });
+            }
+        }
+
+        function updateBlogPostStatus(id) {
+            var old_sts = 1;
+            var new_sts = 0;
+            if ($('#sts_' + id).val() == 0) {
+                old_sts = 0;
+                new_sts = 1;
+            }
+            var url = base_url + 'adminmedia/updateBlogPostStatus';
+            $.post(url, {
+                    id: id,
+                    sts: new_sts,
+                    _token: '{{ csrf_token() }}'
+                })
+                .done(function(sts) {
+                    if (sts == 'Done Successfully!') {
+                        $('#sts_' + id).val(new_sts);
+                        alertme('<i class="fas fa-check" aria-hidden="true"></i> ' + sts, 'success', true, 1500);
+                    } else {
+                        $('#sts_' + id).val(old_sts);
+                        if (old_sts == 0) {
+                            $('#sts_' + id).bootstrapToggle('off', true)
+                        } else {
+                            $('#sts_' + id).bootstrapToggle('on', true)
+                        }
+                        alertme('<i class="fas fa-check" aria-hidden="true"></i> ' + sts, 'danger', true, 1500);
+                    }
+                });
+
+        }
+
+        function setToggles() {
+            $('input[data-toggle="toggle_sts"]').bootstrapToggle();
+        }
+        $(document).on('change', 'input[data-toggle="toggle_sts"]', function() {
+            let id = $(this).attr('data-id');
+            updateBlogPostStatus(id);
         });
     </script>
-    @if (isset($_GET['id']))
-        <script>
-            $(document).ready(function() {
-                load_blog_post_edit_form({{ $_GET['id'] }})
-            });
-        </script>
-    @endif
+    <!-- Filer -->
 @endsection

@@ -26,13 +26,12 @@
                     <div class="p-2 card">
                         <div class="row">
                             <div class="col-sm-8">
-                                <h3 class=" card-title">All Blog Categories</h3>
-                                <a href="{{ admin_url() . 'blog' }}" class="btn btn-default">Blog</a>
-                                <a href="{{ admin_url() . 'blog_categories' }}" class="btn btn-primary">Categories</a>
+                                <h3 class=" card-title">All Blog Categories</h3>                                                                                                
                             </div>
                             <div class="col-sm-4">
                                 <div class="text-end" style="padding-bottom:2px;">
-                                    <input type="button" class="sitebtn" value="Add New Category"
+                                    <a href="{{ admin_url() . 'blog-posts' }}" class="btn btn-warning">Blog Posts</a>
+                                    <input type="button" class="btn btn-success" value="Add New Category"
                                         onClick="load_categories_add_form();" />
                                 </div>
                             </div>
