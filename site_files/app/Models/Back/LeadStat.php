@@ -12,6 +12,7 @@ class LeadStat extends Model
     protected $fillable = [
         'id',
         'referrer',
+        'contact_or_quote',
         'created_at',
         'updated_at'
     ];

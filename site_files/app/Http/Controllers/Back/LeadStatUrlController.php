@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers\Back;
 
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Back\LeadStat;
-use App\Models\Back\ContactUsData;
-use App\Models\Back\QouteRequest;
+use App\Models\Back\ContactUsRequest;
 use App\Models\Back\LeadStatUrl;
 use App\Traits\LeadStatUrlTrait;
 use App\Http\Controllers\Controller;
@@ -14,7 +12,6 @@ use Illuminate\Support\Facades\Redirect;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\Back\LeadStatUrlBackFormRequest;
-use App\Http\Requests\Back\UpdateLeadStatUrlBackFormRequest;
 
 class LeadStatUrlController extends Controller
 {
@@ -31,7 +28,7 @@ class LeadStatUrlController extends Controller
         return DataTables::of($leadStatUrlObj)
             ->filter(function ($query) use ($request) {
                 if ($request->has('referrer') && !empty($request->referrer)) {
-                    $query->where('lead_stat_urls.referrer', 'like', "%{$request->get('referrer')}%");
+                    $query->where('lead_stat_urls.referrer', 'like', $request->get('referrer'));
                 }
                 if ($request->has('url') && !empty($request->url)) {
                     $query->where('lead_stat_urls.url', 'like', "%{$request->get('url')}%");
@@ -53,8 +50,8 @@ class LeadStatUrlController extends Controller
             })
             ->addColumn('action', function ($leadStatUrlObj) {
                 return '
-                		<a href="' . route('leadStatUrl.edit', ['leadStatUrlObj' => $leadStatUrlObj->id]) . '" class="btn btn-warning m-2"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-						<a href="javascript:void(0);" onclick="deleteLeadStatUrl(' . $leadStatUrlObj->id . ');"  class="btn btn-danger m-2"><i class="fa fa-trash-o" aria-hidden="true"></i></a>';
+                		<a href="' . route('leadStatUrl.edit', ['leadStatUrlObj' => $leadStatUrlObj->id]) . '" class="m-2 btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+						<a href="javascript:void(0);" onclick="deleteLeadStatUrl(' . $leadStatUrlObj->id . ');"  class="m-2 btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>';
             })
             ->rawColumns(['url', 'url_internal_external', 'action'])
             ->orderColumns(['referrer', 'url', 'url_internal_external'], ':column $1')
@@ -108,13 +105,24 @@ class LeadStatUrlController extends Controller
         flash('Lead Stat Url has been updated!', 'success');
         return Redirect::route('leadStatUrls.index');
     }
+    private function deleteLeadStateUrl(LeadStatUrl $leadStatUrlObj)
+    {
+        LeadStat::where('referrer', 'like', $leadStatUrlObj->referrer)->delete();
+        ContactUsRequest::where('referrer', 'like', $leadStatUrlObj->referrer)->update(['referrer' => '']);
+        $leadStatUrlObj->delete();
+    }
     public function destroy(LeadStatUrl $leadStatUrlObj)
     {
-        LeadStat::where('referrer', 'like', '%' . $leadStatUrlObj->referrer . '%')->delete();
-        ContactUsData::where('referrer', 'like', '%' . $leadStatUrlObj->referrer . '%')->update(['referrer' => '']);
-        QouteRequest::where('referrer', 'like', '%' . $leadStatUrlObj->referrer . '%')->update(['referrer' => '']);
-        $leadStatUrlObj->delete();
+        $this->deleteLeadStateUrl($leadStatUrlObj);
         echo 'ok';
+    }
+    public function deleteLeadReferrer($referrer)
+    {
+        $leadStatUrlObj = LeadStatUrl::where('referrer', 'like', $referrer)->first();
+        $this->deleteLeadStateUrl($leadStatUrlObj);
+        /***************************** */
+        flash('Lead Stats Cleard successfully!', 'success');
+        return Redirect::route('lead.stats.index');
     }
     public function loadEditLeadStatUrlModal(Request $request)
     {

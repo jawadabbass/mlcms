@@ -4,16 +4,16 @@ namespace App\Models\Back;
 
 use Illuminate\Database\Eloquent\Model;
 
-class LeadStatUrl extends Model
+class ReferrerImpressionLead extends Model
 {
-
-    protected $table = 'lead_stat_urls';
+    protected $table = 'referrer_impression_lead';
     protected $primaryKey = 'id';
     public $timestamps = true;
     protected $fillable = [
         'id',
-        'url',
+        'impressions',
+        'leads',
         'created_at',
-        'updated_at',
+        'updated_at'
     ];
 }

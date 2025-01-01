@@ -15,5 +15,6 @@ return [
 	'USER_TYPE_NORMAL_ADMIN' => 'normal-admin',
 	'USER_TYPE_REPS_ADMIN' => 'reps',
 	'USER_TYPE_FRONT_USER' => 'user',
-	'SITE_EMAIL' => '@medialinkers.org'
+	'SITE_EMAIL' => '@medialinkers.org',
+	'REF_URL' => 'https://www.mlcms.directfinding.com/ref/',
 ];

@@ -1,3 +1,19 @@
+@php
+
+    if (isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER'])) {
+        $hostname = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
+        if (stripos(url('/'), $hostname) === false) {
+            $leadStatUrls = \App\Models\Back\LeadStatUrl::where('url_internal_external', 'like', 'external')->get();
+            foreach ($leadStatUrls as $leadStatUrlObj) {
+                if (stripos($_SERVER['HTTP_REFERER'], $leadStatUrlObj->url) !== false) {
+                    $referrer = $leadStatUrlObj->referrer;
+                    session()->put('referrer', $referrer);
+                }
+            }
+        }
+    }
+
+@endphp
 <link rel="shortcut icon" href="{{ asset_storage('front/img/favicon.ico') }}" type="image/x-icon">
 <!-- ========== Start Stylesheet ========== -->
 <link href="{{ asset_storage('front/css/bootstrap.min.css') }}" rel="stylesheet" />

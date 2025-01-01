@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers\Front;
+
 use App\Mail\ContactUs;
 use App\Models\Back\Setting;
 use Illuminate\Http\Request;
@@ -8,6 +10,7 @@ use App\Models\Back\CmsModuleData;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Back\ContactUsRequest;
+
 class ContactUsController extends Controller
 {
     public function index(Request $request)
@@ -15,6 +18,10 @@ class ContactUsController extends Controller
         if (isIpBlocked($request->ip())) {
             return redirect('/block');
         }
+        /*********** */
+        insertLeadStatImpression();
+        incrementImpressions();
+        /*********** */
         $seoArr = getSeoArrayModule(118);
         $editPageID = 118;
         $data = CmsModuleData::find(118);
@@ -67,7 +74,13 @@ class ContactUsController extends Controller
             $contactUsRequest->comments = $request->comments;
             $contactUsRequest->ip = $request->ip();
             $contactUsRequest->dated = date('Y-m-d H:i:s');
+            $contactUsRequest->referrer = $request->session()->get('referrer', '');
             $contactUsRequest->save();
+            /******************************** */
+            /******************************** */
+            incrementLeads();
+            /******************************** */
+            /******************************** */
             $contact_emails = Setting::first();
             $toArray = explode(',', $contact_emails->to_email);
             $ccArray = explode(',', $contact_emails->cc_email);

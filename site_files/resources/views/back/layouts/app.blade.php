@@ -10,6 +10,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @include('back.common_views.before_head_close')
     @yield('beforeHeadClose')
+    @stack('beforeHeadClose')
 </head>
 
 <body
@@ -27,6 +28,7 @@
     </div>
     @include('back.common_views.before_body_close')
     @yield('beforeBodyClose')
+    @stack('beforeBodyClose')
     <style>
         .jFiler-theme-default .jFiler-input {
             width: 100%;

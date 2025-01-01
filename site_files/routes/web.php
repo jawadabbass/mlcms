@@ -364,12 +364,12 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     Route::put('/leadStatUrl/{leadStatUrlObj}', [BackLeadStatUrlController::class, 'update'])->name('leadStatUrl.update');
     Route::get('/leadStatUrl/{leadStatUrlObj}', [BackLeadStatUrlController::class, 'show'])->name('leadStatUrl.show');
     Route::delete('/leadStatUrl/{leadStatUrlObj}', [BackLeadStatUrlController::class, 'destroy'])->name('leadStatUrl.destroy');
+    Route::get('/delete-lead-referrer/{referrer}', [BackLeadStatUrlController::class, 'deleteLeadReferrer'])->name('delete.lead.referrer');
     Route::get('fetchLeadStatUrlsAjax', [BackLeadStatUrlController::class, 'fetchLeadStatUrlsAjax'])->name('fetchLeadStatUrlsAjax');
     Route::post('/loadEditLeadStatUrlModal', [BackLeadStatUrlController::class, 'loadEditLeadStatUrlModal'])->name('loadEditLeadStatUrlModal');
     Route::post('/updateLeadStatUrl', [BackLeadStatUrlController::class, 'updateLeadStatUrl'])->name('updateLeadStatUrl');
     Route::post('/module_video/upload_video', [VideoUploadController::class, 'upload_video']);
-    Route::post('/module_video/remove_video', [VideoUploadController::class, 'remove_video']);
-    
+    Route::post('/module_video/remove_video', [VideoUploadController::class, 'remove_video']);    
     Route::post('checkRoute', [BackModuleManageController::class, 'checkRoute']);
 });
 Auth::routes();

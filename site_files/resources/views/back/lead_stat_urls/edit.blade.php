@@ -1,10 +1,10 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('content')
-    <aside class="right-side {{ session('leftSideBar') == 1 ? 'strech' : '' }}">
+    <div class="content-wrapper pl-3 pr-2">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="row">
-                <div class="col-md-8 col-sm-6">
+                <div class="col-md-5 col-sm-12">
                     <ol class="breadcrumb">
                         <li>
                             <a href="{{ base_url() . 'adminmedia' }}">
@@ -16,7 +16,7 @@
                             </a></li>
                     </ol>
                 </div>
-                <div class="col-md-4 col-sm-6">
+                <div class="col-md-7 col-sm-12">
                     @include('back.common_views.quicklinks')
                 </div>
             </div>
@@ -32,7 +32,7 @@
             @endif
             <div class="row">
                 <div class="col-xs-12 col-md-12">
-                    <div class="box">
+                    <div class="card p-3">
                         @include('flash::message')
                         @if ($errors->any())
                             <div class="alert alert-danger">
@@ -57,12 +57,12 @@
                             </div>
                         </form>
                     </div>
-                    <!-- /.box -->
-                    <!-- /.box -->
+                    <!-- /.card -->
+                    <!-- /.card -->
                 </div>
             </div>
         </section>
         <!-- /.content -->
-    </aside>
+    </div>
     @include('back.common_views.spinner')
 @endsection
