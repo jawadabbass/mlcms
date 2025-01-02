@@ -2,7 +2,7 @@
 @section('content')
     @php echo front_dashboard_links(); @endphp
     <!-- Start Banner
-                                            ============================================= -->
+                                                ============================================= -->
     <div class="banner-area">
         <div id="bootcarousel" class="carousel inc-top-heading slide carousel-fade animate_text" data-ride="carousel">
             <!-- Wrapper for slides -->
@@ -46,7 +46,7 @@
     </div>
     <!-- End Banner -->
     <!-- Start Our About
-                                            ============================================= -->
+                                                ============================================= -->
     <div class="about-area full-width inc-shadow mt default-padding bottom-less">
         <div class="container">
             <div class="row">
@@ -96,7 +96,7 @@
     </div>
     <!-- End Our About -->
     <!-- Start Services
-                                            ============================================= -->
+                                                ============================================= -->
     <div class="services-inc-area half-bg default-padding-20 bg-gray">
         <div class="container">
             <div class="row">
@@ -116,15 +116,17 @@
                             <div class="item">
                                 <div class="thumb"> <img
                                         src="{{ asset_uploads('services/' . $serviceObj->featured_image) }}"
-                                        title="{{ $serviceObj->featured_image_title }}" alt="{{ $serviceObj->featured_image_alt }}">
-                                    <div class="overlay"> 
-                                        <a href="{{ url('services/'.$serviceObj->slug) }}"> <i class="flaticon-report"></i>
+                                        title="{{ $serviceObj->featured_image_title }}"
+                                        alt="{{ $serviceObj->featured_image_alt }}">
+                                    <div class="overlay">
+                                        <a href="{{ url('services/' . $serviceObj->slug) }}"> <i class="flaticon-report"></i>
                                             <h4>{{ $serviceObj->title }}</h4>
-                                        </a> </div>
+                                        </a>
+                                    </div>
                                 </div>
                                 <div class="info">
                                     <p>{{ Str::limit($serviceObj->excerpt, 100, '...') }}</p>
-                                    <a href="{{ url('services/'.$serviceObj->slug) }}">Read More <i
+                                    <a href="{{ url('services/' . $serviceObj->slug) }}">Read More <i
                                             class="fas fa-angle-double-right"></i></a>
                                 </div>
                             </div>
@@ -138,7 +140,7 @@
     </div>
     <!-- End Services -->
     <!-- Start Portfolio
-                                            ============================================= -->
+                                                ============================================= -->
     <div class="portfolio-area inc-colum default-padding-20 bg-gray">
         <div class="container">
             <div class="row">
@@ -168,8 +170,12 @@
                                     <!-- Single Item -->
                                     <div class="pf-item album_{{ $image->album_id }}">
                                         @php
-                                            $thumb_img_url = asset_uploads('gallery/' . $image->album_id . '/thumb/' . $image->imageUrl);
-                                            $img_url = asset_uploads('gallery/' . $image->album_id . '/' . $image->imageUrl);
+                                            $thumb_img_url = asset_uploads(
+                                                'gallery/' . $image->album_id . '/thumb/' . $image->imageUrl,
+                                            );
+                                            $img_url = asset_uploads(
+                                                'gallery/' . $image->album_id . '/' . $image->imageUrl,
+                                            );
                                         @endphp
                                         <div class="effect-left-swipe">
                                             <div class="imagebox">
@@ -196,7 +202,7 @@
     </div>
     <!-- End Portfolio -->
     <!-- Start Testimonial & Faq
-                                            ============================================= -->
+                                                ============================================= -->
     <div class="testimonials-faq about-area default-padding">
         <div class="container">
             <div class="row">
@@ -261,7 +267,7 @@
     </div>
     <!-- End Testimonial & Faq -->
     <!-- Start Blog Area
-                                            ============================================= -->
+                                                ============================================= -->
     <div class="blog-area default-padding bottom-less">
         <div class="container">
             <div class="row">
@@ -297,7 +303,11 @@
                                     <!--<div class="cats"> <a href="#">Business</a> <a href="#">Assets</a> </div>-->
                                     <h4> <a href="{{ base_url() . 'blog/' . $blogsValues['post_slug'] }}">
                                             @php echo $blogsValues['title']; @endphp</a> </h4>
-                                    <p> @php echo get_excerpt($blogsValues['description'],40); @endphp </p>
+                                    <p>
+                                        @php
+                                            //echo get_excerpt($blogsValues['description'],40);
+                                        @endphp
+                                    </p>
                                     <div class="meta">
                                         <ul>
                                             <li><i class="fas fa-calendar-alt"></i>
@@ -319,7 +329,7 @@
     </div>
     <!-- End Blog Area -->
     <!-- Start Clients Area
-                                            ============================================= -->
+                                                ============================================= -->
     <div class="clients-area bg-dark default-padding">
         <div class="container">
             <div class="row">
