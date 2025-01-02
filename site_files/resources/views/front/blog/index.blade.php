@@ -7,8 +7,8 @@
     {!! cms_page_heading('Blog') !!}
     <div class="about-wrap">
         <!-- Start Blog
-        ============================================= -->
-        <div class="blog-area full-blog right-sidebar full-blog default-padding-20">
+                    ============================================= -->
+        <div class="blog-area full-blog right-sidebar default-padding-20">
             <div class="container">
                 <div class="row">
                     <div class="blog-items">
@@ -20,12 +20,14 @@
                                     <div class="single-item item">
                                         <div class="thumb">
                                             <a href="{{ base_url() . 'blog/' . $blogsValues['post_slug'] }}">
-                                                @if (!empty($blogsValues['featured_img']) &&
-                                                    file_exists(storage_uploads('blog/' . $blogsValues['featured_img'])))
+                                                @if (!empty($blogsValues['featured_img']) && file_exists(storage_uploads('blog/' . $blogsValues['featured_img'])))
                                                     <img src="{{ asset_uploads('blog/' . $blogsValues['featured_img']) }}"
-                                                        title="{{ $blogsValues['featured_img_title'] }}" alt="{{ $blogsValues['featured_img_alt'] }}">
+                                                        title="{{ $blogsValues['featured_img_title'] }}"
+                                                        alt="{{ $blogsValues['featured_img_alt'] }}">
                                                 @else
-                                                    <img src="{{ asset_uploads('back/images/no_image.jpg') }}" title="{{ $blogsValues['featured_img_title'] }}" alt="{{ $blogsValues['featured_img_alt'] }}">
+                                                    <img src="{{ asset_uploads('back/images/no_image.jpg') }}"
+                                                        title="{{ $blogsValues['featured_img_title'] }}"
+                                                        alt="{{ $blogsValues['featured_img_alt'] }}">
                                                 @endif
                                             </a>
                                             <span class="post-formats"><i class="fas fa-image"></i></span>
@@ -39,7 +41,9 @@
                                                     @php echo $blogsValues['title']; @endphp</a>
                                             </h3>
                                             <p>
-                                                @php echo substr($blogsValues['description'],0, 180)."..." @endphp
+                                                @php
+                                                    //echo substr($blogsValues['description'],0, 180)."...";
+                                                @endphp
                                             </p>
                                             <div class="meta">
                                                 <ul>
