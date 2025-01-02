@@ -1,13 +1,10 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('beforeHeadClose')
-    <link href="{{ asset_storage('') . 'module/settings/admin/css/settings.css' }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset_storage('') . 'back/css/magicsuggest.css' }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset_storage('') . 'module/settings/admin/css/setting.css' }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.1.0/css/flag-icon.min.css"
         integrity="sha256-D+ZpDJjhGxa5ffyQkuTvwii4AntFGBZa4jUhSpdlhjM=" crossorigin="anonymous" />
 @endsection
 @section('content')
-    <div class="content-wrapper pl-3 pr-2">
+    <div class="pl-3 pr-2 content-wrapper">
         <section class="content-header">
             <div class="row">
                 <div class="col-md-5 col-sm-12">
@@ -78,7 +75,7 @@
                                         onClick="$('#mod_info').slideToggle();">How
                                         does it work?</a></div>
                                 <div id="mod_info" style="display:none;" role="alert"
-                                    class=" description alert alert-warning alert-dismissible ">You can block
+                                    class=" description alert alert-warning alert-dismissible">You can block
                                     exact IP or a range of IP addresses
                                     If you put <code>*</code> it will be taken as full range. <br />for example<br>
                                     (1). If you type <code>165.139.149.169</code> then this exact IP will be
@@ -108,7 +105,7 @@
                                         onClick="$('#mod_negative_keywords_info').slideToggle();">How does it work?</a>
                                 </div>
                                 <div id="mod_negative_keywords_info" style="display:none;" role="alert"
-                                    class=" description alert alert-warning alert-dismissible ">Example: If someone is
+                                    class=" description alert alert-warning alert-dismissible">Example: If someone is
                                     abusing your website contact form frequently and one of his sentence is "I am Eric Jones
                                     from www.talkwithwebtraffic.com....." Then just block the keyword
                                     "www.talkwithwebtraffic.com" In this case if this keyword is used, the form will not get
@@ -126,7 +123,7 @@
                                         onClick="$('#mod_negative_TLDs_info').slideToggle();">How does it work?</a>
                                 </div>
                                 <div id="mod_negative_TLDs_info" style="display:none;" role="alert"
-                                    class=" description alert alert-warning alert-dismissible ">Example: Add those TLDs from where you would not want to recieve emails. </div>
+                                    class=" description alert alert-warning alert-dismissible">Example: Add those TLDs from where you would not want to recieve emails. </div>
                                 <input type="text" id="negativeTLDs" class="form-control" name="negativeTLDs[]"
                                     placeholder="Type to add negative TLD" />
                             </div>
@@ -176,8 +173,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css"
         rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-    <script type="text/javascript" src="{{ asset_storage('') . 'module/settings/admin/js/settings.js' }}"></script>
-    <script type="text/javascript" src="{{ asset_storage('') . 'back/js/magicsuggest.js' }}"></script>
     <script type="text/javascript">
         var countryList = new Array();
         var url = '{{ admin_url() }}';

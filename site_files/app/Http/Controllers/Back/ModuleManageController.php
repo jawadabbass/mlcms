@@ -848,7 +848,7 @@ class ModuleManageController extends Controller
         $slug = str_replace(url('/') . '/blog/', '', $urlToCheck);
         $blogPostObj = BlogPost::where('post_slug', 'like', $slug)->first();
         if (null !== $blogPostObj && $blogPostObj->id != $id) {
-            $urlToEdit = url('/adminmedia/blog/?id=' . $blogPostObj->id);
+            $urlToEdit = url('/adminmedia/blog-posts/' . $blogPostObj->id.'/edit');
             $status = false;
             $urlIn = 'Blog';
         } elseif (null !== $blogPostObj && $blogPostObj->id == $id) {

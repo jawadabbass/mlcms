@@ -27,25 +27,28 @@ class BlogPostBackFormRequest extends Request
     public function rules()
     {
         return [
+            'author_id' => 'required',
+            'author_name' => 'required',
             'title' => 'required',
             'post_slug' => 'required',
             'description' => 'required',
             'dated' => 'required',
             'sts' => 'required',
-            'featured_img' => 'nullable|image',
+            'is_featured' => 'required',
         ];
     }
 
     public function messages()
     {
         return [
+            'author_id.required' => __('Author ID is required'),
+            'author_name.required' => __('Author Name is required'),
             'title.required' => __('Title is required'),
             'post_slug.required' => __('Slug is required'),
             'description.required' => __('Description is required'),
             'dated.required' => __('Date is required'),
             'sts.required' => __('Status is required'),
-            'featured_img.required' => __('Image is required'),
-            'featured_img.image' => __('Only Image can be uploaded'),
+            'is_featured.required' => __('Is Featured?'),
         ];
     }
 }

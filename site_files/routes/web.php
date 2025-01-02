@@ -380,7 +380,9 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     Route::get('/blog-post/{blogPostObj}', [BackBlogController::class, 'show'])->name('blog.post.show');
     Route::delete('/blog-post/{blogPostObj}', [BackBlogController::class, 'destroy'])->name('blog.post.destroy');
     Route::get('fetchBlogPostsAjax', [BackBlogController::class, 'fetchBlogPostsAjax'])->name('fetchBlogPostsAjax');
+    Route::post('updateBlogPostIsFeatured', [BackBlogController::class, 'updateBlogPostIsFeatured'])->name('updateBlogPostIsFeatured');
     Route::post('updateBlogPostStatus', [BackBlogController::class, 'updateBlogPostStatus'])->name('updateBlogPostStatus');
+    Route::post('blog-post-upload-featured-image', [BackBlogController::class, 'uploadFeaturedImage'])->name('blog.post.upload.featured.image');
     
 });
 Auth::routes();

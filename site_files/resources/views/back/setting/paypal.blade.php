@@ -1,11 +1,6 @@
 @extends('back.layouts.app', ['title' => $title])
-@section('beforeHeadClose')
-    <link href="{{ asset_storage('') . 'module/settings/admin/css/settings.css' }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset_storage('') . 'back/css/magicsuggest.css' }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset_storage('') . 'module/settings/admin/css/setting.css' }}" rel="stylesheet" type="text/css" />
-@endsection
 @section('content')
-    <div class="content-wrapper pl-3 pr-2">
+    <div class="pl-3 pr-2 content-wrapper">
         <section class="content-header">
             <div class="row">
                 <div class="col-md-5 col-sm-12">

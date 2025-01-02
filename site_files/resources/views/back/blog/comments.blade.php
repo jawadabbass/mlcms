@@ -33,8 +33,8 @@
                                 <h3 class=" card-title">Comments</h3>
                             </div>
                             <div class="col-sm-4 text-end">
-                                <a href="{{ admin_url() . 'blog-posts' }}" class="m-1 btn btn-warning">Blog</a>
-                                <a href="{{ admin_url() . 'blog_categories' }}" class="m-1 btn btn-info">Categories</a>
+                                <a href="{{ admin_url() . 'blog-posts' }}" class="m-1 btn btn-sm btn btn-warning">Blog Posts</a>
+                                <a href="{{ admin_url() . 'blog_categories' }}" class="m-1 btn btn-sm btn btn-info">Categories</a>
                             </div>
                         </div>
                         <div class=" card-body table-responsive" style="padding: 15px 0;">
@@ -73,7 +73,7 @@
                                                 </td>
                                                 <td>
                                                     <a href="javascript:delete_blog_comments({{ $row->id }});"
-                                                        class="btn btn-danger btn-sm">Delete</a>
+                                                        class="btn btn-sm btn btn-danger btn btn-sm">Delete</a>
                                                 </td>
                                             </tr>
                                         @endforeach

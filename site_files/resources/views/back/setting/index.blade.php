@@ -1,13 +1,10 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('beforeHeadClose')
-    <link href="{{ asset_storage('') . 'module/settings/admin/css/settings.css' }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset_storage('') . 'back/css/magicsuggest.css' }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset_storage('') . 'module/settings/admin/css/setting.css' }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.1.0/css/flag-icon.min.css"
         integrity="sha256-D+ZpDJjhGxa5ffyQkuTvwii4AntFGBZa4jUhSpdlhjM=" crossorigin="anonymous" />
 @endsection
 @section('content')
-    <div class="content-wrapper pl-3 pr-2">
+    <div class="pl-3 pr-2 content-wrapper">
         <section class="content-header">
             <div class="row">
                 <div class="col-md-5 col-sm-12">
@@ -34,7 +31,7 @@
             </div>
         @endif
         <section class="content" id="basic-setting">
-            <div class="card p-2">
+            <div class="p-2 card">
                 <h2 class=" card-title">
                     <i class="fas fa-arrow-circle-o-down" aria-hidden="true"></i> Basic Settings
                     @php echo helptooltip('meta_data_content') @endphp
@@ -148,7 +145,7 @@
         </section>
         <section><hr/></section>
         <section class="content" id="google-analytics">
-            <div class="card p-2">
+            <div class="p-2 card">
                 <h2 class=" card-title">
                     <i class="fas fa-arrow-circle-o-down" aria-hidden="true"></i> Google Analytics Code
                     @php echo helptooltip('google_analytics_content') @endphp
@@ -171,7 +168,7 @@
         </section>
         <section><hr/></section>
         <section class="content" id="google-adsense">
-            <div class="card p-2">
+            <div class="p-2 card">
                 <h2 class=" card-title">
                     <i class="fas fa-arrow-circle-o-down" aria-hidden="true"></i> Google adsense code
                     @php echo helptooltip('google_adsense_content') @endphp
@@ -215,7 +212,7 @@
         </section>
         <section><hr/></section>
         <section class="content" id="google-captcha">
-            <div class="card p-2">
+            <div class="p-2 card">
                 <h2 class=" card-title"><i class="fas fa-arrow-circle-o-down" aria-hidden="true"></i> ContactUs
                     Captcha
                 </h2>
@@ -318,7 +315,7 @@
 
                                         does it work?</a></div>
                                 <div id="mod_info" style="display:none;" role="alert"
-                                    class=" description alert alert-warning alert-dismissible "><strong>You can block
+                                    class=" description alert alert-warning alert-dismissible"><strong>You can block
                                         exact IP or a range of IP addresses
                                         If you put * it will be taken as full range.</strong> <br />for example<br>
                                     (1). If you type <strong>165.139.149.169</strong> then this exact IP will be
@@ -378,7 +375,7 @@
         </section>
         <section><hr/></section>
         <section class="content" id="disable-website">
-            <div class="card p-2">
+            <div class="p-2 card">
                 <h2 class=" card-title"><i class="fas fa-arrow-circle-o-down" aria-hidden="true"></i> Disable Website
                 </h2>
                 <form name="emp_network_detail" action="{{ route('settings.edit', 0) }}">
@@ -429,8 +426,6 @@
             $('#web_down_status').bootstrapToggle();
         });
     </script>
-    <script type="text/javascript" src="{{ asset_storage('') . 'module/settings/admin/js/settings.js' }}"></script>
-    <script type="text/javascript" src="{{ asset_storage('') . 'back/js/magicsuggest.js' }}"></script>
     <script type="text/javascript">
         var countryList = new Array();
         @foreach ($countries as $country)

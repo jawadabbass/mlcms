@@ -48,7 +48,8 @@ function initCKeditor(selector){
         toolbar: "undo redo | fontfamily fontsize | bold italic underline strikethrough | align numlist bullist | link image | table media | lineheight outdent indent| forecolor backcolor removeformat | charmap emoticons | code fullscreen preview | save print | pagebreak anchor codesample | ltr rtl | accordion accordionremove | blocks",
         image_advtab: true,
         importcss_append: true,
-        height: 600
+        min_height: 300,
+        max_height: 500
     });
 }
 function bindCKeditorByClass(cls) {

@@ -1,9 +1,6 @@
 @extends('back.layouts.app', ['title' => $title])
-@section('beforeHeadClose')
-    <link href="{{ asset_storage('') . 'module/settings/admin/css/settings.css' }}" rel="stylesheet" type="text/css" />
-@endsection
 @section('content')
-    <div class="content-wrapper pl-3 pr-2">
+    <div class="pl-3 pr-2 content-wrapper">
         <section class="content-header">
             <div class="row">
                 <div class="col-md-5 col-sm-12">
@@ -30,7 +27,7 @@
             </div>
         @endif
         <section class="content" id="basic-setting">
-            <div class="card p-2">
+            <div class="p-2 card">
                 <h2 class=" card-title">
                     <i class="fas fa-arrow-circle-o-down" aria-hidden="true"></i> Analytics Property ID and Settings
                     @php echo helptooltip('analytics_property_id_and_json_file') @endphp
@@ -42,7 +39,7 @@
                     @csrf
                     <div id="g_analy" >
                         <div class="row">
-                            <div class="col-md-12 mb-3">
+                            <div class="mb-3 col-md-12">
                                 <div class="mb-2">
                                     <label class="form-label">Show Analytics?</label>
                                     <select class="form-control" name="is_show_analytics" id="is_show_analytics">
@@ -51,7 +48,7 @@
                                     </select>                                    
                                 </div>
                             </div>
-                            <div class="col-md-12 mb-3">
+                            <div class="mb-3 col-md-12">
                                 <div class="mb-2">
                                     <label class="form-label">Analytics Property ID</label>
                                     <input type="text" class="form-control" name="analytics_property_id"
@@ -61,7 +58,7 @@
                                             Spatie Laravel Analytics Package </a></p>
                                 </div>
                             </div>
-                            <div class="col-md-12 mb-3">
+                            <div class="mb-3 col-md-12">
                                 <div class="mb-2">
                                     <label class="form-label">Service Account Credentials Json</label>
                                     <input type="file" name="service_account_credentials_json"

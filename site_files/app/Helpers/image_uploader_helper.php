@@ -6,7 +6,7 @@ function getUserImage($user)
 {
     $profileImage = $user->profile_image;
 
-    return ImageUploader::print_image_src($profileImage, 'profile_images', 'mlstorage/front/img/no-image.jpg');
+    return ImageUploader::print_image_src($profileImage, 'profile_images', 'front/images/no-image.jpg');
 }
 
 function getImage($folder, $image, $defaultSize = 'main')
@@ -16,8 +16,7 @@ function getImage($folder, $image, $defaultSize = 'main')
     } else {
         $defaultSize = '/' . $defaultSize;
     }
-
-    return ImageUploader::print_image_src($image, $folder . $defaultSize, 'mlstorage/front/img/no-image-available.png');
+    return ImageUploader::print_image_src($image, $folder . $defaultSize, 'front/images/no-image-available.png');
 }
 
 function storage_uploads($path)

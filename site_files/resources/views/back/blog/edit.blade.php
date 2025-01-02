@@ -50,7 +50,7 @@
                                     </ul>
                                 </div>
                             @endif
-                            <form action="{{ route('blog.post.update', ['blogPostObj' => $blogPostObj->id]) }}" method="POST"
+                            <form id="blog_post_form" action="{{ route('blog.post.update', ['blogPostObj' => $blogPostObj->id]) }}" method="POST"
                                 class="form-horizontal" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
@@ -58,7 +58,7 @@
                                     <div class="row">
                                         @include('back.blog.form')
                                         <div class="mb-4 col-12">
-                                            <button type="submit" class="btn btn-success">Update</button>
+                                            <button type="submit" class="btn btn-sm btn-success">Update</button>
                                         </div>
                                     </div>
                                 </div>

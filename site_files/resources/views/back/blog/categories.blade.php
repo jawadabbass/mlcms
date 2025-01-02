@@ -30,8 +30,8 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="text-end" style="padding-bottom:2px;">
-                                    <a href="{{ admin_url() . 'blog-posts' }}" class="btn btn-warning">Blog Posts</a>
-                                    <input type="button" class="btn btn-success" value="Add New Category"
+                                    <a href="{{ admin_url() . 'blog-posts' }}" class="btn btn-sm btn btn-warning">Blog Posts</a>
+                                    <input type="button" class="btn btn-sm btn btn-success" value="Add New Category"
                                         onClick="load_categories_add_form();" />
                                 </div>
                             </div>
@@ -67,13 +67,13 @@
                                                         </div>
                                                     </label>
                                                 </td>
-                                                <td><a href="{{ 'blog/category/' . $row->cate_slug }}.html"
+                                                <td><a href="{{ url('blog/category/' . $row->cate_slug) }}"
                                                         target="_bank">Preview</a></td>
                                                 <td><a href="javascript:;"
                                                         onClick="load_category_edit_form({{ $row->id }});"
-                                                        class="btn btn-success btn-sm">Edit</a> <a
+                                                        class="btn btn-sm btn btn-success btn btn-sm">Edit</a> <a
                                                         href="javascript:delete_category({{ $row->id }});"
-                                                        class="btn btn-danger btn-sm">Delete</a></td>
+                                                        class="btn btn-sm btn btn-danger btn btn-sm">Delete</a></td>
                                             </tr>
                                         @endforeach
                                     @else
@@ -99,7 +99,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title">Add New Category</h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">
                         </button>
                     </div>
                     <div class="modal-body">
@@ -123,8 +123,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
-                        <button type="submit"  name="submitter" class="btn btn-primary">Submit</button>
+                        <button type="button" class="btn btn-sm btn btn-default" data-bs-dismiss="modal">Close</button>
+                        <button type="submit"  name="submitter" class="btn btn-sm btn btn-primary">Submit</button>
                     </div>
                 </div>
             </form>
@@ -146,7 +146,7 @@
                                 <a href="javascript:void(0);" onclick="showBlogCategoryRecordUpdateHistory();" class="mr-4 go-back"
                                     id="showBlogCategoryRecordUpdateHistoryLink"><i class="fas fa-bars" aria-hidden="true"></i>
                                     History </a>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                <button type="button" class="btn btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
                         </div>
@@ -172,8 +172,8 @@
                         </div>
                         <input type="hidden" name="category_id" id="category_id" />
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
-                            <button type="submit"  name="submitter" class="btn btn-primary">Update</button>
+                            <button type="button" class="btn btn-sm btn btn-default" data-bs-dismiss="modal">Close</button>
+                            <button type="submit"  name="submitter" class="btn btn-sm btn btn-primary">Update</button>
                         </div>
                     </div>
                 </div>

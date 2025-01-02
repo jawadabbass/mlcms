@@ -5,7 +5,7 @@
     <div class="footer-top bg-gray">
         <div class="container">
             <div class="row">
-                <div class="col-md-4 col-sm-4 logo"> <a href="#"><img src="{{ asset_storage('front/img/logo.png') }}"
+                <div class="col-md-4 col-sm-4 logo"> <a href="#"><img src="{{ asset_storage('front/images/logo.png') }}"
                             alt="Logo"></a> </div>
                 <div class="col-md-8 col-sm-8 form text-end">
                     @if (\Session::has('added_subscriber'))

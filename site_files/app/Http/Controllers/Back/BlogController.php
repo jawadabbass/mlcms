@@ -7,10 +7,13 @@ use App\Models\Back\BlogPost;
 use App\Traits\BlogPostTrait;
 use App\Helpers\ImageUploader;
 use App\Models\Back\BlogComment;
+use App\Models\Back\BlogCategory;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\Back\BlogPostBackFormRequest;
+use App\Http\Requests\Back\BlogPostFeaturedImageBackFormRequest;
 
 class BlogController extends Controller
 {
@@ -66,12 +69,25 @@ class BlogController extends Controller
                 value="' . $blogPostObj->sts . '">';
                 return $str;
             })
+            ->addColumn('is_featured', function ($blogPostObj) {
+
+                $checked = ($blogPostObj->is_featured) == 1 ? ' checked' : '';
+
+                $str = '<input type="checkbox" data-toggle="toggle_is_featured" data-onlabel="Featured"
+                data-offlabel="Not Featured" data-onstyle="success"
+                data-offstyle="danger"
+                data-id="' . $blogPostObj->id . '"
+                name="is_featured_' . $blogPostObj->id . '"
+                id="is_featured_' . $blogPostObj->id . '" ' . $checked . '
+                value="' . $blogPostObj->is_featured . '">';
+                return $str;
+            })
             ->addColumn('action', function ($blogPostObj) {
                 return '
                 		<a href="' . route('blog.post.edit', ['blogPostObj' => $blogPostObj->id]) . '" class="m-2 btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-						<a href="javascript:void(0);" onclick="deleteBlogpost(' . $blogPostObj->id . ');"  class="m-2 btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>';
+						<a href="javascript:void(0);" onclick="deleteBlogPost(' . $blogPostObj->id . ');"  class="m-2 btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>';
             })
-            ->rawColumns(['dated', 'featured_img', 'preview', 'sts', 'total_unrevised_comments', 'action'])
+            ->rawColumns(['dated', 'featured_img', 'preview', 'sts', 'is_featured', 'total_unrevised_comments', 'action'])
             ->orderColumns(['dated', 'title'], ':column $1')
             ->setRowId(function ($blogPostObj) {
                 return 'blogPostDtRow' . $blogPostObj->id;
@@ -84,10 +100,18 @@ class BlogController extends Controller
         $title = FindInsettingArr('business_name') . ': Blog Management';
         $msg = '';
         $blogPostObj = new BlogPost();
+        $blogPostObj->author_id = Auth::user()->id;
+        $blogPostObj->author_name = Auth::user()->name;
+        $blogPostObj->id = 0;
+        $blogPostObj->show_follow = 1;
+        $blogPostObj->show_index = 1;
         $blogPostObj->sts = 1;
+
+        $blogCategories = BlogCategory::where('sts', 1)->get();
 
         return view('back.blog.create')
             ->with('blogPostObj', $blogPostObj)
+            ->with('blogCategories', $blogCategories)
             ->with('title', $title)
             ->with('msg', $msg);
     }
@@ -115,15 +139,17 @@ class BlogController extends Controller
 
         session(['message' => 'Blog Post has been added!', 'type' => 'success']);
 
-        return Redirect::route('blog.index');
+        return Redirect::route('blog.posts.index');
     }
     public function edit(BlogPost $blogPostObj)
     {
         $title = FindInsettingArr('business_name') . ': Blog Management';
         $msg = '';
 
+        $blogCategories = BlogCategory::where('sts', 1)->get();
         return view('back.blog.edit')
             ->with('blogPostObj', $blogPostObj)
+            ->with('blogCategories', $blogCategories)
             ->with('title', $title)
             ->with('msg', $msg);
     }
@@ -146,7 +172,29 @@ class BlogController extends Controller
         /******************************* */
         /******************************* */
         session(['message' => 'Blog Post has been updated!', 'type' => 'success']);
-        return Redirect::route('blog.index');
+        return Redirect::route('blog.posts.index');
+    }
+    public function updateBlogPostIsFeatured(Request $request)
+    {
+        $blogPostObj = BlogPost::find($request->id);
+        $blogPostObj = $this->setBlogPostIsFeatured($request, $blogPostObj);
+        $blogPostObj->update();
+        /******************************* */
+        /******************************* */
+        $recordUpdateHistoryData = [
+            'record_id' => $blogPostObj->id,
+            'record_title' => $blogPostObj->title,
+            'record_link' => url('adminmedia/blog-post/' . $blogPostObj->id . '/edit'),
+            'model_or_table' => 'BlogPost',
+            'admin_id' => auth()->user()->id,
+            'ip' => request()->ip(),
+            'draft' => json_encode($blogPostObj->toArray()),
+        ];
+        recordUpdateHistory($recordUpdateHistoryData);
+        /******************************* */
+        /******************************* */
+        echo 'Done Successfully!';
+        exit;
     }
     public function updateBlogPostStatus(Request $request)
     {
@@ -176,9 +224,24 @@ class BlogController extends Controller
         ImageUploader::deleteImage('blog', $blogPostObj->featured_img, true);
         BlogComment::where('post_id', $blogPostObj->id)->delete();
         $blogPostObj->delete();
-        session(['message' => 'Deleted Successfully', 'type' => 'success']);
         echo 'ok';
     }
+    public function uploadFeaturedImage(BlogPostFeaturedImageBackFormRequest $request)
+    {
+        if ($request->hasFile('blog_post_featured_img_file')) {
+            $newName = $request->input('newName', '');
+            $oldName = $request->input('oldName', '');
+            if (!empty($oldName)) {
+                ImageUploader::deleteImage('blog', $oldName, true);
+            }
+            $image = $request->file('blog_post_featured_img_file');
+            $fileName = ImageUploader::UploadImage('blog', $image, $newName, 1600, 1600, true);
+            
+            $returnArr = ['fileName' => $fileName, 'image' => '<img src="' . getImage('blog', $fileName, 'thumb') . '" height="150">'];
+            echo json_encode($returnArr);
+        }
+    }
+
     public function updateCommentStatus(Request $request)
     {
         $id = $request->id;

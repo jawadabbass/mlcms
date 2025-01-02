@@ -3,7 +3,7 @@
     <!-- Start Breadcrumb
         ============================================= -->
     <div class="breadcrumb-area shadow dark bg-fixed text-center text-light"
-        style="background-image: url(<?php echo base_url(); ?>front/img/banner/22.jpg);">
+        style="background-image: url(<?php echo base_url(); ?>front/images/banner/22.jpg);">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-md-12">

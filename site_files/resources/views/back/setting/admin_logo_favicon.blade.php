@@ -1,9 +1,6 @@
 @extends('back.layouts.app', ['title' => $title])
-@section('beforeHeadClose')
-    <link href="{{ asset_storage('') . 'module/settings/admin/css/settings.css' }}" rel="stylesheet" type="text/css" />
-@endsection
 @section('content')
-    <div class="content-wrapper pl-3 pr-2">
+    <div class="pl-3 pr-2 content-wrapper">
         <section class="content-header">
             <div class="row">
                 <div class="col-md-5 col-sm-12">
@@ -30,7 +27,7 @@
             </div>
         @endif
         <section class="content" id="basic-setting">
-            <div class="card p-2">
+            <div class="p-2 card">
                 <h2 class=" card-title">
                     <i class="fas fa-arrow-circle-o-down" aria-hidden="true"></i> Logo and Favicon Settings
                     @php echo helptooltip('admin_logo_favicon') @endphp
@@ -44,7 +41,7 @@
                             <div class="col-md-12">
                                 <img src="{!! getImage('admin_logo_favicon', $setting_result->admin_login_page_logo, 'main') !!}" />
                             </div>
-                            <div class="col-md-12 mb-3">
+                            <div class="mb-3 col-md-12">
                                 <div class="mb-2">
                                     <label class="form-label">Admin Login Page Logo</label>
                                     <input type="file" name="admin_login_page_logo"
@@ -55,7 +52,7 @@
                             <div class="col-md-12">
                                 <img src="{!! getImage('admin_logo_favicon', $setting_result->admin_header_logo, 'main') !!}" />
                             </div>
-                            <div class="col-md-12 mb-3">
+                            <div class="mb-3 col-md-12">
                                 <div class="mb-2">
                                     <label class="form-label">Admin Header Logo</label>
                                     <input type="file" name="admin_header_logo"
@@ -65,7 +62,7 @@
                             <div class="col-md-12">
                                 <img src="{!! getImage('admin_logo_favicon', $setting_result->admin_favicon, 'main') !!}" />
                             </div>
-                            <div class="col-md-12 mb-3">
+                            <div class="mb-3 col-md-12">
                                 <div class="mb-2">
                                     <label class="form-label">Admin Favicon</label>
                                     <input type="file" name="admin_favicon" class="form-control basic_setting_height">
@@ -74,7 +71,7 @@
                             <div class="col-md-12">
                                 <img src="{!! getImage('admin_logo_favicon', $setting_result->og_image, 'main') !!}" />
                             </div>
-                            <div class="col-md-12 mb-3">
+                            <div class="mb-3 col-md-12">
                                 <div class="mb-2">
                                     <label class="form-label">Open Graph Image</label>
                                     <input type="file" name="og_image" class="form-control basic_setting_height">

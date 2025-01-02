@@ -41,17 +41,17 @@
                                 <div class="mb-3 row">
                                     <div class="col-lg-4">
 
-                                        <button type="button" class="btn btn-info" onclick="showFilters();"
-                                            id="showFilterBtn">Show
+                                        <button type="button" class="btn btn-sm btn btn-info" onclick="showFilters();"
+                                            id="showFilterbtn btn-sm">Show
                                             Filters</button>
-                                        <button type="button" class="btn btn-warning" onclick="hideFilters();"
-                                            id="hideFilterBtn" style="display: none;">Hide Filters</button><br><br>
+                                        <button type="button" class="btn btn-sm btn btn-warning" onclick="hideFilters();"
+                                            id="hideFilterbtn btn-sm" style="display: none;">Hide Filters</button><br><br>
                                     </div>
 
                                     <div class="col-sm-8 text-end">
                                         <div class="text-end" style="padding-bottom:2px;">
-                                            <a href="{{ admin_url() . 'blog_categories' }}" class="btn btn-warning">Categories</a>
-                                            <a href="{{ route('blog.post.create') }}" class="btn btn-success">Add Blog Post</a>
+                                            <a href="{{ admin_url() . 'blog_categories' }}" class="btn btn-sm btn btn-warning">Categories</a>
+                                            <a href="{{ route('blog.post.create') }}" class="btn btn-sm btn btn-success">Add Blog Post</a>
                                         </div>
                                     </div>
 
@@ -79,6 +79,7 @@
                                             <th>Title</th>
                                             <th>Comments</th>
                                             <th>Preview</th>
+                                            <th>Is Featured?</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
@@ -143,6 +144,10 @@
                         name: 'preview'
                     },
                     {
+                        data: 'is_featured',
+                        name: 'is_featured'
+                    },
+                    {
                         data: 'sts',
                         name: 'sts'
                     },
@@ -171,19 +176,19 @@
 
         function showFilters() {
             $('#filterForm').show('slow');
-            $('#showFilterBtn').hide('slow');
-            $('#hideFilterBtn').show('slow');
+            $('#showFilterbtn btn-sm').hide('slow');
+            $('#hideFilterbtn btn-sm').show('slow');
         }
 
         function hideFilters() {
             $('#filterForm').hide('slow');
-            $('#showFilterBtn').show('slow');
-            $('#hideFilterBtn').hide('slow');
+            $('#showFilterbtn btn-sm').show('slow');
+            $('#hideFilterbtn btn-sm').hide('slow');
         }
 
         function deleteBlogPost(id) {
             var msg = 'Are you sure?';
-            var url = '{{ url('adminmedia/blog/') }}/' + id;
+            var url = '{{ url('adminmedia/blog-post/') }}/' + id;
             if (confirm(msg)) {
                 $.post(url, {
                         id: id,
@@ -194,6 +199,10 @@
                         if (response.includes('ok')) {
                             var table = $('#blogDatatableAjax').DataTable();
                             table.row('blogPostDtRow' + id).remove().draw(false);
+                            Toast.fire({
+                                icon: "success",
+                                title: "Blog Post Deleted Successfully"
+                            });
                         } else {
                             alert('Request Failed!');
                         }
@@ -201,6 +210,36 @@
             }
         }
 
+        function updateBlogPostIsFeatured(id) {
+            var old_is_featured = 1;
+            var new_is_featured = 0;
+            if ($('#is_featured_' + id).val() == 0) {
+                old_is_featured = 0;
+                new_is_featured = 1;
+            }
+            var url = base_url + 'adminmedia/updateBlogPostIsFeatured';
+            $.post(url, {
+                    id: id,
+                    is_featured: new_is_featured,
+                    _token: '{{ csrf_token() }}'
+                })
+                .done(function(sts) {
+                    if (sts == 'Done Successfully!') {
+                        $('#is_featured_' + id).val(new_is_featured);
+                        alertme('<i class="fas fa-check" aria-hidden="true"></i> ' + sts, 'success', true, 1500);
+                    } else {
+                        $('#is_featured_' + id).val(old_is_featured);
+                        if (old_is_featured == 0) {
+                            $('#is_featured_' + id).bootstrapToggle('off', true)
+                        } else {
+                            $('#is_featured_' + id).bootstrapToggle('on', true)
+                        }
+                        alertme('<i class="fas fa-check" aria-hidden="true"></i> ' + sts, 'danger', true, 1500);
+                    }
+                });
+
+        }
+        
         function updateBlogPostStatus(id) {
             var old_sts = 1;
             var new_sts = 0;
@@ -232,8 +271,13 @@
         }
 
         function setToggles() {
+            $('input[data-toggle="toggle_is_featured"]').bootstrapToggle();
             $('input[data-toggle="toggle_sts"]').bootstrapToggle();
         }
+        $(document).on('change', 'input[data-toggle="toggle_is_featured"]', function() {
+            let id = $(this).attr('data-id');
+            updateBlogPostIsFeatured(id);
+        });
         $(document).on('change', 'input[data-toggle="toggle_sts"]', function() {
             let id = $(this).attr('data-id');
             updateBlogPostStatus(id);

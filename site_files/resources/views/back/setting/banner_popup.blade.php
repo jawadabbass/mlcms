@@ -1,9 +1,6 @@
 @extends('back.layouts.app', ['title' => $title])
-@section('beforeHeadClose')
-    <link href="{{ base_url() . 'module/settings/admin/css/settings.css' }}" rel="stylesheet" type="text/css" />
-@endsection
 @section('content')
-<div class="content-wrapper pl-3 pr-2">
+<div class="pl-3 pr-2 content-wrapper">
     <section class="content-header">
         <div class="row">
             <div class="col-md-5 col-sm-12">
@@ -37,7 +34,7 @@
             </div>
         @endif
         <section class="content" id="basic-setting">
-            <div class="card p-2">
+            <div class="p-2 card">
                 <h2 class=" card-title">
                     <i class="fas fa-arrow-circle-o-down" aria-hidden="true"></i> Banner Popup Settings
                     @php echo helptooltip('banner_popup') @endphp
@@ -51,14 +48,14 @@
                             <div class="col-md-12">
                                 <img src="{!! getImage('banner_popup', $metaArray['banner_popup_image'], 'main') !!}" />
                             </div>
-                            <div class="col-md-12 mb-3">
+                            <div class="mb-3 col-md-12">
                                 <div class="mb-2">
                                     <label class="form-label">Image</label>
                                     <input type="file" name="banner_popup_image"
                                         class="form-control basic_setting_height">
                                 </div>
                             </div>
-                            <div class="col-md-12 mb-3">
+                            <div class="mb-3 col-md-12">
                                 <div class="mb-2">
                                     <label class="form-label">Status</label>
                                     <select name="banner_popup_status" id="banner_popup_status" class="form-control basic_setting_height">

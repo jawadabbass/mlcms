@@ -20,6 +20,8 @@
 <script defer src="https://cdn.jsdelivr.net/npm/img-comparison-slider@8/dist/index.js"></script>
 <script src="{{ asset_storage('lib/chartjs/dist/chart.umd.js') }}"></script>
 <script src="{{ asset_storage('back/toggle_switch/bootstrap5-toggle.jquery.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset_storage('module/settings/admin/js/settings.js') }}"></script>
+<script type="text/javascript" src="{{ asset_storage('back/js/magicsuggest.js') }}"></script>
 <script src="{{ asset_storage('back/js/AdminLTE/dist/js/adminlte.min.js') }}"></script>
 
 
@@ -51,4 +53,27 @@
     $(document).ready(function() {
         $('.phone_mask').inputmask("999-999-9999");
     });
+
+    function fileValidation(fileId) {
+        var ret = true;
+        const fi = document.getElementById(fileId);
+        // Check if any file is selected.
+        if (fi.files.length > 0) {
+            for (i = 0; i <= fi.files.length - 1; i++) {
+
+                const fsize = fi.files.item(i).size;
+                const fsizeMb = Math.round((fsize / (1024 * 1024)));
+                const file = Math.round((fsize / 1024));
+                const maxFileSize = {{ getMaxUploadSize() }} * 1024;
+                // The size of the file.
+                if (file >= maxFileSize) {
+                    alert(
+                        "File too Big(" + fsizeMb +
+                        "MB), please select a file less than {{ getMaxUploadSize() }}MB");
+                    ret = false;
+                }
+            }
+        }
+        return ret;
+    }
 </script>

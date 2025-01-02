@@ -1,11 +1,6 @@
 @extends('back.layouts.app', ['title' => $title])
-@section('beforeHeadClose')
-    <link href="{{ asset_storage('') . 'module/settings/admin/css/settings.css' }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset_storage('') . 'back/css/magicsuggest.css' }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset_storage('') . 'module/settings/admin/css/setting.css' }}" rel="stylesheet" type="text/css" />
-@endsection
 @section('content')
-    <div class="content-wrapper pl-3 pr-2">
+    <div class="pl-3 pr-2 content-wrapper">
         <section class="content-header">
             <div class="row">
                 <div class="col-md-5 col-sm-12">
@@ -32,7 +27,7 @@
             </div>
         @endif
         <section class="content" id="disable-website">
-            <div class="card p-2">
+            <div class="p-2 card">
                 <h2 class=" card-title"><i class="fas fa-arrow-circle-o-down" aria-hidden="true"></i> Disable Website </h2>
                 <form name="emp_network_detail" action="{{ route('settings.edit', 0) }}">
                     <div class="mb-2">
@@ -82,7 +77,5 @@
         $(function() {
             $('#web_down_status').bootstrapToggle();            
         });
-    </script>
-    <script type="text/javascript" src="{{ asset_storage('') . 'module/settings/admin/js/settings.js' }}"></script>
-    <script type="text/javascript" src="{{ asset_storage('') . 'back/js/magicsuggest.js' }}"></script>
+    </script>    
 @endsection

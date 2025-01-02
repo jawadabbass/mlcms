@@ -1,13 +1,10 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('beforeHeadClose')
-    <link href="{{ asset_storage('') . 'module/settings/admin/css/settings.css' }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset_storage('') . 'back/css/magicsuggest.css' }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset_storage('') . 'module/settings/admin/css/setting.css' }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.1.0/css/flag-icon.min.css"
         integrity="sha256-D+ZpDJjhGxa5ffyQkuTvwii4AntFGBZa4jUhSpdlhjM=" crossorigin="anonymous" />
 @endsection
 @section('content')
-    <div class="content-wrapper pl-3 pr-2">
+    <div class="pl-3 pr-2 content-wrapper">
         <section class="content-header">
             <div class="row">
                 <div class="col-md-5 col-sm-12">
@@ -34,7 +31,7 @@
             </div>
         @endif
         <section class="content" id="basic-setting">
-            <div class="card p-2">
+            <div class="p-2 card">
                 <h2 class=" card-title">
                     <i class="fas fa-arrow-circle-o-down" aria-hidden="true"></i> Basic Settings
                     @php echo helptooltip('meta_data_content') @endphp

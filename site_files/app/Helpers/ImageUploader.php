@@ -129,7 +129,8 @@ class ImageUploader
         $newName = ($newName != '') ? $newName : $name;
         $newName = self::getFileName($newName);
         $fileName = Str::slug($newName, '-') . '.' . $extension;
-        if (file_exists($destinationPath . '/' . $fileName)) {
+        $fileNameWebp = Str::slug($newName, '-') . '.webp';
+        if (file_exists($destinationPath . '/' . $fileName) || file_exists($destinationPath . '/' . $fileNameWebp)) {
             $fileName = time() . '-' . $fileName;
         }
         return $fileName;
@@ -229,12 +230,12 @@ class ImageUploader
         $image_src = self::print_image_src($image_name, $image_path, $default_image);
         return '<img src="' . $image_src . '" ' . $dimensions . ' alt="' . $alt_title_txt . '" title="' . $alt_title_txt . '">';
     }
-    public static function print_image_src($image_name, $image_path, $default_image = 'images/no-image-available.png')
+    public static function print_image_src($image_name='fake_image.png', $image_path='fake/image/path', $default_image = 'images/no-image-available.png')
     {
         if (!empty($image_name) && !empty($image_path) && file_exists(ImageUploader::storage_uploads() . $image_path . '/' . $image_name)) {
             return ImageUploader::asset_uploads() . $image_path . '/' . $image_name;
         } else {
-            return self::asset_storage($default_image);
+            return self::asset_storage().$default_image;
         }
     }
     public static function get_doc($doc_path, $doc_title, $alt_title_txt = '')

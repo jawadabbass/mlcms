@@ -49,14 +49,14 @@
                                     </ul>
                                 </div>
                             @endif
-                            <form action="{{ route('blog.post.store') }}" method="POST" class="form-horizontal"
+                            <form  id="blog_post_form" action="{{ route('blog.post.store') }}" method="POST" class="form-horizontal"
                                 enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-body">
                                     <div class="row">
                                         @include('back.blog.form')
                                         <div class="mb-4 col-12">
-                                            <button type="submit" class="btn btn-success">Save</button>
+                                            <button type="submit" class="btn btn-sm btn-success">Save</button>
                                         </div>
                                     </div>
                                 </div>
