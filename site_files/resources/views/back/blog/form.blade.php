@@ -1,5 +1,5 @@
 @php
-    $cate_ids = explode(',', $blogPostObj->cate_ids);
+    $cate_ids = explode(',', old('cate_ids', $blogPostObj->cate_ids));
     $strlen_meta_title = strlen($blogPostObj->meta_title);
     $strlen_meta_keywords = strlen($blogPostObj->meta_keywords);
     $strlen_meta_description = strlen($blogPostObj->meta_description);
@@ -25,12 +25,13 @@
                 <input type="hidden" name="moduleType" id="moduleType" value="blog">
                 <input type="hidden" value="{{ $blogPostObj->id }}" name="id" id="id">
                 <input type="hidden" value="{{ $blogPostObj->author_id }}" name="author_id" id="author_id">
-                <input type="hidden" value="{{ $blogPostObj->featured_img }}" name="featured_img" id="featured_img">
+                <input type="hidden" value="{{ old('featured_img', $blogPostObj->featured_img) }}" name="featured_img"
+                    id="featured_img">
                 <div class="clearfix form-group">
                     <label>Categories</label>
                     <div class="row">
                         @foreach ($blogCategories as $blogCategory)
-                            <div class="col-md-4">
+                            <div class="p-1 col-md-4">
                                 <div class="icheck-success d-inline">
                                     <input type="checkbox" id="cate_ids_{{ $blogCategory->id }}" name="cate_ids[]"
                                         value="{{ $blogCategory->id }}" id="cate_ids_{{ $blogCategory->id }}"
@@ -71,7 +72,8 @@
                 <div class="form-group">
                     <label class="form-label">Date:*</label>
                     <input id="dated" name="dated" value="{{ old('dated', $blogPostObj->dated) }}"
-                        type="text" class="form-control {{ hasError($errors, 'dated') }}" placeholder="Date" autocomplete="off">
+                        type="date" class="form-control {{ hasError($errors, 'dated') }}" placeholder="Date"
+                        autocomplete="off">
                     {!! showErrors($errors, 'dated') !!}
                 </div>
                 <div class="form-group">
@@ -84,7 +86,7 @@
                 <div class="form-group">
                     <label for="is_featured">Is Featured?</label>
                     <select class="form-control" name="is_featured" id="is_featured">
-                        {!! generateBlogPostIsFeaturedDropDown($blogPostObj->is_featured, false) !!}
+                        {!! generateBlogPostIsFeaturedDropDown(old('is_featured', $blogPostObj->is_featured), false) !!}
                     </select> @error('is_featured')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -92,18 +94,19 @@
                 <div class="form-group">
                     <label>Status:*</label>
                     <select class="form-control" name="sts" id="sts">
-                        {!! generateBlogPostStatusDropDown($blogPostObj->sts, false) !!}
+                        {!! generateBlogPostStatusDropDown(old('sts', $blogPostObj->sts), false) !!}
                     </select>
                 </div>
             </div>
             <div class="tab-pane fade" id="featured-image" role="tabpanel" aria-labelledby="featured-image-tab">
                 <div class="form-group">
                     <div id="blog_post_featured_image_div">
-                        @if (!empty($blogPostObj->featured_img))
-                            <img src="{{ getImage('blog', $blogPostObj->featured_img, 'thumb') }}" height="150">
+                        @if (!empty(old('featured_img', $blogPostObj->featured_img)))
+                            <img src="{{ getImage('blog', old('featured_img', $blogPostObj->featured_img), 'thumb') }}?t={{ time() }}"
+                                height="150">
                         @endif
                     </div>
-                    <label for="featured_img">Featured Image</label><br/>
+                    <label for="featured_img">Featured Image</label><br />
                     <button id="upload_blog_post_featured_image_btn" type="button" class="btn btn-warning">Upload
                         Featured
                         Image</button>
@@ -115,13 +118,15 @@
                 </div>
                 <div class="form-group"> <label for="featured_img_alt">Featured Image Alt</label> <input
                         type="text" class="form-control" id="featured_img_alt" name="featured_img_alt"
-                        value="{{ $blogPostObj->featured_img_alt }}"> @error('featured_img_alt')
+                        value="{{ old('featured_img_alt', $blogPostObj->featured_img_alt) }}">
+                    @error('featured_img_alt')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="form-group"> <label for="featured_img_title">Featured Image Title</label> <input
                         type="text" class="form-control" id="featured_img_title" name="featured_img_title"
-                        value="{{ $blogPostObj->featured_img_title }}"> @error('featured_img_title')
+                        value="{{ old('featured_img_title', $blogPostObj->featured_img_title) }}">
+                    @error('featured_img_title')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
@@ -130,30 +135,27 @@
                 <div class="mb-3 form-group">
                     <label class="form-label">Make Follow</label>
                     <input id="show_follow_rel_1" value="1" type="radio" name="show_follow"
-                        value="{{ $blogPostObj->show_follow }}"
-                        {{ $blogPostObj->show_follow == 1 ? 'checked' : '' }} />
+                        {{ old('show_follow', $blogPostObj->show_follow) == 1 ? 'checked' : '' }} />
                     @php echo helptooltip('follow') @endphp <br />
                     <label class="form-label">Make No Follow</label>
                     <input id="show_follow_rel_0" value="0" type="radio" name="show_follow"
-                        value="{{ $blogPostObj->show_follow }}"
-                        {{ $blogPostObj->show_follow == 0 ? 'checked' : '' }} />
+                        {{ old('show_follow', $blogPostObj->show_follow) == 0 ? 'checked' : '' }} />
                 </div>
                 <div class="mb-3 form-group">
                     <label class="form-label">Indexing</label>
                     <input id="show_index_rel_1" value="1" type="radio" name="show_index"
-                        value="{{ $blogPostObj->show_index }}"
-                        {{ $blogPostObj->show_index == 1 ? 'checked' : '' }} />
+                        {{ old('show_index', $blogPostObj->show_index) == 1 ? 'checked' : '' }} />
                     @php echo helptooltip('indexing') @endphp <br />
                     <label class="form-label">No Indexing</label>
                     <input id="show_index_rel_0" value="0" type="radio" name="show_index"
-                        value="{{ $blogPostObj->show_index }}"
-                        {{ $blogPostObj->show_index == 0 ? 'checked' : '' }} />
+                        {{ old('show_index', $blogPostObj->show_index) == 0 ? 'checked' : '' }} />
                 </div>
                 <div class="mb-3 form-group">
                     <label class="form-label">Meta Title (<i class="text-primary">Recommended: 60 characters</i>)
                         @php echo helptooltip('seo_title')@endphp </label>
-                    <input type="text" name="meta_title" id="meta_title" value="{{ $blogPostObj->meta_title }}"
-                        class="form-control" placeholder="Meta Title"
+                    <input type="text" name="meta_title" id="meta_title"
+                        value="{{ old('meta_title', $blogPostObj->meta_title) }}" class="form-control"
+                        placeholder="Meta Title"
                         onKeyUp="seo_limit_suggestion('meta_title', 60, 'meta_title_char_countdown');">
                     <span id="meta_title_char_countdown"
                         class="{{ $strlen_meta_title > 60 ? 'text-danger' : 'text-success' }}">{{ $strlen_meta_title }}
@@ -163,7 +165,7 @@
                     <label class="form-label">Meta Keywords (<i class="text-primary">Recommended: 160 characters</i>)
                         @php echo helptooltip('seo_keywords')@endphp</label>
                     <textarea style="height: 100px !important;" class="form-control" rows="3" cols="70" name="meta_keywords"
-                        id="meta_keywords" onKeyUp="seo_limit_suggestion('meta_keywords', 160, 'meta_keywords_char_countdown');">{{ $blogPostObj->meta_keywords }}</textarea>
+                        id="meta_keywords" onKeyUp="seo_limit_suggestion('meta_keywords', 160, 'meta_keywords_char_countdown');">{{ old('meta_keywords', $blogPostObj->meta_keywords) }}</textarea>
                     <span id="meta_keywords_char_countdown"
                         class="{{ $strlen_meta_keywords > 160 ? 'text-danger' : 'text-success' }}">{{ $strlen_meta_keywords }}
                         characters</span>
@@ -173,7 +175,7 @@
                             characters</i>) @php echo helptooltip('seo_descp')@endphp</label>
                     <textarea style="height: 100px !important;" class="form-control" rows="3" cols="70"
                         name="meta_description" id="meta_description"
-                        onKeyUp="seo_limit_suggestion('meta_description', 160, 'meta_description_char_countdown');">{{ $blogPostObj->meta_description }}</textarea>
+                        onKeyUp="seo_limit_suggestion('meta_description', 160, 'meta_description_char_countdown');">{{ old('meta_description', $blogPostObj->meta_description) }}</textarea>
                     <span id="meta_description_char_countdown"
                         class="{{ $strlen_meta_description > 160 ? 'text-danger' : 'text-success' }}">{{ $strlen_meta_description }}
                         characters</span>
@@ -181,7 +183,7 @@
                 <div class="mb-3 form-group">
                     <label class="form-label">Canonical URL @php echo helptooltip('canonical_url')@endphp</label>
                     <textarea style="height: 100px !important;" class="form-control" rows="3" cols="70" name="canonical_url"
-                        id="canonical_url">{{ $blogPostObj->canonical_url }}</textarea> <code>If Canonical URL is same as Page URL then Leave this field empty,
+                        id="canonical_url">{{ old('canonical_url', $blogPostObj->canonical_url) }}</textarea> <code>If Canonical URL is same as Page URL then Leave this field empty,
                         in this case Canonical URL will be handled programmatically</code>
                 </div>
             </div>
@@ -197,11 +199,11 @@
 </div>
 @section('beforeBodyClose')
     <script>
-        $(document).ready(function() {
-            $("#dated").datetimepicker({
-                format: 'Y-m-d H:i:s'
-            });
-        });
+        /* $(document).ready(function() {
+                $("#dated").datepicker({
+                    format: 'Y-m-d'
+                });
+            }); */
         $(document).ready(function(e) {
             $("#title").change(function() {
                 string_to_slug('title', 'post_slug');
@@ -213,7 +215,7 @@
     </script>
     <script type="text/javascript">
         @php
-            $tags = explode(',', $blogPostObj->tags);
+            $tags = old('tags', explode(',', $blogPostObj->tags));
         @endphp
         var tags = new Array();
         @foreach ($tags as $tag)
@@ -222,8 +224,10 @@
 
         $(document).ready(function(e) {
             var tagsMS = $('#post_tags').magicSuggest({
-                data: tags,
-                value: tags,
+                @if(isset($tags[0]) && !empty($tags[0]))
+                    data: tags,
+                    value: tags,
+                @endif
                 selectionPosition: 'bottom',
                 maxSelection: 5000,
                 valueField: 'tags[]'

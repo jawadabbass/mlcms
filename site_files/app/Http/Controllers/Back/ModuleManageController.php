@@ -14,6 +14,7 @@ use App\Models\Back\ModuleVideo;
 use App\Models\Back\CmsModuleData;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Back\BlogCategory;
 use App\Models\Back\BlogPost;
 use App\Models\Back\ModuleDataImage;
 use Illuminate\Support\Facades\Route;
@@ -848,10 +849,22 @@ class ModuleManageController extends Controller
         $slug = str_replace(url('/') . '/blog/', '', $urlToCheck);
         $blogPostObj = BlogPost::where('post_slug', 'like', $slug)->first();
         if (null !== $blogPostObj && $blogPostObj->id != $id) {
-            $urlToEdit = url('/adminmedia/blog-posts/' . $blogPostObj->id.'/edit');
+            $urlToEdit = url('/adminmedia/blog-post/' . $blogPostObj->id.'/edit');
             $status = false;
             $urlIn = 'Blog';
         } elseif (null !== $blogPostObj && $blogPostObj->id == $id) {
+            $urlToEdit = '';
+            $status = true;
+            $urlIn = '';
+        }
+        /********************** */
+        $slug = str_replace(url('/') . '/blog/category/', '', $urlToCheck);
+        $blogCategoryObj = BlogCategory::where('cate_slug', 'like', $slug)->first();
+        if (null !== $blogCategoryObj && $blogCategoryObj->id != $id) {
+            $urlToEdit = url('/adminmedia/blog-category/' . $blogCategoryObj->id.'/edit');
+            $status = false;
+            $urlIn = 'BlogCategory';
+        } elseif (null !== $blogCategoryObj && $blogCategoryObj->id == $id) {
             $urlToEdit = '';
             $status = true;
             $urlIn = '';

@@ -42,5 +42,6 @@ class HelpersProvider extends ServiceProvider
         require_once app_path() . '/Helpers/seo_helper.php';
         require_once app_path() . '/Helpers/lead_stat_helper.php';
         require_once app_path() . '/Helpers/blog_helper.php';
+        require_once app_path() . '/Helpers/blog_categories_helper.php';
     }
 }

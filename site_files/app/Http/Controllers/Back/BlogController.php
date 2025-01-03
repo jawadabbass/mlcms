@@ -20,13 +20,23 @@ class BlogController extends Controller
     use BlogPostTrait;
     public function index()
     {
+        /*
+        $blogPosts = BlogPost::all();
+        $counter = 60;
+        foreach ($blogPosts as $blogPostObj) {
+            $blogPostObj->dated = date('Y-m-d', strtotime('- ' . $counter . 'days'));
+            $blogPostObj->update();
+            $counter++;
+        }
+        */
+        
         $title = config('Constants.SITE_NAME') . ': Blog Management';
         $msg = '';
         return view('back.blog.index', compact('title', 'msg'));
     }
     public function fetchBlogPostsAjax(Request $request)
     {
-        $blogPostObj = Blogpost::select('*');
+        $blogPostObj = BlogPost::select('*');
         return DataTables::of($blogPostObj)
             ->filter(function ($query) use ($request) {
                 if ($request->has('search') && !empty($request->search)) {
@@ -52,10 +62,16 @@ class BlogController extends Controller
                 return '<a href="' . admin_url() . 'blog_comments?id=' . $blogPostObj->id . '">View All<br>' . $unreviewed . '</a>';
             })
             ->addColumn('featured_img', function ($blogPostObj) {
-                return '<img src="' . ImageUploader::print_image_src($blogPostObj->featured_img, 'blog/thumb') . '" style="max-width:165px !important; max-height:165px !important;"/>';
+                return '<img src="' . ImageUploader::print_image_src($blogPostObj->featured_img, 'blog/thumb') . '?t=' . time() . '" style="max-width:150px !important; max-height:150px !important;"/>';
             })
             ->addColumn('preview', function ($blogPostObj) {
                 return '<a href="' . base_url() . 'blog/' . $blogPostObj->post_slug . '" target="_bank">Preview</a>';
+            })
+            ->addColumn('cate_ids', function ($blogPostObj) {
+                $catIdsArr = explode(',', $blogPostObj->cate_ids);
+                $catIdsArr = array_filter($catIdsArr);
+                $catTitlesArr = BlogCategory::whereIn('id', $catIdsArr)->pluck('cate_title')->toArray();
+                return implode(',<br/>', $catTitlesArr);
             })
             ->addColumn('sts', function ($blogPostObj) {
                 $checked = ($blogPostObj->sts) == 1 ? ' checked' : '';
@@ -87,7 +103,7 @@ class BlogController extends Controller
                 		<a href="' . route('blog.post.edit', ['blogPostObj' => $blogPostObj->id]) . '" class="m-2 btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i></a>
 						<a href="javascript:void(0);" onclick="deleteBlogPost(' . $blogPostObj->id . ');"  class="m-2 btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>';
             })
-            ->rawColumns(['dated', 'featured_img', 'preview', 'sts', 'is_featured', 'total_unrevised_comments', 'action'])
+            ->rawColumns(['cate_ids', 'dated', 'featured_img', 'preview', 'sts', 'is_featured', 'total_unrevised_comments', 'action'])
             ->orderColumns(['dated', 'title'], ':column $1')
             ->setRowId(function ($blogPostObj) {
                 return 'blogPostDtRow' . $blogPostObj->id;
@@ -101,13 +117,14 @@ class BlogController extends Controller
         $msg = '';
         $blogPostObj = new BlogPost();
         $blogPostObj->author_id = Auth::user()->id;
-        $blogPostObj->author_name = Auth::user()->name;
+        $blogPostObj->author_name = '';/* Auth::user()->name */;
         $blogPostObj->id = 0;
         $blogPostObj->show_follow = 1;
         $blogPostObj->show_index = 1;
         $blogPostObj->sts = 1;
+        $blogPostObj->is_featured = 0;
 
-        $blogCategories = BlogCategory::where('sts', 1)->get();
+        $blogCategories = BlogCategory::where('sts', 1)->orderBy('cate_title', 'asc')->get();
 
         return view('back.blog.create')
             ->with('blogPostObj', $blogPostObj)
@@ -127,7 +144,7 @@ class BlogController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $blogPostObj->id,
             'record_title' => $blogPostObj->title,
-            'record_link' => url('adminmedia/blog/' . $blogPostObj->id . '/edit'),
+            'record_link' => url('adminmedia/blog-post/' . $blogPostObj->id . '/edit'),
             'model_or_table' => 'BlogPost',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -146,7 +163,7 @@ class BlogController extends Controller
         $title = FindInsettingArr('business_name') . ': Blog Management';
         $msg = '';
 
-        $blogCategories = BlogCategory::where('sts', 1)->get();
+        $blogCategories = BlogCategory::where('sts', 1)->orderBy('cate_title', 'asc')->get();
         return view('back.blog.edit')
             ->with('blogPostObj', $blogPostObj)
             ->with('blogCategories', $blogCategories)
@@ -162,7 +179,7 @@ class BlogController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $blogPostObj->id,
             'record_title' => $blogPostObj->title,
-            'record_link' => url('adminmedia/blog/' . $blogPostObj->id . '/edit'),
+            'record_link' => url('adminmedia/blog-post/' . $blogPostObj->id . '/edit'),
             'model_or_table' => 'BlogPost',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -206,7 +223,7 @@ class BlogController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $blogPostObj->id,
             'record_title' => $blogPostObj->title,
-            'record_link' => url('adminmedia/blog/' . $blogPostObj->id . '/edit'),
+            'record_link' => url('adminmedia/blog-post/' . $blogPostObj->id . '/edit'),
             'model_or_table' => 'BlogPost',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -236,8 +253,8 @@ class BlogController extends Controller
             }
             $image = $request->file('blog_post_featured_img_file');
             $fileName = ImageUploader::UploadImage('blog', $image, $newName, 1600, 1600, true);
-            
-            $returnArr = ['fileName' => $fileName, 'image' => '<img src="' . getImage('blog', $fileName, 'thumb') . '" height="150">'];
+
+            $returnArr = ['fileName' => $fileName, 'image' => '<img src="' . getImage('blog', $fileName, 'thumb') . '?t=' . time() . '" height="150">'];
             echo json_encode($returnArr);
         }
     }

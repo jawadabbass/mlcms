@@ -58,7 +58,7 @@ use App\Http\Controllers\Back\SocialMediaController as BackSocialMediaController
 use App\Http\Controllers\Back\ContactPagesController as BackContactPagesController;
 use App\Http\Controllers\Back\ModuleManageController as BackModuleManageController;
 use App\Http\Controllers\Back\PaymentOptionController as BackPaymentOptionController;
-use App\Http\Controllers\Back\BlogCategoriesController as BackBlogCategoriesController;
+use App\Http\Controllers\Back\BlogCategoryController as BackBlogCategoryController;
 use App\Http\Controllers\Back\JobApplicationController as BackJobApplicationController;
 use App\Http\Controllers\Back\PackageContentController as BackPackageContentController;
 use App\Http\Controllers\Back\PackageQuestionController as BackPackageQuestionController;
@@ -370,7 +370,6 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
 
     Route::get('/blog_comments', [BackBlogController::class, 'comments']);
     Route::post('/blog_comments', [BackBlogController::class, 'deleteComment']);
-    Route::resource('/blog_categories', BackBlogCategoriesController::class);
     
     Route::get('/blog-posts', [BackBlogController::class, 'index'])->name('blog.posts.index');
     Route::get('/blog-post/create', [BackBlogController::class, 'create'])->name('blog.post.create');
@@ -383,6 +382,20 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     Route::post('updateBlogPostIsFeatured', [BackBlogController::class, 'updateBlogPostIsFeatured'])->name('updateBlogPostIsFeatured');
     Route::post('updateBlogPostStatus', [BackBlogController::class, 'updateBlogPostStatus'])->name('updateBlogPostStatus');
     Route::post('blog-post-upload-featured-image', [BackBlogController::class, 'uploadFeaturedImage'])->name('blog.post.upload.featured.image');
+
+    Route::get('/blog-categories', [BackBlogCategoryController::class, 'index'])->name('blog.categories.index');
+    Route::get('/blog-category/create', [BackBlogCategoryController::class, 'create'])->name('blog.category.create');
+    Route::post('/blog-category', [BackBlogCategoryController::class, 'store'])->name('blog.category.store');
+    Route::get('/blog-category/{blogCategoryObj}/edit', [BackBlogCategoryController::class, 'edit'])->name('blog.category.edit');
+    Route::put('/blog-category/{blogCategoryObj}', [BackBlogCategoryController::class, 'update'])->name('blog.category.update');
+    Route::get('/blog-category/{blogCategoryObj}', [BackBlogCategoryController::class, 'show'])->name('blog.category.show');
+    Route::delete('/blog-category/{blogCategoryObj}', [BackBlogCategoryController::class, 'destroy'])->name('blog.category.destroy');
+    Route::get('fetchBlogCategoriesAjax', [BackBlogCategoryController::class, 'fetchBlogCategoriesAjax'])->name('fetchBlogCategoriesAjax');
+    Route::post('updateBlogCategoryIsFeatured', [BackBlogCategoryController::class, 'updateBlogCategoryIsFeatured'])->name('updateBlogCategoryIsFeatured');
+    Route::post('updateBlogCategoryShowInHeader', [BackBlogCategoryController::class, 'updateBlogCategoryShowInHeader'])->name('updateBlogCategoryShowInHeader');
+    Route::post('updateBlogCategoryStatus', [BackBlogCategoryController::class, 'updateBlogCategoryStatus'])->name('updateBlogCategoryStatus');
+    Route::post('blog-category-upload-featured-image', [BackBlogCategoryController::class, 'uploadFeaturedImage'])->name('blog.category.upload.featured.image');
+
     
 });
 Auth::routes();

@@ -108,6 +108,7 @@ function checkRoute(slug) {
       if (
         response.urlIn == "CMS" ||
         response.urlIn == "Blog" ||
+        response.urlIn == "BlogCategory" ||
         response.urlIn == "Prducts"
       ) {
         html = `<span style="font-size:16px;">To Edit the existing Page Click Here :</span><br/>

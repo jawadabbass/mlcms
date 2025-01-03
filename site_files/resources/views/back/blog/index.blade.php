@@ -12,7 +12,7 @@
                             </a>
                         </li>
                         <li class="active">
-                            <a href="{{ base_url() . 'adminmedia/blog' }}">
+                            <a href="{{ base_url() . 'adminmedia/blog-posts' }}">
                                 Blog Management
                             </a>
                         </li>
@@ -41,17 +41,17 @@
                                 <div class="mb-3 row">
                                     <div class="col-lg-4">
 
-                                        <button type="button" class="btn btn-sm btn btn-info" onclick="showFilters();"
+                                        <button type="button" class="btn btn-sm btn-info" onclick="showFilters();"
                                             id="showFilterbtn btn-sm">Show
                                             Filters</button>
-                                        <button type="button" class="btn btn-sm btn btn-warning" onclick="hideFilters();"
+                                        <button type="button" class="btn btn-sm btn-warning" onclick="hideFilters();"
                                             id="hideFilterbtn btn-sm" style="display: none;">Hide Filters</button><br><br>
                                     </div>
 
                                     <div class="col-sm-8 text-end">
                                         <div class="text-end" style="padding-bottom:2px;">
-                                            <a href="{{ admin_url() . 'blog_categories' }}" class="btn btn-sm btn btn-warning">Categories</a>
-                                            <a href="{{ route('blog.post.create') }}" class="btn btn-sm btn btn-success">Add Blog Post</a>
+                                            <a href="{{ admin_url() . 'blog-categories' }}" class="btn btn-sm btn-warning">Categories</a>
+                                            <a href="{{ route('blog.post.create') }}" class="btn btn-sm btn-success">Add Blog Post</a>
                                         </div>
                                     </div>
 
@@ -77,6 +77,7 @@
                                             <th>Date</th>
                                             <th>Image</th>
                                             <th>Title</th>
+                                            <th>Category</th>
                                             <th>Comments</th>
                                             <th>Preview</th>
                                             <th>Is Featured?</th>
@@ -109,7 +110,7 @@
                 stateSave: true,
                 searching: false,
                 "order": [
-                    [0, "asc"]
+                    [0, "desc"]
                 ],
                 paging: true,
                 info: true,
@@ -134,6 +135,10 @@
                     {
                         data: 'title',
                         name: 'title'
+                    },
+                    {
+                        data: 'cate_ids',
+                        name: 'cate_ids'
                     },
                     {
                         data: 'total_unrevised_comments',

@@ -85,6 +85,9 @@ $(function () {
     if ($('#description').length) {
         bindCKeditor('description');
     }
+    if ($('#cate_description').length) {
+        bindCKeditor('cate_description');
+    }
     if ($('#body').length) {
         bindCKeditor('body');
     }
