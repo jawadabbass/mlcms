@@ -54,7 +54,7 @@ class LeadStatUrlController extends Controller
             ->addColumn('action', function ($leadStatUrlObj) {
                 return '
                 		<a href="' . route('leadStatUrl.edit', ['leadStatUrlObj' => $leadStatUrlObj->id]) . '" class="btn btn-warning m-2"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-						<a href="javascript:void(0);" onclick="deleteLeadStatUrl(' . $leadStatUrlObj->id . ');"  class="btn btn-danger m-2"><i class="fa fa-trash-o" aria-hidden="true"></i></a>';
+						<a href="javascript:void(0);" onclick="deleteLeadStatUrl(' . $leadStatUrlObj->id . ');"  class="btn btn-danger m-2"><i class="fa fa-trash" aria-hidden="true"></i></a>';
             })
             ->rawColumns(['url', 'url_internal_external', 'action'])
             ->orderColumns(['referrer', 'url', 'url_internal_external'], ':column $1')

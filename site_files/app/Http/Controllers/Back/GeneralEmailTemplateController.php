@@ -41,7 +41,7 @@ class GeneralEmailTemplateController extends Controller
             ->addColumn('action', function ($generalEmailTemplates) {
                 return '
                 <a href="' . route('generalEmailTemplates.edit', ['generalEmailTemplateObj' => $generalEmailTemplates->id]) . '" class="btn btn-warning m-1"><i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;Edit</a>
-                <a href="' . route('generalEmailTemplates.destroy', ['generalEmailTemplateObj' => $generalEmailTemplates->id]) . '" class="btn btn-danger m-1" onclick="return confirm(\'Are you sure?\')"><i class="fa fa-trash-o" aria-hidden="true"></i>&nbsp;Delete</a>
+                <a href="' . route('generalEmailTemplates.destroy', ['generalEmailTemplateObj' => $generalEmailTemplates->id]) . '" class="btn btn-danger m-1" onclick="return confirm(\'Are you sure?\')"><i class="fa fa-trash" aria-hidden="true"></i>&nbsp;Delete</a>
                 ';
             })
             ->rawColumns(['action'])

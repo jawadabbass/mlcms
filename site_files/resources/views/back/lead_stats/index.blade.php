@@ -146,7 +146,7 @@
                                                         </td>
                                                         <td>
                                                             @if ($row['totalReferrerCount'] > 0)
-                                                                <a href="{{ route('clear.lead.stats', ['referrer'=>$row['referrer']]) }}" onclick="return confirm('Are you sure?')" class="m-1 btn btn-sm btn-warning d-none"><i class="fa fa-trash-o" aria-hidden="true"></i>Clear Stats</a>
+                                                                <a href="{{ route('clear.lead.stats', ['referrer'=>$row['referrer']]) }}" onclick="return confirm('Are you sure?')" class="m-1 btn btn-sm btn-warning d-none"><i class="fa fa-trash" aria-hidden="true"></i>Clear Stats</a>
                                                             @endif
                                                             <a href="{{ route('delete.lead.referrer', ['referrer' => $row['referrer']]) }}"
                                                                 onclick="return confirm('Are you sure?')"
