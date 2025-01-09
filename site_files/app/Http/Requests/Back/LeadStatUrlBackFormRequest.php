@@ -24,15 +24,22 @@ class LeadStatUrlBackFormRequest extends Request
      */
     public function rules()
     {
-        return [
+        $rules = [
             'url' => 'required',
+            'url_internal_external' => 'required',
         ];
+        if (request('url_internal_external') == 'internal') {
+            $rules['final_destination'] = 'required';
+        }
+        return $rules;
     }
 
     public function messages()
     {
         return [
             'url.required' => __('URL is required'),
+            'url_internal_external.required' => __('Is URL Internal/External'),
+            'final_destination.required' => __('Final destination is required'),
         ];
     }
 }

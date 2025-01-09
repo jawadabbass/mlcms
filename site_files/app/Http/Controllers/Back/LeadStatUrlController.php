@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Back;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Back\LeadStat;
-use App\Models\Back\ContactUsRequest;
 use App\Models\Back\LeadStatUrl;
 use App\Traits\LeadStatUrlTrait;
+use App\Models\Back\QuoteRequest;
+use App\Models\Back\ContactUsData;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
@@ -50,8 +53,8 @@ class LeadStatUrlController extends Controller
             })
             ->addColumn('action', function ($leadStatUrlObj) {
                 return '
-                		<a href="' . route('leadStatUrl.edit', ['leadStatUrlObj' => $leadStatUrlObj->id]) . '" class="m-2 btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-						<a href="javascript:void(0);" onclick="deleteLeadStatUrl(' . $leadStatUrlObj->id . ');"  class="m-2 btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>';
+                		<a href="' . route('leadStatUrl.edit', ['leadStatUrlObj' => $leadStatUrlObj->id]) . '" class="btn btn-warning m-2"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+						<a href="javascript:void(0);" onclick="deleteLeadStatUrl(' . $leadStatUrlObj->id . ');"  class="btn btn-danger m-2"><i class="fa fa-trash-o" aria-hidden="true"></i></a>';
             })
             ->rawColumns(['url', 'url_internal_external', 'action'])
             ->orderColumns(['referrer', 'url', 'url_internal_external'], ':column $1')
@@ -66,6 +69,7 @@ class LeadStatUrlController extends Controller
         $msg = '';
         $leadStatUrlObj = new LeadStatUrl();
         $leadStatUrlObj->url_internal_external = 'internal';
+        $leadStatUrlObj->final_destination = url('/');
         return view('back.lead_stat_urls.create')
             ->with('leadStatUrlObj', $leadStatUrlObj)
             ->with('title', $title)
@@ -108,7 +112,8 @@ class LeadStatUrlController extends Controller
     private function deleteLeadStateUrl(LeadStatUrl $leadStatUrlObj)
     {
         LeadStat::where('referrer', 'like', $leadStatUrlObj->referrer)->delete();
-        ContactUsRequest::where('referrer', 'like', $leadStatUrlObj->referrer)->update(['referrer' => '']);
+        ContactUsData::where('referrer', 'like', $leadStatUrlObj->referrer)->update(['referrer' => '']);
+        QuoteRequest::where('referrer', 'like', $leadStatUrlObj->referrer)->update(['referrer' => '']);
         $leadStatUrlObj->delete();
     }
     public function destroy(LeadStatUrl $leadStatUrlObj)
@@ -137,21 +142,26 @@ class LeadStatUrlController extends Controller
             'url' => 'required',
             'url_internal_external' => 'required',
         ];
+        if ($request->input('url_internal_external') == 'internal') {
+            $rules['final_destination'] = 'required';
+        }
         $messages = [
             'url.required' => __('URL is required'),
             'url_internal_external.required' => __('Is URL Internal/External'),
+            'final_destination.required' => __('Final destination is required'),
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
         if ($validator->fails()) {
+            Session::flash('_old_input', $request->all());
             $html = view('back.lead_stat_urls.edit_url')
                 ->with('errors', $validator->errors())
                 ->with('leadStatUrlObj', $leadStatUrlObj)->render();
             return response()->json(['html' => $html, 'closeModal' => 'n']);
         }
 
-        $leadStatUrlObj->url = $request->input('url', '');
-        $leadStatUrlObj->url_internal_external = $request->input('url_internal_external', 'internal');
+        $leadStatUrlObj = $this->setLeadStatUrlValues($request, $leadStatUrlObj);
         $leadStatUrlObj->update();
+
         $html = view('back.lead_stat_urls.edit_url_done')->render();
         return response()->json(['html' => $html, 'closeModal' => 'y']);
     }

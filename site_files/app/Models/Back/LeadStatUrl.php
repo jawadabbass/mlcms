@@ -13,6 +13,8 @@ class LeadStatUrl extends Model
     protected $fillable = [
         'id',
         'url',
+        'final_destination',
+        'url_internal_external',
         'created_at',
         'updated_at',
     ];

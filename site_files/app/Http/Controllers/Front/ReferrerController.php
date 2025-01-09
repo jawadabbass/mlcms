@@ -14,7 +14,11 @@ class ReferrerController extends Controller
         if (null !== $leadStatUrlObj) {
             $referrer = $leadStatUrlObj->referrer;
             $request->session()->put('referrer', $referrer);
-            return redirect('/');
+            if (!empty($leadStatUrlObj->final_destination)) {
+                return redirect($leadStatUrlObj->final_destination);
+            } else {
+                return redirect('/');
+            }
         }
     }
 }

@@ -67,15 +67,27 @@
     }
 
     function adjust_URL_Keyword(val) {
-        var url_internal = `<label class="form-label">URL:*</label>
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">http://www.popcornlady.com/ref/</span>
+        var REF_URL = '{{ config('Constants.REF_URL') }}';
+        var url_internal = `
+        <div class="row">
+            <div class="col-md-12">
+                <label class="form-label">URL:*</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            ${REF_URL}
+                        </span>
+                    </div>
+                    <input id="url" name="url" value="" type="text"
+                        class="form-control" placeholder="URL" aria-describedby="url">
+                </div>
             </div>
-            <input id="url" name="url" value="" type="text"
-                class="form-control " placeholder="URL" aria-describedby="url">
-        </div>
-        `;
+            <div class="col-md-12">
+                <label class="form-label">Final Destination:*</label>
+                    <input id="final_destination" name="final_destination" value="" type="text"
+                        class="form-control" placeholder="Final Destination" aria-describedby="final_destination">
+            </div>
+        </div>`;
         var url_external = `<label class="form-label">Keyword:*</label>
             <input id="url" name="url" value="" type="text"
                 class="form-control " placeholder="Keyword" aria-describedby="url">
