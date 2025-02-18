@@ -10,6 +10,7 @@ use App\Models\Back\CmsModuleData;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Back\ContactUsRequest;
+use Exception;
 
 class ContactUsController extends Controller
 {
@@ -82,6 +83,22 @@ class ContactUsController extends Controller
             /******************************** */
             /******************************** */
             $contact_emails = Setting::first();
+
+
+            $data = $request->all();
+            $ip = $request->ip();
+            /*
+            $subject = FindInsettingArr('business_name') . ' | Contact Us Form Submitted';
+            $message = view('mail.contact', compact('data', 'ip'))->render();
+            
+            if($this->sendMail($contact_emails->to_email, $contact_emails->cc_email, $contact_emails->bcc_email, $subject, $message)){
+                echo json_encode(['status' => true, 'error' => 'Thank you, your message has been sent']);
+            }else{
+                echo json_encode(['status' => true, 'error' => 'Thank you, your message has been sent!!']);
+            }
+            return;
+            */
+
             $toArray = explode(',', $contact_emails->to_email);
             $ccArray = explode(',', $contact_emails->cc_email);
             $bccArray = explode(',', $contact_emails->bcc_email);
@@ -108,7 +125,7 @@ class ContactUsController extends Controller
                 if (!empty($bccArray)) {
                     $mail->bcc($bccArray);
                 }
-                $mail->send(new ContactUs($request->all(), $request->ip()));
+                $mail->send(new ContactUs($data, $ip));
             }
             echo json_encode(['status' => true, 'error' => 'Thank you, your message has been sent']);
             return;
@@ -116,6 +133,28 @@ class ContactUsController extends Controller
             /* echo json_encode(['status' => false, 'error' => 'Email can not be sent; Unwanted Keyword detected']); */
             echo json_encode(['status' => true, 'error' => 'Thank you, your message has been sent!']);
             return;
+        }
+    }
+
+    public function sendMail($to = '', $cc = '', $bcc = '', $subject = '', $message = '')
+    {
+        $headers[] = 'MIME-Version: 1.0';
+        $headers[] = 'Content-type: text/html; charset=iso-8859-1';
+
+        $headers[] = 'To: ' . $to;
+        $headers[] = 'From: Info <info@atlservicesolutions.com>';
+        if (!empty($cc)) {
+            $headers[] = 'Cc: ' . $cc;
+        }
+        if (!empty($bcc)) {
+            $headers[] = 'Bcc: ' . $bcc;
+        }
+        try {
+            mail($to, $subject, $message, implode("\r\n", $headers));
+            return true;
+        } catch (Exception $e) {
+            //dd($e->getMessage());
+            return false;
         }
     }
 }
