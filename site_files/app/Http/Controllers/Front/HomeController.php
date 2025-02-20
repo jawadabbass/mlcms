@@ -64,8 +64,9 @@ class HomeController extends Controller
         $seoArr = SeoArray($about);
 
         $cmsModuleDataImages = getCmsModuleDataImagesById(104);
+        $cmsModuleVideos = getCmsModuleVideosById(104);
 
-        $html = view('front.home.about-us', compact('about', 'seoArr', 'cmsModuleDataImages'))->render();
+        $html = view('front.home.about-us', compact('about', 'seoArr', 'cmsModuleDataImages', 'cmsModuleVideos'))->render();
         $parser = \WyriHaximus\HtmlCompress\Factory::construct();
         $html = $parser->compress($html);
         if (Auth::check() == false) {

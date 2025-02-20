@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Back\CmsModule;
+use App\Models\Back\ModuleVideo;
 use App\Models\Back\CmsModuleData;
 use App\Models\Back\ModuleDataImage;
 
@@ -104,12 +105,42 @@ function getCmsModuleDataImages($images)
                 'image_title' => $image->image_title,
                 'isBeforeAfter' => $isBeforeAfter,
                 'isBeforeAfterHaveTwoImages' => $isBeforeAfterHaveTwoImages,
-        ];
+            ];
         }
     }
     return $imagesArray;
 }
+/******************************** */
+function getCmsModuleVideosById($module_data_id)
+{
+    $videos = ModuleVideo::where('module_data_id', $module_data_id)->get();
+    return getCmsModuleVideos($videos);
+}
 
+function getCmsModuleVideosBySlug($post_slug)
+{
+    $moduleData = CmsModuleData::where('post_slug', 'like', $post_slug)->first();
+    $videos = ModuleVideo::where('module_data_id', $moduleData->id)->get();
+    return getCmsModuleVideos($videos);
+}
+
+function getCmsModuleVideos($videos)
+{
+    $videosArray = [];
+    if (count($videos) > 0) {
+        foreach ($videos as $videoObj) {
+            $thumb = getImage('module/' . $videoObj->module_type . '/videos', $videoObj->video_thumb_img, 'thumb');
+            $video = $videoObj->video_link_embed_code;
+            $videosArray[] = (object)[
+                'id' => $videoObj->id,
+                'thumb' => $thumb,
+                'video' => $video,
+            ];
+        }
+    }
+    return $videosArray;
+}
+/******************************** */
 function generateModuleCodeFieldLabel($field_counter, $errors, $oldData, $hide_show)
 {
     $field_counter_minus_1 = $field_counter - 1;
