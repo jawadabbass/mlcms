@@ -59,7 +59,7 @@ class VideoController extends Controller
             $recordUpdateHistoryData = [
                 'record_id' => $video->id,
                 'record_title' => $video->heading,
-                'record_link' => url('adminmedia/videos/edit/'.$video->id),
+                'record_link' => url('adminmedia/videos/edit/' . $video->id),
                 'model_or_table' => 'Video',
                 'admin_id' => auth()->user()->id,
                 'ip' => request()->ip(),
@@ -127,12 +127,12 @@ class VideoController extends Controller
             if ($request->video_type == 'Youtube' || $request->video_type == 'Vimeo') {
                 if ($request->video_type == 'Youtube') {
                     $youtubeID = youtubelink2id($request->linkk);
-                    $image = @file_get_contents('https://img.youtube.com/vi/' . $youtubeID . '/0.jpg');
+                    $image = url_get_contents('https://img.youtube.com/vi/' . $youtubeID . '/0.jpg');
                 }
                 if ($request->video_type == 'Vimeo') {
                     $vimeoID = vimeolink2id($request->linkk);
                     $imgLink = vimeoid2img($vimeoID);
-                    $image = @file_get_contents($imgLink);
+                    $image = url_get_contents($imgLink);
                 }
                 $image_source = storage_public('/uploads/videos/thumb/' . $img_name);
                 file_put_contents($image_source, $image);
@@ -150,7 +150,7 @@ class VideoController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $Video->id,
             'record_title' => $Video->heading,
-            'record_link' => url('adminmedia/videos/edit/'.$Video->id),
+            'record_link' => url('adminmedia/videos/edit/' . $Video->id),
             'model_or_table' => 'Video',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -167,7 +167,7 @@ class VideoController extends Controller
             'heading' => 'required',
             'fimg' => 'mimes:jpg,png,jpeg'
         ]);
-        
+
         $idd = (int)$request->idd;
         if ($idd == 0) {
             abort(404);
@@ -205,12 +205,12 @@ class VideoController extends Controller
                 if ($request->video_type == 'Youtube' || $request->video_type == 'Vimeo') {
                     if ($request->video_type == 'Youtube') {
                         $youtubeID = youtubelink2id($request->linkk);
-                        $image = @file_get_contents('https://img.youtube.com/vi/' . $youtubeID . '/0.jpg');
+                        $image = url_get_contents('https://img.youtube.com/vi/' . $youtubeID . '/0.jpg');
                     }
                     if ($request->video_type == 'Vimeo') {
                         $vimeoID = vimeolink2id($request->linkk);
                         $imgLink = vimeoid2img($vimeoID);
-                        $image = @file_get_contents($imgLink);
+                        $image = url_get_contents($imgLink);
                     }
                     $image_source = storage_public('/uploads/videos/thumb/' . $img_name);
                     @unlink(storage_public('/uploads/videos/thumb/' . $Video->video_img));
@@ -232,7 +232,7 @@ class VideoController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $Video->id,
             'record_title' => $Video->heading,
-            'record_link' => url('adminmedia/videos/edit/'.$Video->id),
+            'record_link' => url('adminmedia/videos/edit/' . $Video->id),
             'model_or_table' => 'Video',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),

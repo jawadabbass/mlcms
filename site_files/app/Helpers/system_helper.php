@@ -78,11 +78,11 @@ function showUploadedVideo($link, $type, $w = '100%', $h = '400', $class = 'd-bl
     if ($type == 'upload') {
         $width = '';
         $height = '';
-        if(!empty($w)){
-            $width = ' width="'.$w.'" ';
+        if (!empty($w)) {
+            $width = ' width="' . $w . '" ';
         }
-        if(!empty($h)){
-            $height = ' height="'.$h.'" ';
+        if (!empty($h)) {
+            $height = ' height="' . $h . '" ';
         }
         return '
         <video ' . $width . ' ' . $height . ' class="' . $class . '" autoplay playsinline controls>
@@ -134,26 +134,24 @@ function youtubelink2id($link)
 }
 function vimeolink2id($link)
 {
-    preg_match('/video\/([\w+\-+]+)[\"\?]/', $link, $match);
-    if (isset($match[1])) {
-        $vimeo_id = $match[1];
-        return $vimeo_id;
+    //https://vimeo.com/1032494537?share=copy
+    $arr1 = explode('?', $link);
+    $arr = explode('vimeo.com/', $arr1[0]);
+    if (isset($arr[1])) {
+        return $arr[1];
+    } else {
+        return '';
     }
-    return '';
 }
 function vimeoid2img($link)
 {
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, 'http://vimeo.com/api/v2/video/' . $link . '.php');
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $hash = curl_exec($ch);
-    curl_close($ch);
-    ///$hash=file_get_contents('http://vimeo.com/api/v2/video/'.$link.'.php');
-    $hash = unserialize($hash);
-    if (isset($hash[0]['thumbnail_large'])) {
-        return $hash[0]['thumbnail_large'];
+    $hash = url_get_contents('https://vimeo.com/api/oembed.json?url=https://vimeo.com/' . $link);
+    $hash = json_decode($hash);
+    if (isset($hash->thumbnail_url)) {
+        return $hash->thumbnail_url;
+    } else {
+        return '';
     }
-    return '';
 }
 // ************************************************** //
 function settingArr()
@@ -360,7 +358,7 @@ function recordUpdateHistory($data)
 {
     deleteExtraRecordUpdateHistory($data);
     $history = new RecordUpdateHistory();
-    foreach($data as $key=>$value){
+    foreach ($data as $key => $value) {
         $history->{$key} = $value;
     }
     $history->save();

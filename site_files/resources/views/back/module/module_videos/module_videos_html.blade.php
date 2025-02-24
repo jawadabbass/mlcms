@@ -14,6 +14,7 @@
                 <select class="form-control" name="video_type" id="video_type">
                     <option value="">Select Video Type</option>
                     <option value="Youtube">YouTube Video</option>
+                    <option value="Vimeo">Vimeo Video</option>
                     <option value="Upload">Video Upload</option>
                 </select>
             </div>
