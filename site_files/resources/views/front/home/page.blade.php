@@ -63,15 +63,30 @@
                     @endforeach
                 </div>
             @endif
+
+            @if (isset($cmsModuleVideos) && count($cmsModuleVideos) > 0)
+                <div class="row">
+                    @foreach ($cmsModuleVideos as $videoObj)
+                        <div class="col-xs-6 col-md-3">
+                            <div class="thumbnail-item">
+                                <a href="javascript:void(0);" onclick="showModuleVideoModal('{{ $videoObj->video }}');"
+                                    class="ctimgbox" title="">
+                                    <img src="{{ $videoObj->thumb }}">
+                                </a>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
         </div>
     </div>
 @endsection
 @section('beforeHeadClose')
-<style>
-    .mb-3px{
-        margin-bottom:3px;
-    }
-</style>
+    <style>
+        .mb-3px {
+            margin-bottom: 3px;
+        }
+    </style>
 @endsection
 @section('beforeBodyClose')
     <div class="modal fade" id="beforeAfterImageModal" tabindex="-1" aria-labelledby="beforeAfterImageModalLabel"
@@ -80,6 +95,18 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="row text-center" id="beforeAfterImageModalContainer"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center row" id="videoContainer"></div>
                 </div>
             </div>
         </div>
@@ -98,6 +125,19 @@
                             </img-comparison-slider>`;
             $('#beforeAfterImageModalContainer').html(htmlStr);
             $('#beforeAfterImageModal').modal('show');
+        }
+    </script>
+    <script>
+        $("#videoModal").on('hidden.bs.modal', function(e) {
+            $("#videoModal iframe").attr("src", '');
+            $("#videoModal video").attr("src", '');
+            $("#videoContainer").html('');
+        });
+
+        function showModuleVideoModal(video) {
+            var htmlStr = `${video}`;
+            $('#videoContainer').html(htmlStr);
+            $('#videoModal').modal('show');
         }
     </script>
 @endsection

@@ -118,12 +118,15 @@ class HomeController extends Controller
             $menu_types = MenuType::orderBy('id', 'ASC')->get();
             $seoArr = getSeoArrayModule($data->id);
             $cmsModuleDataImages = getCmsModuleDataImagesBySlug($slug);
+            $cmsModuleVideos = getCmsModuleVideosBySlug($slug);
+
+
             $editPageID = $data->id;
             if ($data->cms_module_id == 33) {
-                return view('front.home.full', compact('data', 'seoArr', 'module', 'menu_types', 'editPageID', 'cmsModuleDataImages'));
+                return view('front.home.full', compact('data', 'seoArr', 'module', 'menu_types', 'editPageID', 'cmsModuleDataImages', 'cmsModuleVideos'));
             } else {
                 // return view('front.home.page', compact('data', 'seoArr','module','menu_types','editPageID'));
-                $html = view('front.home.page', compact('data', 'seoArr', 'module', 'menu_types', 'editPageID', 'cmsModuleDataImages'))->render();
+                $html = view('front.home.page', compact('data', 'seoArr', 'module', 'menu_types', 'editPageID', 'cmsModuleDataImages', 'cmsModuleVideos'))->render();
                 $parser = \WyriHaximus\HtmlCompress\Factory::construct();
                 $html = $parser->compress($html);
                 Cache::put($slug, $html, cacheTime());
