@@ -39,8 +39,17 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $sendResult = array('name' => '', 'email' => '',);
-        if (isset($_GET['name']) || isset($_GET['email']) || isset($_GET['previous']) || isset($_GET['package'])) {
+        $sendResult = array('name' => '');
+        $name = '';
+        $email = '';
+        if (isset($_GET['name'])) {
+            $inputValue = explode(' (', $_GET['name']);
+            $name = $inputValue[0];
+            if (isset($inputValue[1])) {
+                $email = str_replace(')', '', $inputValue[1]);
+            }
+        }
+        if (isset($_GET['name']) || isset($_GET['previous']) || isset($_GET['package'])) {
             $searchArr = array();
             $serachLink = '';
             foreach ($sendResult as $key => $value) {
@@ -57,9 +66,14 @@ class ClientController extends Controller
                     unset($searchArr[$key]);
                 }
             }
-            $specialistQuery = Client::with('user')->with('client_assessment.assessment_question')->with('clientPackage')->orderBy('dated', 'DESC');
-            if (isset($_GET['name']) && !empty($_GET['name'])) {
-                $specialistQuery->where('name', 'like', '%' . $_GET['name'] . '%')->orWhere('email', 'like', '%' . $_GET['name'] . '%')->where('email', 'like', '%' . $_GET['name'] . '%')->orWhere('name', 'like', '%' . $_GET['name'] . '%');
+            $specialistQuery = Client::with('user')
+                ->with('client_assessment.assessment_question')
+                ->with('clientPackage');
+            if ((isset($name) && !empty($name)) || (isset($email) && !empty($email))) {
+                $specialistQuery->where(function ($query) use ($name, $email) {
+                    $query->where('name', 'like', '%' . $name . '%')
+                        ->orWhere('email', 'like', '%' . $email . '%');
+                });
             }
             if (isset($_GET['dates']) && !empty($_GET['dates'])) {
                 $date = $_GET['dates'];
@@ -93,6 +107,25 @@ class ClientController extends Controller
         $get_all_packages = getModuleData(37);
         $content_condition = ContentCondition::select('id', 'title')->whereNotNull('title')->get();
         return view('back.clients.index_view', compact('result', 'title', 'data', 'sms_template', 'get_all_packages', 'content_condition'));
+    }
+
+    public function searchClient(Request $request)
+    {
+        $searchTerm = $request->input('q', '');
+        $resArr = [];
+        if (!empty($searchTerm)) {
+            $specialistQuery = Client::select('name', 'email');
+            $specialistQuery->where('name', 'like', '%' . $searchTerm . '%')->orWhere('email', 'like', '%' . $searchTerm . '%');
+            $specialistQuery->orderBy('name', 'ASC');
+
+            if ($specialistQuery->count() > 0) {
+                $result = $specialistQuery->get();
+                foreach ($result as $res) {
+                    $resArr[] = ['name' => $res->name . ' (' . $res->email . ')'];
+                }
+            }
+        }
+        echo json_encode($resArr);
     }
     /**
      * Show the form for creating a new resource.
@@ -140,7 +173,7 @@ class ClientController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $client->id,
             'record_title' => $client->email,
-            'record_link' => url('adminmedia/manage_clients/'.$client->id.'/edit'),
+            'record_link' => url('adminmedia/manage_clients/' . $client->id . '/edit'),
             'model_or_table' => 'Client',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -182,7 +215,7 @@ class ClientController extends Controller
             $recordUpdateHistoryData = [
                 'record_id' => $clientObj->id,
                 'record_title' => $clientObj->email,
-                'record_link' => url('adminmedia/manage_clients/'.$clientObj->id.'/edit'),
+                'record_link' => url('adminmedia/manage_clients/' . $clientObj->id . '/edit'),
                 'model_or_table' => 'Client',
                 'admin_id' => auth()->user()->id,
                 'ip' => request()->ip(),
@@ -266,7 +299,7 @@ class ClientController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $client->id,
             'record_title' => $client->email,
-            'record_link' => url('adminmedia/manage_clients/'.$client->id.'/edit'),
+            'record_link' => url('adminmedia/manage_clients/' . $client->id . '/edit'),
             'model_or_table' => 'Client',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -564,7 +597,7 @@ class ClientController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $client->id,
             'record_title' => $client->email,
-            'record_link' => url('adminmedia/manage_clients/'.$client->id.'/edit'),
+            'record_link' => url('adminmedia/manage_clients/' . $client->id . '/edit'),
             'model_or_table' => 'Client',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),

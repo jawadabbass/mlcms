@@ -51,7 +51,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3 form-group">
-                                        <input type="text" name="name" class="form-control"
+                                        <input type="text" name="name" id="search-box" class="form-control"
                                             placeholder="Search By Name,Email" value='<?php if (isset($_GET['name'])) {
                                                 echo $_GET['name'];
                                             } ?>'>
@@ -740,5 +740,32 @@
                 $('#client_check_all').prop('checked', false);
             }
         }
+    </script>
+    <script>
+        $(document).ready(function() {
+            var searchInput = $('#search-box');
+
+            // Initialize Typeahead
+            searchInput.typeahead({
+                minLength: 2, // Minimum characters before searching
+                highlight: true
+            }, {
+                name: 'data',
+                display: 'name', // Adjust according to API response
+                source: function(query, syncResults, asyncResults) {
+                    $.ajax({
+                        url: '{{ route('search.client') }}', // Backend PHP script
+                        type: 'GET',
+                        data: {
+                            q: query
+                        },
+                        dataType: 'json',
+                        success: function(data) {
+                            asyncResults(data);
+                        }
+                    });
+                }
+            });
+        });
     </script>
 @endsection

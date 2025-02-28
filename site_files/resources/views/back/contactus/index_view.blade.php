@@ -53,7 +53,7 @@
                                 } ?>">
                                 <div class="row" onKeyPress="return checkSubmit(event)">
                                     <div class="col-md-3">
-                                        <input type="text" name="name" class="form-control"
+                                        <input type="text" name="name" id="search-box" class="form-control"
                                             placeholder="Search By Name,Email" value='<?php if (isset($_GET['name'])) {
                                                 echo $_GET['name'];
                                             } ?>'>
@@ -158,10 +158,14 @@
                                                         </td> --}}
                                                         <td>{{ fmtDate($row->dated, 'd M, Y') }}</td>
                                                         <td>
-                                                            <a href="javascript:;" onclick="showLeadCommentModal({{ $row->id }});" class="btn btn-sm btn-success">
+                                                            <a href="javascript:;"
+                                                                onclick="showLeadCommentModal({{ $row->id }});"
+                                                                class="btn btn-sm btn-success">
                                                                 <i class="fas fa-comment" aria-hidden="true"></i>
                                                             </a>
-                                                            <div style="display: none;" id="comments_div_{{ $row->id }}">{!! $row->comments !!}</div>
+                                                            <div style="display: none;"
+                                                                id="comments_div_{{ $row->id }}">
+                                                                {!! $row->comments !!}</div>
                                                         </td>
                                                     </tr>
                                                     <tr style="display: none;" id="subtrr{{ $row->id }}">
@@ -464,7 +468,7 @@
     @include('back.clients.common.sms_script')
     <script>
         function showLeadCommentModal(id) {
-            $('#leadCommentModalContainer').html($('#comments_div_'+id).html());
+            $('#leadCommentModalContainer').html($('#comments_div_' + id).html());
             $('#leadCommentModal').modal('show');
         }
         $(document).ready(function() {
@@ -907,5 +911,32 @@
             $('#read_lead').val(status);
             $('#search_form').submit();
         }
+    </script>
+    <script>
+        $(document).ready(function() {
+            var searchInput = $('#search-box');
+
+            // Initialize Typeahead
+            searchInput.typeahead({
+                minLength: 2, // Minimum characters before searching
+                highlight: true
+            }, {
+                name: 'data',
+                display: 'name', // Adjust according to API response
+                source: function(query, syncResults, asyncResults) {
+                    $.ajax({
+                        url: '{{ route('search.in.leads') }}', // Backend PHP script
+                        type: 'GET',
+                        data: {
+                            q: query
+                        },
+                        dataType: 'json',
+                        success: function(data) {
+                            asyncResults(data);
+                        }
+                    });
+                }
+            });
+        });
     </script>
 @endsection

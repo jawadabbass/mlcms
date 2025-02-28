@@ -37,6 +37,15 @@ class ContactUsController extends Controller
     {
         $read_lead = $request->input('read_lead', 2);
         $sendResult = array('name' => '', 'email' => '', 'dates' => '');
+        $name = '';
+        $email = '';
+        if (isset($_GET['name'])) {
+            $inputValue = explode(' (', $_GET['name']);
+            $name = $inputValue[0];
+            if (isset($inputValue[1])) {
+                $email = str_replace(')', '', $inputValue[1]);
+            }
+        }
         if (isset($_GET['name']) || isset($_GET['email']) || isset($_GET['dates'])) {
             $searchArr = array();
             $serachLink = '';
@@ -58,8 +67,11 @@ class ContactUsController extends Controller
             if ($read_lead != 2) {
                 $specialistQuery->where('read_lead', $read_lead);
             }
-            if (isset($_GET['name']) && !empty($_GET['name'])) {
-                $specialistQuery->where('name', 'like', '%' . $_GET['name'] . '%')->orWhere('email', 'like', '%' . $_GET['name'] . '%')->where('email', 'like', '%' . $_GET['name'] . '%')->orWhere('name', 'like', '%' . $_GET['name'] . '%');
+            if ((isset($name) && !empty($name)) || (isset($email) && !empty($email))) {
+                $specialistQuery->where(function ($query) use ($name, $email) {
+                    $query->where('name', 'like', '%' . $name . '%')
+                        ->orWhere('email', 'like', '%' . $email . '%');
+                });
             }
             if (isset($_GET['dates']) && !empty($_GET['dates'])) {
                 $date = $_GET['dates'];
@@ -92,6 +104,26 @@ class ContactUsController extends Controller
         $sms_template = MessageTemplate::all();
         return view('back.contactus.index_view', compact('result', 'title', 'data', 'clientArr', 'contact', 'get_all_packages', 'sms_template'));
     }
+
+    public function searchInLeads(Request $request)
+    {
+        $searchTerm = $request->input('q', '');
+        $resArr = [];
+        if (!empty($searchTerm)) {
+            $specialistQuery = ContactUs::select('name', 'email');
+            $specialistQuery->where('name', 'like', '%' . $searchTerm . '%')->orWhere('email', 'like', '%' . $searchTerm . '%');
+            $specialistQuery->orderBy('name', 'ASC');
+
+            if ($specialistQuery->count() > 0) {
+                $result = $specialistQuery->get();
+                foreach ($result as $res) {
+                    $resArr[] = ['name' => $res->name . ' (' . $res->email . ')'];
+                }
+            }
+        }
+        echo json_encode($resArr);
+    }
+
     public function index1()
     {
         $adminAlert = AdminAlert::where('keyy', 'contact_request')->first();
@@ -157,7 +189,7 @@ class ContactUsController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $contact->id,
             'record_title' => $contact->email,
-            'record_link' => url('adminmedia/contact_request/'.$contact->id.'/edit'),
+            'record_link' => url('adminmedia/contact_request/' . $contact->id . '/edit'),
             'model_or_table' => 'ContactUsRequest',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -200,7 +232,7 @@ class ContactUsController extends Controller
             $recordUpdateHistoryData = [
                 'record_id' => $clientObj->id,
                 'record_title' => $clientObj->email,
-                'record_link' => url('adminmedia/contact_request/'.$contact->id.'/edit'),
+                'record_link' => url('adminmedia/contact_request/' . $contact->id . '/edit'),
                 'model_or_table' => 'Client',
                 'admin_id' => auth()->user()->id,
                 'ip' => request()->ip(),
@@ -450,7 +482,7 @@ class ContactUsController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $contatUsRequestObj->id,
             'record_title' => $contatUsRequestObj->email,
-            'record_link' => url('adminmedia/contact_request/'.$contatUsRequestObj->id.'/edit'),
+            'record_link' => url('adminmedia/contact_request/' . $contatUsRequestObj->id . '/edit'),
             'model_or_table' => 'ContactUsRequest',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),

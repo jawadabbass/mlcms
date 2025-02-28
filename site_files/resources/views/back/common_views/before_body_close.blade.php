@@ -22,6 +22,7 @@
 <script src="{{ asset_storage('back/toggle_switch/bootstrap5-toggle.jquery.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset_storage('module/settings/admin/js/settings.js') }}"></script>
 <script type="text/javascript" src="{{ asset_storage('back/js/magicsuggest.js') }}"></script>
+<script type="text/javascript" src="{{ asset_storage('lib/typeahead.bundle.js') }}"></script>
 <script src="{{ asset_storage('back/js/AdminLTE/dist/js/adminlte.min.js') }}"></script>
 
 

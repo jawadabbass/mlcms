@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front\AjaxController;
@@ -68,6 +69,7 @@ use App\Http\Controllers\AdminAuth\ResetPasswordController as AdminAuthResetPass
 use App\Http\Controllers\AdminAuth\ForgotPasswordController as AdminAuthForgotPasswordController;
 use App\Http\Controllers\Back\RecordUpdateHistoryController as BackRecordUpdateHistoryController;
 use App\Http\Controllers\AdminAuth\ConfirmPasswordController as AdminAuthConfirmPasswordController;
+
 Route::prefix('adminmedia')->name('admin.')->group(function () {
     Route::get('login', [AdminAuthLoginController::class, 'showLoginForm'])->name('login');
     Route::post('login', [AdminAuthLoginController::class, 'login']);
@@ -122,7 +124,7 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     Route::post('/invoice/post_send_invoice', [BackInvoiceController::class, 'post']);
     Route::post('/invoice/re_send_invoice', [BackInvoiceController::class, 're_send_invoice']);
     Route::resource('/invoice', BackInvoiceController::class);
-    Route::resource('/menus', BackMenuController::class);    
+    Route::resource('/menus', BackMenuController::class);
     Route::get('/productSellStatus', [BackProductController::class, 'productSellStatus'])->name('product.sell.status');
     Route::resource('/products', BackProductController::class);
     Route::get('/videos/add/', [BackVideoController::class, 'add_video']);
@@ -130,7 +132,7 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     Route::post('/videos/edit', [BackVideoController::class, 'post_edit_video']);
     Route::post('/videos/add', [BackVideoController::class, 'post_add_video']);
     Route::get('/videos/ordering-set/', [BackVideoController::class, 'saveOrdering']);
-    Route::resource('/videos', BackVideoController::class);    
+    Route::resource('/videos', BackVideoController::class);
     Route::resource('/gallery', BackGalleryController::class);
     Route::post('/gallery/activate', [BackGalleryController::class, 'activate'])->name('album.activate');
     Route::post('/gallery/is_feature', [BackGalleryController::class, 'isfeatured'])->name('album.feature');
@@ -147,7 +149,7 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     Route::post('/save_gallery_image_crop_image', [BackGalleryController::class, 'ajax_crop_gallery_img']);
     Route::post('/albums/gallery/markBeforeAfter', [BackGalleryController::class, 'markBeforeAfter']);
     Route::post('/getGalleryImageAltTitle', [BackGalleryController::class, 'getGalleryImageAltTitle']);
-    Route::post('/saveGalleryImageAltTitle', [BackGalleryController::class, 'saveGalleryImageAltTitle']);    
+    Route::post('/saveGalleryImageAltTitle', [BackGalleryController::class, 'saveGalleryImageAltTitle']);
     Route::get('/gallery4444/ordering-set/', [BackGalleryController::class, 'saveOrdering'])->name('set999_ordering_gallery');
     Route::resource('/media', BackMediaController::class);
     Route::post('/media/add_album', [BackMediaController::class, 'add_album']);
@@ -188,20 +190,20 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     Route::get('/leftsidebar/session', [BackDashboardController::class, 'sideBarLeft']);
     Route::get('/search', [BackSearchController::class, 'search']);
     Route::resource('/manage-theme', BackThemeController::class);
-    Route::post('/manage-theme/update', [BackThemeController::class, 'save']);    
+    Route::post('/manage-theme/update', [BackThemeController::class, 'save']);
     Route::resource('/question', BackPackageQuestionController::class);
     Route::get('/addView', [BackPackageQuestionController::class, 'addView'])->name('question.addView');
-    Route::post('/question-update/{id}', [BackPackageQuestionController::class, 'update'])->name('question_update');        
+    Route::post('/question-update/{id}', [BackPackageQuestionController::class, 'update'])->name('question_update');
     Route::resource('/assesment_question', BackAssesmentQuestionController::class);
     Route::get('/assesment-addView', [BackAssesmentQuestionController::class, 'addView'])->name('assesment_question.addView');
     Route::get('/delete-assesment-question/{id}', [BackAssesmentQuestionController::class, 'destroy'])->name('delete_assesment_question');
     Route::post('/assesment-update/{id}', [BackAssesmentQuestionController::class, 'update'])->name('assesment_update');
-    Route::post('/assesment-receipts-email', [BackAssesmentQuestionController::class, 'update_receipts_assessment_question'])->name('assesment_update_receipts_email');        
+    Route::post('/assesment-receipts-email', [BackAssesmentQuestionController::class, 'update_receipts_assessment_question'])->name('assesment_update_receipts_email');
     Route::get('/package-content/{id}', [BackPackageContentController::class, 'index'])->name('package_content_index');
     Route::post('/package-content-store', [BackPackageContentController::class, 'store'])->name('package_content_store');
     Route::get('/package-content-delete/{id}', [BackPackageContentController::class, 'delete'])->name('package_content_delete');
     Route::post('/package-content-edit-store', [BackPackageContentController::class, 'editStoreContent'])->name('package_content_store_edit');
-    Route::get('/send-assesment-email', [BackContactUsController::class, 'send_assesments_email'])->name('send_assesment_email');    
+    Route::get('/send-assesment-email', [BackContactUsController::class, 'send_assesments_email'])->name('send_assesment_email');
     Route::resource('/contact_request', BackContactUsController::class);
     Route::get('/contact_request/convert_client/{id}', [BackContactUsController::class, 'convert_client'])->name('lead_convert_client');
     Route::get('/contact_request/loadDataToGoogleCalendarModal/{id}', [BackContactUsController::class, 'loadDataToGoogleCalendarModal'])->name('loadDataToGoogleCalendarModal');
@@ -219,14 +221,16 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     Route::get('/read_data_contact_lead/{id}', [BackContactUsController::class, 'contactUsReadData'])->name('contact_lead_read');
     Route::get('/package-change-contact-lead', [BackContactUsController::class, 'packageChangeLeads'])->name('package-change-contact-lead');
     Route::post('/contact_request/price', [BackContactUsController::class, 'PriceContactLeads'])->name('lead_price');
+    Route::get('/search-in-leads', [BackContactUsController::class, 'searchInLeads'])->name('search.in.leads');
+    Route::get('/search-client', [BackClientController::class, 'searchClient'])->name('search.client');
     Route::post('/manage_clients/status', [BackClientController::class, 'status']);
     Route::post('/manage_clients/update_condition', [BackClientController::class, 'update_condition']);
     Route::resource('/manage_clients', BackClientController::class);
     Route::post('/client_comments/request_comment', [BackClientController::class, 'CommentContactClients'])->name('client_comments');
     Route::post('/clients-update-record/{id}', [BackClientController::class, 'update'])->name('client_update_record_store');
-    Route::post('/client-delete', [BackClientController::class, 'clientDelete'])->name('client.delete');    
+    Route::post('/client-delete', [BackClientController::class, 'clientDelete'])->name('client.delete');
     Route::get('/client_sms_template/{id}', [BackClientController::class, 'ClientSMSTemplate'])->name('client_sms_templates');
-    Route::post('/send_sms_template_client', [BackClientController::class, 'sendSMSClient'])->name('send_sms_template_client');    
+    Route::post('/send_sms_template_client', [BackClientController::class, 'sendSMSClient'])->name('send_sms_template_client');
     Route::post('/send_email_template_client', [BackClientController::class, 'sendEmailClient'])->name('send_email_template_client');
     Route::get('/manage-client/package-status', [BackClientController::class, 'changePackageStatus'])->name('manage_client_change_package_status');
     Route::get('/manage-client-packages/{id}', [BackClientController::class, 'ManageClientPackages'])->name('manage_client_packages');
@@ -364,13 +368,13 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     Route::post('/loadEditLeadStatUrlModal', [BackLeadStatUrlController::class, 'loadEditLeadStatUrlModal'])->name('loadEditLeadStatUrlModal');
     Route::post('/updateLeadStatUrl', [BackLeadStatUrlController::class, 'updateLeadStatUrl'])->name('updateLeadStatUrl');
     Route::post('/module_video/upload_video', [VideoUploadController::class, 'upload_video']);
-    Route::post('/module_video/remove_video', [VideoUploadController::class, 'remove_video']);    
+    Route::post('/module_video/remove_video', [VideoUploadController::class, 'remove_video']);
     Route::post('checkRoute', [BackModuleManageController::class, 'checkRoute']);
 
 
     Route::get('/blog_comments', [BackBlogController::class, 'comments']);
     Route::post('/blog_comments', [BackBlogController::class, 'deleteComment']);
-    
+
     Route::get('/blog-posts', [BackBlogController::class, 'index'])->name('blog.posts.index');
     Route::get('/blog-post/create', [BackBlogController::class, 'create'])->name('blog.post.create');
     Route::post('/blog-post', [BackBlogController::class, 'store'])->name('blog.post.store');
@@ -395,8 +399,6 @@ Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddle
     Route::post('updateBlogCategoryShowInHeader', [BackBlogCategoryController::class, 'updateBlogCategoryShowInHeader'])->name('updateBlogCategoryShowInHeader');
     Route::post('updateBlogCategoryStatus', [BackBlogCategoryController::class, 'updateBlogCategoryStatus'])->name('updateBlogCategoryStatus');
     Route::post('blog-category-upload-featured-image', [BackBlogCategoryController::class, 'uploadFeaturedImage'])->name('blog.category.upload.featured.image');
-
-    
 });
 Auth::routes();
 Route::group(['middleware' => ['siteStatus', 'clearCache', 'ipmiddleware']], function () {
