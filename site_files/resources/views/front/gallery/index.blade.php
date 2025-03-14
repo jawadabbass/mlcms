@@ -8,7 +8,7 @@
                     <div class="inner-wrap">
                         <div class="about-wrap">
                             <!-- Start Portfolio
-                                                                        ============================================= -->
+                                                                                    ============================================= -->
                             <div class="portfolio-area inc-colum default-padding-20">
                                 <div class="container">
                                     <div class="row">
@@ -37,10 +37,38 @@
                                                     <div id="portfolio-grid" class="portfolio-items col-3">
                                                         @foreach ($images as $image)
                                                             @php
-                                                                $thumb_img_url = asset_uploads('') . 'gallery/' . $image->album_id . '/thumb/' . $image->imageUrl . '?' . time();
-                                                                $img_url = asset_uploads('') . 'gallery/' . $image->album_id . '/' . $image->imageUrl . '?' . time();
-                                                                $thumb_img2_url = asset_uploads('') . 'gallery/' . $image->album_id . '/thumb/' . $image->imageUrl2 . '?' . time();
-                                                                $img2_url = asset_uploads('') . 'gallery/' . $image->album_id . '/' . $image->imageUrl2 . '?' . time();
+                                                                $thumb_img_url =
+                                                                    asset_uploads('') .
+                                                                    'gallery/' .
+                                                                    $image->album_id .
+                                                                    '/thumb/' .
+                                                                    $image->imageUrl .
+                                                                    '?' .
+                                                                    time();
+                                                                $img_url =
+                                                                    asset_uploads('') .
+                                                                    'gallery/' .
+                                                                    $image->album_id .
+                                                                    '/' .
+                                                                    $image->imageUrl .
+                                                                    '?' .
+                                                                    time();
+                                                                $thumb_img2_url =
+                                                                    asset_uploads('') .
+                                                                    'gallery/' .
+                                                                    $image->album_id .
+                                                                    '/thumb/' .
+                                                                    $image->imageUrl2 .
+                                                                    '?' .
+                                                                    time();
+                                                                $img2_url =
+                                                                    asset_uploads('') .
+                                                                    'gallery/' .
+                                                                    $image->album_id .
+                                                                    '/' .
+                                                                    $image->imageUrl2 .
+                                                                    '?' .
+                                                                    time();
                                                             @endphp
                                                             @if ($image->isBeforeAfterHaveTwoImages == 0)
                                                                 <!-- Single Item -->

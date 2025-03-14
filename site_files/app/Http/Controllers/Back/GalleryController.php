@@ -291,7 +291,9 @@ class GalleryController extends Controller
                 $imageObj->save();
             }
         }
-        return back()->with('success', 'Images Uploaded Successfully.');
+        Image::where('album_id', $request->input('album'))->update(['orderBy' => DB::raw('orderBy + 1')]);
+        return redirect('adminmedia/albums/' . $request->input('album') . '/gallery/create')
+            ->with('success', 'Images Uploaded Successfully.');
     }
     /**
      * Remove the specified images from album.

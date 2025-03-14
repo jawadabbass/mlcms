@@ -95,20 +95,19 @@
                                 </div>
                                 <div class="col-md-12 mb-3 before_after_have_two_images" style="display: none;">
                                     <label>Before Image</label>
-                                    <input class="form-control" id="before_image" name="before_image"
-                                        type="file" />
+                                    <input class="form-control" id="before_image" name="before_image" type="file" />
                                     <div class="text-danger"><em>Max :</em> {{ getMaxUploadSize() }} MB</div>
                                     <div id="before_image_preview" class="row"></div>
                                 </div>
                                 <div class="col-md-12 mb-3 before_after_have_two_images" style="display: none;">
                                     <label>After Image</label>
-                                    <input class="form-control" id="after_image" name="after_image"
-                                        type="file" />
+                                    <input class="form-control" id="after_image" name="after_image" type="file" />
                                     <div class="text-danger"><em>Max :</em> {{ getMaxUploadSize() }} MB</div>
                                     <div id="after_image_preview" class="row"></div>
                                 </div>
                                 <div class="col-md-12 mb-3">
-                                    <input class="btn btn-success" name="submitImage" type="submit"  value="Upload Image(s)" />
+                                    <input class="btn btn-success" name="submitImage" type="submit"
+                                        value="Upload Image(s)" />
                                 </div>
                             </div>
                         </form>
@@ -384,7 +383,8 @@
                             },
                             success: function(data) {},
                             error: function(jqXHR, textStatus, errorThrown) {
-                                alert('Error adding / update data ' + ' ' + textStatus + ' ' + errorThrown);
+                                alert('Error adding / update data ' + ' ' + textStatus + ' ' +
+                                    errorThrown);
                                 console.log(jqXHR);
                                 console.log(textStatus);
                                 console.log(errorThrown);
@@ -413,6 +413,7 @@
                                     $('#' + id).remove();
                                     swal("Poof! Your image has been deleted!", {
                                         icon: "success",
+                                        timer: 2000
                                     });
                                 }
                             }
@@ -463,7 +464,7 @@
                         console.log(response);
                     }
                 });
-            }            
+            }
         </script>
         <script>
             function markBeforeAfter(id, elem) {
@@ -483,6 +484,7 @@
                     }
                 });
             }
+
             function openGalleryImageZoomModal(url) {
                 $('#galleryImageZoomImage').attr('src', url);
                 $('#galleryImageZoomModal').modal('show');
