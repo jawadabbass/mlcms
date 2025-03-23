@@ -35,8 +35,8 @@
                                 @endif
                                 <div class="text-end" style="padding-bottom:2px; display: inline;">
                                     <!--<input type="button" class="sitebtn"
-                                    value="Add New {{ ucwords($module->term) == 'CMS' ? 'Page' : ucwords($module->term) }}"
-                                    onclick="add_content()"/>-->
+                                                        value="Add New {{ ucwords($module->term) == 'CMS' ? 'Page' : ucwords($module->term) }}"
+                                                        onclick="add_content()"/>-->
                                     <a class="sitebtn" href="{{ admin_url() . 'module/' . $module->type . '/add' }} "> Add
                                         New
                                         {{ ucwords($module->term) == 'CMS' ? 'Page' : ucwords($module->term) }}</a>
@@ -168,7 +168,8 @@
                                                 @if ($moduleMember->cms_module_id == 37)
                                                     <br />
                                                     <a href="{{ route('package_content_index', $moduleMember->id) }}"
-                                                        class="btn btn-sm btn-primary" style="margin-top:5px;">Manage Package
+                                                        class="btn btn-sm btn-primary" style="margin-top:5px;">Manage
+                                                        Package
                                                         Content</a>
                                                 @endif
                                             </td>
@@ -210,6 +211,18 @@
         var module_id = "{{ $module->type }}";
 
         $(document).ready(function() {
+            var table = $('#table').DataTable({
+                "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": true,
+                "responsive": true,
+                "order": [
+                    [1, "asc"]
+                ]
+            });
             $('input[data-toggle="toggle"]').bootstrapToggle();
         });
         $('input[data-toggle="toggle"]').change(function() {
