@@ -287,7 +287,6 @@
                             <div class="mb-2">
                                 <label class="form-label">Show Featured image on Listing Page </label>
                                 <select class="form-control" id="show_featured_image" name="show_featured_image">
-                                    <option value="">Select Option</option>
                                     <option value="0">No</option>
                                     <option value="1">Yes</option>
                                 </select>
@@ -295,7 +294,6 @@
                             <div class="mb-2">
                                 <label class="form-label">Show Is Featured </label>
                                 <select class="form-control" id="show_is_featured" name="show_is_featured">
-                                    <option value="">Select Option</option>
                                     <option value="0">No</option>
                                     <option value="1">Yes</option>
                                 </select>
@@ -303,7 +301,7 @@
                             <div class="mb-2">
                                 <label class="form-label">How Many Featured?</label>
                                 <input type="text" class="form-control" id="how_many_featured"
-                                    name="how_many_featured" placeholder="How many featured?">
+                                    name="how_many_featured" value="0" placeholder="How many featured?">
                             </div>
                             <div class="mb-2">
                                 <label class="form-label">Fontawesome Icon:</label>
@@ -591,7 +589,6 @@
                             <div class="mb-2">
                                 <label class="form-label">Show Featured image on Listing Page </label>
                                 <select class="form-control" id="edit_show_featured_image" name="show_featured_image">
-                                    <option value="">Select Option</option>
                                     <option value="0">No</option>
                                     <option value="1">Yes</option>
                                 </select>
@@ -599,7 +596,6 @@
                             <div class="mb-2">
                                 <label class="form-label">Show Is Featured </label>
                                 <select class="form-control" id="edit_show_is_featured" name="show_is_featured">
-                                    <option value="">Select Option</option>
                                     <option value="0">No</option>
                                     <option value="1">Yes</option>
                                 </select>
@@ -607,7 +603,7 @@
                             <div class="mb-2">
                                 <label class="form-label">How Many Featured?</label>
                                 <input type="text" class="form-control" id="edit_how_many_featured"
-                                    name="how_many_featured" placeholder="How many featured?">
+                                    name="how_many_featured" value="0" placeholder="How many featured?">
                             </div>
                             <div class="mb-2">
                                 <label class="form-label">Fontawesome Icon:</label>

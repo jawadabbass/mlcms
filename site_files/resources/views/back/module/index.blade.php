@@ -3,7 +3,7 @@
     @include('back.common_views.switch_css')
 @endsection
 @section('content')
-    <div class="content-wrapper pl-3 pr-2">
+    <div class="pl-3 pr-2 content-wrapper">
         <section class="content-header">
             <div class="row">
                 <div class="col-md-5 col-sm-12">
@@ -18,7 +18,7 @@
         <section class="content">
             <div class="row">
                 <div class="col-xs-12 col-md-12">
-                    <div class="card p-2">
+                    <div class="p-2 card">
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="box-header">
@@ -35,8 +35,8 @@
                                 @endif
                                 <div class="text-end" style="padding-bottom:2px; display: inline;">
                                     <!--<input type="button" class="sitebtn"
-                                                        value="Add New {{ ucwords($module->term) == 'CMS' ? 'Page' : ucwords($module->term) }}"
-                                                        onclick="add_content()"/>-->
+                                                                    value="Add New {{ ucwords($module->term) == 'CMS' ? 'Page' : ucwords($module->term) }}"
+                                                                    onclick="add_content()"/>-->
                                     <a class="sitebtn" href="{{ admin_url() . 'module/' . $module->type . '/add' }} "> Add
                                         New
                                         {{ ucwords($module->term) == 'CMS' ? 'Page' : ucwords($module->term) }}</a>
@@ -159,7 +159,7 @@
                                                 @endif
                                                 @if ($module->term == 'Classes')
                                                     <a href="{{ route('class.show', $moduleMember->id) }}"
-                                                        class="btn btn-sm btn-success btn-sm">View Registered
+                                                        class="btn btn-sm btn-success">View Registered
                                                         User</a>
                                                 @elseif($module->term == 'Camps')
                                                     <a href="{{ route('camp.show', $moduleMember->id) }}"
@@ -214,6 +214,11 @@
             var table = $('#table').DataTable({
                 "paging": true,
                 "lengthChange": true,
+                "lengthMenu": [
+                    [10, 25, 50, 100, -1],
+                    [10, 25, 50, 100, 'All']
+                ],
+                "pageLength": 100,
                 "searching": true,
                 "ordering": true,
                 "info": true,
@@ -233,14 +238,11 @@
     <script type="text/javascript" src="{{ asset_storage('') . 'back/js/fileUploader.js' }}"></script>
     <div id="loading" class="loadinggif" style="display: none;"></div>
     <!-- End Bootstrap modal -->
-    @php
-        if (isset($_GET['id']) && !empty($_GET['id'])) {
-            echo '<script>
-                $(document).ready(function() {
-                    edit_module('.$_GET['
-                        id '].')
-                });
-            </script>';
-        }
-    @endphp
+    @if (isset($_GET['id']) && !empty($_GET['id']))
+        <script>
+            $(document).ready(function() {
+                edit_module({{ $_GET['id'] }});
+            });
+        </script>';
+    @endif
 @endsection

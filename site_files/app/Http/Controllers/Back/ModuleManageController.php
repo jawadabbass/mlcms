@@ -145,10 +145,18 @@ class ModuleManageController extends Controller
      */
     public function store($type, Request $request)
     {
+        $module_id = $request->module_id;
+        $moduleObj = CmsModule::find($module_id);
+        $moduleData = new CmsModuleData();
+
         $rules = [
             'module_heading' => 'required',
-            'module_slug' => 'required',
         ];
+        if ((bool)$moduleObj->show_page_slug_field) {
+            $rules['module_slug'] = 'required';
+        } else {
+            $rules['module_slug'] = 'nullable';
+        }
         $messages = [
             'module_heading.required' => 'Heading is required',
             'module_slug.required' => 'Slug is required',
@@ -159,9 +167,6 @@ class ModuleManageController extends Controller
             return response()->json(['error' => $validator->errors()->all()]);
         }
 
-        $module_id = $request->module_id;
-        $moduleObj = CmsModule::find($module_id);
-        $moduleData = new CmsModuleData();
         $moduleData->heading = $request->module_heading;
         $page_slug = $request->module_slug;
         $slugs = $page_slug;
@@ -849,7 +854,7 @@ class ModuleManageController extends Controller
         $slug = str_replace(url('/') . '/blog/', '', $urlToCheck);
         $blogPostObj = BlogPost::where('post_slug', 'like', $slug)->first();
         if (null !== $blogPostObj && $blogPostObj->id != $id) {
-            $urlToEdit = url('/adminmedia/blog-post/' . $blogPostObj->id.'/edit');
+            $urlToEdit = url('/adminmedia/blog-post/' . $blogPostObj->id . '/edit');
             $status = false;
             $urlIn = 'Blog';
         } elseif (null !== $blogPostObj && $blogPostObj->id == $id) {
@@ -861,7 +866,7 @@ class ModuleManageController extends Controller
         $slug = str_replace(url('/') . '/blog/category/', '', $urlToCheck);
         $blogCategoryObj = BlogCategory::where('cate_slug', 'like', $slug)->first();
         if (null !== $blogCategoryObj && $blogCategoryObj->id != $id) {
-            $urlToEdit = url('/adminmedia/blog-category/' . $blogCategoryObj->id.'/edit');
+            $urlToEdit = url('/adminmedia/blog-category/' . $blogCategoryObj->id . '/edit');
             $status = false;
             $urlIn = 'BlogCategory';
         } elseif (null !== $blogCategoryObj && $blogCategoryObj->id == $id) {
