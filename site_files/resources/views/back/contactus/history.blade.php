@@ -1,6 +1,6 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('content')
-    <div class="content-wrapper pl-3 pr-2">
+    <div class="pl-3 pr-2 content-wrapper">
         <section class="content-header">
             <div class="row">
                 <div class="col-md-5 col-sm-12">
@@ -28,25 +28,28 @@
                                     class="btn btn-warning">Edit</button>
                             </h3>
                         </div>
-                        <div class="row">
-                            <div class="col-md-5 table-responsive">
-                                <p class="alert alert-success mt-2" style="display: none;"
-                                    id="editContactRequestMessageAlert"></p>
-                                <table class="table border ">
-                                    <tbody>
-                                        <tr>
-                                            <td>Name</td>
-                                            <td>{{ $result->name }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Email</td>
-                                            <td>{{ $result->email }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Phone Number</td>
-                                            <td>{{ $result->phone }}</td>
-                                        </tr>
-                                        {{-- <tr>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5 table-responsive">
+                    <p class="mt-2 alert alert-success" style="display: none;" id="editContactRequestMessageAlert"></p>
+                    <table class="table border ">
+                        <tbody>
+                            <tr>
+                                <td>Name</td>
+                                <td>{{ $result->name }}</td>
+                            </tr>
+                            <tr>
+                                <td>Email</td>
+                                <td>{{ $result->email }}</td>
+                            </tr>
+                            <tr>
+                                <td>Phone Number</td>
+                                <td>{{ $result->phone }}</td>
+                            </tr>
+                            {{-- <tr>
                                             <td>Address</td>
                                             <td>{{ $result->address }}</td>
                                         </tr>
@@ -58,88 +61,80 @@
                                             <td>Subject</td>
                                             <td>{{ $result->subject }}</td>
                                         </tr> --}}
-                                        <tr>
-                                            <td>Comments</td>
-                                            <td>{{ $result->comments }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Enrolled Date</td>
-                                            <td><?php echo date('d-M-Y', strtotime($result->dated)); ?></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="col-md-7">
-                                {{-- HERE --}}
-                                <div class="row">
-                                    <div class="col-md-12 col-lg-12">
+                            <tr>
+                                <td>Comments</td>
+                                <td>{{ $result->comments }}</td>
+                            </tr>
+                            <tr>
+                                <td>Enrolled Date</td>
+                                <td><?php echo date('d-M-Y', strtotime($result->dated)); ?></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-7">
+                    {{-- HERE --}}
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12">
 
-                                        <div id="tracking-pre"></div>
-                                        <div id="tracking">
-                                            <div class="text-center tracking-status-intransit">
-                                                <div class="row">
-                                                    <div class="col-md-4 text-left pl-4">
-                                                        @if ($pre)
-                                                            <a href="{{ route('contact_request.show', [$pre->id]) }}"
-                                                                class="btn btn-info"><i
-                                                                    class="fa-solid fa-arrow-circle-left"></i></a>
-                                                        @endif
-                                                    </div>
-                                                    <div class="col-md-4 text-center">
-                                                        <p class="tracking-status text-tight">
-                                                            <span><i class="fa-solid fa-history" aria-hidden="true"></i>
-                                                                History</span>
-                                                        </p>
-                                                    </div>
-                                                    <div class="col-md-4 text-right pr-4">
-                                                        @if ($next)
-                                                            <a href="{{ route('contact_request.show', [$next->id]) }}"
-                                                                class="btn btn-info"><i
-                                                                    class="fa-solid fa-arrow-circle-right"></i></a>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="tracking-list">
-                                                @foreach ($history as $key => $val)
-                                                    <div class="tracking-item">
-                                                        <div class="tracking-icon status-intransit">
-                                                            <div style="font-size:18px;" class="">
-                                                                @if ($val->ref == 1)
-                                                                    <i class="fas fa-money" style="color:green;"
-                                                                        aria-hidden="true"></i>
-                                                                @elseif($val->ref == 2)
-                                                                    <i class="fas fa-plus" style="color:green;"
-                                                                        aria-hidden="true"></i>
-                                                                @elseif($val->ref == 3)
-                                                                    <i class="fas fa-envelope-square" style="color:#b9b929;"
-                                                                        aria-hidden="true"></i>
-                                                                @else
-                                                                    <i class="fas fa-edit" style="color:red"></i>
-                                                                @endif
-                                                            </div>
-                                                        </div>
-                                                        <div class="tracking-date">
-                                                            {{ format_date($val->created_at, 'date') }}<span>{{ format_date($val->created_at, 'time_only') }}</span>
-                                                        </div>
-                                                        <div class="tracking-content">{{ $val->msg }} by <strong><span
-                                                                    class="d-inline-block" tabindex="0"
-                                                                    data-toggle="tooltip"
-                                                                    title="{{ $val->admin->name }}&nbsp; ({{ $val->admin->email }})">
-                                                                    <h5 style="pointer-events: none;color:#038cfc;font-size:14px;"
-                                                                        disabled>{{ $val->admin->name }}</h5>
-                                                                </span></strong></div>
-                                                    </div>
-                                                @endforeach
-                                            </div>
+                            <div id="tracking-pre"></div>
+                            <div id="tracking">
+                                <div class="text-center tracking-status-intransit">
+                                    <div class="row">
+                                        <div class="pl-4 text-left col-md-4">
+                                            @if ($pre)
+                                                <a href="{{ route('contact_request.show', [$pre->id]) }}"
+                                                    class="btn btn-info"><i class="fa-solid fa-arrow-circle-left"></i></a>
+                                            @endif
                                         </div>
-                                        {!! $history->links() !!}
+                                        <div class="text-center col-md-4">
+                                            <p class="tracking-status text-tight">
+                                                <span><i class="fa-solid fa-history" aria-hidden="true"></i>
+                                                    History</span>
+                                            </p>
+                                        </div>
+                                        <div class="pr-4 text-right col-md-4">
+                                            @if ($next)
+                                                <a href="{{ route('contact_request.show', [$next->id]) }}"
+                                                    class="btn btn-info"><i class="fa-solid fa-arrow-circle-right"></i></a>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
-                                {{-- HEREE --}}
+                                <div class="tracking-list">
+                                    @foreach ($history as $key => $val)
+                                        <div class="tracking-item">
+                                            <div class="tracking-icon status-intransit">
+                                                <div style="font-size:18px;" class="">
+                                                    @if ($val->ref == 1)
+                                                        <i class="fas fa-money" style="color:green;" aria-hidden="true"></i>
+                                                    @elseif($val->ref == 2)
+                                                        <i class="fas fa-plus" style="color:green;" aria-hidden="true"></i>
+                                                    @elseif($val->ref == 3)
+                                                        <i class="fas fa-envelope-square" style="color:#b9b929;"
+                                                            aria-hidden="true"></i>
+                                                    @else
+                                                        <i class="fas fa-edit" style="color:red"></i>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <div class="tracking-date">
+                                                {{ format_date($val->created_at, 'date') }}<span>{{ format_date($val->created_at, 'time_only') }}</span>
+                                            </div>
+                                            <div class="tracking-content">{{ $val->msg }} by <strong><span
+                                                        class="d-inline-block" tabindex="0" data-toggle="tooltip"
+                                                        title="{{ $val->admin->name }}&nbsp; ({{ $val->admin->email }})">
+                                                        <h5 style="pointer-events: none;color:#038cfc;font-size:14px;"
+                                                            disabled>{{ $val->admin->name }}</h5>
+                                                    </span></strong></div>
+                                        </div>
+                                    @endforeach
+                                </div>
                             </div>
+                            {!! $history->links() !!}
                         </div>
                     </div>
+                    {{-- HEREE --}}
                 </div>
             </div>
         </section>
