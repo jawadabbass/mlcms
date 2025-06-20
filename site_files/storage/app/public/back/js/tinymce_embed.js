@@ -55,7 +55,7 @@ function initCKeditor(selector) {
     min_height: 300,
     max_height: 500,
     valid_elements: "*[*]",
-    content_css: "/mlstorage/front/css/style.css",
+    content_css: "/mlcms/public/mlstorage/front/css/style.css",
   });
 }
 function bindCKeditorByClass(cls) {

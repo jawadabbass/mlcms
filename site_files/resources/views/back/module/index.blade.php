@@ -35,8 +35,8 @@
                                 @endif
                                 <div class="text-end" style="padding-bottom:2px; display: inline;">
                                     <!--<input type="button" class="sitebtn"
-                                                                    value="Add New {{ ucwords($module->term) == 'CMS' ? 'Page' : ucwords($module->term) }}"
-                                                                    onclick="add_content()"/>-->
+                                                                                            value="Add New {{ ucwords($module->term) == 'CMS' ? 'Page' : ucwords($module->term) }}"
+                                                                                            onclick="add_content()"/>-->
                                     <a class="sitebtn" href="{{ admin_url() . 'module/' . $module->type . '/add' }} "> Add
                                         New
                                         {{ ucwords($module->term) == 'CMS' ? 'Page' : ucwords($module->term) }}</a>
@@ -47,6 +47,10 @@
                             <table id="table" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
+                                        @if (isset($module->show_ordering_options) && $module->show_ordering_options == 1)
+                                            <th>Order</th>
+                                        @endif
+
                                         @if (isset($module->show_featured_image) && $module->show_featured_image == 1)
                                             <th>Image</th>
                                         @endif
@@ -71,6 +75,9 @@
                                 <tbody>
                                     @forelse($moduleMembers as $moduleMember)
                                         <tr>
+                                            @if (isset($module->show_ordering_options) && $module->show_ordering_options == 1)
+                                                <td>{{ $moduleMember->item_order }}</td>
+                                            @endif
                                             @if ($module->show_featured_image == 1)
                                                 <td>
                                                     @if (!empty($moduleMember->featured_img))
@@ -225,7 +232,11 @@
                 "autoWidth": true,
                 "responsive": true,
                 "order": [
-                    [1, "asc"]
+                    @if (isset($module->show_ordering_options) && $module->show_ordering_options == 1)
+                        [0, "asc"]
+                    @else
+                        [1, "asc"]
+                    @endif
                 ]
             });
             $('input[data-toggle="toggle"]').bootstrapToggle();
