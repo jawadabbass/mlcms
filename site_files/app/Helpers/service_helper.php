@@ -62,7 +62,7 @@ function generateServicesDropDown($defaultSelected = '', $empty = true)
 
 function generateParentServicesDropDown($defaultSelected = '', $empty = true)
 {
-    $html = ($empty) ? '<option value="0">No Parent</option>' : '';
+    $html = ($empty) ? '<option value="0">Root Level</option>' : '';
     $parentTitleArray = [];
     getServiceOptions($html, $parentTitleArray, 0, $defaultSelected);
 
@@ -76,7 +76,7 @@ function getServiceOptions(&$html, &$parentTitleArray, $parent_id = 0, $defaultS
         foreach ($services as $service) {
             $selected = ($service->id == $defaultSelected) ? 'selected="selected"' : '';
             $parentTitleArray[] = $service->title;
-            $html .= '<option value="' . $service->id . '" ' . $selected . '>' . implode(' -> ', $parentTitleArray) . '</option>';
+            $html .= '<option value="' . $service->id . '" ' . $selected . '>' . implode(' &rArr; ', $parentTitleArray) . '</option>';
             getServiceOptions($html, $parentTitleArray, $service->id, $defaultSelected);
             array_pop($parentTitleArray);
         }
@@ -88,17 +88,17 @@ function getServiceli(&$html, &$parentTitleArray, $parent_id = 0)
     $services = Service::select('id', 'title', 'slug', 'parent_id')->where('parent_id', $parent_id)->active()->sorted()->get();
     if (count($services) > 0) {
         foreach ($services as $service) {
-            
+
             $parentTitleArray[] = $service->title;
-            $html .= '<li class="ui-state-default" id="' . $service->id . '"><i class="fa fa-sort"></i> ' . implode(' -> ', $parentTitleArray) . '</li>';
+            $html .= '<li class="ui-state-default" id="' . $service->id . '"><i class="fa fa-sort"></i> ' . implode(' &rArr; ', $parentTitleArray) . '</li>';
 
             getServiceli($html, $parentTitleArray, $service->id);
             array_pop($parentTitleArray);
         }
-    } 
+    }
 }
 
-function getParentServicesList(&$html, $parent_id = 0, $indent = ' -> ')
+function getParentServicesList(&$html, $parent_id = 0, $indent = ' &rArr; ')
 {
     $parentServiceObj = Service::where('id', $parent_id)->first();
     if (null != $parentServiceObj) {
@@ -211,4 +211,18 @@ function getServicesExtraImages($serviceId)
         }
     }
     return $imagesArray;
+}
+
+function updateChildrenServicesSortOrder($serviceId, $serviceSortOrder)
+{
+    $childServices = Service::where('parent_id', $serviceId)->get();
+    if (count($childServices) > 0) {
+        $count = 1;
+        foreach ($childServices as $childServiceObj) {
+            $childServiceObj->sort_order = $serviceSortOrder . '-' . $count;
+            $childServiceObj->update();
+            updateChildrenServicesSortOrder($childServiceObj->id, $childServiceObj->sort_order);
+            $count++;
+        }
+    }
 }

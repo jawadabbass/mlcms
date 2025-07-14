@@ -134,7 +134,7 @@ class SiteMapController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $siteMapObj->id,
             'record_title' => $siteMapObj->title,
-            'record_link' => url('adminmedia/site-map/'.$siteMapObj->id.'/edit'),
+            'record_link' => url('adminmedia/site-map/' . $siteMapObj->id . '/edit'),
             'model_or_table' => 'SiteMap',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -191,7 +191,7 @@ class SiteMapController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $siteMapObj->id,
             'record_title' => $siteMapObj->title,
-            'record_link' => url('adminmedia/site-map/'.$siteMapObj->id.'/edit'),
+            'record_link' => url('adminmedia/site-map/' . $siteMapObj->id . '/edit'),
             'model_or_table' => 'SiteMap',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -246,6 +246,7 @@ class SiteMapController extends Controller
                 $siteMapObj->sort_order = $parentSiteMapObj->sort_order . '-' . $count;
             } else {
                 $siteMapObj->sort_order = $count;
+                updateChildrenSiteMapSortOrder($siteMapObj->id, $siteMapObj->sort_order);
             }
             $siteMapObj->update();
             $count++;

@@ -154,7 +154,7 @@ class ServiceController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $serviceObj->id,
             'record_title' => $serviceObj->title,
-            'record_link' => url('adminmedia/services/'.$serviceObj->id.'/edit'),
+            'record_link' => url('adminmedia/services/' . $serviceObj->id . '/edit'),
             'model_or_table' => 'Service',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -218,7 +218,7 @@ class ServiceController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $serviceObj->id,
             'record_title' => $serviceObj->title,
-            'record_link' => url('adminmedia/services/'.$serviceObj->id.'/edit'),
+            'record_link' => url('adminmedia/services/' . $serviceObj->id . '/edit'),
             'model_or_table' => 'Service',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -245,7 +245,7 @@ class ServiceController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $serviceObj->id,
             'record_title' => $serviceObj->title,
-            'record_link' => url('adminmedia/services/'.$serviceObj->id.'/edit'),
+            'record_link' => url('adminmedia/services/' . $serviceObj->id . '/edit'),
             'model_or_table' => 'Service',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -268,7 +268,7 @@ class ServiceController extends Controller
         $recordUpdateHistoryData = [
             'record_id' => $serviceObj->id,
             'record_title' => $serviceObj->title,
-            'record_link' => url('adminmedia/services/'.$serviceObj->id.'/edit'),
+            'record_link' => url('adminmedia/services/' . $serviceObj->id . '/edit'),
             'model_or_table' => 'Service',
             'admin_id' => auth()->user()->id,
             'ip' => request()->ip(),
@@ -314,6 +314,7 @@ class ServiceController extends Controller
                 $serviceObj->sort_order = $parentServiceObj->sort_order . '-' . $count;
             } else {
                 $serviceObj->sort_order = $count;
+                updateChildrenServicesSortOrder($serviceObj->id, $serviceObj->sort_order);
             }
             $serviceObj->update();
             $count++;

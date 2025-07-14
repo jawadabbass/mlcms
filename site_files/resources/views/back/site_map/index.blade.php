@@ -1,7 +1,7 @@
 @extends('back.layouts.app', ['title' => $title])
 
 @section('content')
-    <div class="content-wrapper pl-3 pr-2">
+    <div class="pl-3 pr-2 content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="row">
@@ -97,7 +97,7 @@
                 "autoWidth": true,
                 processing: true,
                 serverSide: true,
-                stateSave: true,
+                stateSave: false,
                 searching: false,
                 "order": [
                     [0, "asc"]
@@ -139,7 +139,7 @@
                     }
                 ]
             });
-
+            oTable.column(0).visible(false);
             $('#site-map-search-form').on('submit', function(e) {
                 oTable.draw();
                 e.preventDefault();

@@ -51,7 +51,7 @@ function generateSiteMapsDropDown($defaultSelected = '', $empty = true)
 
 function generateParentSiteMapsDropDown($defaultSelected = '', $empty = true)
 {
-    $html = ($empty) ? '<option value="0">No Parent</option>' : '';
+    $html = ($empty) ? '<option value="0">Root Level</option>' : '';
     $parentTitleArray = [];
     getSiteMapOptions($html, $parentTitleArray, 0, $defaultSelected);
 
@@ -65,14 +65,14 @@ function getSiteMapOptions(&$html, &$parentTitleArray = [], $parent_id = 0, $def
         foreach ($siteMapCollection as $siteMap) {
             $parentTitleArray[] = $siteMap->title;
             $selected = ($siteMap->id == $defaultSelected) ? 'selected="selected"' : '';
-            $html .= '<option value="' . $siteMap->id . '" ' . $selected . '>' . implode(' -> ', $parentTitleArray) . '</option>';
+            $html .= '<option value="' . $siteMap->id . '" ' . $selected . '>' . implode(' &rArr; ', $parentTitleArray) . '</option>';
             getSiteMapOptions($html, $parentTitleArray, $siteMap->id, $defaultSelected);
             array_pop($parentTitleArray);
         }
     }
 }
 
-function getParentSiteMapsList(&$html, $parent_id = 0, $indent = ' -> ')
+function getParentSiteMapsList(&$html, $parent_id = 0, $indent = ' &rArr; ')
 {
     $parentSiteMapObj = SiteMap::where('id', $parent_id)->first();
     if (null != $parentSiteMapObj) {
@@ -88,7 +88,7 @@ function getSiteMapliFront(&$html, $parent_id = 0, $levelCounter = -1)
     $siteMapCollection = SiteMap::select('id', 'title', 'link', 'parent_id', 'sort_order')->where('parent_id', $parent_id)->active()->sorted()->get();
     if (count($siteMapCollection) > 0) {
         $levelCounter = $levelCounter + 1;
-        $html.='<ul class="site-map-ul">';
+        $html .= '<ul class="site-map-ul">';
         foreach ($siteMapCollection as $siteMap) {
             $siteMapTitle = $siteMap->title;
             $siteMapLink = $siteMap->link;
@@ -101,13 +101,13 @@ function getSiteMapliFront(&$html, $parent_id = 0, $levelCounter = -1)
             }
             $arrowHtml = '&nbsp;&nbsp;<i class="fa-solid fa-angles-right"></i>&nbsp;&nbsp;';
             $html .= '
-            <li class="site-map-level-'.$levelCounter.'" data-parent-id="' . $siteMap->parent_id . '" data-level="' . $levelCounter . '">
+            <li class="site-map-level-' . $levelCounter . '" data-parent-id="' . $siteMap->parent_id . '" data-level="' . $levelCounter . '">
             <a class="site-map-border" href="' . $siteMapLink . '" title="' . $siteMapTitle . '">' . $arrowHtml . $siteMapTitle . '&nbsp;&nbsp;</a>
             ';
             getSiteMapliFront($html, $siteMap->id, $levelCounter);
-            $html.='</li>';
+            $html .= '</li>';
         }
-        $html.='</ul>';
+        $html .= '</ul>';
         $levelCounter = $levelCounter - 1;
     }
 }
@@ -118,6 +118,20 @@ function getSiteMapliForSort(&$html, $parent_id = 0)
     if (count($siteMapCollection) > 0) {
         foreach ($siteMapCollection as $siteMap) {
             $html .= '<li class="ui-state-default" id="' . $siteMap->id . '"><i class="fa fa-sort"></i> ' . $siteMap->title . '</li>';
+        }
+    }
+}
+
+function updateChildrenSiteMapSortOrder($siteMapId, $siteMapSortOrder)
+{
+    $childSiteMap = SiteMap::where('parent_id', $siteMapId)->get();
+    if (count($childSiteMap) > 0) {
+        $count = 1;
+        foreach ($childSiteMap as $childSiteMapObj) {
+            $childSiteMapObj->sort_order = $siteMapSortOrder . '-' . $count;
+            $childSiteMapObj->update();
+            updateChildrenSiteMapSortOrder($childSiteMapObj->id, $childSiteMapObj->sort_order);
+            $count++;
         }
     }
 }
