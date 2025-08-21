@@ -81,4 +81,15 @@ class LoginController extends Controller
         session_unset();
         session_destroy();
     }
+
+    /**
+     * The user has logged out of the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return mixed
+     */
+    protected function loggedOut(Request $request)
+    {
+        clearCache();
+    }
 }
