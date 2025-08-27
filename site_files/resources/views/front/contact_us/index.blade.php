@@ -1,16 +1,7 @@
 @extends('front.layout.app')
 @section('beforeHeadClose')
     <link href="{{ asset_storage('') . 'module/blog/front/css/blog.css' }}" rel="stylesheet" type="text/css" />
-    <script src='https://www.google.com/recaptcha/api.js'></script>
-    <style>
-        .error-bg {
-            background-color: #e6cfcf;
-        }
-
-        .error {
-            color: #FF0000;
-        }
-    </style>
+    <script src="https://www.google.com/recaptcha/api.js?render={{ config('recaptcha.siteKey') }}"></script>
 @endsection
 @section('content')
     @php $settingArr = settingArr(); @endphp
@@ -20,8 +11,8 @@
     @php echo cms_edit_page('cms',$data->id);@endphp
     <div class="about-wrap">
         <!-- Start Breadcrumb
-                                                                                        ============================================= -->
-        <div class="breadcrumb-area shadow dark bg-fixed text-center text-light"
+                                                                                                                                                            ============================================= -->
+        <div class="text-center bg-fixed shadow breadcrumb-area dark text-light"
             style="background-image: url(<?php echo base_url(); ?>front/images/banner/23.jpg);">
             <div class="container">
                 <div class="row">
@@ -37,11 +28,11 @@
         </div>
         <!-- End Breadcrumb -->
         <!-- Start Contact Area
-                                                                                        ============================================= -->
+                                                                                                                                                            ============================================= -->
         <div class="contact-area default-padding">
             <div class="container">
                 <div class="row">
-                    <div class="contact-items bg-contain" style="background-image: url(assets/img/map.svg);">
+                    <div class="bg-contain contact-items" style="background-image: url(assets/img/map.svg);">
                         <div class="col-md-4 address">
                             <div class="address-items">
                                 <ul class="info">
@@ -79,6 +70,7 @@
                             <div id="errorMessages"></div>
                             <form action="#" method="POST" name="frm_process" id="contactForm" class="contact-form">
                                 @csrf
+                                <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
                                 <div class="col-md-12">
                                     <div class="row">
                                         <div class="form-group">
@@ -114,10 +106,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="row">
-                                        <div class="g-recaptcha" data-sitekey="{{ config('recaptcha.siteKey') }}"></div>
-                                        <div id="g-recaptcha-response-error" class="error"></div>
-                                        <button type="button" onclick="submitContactForm();">Send Message <i
-                                                class="fa fa-paper-plane"></i> </button>
+                                        <button type="submit">Send Message <i class="fa fa-paper-plane"></i> </button>
                                     </div>
                                 </div>
                             </form>
@@ -128,7 +117,7 @@
         </div>
         <!-- End Contact Area -->
         <!-- Start Google Maps
-                                                                                        ============================================= -->
+                                                                                                                                                            ============================================= -->
         @if ($settingArr->google_map_status == 1)
             <div class="maps-area">
                 <div class="container-full">
@@ -181,25 +170,38 @@
                         required: "Please prove you are not a robot"
                     }
                 },
+                invalidHandler: function(event, validator) {
+                    var errors = validator.numberOfInvalids();
+                    if (errors) {
+                        var message = "You missed " + errors + " field(s). Please correct them:";
+                        var errorList = "";
+                        // Loop through the errorList to get individual error messages
+                        $.each(validator.errorList, function(index, error) {
+                            errorList += "<br/>" + error.message;
+                        });
+                        Swal.fire({
+                            title: message,
+                            html: errorList
+                        });
+                    }
+                },
+                // Optionally, prevent displaying errors inline if you only want alerts
                 errorPlacement: function(error, element) {
-                    var key = element[0].id;
-                    $('#contactForm').find('#' + key + '-error').html(error);
-                    $('#contactForm').find('#' + key + '-error').addClass('formValidationErrors');
-                    $('#contactForm').find('#' + key + '-error').show();
-                    scrollToErrors('.formValidationErrors');
-                    $('#contactForm').find('#g-recaptcha-response').hide();
+                    return false; // This prevents the plugin from placing error labels next to fields
                 },
                 submitHandler: function() {
-                    submitContactFormAjax();
+                    grecaptcha.ready(function() {
+                        grecaptcha.execute('{{ config('recaptcha.siteKey') }}', {
+                            action: 'submit'
+                        }).then(function(token) {
+                            $('#g-recaptcha-response').val(token); // Set token
+                            submitContactFormAjax();
+                        });
+                    });
+
                 }
             });
         });
-
-        function submitContactForm() {
-            $('#contactForm').find('#g-recaptcha-response').prop('style', 'width:1px;height:1px;');
-            $('#contactForm').find('#g-recaptcha-response').show();
-            $('#contactForm').submit();
-        }
         $('#contactForm').find('#phone').inputmask("999-999-9999");
     </script>
     <script>
@@ -245,12 +247,17 @@
                 error: function(data) {
                     if (data.status === 422) {
                         var responseText = $.parseJSON(data.responseText);
-                        $.each(responseText.errors, function(key, value) {
-                            $('#contactForm').find('#' + key + '-error').html(value);
-                            $('#contactForm').find('#' + key + '-error').addClass('formValidationErrors');
-                            $('#contactForm').find('#' + key + '-error').show();
-                            scrollToErrors('.formValidationErrors');
+                        var message = "You missed some field(s). Please correct them:";
+                        var errorList = "";
+                        // Loop through the errorList to get individual error messages                                                
+                        $.each(responseText.errors, function(index, value) {
+                            errorList += "<br/>" + value;
                         });
+                        Swal.fire({
+                            title: message,
+                            html: errorList
+                        });
+
                     }
                 }
             });
