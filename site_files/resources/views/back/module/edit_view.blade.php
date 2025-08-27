@@ -98,7 +98,15 @@
                                     <p>Note: if you want to update further menu settings then please <a
                                             href="{{ route('menus.index') }}" target="_blank">click here</a></p>
                                 </div>
+                                <div id="page_excerpt" class="mb-3"
+                                    @if ($module->show_excerpt == '0') style="display: none" @endif>
+                                    <label class="form-label">{{ ucwords($module->term) }} Excerpt</label>
+                                    <textarea name="excerpt_editor" id="excerpt_editor" placeholder="{{ ucwords($module->term) }} Excerpt"
+                                        class="form-control" type="text">{{ adjustUrl($moduleData->excerpt) }}</textarea>
+                                    <textarea name="excerpt" id="excerpt" style="display: none;"></textarea>
+                                </div>
                                 <div id="page_content" @if ($module->show_descp == '0') style="display: none" @endif>
+
                                     <label class="form-label">{{ ucwords($module->term) }} Description</label>
                                     <label for="">
                                         <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#media_image"
@@ -519,8 +527,12 @@
 
         function save() {
             var url;
+            var excerpt = tinyMCE.get('excerpt_editor').getContent();
+            $('#excerpt').val(excerpt);
+
             var content = tinyMCE.get('editor1').getContent();
             $('#module_description1').val(content);
+
             if (save_method == 'add') {
                 url = "{{ admin_url() . 'module/' . $module->type }}";
             } else {
@@ -638,8 +650,14 @@
         function updatePageContent() {
             $('#btnSave').attr('disabled', 'disabled');
             $('#btnSave').text('Submitting...');
+
+            var excerpt = tinyMCE.get('excerpt_editor').getContent();
+            $('#excerpt').val(excerpt);
+
             var content = tinyMCE.get('editor1').getContent();
             $('#module_description1').val(content);
+
+
             $('#form_edit_1').submit();
         }
     </script>

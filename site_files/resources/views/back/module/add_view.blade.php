@@ -75,6 +75,13 @@
                                     <p>Note: if you want to update further menu settings then please <a
                                             href="{{ route('menus.index') }}" target="_blank">click here</a></p>
                                 </div>
+                                <div id="page_excerpt" class="mb-3"
+                                    @if ($module->show_excerpt == '0') style="display: none" @endif>
+                                    <label class="form-label">{{ ucwords($module->term) }} Excerpt</label>
+                                    <textarea name="excerpt_editor" id="excerpt_editor" placeholder="{{ ucwords($module->term) }} Excerpt"
+                                        class="form-control" type="text"></textarea>
+                                    <textarea name="excerpt" id="excerpt" style="display: none;"></textarea>
+                                </div>
                                 <div id="page_content" @if ($module->show_descp == '0') style="display: none" @endif>
                                     <label class="form-label">{{ ucwords($module->term) }} Description</label>
                                     <label for="">
@@ -87,6 +94,7 @@
                                                 aria-hidden="true"></i>
                                             Insert Document from Media</a>
                                     </label>
+
                                     <textarea name="editor1" id="editor1" placeholder="{{ ucwords($module->term) }} Description" class="form-control"
                                         type="text"></textarea>
                                     <textarea name="module_description" id="module_description1" style="display: none;"></textarea>
@@ -451,8 +459,13 @@
             $('#btnSave').text('Submitting...');
             $(window).off('beforeunload');
             var url;
+
+            var excerpt = tinyMCE.get('excerpt_editor').getContent();
+            $('#excerpt').val(excerpt);
+
             var content = tinyMCE.get('editor1').getContent();
             $('#module_description1').val(content);
+
             if (save_method == 'add') {
                 url = "{{ admin_url() . 'module/' . $module->type }}";
             } else {

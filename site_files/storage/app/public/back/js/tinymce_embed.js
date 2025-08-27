@@ -105,4 +105,7 @@ $(function () {
   if ($("#edit_content").length) {
     bindCKeditor("edit_content");
   }
+  if ($("#excerpt_editor").length) {
+    bindCKeditor("excerpt_editor");
+  }
 });

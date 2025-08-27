@@ -30,9 +30,7 @@ class ModuleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-    }
+    public function create() {}
 
     /**
      * Store a newly created resource in storage.
@@ -72,6 +70,7 @@ class ModuleController extends Controller
         $cmsModule->show_preview_link_on_listing_page = $request->show_preview_link_on_listing_page;
         $cmsModule->show_follow = $request->show_follow;
         $cmsModule->show_index = $request->show_index;
+        $cmsModule->show_excerpt = $request->show_excerpt;
         $cmsModule->show_descp = $request->show_descp;
         $cmsModule->crop_image = ($request->crop_image == 'Yes') ? 'Yes' : 'No';
         if ($request->feature_img_thmb_width != null) {
@@ -202,6 +201,7 @@ class ModuleController extends Controller
         $cmsModule->module_fontawesome_icon = $request->module_fontawesome_icon;
         $cmsModule->access_level = implode(',', $request->input('access_level', ['super-admin', 'normal-admin']));
         $cmsModule->show_icon_in = implode(',', $request->input('show_icon_in'));
+        $cmsModule->show_excerpt = $request->show_excerpt;
         $cmsModule->show_descp = $request->show_descp;
 
         $cmsModule->show_is_featured = $request->show_is_featured;

@@ -173,6 +173,7 @@ class ModuleManageController extends Controller
         $slugs = ((isset($moduleObj) && $moduleObj->type && $moduleObj->id != 1) ? $moduleObj->type . '/' : '') . $slugs;
         $slugs = $this->createUniqueURL($slugs);
         $moduleData->post_slug = $slugs;
+        $moduleData->excerpt = myform_admin_cms_filter(adjustUrl($request->excerpt));
         $moduleData->content = myform_admin_cms_filter(adjustUrl($request->module_description));
         $moduleData->additional_field_1 = $request->additional_field_1;
         $moduleData->additional_field_2 = $request->additional_field_2;
@@ -312,6 +313,7 @@ class ModuleManageController extends Controller
             return response()->json(['error' => ['URL already assigned.']]);
         }
         $moduleData->post_slug = $slugs;
+        $moduleData->excerpt = myform_admin_cms_filter(adjustUrl($request->excerpt));
         $moduleData->content = myform_admin_cms_filter(adjustUrl($request->module_description));
         $moduleData->additional_field_1 = $request->additional_field_1;
         $moduleData->additional_field_2 = $request->additional_field_2;
@@ -607,6 +609,7 @@ class ModuleManageController extends Controller
                 if (isset($orig_module)) {
                     $module->show_page_slug_field = $orig_module->page_link;
                     $module->show_menu_field = $orig_module->page_menu_option;
+                    $module->show_excerpt = $orig_module->show_excerpt;
                     $module->show_descp = $orig_module->page_content;
                     $module->show_feature_img_field = $orig_module->page_featured_img;
                     $module->show_follow = $orig_module->page_follow_index;

@@ -247,6 +247,13 @@
                                 </select>
                             </div>
                             <div class="mb-2">
+                                <label class="form-label">Show Excerpt </label>
+                                <select class="form-control" id="show_excerpt" name="show_excerpt">
+                                    <option value="0">No</option>
+                                    <option value="1">Yes</option>
+                                </select>
+                            </div>
+                            <div class="mb-2">
                                 <label class="form-label">Show Description </label>
                                 <select class="form-control" id="show_descp" name="show_descp">
                                     <option value="0">No</option>
@@ -548,6 +555,14 @@
                                     <option value="1">Yes</option>
                                 </select>
                             </div>
+                            <div class="mb-2">
+                                <label class="form-label">Show Excerpt </label>
+                                <select class="form-control" id="edit_show_excerpt" name="show_excerpt">
+                                    <option value="0">No</option>
+                                    <option value="1">Yes</option>
+                                </select>
+                            </div>
+
                             <div class="mb-2">
                                 <label class="form-label">Show Description</label>
                                 <select class="form-control" id="edit_show_descp" name="show_descp">
