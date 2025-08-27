@@ -65,7 +65,11 @@ class ModuleController extends Controller
         $cmsModule->show_page_slug_field = $request->show_page_slug_field;
         $cmsModule->show_ordering_options = $request->show_ordering_field;
         $cmsModule->show_menu_field = $request->show_menu_field;
+
         $cmsModule->show_feature_img_field = $request->show_feature_img_field;
+        $cmsModule->show_more_images_option = $request->show_more_images_option;
+        $cmsModule->show_videos_option = $request->show_videos_option;
+
         $cmsModule->show_seo_field = $request->show_seo_field;
         $cmsModule->show_preview_link_on_listing_page = $request->show_preview_link_on_listing_page;
         $cmsModule->show_follow = $request->show_follow;
@@ -188,6 +192,8 @@ class ModuleController extends Controller
         $cmsModule->show_ordering_options = $request->edit_ordering_field;
         $cmsModule->show_menu_field = $request->show_menu_field;
         $cmsModule->show_feature_img_field = $request->show_feature_img_field;
+        $cmsModule->show_more_images_option = $request->show_more_images_option;
+        $cmsModule->show_videos_option = $request->show_videos_option;
         $cmsModule->show_seo_field = $request->show_seo_field;
         $cmsModule->show_preview_link_on_listing_page = $request->show_preview_link_on_listing_page;
         $cmsModule->show_follow = $request->show_follow;

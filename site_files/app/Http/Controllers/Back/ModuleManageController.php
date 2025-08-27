@@ -612,6 +612,8 @@ class ModuleManageController extends Controller
                     $module->show_excerpt = $orig_module->show_excerpt;
                     $module->show_descp = $orig_module->page_content;
                     $module->show_feature_img_field = $orig_module->page_featured_img;
+                    $module->show_more_images_option = $orig_module->show_more_images_option;
+                    $module->show_videos_option = $orig_module->show_videos_option;
                     $module->show_follow = $orig_module->page_follow_index;
                     $module->show_index = $orig_module->page_follow_index;
                     $module->show_seo_field = $orig_module->page_seo_option;

@@ -232,6 +232,20 @@
                                 </select>
                             </div>
                             <div class="mb-2">
+                                <label class="form-label">Show More Images Option</label>
+                                <select class="form-control" id="show_more_images_option" name="show_more_images_option">
+                                    <option value="0">No</option>
+                                    <option value="1">Yes</option>
+                                </select>
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">Show Videos Option </label>
+                                <select class="form-control" id="show_videos_option" name="show_videos_option">
+                                    <option value="0">No</option>
+                                    <option value="1">Yes</option>
+                                </select>
+                            </div>
+                            <div class="mb-2">
                                 <label class="form-label">Show SEO Field </label>
                                 <select class="form-control" id="show_seo_field" name="show_seo_field">
                                     <option value="0">No</option>
@@ -534,6 +548,21 @@
                                 <select class="form-control" id="edit_show_feature_img_field"
                                     name="show_feature_img_field">
                                     <option value="">Select Option</option>
+                                    <option value="0">No</option>
+                                    <option value="1">Yes</option>
+                                </select>
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">Show More Images Option</label>
+                                <select class="form-control" id="edit_show_more_images_option"
+                                    name="show_more_images_option">
+                                    <option value="0">No</option>
+                                    <option value="1">Yes</option>
+                                </select>
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">Show Videos Option </label>
+                                <select class="form-control" id="edit_show_videos_option" name="show_videos_option">
                                     <option value="0">No</option>
                                     <option value="1">Yes</option>
                                 </select>

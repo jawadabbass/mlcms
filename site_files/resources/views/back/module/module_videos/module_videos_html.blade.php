@@ -1,4 +1,4 @@
-<div class="row" id="page_video_option" style="display: {{ $module->show_feature_img_field == 1 ? 'block' : 'none' }}">
+<div class="row" id="page_video_option" style="display: {{ $module->show_videos_option == 1 ? 'block' : 'none' }}">
     <div class="col-md-12">
         <div class="m-3 spinner-border text-primary" role="status" id="upload_video_loader_div" style="display:none;">
             <span class="visually-hidden">Uploading...</span>

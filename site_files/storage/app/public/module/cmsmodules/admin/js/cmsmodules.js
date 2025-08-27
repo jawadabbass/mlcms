@@ -50,6 +50,8 @@ function load_cmsmodule_edit_form(id) {
     $("#edit_ordering_field").val(data.show_ordering_options);
     $("#edit_show_menu_field").val(data.show_menu_field);
     $("#edit_show_feature_img_field").val(data.show_feature_img_field);
+    $("#edit_show_more_images_option").val(data.show_more_images_option);
+    $("#edit_show_videos_option").val(data.show_videos_option);
     $("#edit_show_seo_field").val(data.show_seo_field);
     $("#edit_show_preview_link_on_listing_page").val(
       data.show_preview_link_on_listing_page
