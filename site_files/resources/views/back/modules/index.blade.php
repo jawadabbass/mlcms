@@ -275,6 +275,13 @@
                                 </select>
                             </div>
                             <div class="mb-2">
+                                <label class="form-label">Show Description 2</label>
+                                <select class="form-control" id="show_descp_2" name="show_descp_2">
+                                    <option value="0">No</option>
+                                    <option value="1">Yes</option>
+                                </select>
+                            </div>
+                            <div class="mb-2">
                                 <label class="form-label">Show Follow Checkbox </label>
                                 <select class="form-control" id="show_follow" name="show_follow">
                                     <option value="1">Yes</option>
@@ -600,6 +607,16 @@
                                     <option value="1">Yes</option>
                                 </select>
                             </div>
+
+                            <div class="mb-2">
+                                <label class="form-label">Show Description 2</label>
+                                <select class="form-control" id="edit_show_descp_2" name="show_descp_2">
+                                    <option value="">Select Option</option>
+                                    <option value="0">No</option>
+                                    <option value="1">Yes</option>
+                                </select>
+                            </div>
+
                             <div class="mb-2">
                                 <label class="form-label">Show Follow Checkbox </label>
                                 <select class="form-control" id="edit_show_follow" name="show_follow">

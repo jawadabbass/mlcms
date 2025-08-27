@@ -71,8 +71,10 @@ class ClientController extends Controller
                 ->with('clientPackage');
             if ((isset($name) && !empty($name)) || (isset($email) && !empty($email))) {
                 $specialistQuery->where(function ($query) use ($name, $email) {
-                    $query->where('name', 'like', '%' . $name . '%')
-                        ->orWhere('email', 'like', '%' . $email . '%');
+                    $query->where('name', 'like', '%' . $name . '%');
+                    if (!empty($email)) {
+                        $query->orWhere('email', 'like', '%' . $email . '%');
+                    }
                 });
             }
             if (isset($_GET['dates']) && !empty($_GET['dates'])) {

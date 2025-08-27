@@ -62,6 +62,7 @@ function load_cmsmodule_edit_form(id) {
     $("#edit_show_index").val(data.show_index);
     $("#edit_show_excerpt").val(data.show_excerpt);
     $("#edit_show_descp").val(data.show_descp);
+    $("#edit_show_descp_2").val(data.show_descp_2);
     $("#edit_show_featured_image").val(data.show_featured_image);
     $("#edit_module_fontawesome_icon").val(data.module_fontawesome_icon);
     $("#edit_show_is_featured").val(data.show_is_featured);

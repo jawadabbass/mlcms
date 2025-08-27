@@ -105,7 +105,8 @@
                                         class="form-control" type="text">{{ adjustUrl($moduleData->excerpt) }}</textarea>
                                     <textarea name="excerpt" id="excerpt" style="display: none;"></textarea>
                                 </div>
-                                <div id="page_content" @if ($module->show_descp == '0') style="display: none" @endif>
+                                <div id="page_content" class="mb-3"
+                                    @if ($module->show_descp == '0') style="display: none" @endif>
 
                                     <label class="form-label">{{ ucwords($module->term) }} Description</label>
                                     <label for="">
@@ -122,6 +123,13 @@
                                         type="text">{{ adjustUrl($moduleData->content) }}</textarea>
                                     <textarea name="module_description" id="module_description1" style="display: none;"></textarea>
                                     <span id="module_description" style="padding-left:2px;" class="err"></span>
+                                </div>
+                                <div id="page_descp_2" class="mb-3"
+                                    @if ($module->show_descp_2 == '0') style="display: none" @endif>
+                                    <label class="form-label">{{ ucwords($module->term) }} Description 2</label>
+                                    <textarea name="descp_2_editor" id="descp_2_editor" placeholder="{{ ucwords($module->term) }} Description 2"
+                                        class="form-control" type="text">{{ adjustUrl($moduleData->content_2) }}</textarea>
+                                    <textarea name="descp_2" id="descp_2" style="display: none;"></textarea>
                                 </div>
                                 {{-- @if ($module->have_category == '1')
             <div id="have_category">
@@ -530,6 +538,10 @@
             var excerpt = tinyMCE.get('excerpt_editor').getContent();
             $('#excerpt').val(excerpt);
 
+            var descp_2 = tinyMCE.get('descp_2_editor').getContent();
+            $('#descp_2').val(descp_2);
+
+
             var content = tinyMCE.get('editor1').getContent();
             $('#module_description1').val(content);
 
@@ -653,6 +665,9 @@
 
             var excerpt = tinyMCE.get('excerpt_editor').getContent();
             $('#excerpt').val(excerpt);
+
+            var descp_2 = tinyMCE.get('descp_2_editor').getContent();
+            $('#descp_2').val(descp_2);
 
             var content = tinyMCE.get('editor1').getContent();
             $('#module_description1').val(content);

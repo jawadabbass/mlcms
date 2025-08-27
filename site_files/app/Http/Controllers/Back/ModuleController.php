@@ -76,6 +76,7 @@ class ModuleController extends Controller
         $cmsModule->show_index = $request->show_index;
         $cmsModule->show_excerpt = $request->show_excerpt;
         $cmsModule->show_descp = $request->show_descp;
+        $cmsModule->show_descp_2 = $request->show_descp_2;
         $cmsModule->crop_image = ($request->crop_image == 'Yes') ? 'Yes' : 'No';
         if ($request->feature_img_thmb_width != null) {
             $cmsModule->feature_img_thmb_width = $request->feature_img_thmb_width;
@@ -209,6 +210,7 @@ class ModuleController extends Controller
         $cmsModule->show_icon_in = implode(',', $request->input('show_icon_in'));
         $cmsModule->show_excerpt = $request->show_excerpt;
         $cmsModule->show_descp = $request->show_descp;
+        $cmsModule->show_descp_2 = $request->show_descp_2;
 
         $cmsModule->show_is_featured = $request->show_is_featured;
         $cmsModule->how_many_featured = $request->how_many_featured;

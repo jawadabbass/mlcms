@@ -108,4 +108,7 @@ $(function () {
   if ($("#excerpt_editor").length) {
     bindCKeditor("excerpt_editor");
   }
+  if ($("#descp_2_editor").length) {
+    bindCKeditor("descp_2_editor");
+  }
 });

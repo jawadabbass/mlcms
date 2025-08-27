@@ -175,6 +175,7 @@ class ModuleManageController extends Controller
         $moduleData->post_slug = $slugs;
         $moduleData->excerpt = myform_admin_cms_filter(adjustUrl($request->excerpt));
         $moduleData->content = myform_admin_cms_filter(adjustUrl($request->module_description));
+        $moduleData->content_2 = myform_admin_cms_filter(adjustUrl($request->descp_2));
         $moduleData->additional_field_1 = $request->additional_field_1;
         $moduleData->additional_field_2 = $request->additional_field_2;
         $moduleData->additional_field_3 = $request->additional_field_3;
@@ -315,6 +316,7 @@ class ModuleManageController extends Controller
         $moduleData->post_slug = $slugs;
         $moduleData->excerpt = myform_admin_cms_filter(adjustUrl($request->excerpt));
         $moduleData->content = myform_admin_cms_filter(adjustUrl($request->module_description));
+        $moduleData->content_2 = myform_admin_cms_filter(adjustUrl($request->descp_2));
         $moduleData->additional_field_1 = $request->additional_field_1;
         $moduleData->additional_field_2 = $request->additional_field_2;
         $moduleData->additional_field_3 = $request->additional_field_3;
@@ -611,6 +613,7 @@ class ModuleManageController extends Controller
                     $module->show_menu_field = $orig_module->page_menu_option;
                     $module->show_excerpt = $orig_module->show_excerpt;
                     $module->show_descp = $orig_module->page_content;
+                    $module->show_descp_2 = $orig_module->show_descp_2;
                     $module->show_feature_img_field = $orig_module->page_featured_img;
                     $module->show_more_images_option = $orig_module->show_more_images_option;
                     $module->show_videos_option = $orig_module->show_videos_option;
