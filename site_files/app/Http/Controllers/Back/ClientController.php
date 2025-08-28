@@ -84,7 +84,7 @@ class ClientController extends Controller
                 $to = date("Y-m-d", strtotime($value[1]));
                 $specialistQuery->whereBetween('dated', [$from, $to]);
             }
-            $specialistQuery->orderBy('dated', 'DESC');
+            $specialistQuery->orderBy('id', 'DESC');
             $result = $specialistQuery->get();
             $result2 = [];
             if (isset($_GET['package']) && !empty($_GET['package'])) {
@@ -100,7 +100,7 @@ class ClientController extends Controller
                 $result = $result2;
             }
         } else {
-            $result = Client::with('user')->with('client_assessment.assessment_question')->orderBy('dated', 'DESC')->paginate(10);
+            $result = Client::with('user')->with('client_assessment.assessment_question')->orderBy('id', 'DESC')->paginate(10);
         }
         $data = array();
         $data['msg'] = '';

@@ -1,6 +1,6 @@
 @extends('back.layouts.app', ['title' => $title])
 @section('content')
-    <div class="content-wrapper pl-3 pr-2">
+    <div class="pl-3 pr-2 content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="row">
@@ -17,7 +17,7 @@
         <section class="content">
             <div class="row">
                 <div class="col-xs-12 col-md-12">
-                    <div class="card p-2">
+                    <div class="p-2 card">
                         <div class=" card-body">
                             @if (session('success'))
                                 <div style="padding-top:5px;" class="alert alert-success">{{ session('success') }}
@@ -37,13 +37,13 @@
                                 <a href="{{ admin_url() }}mass-mail?clients=yes" class="btn btn-info">
                                     <i class="fas fa-envelope-square" aria-hidden="true"></i>&nbsp;Send Mass Email</a>
 
-                                <a href="{{ route('message.index') }}" class="btn btn-info">
+                                {{-- <a href="{{ route('message.index') }}" class="btn btn-info">
                                     <i class="fas awesome_style fa-share" aria-hidden="true"></i>&nbsp;Message Template
                                     Management</a>
                                 <a href="javascript:;" onclick="send_template_sms('','client','combine')"
                                     class="btn btn-info">
                                     <i class="fas awesome_style fa-share" aria-hidden="true"></i>&nbsp;Send SMS
-                                </a>
+                                </a> --}}
                             </div>
                             <br>
                             <form method="get" action="{{ route('manage_clients.index') }}" id="search_form">
@@ -62,18 +62,6 @@
                                     <div class="col-md-3 form-group">
                                         <input type="text" name="dates" id="reportrange" placeholder="All"
                                             class="form-control">
-                                    </div>
-                                    <div class="col-md-3 form-group ">
-                                        <select class="btn btn-info form-group" name="package" aria-hidden="true"
-                                            id="package"
-                                            style="width:100%;background-color:white;color: gray;border-color: #edcbcb;">
-                                            <option class="form-control" value="">Search By Package</option>
-                                            @foreach ($get_all_packages as $package)
-                                                <option class="form-control" value="{{ $package->id }}"
-                                                    @if (isset($_GET['package']) && $_GET['package'] == $package->id)  @endif>{{ $package->heading }}
-                                                </option>
-                                            @endforeach
-                                        </select>
                                     </div>
                                     <div class="col-md-2 text-start">
                                         <button type="submit" class="btn btn-info"><i class="fas fa-search"
@@ -97,12 +85,11 @@
                                             <th>
                                             </th>
                                             <th>ID</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
+                                            <th>Name</th>
+                                            {{-- <th>Last Name</th> --}}
                                             <th>Email</th>
                                             <th>Phone</th>
-                                            <th>Package</th>
-                                            <th>Status</th>
+                                            {{-- <th>Status</th> --}}
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -138,13 +125,12 @@
                                                         </td>
                                                         <td>{{ $row->id }}</td>
                                                         <td>{{ $row->name }}</td>
-                                                        <td>{{ $row->last_name }}</td>
+                                                        {{-- <td>{{ $row->last_name }}</td> --}}
                                                         <td><a href="mailto:{{ $row->email }}">{{ $row->email }}</a>
                                                         </td>
                                                         <td><a href="tel:{{ $row->phone }}">{{ $row->phone }}</a>
                                                         </td>
-                                                        <td><?php echo client_package($row->id, $response); ?> </td>
-                                                        <td>
+                                                        {{-- <td>
                                                             <select class="form-control"
                                                                 onchange="update_status('{{ $row->id }}',this.value)">
                                                                 <option value="">-Select-</option>
@@ -154,7 +140,7 @@
                                                                         {{ $val }}</option>
                                                                 @endforeach
                                                             </select>
-                                                        </td>
+                                                        </td> --}}
                                                     </tr>
                                                     <tr style="display: none;" id="subtrr{{ $row->id }}">
                                                         <td colspan="2">
@@ -168,165 +154,31 @@
                                                         </td>
                                                         <td colspan="7">
                                                             <a class="btn btn-sm btn-info"
-                                                                href="mailto:{{ $row->email }}"
-                                                                title="Reply via Email">
+                                                                href="mailto:{{ $row->email }}" title="Reply via Email">
                                                                 <i class="fas fa-reply" aria-hidden="true"></i>
                                                                 Reply</a>
                                                             <a href="{{ admin_url() }}manage_clients/{{ $row->id }}"
-                                                                class="btn btn-success  btn-sm"><i class="fas fa-history"
+                                                                class="btn btn-success btn-sm"><i class="fas fa-history"
                                                                     aria-hidden="true"></i>
                                                                 History</a>
-                                                            <a href="javascript:;" class="btn btn-success  btn-sm"
+                                                            <a href="javascript:;" class="btn btn-success btn-sm"
                                                                 style="color:white;"
                                                                 onclick="comment_model({{ $row->id }})"><i
                                                                     class="fas fa-edit" aria-hidden="true"></i> Add
                                                                 Comment</a>
                                                             <a href="{{ admin_url() }}manage_clients/{{ $row->id }}/edit"
-                                                                class="btn btn-info  btn-sm"><i class="fas fa-edit"
+                                                                class="btn btn-info btn-sm"><i class="fas fa-edit"
                                                                     aria-hidden="true"></i>
                                                                 Edit</a>
                                                             <a href="{{ admin_url() }}mass-mail?client_id={{ $row->id }}"
                                                                 class="btn btn-info">
                                                                 <i class="fas fa-envelope-square"
                                                                     aria-hidden="true"></i>&nbsp;Send Email</a>
-                                                            <a href="javascript:;"
-                                                                onclick="send_template_sms('{{ $row->id }}','client','single')"
-                                                                class="btn btn-sm btn-info" href="javascript:"><i
-                                                                    class="fas awesome_style fa-share"></i> Send
-                                                                Message</a>
-                                                            @if ($row->assesment_status == 'sent')
-                                                                <a onclick="send_assessment_email('{{ $row->id }}','client')"
-                                                                    class="btn btn-sm btn-primary" href="javascript:"><i
-                                                                        class="fas fa-envelope-square"></i>
-                                                                    ReSend
-                                                                    Questionnaire</a>
-                                                            @elseif($row->assesment_status == 'receive')
-                                                                <a class="btn btn-sm btn-info" href="javascript:"
-                                                                    data-toggle="modal"
-                                                                    data-target="#largeShoes-<?php echo $row->id; ?>"><i
-                                                                        class="fas fa-envelope-square"></i>View
-                                                                    Answered
-                                                                    Questions</a>
-                                                            @else
-                                                                <a href="javascript:;"
-                                                                    onclick="send_assessment_email('{{ $row->id }}','client')"
-                                                                    class="btn btn-sm btn-primary" href="javascript:"><i
-                                                                        class="fas fa-envelope-square"></i>
-                                                                    Send
-                                                                    Questionnaire</a>
-                                                            @endif
                                                             <a class="btn btn-sm btn-danger" href="javascript:"
                                                                 onclick="del_recrod('{{ $row->id }}');"
                                                                 title="Delete">
                                                                 <i class="fas fa-trash" aria-hidden="true"></i>
                                                                 Delete</a>
-                                                            <div class="modal" id="largeShoes-<?php echo $row->id; ?>"
-                                                                tabindex="-1" role="dialog"
-                                                                aria-labelledby="modalLabelLarge" aria-hidden="true">
-                                                                <div class="modal-dialog modal-lg">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h4 class="modal-title" id="modalLabelLarge">
-                                                                                Answered
-                                                                                Questions</h4>
-                                                                            <button type="button" class="close"
-                                                                                data-bs-dismiss="modal"
-                                                                                aria-label="Close">
-                                                                            </button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <div class="table-responsive">
-                                                                                <table class="table table-striped">
-                                                                                    <thead>
-                                                                                        <tr>
-                                                                                            <th scope="col">Question(s)
-                                                                                            </th>
-                                                                                            <th scope="col">Answer(s)
-                                                                                            </th>
-                                                                                        </tr>
-                                                                                    </thead>
-                                                                                    <tbody>
-                                                                                        @if (!$row->client_assessment == null)
-                                                                                            <?php $q = 0; ?>
-                                                                                            @foreach ($row->client_assessment as $p_question)
-                                                                                                <tr>
-                                                                                                    <td>{{ $p_question->assessment_question->question }}
-                                                                                                    </td>
-                                                                                                    <td class="down_answer_que{{ $q }}"
-                                                                                                        style="text-align: center;">
-                                                                                                        <a style="font-size: 24px;"
-                                                                                                            onclick="show_hides('answer_que{{ $q }}')"><i
-                                                                                                                class="fas fa-angle-double-down"
-                                                                                                                aria-hidden="true"></i></a>
-                                                                                                    </td>
-                                                                                                    <td class="up_answer_que{{ $q }}"
-                                                                                                        style="display:none;text-align: center;">
-                                                                                                        <a style="font-size: 24px;"
-                                                                                                            onclick="hide_show('answer_que{{ $q }}')"><i
-                                                                                                                class="fas fa-angle-double-up"
-                                                                                                                aria-hidden="true"></i></a>
-                                                                                                    </td>
-                                                                                                </tr>
-                                                                                                <tr style="display:none;"
-                                                                                                    class="answer_que{{ $q }}">
-                                                                                                    <td colspan="2"
-                                                                                                        style="width:100%;border:none;">
-                                                                                                        @if (is_array(json_decode($p_question->answer)) || is_object(json_decode($p_question->answer)))
-                                                                                                            @foreach (json_decode($p_question->answer) as $key => $ans)
-                                                                                                                {{ $key }}<br>
-                                                                                                            @endforeach
-                                                                                                        @else
-                                                                                                            {{ $p_question->answer }}
-                                                                                                        @endif
-                                                                                                    </td>
-                                                                                                </tr>
-                                                                                                <?php $q++; ?>
-                                                                                            @endforeach
-                                                                                        @endif
-                                                                                    </tbody>
-                                                                                </table>
-                                                                            </div>
-                                                                            <label>Conditions </label>
-                                                                            <div class="row">
-                                                                                @foreach ($content_condition as $content)
-                                                                                    <div class="col-md-2"
-                                                                                        style="margin-left: 15px;">
-                                                                                        <input type="checkbox"
-                                                                                            class="form-check-input"
-                                                                                            id="content{{ $content->id }}"
-                                                                                            onchange="update_conditions('{{ $row->id }}','{{ $content->id }}')"
-                                                                                            name="condition_content[]"
-                                                                                            value="{{ $content->id }}"
-                                                                                            <?php if($row->conditions != NULL){ 
-             $decode=json_decode($row->conditions);
-             if(is_array($decode)){
-              foreach($decode as $dec){
-                  if($dec==$content->id){ 
-            ?> checked
-                                                                                            <?php  }
-             }
-             } } ?>>
-                                                                                        <label class="form-check-label"
-                                                                                            for="{{ $content->title }}">{{ $content->title }}</label>
-                                                                                    </div>
-                                                                                @endforeach
-                                                                            </div>
-                                                                            @if (goals($row->id) != '')
-                                                                                <label><b>Goals</b> </label>
-                                                                                <div class="row">
-                                                                                    <div class="col-md-12" style="">
-                                                                                        <table style="display:block;">
-                                                                                            <tbody style="display:block;">
-                                                                                                <?php echo goals($row->id); ?>
-                                                                                            </tbody>
-                                                                                        </table>
-                                                                                    </div>
-                                                                                </div>
-                                                                            @endif
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
                                                         </td>
                                                     </tr>
                                                 @endif
@@ -347,9 +199,7 @@
                 </div>
             </div>
             <div>
-                @if (!isset($_GET['package']))
-                    {{ $result->links() }}
-                @endif
+                {{ $result->links() }}
             </div>
         </section>
         <td>

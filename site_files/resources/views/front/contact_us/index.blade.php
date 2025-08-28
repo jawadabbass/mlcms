@@ -2,6 +2,11 @@
 @section('beforeHeadClose')
     <link href="{{ asset_storage('') . 'module/blog/front/css/blog.css' }}" rel="stylesheet" type="text/css" />
     <script src="https://www.google.com/recaptcha/api.js?render={{ config('recaptcha.siteKey') }}"></script>
+    <style>
+        .swal2-confirm {
+            background-color: #29abe2 !important;
+        }
+    </style>
 @endsection
 @section('content')
     @php $settingArr = settingArr(); @endphp
@@ -11,7 +16,7 @@
     @php echo cms_edit_page('cms',$data->id);@endphp
     <div class="about-wrap">
         <!-- Start Breadcrumb
-                                                                                                                                                            ============================================= -->
+                                                                                                                                                                                                        ============================================= -->
         <div class="text-center bg-fixed shadow breadcrumb-area dark text-light"
             style="background-image: url(<?php echo base_url(); ?>front/images/banner/23.jpg);">
             <div class="container">
@@ -28,7 +33,7 @@
         </div>
         <!-- End Breadcrumb -->
         <!-- Start Contact Area
-                                                                                                                                                            ============================================= -->
+                                                                                                                                                                                                        ============================================= -->
         <div class="contact-area default-padding">
             <div class="container">
                 <div class="row">
@@ -117,7 +122,7 @@
         </div>
         <!-- End Contact Area -->
         <!-- Start Google Maps
-                                                                                                                                                            ============================================= -->
+                                                                                                                                                                                                        ============================================= -->
         @if ($settingArr->google_map_status == 1)
             <div class="maps-area">
                 <div class="container-full">
@@ -173,7 +178,7 @@
                 invalidHandler: function(event, validator) {
                     var errors = validator.numberOfInvalids();
                     if (errors) {
-                        var message = "You missed " + errors + " field(s). Please correct them:";
+                        var message = "Please fill the following fields:";
                         var errorList = "";
                         // Loop through the errorList to get individual error messages
                         $.each(validator.errorList, function(index, error) {
@@ -247,7 +252,7 @@
                 error: function(data) {
                     if (data.status === 422) {
                         var responseText = $.parseJSON(data.responseText);
-                        var message = "You missed some field(s). Please correct them:";
+                        var message = "Please fill the following fields:";
                         var errorList = "";
                         // Loop through the errorList to get individual error messages                                                
                         $.each(responseText.errors, function(index, value) {

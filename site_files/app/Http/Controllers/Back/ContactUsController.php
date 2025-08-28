@@ -63,7 +63,7 @@ class ContactUsController extends Controller
                     unset($searchArr[$key]);
                 }
             }
-            $specialistQuery = ContactUs::with('user')->with('assessment.assessment_question')->orderBy('dated', 'DESC');
+            $specialistQuery = ContactUs::with('user')->with('assessment.assessment_question')->orderBy('id', 'DESC');
             if ($read_lead != 2) {
                 $specialistQuery->where('read_lead', $read_lead);
             }
@@ -81,12 +81,12 @@ class ContactUsController extends Controller
                 $specialistQuery->where('dated', '>=', $from)
                     ->where('dated', '<=', $to);
             }
-            $specialistQuery->orderBy('dated', 'desc');
+            $specialistQuery->orderBy('id', 'desc');
             $result = $specialistQuery->paginate(15);
             $serachLink = rtrim($serachLink, '&');
             $result->setPath('?' . $serachLink);
         } else {
-            $result = ContactUs::with('user')->with('assessment.assessment_question')->orderBy('dated', 'DESC')->paginate(15);
+            $result = ContactUs::with('user')->with('assessment.assessment_question')->orderBy('id', 'DESC')->paginate(15);
         }
         $adminAlert = AdminAlert::where('keyy', 'contact_request')->first();
         if (null !== $adminAlert) {

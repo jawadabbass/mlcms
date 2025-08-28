@@ -23,10 +23,8 @@
                         <div class="box-header">
                             <h3 class=" card-title">
                                 Details of Mr /Mr's <code> {!! $client->name !!}</code>
-                                <a
-                                    href="{{ admin_url() }}manage_clients/{{ $client->id }}/edit"
-                                    class="btn btn-info  btn-sm"><i class="fas fa-edit-square-o"
-                                        aria-hidden="true"></i>
+                                <a href="{{ admin_url() }}manage_clients/{{ $client->id }}/edit"
+                                    class="btn btn-info  btn-sm"><i class="fas fa-edit-square-o" aria-hidden="true"></i>
                                     Update Client</a>
                             </h3>
                         </div>
@@ -35,13 +33,13 @@
                                 <table class="table border ">
                                     <tbody>
                                         <tr>
-                                            <td>First Name</td>
+                                            <td>Name</td>
                                             <td>{{ $client->name }}</td>
                                         </tr>
-                                        <tr>
+                                        {{-- <tr>
                                             <td>Last Name</td>
                                             <td>{{ $client->last_name }}</td>
-                                        </tr>
+                                        </tr> --}}
                                         <tr>
                                             <td>Email</td>
                                             <td>{{ $client->email }}</td>
@@ -53,7 +51,7 @@
                                         </tr>
 
 
-                                        <tr>
+                                        {{--  <tr>
                                             <td>Address</td>
                                             <td>{{ $client->address }}</td>
                                         </tr>
@@ -69,12 +67,12 @@
                                             <td>Zip Code</td>
                                             <td>{{ $client->zip }}</td>
                                         </tr>
-
+ --}}
                                         <tr>
                                             <td>Comments</td>
                                             <td>{{ $client->comments }}</td>
                                         </tr>
-
+                                        {{-- 
                                         <tr>
                                             <td>Conditions</td>
                                             <td>
@@ -92,7 +90,7 @@
 
                                             </td>
                                         </tr>
-
+ --}}
                                         <tr>
                                             <td>Date of Birth</td>
                                             <td><?php echo date('d-M-Y', strtotime($client->dob)); ?></td>

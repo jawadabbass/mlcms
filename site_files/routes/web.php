@@ -84,7 +84,7 @@ Route::prefix('adminmedia')->name('admin.')->group(function () {
     Route::get('email/verify/{id}/{hash}', [AdminAuthVerificationController::class, 'verify'])->name('verification.verify');
     Route::post('email/resend', [AdminAuthVerificationController::class, 'resend'])->name('verification.resend');
 });
-Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'ipmiddleware']], function () {
+Route::group(['prefix' => 'adminmedia', 'middleware' => ['admin_auth', 'clearCache', 'ipmiddleware']], function () {
     Route::get('/', [BackDashboardController::class, 'index']);
     Route::get('/aaa', function () {
         return view('back.common_views.script');

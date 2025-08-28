@@ -101,7 +101,7 @@
                                                 <th>Name</th>
                                                 <th>Email</th>
                                                 <th>Phone</th>
-                                                <th>Service</th>
+                                                {{-- <th>Service</th> --}}
                                                 {{-- <th>Package</th> --}}
                                                 <th>Date</th>
                                                 <th>Comment</th>
@@ -144,7 +144,7 @@
                                                         </td>
                                                         <td><a href="tel:{{ $row->phone }}">{{ $row->phone }}</a>
                                                         </td>
-                                                        <td>{{ $row->service }}</td>
+                                                        {{-- <td>{{ $row->service }}</td> --}}
                                                         {{-- <td>
                                                             <select class="form-control"
                                                                 onchange="update_package('{{ $row->id }}',this.value)">
@@ -199,12 +199,13 @@
                                                                         class="fas fa-user" aria-hidden="true"></i>
                                                                     Convert to Client</a>
                                                             @endif
+                                                            {{-- 
                                                             <a class="btn btn-sm btn-primary" href="javascript:;"
                                                                 onclick="loadDataToGoogleCalendarModal('{{ $row->id }}')"><i
                                                                     class="fas fa-calendar" aria-hidden="true"></i>
                                                                 Add{{ $row->added_to_google_calendar == 1 ? ' again' : '' }}
                                                                 to Google Calendar</a>
-
+                                                                --}}
                                                             <a href="{{ admin_url() }}mass-mail?lead_id={{ $row->id }}"
                                                                 class="btn btn-info">
                                                                 <i class="fas fa-envelope-square"
