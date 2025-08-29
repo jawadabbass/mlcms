@@ -1,24 +1,168 @@
-<h3><strong>Someone has requested to contact from {{ FindInsettingArr('business_name') }} </strong></h3>
-<table width="70%" border="0" cellspacing="1" cellpadding="6"
-    style="border:1px solid #ddd; font-family:Arial, Helvetica, sans-serif; font-size:14px;">
-    <tr>
-        <td width="50%" height="25" bgcolor="#eeeeee"><strong> Name </strong>:</td>
-        <td width="50%" bgcolor="#eeeeee"> {{ $data['name'] }} </td>
-    </tr>
-    <tr>
-        <td height="25" width="50%"><strong>Email</strong>:</td>
-        <td width="50%">{{ $data['email'] }}</td>
-    </tr>
-    <tr>
-        <td height="25" bgcolor="#eeeeee" width="50%"><strong>Phone No</strong></td>
-        <td width="50%" bgcolor="#eeeeee">{{ $data['phone'] }}</td>
-    </tr>
-    <tr>
-        <td height="25" width="50%"><strong>Message</strong></td>
-        <td width="50%">{{ $data['comments'] }}</td>
-    </tr>
-    <tr>
-        <td height="25" bgcolor="#eeeeee" width="50%"><strong>IP Address</strong></td>
-        <td width="50%" bgcolor="#eeeeee">{{ $ip }}</td>
-    </tr>
-</table>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>{{ config('app.name') }}</title>
+</head>
+
+<body>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#eeeeee"
+        style="
+        font-family: Gotham, 'Helvetica Neue', Helvetica, Arial, 'sans-serif';
+      ">
+        <tbody>
+            <tr>
+                <td height="30">&nbsp;</td>
+            </tr>
+            <tr>
+                <td>
+                    <table width="650" border="0" align="center" cellpadding="10" cellspacing="0"
+                        bgcolor="#ffffff">
+                        <tbody>
+                            <tr>
+                                <td align="center">
+                                    <img src="{!! asset_uploads('admin_logo_favicon/' . config('admin_logo_favicon.admin_login_page_logo')) !!}" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table align="center" width="650" border="0" cellspacing="0" cellpadding="0"
+                        bgcolor="#ffffff">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <table role="presentation" class="column" width="100%"
+                                                        border="0" cellspacing="0" cellpadding="0">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td align="center" bgcolor="#007bff"
+                                                                    style="padding: 30px 40px">
+                                                                    <h1
+                                                                        style="
+                                        color: #ffffff;
+                                        font-size: 26px;
+                                        margin: 0;
+                                        font-weight: bold;
+                                      ">
+                                                                        Contact Form Submitted
+                                                                    </h1>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table align="center" width="650" border="0" cellspacing="0" cellpadding="0"
+                        bgcolor="#ffffff">
+                        <tbody>
+                            <tr>
+                                <td style="padding: 20px 40px; color: #333; line-height: 26px">
+                                    <table width="100%" border="0" cellspacing="0" cellpadding="0"
+                                        style="font-size: 14px">
+                                        <tbody>
+                                            <tr>
+                                                <td width="100" style="padding: 5px 0">Name</td>
+                                                <td>&nbsp;:&nbsp;</td>
+                                                <td style="padding: 5px 0">
+                                                    <strong>{{ $data['name'] }}</strong>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="border-top: 1px solid #eee; padding: 5px 0">
+                                                    Email
+                                                </td>
+                                                <td>&nbsp;:&nbsp;</td>
+                                                <td style="border-top: 1px solid #eee; padding: 5px 0">
+                                                    <strong>{{ $data['email'] }}</strong>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="border-top: 1px solid #eee; padding: 5px 0">
+                                                    Phone
+                                                </td>
+                                                <td>&nbsp;:&nbsp;</td>
+                                                <td style="border-top: 1px solid #eee; padding: 5px 0">
+                                                    <strong>{{ $data['phone'] }}</strong>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="border-top: 1px solid #eee; padding: 5px 0">
+                                                    Message
+                                                </td>
+                                                <td>&nbsp;:&nbsp;</td>
+                                                <td style="border-top: 1px solid #eee; padding: 5px 0">
+                                                    <strong>{{ $data['comments'] }}</strong>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="border-top: 1px solid #eee; padding: 5px 0">
+                                                    Ip Address
+                                                </td>
+                                                <td>&nbsp;:&nbsp;</td>
+                                                <td style="border-top: 1px solid #eee; padding: 5px 0">
+                                                    <strong>{{ $ip }}</strong>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- footer_alt -->
+                    <table align="center" width="650" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                            <tr>
+                                <td class="email_body email_end tc">
+                                    <table role="presentation" class="content_section" width="100%" border="0"
+                                        cellspacing="0" cellpadding="0">
+                                        <tbody>
+                                            <tr>
+                                                <td height="16">&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <table role="presentation" class="column" width="100%"
+                                                        border="0" cellspacing="0" cellpadding="0"
+                                                        style="font-size: 14px">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td align="center" valign="top"
+                                                                    style="line-height: 20px">
+                                                                    <p>
+                                                                        Copyright © {{ date('Y') }}
+                                                                        {{ config('app.name') }}. All Rights Reserved
+                                                                    </p>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>
