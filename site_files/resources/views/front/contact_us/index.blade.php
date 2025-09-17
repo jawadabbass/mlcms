@@ -16,7 +16,7 @@
     @php echo cms_edit_page('cms',$data->id);@endphp
     <div class="about-wrap">
         <!-- Start Breadcrumb
-                                                                                                                                                                                                        ============================================= -->
+                                                                                                                                                                                                                                    ============================================= -->
         <div class="text-center bg-fixed shadow breadcrumb-area dark text-light"
             style="background-image: url(<?php echo base_url(); ?>front/images/banner/23.jpg);">
             <div class="container">
@@ -33,7 +33,7 @@
         </div>
         <!-- End Breadcrumb -->
         <!-- Start Contact Area
-                                                                                                                                                                                                        ============================================= -->
+                                                                                                                                                                                                                                    ============================================= -->
         <div class="contact-area default-padding">
             <div class="container">
                 <div class="row">
@@ -76,16 +76,21 @@
                             <form action="#" method="POST" name="frm_process" id="contactForm" class="contact-form">
                                 @csrf
                                 <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
-                                <div class="col-md-12">
-                                    <div class="row">
+                                <div class="row">
+                                    <div class="col-md-6">
                                         <div class="form-group">
-                                            <input name="name" type="text" placeholder="Name"
+                                            <input name="name" type="text" placeholder="First Name"
                                                 value="{{ old('name') }}" class="form-control" id="name" required>
                                             <div id="name-error" class="error"></div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input name="lname" type="text" placeholder="Last Name"
+                                                value="{{ old('lname') }}" class="form-control" id="lname">
+                                            <div id="name-error" class="error"></div>
+                                        </div>
+                                    </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <input name="email" type="email" placeholder="Email"
@@ -100,18 +105,23 @@
                                             <div id="phone-error" class="error"></div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input name="subject" type="text" placeholder="Subject"
+                                                value="{{ old('subject') }}" class="form-control" id="subject">
+                                            <div id="name-error" class="error"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
                                         <div class="form-group comments">
                                             <textarea name="comments" placeholder="Message" class="form-control" rows="6" id="comments">{{ old('comments') }}</textarea>
                                             <div id="comments-error" class="error"></div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="row">
-                                        <button type="submit">Send Message <i class="fa fa-paper-plane"></i> </button>
+                                    <div class="col-md-12">
+                                        <button type="submit">Send Message <i class="fa fa-paper-plane"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </form>
@@ -122,7 +132,7 @@
         </div>
         <!-- End Contact Area -->
         <!-- Start Google Maps
-                                                                                                                                                                                                        ============================================= -->
+                                                                                                                                                                                                                                    ============================================= -->
         @if ($settingArr->google_map_status == 1)
             <div class="maps-area">
                 <div class="container-full">

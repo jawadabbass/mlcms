@@ -3,8 +3,12 @@
     <div class="modal-body">
         <input type="hidden" name="id" id="id" value="">
         <div class="mb-3 col-sm-12">
-            <label class="form-label">Name</label>
+            <label class="form-label">First Name</label>
             <input type="text" name="name" id="name" class="form-control" value="">
+        </div>
+        <div class="mb-3 col-sm-12">
+            <label class="form-label">Last Name</label>
+            <input type="text" name="lname" id="lname" class="form-control" value="">
         </div>
         <div class="mb-3 col-sm-12">
             <label class="form-label">Email</label>
@@ -22,11 +26,12 @@
             <label class="form-label">Price</label>
             <input type="text" name="price" id="price" class="form-control" value=""> 
         </div>
+         --}}
         <div class="mb-3 col-sm-12">
             <label class="form-label">Subject</label>
             <input type="text" name="subject" id="subject" class="form-control" value=""> 
         </div>
-         --}}
+        
          <div class="mb-3 col-sm-12">
             <label class="form-label">Comments</label>
             <textarea class="form-control" name="comments" id="comments"></textarea>

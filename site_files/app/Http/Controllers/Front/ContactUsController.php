@@ -46,7 +46,7 @@ class ContactUsController extends Controller
         ];
         $validatedData = $request->validate($validationRules, $validationMessages);
         $contact_emails = Setting::first();
-        $sentenceToCheck = $request->name . ' ' . $request->email . ' ' . $request->phone . ' ' . $request->comments . ' ' . $contact_emails->to_email . ' ' . $contact_emails->cc_email . ' ' . $contact_emails->bcc_email;
+        $sentenceToCheck = $request->name . ' ' . $request->lname . ' ' . $request->email . ' ' . $request->phone . ' ' . $request->subject . ' ' . $request->comments . ' ' . $contact_emails->to_email . ' ' . $contact_emails->cc_email . ' ' . $contact_emails->bcc_email;
         $negativeKeywordsMetaData = Metadata::where('data_key', 'negative_keywords')->first();
         $negativeKeywords = explode(',', $negativeKeywordsMetaData->val1);
         $hasNegativeKeyword = false;
@@ -70,8 +70,10 @@ class ContactUsController extends Controller
         if ($hasNegativeKeyword === false && $hasNegativeTLD === false) {
             $contactUsRequest = new ContactUsRequest();
             $contactUsRequest->name = $request->name;
+            $contactUsRequest->lname = $request->lname;
             $contactUsRequest->email = $request->email;
             $contactUsRequest->phone = $request->phone;
+            $contactUsRequest->subject = $request->subject;
             $contactUsRequest->comments = $request->comments;
             $contactUsRequest->ip = $request->ip();
             $contactUsRequest->dated = date('Y-m-d H:i:s');

@@ -35,9 +35,15 @@
                                 @csrf
                                 <br>
                                 <div class="row" style="margin-bottom: 10px;">
-                                    <div class="col-lg-3 text-end">Name</div>
+                                    <div class="col-lg-3 text-end">First Name</div>
                                     <div class="col-lg-6"><input type="text" name="name" id="name"
                                             class="form-control" value="{{ old('name') }}" placeholder=""></div>
+                                    <div class="col-lg-3 text-start"></div>
+                                </div>
+                                <div class="row" style="margin-bottom: 10px;">
+                                    <div class="col-lg-3 text-end">Last Name</div>
+                                    <div class="col-lg-6"><input type="text" name="lname" id="lname"
+                                            class="form-control" value="{{ old('lname') }}" placeholder=""></div>
                                     <div class="col-lg-3 text-start"></div>
                                 </div>
                                 <div class="row" style="margin-bottom: 10px;">
@@ -52,6 +58,13 @@
                                             class="form-control" value="{{ old('phone') }}" placeholder=""></div>
                                     <div class="col-lg-3 text-start"></div>
                                 </div>
+                                <div class="row" style="margin-bottom: 10px;">
+                                    <div class="col-lg-3 text-end">Subject</div>
+                                    <div class="col-lg-6"><input type="text" name="subject" id="subject"
+                                            class="form-control" value="{{ old('subject') }}" placeholder=""></div>
+                                    <div class="col-lg-3 text-start"></div>
+                                </div>
+                                
                                 <div class="row" style="margin-bottom: 10px;">
                                     <div class="col-lg-3 text-end">Comments</div>
                                     <div class="col-lg-6">

@@ -38,8 +38,12 @@
                     <table class="table border ">
                         <tbody>
                             <tr>
-                                <td>Name</td>
+                                <td>First Name</td>
                                 <td>{{ $result->name }}</td>
+                            </tr>
+                            <tr>
+                                <td>Last Name</td>
+                                <td>{{ $result->lname }}</td>
                             </tr>
                             <tr>
                                 <td>Email</td>
@@ -57,10 +61,11 @@
                                             <td>Cost of Lead</td>
                                             <td>${{ $result->price }}</td>
                                         </tr>
-                                        <tr>
-                                            <td>Subject</td>
-                                            <td>{{ $result->subject }}</td>
-                                        </tr> --}}
+                                         --}}
+                            <tr>
+                                <td>Subject</td>
+                                <td>{{ $result->subject }}</td>
+                            </tr>
                             <tr>
                                 <td>Comments</td>
                                 <td>{{ $result->comments }}</td>
@@ -331,13 +336,14 @@
                 .then(contatUsRequest => {
                     $('#edit_contact_request_form').find('#id').val(contatUsRequest.id);
                     $('#edit_contact_request_form').find('#name').val(contatUsRequest.name);
+                    $('#edit_contact_request_form').find('#lname').val(contatUsRequest.lname);
                     $('#edit_contact_request_form').find('#email').val(contatUsRequest.email);
                     $('#edit_contact_request_form').find('#phone').val(contatUsRequest.phone);
                     $('#edit_contact_request_form').find('#address').val(contatUsRequest.address);
                     $('#edit_contact_request_form').find('#price').val(contatUsRequest.price);
                     $('#edit_contact_request_form').find('#subject').val(contatUsRequest.subject);
                     $('#edit_contact_request_form').find('#comments').val(contatUsRequest.comments);
-                    $('#edit_contact_request_form').find('#dated').val(contatUsRequest.dated);
+                    $('#edit_contact_request_form').find('#dated').val(getFormattedDateToEdit(contatUsRequest.dated));
 
                     $('#editContactRequestModal').modal('show');
                 });
@@ -357,6 +363,7 @@
                     contatUsRequest = jsonResponse.contatUsRequestObj;
 
                     $('#contact_request_details').find('#name').text(getData(contatUsRequest.name));
+                    $('#contact_request_details').find('#lname').text(getData(contatUsRequest.lname));
                     $('#contact_request_details').find('#email').text(getData(contatUsRequest.email));
                     $('#contact_request_details').find('#phone').text(getData(contatUsRequest.phone));
                     $('#contact_request_details').find('#address').text(getData(contatUsRequest.address));
@@ -384,6 +391,18 @@
             day = day.length > 1 ? day : '0' + day;
 
             return month + '-' + day + '-' + year;
+        }
+        function getFormattedDateToEdit(date) {
+            date = new Date(date);
+            var year = date.getFullYear();
+
+            var month = (1 + date.getMonth()).toString();
+            month = month.length > 1 ? month : '0' + month;
+
+            var day = date.getDate().toString();
+            day = day.length > 1 ? day : '0' + day;
+
+            return year + '-' + month + '-' + day;
         }
     </script>
 @endsection

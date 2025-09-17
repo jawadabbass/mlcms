@@ -70,6 +70,7 @@ class ContactUsController extends Controller
             if ((isset($name) && !empty($name)) || (isset($email) && !empty($email))) {
                 $specialistQuery->where(function ($query) use ($name, $email) {
                     $query->where('name', 'like', '%' . $name . '%')
+                        ->orWhere('lname', 'like', '%' . $name . '%')
                         ->orWhere('email', 'like', '%' . $email . '%');
                 });
             }
@@ -174,8 +175,10 @@ class ContactUsController extends Controller
         }
         $contact = new ContactUsRequest;
         $contact->name = $request->name;
+        $contact->lname = $request->lname;
         $contact->email = $request->email;
         $contact->phone = $request->phone;
+        $contact->subject = $request->subject;
         $contact->comments = $request->comments;
         $contact->city = '';
         $contact->country = '';
@@ -211,6 +214,7 @@ class ContactUsController extends Controller
         } else {
             $clientObj = new Client;
             $clientObj->name = $contact->name;
+            $clientObj->last_name = $contact->lname;
             $clientObj->email = $contact->email;
             $clientObj->phone = $contact->phone;
             $clientObj->comments = $contact->comments;
@@ -286,7 +290,7 @@ class ContactUsController extends Controller
             <input type="hidden" name="lead_id" id="lead_id" value="' . $id . '">
             <div class="col-sm-12">
                 <label>Name</label>
-                <input type="text" name="name" id="name" class="form-control" value="' . $contact->name . '"/>
+                <input type="text" name="name" id="name" class="form-control" value="' . $contact->name.' '.$contact->lname . '"/>
             </div>
             <div class="col-sm-12">
                 <label>Date</label>
@@ -441,7 +445,7 @@ class ContactUsController extends Controller
         $email = '';
         if ($request->status == 'lead') {
             $contact = ContactUs::find($request->id);
-            $name = $contact->name;
+            $name = $contact->name.' '.$contact->lname;
             $email = $contact->email;
             $contact->assesment_code = $code;
             $contact->assesment_status = 'sent';
@@ -467,6 +471,7 @@ class ContactUsController extends Controller
     {
         $contatUsRequestObj = ContactUs::find($request->id);
         $contatUsRequestObj->name = $request->name;
+        $contatUsRequestObj->lname = $request->lname;
         $contatUsRequestObj->email = $request->email;
         $contatUsRequestObj->phone = $request->phone;
         $contatUsRequestObj->address = $request->address;

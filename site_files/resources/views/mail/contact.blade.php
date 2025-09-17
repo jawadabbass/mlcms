@@ -72,10 +72,17 @@
                                         style="font-size: 14px">
                                         <tbody>
                                             <tr>
-                                                <td width="100" style="padding: 5px 0">Name</td>
+                                                <td width="100" style="padding: 5px 0">First Name</td>
                                                 <td>&nbsp;:&nbsp;</td>
                                                 <td style="padding: 5px 0">
                                                     <strong>{{ $data['name'] }}</strong>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td width="100" style="padding: 5px 0">Last Name</td>
+                                                <td>&nbsp;:&nbsp;</td>
+                                                <td style="padding: 5px 0">
+                                                    <strong>{{ $data['lname'] }}</strong>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -94,6 +101,15 @@
                                                 <td>&nbsp;:&nbsp;</td>
                                                 <td style="border-top: 1px solid #eee; padding: 5px 0">
                                                     <strong>{{ $data['phone'] }}</strong>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="border-top: 1px solid #eee; padding: 5px 0">
+                                                    Subject
+                                                </td>
+                                                <td>&nbsp;:&nbsp;</td>
+                                                <td style="border-top: 1px solid #eee; padding: 5px 0">
+                                                    <strong>{{ $data['subject'] }}</strong>
                                                 </td>
                                             </tr>
                                             <tr>

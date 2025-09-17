@@ -98,7 +98,8 @@
                                                 </th>
                                                 <th></th>
                                                 <th width="8%">ID</th>
-                                                <th>Name</th>
+                                                <th>First Name</th>
+                                                <th>Last Name</th>
                                                 <th>Email</th>
                                                 <th>Phone</th>
                                                 {{-- <th>Service</th> --}}
@@ -140,6 +141,7 @@
                                                             @endif
                                                         </td>
                                                         <td>{{ $row->name }}</td>
+                                                        <td>{{ $row->lname }}</td>
                                                         <td><a href="mailto:{{ $row->email }}">{{ $row->email }}</a>
                                                         </td>
                                                         <td><a href="tel:{{ $row->phone }}">{{ $row->phone }}</a>
